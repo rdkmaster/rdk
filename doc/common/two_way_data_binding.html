@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>two_way_data_binding</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* This file is deliberately empty */
+</style>
+<link rel="stylesheet" type="text/css" href="/doc/css/github.css"/>
+</head>
+<body>
+<h1>双向数据绑定</h1>
+<p>双向数据绑定，也称为双向绑定或者简称绑定。它是AngularJS提供的一个非常有意义的功能，它能够极大地减少编码量，以及完全隔离对UI的操作，它是应用MVVM思想来开发web应用的基础。</p>
+<p>几乎所有RDK的控件都有使用双向绑定运作的属性，因此了解一些双向绑定的知识对更好的使用RDK的控件会有很大的帮助。</p>
+<h2>双向绑定与数据类型</h2>
+<p>双向绑定与js数据类型之间没有必然联系，一个应用双向绑定运作的属性可以是一个复杂的json对象，也可以是一个简单的数值、字符串。</p>
+<p>比如 <code>rdk_selector</code> 控件的 <code>data</code> 属性和 <code>least</code> 属性，都应用了双向绑定，<code>data</code> 是一个复杂对象，而 <code>least</code> 则是一个简单数值。</p>
+<pre><code>&lt;!-- HTML代码 --&gt;
+&lt;rdk_selector data=&quot;allData&quot; least=&quot;least&quot;&gt;
+&lt;/rdk_selector&gt;
+
+//JS代码
+scope.allData = [{label:&quot;item1&quot;},{label:&quot;item2&quot;}]; // 复杂对象
+scope.least   = 1; //简单数值
+</code></pre>
+
+<p>应用双向绑定的属性也支持直接以json字符串的形式来定义属性值，比如下面代码段运行的效果和前面例子是一样的</p>
+<pre><code>&lt;rdk_selector data=&quot;[{label:'item1'},{label:'item2'}]&quot; least=&quot;1&quot;&gt;
+&lt;/rdk_selector&gt;
+</code></pre>
+
+<p><strong>注</strong>：以json字符串形式定义双向绑定的属性值提供给控件，在控件内部改变了该值之后，应用无法获得变更后的新值，同时应用也无法再主动改变它的值了。因此以json字符串形式定义双向绑定的属性值的方式，仅适用于只需要初始化一次，然后再不会改变或者不关心其变化的场景。</p>
+<h2>何为双向</h2>
+<p>所谓双向：</p>
+<ul>
+<li>一端是应用的模型数据，即应用的 <code>scope</code> 上对应的属性。</li>
+<li>一端是控件的内部，可以笼统的理解为UI。这一点和纯AngularJS语义下的双向绑定是有细微的区别的。</li>
+</ul>
+<h2>如何使用</h2>
+<p>非常简单，直接修改 <code>scope</code> 上对应的属性即可自动更新UI，比如前面例子， <code>allData</code> 新增了一个item3，则只需要下面的代码即可：</p>
+<pre><code>//JS代码
+scope.allData.push({label: &quot;item3&quot;});
+</code></pre>
+
+<p>控件会非常快的感知到值发生了变化，进而马上更新UI。</p>
+<p>同样的，当控件内部修改了 <code>allData</code> 的值，则新的值会自动更新到 <code>scope.allData</code> 上，即<strong>无论何时，应用读取的 <code>scope.allData</code> 的值永远和界面上是一致的</strong>。 </p>
+<h2>注意事项</h2>
+<p>以json字符串形式定义双向绑定的属性值，<strong>值是字符串的时候，需要使用单引号将值包围起来，看上去是这样的</strong></p>
+<pre><code>&lt;!-- HTML代码 --&gt;
+&lt;rdk_graph graph_template=&quot;'my/templates/xxx.js'&quot;&gt;&lt;/rdk_graph&gt;
+</code></pre>
+
+<p>注意到 <code>'my/templates/xxx.js'</code> 使用了双引号包围了起来。如果忘了单引号包围起来，则在浏览器的控制台上会报类似下面的错误：</p>
+<pre><code>Error: [$compile:nonassign] Expression 'my/templates/xxx.js' used with directive 'rdkGraph' is non-assignable!
+    http://errors.angularjs.org/1.3.9-local+sha.a3c3bf3/$compile/nonassign?p0=my%2Ftemplates%2Fxxx.js&amp;p1=rdkSelector
+    at angular.js:63
+    at parentSet (angular.js:7654)
+    at parentValueWatch (angular.js:7667)
+    at Object.regularInterceptedExpression (angular.js:12833)
+    at Scope.$digest (angular.js:14217)
+    at Scope.$apply (angular.js:14488)
+    at bootstrapApply (angular.js:1449)
+    at Object.invoke (angular.js:4182)
+    at doBootstrap (angular.js:1447)
+    at Object.bootstrap (angular.js:1467)
+</code></pre>
+
+<p>这样做的原因其实非常简单，就像我们调用 <code>eval()</code> 一样，下面的代码必然报错：</p>
+<pre><code>//JS代码
+eval(my/templates/xxx.js);
+</code></pre>
+
+<p>而改为下面的代码则正常，并且 <code>eval()</code> 返回了一个字符串</p>
+<pre><code>//JS代码
+eval('my/templates/xxx.js');
+</code></pre>
+
+<p>尽管这样的代码看上去有点奇怪，但是实际上非常好理解</p>
+<pre><code>graph_template=&quot;'my/templates/xxx.js'&quot;
+</code></pre>
+
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

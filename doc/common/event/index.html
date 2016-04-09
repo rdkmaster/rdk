@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>EventService</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* This file is deliberately empty */
+</style>
+<link rel="stylesheet" type="text/css" href="/doc/css/github.css"/>
+</head>
+<body>
+<h1>事件机制</h1>
+<p>在RDK中，组件与组件间的交互，组件与应用间的交互，都是通过事件来实现的，事件是整个网页动态化的纽带。事件虽然很重要，但是却非常易用。</p>
+<h2>重要概念</h2>
+<h3>事件发出者</h3>
+<p>在RDK中，下面3个称谓含义一致：</p>
+<ul>
+<li><code>事件发出者</code></li>
+<li><code>dispatcher</code></li>
+<li><code>event dispatcher</code></li>
+</ul>
+<p>在RDK中，<code>事件发出者</code>是一个任意<code>字符串</code>，大小写敏感。换句话，任意的字符串都可以成为RDK的<code>事件发出者</code>。在实际开发中，常见的<code>事件发出者</code>有：</p>
+<ul>
+<li>DOM节点的id；</li>
+<li>数据源id；</li>
+</ul>
+<h3>事件类型</h3>
+<p>在RDK中，<code>事件类型</code>是一个任意<code>字符串</code>。比如 &quot;click&quot;，&quot;query_result&quot; 等。<code>事件类型</code>大小写敏感。</p>
+<h3>事件数据</h3>
+<p><code>事件数据</code>是事件发生时，<code>事件发出者</code>附加的额外信息，可以是一个任意结构的json对象、简单值。</p>
+<h3>事件处理器</h3>
+<p>一个函数。当事件发生时，RDK会调用这个函数。以下是一个事件处理器的定义</p>
+<pre><code>function eventHandler(event, data) {
+    //...
+}
+</code></pre>
+
+<p>它接收两个参数：</p>
+<ul>
+<li><code>event</code> 事件实例</li>
+<li><code>data</code> 事件数据</li>
+</ul>
+<h2>使用事件</h2>
+<h3>监听</h3>
+<p>要成功处理一个事件，必须先<code>监听</code>该事件。使用下面的代码可以监听一个事件：</p>
+<pre><code>EventService.register('main_reason_graph', 'click', myHandler);
+</code></pre>
+
+<p>注意，需要将<code>EventService</code>的<a href="http://docs.ngnice.com/tutorial/step_05">依赖注入</a>到你的控制器中。<code>register</code> 函数接收3个参数：</p>
+<ul>
+<li><code>事件发出者</code>，一个字符串，详见前文的说明。</li>
+<li><code>事件类型</code>，一个字符串，详见前文的说明。</li>
+<li><code>事件处理器</code>，一个函数，详见前文的说明。</li>
+</ul>
+<h3>派发</h3>
+<p>使用下面代码可以派发一个事件</p>
+<pre><code>EventService.broadcast('main_reason_graph', 'click', data);
+</code></pre>
+
+<p><code>broadcast</code> 函数接收3个参数：</p>
+<ul>
+<li><code>事件发出者</code>，一个字符串，详见前文的说明。</li>
+<li><code>事件类型</code>，一个字符串，详见前文的说明。</li>
+<li><code>事件数据</code>，一个json对象，详见前文的说明。</li>
+</ul>
+<h3>onEvents处理多事件</h3>
+<p>在实际应用中，场景通常会比较复杂，需要多个事件都发生了之后，才能执行某个回调函数。使用 <code>onEvents()</code> 可以轻松处理这样的场景。</p>
+<pre><code>var eventInfos = [
+    {dispatcher: 'dispatcher1', type: 'event_type1'},
+    {dispatcher: 'dispatcher2', type: 'event_type2'},
+    {dispatcher: 'dispatcher3', type: 'event_type3'},
+];
+//当 eventInfos 中所有事件都发生至少一次之后，callback才会被调用
+EventService.onEvents(eventInfos, callback);
+</code></pre>
+
+<h3>检查事件是否已注册</h3>
+<pre><code>//未加回调函数时，只要该事件发出者上有至少一个该事件类型，则返回true，否则返回false
+EventService.hasEvent('simple_mode', 'some_event');
+
+//提供了回调函数时，必须该事件发出者上有一个该事件类型，
+//并且回调函数与提供的回调函数是同一个(===)，则返回true，否则返回false
+EventService.hasEvent('simple_mode', 'some_event', callback);
+</code></pre>
+
+<h3>删除事件回调</h3>
+<pre><code>//未加回调函数时，则删除该事件发出者上所有该事件类型的回调
+EventService.remove('simple_mode', 'some_event');
+
+//使用了回调函数时，则只删除该事件发出者上该事件类型下，与提供的函数相同(===)的回调
+EventService.remove('simple_mode', 'some_event', callback);
+</code></pre>
+
+<h2>综合例子</h2>
+<p><live_demo example="common/event/" width="800" height="120"></live_demo></p>
+<div><script rdk-app="/doc/utils/doc_script" data-main="/libs/rdk/rdk" src="/libs/requirejs/require.js"></script></div>
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

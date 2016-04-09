@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>rdk_table</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* This file is deliberately empty */
+</style>
+<link rel="stylesheet" type="text/css" href="/doc/css/github.css" />
+</head>
+<body>
+<h1>简介</h1>
+<p><code>rdk_table</code> 主要用于提供表格展示，主要</p>
+<p>这是一个简单的 <code>rdk_table</code> 例子：
+<live_demo example="controls/table/basic" width="900" height="200"></live_demo></p>
+<hr />
+<h1>属性</h1>
+<h2>data <binding></binding></h2>
+<blockquote>
+<p>支持类型：对象或数据源id</p>
+</blockquote>
+<p><code>data</code> 是需要在表格中展示的全部信息，可以是某个<code>数据源</code>的id。</p>
+<p>data对象中应该包含以下<strong>必填属性</strong>：</p>
+<ul>
+<li>field 	：表中的列头信息</li>
+<li>header：field的各个列头的国际化内容</li>
+<li>data:真实的数据</li>
+</ul>
+<p><live_demo example="controls/table/basic" width="900" height="200"></live_demo></p>
+<h2>setting</h2>
+<blockquote>
+<p>支持类型：JSON对象</p>
+</blockquote>
+<p>此属性可以设置展现列表中的列的各种属性,包括样式、显隐性等。
+可以通过列索引（从0开始索引）或者相应的<code>field</code>的值进行设置。</p>
+<h3>设置列样式</h3>
+<p>具体设置格式如下：</p>
+<pre><code>   scope.setting = {
+        &quot;columnDefs&quot; :[
+            {
+                targets : 0,
+                class : &quot;red&quot;
+            },{
+                targets : &quot;extn&quot;,
+                class : &quot;green&quot;
+            }
+        ]
+    }
+</code></pre>
+
+<p>其中的class为自定义的样式。详细示例如下：</p>
+<p><live_demo example="controls/table/columnclass" width="900" height="200"></live_demo></p>
+<h3>设置列的显隐性</h3>
+<p>具体设置格式如下：</p>
+<pre><code>    scope.setting = {
+        &quot;columnDefs&quot; :[
+            {
+                targets : 0,
+                visible : false
+            },{
+                targets : &quot;extn&quot;,
+                visible : false
+            }
+        ]
+    }
+</code></pre>
+
+<p>详细示例如下：</p>
+<p><live_demo example="controls/table/columnvisible" width="900" height="200"></live_demo></p>
+<h3>设置列的宽度</h3>
+<p>具体设置格式如下：</p>
+<pre><code>    scope.setting = {
+        &quot;columnDefs&quot; :[
+            {
+                targets : 0,
+                width : 20%
+            },{
+                targets : &quot;extn&quot;,
+                width : 40%
+            }
+        ]
+    }
+</code></pre>
+
+<p>详细示例如下：</p>
+<p><live_demo example="controls/table/columnwidth" width="900" height="200"></live_demo></p>
+<h3>添加自定义列</h3>
+<p>具体设置格式如下：</p>
+<pre><code>    scope.setting = {
+        &quot;columnDefs&quot; :[
+            {
+                title : &quot;编辑列&quot;,
+                render : '&lt;a ng-click=&quot;appScope.click(item)&quot;&gt;点击&lt;/a&gt;'
+            },{
+                title : &quot;索引添加&quot;,
+                targets : 1,
+                override : false,
+                render : &quot;渲染内容&quot;
+            }
+        ]
+    }
+</code></pre>
+
+<ul>
+<li>
+<p>targets标记只支持索引形式，不支持<code>field</code>字符串形式。</p>
+</li>
+<li>
+<p>override的属性为false表示新添加一列；为true将会覆盖target所对应的列。</p>
+</li>
+<li>
+<p>render为新添加列的信息，通过渲染的方式进行添加。</p>
+</li>
+</ul>
+<p>详细示例如下：</p>
+<p><live_demo example="controls/table/newcolumn" width="900" height="200"></live_demo></p>
+<h3>设置水平滚动条</h3>
+<p>具体设置格式如下：</p>
+<pre><code>    scope.setting = {
+        scrollX : true
+    }
+</code></pre>
+
+<p>详细示例如下：</p>
+<p><live_demo example="controls/table/scrollx" width="900" height="200"></live_demo></p>
+<h2>自定义表头</h2>
+<p>可以使用CSS中定义的table标记中的thead、tr、th等标记来修改表头内容。</p>
+<p>例如：
+<live_demo example="controls/table/customheader" width="900" height="200"></live_demo></p>
+<h2>page_size</h2>
+<blockquote>
+<p>支持类型：字符串
+此属性支持自定义分页功能，通过此属性可以定义列表每页要展现的行数。代码如下：</p>
+</blockquote>
+<pre><code>&lt;rdk-table page_size=&quot;1&quot;&gt;&lt;/rdk-table&gt;
+</code></pre>
+
+<p><live_demo example="controls/table/localpaging" width="900" height="200"></live_demo></p>
+<h2>paging_type</h2>
+<blockquote>
+<p>支持类型：字符串</p>
+</blockquote>
+<p>此属性设置服务端的分页要求。
+示例中绑定的数据源模拟的是从服务端反馈回来的数据，在反馈的信息中有以下分页要求，客户端接收到此数据后根据数据要求进行分页显示。</p>
+<pre><code>&quot;paging&quot; :{&quot;totalRecord&quot;:14,&quot;currentPage&quot;:1,&quot;pageSize&quot;:5}
+</code></pre>
+
+<ul>
+<li>totalRecord : 返回的中的数据条数。</li>
+<li>currentPage : 当前显示第几页数据。</li>
+<li>pageSize : 每页显示的最大条数。 </li>
+</ul>
+<p>例如：
+<live_demo example="controls/table/serverpaging" width="900" height="200"></live_demo></p>
+<h1>事件</h1>
+<p>暂无</p>
+<h1>方法</h1>
+<p>暂无</p>
+<h1>样式</h1>
+<h3><a href="/doc/controls/table/style_demo.html">关键样式示例</a></h3>
+<h3>表的整体属性</h3>
+<h4>font-size</h4>
+<p>字体大小，默认值：14px</p>
+<h4>line-height</h4>
+<p>行高，默认值：28px</p>
+<h3>选择行的属性</h3>
+<h4>background-color</h4>
+<p>选择行的背景色， 默认值：#849DE9</p>
+<h3>鼠标移动到行上的属性</h3>
+<h4>background-color</h4>
+<p>鼠标移动到行上的背景色， 默认值：#F1F1F1</p>
+<h3>表头、表尾属性</h3>
+<h4>text-align</h4>
+<p>文字水平对齐，默认值center</p>
+<h4>padding</h4>
+<p>属性定义元素边框与元素内容之间的空间（单位：像素）。默认值：10px 6px,padding属性的默认填充顺序为从上开始的顺时针方向。</p>
+<h4>background-color</h4>
+<p>表头或表尾背景色,默认值: #325BDB</p>
+<h4>color</h4>
+<p>表头或表尾文字色,默认值: #FFFFFF</p>
+<h3>表体数据属性</h3>
+<h4>text-align</h4>
+<p>文字水平对齐，默认值: center</p>
+<h4>vertical-align</h4>
+<p>文字的垂直对齐，默认值: middle</p>
+<h4>padding</h4>
+<p>文字与边框间距，默认值: 8px 6px</p>
+<h2>渲染器</h2>
+<p>表中的渲染其主要是进行整列数据的渲染，主要是通过table控件的<code>setting</code>属性进行设置的。详细信息可以参见本文档的<code>添加自定义列</code>的说明。</p>
+<h2>数据源绑定</h2>
+<p>表格的数据可以通过数据源绑定的方式进行数据展示。
+数据源绑定的说明请参照<code>BasicSelector控件</code>中的数据源绑定章节中的内容。以下为<code>rdk_table</code>的数据源绑定的示例：</p>
+<p><live_demo example="controls/table/datasource" width="900" height="200"></live_demo></p>
+<div><script rdk-app="/doc/utils/doc_script" data-main="/libs/rdk/rdk" src="/libs/requirejs/require.js"></script></div>
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

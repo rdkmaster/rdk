@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>rdk_tab</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* This file is deliberately empty */
+</style>
+<link rel="stylesheet" type="text/css" href="/doc/css/github.css" />
+</head>
+<body>
+<h1>简介</h1>
+<p><code>rdk_tab</code> 控件是一个导航容器控件，<code>rdk_tab</code> 容器可以包含 <code>tab</code> 容器用于在其子容器间导航。
+<code>rdk_tab</code>容器包含一组子容器，其中一次只能显示一个子容器。
+<code>rdk_tab</code>容器中每个子容器均带有相应的选项卡，每个选项卡可以具有自己的标签和文本。
+用户单击选项卡时，相应的子容器将显示为<code>rdk_tab</code>容器的选定子容器。</p>
+<p><code>rdk_tab</code>容器可以填充：</p>
+<ul>
+<li>标准的HTML文本信息</li>
+<li>表格、图片等格式，同时支持双向绑定</li>
+<li>其它的rdk控件</li>
+<li>其它的rdk容器</li>
+</ul>
+<p>这是一个简单的 <code>rdk_tab</code> 例子：
+<live_demo example="containers/tab/basic" width="800" height="200"></live_demo></p>
+<hr />
+<h1>属性</h1>
+<h2>selected_tab <binding></binding></h2>
+<blockquote>
+<p>支持类型：字符串</p>
+</blockquote>
+<p>此属性设置初始展现的选项卡。代码如下：</p>
+<pre><code>&lt;rdk-tab selected_tab=&quot;2&quot;&gt;&lt;/rdk-tab&gt;
+</code></pre>
+
+<h2>toggleCondition</h2>
+<blockquote>
+<p>支持类型：字符串</p>
+</blockquote>
+<p>此属性设置了激活选项卡的方式，默认值为click。
+如果需要鼠标移动到选项卡上即激活选项卡，则此属性需要设置为“mouseover”。代码如下：</p>
+<pre><code>&lt;rdk-tab toggle_condition=&quot;mouseover&quot;&gt;&lt;/rdk-tab&gt;
+</code></pre>
+
+<h2>heightStyle</h2>
+<blockquote>
+<p>支持类型：字符串</p>
+</blockquote>
+<p>此属性设置选项卡的高度，默认值为content。
+此属性支持的选项为：</p>
+<ul>
+<li>auto ： 选项卡高度将被设置成最高的那个选项卡的高度</li>
+<li>content ： 每个选项卡将以自身内容为高度</li>
+<li>fill ： 扩展到基于选项卡的父容器的可用高度</li>
+</ul>
+<p>代码如下：</p>
+<pre><code>&lt;rdk-tab height_style=&quot;auto&quot;&gt;&lt;/rdk-tab&gt;
+</code></pre>
+
+<h2>collapsible</h2>
+<blockquote>
+<p>支持类型：字符串</p>
+</blockquote>
+<p>此属性设置选项卡的折叠属性，默认值为false即不可折叠。代码如下：</p>
+<pre><code>&lt;rdk-tab collapsible=&quot;true&quot;&gt;&lt;/rdk-tab&gt;
+</code></pre>
+
+<p><live_demo example="containers/tab/tab_collapsible" width="800" height="200"></live_demo></p>
+<h2>draggable</h2>
+<blockquote>
+<p>支持类型：字符串</p>
+</blockquote>
+<p>此属性设置选项卡是否支持拖拽功能，默认值：true即支持选项卡的拖拽。</p>
+<pre><code>&lt;rdk-tab draggable=&quot;false&quot;&gt;&lt;/rdk-tab&gt;
+</code></pre>
+
+<p><live_demo example="containers/tab/tab_draggable" width="800" height="200"></live_demo></p>
+<h2>id</h2>
+<blockquote>
+<p>支持类型：字符串</p>
+</blockquote>
+<p>事件发出者，此字段大小写敏感。详见<code>事件机制</code>中事件发出者的说明。</p>
+<h1>事件</h1>
+<h2>TAB_SELECT</h2>
+<blockquote>
+<p>事件类型：EventTypes.TAB_SELECT</p>
+</blockquote>
+<p>通过广播此事件来跳转要显示的选项卡。
+此事件接收3个参数：</p>
+<ul>
+<li>事件的类型 : EventTypes.TAB_SELECT</li>
+<li>id号 : 当前rdk-tab控件的id</li>
+<li>要显示的选项卡索引号</li>
+</ul>
+<p><live_demo example="containers/tab/tab_event" width="800" height="300"></live_demo></p>
+<h1>方法</h1>
+<p>暂无</p>
+<h1>样式</h1>
+<p>暂无</p>
+<h2>渲染器</h2>
+<p>暂无</p>
+<h2>数据源绑定</h2>
+<p>暂无</p>
+<div><script rdk-app="/doc/utils/doc_script" data-main="/libs/rdk/rdk" src="/libs/requirejs/require.js"></script></div>
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
