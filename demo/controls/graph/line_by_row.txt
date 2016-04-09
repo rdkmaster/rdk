@@ -1,0 +1,78 @@
+{
+    "title": {
+        "text": "折线图-按行", 
+        "subtext": "纯属虚构"
+    }, 
+    "tooltip": {
+        "trigger": "axis"
+    }, 
+    "legend": {
+        "data": "$ctx.rowDescriptor"
+    }, 
+    "calculable": "true", 
+    "xAxis": [
+        {
+            "type": "category", 
+            "boundaryGap": "false", 
+            "data": "$ctx.header"
+        }
+    ], 
+    "yAxis": [
+        {
+            "type": "value", 
+            "axisLabel": {
+                "formatter": "{value} °C"
+            }
+        }
+    ], 
+    "ext": {
+        "threshold": [-2, 3, 9, 12],
+        "itemWithoutMarkLine": {
+            "name": "$ctx.rowDescriptor[$i]", 
+            "type": "line", 
+            "data": "$ctx.row($ctx.data, $i)"
+        },
+        "itemWithMarkLine": {
+            "name": "$ctx.rowDescriptor[$i]", 
+            "type": "line", 
+            "data": "$ctx.row($ctx.data, $i)", 
+            "markLine": {
+                "data": [
+                    [{
+                        "name": "警告", "value": "$ext.threshold[0]", "xAxis": 10000, 
+                        "yAxis": "$ext.threshold[0]",
+                        "itemStyle": { "normal": { "color": "#ff00aa" } }
+                    }, {
+                        "name": "", "xAxis": -1, "yAxis": "$ext.threshold[0]", 
+                        "itemStyle": { "normal": { "color": "#ff00aa" } }
+                    }], 
+                    [{
+                        "name": "轻微", "value": "$ext.threshold[1]", "xAxis": 10000, 
+                        "yAxis": "$ext.threshold[1]",
+                        "itemStyle": { "normal": { "color": "#ff00aa" } }
+                    }, {
+                        "name": "", "xAxis": -1, "yAxis": "$ext.threshold[1]", 
+                        "itemStyle": { "normal": { "color": "#ffaa00" } }
+                    }], 
+                    [{
+                        "name": "严重", "value": "$ext.threshold[2]", "xAxis": 10000, 
+                        "yAxis": "$ext.threshold[2]",
+                        "itemStyle": { "normal": { "color": "#ff00aa" } }
+                    }, {
+                        "name": "", "xAxis": -1, "yAxis": "$ext.threshold[2]", 
+                        "itemStyle": { "normal": { "color": "#ffaa00" } }
+                    }], 
+                    [{
+                        "name": "致命", "value": "$ext.threshold[3]", "xAxis": 10000,
+                        "yAxis": "$ext.threshold[3]", 
+                        "itemStyle": { "normal": { "color": "#ff00aa" } }
+                    }, {
+                        "name": "", "xAxis": -1, "yAxis": "$ext.threshold[3]", 
+                        "itemStyle": { "normal": { "color": "#ffaa00" } }
+                    }]
+                ]
+            }
+        }
+    }, 
+    "series": "$ctx.repeat('$i','0','$ctx.rowDescriptor.length', '$i == 0 ? $ext.itemWithMarkLine : $ext.itemWithoutMarkLine')"
+}

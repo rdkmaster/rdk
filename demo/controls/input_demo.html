@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app="InputApp">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>带删除功能的Input</title>
+    <link rel="stylesheet" type="text/css" href="../../libs/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../libs/codemirror/codemirror.css" />
+    <link rel="stylesheet" type="text/css" href="tabledemo/css/demo.css" />
+    <script type="text/javascript" src="../../libs/jquery/jquery-1.11.2.min.js"></script>
+    <script src="../../libs/codemirror/codemirror.js"></script>
+    <script src="../../libs/codemirror/mode/javascript.js"></script>
+    <script src="../../libs/angular/angular.js"></script>
+    <script src="../../libs/angular/ui-codemirror.js"></script>
+    <script src="../../libs/angular/angular-translate.min.js"></script>
+    <script src="../../libs/angular/angular-translate-loader-static-files.min.js"></script>
+<<<<<<< .mine
+    <!-- 正式环境建议包含这个文件，加快运行速度 -->
+    <!--script src="../../libs/rdk/rdk.all.js"></script-->
+    <!-- 开发环境建议分开包含各个文件，方便定位问题 -->
+     <script src="../../src/rdk.js"></script>
+    <script src="../../src/attributes/bind_ds.js"></script>
+    <script src="../../src/attributes/modal.js"></script>
+    <script src="../../src/services/I18nService.js"></script>
+    <script src="../../src/services/DataSourceService.js"></script>
+    <script src="../../src/services/EventService.js"></script>
+    <script src="../../src/services/appScope.js"></script>
+    <script src="../../src/services/NodeService.js"></script>
+    <script src="../../src/services/Utils.js"></script>
+    <script src="../../src/containers/Accordion.js"></script>
+    <script src="../../src/containers/GraphGroup.js"></script>
+    <script src="../../src/containers/Tab.js"></script>
+    <script src="../../src/controls/Graph.js"></script>
+    <script src="../../src/controls/GIS.js"></script>
+    <script src="../../src/controls/Table.js"></script>
+    <script src="../../src/controls/TabSelect.js"></script>
+    <script src="../../src/controls/TabSelector.js"></script>
+    <script src="../../src/controls/Tree.js"></script>
+    <script src="../../src/controls/Selector.js"></script>
+    <script src="../../src/controls/ComboSelect.js"></script>
+    <script src="../../src/controls/Input.js"></script>
+    <script src="../../src/controls/Time.js"></script>
+    <!-- 结束 -->
+=======
+
+    <!-- 正式环境建议包含这个文件，加快运行速度
+    <script src="../../libs/rdk/rdk.all.js"></script>
+    -->
+    <!-- 下面代码仅仅是为了rdk demo测试方便，正式版本禁止使用 -->
+    <script src="../rdk_src_all.js"></script>
+    <script type="text/javascript">
+        loadRDK('../../');
+    </script>
+    
+>>>>>>> .r51327
+    <script src="./input_demo_script.js"></script>
+</head>
+
+<body ng-controller="InputController">
+    <h1>带删除功能的Input</h1>
+    <div style="margin-top:30px;">
+        <rdk-input ng-model="age" style="width:300px;" placeholder="aaaa"></rdk-input>
+        --------{{age}}-------------
+    </div>
+    <button ng-click="changeAge()"></button>
+    <br>
+    <h2>1.In the HTML:支持自定义样式 通过原生的style和class配置</h2>
+    <ui-codemirror ui-codemirror-opts="editorOptions" ng-model="option"></ui-codemirror>
+    <h2>2.In the Controller:</h2>
+    <ui-codemirror ui-codemirror-opts="editorOptions">$scope.age = 11;</ui-codemirror>
+</body>
+
+</html>

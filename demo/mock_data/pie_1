@@ -1,0 +1,10 @@
+{"data": [
+	["26","1","1"],
+	["17","2","1"],
+	["16","1","2"],
+	["15","2","2"]
+	],
+	"header":["causeName","num","causeID","objectTypeID"],
+	"rowDescriptor":["SGW负载问题","SGW非负载问题","APN对应的业务网关负载问题","APN对应的业务网关非负载问题"],
+	"field":["causeName","num","causeID","objectTypeID"]
+}

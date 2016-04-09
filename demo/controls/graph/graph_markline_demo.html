@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Graph Demo</title>
+</head>
+
+<body ng_controller="ctrl" >
+
+    <!-- 饼图-按行分块：每行占一块 -->
+    <rdk_graph style="height:400px;width:400px;float:left" bind_ds="ds" from_url="/demo/line_1" graph_template="tplPath"></rdk_graph>
+
+    <button ng-click="change()">改变图形模板</button>
+
+</body>
+
+
+
+<!-- 正式环境建议包含这个文件，加快运行速度
+<script src="../../libs/rdk/rdk.all.js"></script>
+-->
+<!-- 下面代码仅仅是为了rdk demo测试方便，正式版本禁止使用 -->
+<script src="../../rdk_src_all.js"></script>
+<script src="./echarts-2.2.7/build/dist/echarts-all.js"></script>
+<script type="text/javascript">
+    loadAll('../../../');
+</script>
+
+
+<script src="./graph_markline_demo_script.js"></script>
+<style type="text/css">
+textarea {
+     border: 1px solid black;
+     height: 360px;
+     width: 400px;
+ }
+</style>
+
+</html>

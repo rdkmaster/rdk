@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+    <link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../libs/jquery/jquery-1.11.2.min.js"></script>
+    <script src="../libs/angular/angular.js"></script>
+    <script src="../libs/echarts/echarts-all.js"></script>
+    <script src="../src/controls/Graph.js"></script>
+    <script src="../src/controls/GIS.js"></script>
+    <script src="../src/containers/GraphGroup.js"></script>
+    <script src="../src/services/DataSourceService.js"></script>
+    <script src="../src/services/EventService.js"></script>
+    <script src="../src/services/NodeService.js"></script>
+    <script src="../src/services/Utils.js"></script>
+    <script src="../src/attributes/bind_ds.js"></script>
+    <script src="./echar_posandsize_demo.js"></script>
+<body ng-controller="ctrl">
+        <div class="row" style="margin-top:10px;height:400px">
+            <div class="container moduleMargin lineChartStyle">
+                <div class="col-xs-4" style="border:1px solid #ccc;border-radius:10px">
+                    <div  style="height:438px">
+                        <vmax_graph id="lowspeedPie" style="height:438px;width:100%;" bind_ds="dsLowspeedPie" graph_template="template/lowspeed_pie_services.txt" tpl.title.text="各业务低速率占比分布"
+                            tpl.title.subtext=""
+                            tpl.toolbox="">
+                        </vmax_graph>
+                    </div>
+                    <div>
+                        <h4>title</h4>
+                        <div>
+                            <label>width:</label>
+                            <label>{{pieTitileWidth}}</label>
+                            <label>height:</label>
+                            <label>{{pieTitileHeight}}</label>
+                            <label>x:</label>
+                            <label>{{pieTitileX}}</label>
+                            <label>y:</label>
+                            <label>{{pieTitileY}}</label>
+                        </div>
+                        <h4>legend</h4>
+                        <div>
+                            <label>width:</label>
+                            <label>{{pieLegendWidth}}</label>
+                            <label>height:</label>
+                            <label>{{pieLegendHeight}}</label>
+                            <label>x:</label>
+                            <label>{{pieLegendX}}</label>
+                            <label>y:</label>
+                            <label>{{pieLegendY}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-8" >
+                    <div style="border:1px solid #ccc;border-radius:10px">
+                        <div>
+                            <vmax_graph id="lowspeedRectangular" style="width:100%;height:220px" bind_ds="dsLowspeedCount" graph_template="template/lowspeed_rectangular_up.txt" tpl.title.text="低速率分布趋势"
+                             tpl.title.subtext=""
+                             tpl.y-Axis0.name = "次数"
+                             tpl.y-Axis1.name = "比率"
+                             ></vmax_graph>
+                         </div>
+                         <div>
+                            <div style="float:left;margin-right:20px">
+                                <h4>title</h4>
+                                <div>
+                                    <label> width: </label>
+                                    <label> {{rectangularTitileWidth}} </label>
+                                    <label> height: </label>
+                                    <label> {{rectangularTitileHeight}} </label>
+                                    <label> x: </label>
+                                    <label> {{rectangularTitileX}} </label>
+                                    <label> y: </label>
+                                    <label> {{rectangularTitileY}} </label>
+                                </div>                                
+                            </div>
+                            <div style="float:left;margin-left:20px">
+                                <h4>legend</h4>
+                                <div>
+                                    <label> width: </label>
+                                    <label> {{rectangularLegendWidth}} </label>
+                                    <label> height: </label>
+                                    <label> {{rectangularLegendHeight}} </label>
+                                    <label> x: </label>
+                                    <label> {{rectangularLegendX}} </label>
+                                    <label> y: </label>
+                                    <label> {{rectangularLegendY}} </label>
+                                </div>                                
+                            </div>
+                            <div style="clear:both"></div>
+                        </div>                          
+                    </div>
+                    <div style="border:1px solid #ccc;border-radius:10px">
+                        <div>
+                            <vmax_graph id="lowspeedScatter" style="height:510px;width:100%;" bind_ds="dsScatterDiagram"
+                            graph_template="template/lowspeed_scatter_neobj.txt" tpl.title.text="问题网元分布"
+                            tpl.title.subtext="" tpl.toolbox=""></vmax_graph>
+                        </div>
+                         <div>
+                            <div style="float:left;margin-right:20px">
+                                <h4>title</h4>
+                                <div>
+                                    <label> width: </label>
+                                    <label> {{scatterTitileWidth}} </label>
+                                    <label> height: </label>
+                                    <label> {{scatterTitileHeight}} </label>
+                                    <label> x: </label>
+                                    <label> {{scatterTitileX}} </label>
+                                    <label> y: </label>
+                                    <label> {{scatterTitileY}} </label>
+                                </div>                                
+                            </div>
+                            <div style="float:left;margin-left:20px">
+                                <h4>legend</h4>
+                                <div>
+                                    <label> width: </label>
+                                    <label> {{scatterLegendWidth}} </label>
+                                    <label> height: </label>
+                                    <label> {{scatterLegendHeight}} </label>
+                                    <label> x: </label>
+                                    <label> {{scatterLegendX}} </label>
+                                    <label> y: </label>
+                                    <label> {{scatterLegendY}} </label>
+                                </div>                                
+                            </div>
+                            <div style="clear:both"></div>
+                        </div>                         
+                    </div>                   
+                </div>                
+            </div>
+        </div>
+
+</body>
+</html>

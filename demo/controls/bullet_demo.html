@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="scoreDemoApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+    <link href="../../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../libs/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<body ng-controller="ctrl">
+    <br>
+    <br>
+<!--     <div class="progress" style="height: 46px; width: 90%;">
+        <div class="progress-bar progress-bar-danger" style="width: 60%;"></div>
+        <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 20%;"></div>
+        <div class="progress-bar progress-bar-success" style="width: 20%;"></div>
+         show_slider_legend show_bkg_legend
+    </div> -->
+    <br>
+    <div>这是一些文字。。。</div>
+    <div style="width:300px;height:125px;border:1px solid #ff2233">
+        <rdk_bullet 
+            sliders="inputScales" 
+            bkg_styles="[{color:'#d9534f',width:'100%',label:'test'}]"
+            slider_styles="[
+                    {color:'red',label:'警告',position:'up',iconstyle:''},
+                    {color:'green',label:'轻微',position:'up',iconstyle:''},
+                    {color:'blue',label:'严重',position:'up',iconstyle:''},
+                    {color:'gray',label:'致命',position:'up',iconstyle:''},
+                ]"
+            title="告警门限设置"
+            editable
+            step="1"
+            min_value="20"
+            max_value="80"
+            show_slider_legend
+        ></rdk_bullet>
+    </div>
+    <div>这是一些文字。。。</div>
+    <div>{{inputScales[0]}}</div>
+    <div>{{inputScales[1]}}</div>
+    <div>{{inputScales[2]}}</div>
+    <div>{{inputScales[3]}}</div>
+
+<!--     <div class="progress" style="height: 46px; width: 90%;">
+        <div class="progress-bar progress-bar-danger" style="width: 60%;"></div>
+        <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 20%;"></div>
+        <div class="progress-bar progress-bar-success" style="width: 20%;"></div>
+    </div> -->
+
+</body>
+    <script src="../../libs/jquery/jquery-1.11.2.min.js"></script>
+    <script src="../../libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../libs/angular/angular.js"></script>
+
+    <!-- 正式环境建议包含这个文件，加快运行速度
+    <script src="../../libs/rdk/rdk.all.js"></script>
+    -->
+    <!-- 下面代码仅仅是为了rdk demo测试方便，正式版本禁止使用 -->
+    <script src="../rdk_src_all.js"></script>
+    <script type="text/javascript">
+        loadRDK('../../');
+    </script>
+
+    <script src="./bullet_demo_script.js"></script>
+</html>

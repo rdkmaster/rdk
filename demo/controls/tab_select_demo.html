@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../../libs/bootstrap/css/bootstrap.min.css"/>  
+
+    <script type="text/javascript" src="../../libs/jquery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../../libs/angular/angular.js"></script>
+
+    <script src="../../../libs/codemirror/codemirror.js"></script>
+    <script src="../../../libs/codemirror/mode/javascript.js"></script>
+    <script src="../../../libs/angular/ui-codemirror.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../libs/codemirror/codemirror.css"/>
+
+    <script src="../../src/attributes/ds.js"></script>
+    <script src="../../src/services/appScope.js"></script>
+    <script src="../../src/services/DataSourceService.js"></script>
+    <script src="../../src/services/EventService.js"></script>
+    <script src="../../src/services/Utils.js"></script>
+    <script src="../../src/controls/Selector.js"></script>
+    <script src="../../src/controls/TabSelector.js"></script>
+    <script src="../../src/controls/TabSelect.js"></script>
+
+	<script src="./tab_select_demo_script.js"></script>
+
+    <title>TabSelect Demo</title>
+</head>
+
+<body ng_controller="ctrl" >
+
+    <rdk_tab_selector ds="tabData" ds_url="/demo/mock_data/tab_select" ds_query_if="ready" track_item_by="label" node_field="items" multiple_select="true"></rdk_tab_selector>
+
+	
+	<!-- 设置ID，捕捉内部抛出的选中对象 -->
+	<div>
+		<strong style="margin-left: 20px;margin-top: 20px;margin-bottom: 0px;display: block;">DEMO_1 : 设置ID，捕捉内部抛出的选中对象</strong>	
+		<rdk_tab_select style="height:220px;width: 100%;margin: 20px;" ds="ds_tab_select" ds_url="/demo/mock_data/tab_select" node_field="items" label_field="label" id="id_tab_select" label="区域名"></rdk_tab_select>	
+		<textarea style="height: 400px;width:600px;margin: 20px;background-color: black;color:white;">{{tab_selected_data}}</textarea>
+	</div>  
+	
+	<!-- 主动发事件控制demo -->
+	<!-- <div>
+		<strong style="margin-left: 20px;margin-top: 20px;margin-bottom: 0px;display: block;">DEMO_2 : 主动发事件控制demo : </strong>	
+		<rdk_tab_select style="height:220px;width: 100%;margin: 20px;" bind_ds="ds_tab_select_2" from_url="../mock_data/tab_select" node_field="items" label_field="label" id="id_tab_select_2"></rdk_tab_select>
+		<textarea style="height: 400px;width:600px;margin: 20px;background-color: black;color:white;">{{tab_selected_data_2}}</textarea>
+	</div> -->
+
+</body>
+
+<style>
+ .CodeMirror {
+     border: 1px solid black;
+     height: auto;
+     font-size: 12px;
+ }
+</style>
+
+
+</html>

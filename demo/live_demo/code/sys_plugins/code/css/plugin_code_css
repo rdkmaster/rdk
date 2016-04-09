@@ -1,0 +1,27 @@
+
+				
+/*LineHighlight*/
+.DefaultTheme .activeline {
+	background: #e8f2ff !important;
+}
+
+.NightTheme .activeline {
+	background: #333 !important;
+}
+/*ToolBarPlugin*/
+.DefaultTheme .toolItem .select ul li.lib_name{
+	background-color: #EEE;
+}
+
+.NightTheme .toolItem .select ul li.lib_name {
+	background-color: rgb(102, 102, 102);
+}
+
+.DefaultTheme .toolItem .select ul li.imported{
+	color: #A00;
+}
+
+.NightTheme .toolItem .select ul li.imported {
+	color: #DEBD00;
+}
+

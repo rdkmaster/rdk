@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html ng-app="treeApp">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="../../libs/ztree/css/globalStyle.css" type="text/css">
+    <link rel="stylesheet" href="../../libs/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+    <script type="text/javascript" src="../../libs/jquery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../../libs/ztree/jquery.ztree.all-3.5.js"></script>
+    <script type="text/javascript" src="../../libs/angular/angular.js"></script>
+
+    <script src="../../../libs/codemirror/codemirror.js"></script>
+    <script src="../../../libs/codemirror/mode/javascript.js"></script>
+    <script src="../../../libs/angular/ui-codemirror.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../libs/codemirror/codemirror.css"/>
+
+    <script src="../../src/attributes/ds.js"></script>
+    <script src="../../src/services/appScope.js"></script>
+    <script src="../../src/services/DataSourceService.js"></script>
+    <script src="../../src/services/EventService.js"></script>
+    <script src="../../src/services/Utils.js"></script>
+    <script src="../../src/controls/Tree.js"></script>
+
+    <script src="./tree_demo_script.js"></script>
+</head>
+
+<body ng-controller="treeControl" style="font-size: 14px">
+    <h3>示例1: 最简单的一个例子</h3>
+    <rdk_tree data="treeData" style="float:left"></rdk_tree>
+    HTML代码：
+    <ui-codemirror ui-codemirror-opts="{lineNumbers:true,lineWrapping:true,mode:'javascript'}">
+&lt;rdk_tree data="treeData"&gt;&lt;/rdk_tree&gt;
+    </ui-codemirror>
+    JS代码：
+    <ui-codemirror ui-codemirror-opts="{lineNumbers:true,lineWrapping:true,mode:'javascript'}">
+scope.treeData = [{
+    node: [{
+        key: "specialtopic",
+        label: "专题",
+        open: true
+    }, {
+        node: [],
+        key: "specialtopic",
+        label: "总览"
+    }],
+    key: "e2e",
+    label: "端到端定界定位",
+    open: true,
+    icon: "../../libs/ztree/css/zTreeStyle/img/diy/1_open.png",
+}, {
+    node: [{
+        key: "monitoring",
+        label: "监控",
+        open: true
+    }, {
+        node: [],
+        key: "reasonconfig",
+        label: "原因配置"
+    }],
+    key: "realtimeMonitor",
+    label: "实时监控",
+    open: true,
+    icon: "../../libs/ztree/css/zTreeStyle/img/diy/1_open.png",
+}]
+    </ui-codemirror>
+
+    <h3>示例2: 使用服务来提供数据</h3>
+    <p>本例中，服务返回的数据节点为module，而默认的是node，此时可以通过node_field来修正</p>
+    <rdk_tree style="float:left" node_field="module" label_field="label"
+        data="ds_tree_data" ds="ds_tree_data"
+        ds_url="/demo/mock_data/tree_data" ds_query_if="ready"></rdk_tree>
+    <br><br><br>
+    HTML代码：
+    <ui-codemirror ui-codemirror-opts="{lineNumbers:true,lineWrapping:true,mode:'javascript'}">
+&lt;rdk_tree node_field="module" label_field="label"
+    data="ds_tree_data" ds="ds_tree_data"
+    ds_url="/demo/mock_data/tree_data" ds_query_if="ready"&gt;
+&lt;/rdk_tree&gt;
+    </ui-codemirror>
+    <br><br><br>
+
+    <h3>示例3：事件回调</h3>
+    <rdk_tree data="treeData" style="float:left" rdk_click="clickHandler" rdk_double_click="doubleClickHandler"></rdk_tree>
+    HTML代码：
+    <ui-codemirror ui-codemirror-opts="{lineNumbers:true,lineWrapping:true,mode:'javascript'}">
+&lt;rdk_tree data="treeData" rdk_click="clickHandler" rdk_double_click="doubleClickHandler"&gt;&lt;/rdk_tree&gt;
+    </ui-codemirror>
+    JS代码：
+    <ui-codemirror ui-codemirror-opts="{lineNumbers:true,lineWrapping:true,mode:'javascript'}">
+scope.clickHandler = function(event, treeNode) {
+    console.log("click callback!" + treeNode.label);
+}
+scope.doubleClickHandler = function(event, treeNode) {
+    console.log("doubleclick callback!" + treeNode.label);
+}
+    </ui-codemirror>
+
+    <h3>示例4：自定义节点的需通过draggable设置拖动功能</h3>
+    <div style="float:left">
+    <rdk_tree draggable="dragMode" data="treeData"></rdk_tree>
+    <button ng-click="toggleDraggable()">change drag mode</button>
+    <br><br><br><br><br>
+    </div>
+    HTML代码：
+    <ui-codemirror ui-codemirror-opts="{lineNumbers:true,lineWrapping:true,mode:'javascript'}">
+&lt;-- 方式1：不需要修改可拖动属性时，使用下面方式最简便 --&gt;
+&lt;rdk_tree draggle data="treeData"&gt;&lt;/rdk_tree&gt;
+
+&lt;-- 方式2：需要修改可拖动属性时，使用下面方式 --&gt;
+&lt;rdk_tree draggle="dragMode" data="treeData"&gt;&lt;/rdk_tree&gt;
+    </ui-codemirror>
+    JS代码
+    <ui-codemirror ui-codemirror-opts="{lineNumbers:true,lineWrapping:true,mode:'javascript'}">
+scope.dragMode = true;
+scope.toggleDraggable = function() {
+    scope.dragMode = !scope.dragMode;
+    console.log('scope.dragMode='+scope.dragMode);
+}
+    </ui-codemirror>
+
+</body>
+
+<style>
+ .CodeMirror {
+     border: 1px solid black;
+     height: auto;
+     font-size: 12px;
+ }
+</style>
+
+</html>

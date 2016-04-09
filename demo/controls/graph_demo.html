@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Graph Demo</title>
+</head>
+
+<body ng_controller="ctrl" >
+    <button ng-click="reisze()">改变图形宽度</button>
+
+    <div style="height:400px;width:100%">
+        <!-- 饼图-按行分块：每行占一块 -->
+        <rdk_graph style="height:400px;width:400px;float:left" bind_ds="ds_pie_1" from_url="/demo/pie_1" graph_template="../template/pie_by_row.txt" id="pie_graph" on.pie_graph.click="clickHandler()"></rdk_graph>
+
+        <p>对应的模板：</p>
+        <textarea bind_ds="ds_pie_by_row" from_url="../template/pie_by_row.txt" ng-bind="getCode('ds_pie_by_row')"></textarea>
+    </div>
+
+    <br>
+
+    <div style="height:400px;width:100%">
+        <!-- 饼图-按列分块：每列占一块 -->
+        <rdk_graph style="height:400px;width:400px;float:left" bind_ds="ds_pie_2" from_url="/demo/pie_2" graph_template="../template/pie_by_column.txt" id="pie_graph_2" on.pie_graph_2.click="clickHandler()"></rdk_graph>
+
+        <p>对应的模板：</p>
+        <textarea bind_ds="ds_pie_by_column" from_url="../template/pie_by_row.txt" ng-bind="getCode('ds_pie_by_column')"></textarea>
+    </div>
+
+    <br>
+
+    <div style="height:400px;width:100%">
+        <!-- 标准折线图-按行 -->
+        <rdk_graph style="height:400px;width:400px;float:left" bind_ds="ds_line_1" from_url="/demo/line_1" graph_template="../template/line_by_row.txt" id="line_graph_1" on.line_graph_1.click="clickHandler()"></rdk_graph>
+
+        <p>对应的模板：</p>
+        <textarea bind_ds="ds_line_by_row" from_url="../template/pie_by_row.txt" ng-bind="getCode('ds_line_by_row')"></textarea>
+    </div>
+
+    <br> 
+
+    <div style="height:400px;width:100%">
+        <!-- 标准折线图-按列 -->
+        <rdk_graph style="height:400px;width:400px;float:left" bind_ds="ds_line_2" from_url="/demo/line_2" graph_template="../template/line_by_column.txt" id="line_graph_2" on.line_graph_2.click="clickHandler()"></rdk_graph>
+
+        <p>对应的模板：</p>
+        <textarea bind_ds="ds_line_by_column" from_url="../template/pie_by_row.txt" ng-bind="getCode('ds_line_by_column')"></textarea>
+    </div>
+
+    <br> 
+
+    <div style="height:400px;width:100%">
+        <!-- 标准散点图-按行 -->
+        <rdk_graph style="height:400px;width:400px;float:left" bind_ds="ds_scatter_1" from_url="/demo/scatter_1" graph_template="../template/scatter_by_row.txt" id="scatter_graph_1" on.scatter_graph_1.click="clickHandler()"></rdk_graph>
+
+        <p>对应的模板：</p>
+        <textarea bind_ds="ds_scatter_by_row" from_url="../template/pie_by_row.txt" ng-bind="getCode('ds_scatter_by_row')"></textarea>
+    </div>
+
+    <br> 
+
+    <div style="height:400px;width:100%">
+        <!-- 标准散点图-按列 -->
+        <rdk_graph style="height:400px;width:400px;float:left" bind_ds="ds_scatter_2" from_url="/demo/scatter_2" graph_template="../template/scatter_by_column.txt" id="scatter_graph_2" on.scatter_graph_2.click="clickHandler()"></rdk_graph>
+
+        <p>对应的模板：</p>
+        <textarea bind_ds="ds_scatter_by_column" from_url="../template/pie_by_row.txt" ng-bind="getCode('ds_scatter_by_column')"></textarea>
+    </div>
+
+    <br> 
+
+    <div style="height:400px;width:100%">
+       <!-- 标准仪表盘-按行 -->
+       <rdk_graph style="height:400px;width:400px;float:left" bind_ds="ds_dashboard_1" from_url="/demo/dashboard_1" graph_template="../template/dashboard_by_row.txt" id="dashboard_graph_1" on.dashboard_graph_1.click="clickHandler()"></rdk_graph>
+
+        <p>对应的模板：</p>
+        <textarea bind_ds="ds_dashboard_by_row" from_url="../template/pie_by_row.txt" ng-bind="getCode('ds_dashboard_by_row')"></textarea>
+   </div>
+
+    <br> 
+
+    <div style="height:400px;width:100%">
+       <!-- 标准仪表盘-按列 -->
+       <rdk_graph style="height:400px;width:400px;float:left" bind_ds="ds_dashboard_2" from_url="/demo/dashboard_2" graph_template="../template/dashboard_by_column.txt" id="dashboard_graph_2" on.dashboard_graph_2.click="clickHandler()"></rdk_graph>
+
+        <p>对应的模板：</p>
+        <textarea bind_ds="ds_dashboard_by_column" from_url="../template/pie_by_row.txt" ng-bind="getCode('ds_dashboard_by_column')"></textarea>
+   </div>
+</body>
+
+
+<!-- 依赖的js文件 -->
+<script src="../../libs/jquery/jquery-1.11.2.min.js"></script>
+<script src="../../libs/echarts/echarts-all.js"></script>
+<script src="../../libs/angular/angular.js"></script>
+<script src="../../libs/angular/angular-translate.min.js"></script>
+<script src="../../libs/angular/angular-translate-loader-static-files.min.js"></script>
+
+<!-- 正式环境建议包含这个文件，加快运行速度
+<script src="../../libs/rdk/rdk.all.js"></script>
+-->
+<!-- 下面代码仅仅是为了rdk demo测试方便，正式版本禁止使用 -->
+<script src="../rdk_src_all.js"></script>
+<script type="text/javascript">
+    loadRDK('../../');
+</script>
+
+
+<script src="./graph_demo_script.js"></script>
+<style type="text/css">
+textarea {
+     border: 1px solid black;
+     height: 360px;
+     width: 400px;
+ }
+</style>
+
+</html>

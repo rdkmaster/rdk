@@ -1,0 +1,35 @@
+.rdk-combo-select-module{
+    width: 400px;
+    height: 200px;
+    position: relative;
+}
+
+.rdk-combo-select-module .combo-caption{
+    display: inline-block;
+    width: 20%;
+}
+
+.rdk-combo-select-module .combo-content-theme{
+    cursor: pointer!important;
+    display: inline-block;
+    width: 75%;
+}
+
+.rdk-combo-select-module .combo-content-transclude{
+    width: 75%;
+    outline: none;
+    position: absolute;
+    margin-left: 21%;
+    z-index: 9999;
+    background-color: white;
+}
+
+button {
+    position:relative;
+    top:-200px;
+    margin-left: 420px;
+}
+
+.rdk_selector_style {
+    width: 100%;
+}

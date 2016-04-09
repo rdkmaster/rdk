@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <!--
+          这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+        -->
+        <script data-main="/libs/rdk/rdk" src="/libs/requirejs/require.js"></script>
+        <script src="scripts/main.js"></script>
+    </head>
+
+    <body ng-controller='myCtrl' >
+
+<!--         <rdk_combo_select caption="theme" open="true">
+            <rdk_basic_selector style="width:100%" multiple_select="true" track_item_by="id" data="currentItems" border_style="0"  child_change="selected2string">
+            <span>{{item.label}}--自定义</span>
+
+            </rdk_basic_selector>
+        </rdk_combo_select> -->
+
+
+        <rdk_combo_select caption="'我是标题'">
+            <span>请选择一个城市</span>
+            <rdk_basic_selector style="width:100%" selected_items="testSelectedItems" multiple_select="false" track_item_by="id" data="testAllItems" least="1" child_change="selected2string" change="changeHandler"></rdk_basic_selector>
+        </rdk_combo_select>
+<!--         <rdk_combo_select caption="'我是标题'">
+            <span>请选择一个城市</span>
+            <rdk_basic_selector style="width:100%" selected_items="testSelectedItems" multiple_select="false" track_item_by="id" data="[{ id: 0, label: '江苏省'},{ id: 1, label: '浙江省'},{ id: 2, label: '广东省'},{ id: 3, label: '广西省'},{ id: 4, label: '河北省'},{ id: 5, label: '河南省'},{ id: 6, label: '湖北省'},{ id: 7, label: '湖南省'},{ id: 8, label: '新疆省'},{ id: 9, label: '四川省'}]" least="1" child_change="selected2string" change="changeHandler"></rdk_basic_selector>
+        </rdk_combo_select> -->
+
+
+<!--         <rdk_combo_select>
+            <rdk_accordion child_change="getOrderParam" open="false" caption="'排序参数'" change="">
+                TOP: <rdk_basic_selector style="width:100%" multiple_select="false" data="[{label: '10'}, {label: '20'}, {label: '50'}]" least="1"></rdk_basic_selector>
+                排序: <rdk_basic_selector style="width:100%" multiple_select="false" data="[{label: '升序'}, {label: '降序'}, {label: '非法值'}]" editable="false" least="1"></rdk_basic_selector>
+            </rdk_accordion>
+            <rdk_accordion child_change="getOrderParam" open="true" caption="'接口'" change="">
+                <rdk_basic_selector style="width:100%" multiple_select="true" track_item_by="id" data="currentItems" child_change="selected2string"><d1></d1></rdk_basic_selector>
+            </rdk_accordion>
+            <rdk_accordion child_change="getOrderParam" open="false" caption="'地市'" change="">
+                <rdk_basic_selector style="width:100%" multiple_select="true" track_item_by="id" data="currentItems" child_change="selected2string"></rdk_basic_selector>
+            </rdk_accordion>
+        </rdk_combo_select> 
+
+        <rdk_combo_select id="comboSelectID">
+            <rdk_accordion open="false" caption="'排序参数'">
+                TOP: <rdk_basic_selector id="topID" style="width:100%" multiple_select="false" data="[{label: '10'}, {label: '20'}, {label: '50'}]" least="1" change="orderHandler"></rdk_basic_selector>
+                排序: <rdk_basic_selector id="orderID" style="width:100%" multiple_select="false" data="[{label: '升序'}, {label: '降序'}, {label: '非法值'}]" editable="false" least="1" change="orderHandler"></rdk_basic_selector>
+            </rdk_accordion>
+            <rdk_accordion open="true" caption="'接口'">
+                <rdk_basic_selector style="width:100%" multiple_select="true" track_item_by="id" data="currentItems" change="changeHandler"><d1></d1></rdk_basic_selector>
+            </rdk_accordion>
+            <rdk_accordion open="false" caption="'地市'">
+                <rdk_basic_selector style="width:100%" multiple_select="true" track_item_by="id" data="currentItems" change="changeHandler"></rdk_basic_selector>
+            </rdk_accordion>
+        </rdk_combo_select>   -->  
+
+    </body>
+
+<style>
+ .CodeMirror {
+     border: 1px solid black;
+     height: auto;
+     font-size: 12px;
+ }
+</style>
+
+</html>

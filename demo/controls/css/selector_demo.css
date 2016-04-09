@@ -1,0 +1,7 @@
+#selector_test_id{
+    width: 300px;
+}
+
+#selector_test_id .selected-item{
+	border : 2px solid green;
+}

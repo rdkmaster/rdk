@@ -1,0 +1,15 @@
+{"data": [
+                [
+                    "Tiger Nixon1",
+                    "System Architect",
+                    "EXT"
+                ],
+                [
+                    "Garrett Winters1",
+                    "Accountant",
+                    "EXT"
+                ]
+            ],
+            "field": ["reason1", "reason2","ext"],
+            "header": ["一级原因", "二级原因","其他"]
+}

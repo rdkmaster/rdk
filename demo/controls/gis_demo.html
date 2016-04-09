@@ -1,0 +1,43 @@
+<!doctype html>
+<html ng-app="gisApp">
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body ng-controller="ctrl">
+    demo 需要禁用浏览器的安全检查   http://jingyan.baidu.com/article/7c6fb4281d685780642c900a.html
+    <div on.cell_select="cellhandler" on.gis.switch_cell_grids_status="statusChanged" on.gis.load_cell_complete="renderValue" on.grid_select="gridhandler">
+        <rdk_gis style="width:800px;height:800px" option="option" node-id="gis"></rdk_gis>
+    <div>
+</body>
+
+
+
+<!-- 依赖的js文件 -->
+<script src="../../libs/jquery/jquery-1.11.2.min.js"></script>
+<script src="../../libs/echarts/echarts-all.js"></script>
+<script src="../../libs/angular/angular.js"></script>
+<script src="../../libs/angular/angular-translate.min.js"></script>
+<script src="../../libs/angular/angular-translate-loader-static-files.min.js"></script>
+
+<!-- 正式环境建议包含这个文件，加快运行速度 -->
+<script src="../../libs/rdk/rdk.all.js"></script>
+
+<!-- 开发环境建议分开包含各个文件，方便定位问题 -->
+<!--
+<script src="../src/rdk.js"></script>
+<script src="../src/controls/GIS.js"></script>
+<script src="../src/controls/Graph.js"></script>
+<script src="../src/containers/GraphGroup.js"></script>
+<script src="../src/services/DataSourceService.js"></script>
+<script src="../src/services/EventService.js"></script>
+<script src="../src/services/I18nService.js"></script>
+<script src="../src/services/NodeService.js"></script>
+<script src="../src/services/Utils.js"></script>
+<script src="../src/attributes/bind_ds.js"></script>
+-->
+
+<script src="./gis_demo_script.js"></script>
+
+</html>

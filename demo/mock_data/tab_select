@@ -1,0 +1,197 @@
+{
+    "classes": [ {"label": "省"}, {"label": "市"}, {"label": "区"}, {"label": "苑"} ],
+    "items": [
+        {
+            "label": "江苏省",
+            "items": [
+                {
+                    "label": "南京市",
+                    "items": [
+                        {
+                            "label": "雨花区",
+                            "items": [
+                                {
+                                    "label": "银杏山庄",
+                                    "items": []
+                                },
+                                {
+                                    "label": "翠岭银河",
+                                    "items": []
+                                },
+                                {
+                                    "label": "银杏山庄",
+                                    "items": []
+                                },
+                                {
+                                    "label": "翠岭银河",
+                                    "items": []
+                                },
+                                {
+                                    "label": "银杏山庄",
+                                    "items": []
+                                },
+                                {
+                                    "label": "翠岭银河",
+                                    "items": []
+                                },
+                                {
+                                    "label": "银杏山庄",
+                                    "items": []
+                                },
+                                {
+                                    "label": "翠岭银河",
+                                    "items": []
+                                },
+                                {
+                                    "label": "银杏山庄",
+                                    "items": []
+                                },
+                                {
+                                    "label": "翠岭银河",
+                                    "items": []
+                                },
+                                {
+                                    "label": "银杏山庄",
+                                    "items": []
+                                },
+                                {
+                                    "label": "翠岭银河",
+                                    "items": []
+                                }
+                            ]
+                        },
+                        {
+                            "label": "江宁区",
+                            "items": [
+                                {
+                                    "label": "文鼎雅苑",
+                                    "items": []
+                                },
+                                {
+                                    "label": "文鼎雅苑2",
+                                    "items": []
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "苏州市",
+                    "items": [
+                        {
+                            "label": "吴中区",
+                            "items": [
+                                {
+                                    "label": "灵岩山庄",
+                                    "items": []
+                                },
+                                {
+                                    "label": "天平山庄",
+                                    "items": []
+                                }
+                            ]
+                        },
+                        {
+                            "label": "金阊区",
+                            "items": [
+                                {
+                                    "label": "文鼎雅苑",
+                                    "items": []
+                                },
+                                {
+                                    "label": "文鼎雅苑2",
+                                    "items": []
+                                },
+                                {
+                                    "label": "文鼎雅苑2",
+                                    "items": []
+                                },
+                                {
+                                    "label": "文鼎雅苑2",
+                                    "items": []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "浙江省",
+            "items": [
+                {
+                    "label": "宁波市",
+                    "items": []
+                },
+                {
+                    "label": "杭州市",
+                    "items": []
+                }
+            ]
+        },
+        {
+            "label": "x0省",
+            "items": []
+        },        
+        {
+            "label": "x1省",
+            "items": []
+        },
+        {
+            "label": "x2省",
+            "items": []
+        },
+        {
+            "label": "x3省",
+            "items": []
+        },
+        {
+            "label": "x4省",
+            "items": []
+        },
+        {
+            "label": "x5省",
+            "items": []
+        },
+        {
+            "label": "x6省",
+            "items": []
+        },
+        {
+            "label": "x7省",
+            "items": []
+        },
+        {
+            "label": "x8省",
+            "items": []
+        },
+        {
+            "label": "x9省",
+            "items": []
+        },
+        {
+            "label": "y0省",
+            "items": []
+        },
+        {
+            "label": "y1省",
+            "items": []
+        },
+        {
+            "label": "y2省",
+            "items": []
+        },
+        {
+            "label": "y3省",
+            "items": []
+        },
+        {
+            "label": "y4省",
+            "items": []
+        },
+        {
+            "label": "y5省",
+            "items": []
+        }                    
+    ]
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+
+    <!-- 依赖的js文件 -->
+    <script src="../../../libs/jquery/jquery-1.11.3.min.js"></script>
+    <script src="../../../libs/angular/angular.js"></script>
+
+    <script src="../../../libs/codemirror/codemirror.js"></script>
+    <script src="../../../libs/codemirror/mode/javascript.js"></script>
+    <script src="../../../libs/angular/ui-codemirror.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../libs/codemirror/codemirror.css"/>
+
+    <script src="../../../libs/echarts/echarts3.common.min.js"></script>
+
+    <script src="../../../libs/requirejs/require.min.js"></script>
+
+    <script src="../../../src/attributes/ds.js"></script>
+    <script src="../../../src/services/appScope.js"></script>
+    <script src="../../../src/services/DataSourceService.js"></script>
+    <script src="../../../src/services/EventService.js"></script>
+    <script src="../../../src/services/Utils.js"></script>
+    <script src="../../../src/controls/Graph.js"></script>
+
+    <script src="./script.js"></script>
+
+    <title>Graph Demo</title>
+</head>
+
+<body ng_controller="ctrl" >
+    <div style="width:450px;">
+        <p>极简应用</p>
+        <rdk_graph data="temperatureOption"></rdk_graph>
+    </div>
+    <div style="width:450px;">
+        <p>简单场景</p>
+        <rdk_graph data="ds_temperature" ds="ds_temperature" ds_url="/demo/mock_data/graph/temperature" ds_query_if="ready" graph_context="this" graph_template="graph_define/simple_line.js"></rdk_graph>
+    </div>
+    <div style="width:450px;">
+        <p>典型场景1</p>
+        <rdk_graph data="ds_temperature" ds="ds_temperature" ds_url="/demo/mock_data/graph/temperature" ds_query_if="ready" graph_context="this" graph_template="graph_define/simple_line.js"></rdk_graph>
+    </div>
+    <div style="width:450px;">
+        <p>典型场景2</p>
+        <rdk_graph data="ds_temperature" ds="ds_temperature" ds_url="/demo/mock_data/graph/temperature" ds_query_if="ready" graph_context="this" graph_template="graph_define/simple_line.js"></rdk_graph>
+    </div>
+    <div style="width:450px;">
+        <p>一个非常复杂的例子，来自真实业务的场景</p>
+        <rdk_graph data="ds_temperature" ds="ds_temperature" ds_url="/demo/mock_data/graph/temperature" ds_query_if="ready" graph_context="this" graph_template="graph_define/simple_line.js"></rdk_graph>
+    </div>
+
+        对应的HTML代码：
+        <ui-codemirror ui-codemirror-opts="editorOptions">
+&lt;rdk_graph style="height:400px;width:400px;float:left"
+    ds="ds_pie_1" ds_url="/demo/mock_data/pie_1" ds_query_if="ready"
+    graph_template="../../template/pie_by_row.json" data="ds_pie_1"&gt;
+&lt;/rdk_graph&gt;
+        </ui-codemirror>
+        对应的模板：
+        <!-- <ui-codemirror ui-codemirror-opts="editorOptions" ds="ds_pie_by_row" ds_url="../../template/pie_by_row.json" ds_data_processor="json2string" ds_query_if="ready" ng-model="ds_pie_by_row">
+        </ui-codemirror> -->
+        
+
+    <br>
+</body>
+
+
+<style>
+ .CodeMirror {
+     border: 1px solid black;
+     height: auto;
+ }
+</style>
+
+</html>

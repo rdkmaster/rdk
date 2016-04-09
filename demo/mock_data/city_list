@@ -1,0 +1,7 @@
+[
+    {"name": "南京", "areaCode": 1},
+    {"name": "苏州", "areaCode": 2},
+    {"name": "无锡", "areaCode": 3},
+    {"name": "扬州", "areaCode": 4},
+    {"name": "盐城", "areaCode": 5}
+]

@@ -1,0 +1,21 @@
+.cm-s-night { background: rgb(22, 26, 27); color: white; }
+.cm-s-night div.CodeMirror-selected { background: #b36539 !important; }
+.cm-s-night .CodeMirror-gutter { background: rgb(26, 30, 31); border-right: 1px solid rgb(30, 34, 37); }
+.cm-s-night .CodeMirror-gutter-text { color: #d0d0d0; }
+.cm-s-night .CodeMirror-cursor { border-left: 1px solid white !important; }
+
+.cm-s-night span.cm-atom       { color: #845dc4; }
+.cm-s-night span.cm-attribute  { color: #ff80e1; }
+.cm-s-night span.cm-bracket    { color: #ff9d00; }
+.cm-s-night span.cm-builtin    { color: #eeaaaa; }
+.cm-s-night span.cm-comment    { color: #7777ff; }
+.cm-s-night span.cm-def        { color: #ee77aa; }
+.cm-s-night span.cm-error      { color: #9d1e15; }
+.cm-s-night span.cm-keyword    { color: #ffee80; }
+.cm-s-night span.cm-meta       { color: #50fefe; }
+.cm-s-night span.cm-number     { color: #ffd0d0; }
+.cm-s-night span.cm-operator   { color: #dd1111; }
+.cm-s-night span.cm-string     { color: #3ad900; }
+.cm-s-night span.cm-tag        { color: #9effff; }
+.cm-s-night span.cm-variable   { color: #50fe50; }
+.cm-s-night span.cm-variable-2 { color: #ee00ee; }

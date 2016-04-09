@@ -1,0 +1,10 @@
+[
+	{"city": 1, "user": 1},
+	{"city": 2, "user": 2},
+	{"city": 3, "user": 3},
+	{"city": 1, "user": 4},
+	{"city": 4, "user": 5},
+	{"city": 5, "user": 6},
+	{"city": 3, "user": 7},
+	{"city": 2, "user": 8}
+]

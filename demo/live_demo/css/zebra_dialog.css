@@ -1,0 +1,69 @@
+.ZebraDialog {
+	font-family: Tahoma, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	padding: 0px;
+	width: 350px;
+}
+
+.ZebraDialog .ZebraDialog_Title {
+	margin: 0;
+	padding: 5px 10px;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: left;
+	*padding: 7px 10px; /* IE6 & 7 */
+	padding: 7px 10px\9; /* IE8 */
+}
+
+.ZebraDialog .ZebraDialog_Body {
+	background-repeat: no-repeat;
+	background-position: 10px 10px;
+	padding: 10px;
+	text-align: left
+}
+
+.ZebraDialog .ZebraDialog_Icon {
+	padding: 10px 10px 10px 68px;
+	min-height: 48px;
+	_height: 48px
+}
+
+.ZebraDialog .ZebraDialog_Confirmation {
+	background-image: url('../img/confirmation.png')
+}
+
+.ZebraDialog .ZebraDialog_Error {
+	background-image: url('../img/error.png')
+}
+
+.ZebraDialog .ZebraDialog_Information {
+	background-image: url('../img/information.png')
+}
+
+.ZebraDialog .ZebraDialog_Question {
+	background-image: url('../img/question.png')
+}
+
+.ZebraDialog .ZebraDialog_Warning {
+	background-image: url('../img/warning.png')
+}
+
+.ZebraDialog .ZebraDialog_Buttons {
+	padding: 5px 5px 5px 10px;
+}
+
+.ZebraDialog .ZebraDialog_Buttons a {
+	text-decoration: none;
+	font-weight: bold;
+	padding: 4px 10px;
+	float: right;
+	margin-right: 5px;
+	min-width: 60px;
+	_width: 60px;
+	text-align: center;
+	font-size:10pt;
+}
+
+.ZebraDialogOverlay {
+	background: #666
+}
