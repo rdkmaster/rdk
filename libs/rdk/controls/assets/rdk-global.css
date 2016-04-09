@@ -1,0 +1,12 @@
+body, div, dl, dt, dd, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, p, blockquote, th, td { margin:0; padding:0; }
+body { font-size:12px; color:#666; font-family:Verdana, Microsoft YaHei, Simsun; background:#fff; line-height:24px; }
+fieldset, img { border:0; }
+/*ol, ul { list-style:none; }*/
+h1, h2, h3, h4, h5, h6{ font-size:100%; }
+em { font-style:normal; }
+input, button, select, textarea { outline:none; }
+textarea { resize:none; } //禁用了文本的拖拉，尤其在谷歌下
+p{ text-align:justify; text-justify:distribute;} //为了使文本段落左右两边对齐
+
+a { color: #666; text-decoration:none; }
+a:hover { color: #f60; text-decoration:none; }
