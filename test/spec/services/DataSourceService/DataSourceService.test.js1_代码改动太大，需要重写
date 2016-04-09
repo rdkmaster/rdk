@@ -1,0 +1,508 @@
+describe('tests DataSourceService function', function() {
+    var dataSourceService;
+    var dataSourcePool = {};
+    var _dsService;
+
+    /*引入模块*/
+    beforeEach(module('rd.services.DataSourceService'));
+
+    beforeEach(inject(function($injector){
+                dataSourceService = $injector.get('DataSourceService');
+         })
+    );
+
+    /*测试create方法*/
+    describe('-> test the function of create', function() {
+	    /*数据源类型为Array，且长度等于1*/
+        it('Access the create function: the type of data is Array', function() {
+            var ds, id = 1, data = ['/demo/pie'], handlers;
+			
+            spyOn(dataSourceService, 'create').and.callThrough();
+            ds = dataSourceService.create(id, data, handlers);
+			
+			expect(ds.id).toBe(1);
+			expect(ds.url).toBe('/demo/pie');
+			expect(ds.conditionProcessor).toBeUndefined();
+			expect(ds.dataProcessor).toBeUndefined();
+			expect(ds.queryMethod).toBe('get');
+			expect(ds.updateMethod).toBe('post');
+			expect(ds.deleteMethod).toBe('delete');
+			expect(ds.scope).toBeUndefined();
+			expect(ds.busy).toBe(false);
+			expect(ds.type).toBe('simple');
+			
+			expect(ds.bind).toBeDefined();
+			expect(ds.processData).toBeDefined();
+			expect(ds.query).toBeDefined();
+			
+			expect(ds.id).not.toBe(100);
+            expect(ds.url).not.toBe('/demo/pie1');
+			
+			expect(dataSourceService.create).toHaveBeenCalled();
+        });
+	
+        /*数据源类型为Array，且长度大于1*/
+        it('Access the create function: the type of data is Array', function() {
+            var ds, id = 2, data = ['/demo/pie', '/demo/rectangular'], handlers;
+			
+            spyOn(dataSourceService, 'create').and.callThrough();
+            ds = dataSourceService.create(id, data, handlers);
+			
+			expect(ds.id).toBe(2);
+//			expect(ds.list).toContain('/demo/pie');
+//			expect(ds.list).toContain('/demo/rectangular');
+
+			expect(ds.list.length).toBe(2);
+			/*通过下标判断复合数据源,判断其中某一个*/
+			expect(ds.list[0].id).toBeDefined();
+			expect(ds.list[0].url).toBe('/demo/pie');
+			expect(ds.list[0].conditionProcessor).toBeUndefined();
+			expect(ds.list[0].dataProcessor).toBeUndefined();
+			expect(ds.list[0].queryMethod).toBe('get');
+			expect(ds.list[0].updateMethod).toBe('post');
+			expect(ds.list[0].deleteMethod).toBe('delete');
+			expect(ds.list[0].scope).toBeUndefined();
+			expect(ds.list[0].busy).toBe(false);
+			expect(ds.list[0].type).toBe('simple');
+			
+			expect(ds.list[0].bind).toBeDefined();
+			expect(ds.list[0].processData).toBeDefined();
+			expect(ds.list[0].query).toBeDefined();
+			
+			
+			expect(ds.conditionProcessor).toBeUndefined();
+			expect(ds.dataProcessor).toBeUndefined();
+			expect(ds.scope).toBe(undefined); // 等价于 expect(ds.scope).toBeUndefined();
+			expect(ds.busy).toBeFalsy();// 等价于 expect(ds.busy).toBe(false)
+			expect(ds.type).toBe('combined');
+				
+			expect(ds.bind).toBeDefined();
+			expect(ds.processData).toBeDefined();
+			expect(ds.query).toBeDefined();
+			
+            expect(dataSourceService.create).toHaveBeenCalled();
+        });
+		
+		/*数据源类型为Array，且长度大于1,handlers自定义*/
+		it('Access the create function: the type of data is Array', function() {
+            var ds, id = 20, data = ['/demo/pie', '/demo/rectangular'], handlers = {
+				conditionProcessor:function() {return 'combinedConditionProcessor'},dataProcessor:function() {return 'combinedDataProcessor'}
+			};
+			
+            spyOn(dataSourceService, 'create').and.callThrough();
+            ds = dataSourceService.create(id, data, handlers);
+			
+			expect(ds.id).toBe(20);
+			
+			expect(ds.list.length).toBe(2);
+			/*通过下标判断复合数据源,判断其中某一个*/
+			expect(ds.list[0].conditionProcessor).toBeUndefined();
+			expect(ds.list[0].dataProcessor).toBeUndefined();			
+			
+			expect(ds.conditionProcessor).toBeDefined();
+			expect(ds.dataProcessor).toBeDefined();
+			
+            expect(dataSourceService.create).toHaveBeenCalled();
+        });
+
+
+         /*数据源类型为Array，且长度等于0*/
+        it('Access the create function: the type of data is Array', function() {
+            var ds, id, data = [], handlers;
+			
+            spyOn(dataSourceService, 'create').and.callThrough();
+            ds = dataSourceService.create(id, data, handlers);
+			
+			expect(ds).toBeUndefined();
+			
+            expect(dataSourceService.create).toHaveBeenCalled();
+        });
+
+
+        /*数据源类型为String*/
+        it('Access the create function: the type of data is String', function() {
+            var ds, id = 3, data = '/demo/string', handlers;
+			
+            spyOn(dataSourceService, 'create').and.callThrough();
+            ds = dataSourceService.create(id, data, handlers);
+			
+			expect(ds.id).toBe(3);
+			expect(ds.url).toBe('/demo/string');
+			expect(ds.conditionProcessor).toBeUndefined();
+			expect(ds.dataProcessor).toBeUndefined();
+			expect(ds.queryMethod).toBe('get');
+			expect(ds.updateMethod).toBe('post');
+			expect(ds.deleteMethod).toBe('delete');
+			expect(ds.scope).toBeUndefined();
+			expect(ds.busy).toBe(false);
+			expect(ds.type).toBe('simple');
+			
+			expect(ds.bind).toBeDefined();
+			expect(ds.processData).toBeDefined();
+			expect(ds.query).toBeDefined();
+			
+            expect(dataSourceService.create).toHaveBeenCalled();
+        });  
+
+        /*数据源类型为String,且handlers自定义*/
+        it('Access the create function: the type of data is String', function() {
+            var ds, id = 30, data = '/demo/string', handlers = {
+				conditionProcessor:function() {return 'combinedConditionProcessor'},dataProcessor:function() {return 'combinedDataProcessor'}
+			};
+			
+            spyOn(dataSourceService, 'create').and.callThrough();
+            ds = dataSourceService.create(id, data, handlers);
+			
+			expect(ds.id).toBe(30);
+
+			expect(ds.conditionProcessor).toBeDefined();
+			expect(ds.dataProcessor).toBeDefined();
+			
+            expect(dataSourceService.create).toHaveBeenCalled();
+        });   		
+
+        /*数据源复用*/
+		it('Access the create function: the type of data is String', function() {
+            var ds1, ds2, id1 = 31, id2 = 32, data = '/demo/string', handlers;
+			
+            spyOn(dataSourceService, 'create').and.callThrough();
+            ds1 = dataSourceService.create(id1, data, handlers);		
+			ds2 = dataSourceService.create(id2, ds1, handlers);
+			
+			expect(ds1.id).toBe(31);
+			expect(ds1.url).toBe('/demo/string');
+			
+			expect(ds2.id).toBe(31);
+			expect(ds2.url).toBe('/demo/string');
+			
+            expect(dataSourceService.create).toHaveBeenCalled();
+        });  
+		
+		/*数据源类型为异常值*/
+        it('Access the create function: the type of data is String', function() {
+            var ds, id, data = 12, handlers;
+			
+            spyOn(dataSourceService, 'create').and.callThrough();
+            ds = dataSourceService.create(id, data, handlers);
+
+			expect(ds).toBeUndefined();
+			
+            expect(dataSourceService.create).toHaveBeenCalled();
+        }); 
+    });
+
+
+   
+    /*测试接口get*/
+    describe('-> test the function of get', function() {
+        /*数据袁类型非string*/
+        it('the type of var dataSource is string', function() {
+			var ds, id = 11, url = '/demo/pie', handlers, val;
+
+			spyOn(dataSourceService, 'createSimple');
+			spyOn(dataSourceService, 'get').and.callThrough();
+            ds = dataSourceService.createSimple(id, url, handlers);
+            val = dataSourceService.get(id);
+			
+			expect(val).toBe(id);
+            expect(dataSourceService.get).toHaveBeenCalled();
+        });
+
+        /*数据源类型是string*/
+        it('the type of var dataSource is string', function() {
+			var ds, id = 'nanjing', url = '/demo/pie', handlers, val, val_2;
+
+			spyOn(dataSourceService, 'createSimple').and.callThrough();
+			spyOn(dataSourceService, 'get').and.callThrough();
+            ds = dataSourceService.createSimple(id, url, handlers);			
+            val = dataSourceService.get(id);
+			/*数据源id在数据源池冲不存在*/
+			val_2 = dataSourceService.get('suzhou');
+			
+			expect(ds.id).toBe('nanjing');
+			expect(val).toBe(ds);
+			expect(val_2).toBe(null);
+            expect(dataSourceService.get).toHaveBeenCalled();
+        });
+    });
+
+    /*测试defaultQueryResultAction*/
+    describe('-> test the function of defaultQueryResultAction', function() {
+        it('-> defaultQueryResultAction:', function() {
+            var scope = {'ds':{'query_result':'xiaoxiao'}}, dataSourceId, data;
+
+            spyOn(dataSourceService, 'defaultQueryResultAction').and.callThrough();
+            dataSourceService.defaultQueryResultAction(scope, dataSourceId, data);
+
+            expect(dataSourceService.defaultQueryResultAction).toHaveBeenCalled();
+        });
+    });
+
+    /*测试defaultAddAction，defaultUpdateAction ，defaultDeleteAction */
+    describe('-> test the defatult function(Add/Updata/Delete)', function() {
+        it('defatult', function(){
+            var dataSource, condition, addVal, updateVal, deleteVal;
+
+            spyOn(dataSourceService, 'defaultAddAction').and.callThrough();
+            spyOn(dataSourceService, 'defaultUpdateAction').and.callThrough();
+            spyOn(dataSourceService, 'defaultDeleteAction').and.callThrough();
+
+            addVal = dataSourceService.defaultAddAction(dataSource, condition);
+            updateVal = dataSourceService.defaultUpdateAction(dataSource, condition);
+            deleteVal = dataSourceService.defaultDeleteAction(dataSource, condition);
+
+			expect(addVal).toBeUndefined();
+			expect(updateVal).toBeUndefined();
+			expect(deleteVal).toBeUndefined();
+        });
+    });
+
+
+    /*测试构造函数DataSource:测试DataSource提供的接口*/
+    describe('-> test the constructor of the DataSource', function() {
+        /*定义ds存放DataSource实例，通过这个实例访问DataSource对外提供的接口*/
+        var ds;
+
+        beforeEach(function(){
+            var id = 12, url = '/demo/rectangular', handlers = {};
+			handlers.conditionProcessor = function(condition) {
+				return 'conditionProcessor:' + condition;
+			};
+			handlers.dataProcessor = function(data) {
+				return 'dataProcessor:' + data;
+			};
+			
+            spyOn(dataSourceService, 'createSimple').and.callThrough();
+            ds = dataSourceService.createSimple(id, url, handlers);
+        });
+
+        /*测试DataSource里的对外接口bind函数*/
+        it('test the function of bind in the DataSource', function() {
+            var ds_inner, scope, eventType;
+            spyOn(ds, 'bind').and.callThrough();
+            ds_inner = ds.bind(scope, eventType);
+			
+			expect(ds_inner.id).toBe(12);
+			expect(ds_inner.type).toBe('simple');
+        });
+
+        /*测试DataSource里的对外接口processData函数*/
+        it('test the function of processData in the DataSource', function() {
+            var rawData = 'hey', val;
+			
+            spyOn(ds, 'processData').and.callThrough();
+            val = ds.processData(rawData);	
+			
+			expect(ds.dataProcessor).toBeDefined();
+			expect(val).toBe('dataProcessor:hey');
+        });
+		it('test the function of processData in the DataSource', function() {
+            var rawData = 'hey, alone', val;
+			
+			ds.dataProcessor = undefined;
+            spyOn(ds, 'processData').and.callThrough();
+            val = ds.processData(rawData);	
+			
+			expect(ds.dataProcessor).toBeUndefined();
+			expect(val).toBe('hey, alone');
+        });
+		
+
+        /*测试DataSource里的对外接口query函数*/
+		/*将busy属性置为true*/
+		it('test the function of query in the DataSource', function() {
+            var condition, val;
+			
+			ds.busy = true;
+            spyOn(ds, 'query').and.callThrough();
+            val = ds.query(condition);
+		
+			expect(val).toBeUndefined();
+        });
+		/*将busy属性置为false*/
+		it('test the function of query in the DataSource', function() {
+            var condition, val;
+			
+            spyOn(ds, 'query').and.callThrough();
+            val = ds.query(condition);
+
+			expect(val).toBeUndefined();
+        });
+        /*查询条件condition为空*/
+        it('test the function of query in the DataSource', function() {
+            var condition, val;
+            spyOn(ds, 'query').and.callThrough();
+            ds.query(condition);
+			
+			expect(ds.busy).toBeTruthy();//expect(ds.busy).toBe(true);
+        });
+        /*查询条件condition为__DUMMY_REQUEST__*/
+        it('test the function of query in the DataSource', function() {
+            var condition = '__DUMMY_REQUEST__';
+            spyOn(ds, 'query').and.callThrough();
+            ds.query(condition);
+
+            expect(ds.query).toHaveBeenCalled();
+        });
+        /*测试查询时数据源dataSource的busy属性为true的情况:两次查询，由于busy是在http请求成功时置为false的，测试暂未
+            http请求，所以busy值为true
+        */
+        // describe('-> the dataSource\'s busy is true when issuing query', function() {
+        //     var ds, condition;
+        //     beforeEach(function() {
+        //         var id = 1200, url = '/demo/rectangular', handlers = '{conditionProcessor:province; dataProcessor:query}';
+        //         spyOn(dataSourceService, 'createSimple').and.callThrough();
+        //         ds = dataSourceService.createSimple(id, url, handlers);
+        //         spyOn(ds, 'query');
+        //         ds.query(condition);
+        //     });
+        //     it('test the function of query in the DataSource', function() {
+        //         // var condition;
+        //         spyOn(ds, 'query').and.callThrough();
+        //         ds.query(condition);
+
+        //         expect(ds.query).toHaveBeenCalled();
+        //     });
+        // });
+
+        /*注：query需发起http请求，这部分测试需要进一步测试(待补充)*/
+    });
+
+
+   /*测试构造函数CombinedDataSource*/
+    describe('-> test the constructor of the CombinedDataSource', function() {
+        /*定义ds存放DataSource实例，通过这个实例访问DataSource对外提供的接口*/
+        var ds;
+        beforeEach(function(){
+            var id = 13, dataSources = ['combinedPie', 'combinedrectangular'], handlers = {};
+			handlers.conditionProcessor = function(condition) {
+				return 'conditionProcessor:' + condition;
+			};
+			handlers.dataProcessor = function(data) {
+				return 'dataProcessor:' + data;
+			};
+			
+            spyOn(dataSourceService, 'createCombined').and.callThrough();
+            ds = dataSourceService.create(id, dataSources, handlers);
+        });
+
+        /*测试CombinedDataSource里的对外接口bind函数*/
+        it('-> test the function of bind in the CombinedDataSource', function() {
+            var scope, eventType, ds_inner;
+            spyOn(ds, 'bind').and.callThrough();
+            ds_inner = ds.bind(scope, eventType);
+		
+            expect(ds_inner.id).toBe(13);
+			expect(ds_inner.type).toBe('combined');
+        });
+
+        /*测试DataSource里的对外接口processData函数*/
+        xit('-> test the function of processData in the CombinedDataSource', function() {
+            var rawData;
+            spyOn(ds, 'processData').and.callThrough();
+            ds.processData(rawData);
+
+            expect(ds.processData).toHaveBeenCalled();
+        });
+
+        /*测试DataSource里的对外接口query函数*/
+		/*busy属性默认为fasle*/
+        it('-> test the function of query in the CombinedDataSource', function() {
+            var condition, val;
+            spyOn(ds, 'query').and.callThrough();
+            val = ds.query(condition);
+			
+			expect(ds.busy).toBe(true);
+			expect(val).toBeUndefined();
+        });
+		/*手动将busy属性修改为true*/
+        it('-> test the function of query in the CombinedDataSource', function() {
+            var condition, val;
+			ds.busy = true;
+            spyOn(ds, 'query').and.callThrough();
+            val = ds.query(condition);
+			
+			expect(ds.busy).toBe(true);
+			expect(val).toBeUndefined();
+        });
+		/*conditionProcessor为undefined*/
+        it('-> test the function of query in the CombinedDataSource', function() {
+            var condition, val;
+			ds.conditionProcessor = undefined;
+            spyOn(ds, 'query').and.callThrough();
+            val = ds.query(condition);
+			
+			expect(ds.busy).toBe(true);
+			expect(val).toBeUndefined();
+        });		
+
+    });
+	
+	/*测试构造函数CombinedDataSource：registerEvents和processData*/
+	describe('->test the constructor of the CombinedDataSource: registerEvents and processData', function() {
+		var ds_combined, eventType, val;
+		
+		beforeEach(function() {
+			var id = 14, dataSources = ['/demo/combinedPie', ['/demo/combinedRectangular', '/demo/combined']], handlers = {};
+			
+			handlers.conditionProcessor = function(condition) {
+				return 'conditionProcessor:' + condition;
+			};
+			handlers.dataProcessor = function(data) {
+				return 'dataProcessor:' + data;
+			};	
+			
+			spyOn(dataSourceService, 'create').and.callThrough();
+            ds_combined = dataSourceService.create(id, dataSources, handlers);
+		});
+		
+		/*测试DataSource里的对外接口registerEvents函数*/
+		it('-> test the function of registerEvents ', function() {
+			ds_combined.registerEvents(eventType);
+			
+			expect(ds_combined.id).toBe(14);
+			expect(ds_combined.list[0].id).toBe('ds0');
+			expect(ds_combined.list[0].url).toBe('/demo/combinedPie');
+			expect(ds_combined.list[1].list.length).toBe(2);
+			expect(ds_combined.list[1].type).toBe('combined');
+			expect(ds_combined.list[1].list[0].id).toBe('ds2');
+			expect(ds_combined.list[1].list[0].url).toBe('/demo/combinedRectangular');
+			
+		});
+		
+		
+		/*测试DataSource里的对外接口processData函数*/
+		xit('-> test the function of registerEvents ', function() {
+			var val, rawData = {
+				'ds0': 'beijing',
+				'ds1': {
+					'ds2': 'nanjing',
+					'ds3': 'suzhou'
+				}
+			};
+			
+			val = ds_combined.processData(rawData);
+			
+		});
+		/*测试DataSource里的对外接口processData函数*/
+		it('-> test the function of registerEvents ', function() {
+			var val, rawData = {
+				'ds0': 'beijing',
+				'ds10': 'nanjing'
+			};
+			
+			val = ds_combined.processData(rawData);
+			
+		});
+		/*dataProcessor为undefined*/
+		it('-> test the function of registerEvents ', function() {
+			var rawData = 'nanjing', val;
+			
+			ds_combined.dataProcessor = undefined;		
+			val = ds_combined.processData(rawData);
+			
+			expect(val).toBe('nanjing');
+		});
+	});
+	
+});
