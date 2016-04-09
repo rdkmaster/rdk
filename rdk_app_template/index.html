@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>RDK应用模板工程</title>
+
+
+    <!--
+      script节点描述了rdk启动相关参数。其中，
+          src是requirejs的位置，必选，相对路径起点是html所在位置
+          data-main是rdk主文件的位置，必选，相对路径起点是html所在位置
+          rdk-app是应用的入口文件位置，可选。默认值是 scripts/main，相对路径起点是html所在位置
+    -->
+
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/libs/rdk/rdk" src="/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+
+
+    <!-- 应用正式运行的时候，请使用下面这个节点，RDK会使用编译后的代码，代码体积小，下载快 -->
+    <!--
+    <script data-main="main.min.js" src="/libs/requirejs/require.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    -->
+</head>
+
+<body ng-controller='rdk_ctrl'>
+    <h1>Hello RDK</h1>
+    <div ng-show="hasErr">
+        <h2 style="color:red">出了点小问题，你的 RDK 应用不能正常工作！</h2>
+        <p>通常是因为代码路径配置出错导致文件下载不到所致<br>
+        打开浏览器控制台，切换到network页上，刷新页面后可以看到详情。<br><br>注意
+        <ul>
+        <li>仔细阅读本页面代码中的注释；</li>
+        <li>提示要改的要按实际路径修改；</li>
+        <li>提示不要改的请不要改；</li>
+        </ul>
+        </p>
+    </div>
+    <div>
+        <h2 ng-bind="'太棒了！你的 RDK 应用能够正常工作了！'"></h2>
+    </div>
+</body>
+
+</html>
