@@ -140,5 +140,5 @@ scope.timeSetting  = {
 
 
 <div title="第3步 使用第一个RDK控件 - RDK应用开发最佳实践" id="__hidden__">
-<script src="../utils/misc.js"></script>
+<script src="/doc/tools/doc_js/misc.js"></script>
 </div>

@@ -110,5 +110,5 @@ var app = angular.module("rdk_app", ['rd.core', 'blockUI',
 
 
 <div title="第4步 完成查询条件栏 - RDK应用开发最佳实践" id="__hidden__">
-<script src="../utils/misc.js"></script>
+<script src="/doc/tools/doc_js/misc.js"></script>
 </div>

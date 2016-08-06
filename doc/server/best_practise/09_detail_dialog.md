@@ -89,5 +89,5 @@ rdk_map主要用于Echart版本的地图展现，目前仅支持json文件格式
 
 
 <div title="第8步 优化详情对话框 - RDK应用开发最佳实践" id="__hidden__">
-<script src="../utils/misc.js"></script>
+<script src="/doc/tools/doc_js/misc.js"></script>
 </div>

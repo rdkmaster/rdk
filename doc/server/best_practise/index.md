@@ -22,5 +22,4 @@
 
 
 <div title="RDK应用开发新手宝典 - RDK应用开发最佳实践" id="__hidden__">
-<script src="../utils/misc.js"></script>
 </div>

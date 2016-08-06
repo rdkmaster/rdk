@@ -154,5 +154,5 @@ EventService.register('myGraph', 'click', function(event, item) {
 
 
 <div title="第7步 将查询得到的数据以图形方式呈现 - RDK应用开发最佳实践" id="__hidden__">
-<script src="../utils/misc.js"></script>
+<script src="/doc/tools/doc_js/misc.js"></script>
 </div>

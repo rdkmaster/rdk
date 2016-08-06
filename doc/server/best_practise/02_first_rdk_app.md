@@ -73,5 +73,5 @@ RDK推出新的功能后，会第一时间更新[example应用](/rdk_server/app/
 
 
 <div title="第2步 编写第一个应用 - RDK应用开发最佳实践" id="__hidden__">
-<script src="../utils/misc.js"></script>
+<script src="/doc/tools/doc_js/misc.js"></script>
 </div>

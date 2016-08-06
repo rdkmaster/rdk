@@ -138,5 +138,5 @@ scope.cityProcessor = function(rawCitys) {
 
 
 <div title="第5步 实现第一个RDK服务并调用它 - RDK应用开发最佳实践" id="__hidden__">
-<script src="../utils/misc.js"></script>
+<script src="/doc/tools/doc_js/misc.js"></script>
 </div>
