@@ -1,0 +1,17 @@
+.rdk-graph-module {
+    width: 97%;
+    height: 300px;
+}
+
+.rdk-graph-module .no-data {
+    width: 100%;
+    padding: 10px;
+
+    background:url("graph_bg.jpg") repeat scroll!important;
+    border-radius: 4px;
+
+    color: #111;
+    font-size: 16px;
+    background-color: #eee;
+    text-align: center;
+}

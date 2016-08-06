@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>accordion -> accordionRenderer</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='myCtrl'>
+    <rdk_accordion style="width: 300px;" open="accordionOpenable" id="testID">
+        <header_renderer>
+            <i class="{{appScope.accordionOpenable?'fa fa-angle-double-up':'fa fa-angle-double-down'}}"></i>
+            <span>网易考拉</span>
+            <strong style="color: #FFFFFF;background: linear-gradient(#C81E2B, #F04349);">2</strong>
+            <i style="float: right; line-height: 24px;" class="fa fa-long-arrow-down"></i>
+        </header_renderer>
+        <rdk_basic_selector least="1" selected_items="testSelectedItems" style="width: 100%" data="allItems" track_item_by="id" change="changeHandler">
+        </rdk_basic_selector>
+    </rdk_accordion>
+</body>
+
+</html>

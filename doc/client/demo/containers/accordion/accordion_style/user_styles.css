@@ -1,0 +1,59 @@
+.rdk-accordion-module{
+	width: {{moduleWidth}};
+	max-height: {{moduleMaxHeight}};
+}
+
+.rdk-accordion-module .theme{
+    padding: {{themePadding}};
+    width: {{themeWidth}};
+    background-color: {{themeBackgroupColor}};
+    border: {{themeBorder}};
+    border-radius: {{themeBorderRadius}};
+    font-weight: {{themeFontWeight}};
+    font-size: {{themeFontSize}};
+    cursor: {{themeCursor}};
+}
+
+.rdk-accordion-module .theme-caption{
+    outline:none;
+    padding:0 5px;
+}
+
+.rdk-accordion-module .theme-buttons{
+    float: right;
+    margin-top: -5px;
+}
+
+.rdk-accordion-module .theme-link-btn{
+    padding: 5px;
+}
+
+.rdk-accordion-module .content{
+    width: {{contentWidth}};
+    border: {{contentBorder}};
+    border-radius: {{contentBorderRadius}};
+    padding: {{contentPadding}};
+}
+
+.rdk_selector_style {
+    width: 100%;
+}
+
+form {
+    margin-top: 10px;
+}
+    
+h1 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+label {
+    font-weight: bold;
+}
+
+textarea {
+    font-family: "Courier New";
+    height:500px ; 
+    width:300px ;
+}

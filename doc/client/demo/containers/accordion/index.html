@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        
+        <!--
+          这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+        -->
+        <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+        <script src="scripts/main.js"></script>
+    </head>
+
+    <body ng-controller='myCtrl'>
+        <rdk_accordion id="id_accordion" buttons="buttonSource" caption="caption" open="true" 
+                        frozen="false" folded_icon="foldedIcon" unfolded_icon="unfoldedIcon"
+                        editable="true">
+            <div>
+                我设置了buttons
+                <div>
+                    button支持单击回调callback。
+                </div>
+            </div>
+        </rdk_accordion>
+
+        <rdk_accordion>
+            <div>
+                我设置了buttons
+                <div>
+                    button支持单击回调callback。
+                </div>
+            </div>
+        </rdk_accordion>
+
+        <rdk_accordion caption="theme" open="false" 
+                       frozen="true" folded_icon="foldedIcon" unfolded_icon="unfoldedIcon"
+                       editable="false">
+            <div>
+                我设置了buttons
+                <div>
+                    button支持单击回调callback。
+                </div>
+            </div>
+        </rdk_accordion>
+
+
+        <rdk_accordion caption="theme" open="false" folded_icon="foldedIcon" unfolded_icon="unfoldedIcon"
+                       editable="false">
+            <div>
+                我设置了buttons
+                <div>
+                    button支持单击回调callback。
+                </div>
+            </div>
+        </rdk_accordion>    
+    </body>
+</html>

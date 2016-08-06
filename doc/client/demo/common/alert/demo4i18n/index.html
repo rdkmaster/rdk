@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Alert 4 confirm</title>
+
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+	<script type="text/javascript">
+	    require.config({
+	        paths: {
+	            //这里引用了rdk应用的公共助手文件，不要改动
+	            "application": '/rdk/app/modules/rdk_app_helpers',
+	            //页面的国际化文件配置信息
+	            "i18n": '/doc/client/demo/common/alert/demo4i18n/scripts/i18n',
+	        }
+	    });
+	</script>
+</head>
+
+<body ng-controller='rdk_ctrl'>
+    <p style="background-color: red; display: inline-block;" ng-click="clickHandler()">单击弹出CONFIRM示例</p>
+</body>
+
+</html>

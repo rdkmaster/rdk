@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Angular-Translate</title>
+
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+	<script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller="myCtrl">
+  <button style="margin-left: 20px" ng-click="setmodal('topModal', 'modal', {x:20, y:50})">模态框</button>
+  <button style="margin-top: 20px" ng-click="setmodal('topModal', 'none_modal', {x:30, y:50, z:111})">非模态框</button>
+  <button style="margin-top: 20px" ng-click="setmodal('topModal', 'fixed')">固定到文档流</button>
+  
+  <br>
+  <br>
+  <p style="width:100%;height:200px;font-family:Courier New;border:1px solid red" id="id_p">
+用法：给任意标签加上rdk_modal属性即可，其他功能请阅读本demo的源码<br>
+&lt;div id="modalFrame" <b>rdk_modal="modal"</b>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;这是一个简陋的div，只是为了演示一下模态框/非模态框&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;button ng-click="setmodal('topModal', 'hide')"&gt;close&lt;/button&gt;<br>
+&lt;/div&gt;
+  </p>
+
+  <div id="topModal" rdk_modal="hide" style="background-color:#fff;border:1px solid #ff0000;">
+    <p>这是一个简陋的div，只是为了演示一下模态框/非模态框</p>
+    <button ng-click="setmodal('topModal', 'hide')">close</button>
+    <button ng-click="setmodal('subModal', 'modal', {x:100,y:100,z:333})">show sub modal</button>
+  </div>
+  <div id="subModal" rdk_modal="hide" style="background-color:#fff;border:1px solid #ff0000;">
+    <p>这是另一个简陋的div。。。。</p>
+    <button ng-click="setmodal('subModal', 'hide')">close</button>
+  </div>
+</body>
+
+
+</html>

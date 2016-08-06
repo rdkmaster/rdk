@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>dependency_injection</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<p>本文包括两部分的依赖说明：</p>
+<ul>
+<li>
+requirejs
+<ul>
+<li>rdk使用requirejs来作为依赖管理工具，因此rdk的应用在开发的时候，如果需要增加自己的文件，或者引入其他第三方库，则最好采用本文描述的方式。</li>
+</ul>
+</li>
+<li>
+AngularJS的
+<ul>
+<li>本文还简要的描述了AngularJS的依赖注入在rdk中是如何使用的，特别是如何与requirejs配合。</li>
+</ul>
+</li>
+</ul>
+<p>本文一切均以<a href="/rdk_server/app/example/web/index.html">example应用</a>为例说明，所以在开始之前，最好能够阅读一下它的源码。</p>
+<h2>requirejs相关</h2>
+<h3>可被管理的文件种类</h3>
+<ul>
+<li>js文件</li>
+<li>css文件</li>
+<li>rest服务</li>
+</ul>
+<h3 id="new-dep">如何新增一个被管理文件</h3>
+<p>分两步：</p>
+<h4 id="dep-name">增加依赖别名（可选）</h4>
+<p>打开<a href="/rdk_server/app/example/web/index.html">example应用</a>的index.html，在文档头中有下面的代码</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+    require.config({
+        paths: {
+            //这里引用了rdk应用的公共助手文件，不要改动
+            &quot;application&quot;: '/rdk_server/app/modules/rdk_app_helpers',
+            //这里引用了当前应用自身的助手文件，路径需要根据实际情况修改
+            &quot;utils&quot;: '/rdk_server/app/example/web/scripts/utils',
+            //页面的国际化文件配置信息
+            &quot;i18n&quot;: '/rdk_server/app/example/web/scripts/i18n',
+        }
+    });
+&lt;/script&gt;
+</code></pre>
+
+<p>这段代码是在对requirejs进行配置，<code>paths</code> 属性的key部分就是依赖的别名，而value部分就是依赖的路径。</p>
+<p>注意：</p>
+<ol>
+<li>依赖的路径是<strong>不带文件的扩展名</strong>的！这个很重要！</li>
+<li>依赖的路径最好使用绝对路径。</li>
+</ol>
+<blockquote>
+<p>拓展：依赖的相对路径是这个目录：<code>/rdk_server/app/libs/rdk</code></p>
+</blockquote>
+<p>这里一共定义了3个依赖了，如果你想增加一个依赖，则依葫芦画瓢，添加一行类似的代码即可。例如我们加上：</p>
+<pre><code>&quot;sichuan_map&quot;: '/rdk_server/app/portal/web/pages/scripts/maps/sichuan_map'
+</code></pre>
+
+<p>这一步不是必须的，它只是可以让注入依赖的代码简洁一些而已。</p>
+<p>下面看看如何使用这个依赖。</p>
+<h4>依赖注入</h4>
+<p>打开<a href="/rdk_server/app/example/web/index.html">example应用</a>的main.js文件，如果你把所有的匿名函数都叠起来，你会发现整个应用的代码看起来是这样的</p>
+<pre><code>define('main', ['application', 'utils', 'i18n', 'blockUI'],
+    function(application, utils, i18n) {
+        ...
+    }
+);
+</code></pre>
+
+<p>如你所见，这里只调用了一个define()函数而已。define()函数接收3个参数</p>
+<p><a name="define-args"></a>
+1. 永远是 <code>main</code> 这个字符串
+2. 一个数组。这里存放的就是当前这应用所依赖的所有文件了
+3. 一个函数。所有依赖都被成功下载之后这个函数会被调用，这就是rdk应用的启动过程。</p>
+<p>我们只要把我们所需的依赖添加到第2个参数这个数组中即可。代码改为：</p>
+<pre><code>define('main', ['application', 'utils', 'i18n', 'blockUI', 'sichuan_map'],
+    function(application, utils, i18n) {
+        ...
+    }
+);
+</code></pre>
+
+<blockquote>
+<p>扩展：如果你未<a href="#dep-name">定义依赖别名</a>，那么代码看起来是这样的</p>
+<pre><code>define('main', ['application', 'utils', 'i18n', 'blockUI',
+                '/rdk_server/app/portal/web/pages/scripts/maps/sichuan_map'],
+    function(application, utils, i18n) {
+        ...
+    }
+);
+</code></pre>
+
+<p>这这样的代码看起来很乱不是吗？</p>
+<p>注意这里依然<strong>没有使用文件的扩展名</strong>。</p>
+</blockquote>
+<h3>使用依赖文件的数据</h3>
+<p><a href="#new-dep">前面小节</a>介绍了最简单的增加依赖方法，这里稍微深入一下，讨论一下这个场景：</p>
+<p>如果我们不仅需要增加依赖，我们还需要使用这依赖返回的数据。</p>
+<p><a href="#define-args">前面</a>提到define()函数有3个参数，我们仔细观察一下第3个参数：</p>
+<pre><code>function(application, utils, i18n) {
+    ...
+}
+</code></pre>
+
+<p>这个函数有若干个形参，分别是</p>
+<pre><code>application, utils, i18n
+</code></pre>
+
+<p>再看看define()函数的第2个参数：</p>
+<pre><code>['application', 'utils', 'i18n', 'blockUI']
+</code></pre>
+
+<p>可以发现前3个数据名字和顺序都一致！requirejs不仅会下载依赖的文件，还可以把这些依赖返回的值传递给最后的那个函数。</p>
+<p>所以，如果你需要使用到依赖的文件返回的数据，则只要安排你的依赖的顺序和最后回调函数的参数顺序一致即可。</p>
+<blockquote>
+<p>提示：</p>
+<p>把关心返回值的依赖排在前面，不关心返回值的依赖排在后面是一个很好的开发习惯</p>
+</blockquote>
+<h3>依赖的依赖</h3>
+<p>虽然这个话题越来越深入，但这已经是最复杂的情况了。</p>
+<p>define()函数的第2个参数是一个依赖列表：</p>
+<pre><code>['application', 'utils', 'i18n', 'blockUI']
+</code></pre>
+
+<p>它的作用是说明当前应用依赖的所有文件，这些文件是同时被下载的，那就是说：</p>
+<p><strong>排列靠前的依赖不一定会先下载完！！</strong></p>
+<p>设想一下这个场景：你依赖的某个文件的执行必须保证另一个文件已经存在，那怎么办？</p>
+<p>其实非常简单就可以解决，我们继续<a href="#new-dep">前面小节</a>添加 <code>sichuan_map</code> 依赖的例子来说明如何做到。</p>
+<p>如果你用过echart地图，你会很清楚，各地市的地图包在下载后，必须使用 <code>echarts</code> 对象注册一下才能用。</p>
+<p>具体到在我们这个例子中，我们必须确保 <code>echarts</code> 对象先于 <code>sichuan_map</code> 这个依赖被创建。rdk已经<a href="#predef-dep">事先定义</a>好了一个 <code>echarts3</code> 这依赖的别名，它会创建 <code>echarts</code> 对象。</p>
+<p>我们可以分开下载各个依赖，代码改为：</p>
+<pre><code>define('main', ['application', 'utils', 'i18n', 'echarts3', 'blockUI'],
+    function(application, utils, i18n, echarts) {
+        define(['sichuan_map'], function(application, utils, i18n, echarts) {
+            //此时可以放心的使用 echarts 的各个函数了
+            echarts.registerMap(...);
+            
+            //example应用的其他代码写在这里
+        });
+    }
+);
+</code></pre>
+
+<p>原理非常简单，就是把一批同时下载的依赖分开成多批下载即可。</p>
+<blockquote>
+<p>扩展：</p>
+<p>为了让代码更容易维护，你可以把最里边的匿名函数挪到外头来，代码重构一下：</p>
+<pre><code>define('main', ['application', 'utils', 'i18n', 'echarts3', 'blockUI'],
+    function(application, utils, i18n, echarts) {
+        define(['sichuan_map'], start);
+    }
+);
+
+function start(application, utils, i18n, echarts) {
+    //此时可以放心的使用 echarts 的各个函数了
+    echarts.registerMap(...);           
+    //example应用的其他代码写在这里
+}
+</code></pre>
+
+<p>代码这样看起来就清晰多了，不是吗？</p>
+</blockquote>
+<p><font color=red>有一点需要特别注意：</font>鉴于jquery和angular这两个库非常常用，因此rdk已经强制他们预先下载了，所以应用的代码可以放心的使用这2个库提供的功能。</p>
+<h3 id="predef-dep">rdk预定义的依赖</h3>
+<p><a href="/libs/rdk/mainconfig.js">这里</a>罗列了rdk预定义的所有依赖。</p>
+<h3>CSS类型和Rest服务类型</h3>
+<p>CSS类型的依赖和Rest服务类型的依赖，使用起来和JS类型的依赖几乎一样，只是稍微有一些区别。</p>
+<h4>依赖一个CSS类型文件</h4>
+<p>依赖别名的定义部分和<a href="#dep-name">js依赖别名定义方法</a>完全一致。</p>
+<p>例如我们需要增加一个自己的css文件，那别名定义部分代码为：</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+    require.config({
+        paths: {
+            ...
+            &quot;mycss&quot;: '/rdk_server/app/example/web/scripts/mycss',
+        }
+    });
+&lt;/script&gt;
+</code></pre>
+
+<p>使用依赖的地方有些许差别：</p>
+<pre><code>define('main', [ ... , 'css!mycss'],
+    function( ... ) {
+        ...
+    }
+);
+</code></pre>
+
+<p>在依赖别名前面多了一个 <code>css!</code>，这个是为了区分类型用的。</p>
+<h4>依赖一个Rest服务</h4>
+<p>比如我们有一个my_citys服务，想在应用渲染之前就获取到它的数据。依赖别名的定义部分和<a href="#dep-name">js依赖别名定义方法</a>完全一致，增加一行：</p>
+<pre><code>&quot;my_citys&quot;: '/rdk/service/app/example/server/my_citys'
+</code></pre>
+
+<p>使用依赖的地方需要用 <code>rest!</code> 作为前缀：</p>
+<pre><code>define('main', [ ... , 'rest!my_citys'],
+    function( ... ) {
+        ...
+    }
+);
+</code></pre>
+
+<p>这样使用rest服务类型的依赖不是一个好实践，它会导致页面打开变慢。</p>
+<h2 id="angular">AngularJS相关</h2>
+<h3><code>angular.module()</code></h3>
+<p>这个函数会涉及到依赖注入，它的第二个参数是一个数组，作用是列出当前模块依赖的其他所有模块，将其他模块的名称字符串填写在数组中即可。</p>
+<p>一个典型的RDK应用总会包含类似下面的代码：</p>
+<pre><code>var app = angular.module(&quot;rdk_app&quot;, ['rd.core', 'blockUI', 'rd.controls.Time']);
+</code></pre>
+
+<p>说明当前应用必须依赖 <code>'rd.core', 'blockUI', 'rd.controls.Time'</code> 这些模块才能正常运行。</p>
+<h3 id="ctrl"><code>app.controller()</code></h3>
+<p>这个函数也涉及到依赖注入，它和 <code>angular.module()</code> 的注入方法基本上一样，但是稍微复杂一些。</p>
+<p>一个典型的RDK应用总会包含类似下面的代码：</p>
+<pre><code>app.controller('rdk_ctrl',
+[       '$scope', 'DataSourceService', 'blockUI', 'EventService',
+function($scope,   DataSourceService,   blockUI,   EventService) {
+    // 应用的所有逻辑都在这里 ...
+}]);
+</code></pre>
+
+<p>第二个参数是一个数组，并且数组最后一个元素是一个函数，前面都是字符串。注意到函数的入参名字和数组的元素字符串值一致！这是AngularJS实现依赖注入的一种方式，RDK推荐使用这个方式。</p>
+<p>这段代码说明应用的逻辑有可能会使用到这些功能：<code>'$scope', 'DataSourceService', 'blockUI', 'EventService'</code>。这个列表中一般是各种AngularJS服务，可能是RDK实现的，可能是第三方实现的，可能是AngularJS内置的，也可能是应用自己开发的。</p>
+<p>除了各种服务可以出现在这个列表中，还有其他很多各种类型的功能，都可以出现在列表中。感兴趣的同学可以仔细阅读这偏文章：<a href="http://docs.ngnice.com/guide/di">http://docs.ngnice.com/guide/di</a></p>
+<div title="依赖注入相关知识" id="__hidden__">
+<script src="/doc/tools/doc_js/misc.js"></script>
+</div>
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

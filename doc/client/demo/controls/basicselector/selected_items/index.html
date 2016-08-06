@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>BasicSelector -> selected_items</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='myCtrl'>
+    <rdk_basic_selector selected_items="selectedItems" data="allItems" change="selectorChanged"></rdk_basic_selector>
+    <button ng-click="randomSelect()">随机选中几个</button>
+</body>
+
+</html>

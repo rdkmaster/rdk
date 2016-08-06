@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Bullet -> ChangeStepSize</title>
+
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+	<script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='myCtrl' style="margin-top:20px" >
+    <rdk_bullet 
+            sliders="inputScales"
+            slider_styles="sliderStyles"
+            title="告警门限设置"
+            editable
+            step="step"
+            min_value="0"
+            max_value="100"
+            show_legend
+        ></rdk_bullet>
+
+     <button ng-click="changeStepSize()">改变StepSize</button>
+</body>
+
+</html>

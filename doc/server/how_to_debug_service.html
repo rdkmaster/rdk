@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>how_to_debug_service</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<h2>检出代码</h2>
+<p>如果本地电脑上没有下面这个svn分支，请检出</p>
+<pre><code>http://10.5.70.3/ZXVMAX/CODE/dev/ZXVMAX/vmax-app-cn/CODE/ZTECOMMON/ClientCode/
+</code></pre>
+
+<p>假设检出到本地的这个目录下</p>
+<pre><code>d:\Codes\ZXVMAX\vmax-app-cn\CODE\ZTECOMMON\ClientCode
+</code></pre>
+
+<p>下文所有的目录都以这个为例，实际设置时，请务必修改为你的实际目录。</p>
+<h2>设置SBT运行环境</h2>
+<p>打开一个windows的命令行终端，敲入一个sbt命令，如果报命令不存在，那请继续本小节的剩余部分。</p>
+<p>如果sbt命令可以执行，则要确认你当前环境上的sbt，是不是对应着下面这个：</p>
+<pre><code>d:\Codes\ZXVMAX\vmax-app-cn\CODE\ZTECOMMON\ClientCode\html\build\sbt
+</code></pre>
+
+<p>如果是，则跳过本小节。如果不是，则需要将环境上的sbt工具从系统环境变量中删除，再按照本小节余下过程设置。</p>
+<p>把下面这个目录添加到Path环境变量中去</p>
+<pre><code>d:\Codes\ZXVMAX\vmax-app-cn\CODE\ZTECOMMON\ClientCode\html\build\sbt\bin\
+</code></pre>
+
+<p>如果不知道怎么添加的话，请自行<a href="https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=0&amp;rsv_idx=1&amp;tn=baidu&amp;wd=%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F&amp;rsv_pq=fba32b1f000189c1&amp;rsv_t=17cc7x9i2muEP6LU2zPYR3cF%2B04FWZNJ3geSW7MrqUEY3LgklGm0gBVIlM0&amp;rsv_enter=1&amp;rsv_sug3=24&amp;rsv_sug1=10&amp;rsv_sug7=100">百度</a>。</p>
+<p>完成之后，<strong>一定一定</strong>再打开一个命令终端继续余下的过程。</p>
+<h2>创建SBT工程</h2>
+<p>打开一个新的命令终端，将当前目录切换到下面这个目录</p>
+<pre><code>d:\Codes\ZXVMAX\vmax-app-cn\CODE\ZTECOMMON\ClientCode\rdk_server\
+</code></pre>
+
+<p>然后敲入sbt update命令：</p>
+<pre><code>Microsoft Windows XP [版本 5.1.2600]
+(C) 版权所有 1985-2001 Microsoft Corp.
+
+D:\Codes\ZXVMAX\vmax-app-cn\CODE\ZTECOMMON\ClientCode\rdk_server&gt;sbt update
+</code></pre>
+
+<p>敲回车执行，等待执行完毕，如果没有报错，则再敲入下面指令</p>
+<pre><code>sbt gen-idea
+</code></pre>
+
+<h2>安装 Idea IDE</h2>
+<p>必须要ultimate版的才行，<a href="http://10.9.233.35:8080/tools/ideaIU-15.zip">点击直接下载</a>。</p>
+<p>各种下一步后就装好了。</p>
+<p>随后需要安装scala插件，如果不需要编辑代码可以跳过这一步。下载<a href="http://10.9.233.35:8080/tools/scala-intellij-bin-2.2.0.zip">这个插件</a>，在Idea中选择菜单 File-&gt; Settings 打开配置页，找到Plugins，单击 Install plugin from disk...，找到刚刚下载的scala插件，根据向导安装即可：</p>
+<p><img src="img/plugin.PNG"></img></p>
+<p>使用下面路径打开刚刚创建好的SBT工程</p>
+<pre><code>d:\Codes\ZXVMAX\vmax-app-cn\CODE\ZTECOMMON\ClientCode\rdk_server\
+</code></pre>
+
+<p>打开之后，需要确认一下当前工程使用的jdk版本是否是1.8的，选择菜单 File-&gt; Project Structure打开工程属性，在下图红框中要选择1.8，如果没有，则单击New新建一个1.8的jdk。</p>
+<p>在刚刚检出的代码中有一个jdk1.8，路径是：</p>
+<pre><code>d:\Codes\ZXVMAX\vmax-app-cn\CODE\ZTECOMMON\ClientCode\rdk_server\jdk1.8.0_65\
+</code></pre>
+
+<p><img src="img/jdk.PNG"></img></p>
+<p>单击右上角，添加一个执行配置项：</p>
+<p><img src="img/setup_run.PNG"></img></p>
+<p>新建一个执行配置：</p>
+<p><img src="img/setup_run1.PNG"></img></p>
+<p>红框中的要填正确，完成之后，OK关闭对话框。找到工程视图下的rdk.cfg文件，编辑它，把要连接的数据库信息配置在这里：</p>
+<p><img src="img/dbcfg.PNG"></img></p>
+<p>至此，终于可以在本地启动rdk服务了，单击右上角的这个按钮：</p>
+<p><img src="img/run.PNG"></img></p>
+<p>打开浏览器，输入</p>
+<pre><code>http://localhost:5812/rdk/service
+</code></pre>
+
+<p>如果看到网页上显示下面的文字，表示一切正常</p>
+<pre><code>Request is missing required query parameter 'p'
+</code></pre>
+
+<h2>调试服务</h2>
+<p>打开任意一个服务，单击行号附近空白位置可以添加一个断点，然后使用<a href="/rdk_server/doc/manual.html#debug">前面的方法</a>启动一个服务的调试，注意把ip换成localhost。</p>
+<p>正常的话，系统运行到断点处就会停下来，可以单步跟踪了。</p>
+<div title="如何断点调试Rest服务" id="__hidden__">
+<script src="utils/misc.js"></script>
+</div>
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Selector Demo</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='myCtrl'>
+    <!-- id事件控制，目前只支持对所有group的统一操作，对实际应用场景来说，有很大欠缺 -->
+    <rdk_selector id="selectorID" data="allItems" selected_items="dimSelectedItems" groupby="groupByFun"></rdk_selector> 
+</body>
+
+</html>

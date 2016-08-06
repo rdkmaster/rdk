@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="vmaxtime_demo_app">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+    <link href="../../../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="../../../libs/bootstrap-select/bootstrap-select.min.css" rel="stylesheet"> 
+    <link href="../../../libs/bootstrap-datepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet"> 
+    <link href="../../../libs/codemirror/codemirror.css" rel="stylesheet" type="text/css" />
+    <link href="./datetimepickerdemo.css" rel="stylesheet"> 
+<body ng-controller="ctrl">
+    <div class="mainDiv">
+        <h2>带粒度选择的时间控件</h2>
+        <h3>1、显示时间选择粒度</h3>
+        <rdk-time value="showUnitSelect"></rdk-time>
+        <h3>In the HTML:</h3>
+        <ui-codemirror ui-codemirror-opts="editorOptions" ng-model="timeOption1"></ui-codemirror>
+        <h3>In the Controller:</h3> 
+        <ui-codemirror ui-codemirror-opts="editorOptions">scope.showUnitSelect = {
+            selectGr: true,
+        }; </ui-codemirror>  
+        <h3>2、添加时间选择粒度</h3>
+        <rdk-time value="unitSelectSetting"></rdk-time>
+        ---------{{unitSelectSetting.value}}---------
+        ---------{{unitSelectSetting.gr}}---------
+        <h3>In the HTML:</h3>
+        <ui-codemirror ui-codemirror-opts="editorOptions" ng-model="timeOption2"></ui-codemirror>
+        <h3>In the Controller:</h3> 
+        <ui-codemirror ui-codemirror-opts="editorOptions">scope.unitSelectSetting = {
+            selectGr: true,
+            grItems:["date", "week", "month"], // hour day week month range
+            gr:"date"
+        }; </ui-codemirror>
+        <h3>3、完整的时间控件设置</h3>
+        <rdk-time range value="entireSet"></rdk-time>
+        <h3>In the HTML:</h3>
+        <ui-codemirror ui-codemirror-opts="editorOptions" ng-model="timeOption3"></ui-codemirror>
+        <h3>In the Controller:</h3> 
+        <ui-codemirror ui-codemirror-opts="editorOptions">scope.entireSet = {
+        value: ["2015-01-07", "2015-01-09"],
+        startDate:"2015-01-01 07:00",
+        endDate:"2015-03-09 07:00",
+        selectGr: true,
+        gr:"date",
+        grItems:[
+            {label: "分钟", value: "minute"},
+            {label: "刻钟", value: "quarter"},
+            {label: "小时", value: "hour"},
+            {label: "天", value: "date"},
+            {label: "周", value: "week"},
+            {label: "月", value: "month"}]
+    }; </ui-codemirror>           
+    </div>   
+</body>
+    <script src="../../../libs/jquery/jquery-1.11.2.min.js"></script>
+    <script src="../../../libs/angular/angular.js"></script>
+    <script src="../../../libs/angular/ui-codemirror.js"></script>
+    <script src="../../../libs/bootstrap/js/bootstrap.js"></script>
+    <script src="../../../libs/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="../../../libs/bootstrap-datepicker/js/bootstrap-datetimepicker.js"></script>
+    <script src="../../../libs/codemirror/codemirror.js"></script>
+    <script src="../../../libs/codemirror/mode/javascript.js"></script>
+
+    <!-- 正式环境建议包含这个文件，加快运行速度
+    <script src="../../libs/rdk/rdk.all.js"></script>
+    -->
+    <!-- 下面代码仅仅是为了rdk demo测试方便，正式版本禁止使用 -->
+    <script src="../../rdk_src_all.js"></script>
+    <script type="text/javascript">
+        loadRDK('../../../');
+    </script>
+    
+    <script src="./optionWithUnit.js"></script>
+</html>

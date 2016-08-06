@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>GraphGroup Demo</title>
+</head>
+
+<body ng_controller="ctrl" >
+	<p>rdk_graph_group 可以将多个图形关联起来，注意需要添加 connect_graph="true" 的属性哦</p>
+    <rdk_graph_group connect_graph="true">
+        <rdk_graph style="height:220px;width:800px;" bind_ds="ds1" from_url="/demo/line_2" graph_template="../template/line_by_column.txt"></rdk_graph>
+
+        <rdk_graph style="height:220px;width:800px;" bind_ds="ds2" from_url="/demo/line_2" graph_template="../template/line_by_column.txt"></rdk_graph>
+    </rdk_graph_group>
+    <br>
+    <ui-codemirror ui-codemirror-opts="editorOptions" ng-model="exampleCode"></ui-codemirror>
+</body>
+
+
+<!-- 依赖的js文件 -->
+<script src="../../libs/jquery/jquery-1.11.2.min.js"></script>
+<script src="../../libs/echarts/echarts-all.js"></script>
+<script src="../../libs/angular/angular.js"></script>
+<script src="../../libs/angular/angular-translate.min.js"></script>
+<script src="../../libs/angular/angular-translate-loader-static-files.min.js"></script>
+<!-- codemirror -->
+<link rel="stylesheet" type="text/css" href="../../libs/codemirror/codemirror.css"/>
+<script src="../../libs/codemirror/codemirror.js"></script>
+<script src="../../libs/codemirror/mode/javascript.js"></script>
+<script src="../../libs/angular/ui-codemirror.js"></script>
+
+<!-- 正式环境建议包含这个文件，加快运行速度
+<script src="../../libs/rdk/rdk.all.js"></script>
+-->
+<!-- 下面代码仅仅是为了rdk demo测试方便，正式版本禁止使用 -->
+<script src="../rdk_src_all.js"></script>
+<script type="text/javascript">
+    loadRDK('../../');
+</script>
+
+
+<script type="text/javascript">
+var app = angular.module("myApp", ['rdk', 'ui.codemirror']);
+app.controller('ctrl', ['$scope', 'EventService',
+    function(scope, EventService) {
+        /** 初始化，否则会报错 **/
+        EventService.init(scope);
+        
+        setTimeout(
+            function() {
+                EventService.broadcast('ds1', "start_query", {});
+                EventService.broadcast('ds2', "start_query", {});
+            },
+            200
+        );
+
+		scope.editorOptions = {
+		    lineNumbers: true,
+		    readOnly: 'nocursor',
+		    lineWrapping: true,
+		    mode: 'javascript'
+		};
+		scope.exampleCode = '<rdk_graph_group connect_graph="true">\n'+
+			'	<rdk_graph style="height:250px;width:800px;" \n'+
+			'		bind_ds="ds1" from_url="/demo/line_2" \n'+
+			'		graph_template="../template/line_by_column.txt"></rdk_graph>\n'+
+			'\n'+
+			'	<rdk_graph style="height:250px;width:800px;" \n'+
+			'		bind_ds="ds2" from_url="/demo/line_2" \n'+
+			'		graph_template="../template/line_by_column.txt"></rdk_graph>\n'+
+			'</rdk_graph_group>\n';
+    }
+]);
+
+</script>
+<style type="text/css">
+ .CodeMirror {
+     border: 1px solid black;
+     height: auto;
+ }
+</style>
+
+</html>

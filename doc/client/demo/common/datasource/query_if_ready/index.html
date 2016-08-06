@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>数据源 -> with select</title>
+
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='rdk_ctrl'>
+    <!--
+        先定义两个数据源实例，并让他们在系统初始化完成后立即发起查询
+    -->
+    <ds id="ds_user" url="../mockdata/user_list" query_if="ready"></ds>
+    <ds id="ds_city" url="../mockdata/city_list" query_if="ready"></ds>
+
+    <!-- 
+        定义第三个数据源，它的数据依赖于 ds_user 和 ds_city，因此必须等
+        这两个数据源查询完成之后，才发起查询
+     -->
+    <div ds="ds_user_city" ds_url="../mockdata/user_city"
+        ds_query_if="ds_user.result and ds_city.result"
+        ds_data_processor="showUserCity" ng-bind="ds_user_city">
+    </div>
+</body>
+
+</html>

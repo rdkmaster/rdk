@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>rdk_tabselect</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<h1>简介</h1>
+<p><code>rdk_tabselect</code> 主要用于提供一些具有逻辑关系或层级关系的备选项给用户选择的场景，它支持</p>
+<ul>
+<li>单选</li>
+<li>多选</li>
+<li>至少选中若干个项目searchable</li>
+</ul>
+<p><code>rdk_tabselect</code>控件为一个组合控件，它是由ComboSelect，TabSelector,Selector控件组合的，这三个控件具有层级关系。</p>
+<p>这是一个简单的 <code>rdk_tabselect</code> 例子：
+<live_demo example="controls/tabselect/basic" width="485"></live_demo></p>
+<hr />
+<h1>属性</h1>
+<h2>data <binding></binding></h2>
+<blockquote>
+<p>支持类型：数组 或者 数据源id</p>
+</blockquote>
+<p><code>data</code> 是待选的全集，可以是 <code>scope</code> 的某个属性，也可以是某个<code>数据源</code>的id。</p>
+<p>在实际应用时，<code>data</code> 的值很有可能是固定不变的，在这个情况下，可以直接将data的值以json字符串的形式写在html节点上：</p>
+<pre><code>&lt;rdk_selector
+    data=&quot;[
+        {&quot;label&quot;: &quot;江苏省&quot;,&quot;value&quot;: &quot;1&quot;}, 
+        {&quot;label&quot;: &quot;南京市&quot;,&quot;value&quot;: &quot;11&quot;}, 
+        {&quot;label&quot;: &quot;雨花区&quot;,&quot;value&quot;: &quot;111&quot;}, 
+        {&quot;label&quot;: &quot;银杏山庄&quot;,&quot;value&quot;: &quot;1112&quot;}
+    ]&quot;&gt;
+&lt;/rdk_selector&gt;
+</code></pre>
+
+<p>这样做使得代码高度内聚，便于日后维护。但是如果 <code>data</code> 的值有很多对象，则不建议这样做。</p>
+<h2>track&#x5f;item&#x5f;by</h2>
+<blockquote>
+<p>支持类型：字符串</p>
+</blockquote>
+<p>这个写法</p>
+<pre><code>track_item_by=&quot;value&quot; 
+</code></pre>
+
+<p>表示按value的值比较对象是否相等。<strong>必须使用具备唯一性的属性，否则会出现误判对象相等的后果</strong>。判定一个对象相等需要用到多个属性时，请使用英文逗号隔开各个属性。例如</p>
+<pre><code>track_item_by=&quot;id, value&quot;
+</code></pre>
+
+<p>未提供 <code>track_item_by</code> 属性时，默认使用 &quot;id&quot; 作为 <code>track_item_by</code> 的值</p>
+<h2>node_field</h2>
+<blockquote>
+<p>支持类型：字符串</p>
+</blockquote>
+<p>指明 <code>data</code> 的每个成员节点对象的层级关系的依据，通过此属性在界面上可以逐级展示其子目录的信息。比如：</p>
+<pre><code>&lt;rdk_selector node_field='dim' data=&quot;{
+        &quot;classes&quot;: [{&quot;label&quot;: &quot;省&quot;}, {&quot;label&quot;: &quot;市&quot;}, {&quot;label&quot;: &quot;小区组&quot;},   {&quot;label&quot;: &quot;小区&quot;}],
+        &quot;dim&quot;: [{
+            &quot;label&quot;: &quot;江苏省&quot;,
+            &quot;value&quot;: &quot;1&quot;,
+            &quot;longitude&quot;: &quot;144&quot;,
+            &quot;latitude&quot;: &quot;144&quot;,
+            &quot;dim&quot;: [{
+                &quot;label&quot;: &quot;南京市&quot;,
+                &quot;value&quot;: &quot;11&quot;,
+                &quot;longitude&quot;: &quot;144&quot;,
+                &quot;latitude&quot;: &quot;144&quot;,
+                &quot;dim&quot;: [{
+                    &quot;label&quot;: &quot;雨花区&quot;,
+                    &quot;value&quot;: &quot;111&quot;,
+                    &quot;longitude&quot;: &quot;1144&quot;,
+                    &quot;latitude&quot;: &quot;1144&quot;,
+                    &quot;dim&quot;: [{
+                        &quot;label&quot;: &quot;银杏山庄&quot;,
+                        &quot;value&quot;: &quot;1112&quot;,
+                        &quot;longitude&quot;: &quot;11144&quot;,
+                        &quot;latitude&quot;: &quot;11144&quot;
+                    }]
+                }]
+            }]
+        }]}&quot;&gt;
+&lt;/rdk_selector&gt;
+</code></pre>
+
+<p>未提供 <code>node_field</code> 属性时，默认使用 &quot;node&quot; 作为 <code>node_field</code> 的值</p>
+<h2>label_field <binding></binding></h2>
+<blockquote>
+<p>支持类型：字符串</p>
+</blockquote>
+<p>指明 <code>data</code> 的每个成员对象用于显示在界面上的属性名。比如：</p>
+<pre><code>&lt;rdk_selector label_field=&quot;name&quot; data=&quot;[
+        {&quot;name&quot;: &quot;江苏省&quot;,&quot;value&quot;: &quot;1&quot;}, 
+        {&quot;name&quot;: &quot;南京市&quot;,&quot;value&quot;: &quot;11&quot;}, 
+        {&quot;name&quot;: &quot;雨花区&quot;,&quot;value&quot;: &quot;111&quot;}, 
+        {&quot;name&quot;: &quot;银杏山庄&quot;,&quot;value&quot;: &quot;1112&quot;}
+    ]&quot;&gt;
+&lt;/rdk_selector&gt;
+</code></pre>
+
+<p>未提供 <code>label_field</code> 属性时，默认使用 &quot;label&quot; 作为 <code>label_field</code> 的值</p>
+<h2>searchable <binding></binding></h2>
+<blockquote>
+<p>支持类型：字符串</p>
+</blockquote>
+<p>反馈是否已经查找到相关信息。代码实例：</p>
+<pre><code>&lt;rdk_tab_select searchable='false'&gt;&lt;/rdk_tab_select&gt;
+</code></pre>
+
+<h2>selectedItems <binding></binding></h2>
+<blockquote>
+<p>支持类型：数组 或者 数据源id</p>
+</blockquote>
+<p><code>selected_items</code> 是选中的集合，可以是 <code>scope</code> 的对象，也可以是某个<code>数据源</code>的id。<code>rdk_tabselect</code> 的任何修改都会直接反馈到对应的变量上，例如：
+<live_demo example="controls/tabselect/selected_items"  width="485"></live_demo></p>
+<p>注意，<code>selected_items</code> 可以参考 <code>data</code> 的做法，把值以json字符串的形式写在html中，但是这样做会导致无法使用上面例子中的双向绑定功能。</p>
+<h2>child_change</h2>
+<p>此属性为通用属性，请参见<a href="/doc/controls/common/child_change.html"><code>childChange</code></a>中的说明</p>
+<h1>事件</h1>
+<p>此控件没有独立的事件，它的事件都是继承于其各组合控件的事件。详细信息请参见<code>ComboSelect</code>,<code>TabSelector</code>,<code>BasicSelector</code>控件中关于事件的说明。</p>
+<h1>方法</h1>
+<p>暂无</p>
+<h1>样式</h1>
+<p>此控件没有独立的样式，它的样式都是继承于其各组合控件的样式。详细信息请参见<code>ComboSelect</code>,<code>TabSelector</code>,<code>BasicSelector</code>控件中关于样式的说明。</p>
+<div>
+<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+<script src="/doc/tools/doc_js/main.js"></script>
+<script src="/doc/tools/doc_js/misc.js"></script>
+</div>
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

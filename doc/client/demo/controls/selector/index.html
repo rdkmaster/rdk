@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Selector Demo</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='myCtrl'>
+<!-- 	<strong>基础demo</strong>
+	<rdk_selector data='groupData' selected_items='groupSelectedItems'></rdk_selector>
+
+	<strong>某一数组时groupby</strong>
+	<rdk_selector data='groupData' selected_items='selectedItems' groupby='selectedGroupByFun'>
+	</rdk_selector>
+
+	<strong>属性demo</strong>
+    <rdk_selector folded_icon="'fa fa-arrow-circle-down'"
+    			  unfolded_icon="'fa fa-arrow-circle-up'"
+    			  frozen='false' open='true' caption_editable='false'
+    			  label_field='label' track_item_by='id' multiple_select='false'
+    			  searchable='true' selector_editable='true'
+    			  data="groupData" selected_items="groupSelectedItems" change='changeHandler'>
+    </rdk_selector>
+
+	<strong>俩数组时groupby</strong>
+    <rdk_selector data="allItems" selected_items="selectedItems" groupby="groupByFun"></rdk_selector> -->
+
+    <strong>事件控制</strong>
+    <rdk_selector id="{{selectorID}}" multiple_select="false" data="allItems" selected_items="dimSelectedItems" groupby="groupByFun" change="dimHandler"></rdk_selector> 
+</body>
+
+</html>

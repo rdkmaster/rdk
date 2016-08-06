@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Demo 4 fixed</title>
+
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+    <style type="text/css">/demo/common/modal/demo4fixed/
+      .modalcss{
+        background-color:#fff !important;
+        /*border:1px solid #ff0000 !important;*/
+        width:400px !important;
+        height:100px !important;
+      }
+    </style>  
+</head>
+
+<body ng-controller="myCtrl">
+  <button ng-click="setmodal('topModal', 'fixed')">固定到文档流</button>
+  
+  <div style="width:100%;height:200px;font-family:Courier New;border:1px solid red" id="id_p">
+  DEMO演示：<br>
+  单击“固定到文档流”按钮，弹出框固定到文档流<br>
+  坐标设置无效
+  </div>
+
+  <div id="topModal" rdk_modal="hide" class="modalcss">
+    <strong>
+      这是固定到文档流的弹出框<br>
+      单击“close”，关闭该弹出框<br>
+      单击“show sub fixed”，弹出子模态框<br>
+    </strong>
+    <button ng-click="setmodal('topModal', 'hide')">close</button>
+    <button ng-click="setmodal('subModal', 'fixed')">show sub fixed</button>
+  </div>
+
+  <div id="subModal" rdk_modal="hide" class="modalcss">
+    <strong>
+    这是子弹出框<br>
+    仍然固定到文档流<br>
+    单击“close”，关闭该弹出框<br>
+    </strong>
+    <button ng-click="setmodal('subModal', 'hide')">close</button>
+  </div>
+
+</body>
+
+
+</html>

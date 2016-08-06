@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>child_change</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* This file is deliberately empty */
+</style>
+<link rel="stylesheet" type="text/css" href="/doc/css/github.css"/>
+</head>
+<body>
+<h1>childChange说明</h1>
+<blockquote>
+<p>支持类型：函数</p>
+</blockquote>
+<p>此属性为通用属性，请参见<a href="./childChangeDesption.html"><code>childChange</code></a>中的说明</p>
+<p>子级控件和父级控件之间的交互通道，子控件发生变化后可以通知其父级节点。
+此属性具有冒泡属性，除了使用“RDKConst.STOP_PROPAGATIOIN”来停止冒泡，否则此变化会一直冒泡到根节点。</p>
+<p>代码示例：</p>
+<pre><code>scope.selected2string = function(selected, context, index) 
+{
+   return Selector.selected2string(selected, 'label', '...');
+}
+&lt;rdk_selector child_change=&quot;selected2string&quot;&gt;&lt;/rdk_selector&gt;
+</code></pre>
+
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

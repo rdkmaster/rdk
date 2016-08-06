@@ -1,0 +1,558 @@
+2016-07-11 15:57:43,906 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-11 15:57:44,125 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-11 15:57:44,141 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-11 15:57:44,172 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-11 15:57:44,297 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-11 15:57:44,313 FATAL [mylib.js:4] - hello rdk 
+2016-07-11 15:57:44,828 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-11 15:57:52,750 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-11 15:57:52,766 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-11 15:57:52,766 FATAL [mylib.js:4] - hello rdk 
+2016-07-11 15:57:53,266 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-11 16:05:07,919 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-11 16:05:07,919 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-11 16:05:07,919 FATAL [mylib.js:4] - hello rdk 
+2016-07-11 16:05:08,419 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-11 17:16:52,744 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-11 17:16:52,947 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-11 17:16:52,963 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-11 17:16:52,994 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-11 17:16:53,104 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-11 17:16:53,104 FATAL [mylib.js:4] - hello rdk 
+2016-07-11 17:16:53,619 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-11 18:43:18,104 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-11 18:43:18,323 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-11 18:43:18,339 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-11 18:43:18,370 ERROR [RunTimeHelper@example] - run js lib error: 
+javax.script.ScriptException: ReferenceError: "helper" is not defined in proc/utils/runtime_helper.js at line number 44
+	at jdk.nashorn.api.scripting.NashornScriptEngine.throwAsScriptException(NashornScriptEngine.java:467)
+	at jdk.nashorn.api.scripting.NashornScriptEngine.evalImpl(NashornScriptEngine.java:451)
+	at jdk.nashorn.api.scripting.NashornScriptEngine.evalImpl(NashornScriptEngine.java:403)
+	at jdk.nashorn.api.scripting.NashornScriptEngine.evalImpl(NashornScriptEngine.java:399)
+	at jdk.nashorn.api.scripting.NashornScriptEngine.eval(NashornScriptEngine.java:155)
+	at javax.script.AbstractScriptEngine.eval(AbstractScriptEngine.java:264)
+	at com.zte.vmax.rdk.jsr.RunTimeHelper.require(RunTimeHelper.java:80)
+	at com.zte.vmax.rdk.jsr.RunTimeHelper.init(RunTimeHelper.java:59)
+	at com.zte.vmax.rdk.svr.ServiceHandler.createRunTimeHelper(ServiceHandler.java:41)
+	at com.zte.vmax.rdk.svr.ServiceHandler.handle(ServiceHandler.java:77)
+	at com.zte.vmax.rdk.service.RestHandler$$anonfun$runRoute$2$$anonfun$apply$3$$anonfun$apply$4.apply(RestHandler.scala:62)
+	at com.zte.vmax.rdk.service.RestHandler$$anonfun$runRoute$2$$anonfun$apply$3$$anonfun$apply$4.apply(RestHandler.scala:62)
+	at spray.routing.directives.RouteDirectives$$anonfun$complete$1$$anon$3.apply(RouteDirectives.scala:49)
+	at spray.routing.directives.RouteDirectives$$anonfun$complete$1$$anon$3.apply(RouteDirectives.scala:48)
+	at spray.routing.directives.BasicDirectives$$anon$3$$anonfun$happly$1.apply(BasicDirectives.scala:92)
+	at spray.routing.directives.BasicDirectives$$anon$3$$anonfun$happly$1.apply(BasicDirectives.scala:92)
+	at spray.routing.directives.ExecutionDirectives$$anonfun$detach$1$$anonfun$apply$7$$anonfun$apply$3.apply$mcV$sp(ExecutionDirectives.scala:89)
+	at spray.routing.directives.ExecutionDirectives$$anonfun$detach$1$$anonfun$apply$7$$anonfun$apply$3.apply(ExecutionDirectives.scala:89)
+	at spray.routing.directives.ExecutionDirectives$$anonfun$detach$1$$anonfun$apply$7$$anonfun$apply$3.apply(ExecutionDirectives.scala:89)
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: proc/utils/runtime_helper.js:44 ReferenceError: "helper" is not defined
+	at jdk.nashorn.internal.runtime.ECMAErrors.error(ECMAErrors.java:57)
+	at jdk.nashorn.internal.runtime.ECMAErrors.referenceError(ECMAErrors.java:319)
+	at jdk.nashorn.internal.runtime.ECMAErrors.referenceError(ECMAErrors.java:291)
+	at jdk.nashorn.internal.objects.Global.__noSuchProperty__(Global.java:1428)
+	at jdk.nashorn.internal.scripts.Script$71$runtime_helper.:program(proc/utils/runtime_helper.js:44)
+	at jdk.nashorn.internal.runtime.ScriptFunctionData.invoke(ScriptFunctionData.java:623)
+	at jdk.nashorn.internal.runtime.ScriptFunction.invoke(ScriptFunction.java:494)
+	at jdk.nashorn.internal.runtime.ScriptRuntime.apply(ScriptRuntime.java:393)
+	at jdk.nashorn.internal.runtime.Context.evaluateSource(Context.java:1224)
+	at jdk.nashorn.internal.runtime.Context.load(Context.java:837)
+	at jdk.nashorn.internal.objects.Global.load(Global.java:1532)
+	at jdk.nashorn.internal.scripts.Script$70$\^eval\_.:program(<eval>:1)
+	at jdk.nashorn.internal.runtime.ScriptFunctionData.invoke(ScriptFunctionData.java:623)
+	at jdk.nashorn.internal.runtime.ScriptFunction.invoke(ScriptFunction.java:494)
+	at jdk.nashorn.internal.runtime.ScriptRuntime.apply(ScriptRuntime.java:393)
+	at jdk.nashorn.api.scripting.NashornScriptEngine.evalImpl(NashornScriptEngine.java:446)
+	... 25 more
+2016-07-11 18:43:18,386 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-11 18:43:18,495 ERROR [RunTimeHelper@example] - service error, message: TypeError: _.isResultSet is not a function, param={}, path=app/example/server/my_service.js
+proc/utils/runtime_helper.js:202 TypeError: _.isResultSet is not a function
+	at jdk.nashorn.internal.runtime.ECMAErrors.error(ECMAErrors.java:57)
+	at jdk.nashorn.internal.runtime.ECMAErrors.typeError(ECMAErrors.java:213)
+	at jdk.nashorn.internal.runtime.ECMAErrors.typeError(ECMAErrors.java:185)
+	at jdk.nashorn.internal.runtime.ECMAErrors.typeError(ECMAErrors.java:172)
+	at jdk.nashorn.internal.runtime.Undefined.lookup(Undefined.java:102)
+	at jdk.nashorn.internal.runtime.linker.NashornLinker.getGuardedInvocation(NashornLinker.java:106)
+	at jdk.nashorn.internal.runtime.linker.NashornLinker.getGuardedInvocation(NashornLinker.java:98)
+	at jdk.internal.dynalink.support.CompositeTypeBasedGuardingDynamicLinker.getGuardedInvocation(CompositeTypeBasedGuardingDynamicLinker.java:176)
+	at jdk.internal.dynalink.support.CompositeGuardingDynamicLinker.getGuardedInvocation(CompositeGuardingDynamicLinker.java:124)
+	at jdk.internal.dynalink.support.LinkerServicesImpl.getGuardedInvocation(LinkerServicesImpl.java:154)
+	at jdk.internal.dynalink.DynamicLinker.relink(DynamicLinker.java:253)
+	at jdk.nashorn.internal.scripts.Script$Recompilation$83$5806AAAA$runtime_helper.each(proc/utils/runtime_helper.js:202)
+	at jdk.nashorn.internal.scripts.Script$Recompilation$82$11351A$runtime_helper._arg2string(proc/utils/runtime_helper.js:438)
+	at jdk.nashorn.internal.scripts.Script$Recompilation$81$10846A$runtime_helper.info(proc/utils/runtime_helper.js:412)
+	at jdk.nashorn.internal.scripts.Script$Recompilation$80$6334A$runtime_helper.require(proc/utils/runtime_helper.js:225)
+	at jdk.nashorn.internal.scripts.Script$Recompilation$79$52AA$my_service.L:1$L:3(app/example/server/my_service.js:5)
+	at jdk.nashorn.internal.scripts.Script$Recompilation$77$14043AAA$runtime_helper._callService(proc/utils/runtime_helper.js:550)
+	at jdk.nashorn.internal.runtime.ScriptFunctionData.invoke(ScriptFunctionData.java:629)
+	at jdk.nashorn.internal.runtime.ScriptFunction.invoke(ScriptFunction.java:494)
+	at jdk.nashorn.internal.runtime.ScriptRuntime.apply(ScriptRuntime.java:393)
+	at jdk.nashorn.api.scripting.ScriptObjectMirror.call(ScriptObjectMirror.java:117)
+	at com.zte.vmax.rdk.jsr.RunTimeHelper.callService(RunTimeHelper.java:89)
+	at com.zte.vmax.rdk.svr.ServiceHandler.handle(ServiceHandler.java:95)
+	at com.zte.vmax.rdk.service.RestHandler$$anonfun$runRoute$2$$anonfun$apply$3$$anonfun$apply$4.apply(RestHandler.scala:62)
+	at com.zte.vmax.rdk.service.RestHandler$$anonfun$runRoute$2$$anonfun$apply$3$$anonfun$apply$4.apply(RestHandler.scala:62)
+	at spray.routing.directives.RouteDirectives$$anonfun$complete$1$$anon$3.apply(RouteDirectives.scala:49)
+	at spray.routing.directives.RouteDirectives$$anonfun$complete$1$$anon$3.apply(RouteDirectives.scala:48)
+	at spray.routing.directives.BasicDirectives$$anon$3$$anonfun$happly$1.apply(BasicDirectives.scala:92)
+	at spray.routing.directives.BasicDirectives$$anon$3$$anonfun$happly$1.apply(BasicDirectives.scala:92)
+	at spray.routing.directives.ExecutionDirectives$$anonfun$detach$1$$anonfun$apply$7$$anonfun$apply$3.apply$mcV$sp(ExecutionDirectives.scala:89)
+	at spray.routing.directives.ExecutionDirectives$$anonfun$detach$1$$anonfun$apply$7$$anonfun$apply$3.apply(ExecutionDirectives.scala:89)
+	at spray.routing.directives.ExecutionDirectives$$anonfun$detach$1$$anonfun$apply$7$$anonfun$apply$3.apply(ExecutionDirectives.scala:89)
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2016-07-13 10:53:14,555 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-13 10:53:15,387 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-13 10:53:15,434 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-13 10:53:15,481 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-13 10:53:15,591 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-13 10:53:15,607 FATAL [mylib.js:4] - hello rdk 
+2016-07-13 10:53:16,125 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-13 11:58:59,854 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-13 11:58:59,854 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-13 11:58:59,869 FATAL [mylib.js:4] - hello rdk 
+2016-07-13 11:59:00,375 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-13 17:31:04,952 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-13 17:31:14,859 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-13 17:32:12,636 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-13 17:32:50,140 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-13 17:32:57,019 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-13 17:32:59,413 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-13 17:33:01,901 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-13 17:34:03,863 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-13 17:34:09,268 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-13 18:13:13,118 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-13 18:15:15,671 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-13 18:16:48,927 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-13 18:17:07,177 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-13 18:17:24,173 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-13 18:17:53,920 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-14 08:49:10,494 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-14 08:49:44,115 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-14 08:50:21,314 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-14 08:50:57,487 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-14 08:51:39,870 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-14 08:52:33,701 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-14 08:54:26,211 INFO [RunTimeHelper@example] - loading script: app/example/server/fff.js
+2016-07-14 11:34:19,966 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-14 11:34:20,124 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-14 11:34:20,124 FATAL [mylib.js:4] - hello rdk 
+2016-07-14 11:34:20,630 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-14 11:35:37,456 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-14 11:35:37,456 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-14 11:35:37,456 FATAL [mylib.js:4] - hello rdk 
+2016-07-14 11:35:38,065 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-14 11:35:43,398 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-14 11:35:43,398 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-14 11:35:43,418 FATAL [mylib.js:4] - hello rdk 
+2016-07-14 11:35:44,027 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-14 12:30:22,645 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-14 12:30:22,849 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-14 12:30:22,864 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-14 12:30:22,896 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-14 12:30:23,005 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-14 12:30:23,005 FATAL [mylib.js:4] - hello rdk 
+2016-07-14 12:30:23,538 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-14 12:31:29,630 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-14 12:31:29,865 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-14 12:31:29,880 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-14 12:31:29,943 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-14 12:31:30,021 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-14 12:31:30,037 FATAL [mylib.js:4] - hello rdk 
+2016-07-14 12:31:30,538 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-14 12:31:36,790 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-14 12:31:36,790 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-14 12:31:36,790 FATAL [mylib.js:4] - hello rdk 
+2016-07-14 12:31:37,292 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-14 12:31:58,210 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-14 12:31:58,210 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-14 12:31:58,225 FATAL [mylib.js:4] - hello rdk 
+2016-07-14 12:31:58,727 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-15 08:20:38,136 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-15 08:20:38,168 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-15 08:20:38,168 FATAL [mylib.js:4] - hello rdk 
+2016-07-15 08:20:38,680 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-15 08:23:34,115 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-15 08:23:34,115 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-15 08:23:34,130 FATAL [mylib.js:4] - hello rdk 
+2016-07-15 08:23:34,636 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-15 08:53:43,770 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-15 08:53:44,020 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-15 08:53:44,052 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-15 08:53:44,098 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-15 08:53:44,208 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-15 08:53:44,208 FATAL [mylib.js:4] - hello rdk 
+2016-07-15 08:53:44,724 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-15 15:30:13,633 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-15 15:30:13,648 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-15 15:30:13,648 FATAL [mylib.js:4] - hello rdk 
+2016-07-15 15:30:14,148 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-15 15:37:18,164 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-15 15:37:18,164 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-15 15:37:18,164 FATAL [mylib.js:4] - hello rdk 
+2016-07-15 15:37:18,664 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-15 16:15:24,242 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-15 16:15:24,351 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-15 16:15:24,351 FATAL [mylib.js:4] - hello rdk 
+2016-07-15 16:15:24,851 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-15 17:40:58,648 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-15 17:40:58,679 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-15 17:40:58,679 FATAL [mylib.js:4] - hello rdk 
+2016-07-15 17:40:59,180 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-15 17:54:58,634 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-15 17:54:58,650 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-15 17:54:58,650 FATAL [mylib.js:4] - hello rdk 
+2016-07-15 17:54:59,150 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-15 18:04:57,931 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-15 18:04:57,931 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-15 18:04:57,931 FATAL [mylib.js:4] - hello rdk 
+2016-07-15 18:04:58,431 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-15 18:06:50,134 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-15 18:06:50,150 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-15 18:06:50,166 FATAL [mylib.js:4] - hello rdk 
+2016-07-15 18:06:50,666 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-15 18:07:14,947 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-15 18:07:14,947 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-15 18:07:14,947 FATAL [mylib.js:4] - hello rdk 
+2016-07-15 18:07:15,447 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-15 18:09:56,869 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-15 18:09:56,869 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-15 18:09:56,869 FATAL [mylib.js:4] - hello rdk 
+2016-07-15 18:09:57,369 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-15 18:10:00,525 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-15 18:10:00,525 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-15 18:10:00,525 FATAL [mylib.js:4] - hello rdk 
+2016-07-15 18:10:01,025 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-15 18:10:02,681 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-15 18:10:02,681 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-15 18:10:02,681 FATAL [mylib.js:4] - hello rdk 
+2016-07-15 18:10:03,181 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-15 18:12:07,134 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-15 18:12:07,134 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-15 18:12:07,150 FATAL [mylib.js:4] - hello rdk 
+2016-07-15 18:12:07,650 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-15 18:12:08,150 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-15 18:12:08,150 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-15 18:12:08,150 FATAL [mylib.js:4] - hello rdk 
+2016-07-15 18:12:08,650 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-15 18:12:08,916 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-15 18:12:08,916 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-15 18:12:08,916 FATAL [mylib.js:4] - hello rdk 
+2016-07-15 18:12:09,416 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-15 18:14:57,478 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-15 18:14:57,478 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-15 18:14:57,478 FATAL [mylib.js:4] - hello rdk 
+2016-07-15 18:14:57,978 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-15 18:15:28,853 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-15 18:15:28,869 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-15 18:15:28,869 FATAL [mylib.js:4] - hello rdk 
+2016-07-15 18:15:29,369 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 10:43:57,871 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-16 10:43:58,715 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-16 10:43:58,746 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-16 10:43:58,856 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-16 10:43:58,981 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-16 10:43:58,996 FATAL [mylib.js:4] - hello rdk 
+2016-07-16 10:43:59,496 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 10:49:51,403 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-16 10:49:52,043 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-16 10:49:52,074 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-16 10:49:52,121 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-16 10:49:52,199 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-16 10:49:52,215 FATAL [mylib.js:4] - hello rdk 
+2016-07-16 10:49:52,731 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 10:59:47,621 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-16 10:59:48,278 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-16 10:59:48,293 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-16 10:59:48,356 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-16 10:59:48,418 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-16 10:59:48,434 FATAL [mylib.js:4] - hello rdk 
+2016-07-16 10:59:48,949 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 11:00:31,621 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-16 11:00:31,621 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-16 11:00:31,621 FATAL [mylib.js:4] - hello rdk 
+2016-07-16 11:00:32,121 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 11:06:21,965 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-16 11:06:22,606 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-16 11:06:22,621 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-16 11:06:22,668 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-16 11:06:22,762 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-16 11:06:22,778 FATAL [mylib.js:4] - hello rdk 
+2016-07-16 11:06:23,293 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 11:06:34,465 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-16 11:06:34,559 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-16 11:06:34,559 FATAL [mylib.js:4] - hello rdk 
+2016-07-16 11:06:35,059 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 11:22:48,449 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-16 11:22:48,746 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-16 11:22:48,762 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-16 11:22:48,793 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-16 11:22:48,903 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-16 11:22:48,918 FATAL [mylib.js:4] - hello rdk 
+2016-07-16 11:22:49,418 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 11:22:54,590 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-16 11:22:54,590 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-16 11:22:54,606 FATAL [mylib.js:4] - hello rdk 
+2016-07-16 11:22:55,106 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 11:22:59,434 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-16 11:22:59,434 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-16 11:22:59,434 FATAL [mylib.js:4] - hello rdk 
+2016-07-16 11:22:59,934 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 11:28:44,059 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-16 11:28:44,324 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-16 11:28:44,340 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-16 11:28:44,387 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-16 11:28:44,481 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-16 11:28:44,496 FATAL [mylib.js:4] - hello rdk 
+2016-07-16 11:28:45,012 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 11:29:06,340 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-16 11:29:06,621 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-16 11:29:06,637 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-16 11:29:06,684 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-16 11:29:06,778 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-16 11:29:06,778 FATAL [mylib.js:4] - hello rdk 
+2016-07-16 11:29:07,293 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 11:29:35,637 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-16 11:29:35,934 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-16 11:29:35,949 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-16 11:29:35,996 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-16 11:29:36,074 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-16 11:29:36,090 FATAL [mylib.js:4] - hello rdk 
+2016-07-16 11:29:36,590 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 11:56:47,434 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-16 11:56:47,715 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-16 11:56:47,746 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-16 11:56:47,809 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-16 11:56:47,903 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-16 11:56:47,903 FATAL [mylib.js:4] - hello rdk 
+2016-07-16 11:56:48,418 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 12:04:02,981 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-16 12:04:03,246 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-16 12:04:03,262 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-16 12:04:03,309 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-16 12:04:03,403 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-16 12:04:03,403 FATAL [mylib.js:4] - hello rdk 
+2016-07-16 12:04:03,918 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 12:36:23,762 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-16 12:36:24,012 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-16 12:36:24,028 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-16 12:36:24,074 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-16 12:36:24,168 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-16 12:36:24,184 FATAL [mylib.js:4] - hello rdk 
+2016-07-16 12:36:24,699 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 12:49:05,090 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-16 12:49:05,090 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-16 12:49:05,090 FATAL [mylib.js:4] - hello rdk 
+2016-07-16 12:49:05,590 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 15:26:28,387 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-16 15:26:28,621 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-16 15:26:28,637 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-16 15:26:28,668 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-16 15:26:28,715 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-16 15:26:28,731 FATAL [mylib.js:4] - hello rdk 
+2016-07-16 15:26:29,231 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 16:42:31,762 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-16 16:42:31,996 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-16 16:42:32,012 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-16 16:42:32,059 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-16 16:42:32,106 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-16 16:42:32,106 FATAL [mylib.js:4] - hello rdk 
+2016-07-16 16:42:32,621 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 16:43:22,028 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-16 16:43:22,059 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-16 16:43:22,074 FATAL [mylib.js:4] - hello rdk 
+2016-07-16 16:43:22,574 INFO [runtime_helper.js:222@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-16 16:43:43,137 INFO [RunTimeHelper@example] - loading script: app/my_first_app/server/webAnalysis.js
+2016-07-16 16:43:43,137 INFO [runtime_helper.js:222@webAnalysis.js] - loading script in js: app/example/server/mock_api.js 
+2016-07-16 16:43:43,137 ERROR [RunTimeHelper@example] - service error, message: TypeError: Cannot load script from app/example/server/mock_api.js, param={beginTime=20160701, endTime=20160710, citys=[1.0, 2.0, 3.0, 4.0]}, path=app/my_first_app/server/webAnalysis.js
+proc/utils/runtime_helper.js:223 TypeError: Cannot load script from app/example/server/mock_api.js
+	at jdk.nashorn.internal.runtime.ECMAErrors.error(ECMAErrors.java:57)
+	at jdk.nashorn.internal.runtime.ECMAErrors.typeError(ECMAErrors.java:213)
+	at jdk.nashorn.internal.runtime.ECMAErrors.typeError(ECMAErrors.java:185)
+	at jdk.nashorn.internal.runtime.ECMAErrors.typeError(ECMAErrors.java:172)
+	at jdk.nashorn.internal.runtime.Context.load(Context.java:866)
+	at jdk.nashorn.internal.objects.Global.load(Global.java:1532)
+	at jdk.nashorn.internal.scripts.Script$Recompilation$134$6265A$runtime_helper.require(proc/utils/runtime_helper.js:223)
+	at jdk.nashorn.internal.scripts.Script$Recompilation$154$52AA$webAnalysis.L:1$L:3(app/my_first_app/server/webAnalysis.js:5)
+	at jdk.nashorn.internal.scripts.Script$Recompilation$131$13974AAA$runtime_helper._callService(proc/utils/runtime_helper.js:547)
+	at jdk.nashorn.internal.runtime.ScriptFunctionData.invoke(ScriptFunctionData.java:629)
+	at jdk.nashorn.internal.runtime.ScriptFunction.invoke(ScriptFunction.java:494)
+	at jdk.nashorn.internal.runtime.ScriptRuntime.apply(ScriptRuntime.java:393)
+	at jdk.nashorn.api.scripting.ScriptObjectMirror.call(ScriptObjectMirror.java:117)
+	at com.zte.vmax.rdk.jsr.RunTimeHelper.callService(RunTimeHelper.java:89)
+	at com.zte.vmax.rdk.svr.ServiceHandler.handle(ServiceHandler.java:95)
+	at com.zte.vmax.rdk.service.RestHandler$$anonfun$runRoute$2$$anonfun$apply$3$$anonfun$apply$4.apply(RestHandler.scala:62)
+	at com.zte.vmax.rdk.service.RestHandler$$anonfun$runRoute$2$$anonfun$apply$3$$anonfun$apply$4.apply(RestHandler.scala:62)
+	at spray.routing.directives.RouteDirectives$$anonfun$complete$1$$anon$3.apply(RouteDirectives.scala:49)
+	at spray.routing.directives.RouteDirectives$$anonfun$complete$1$$anon$3.apply(RouteDirectives.scala:48)
+	at spray.routing.directives.BasicDirectives$$anon$3$$anonfun$happly$1.apply(BasicDirectives.scala:92)
+	at spray.routing.directives.BasicDirectives$$anon$3$$anonfun$happly$1.apply(BasicDirectives.scala:92)
+	at spray.routing.directives.ExecutionDirectives$$anonfun$detach$1$$anonfun$apply$7$$anonfun$apply$3.apply$mcV$sp(ExecutionDirectives.scala:89)
+	at spray.routing.directives.ExecutionDirectives$$anonfun$detach$1$$anonfun$apply$7$$anonfun$apply$3.apply(ExecutionDirectives.scala:89)
+	at spray.routing.directives.ExecutionDirectives$$anonfun$detach$1$$anonfun$apply$7$$anonfun$apply$3.apply(ExecutionDirectives.scala:89)
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2016-07-18 19:05:44,049 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-18 19:05:44,314 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-18 19:05:44,346 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-18 19:05:44,393 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-18 19:05:44,439 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-18 19:05:44,455 FATAL [mylib.js:4] - hello rdk 
+2016-07-18 19:05:44,971 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-20 16:55:56,128 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-20 16:55:56,382 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-20 16:55:56,430 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-20 16:55:56,510 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-20 16:55:56,542 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-20 16:55:56,558 FATAL [mylib.js:4] - hello rdk 
+2016-07-20 16:55:57,099 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-20 17:01:48,545 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-20 17:01:48,545 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-20 17:01:48,545 FATAL [mylib.js:4] - hello rdk 
+2016-07-20 17:01:49,050 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-21 10:23:29,275 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-21 10:23:29,291 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-21 10:23:29,291 FATAL [mylib.js:4] - hello rdk 
+2016-07-21 10:23:29,803 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-21 10:42:39,291 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-21 10:42:39,291 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-21 10:42:39,291 FATAL [mylib.js:4] - hello rdk 
+2016-07-21 10:42:39,792 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-21 15:46:15,435 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-21 15:46:15,686 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-21 15:46:15,718 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-21 15:46:15,765 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-21 15:46:15,827 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-21 15:46:15,843 FATAL [mylib.js:4] - hello rdk 
+2016-07-21 15:46:16,361 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-21 15:47:26,301 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-21 15:47:26,301 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-21 15:47:26,301 FATAL [mylib.js:4] - hello rdk 
+2016-07-21 15:47:26,803 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-21 16:58:06,114 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-21 16:58:06,284 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-21 16:58:06,301 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-21 16:58:06,335 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-21 16:58:06,352 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-21 16:58:06,352 FATAL [mylib.js:4] - hello rdk 
+2016-07-21 16:58:06,912 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-21 18:41:42,827 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-21 18:41:42,827 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-21 18:41:42,844 FATAL [mylib.js:4] - hello rdk 
+2016-07-21 18:41:43,361 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-21 19:13:48,064 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-21 19:13:48,064 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-21 19:13:48,080 FATAL [mylib.js:4] - hello rdk 
+2016-07-21 19:13:48,597 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-22 07:56:34,972 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-22 07:56:35,168 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-22 07:56:35,201 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-22 07:56:35,250 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-22 07:56:35,266 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-22 07:56:35,266 FATAL [mylib.js:4] - hello rdk 
+2016-07-22 07:56:35,840 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-22 11:36:00,526 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-22 11:36:00,714 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-22 11:36:00,730 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-22 11:36:00,776 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-22 11:36:00,808 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-22 11:36:00,808 FATAL [mylib.js:4] - hello rdk 
+2016-07-22 11:36:01,323 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-22 15:21:52,706 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-22 15:21:52,909 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-22 15:21:52,924 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-22 15:21:52,971 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-22 15:21:53,002 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-22 15:21:53,018 FATAL [mylib.js:4] - hello rdk 
+2016-07-22 15:21:53,534 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-23 15:28:02,267 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-23 15:28:02,501 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-23 15:28:02,517 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-23 15:28:02,548 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-23 15:28:02,751 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-23 15:28:02,767 FATAL [mylib.js:4] - hello rdk 
+2016-07-23 15:28:03,283 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-23 16:12:21,469 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-23 16:12:21,469 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-23 16:12:21,469 FATAL [mylib.js:4] - hello rdk 
+2016-07-23 16:12:21,969 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-25 08:29:48,463 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-25 08:29:48,573 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-25 08:29:48,573 FATAL [mylib.js:4] - hello rdk 
+2016-07-25 08:29:49,074 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-25 08:50:08,391 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-25 08:50:08,391 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-25 08:50:08,391 FATAL [mylib.js:4] - hello rdk 
+2016-07-25 08:50:08,912 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-25 08:51:39,305 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-25 08:51:39,323 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-25 08:51:39,323 FATAL [mylib.js:4] - hello rdk 
+2016-07-25 08:51:39,930 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-25 10:49:24,858 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-25 10:49:25,168 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-25 10:49:25,187 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-25 10:49:25,245 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-25 10:49:25,400 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-25 10:49:25,400 FATAL [mylib.js:4] - hello rdk 
+2016-07-25 10:49:26,039 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-25 14:30:33,484 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-25 14:30:33,751 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-25 14:30:33,766 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-25 14:30:33,798 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-25 14:30:33,970 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-25 14:30:33,986 FATAL [mylib.js:4] - hello rdk 
+2016-07-25 14:30:34,503 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-26 10:14:38,230 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-26 10:14:38,438 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-26 10:14:38,454 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-26 10:14:38,470 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-26 10:14:38,646 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-26 10:14:38,646 FATAL [mylib.js:4] - hello rdk 
+2016-07-26 10:14:39,190 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-26 10:39:02,619 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-26 10:39:02,885 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-26 10:39:02,916 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-26 10:39:02,947 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-26 10:39:03,135 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-26 10:39:03,150 FATAL [mylib.js:4] - hello rdk 
+2016-07-26 10:39:03,681 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-26 10:39:12,853 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-26 10:39:12,885 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-26 10:39:12,885 FATAL [mylib.js:4] - hello rdk 
+2016-07-26 10:39:13,385 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-26 10:40:31,072 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-26 10:40:31,072 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-26 10:40:31,072 FATAL [mylib.js:4] - hello rdk 
+2016-07-26 10:40:31,572 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-27 10:00:39,013 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-27 10:00:39,294 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-27 10:00:39,310 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-27 10:00:39,341 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-27 10:00:39,622 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-27 10:00:39,622 FATAL [mylib.js:4] - hello rdk 
+2016-07-27 10:00:40,138 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 
+2016-07-27 15:33:24,287 INFO [RunTimeHelper@example] - loading script: proc/utils/underscore-1.8.3.js
+2016-07-27 15:33:24,568 INFO [RunTimeHelper@example] - loading script: proc/utils/date.js
+2016-07-27 15:33:24,599 INFO [RunTimeHelper@example] - loading script: proc/utils/runtime_helper.js
+2016-07-27 15:33:24,630 INFO [RunTimeHelper@example] - loading script: app/example/server/my_service.js
+2016-07-27 15:33:24,755 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/mylib.js 
+2016-07-27 15:33:24,771 FATAL [mylib.js:4] - hello rdk 
+2016-07-27 15:33:25,287 INFO [runtime_helper.js:231@my_service.js] - loading script in js: app/example/server/i18n.js 

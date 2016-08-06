@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Table -> CheckBox</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='myCtrl'>
+    <rdk_table ds="ds_table" ds_url="../mockdata/table" ds_query_if="ready" setting="setting">
+          <thead>
+            <tr>
+            	<th><input type="checkbox" id="checkBoxAll" ng-click="appScope.select_all()"></th>
+                <th>姓名</th>
+                <th>职位</th>
+                <th>薪资</th>
+                <th>入职日期</th>
+                <th>部门</th>
+                <th>其他</th>
+            </tr>
+        </thead>
+    </rdk_table>
+</body>
+
+</html>

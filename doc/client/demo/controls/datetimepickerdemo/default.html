@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="vmaxtime_demo_app">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+    <link href="../../../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="../../../libs/bootstrap-select/bootstrap-select.min.css" rel="stylesheet"> 
+    <link href="../../../libs/bootstrap-datepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet"> 
+    <link href="../../../libs/codemirror/codemirror.css" rel="stylesheet" type="text/css" />
+    <link href="./datetimepickerdemo.css" rel="stylesheet"> 
+<body ng-controller="ctrl">
+    <div class="mainDiv">
+        <h3>默认配置的时间控件</h3>
+        <rdk-time></rdk-time>
+        <h3>In the HTML:</h3>
+        <ui-codemirror ui-codemirror-opts="editorOptions" ng-model="tableOption"></ui-codemirror>   
+    </div>        
+</body>
+    <script src="../../../libs/jquery/jquery-1.11.2.min.js"></script>
+    <script src="../../../libs/angular/angular.js"></script>
+    <script src="../../../libs/angular/ui-codemirror.js"></script>
+    <script src="../../../libs/bootstrap/js/bootstrap.js"></script>
+    <script src="../../../libs/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="../../../libs/bootstrap-datepicker/js/bootstrap-datetimepicker.js"></script>
+    <script src="../../../libs/codemirror/codemirror.js"></script>
+    <script src="../../../libs/codemirror/mode/javascript.js"></script>
+
+    <!-- 正式环境建议包含这个文件，加快运行速度
+    <script src="../../libs/rdk/rdk.all.js"></script>
+    -->
+    <!-- 下面代码仅仅是为了rdk demo测试方便，正式版本禁止使用 -->
+    <script src="../../rdk_src_all.js"></script>
+    <script type="text/javascript">
+        loadRDK('../../../');
+    </script>
+    
+    <script src="./default.js"></script>
+</html>

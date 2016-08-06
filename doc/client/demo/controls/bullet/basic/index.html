@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Bullet -> Basic</title>
+
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+	<script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='myCtrl' style="margin-top:20px" >
+    <h3>Sliders:{{inputScales}}</h3>
+    <hr>
+    <rdk_bullet 
+            sliders="inputScales"
+            slider_styles="[
+                    {color:'red',label:'警告',position:'down'},
+                    {color:'green',label:'轻微',position:'up'},
+                    {color:'blue',label:'严重',position:'up'},
+                    {color:'gray',label:'致命',position:'up'},
+                ]"
+            title="告警门限设置"
+            editable
+            step="1"
+            min_value="0"
+            max_value="100"
+            show_legend
+        ></rdk_bullet>
+
+         
+</body>
+
+</html>

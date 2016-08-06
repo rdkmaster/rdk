@@ -1,0 +1,44 @@
+.rdk-combo-select-module{
+    width: {{widthValue}};
+    height: {{heightValue}};
+    position: relative;
+}
+
+.rdk-combo-select-module .combo-caption{
+    display: inline-block;
+    width: {{captionWidthValue}};
+}
+
+.rdk-combo-select-module .combo-content-theme{
+    cursor: pointer!important;
+    display: inline-block;
+    width: {{themeWidth}};
+}
+
+.rdk-combo-select-module .combo-content-transclude{
+    width: {{transcludeWidth}};
+    outline: none;
+    position: absolute;
+    margin-left: {{marginLeft}};
+    z-index: 9999;
+    background-color: {{backgroundColorValue}};
+}
+
+form {
+    margin-top: 10px;
+}
+    
+h1 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+label {
+    font-weight: bold;
+}
+
+textarea {
+    font-family: "Courier New";
+    height:500px ; 
+    width:300px ;
+}

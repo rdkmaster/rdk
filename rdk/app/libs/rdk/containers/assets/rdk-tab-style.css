@@ -1,0 +1,48 @@
+.rdk-tab-module{
+	margin : 10px;
+}
+.rdk-tab-module .title li a.selected {
+	color: #008FD4;
+}
+
+.rdk-tab-module .title li a {
+	color: #333333;
+}
+
+
+.rdk-tab-module .bottom_line {
+    width: 100%;
+    height: 4px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background :#008FD4 ;
+}
+
+.rdk-tab-module .bottom_line em{
+    position:absolute;
+    bottom:-4px;
+    left:50%;
+    margin-left:-2px;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #008FD4;
+}
+
+
+.rdk-tab-module .ui-widget-header {
+    border-bottom: 1px solid #008FD4;
+    background-color: transparent;
+}
+
+.rdk-tab-module .ui-tabs .ui-tabs-nav .ui-tabs-anchor{
+	font-size: 14px;
+}
+
+.rdk-tab-module .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+	border: 0;
+	background : transparent;
+}

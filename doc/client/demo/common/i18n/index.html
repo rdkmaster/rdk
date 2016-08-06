@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>国际化例子</title>
+
+    <link rel="stylesheet" type="text/css" href="/libs/rdk/css/global.css">
+
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+
+    <script type="text/javascript">
+        require.config({
+            //注意：paths相对路径的起点是 rdk.js 文件所在目录
+            //建议将所有路径都写成绝对路径
+            paths: {
+                //页面的国际化文件配置信息
+                "i18n": '/demo/common/i18n/scripts/i18n',
+            }
+        });
+    </script>
+</head>
+
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    <div>
+        <!-- 不支持双向绑定的区域需要使用双花括号包围国际化标签 -->
+        <h1>{{i18n.hello}}</h1>
+
+        <!-- 支持双向绑定的区域不能使用双花括号包围国际化标签 -->
+        <h2 ng-bind="i18n.ready"></h2>
+
+        <span>{{i18n.time.st(time)}}</span>
+    </div>
+
+    <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
+    <!--     这个节点可选，删除后，RDK会自动生成一个    -->
+    <!--           这个节点只支持基本HTML标签           -->
+    <rdk_loading>
+        <img src="/demo/common/i18n/images/loding.gif" alt="loading..."/>
+    </rdk_loading>
+</body>
+
+</html>

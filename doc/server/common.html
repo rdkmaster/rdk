@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>common</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<h2>公共配置信息查询服务</h2>
+<p>服务URI：common/server/dim</p>
+<p>参数： key,conditions=[{&quot;key&quot;:&quot;&quot;,values:[]],其中key为必选条件</p>
+<p>使用方法：例如，</p>
+<ul>
+<li>需要提供关于city的配置信息服务</li>
+</ul>
+<p>配置common文件夹下conf/dim_conf.js</p>
+<pre><code>  (function() {
+    return {
+            &quot;city&quot; : &quot;select city_id,city_name from dim_comm_city&quot;
+    }
+   })();
+</code></pre>
+
+<p>前端访问 common/server/dim?key=city 返回值为</p>
+<pre><code> { 
+    &quot;key&quot;:&quot;city&quot;,
+    &quot;result&quot;:[
+            { 
+            &quot;city_id&quot;:0,
+            &quot;city_name&quot;:&quot;unknown&quot;
+            }
+        ]
+ }
+</code></pre>
+
+<ul>
+<li>
+<p>同时需要配置ci的配置信息服务
+在common文件夹下conf/dim.conf.js里面加上</p>
+<p>&quot;ci&quot; : &quot;select ci,ciname from dim_ci where city in ( #city# )&quot;</p>
+</li>
+</ul>
+<p>前端访问 common/server/dim?key=ci&amp;conditions=[{&quot;key&quot;:&quot;city&quot;,&quot;value&quot;:[0]}]} </p>
+<h2>Util工具类</h2>
+<p>使用方式： </p>
+<blockquote>
+<p>var commonLib = require(&quot;app/common/server/util/util.js&quot;);</p>
+<p>commonLib.methodName(params);</p>
+</blockquote>
+<h3>padLeft</h3>
+<p>定义：</p>
+<pre><code>function padLeft(str, length);
+</code></pre>
+
+<p>参数：</p>
+<ul>
+<li>str: 原始字符串</li>
+<li>length : 最终形成的字符串的位数</li>
+</ul>
+<p>返回：按照位数将原始字符串左边以0补齐。   </p>
+<p>说明：无</p>
+<h3>transIP</h3>
+<p>定义：</p>
+<pre><code>function transIP(str);
+</code></pre>
+
+<p>参数：</p>
+<ul>
+<li>str: 原始字符串,IP的十六进制格式，如0A0B0C0D</li>
+</ul>
+<p>返回：十六进制格式转换为点分制 如   10.11.12.13</p>
+<p>说明：无</p>
+<h3>transRate</h3>
+<p>定义：</p>
+<pre><code>function transRate(value, fixed);
+</code></pre>
+
+<p>参数：</p>
+<ul>
+<li>value: 字符串</li>
+<li>fiexed: 保留几位小数</li>
+</ul>
+<p>返回：保留几位小数后的字符串，例如transRate(10.11111,2)，最后返回10.11</p>
+<p>说明：无</p>
+<h2>TableUtil工具类</h2>
+<p>使用方式： </p>
+<blockquote>
+<p>var tableLib = require('app/common/server/util/tableUtil.js');</p>
+<p>tableLib.methodName(params);</p>
+</blockquote>
+<h3>generateTableNames</h3>
+<p>定义：</p>
+<pre><code>function generateTableNames(baseTableName, beginTime, endTime, granularity);
+</code></pre>
+
+<p>参数：</p>
+<ul>
+<li>baseTableName: 核心网侧的基础表名,如aggr_volte_abnormal_handover</li>
+<li>beginTime: 开始时间</li>
+<li>endTime:结束时间</li>
+<li>granularity：粒度， &quot;3&quot;、&quot;4&quot;、&quot;5&quot;、&quot;6&quot;，3和4均表示按周分表，5表示按月分表，6表示按年分表</li>
+</ul>
+<p>返回：数据库中存在的以baseTableName为基础列表，并以granularity为分表，存储的数据在beginTime和endTime之间的并且在数据库中存在的表名数组。</p>
+<p>说明：无</p>
+<h3>generateUnionSQL</h3>
+<p>定义：</p>
+<pre><code>function generateUnionSQL(baseSql, tableNames);
+</code></pre>
+
+<p>参数：</p>
+<ul>
+<li>baseSql: 基础SQL</li>
+<li>tableNames: 表名数组</li>
+</ul>
+<p>返回：将基础SQL中的#tableName#以tableNames数组中的具体值替代，并拼接 union all 之后返回。</p>
+<p>说明：比如说 generateUnionSQL(&quot;select * from #tableName#&quot;,[&quot;base_table_1&quot;,&quot;base_table_2&quot;])，则返回 select * from base_table_1 union all select * from base_table_2</p>
+<h3>existTable</h3>
+<p>定义：</p>
+<pre><code>function existTable(tableName);
+</code></pre>
+
+<p>参数：</p>
+<ul>
+<li>tableName: 表名</li>
+</ul>
+<p>返回：判断gbase库中是否存在该表，存在则返回true,不存在则返回false</p>
+<p>说明：无</p>
+<h3>generatePagingSQL</h3>
+<p>定义：</p>
+<pre><code>function generatePagingSQL(baseSql, pageSize, pageNum);
+</code></pre>
+
+<p>参数：</p>
+<ul>
+<li>baseSql:  基础SQL</li>
+<li>pageSize:分页大小</li>
+<li>pageNum: 第几页</li>
+</ul>
+<p>返回：按照基础SQL和分页大小以及第几页的分页SQL语句</p>
+<p>说明：无</p>
+<h3>generatePagingSQLCount</h3>
+<p>定义：</p>
+<pre><code>function generatePagingSQLCount(baseSql);
+</code></pre>
+
+<p>参数：</p>
+<ul>
+<li>baseSql:  基础SQL</li>
+</ul>
+<p>返回：返回求基础SQL所得记录数的条数的SQL</p>
+<p>说明：无</p>
+<h3>generatePagingObject</h3>
+<p>定义：</p>
+<pre><code>function generatePagingObject(totalRecord,currentPage,pageSize);
+</code></pre>
+
+<p>参数：</p>
+<ul>
+<li>totalRecord:  总记录数</li>
+<li>currentPage:  现在的页数</li>
+<li>pageSize: 单页条数</li>
+</ul>
+<p>返回：返回对象 {totalRecord: , currentPage: ,pageSize: , totalPageNum:}</p>
+<p>说明：无</p>
+<h2>DateUtil工具类</h2>
+<h3>getFirstDateOfWeek</h3>
+<p>定义：</p>
+<pre><code>function getFirstDateOfWeek(date);
+</code></pre>
+
+<p>参数：</p>
+<ul>
+<li>date:  时间</li>
+</ul>
+<p>返回：返回一周的第一天</p>
+<p>说明：无</p>
+<h3>getFirstDate</h3>
+<p>定义：</p>
+<pre><code>function getFirstDate(interval, date);
+</code></pre>
+
+<p>参数：</p>
+<ul>
+<li>interval:  粒度，week ,month,year</li>
+<li>date : 时间</li>
+</ul>
+<p>返回：返回 interval 粒度的第一天</p>
+<p>说明：无</p>
+<h3>getNumOfYear</h3>
+<p>定义：</p>
+<pre><code>function getNumOfYear(interval, date);
+</code></pre>
+
+<p>参数：</p>
+<ul>
+<li>interval:  粒度，week ,month</li>
+<li>date : 时间</li>
+</ul>
+<p>返回：返回 该日期为一年内的第多少周或者多少月</p>
+<p>说明：无</p>
+<h3>getWeekOfYear</h3>
+<p>定义：</p>
+<pre><code>function getWeekOfYear(date);
+</code></pre>
+
+<p>参数：</p>
+<ul>
+<li>date : 时间</li>
+</ul>
+<p>返回：返回 该日期为一年内的第多少周</p>
+<p>说明：无</p>
+<h3>dateDiff</h3>
+<p>定义：</p>
+<pre><code>function dateDiff(interval, date1, date2);
+</code></pre>
+
+<p>参数：</p>
+<ul>
+<li>interval : 粒度 year，month，d(天)，week（周）,h（小时）,n（分钟）,s（秒）,l（毫秒）</li>
+<li>date1 : 开始时间</li>
+<li>date2 : 结束时间</li>
+</ul>
+<p>返回：返回 开始时间和结束日期之间所相差的粒度</p>
+<p>说明：无</p>
+<h3>dateAdd</h3>
+<p>定义：</p>
+<pre><code>function dateAdd(date, strInterval, Number);
+</code></pre>
+
+<p>参数：</p>
+<ul>
+<li>date : 时间</li>
+<li>strInterval : s（second）秒、n分钟、h小时、d天、w(week)周、q季度、m（month)月，y（year)年</li>
+<li>Number : 个数，正负数均可</li>
+</ul>
+<p>返回：返回 时间增加Number个粒度的时间</p>
+<p>说明：无</p>
+<div title="后端服务API" id="__hidden__">
+<script src="utils/misc.js"></script>
+</div>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

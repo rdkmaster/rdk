@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>demo 4 basic</title>
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+    <style type="text/css">
+      .modalcss{
+        background-color:#fff !important;
+        /*border:1px solid #ff0000 !important;*/
+        width:400px !important;
+        height:100px !important;
+      }
+    </style>
+</head>
+
+<body ng-controller='myCtrl'>
+  <button ng-click="setmodal('topModal', 'modal', {x:100, y:100})">单击弹出模态框</button>
+
+  <div id="topModal" rdk_modal="hide" class="modalcss">
+    <strong>模态框/非模态框 demo 演示</strong>
+    <button ng-click="setmodal('topModal', 'hide')">close</button>
+    <button ng-click="setmodal('subModal', 'modal', {x:200,y:200})">show sub modal</button>
+  </div>
+
+  <div id="subModal" rdk_modal="hide" class="modalcss">
+    <strong>模态框/非模态框 demo 演示</strong>
+    <button ng-click="setmodal('subModal', 'hide')">close</button>
+  </div>
+
+</body>
+
+</html>

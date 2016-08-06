@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>数据源 -> with select</title>
+
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='rdk_ctrl'>
+    name: <select ds="ds_user" ds_url="../mockdata/user_list" ds_query_if="ready"
+        ng-options="ds_user.name for ds_user in ds_user" ng-model="myUser">
+      <option value="">-- choose a user --</option>
+    </select>
+    id: <input ng-model="myUser.id">
+</body>
+
+</html>

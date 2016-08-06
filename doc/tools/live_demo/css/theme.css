@@ -1,0 +1,612 @@
+/*
+ *DefaultTheme é»˜è®¤æ¨¡å¼ä¸»é¢˜
+ *Author:Designed By HappySha 
+ */
+.DefaultTheme .activeline {
+	background: #e8f2ff !important;
+}
+
+.DefaultTheme .red {
+	color: #a00;
+}
+
+.DefaultTheme .header {
+	-webkit-box-shadow: 0px 4px 6px #ccc;
+	-moz-box-shadow: 0px 4px 6px #ccc;
+	box-shadow: 0px 4px 6px #ccc;
+}
+
+.DefaultTheme .explorer {
+	border: 1px solid #CCC;
+	border-top: none;
+	background-color: #fff;
+	-webkit-box-shadow: 0px 0px 6px #ccc;
+	-moz-box-shadow: 0px 0px 6px #ccc;
+	box-shadow: 0px 0px 6px #ccc;
+}
+
+.DefaultTheme .editorSet .editor {
+	border: 1px solid #ADADAD;
+	-webkit-box-shadow: inset 0 1px 3px #E4E4E4;
+	-moz-box-shadow: inset 0 1px 3px #E4E4E4;
+	box-shadow: inset 0 1px 3px #E4E4E4;
+}
+/*-----codeMirror-----*/
+.DefaultTheme .CodeMirror {
+	background-color: #fff;
+}
+
+/*-----Menu-----*/
+.DefaultTheme .headerMenu {
+	background: url(../img/bg.gif) bottom repeat-x;
+}
+
+.DefaultTheme .menuItem {
+	color: #FFF;
+}
+
+.DefaultTheme .toolItem {
+	color: #333;
+}
+
+
+.DefaultTheme .toolItem a{
+	color: #333;
+	text-decoration: none;
+}
+
+
+/*----Explorer----*/
+.DefaultTheme .explorer .title {
+	color: #333;
+}
+
+.DefaultTheme .explorer .maintitle {
+	border-bottom: 1px solid #ddd;
+}
+
+.DefaultTheme .add_project {
+	background: url("../img/runjs_icon.gif") 5px -88px no-repeat;
+}
+
+.DefaultTheme .projects .prj_selected .title {
+	color: #000;
+}
+
+.DefaultTheme .project .title .title_name {
+	color:#333
+}
+
+.DefaultTheme .resources .dropped .title .title_name {
+	background: url('../img/runjs_icon.gif') 0 -49px no-repeat;
+}
+
+.DefaultTheme .resources .title .title_name {
+	background: url('../img/runjs_icon.gif') 0 -20px no-repeat;
+}
+
+.DefaultTheme .projects .catalog.dropped .title .title_name {
+	background: url('../img/runjs_icon.gif') 0 -49px no-repeat;
+}
+
+.DefaultTheme .projects .catalog .title .title_name {
+	background: url('../img/runjs_icon.gif') 0 -20px no-repeat;
+}
+
+.DefaultTheme .project .title .rename {
+	color: #175977;
+	background: url('../img/runjs_icon.gif') 9px 8px no-repeat;
+}
+
+.DefaultTheme .versions .version a {
+	color: #000;
+}
+
+.DefaultTheme .versions .description{
+	color: #000;
+}
+
+.DefaultTheme .versions .description .dtitle{
+	color:#A00;
+}
+
+.DefaultTheme .version a.current {
+	color: #A00;
+}
+
+.DefaultTheme .project a.delete {
+	color: #FFF;
+	background: url("../img/runjs_icon.gif") 8px 8px no-repeat;
+}
+
+.DefaultTheme .resources a.rdelete {
+	color: #666;
+}
+
+.DefaultTheme .resources a:hover.rdelete {
+	color: #000;
+}
+
+.DefaultTheme .project .selected {
+	color: #6aa8c5;
+}
+
+.DefaultTheme #image_preview {
+	border: solid 1px #D3D4D5;
+}
+
+/*-----Custom Controls-----*/
+.DefaultTheme .quick_tools span:hover{
+	text-decoration: underline;
+	color:#000;
+}
+
+.DefaultTheme .quick_tools span a:hover{
+	color:#000;
+}
+
+
+.DefaultTheme .btn {
+	border: 1px solid rgb(24, 90, 122);
+}
+
+.DefaultTheme .code_url {
+	color: #175977;
+}
+
+.DefaultTheme .aTheme {
+	color: #175977;
+}
+
+.DefaultTheme .arrow_bottom {
+	border-color: transparent #FFF transparent transparent;
+}
+
+.DefaultTheme .arrow_bottom_blue {
+	border-color: transparent #999 transparent transparent;
+}
+
+.DefaultTheme .menuItem .btn a {
+	color: #FFF;
+}
+
+.DefaultTheme .btnGroup {
+	-webkit-box-shadow: inset 0px 1px 1px white, 0 1px 3px #306F8C;
+	-moz-box-shadow: inset 0px 1px 1px white, 0 1px 3px #306F8C;
+	box-shadow: inset 0px 1px 1px white, 0 1px 3px #306F8C;
+}
+
+.DefaultTheme .btn_shadow {
+	-webkit-box-shadow: inset 0px 1px 1px rgba(255, 255, 255, .2), 0 1px 3px
+		#306F8C;
+	-moz-box-shadow: inset 0px 1px 1px rgba(255, 255, 255, .2), 0 1px 3px
+		#306F8C;
+	box-shadow: inset 0px 1px 1px rgba(255, 255, 255, .2), 0 1px 3px #306F8C;
+}
+
+.DefaultTheme .menuItem .select {
+	border: 1px solid #185A7A;
+}
+
+.DefaultTheme .menuItem .select ul li a {
+	color: rgb(51, 51, 51);
+}
+
+.DefaultTheme .toolItem .select ul {
+	border: 1px solid #adadad;
+}
+
+.DefaultTheme .toolItem .select ul li:hover {
+	background-color: #EEE;
+}
+
+.DefaultTheme .toolItem .select .title {
+	border: 1px solid #adadad;
+}
+
+.DefaultTheme .select ul {
+	background-color: #FFF;
+}
+
+.DefaultTheme .mainproject,.DefaultTheme .mainresource {
+	border: 1px solid #ddd;
+}
+
+.DefaultTheme .setting_menu,.DefaultTheme .setting_menu ul.sub_menu {
+	border: 1px solid #ddd;
+	background-color: #fff;
+	-webkit-box-shadow: 3px 3px 6px #eee;
+	-moz-box-shadow: 3px 3px 6px #eee;
+	box-shadow: 3px 3px 6px #eee;
+}
+
+.DefaultTheme .setting_menu ul {
+	border-bottom: 1px solid #ddd;
+}
+
+.DefaultTheme .setting_menu ul li {
+	color: #454545;
+}
+
+.DefaultTheme .setting_menu ul li:hover {
+	color: #000;
+	background-color: #eee;
+}
+
+.DefaultTheme .setting_menu span {
+	color: #999;
+}
+
+.DefaultTheme .setting_menu em:hover {
+	color: #f00;
+}
+/*-----ZebraDialog-----*/
+.DefaultTheme .ZebraDialog {
+	background: #FFF;
+	color: #222;
+	-webkit-box-shadow: 0px 0px 0px 1px #175977;
+	-moz-box-shadow: 0px 0px 0px 1px #175977;
+	box-shadow: 0px 0px 0px 1px #175977;
+	*border: 1px solid #666; /* IE6 & 7 */
+	border: 1px solid #666\9; /* IE8 */
+}
+
+.DefaultTheme .ZebraDialog .ZebraDialog_Title {
+	background: #175977;
+	color: #FFF;
+}
+
+.DefaultTheme .ZebraDialog .ZebraDialog_Buttons {
+	background: #E5E5E5;
+	border-top: 1px solid #DADADA;
+}
+
+.DefaultTheme .ZebraDialog .ZebraDialog_Buttons a {
+	color: #000;
+	background: transparent;
+	border: 1px solid #AAA;
+}
+
+.DefaultTheme .ZebraDialog .ZebraDialog_Buttons a:hover {
+	background: #717366;
+	color: #FFF
+}
+
+.DefaultTheme .handler_horizontal {
+	background: url(../img/handle-h.png) 50% 3px no-repeat;
+}
+
+.DefaultTheme .handler_vertical {
+	background: url(../img/handle-v.png) 50% 50% no-repeat;
+}
+
+.DefaultTheme .fold_control.on {
+	background: url(../img/l.png) 0px 50% no-repeat;
+}
+.DefaultTheme .fold_control.off {
+	background: url(../img/r.png) 0px 50% no-repeat;
+}
+/*
+ *NightTheme é»‘å¤œæ¨¡å¼ä¸»é¢˜
+ *Author:Designed By HappySha 
+ *Since:2012å¹´9æœˆ25æ—¥
+ */
+ 
+ .NightTheme .activeline {
+	background: #333 !important;
+}
+
+.NightTheme .red {
+	color: rgb(222, 189, 0);
+}
+
+.NightTheme {
+	background-color: rgb(44, 52, 55);
+}
+
+.NightTheme .header {
+	-webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 0px 1px 3px rgba(0, 0, 0, .2);
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, .2);
+}
+
+.NightTheme .explorer {
+	border-right: none; -webkit-box-shadow : 0px 1px 6px rgba( 0, 0, 0, .7);
+	-webkit-box-shadow: 0px 1px 6px rgba(0, 0, 0, .7);
+	-moz-box-shadow: 0px 1px 6px rgba(0, 0, 0, .7);
+	box-shadow: 0px 1px 6px rgba(0, 0, 0, .7);
+	background-color: #fff;
+}
+
+.NightTheme .editorSet .editor {
+	border: 1px solid rgb(22, 26, 27);
+	-webkit-box-shadow: inset 0 1px 3px rgb(22, 26, 27);
+	-moz-box-shadow: inset 0 1px 3px rgb(22, 26, 27);
+	box-shadow: inset 0 1px 3px rgb(22, 26, 27);
+}
+/*-----codeMirror-----*/
+.NightTheme .CodeMirror {
+	background-color: #fff;
+}
+
+/*-----Menu-----*/
+.NightTheme .headerMenu {
+	background: url(../img/bg-black.gif) repeat-x;
+}
+
+.NightTheme .menuItem {
+	color: #FFF;
+}
+
+.NightTheme .toolItem {
+	color: #FFF;
+}
+
+
+.NightTheme .toolItem a{
+	color: #FFF;
+	text-decoration: none;
+}
+
+
+/*----Explorer----*/
+.NightTheme .explorer {
+	background-color: rgb(51, 59, 61);
+}
+
+.NightTheme .explorer .title {
+	color: #CCC;
+}
+
+.NightTheme .explorer .maintitle {
+	border-bottom: 1px solid rgb(38, 51, 57);
+	color: #FFF;
+}
+
+.NightTheme .add_project {
+	background: url("../img/runjs_icon-black.gif") 5px -88px no-repeat;
+}
+
+.NightTheme .resources .dropped .title .title_name {
+	background: url('../img/runjs_icon-black.gif') 0 -49px no-repeat;
+}
+
+.NightTheme .resources .title .title_name {
+	background: url('../img/runjs_icon-black.gif') 0 -20px no-repeat;
+}
+
+
+.NightTheme .projects .catalog.dropped .title .title_name {
+	background: url('../img/runjs_icon-black.gif') 0 -49px no-repeat;
+}
+
+.NightTheme .projects .catalog .title .title_name {
+	background: url('../img/runjs_icon-black.gif') 0 -20px no-repeat;
+}
+
+
+.NightTheme .project .title, .NightTheme .project .title a{
+	color: #CCC;
+}
+
+.NightTheme .prj_selected  .title a{
+	color: #DEBD00;
+}
+
+.NightTheme .project .title .rename {
+	color: #175977;
+	background: url('../img/runjs_icon-black.gif') 9px 8px no-repeat;
+}
+
+.NightTheme .versions .version a {
+	color: #CCC;
+}
+
+.NightTheme .versions .description {
+	color: #CCC;
+}
+
+.NightTheme .versions .description .dtitle{
+	color: #DEBD00;
+}
+
+.NightTheme .version a.current {
+	color: rgb(222, 189, 0);
+}
+
+.NightTheme .project a.delete {
+	color: #FFF;
+	background: url("../img/runjs_icon-black.gif") 8px 8px no-repeat;
+}
+
+.NightTheme .resources a.rdelete {
+	color: #666;
+}
+
+.NightTheme .resources a:hover.rdelete {
+	color: #FFF;
+}
+
+.NightTheme .project .selected {
+	color: #6aa8c5;
+}
+
+.NightTheme #image_preview {
+	border: solid 1px #D3D4D5;
+}
+
+.NightTheme .explorer li.tip {
+	color: #FFF;
+}
+
+.NightTheme .explorer li.tip a{
+	color:#DEBD00;
+}
+
+.NightTheme .resources li.tip a {
+	
+}
+/*-----Custom Controls-----*/
+.NightTheme .btn {
+	border: 1px solid rgb(22, 16, 24);
+}
+
+.NightTheme .code_url {
+	color: #175977;
+}
+
+.NightTheme .aTheme {
+	color: #175977;
+}
+
+.NightTheme .arrow_bottom {
+	border-color: transparent #FFF transparent transparent;
+}
+
+.NightTheme .arrow_bottom_blue {
+	border-color: transparent #FFF transparent transparent;
+}
+
+.NightTheme .menuItem .btn a {
+	color: #FFF;
+}
+
+.NightTheme .btnGroup {
+	-webkit-box-shadow: inset 0px 1px 1px rgb(170, 170, 170), 0 1px 3px
+		rgb(22, 34, 40);
+	-moz-box-shadow: inset 0px 1px 1px rgb(170, 170, 170), 0 1px 3px
+		rgb(22, 34, 40);
+	box-shadow: inset 0px 1px 1px rgb(170, 170, 170), 0 1px 3px
+		rgb(22, 34, 40);
+}
+
+.NightTheme .btn_shadow {
+	-webkit-box-shadow: inset 0px 1px 1px rgba(255, 255, 255, .2), 0 1px 3px
+		rgb(22, 34, 40);
+	-moz-box-shadow: inset 0px 1px 1px rgba(255, 255, 255, .2), 0 1px 3px
+		rgb(22, 34, 40);
+	box-shadow: inset 0px 1px 1px rgba(255, 255, 255, .2), 0 1px 3px
+		rgb(22, 34, 40);
+}
+
+.NightTheme .menuItem .select {
+	border: 1px solid #161018;
+}
+
+.NightTheme .menuItem .select ul li a {
+	color: #fff;
+}
+
+.NightTheme .toolItem .select ul,.NightTheme .menuItem .select ul {
+	border: 1px solid rgb(23, 34, 40);
+}
+
+.NightTheme .toolItem .select ul li:hover,.NightTheme .menuItem .select ul li:hover
+	{
+	background-color: rgb(102, 102, 102);
+}
+
+.NightTheme .toolItem .select .title {
+	border: 1px solid rgb(28, 36, 38);
+	background-color: rgb(52, 62, 64);
+}
+
+.NightTheme .select ul {
+	background-color: rgb(44, 52, 55);
+}
+
+.NightTheme .mainproject,.NightTheme .mainresource {
+	border: 1px solid rgb(38, 51, 57);
+}
+
+.NightTheme .setting_menu,.NightTheme .setting_menu ul.sub_menu {
+	border: 1px solid rgb(34, 39, 42);
+	background-color: rgb(61, 69, 72);
+	-webkit-box-shadow: 3px 3px 6px rgb(34, 39, 42);
+	-moz-box-shadow: 3px 3px 6px rgb(34, 39, 42);
+	box-shadow: 3px 3px 6px rgb(34, 39, 42);
+}
+
+.NightTheme .setting_menu ul {
+	border-bottom: 1px solid rgb(34, 39, 42);
+}
+
+.NightTheme .setting_menu ul li {
+	color: #FFF;
+}
+
+.NightTheme .setting_menu ul li:hover {
+	color: #FFF;
+	background-color: #333;
+}
+
+.NightTheme .setting_menu span {
+	color: #999;
+}
+
+.NightTheme .setting_menu em:hover {
+	color: #f00;
+}
+
+/*-----ZebraDialog-----*/
+.NightTheme .ZebraDialog {
+	background: #FFF;
+	color: #222;
+	-webkit-box-shadow: 0px 0px 0px 1px rgb(41, 58, 65);
+	-moz-box-shadow: 0px 0px 0px 1px rgb(41, 58, 65);
+	box-shadow: 0px 0px 0px 1px rgb(41, 58, 65);
+	*border: 1px solid #666; /* IE6 & 7 */
+	border: 1px solid #666\9; /* IE8 */
+}
+
+.NightTheme .ZebraDialog .ZebraDialog_Title {
+	background: rgb(41, 58, 65);
+	color: #FFF;
+}
+
+.NightTheme .ZebraDialog .ZebraDialog_Buttons {
+	background: #E5E5E5;
+	border-top: 1px solid #DADADA;
+}
+
+.NightTheme .ZebraDialog .ZebraDialog_Buttons a {
+	color: #000;
+	background: transparent;
+	border: 1px solid #AAA;
+}
+
+.NightTheme .ZebraDialog .ZebraDialog_Buttons a:hover {
+	background: #717366;
+	color: #FFF
+}
+
+.NightTheme .handler_horizontal {
+	background: url(../img/handle-h-b.png) 50% 3px no-repeat;
+}
+
+.NightTheme .handler_vertical {
+	background: url(../img/handle-v-b.png) 50% 50% no-repeat;
+}
+
+.NightTheme .fold_control.on {
+	background: url(../img/bl.png) 0px 50% no-repeat;
+}
+
+.NightTheme .fold_control.off {
+	background: url(../img/br.png) 0px 50% no-repeat;
+}
+
+.NightTheme .quick_tools span:hover{
+	text-decoration: underline;
+	color:#FFF;
+}
+
+.NightTheme .quick_tools span a:hover{
+	color:#FFF;
+}
+
+.btn.new_version {
+	border-left: none;
+	border-right: none;
+}
+

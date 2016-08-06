@@ -1,0 +1,9 @@
+body {
+	background-color: white
+}
+
+div {
+	width:300px;
+	border: 2px solid #ccc;
+	padding:5px;
+}

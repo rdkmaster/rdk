@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Map</title>
+
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/libs/rdk/rdk" src="/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //页面的国际化文件配置信息
+                "echarts": '/libs/echarts/echarts3.common.min.modified',
+            }
+        });
+    </script>
+</head>
+
+<body ng-controller='myCtrl' style="width:800px;margin:0 auto">
+    <button ng-click="setMarkPoint()" ds="markPoint" ds-url="/demo/controls/map/visualMap/data/markPoint.json">给地图添加MarkPoint</button>
+    <rdk_map id="gis" ds="colorMap"  ds-url="/demo/controls/map/visualMap/data/colorMap.json"  query_if="ready" map_define="/demo/controls/map/visualMap/scripts/graph_define/map.js" map="'/demo/controls/map/visualMap/data/jilin.json'"></rdk_map>
+</body>
+
+</html>

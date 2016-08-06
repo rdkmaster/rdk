@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        
+	    <!--
+	      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+	    -->
+	    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+	    <script src="scripts/main.js"></script>
+    </head>
+
+    <body ng-controller="tabselectCtrl">
+    	<div><strong>tabselect demo</strong></div>
+    	<rdk_tab_select caption="'新标题'" open="true" selected_items="selItems" track_item_by="{{trackItemByVal}}" searchable='false' label_field='label' node_field='dim' data='tabselectData'></rdk_tab_select>
+
+    	<!-- <rdk_tab_select caption="'新标题'" open="true" selected_items="selItems" track_item_by="trackItemByVal" searchable='false' label_field='label' node_field='dim' data='tabselectData'></rdk_tab_select> -->
+    </body>
+</html>

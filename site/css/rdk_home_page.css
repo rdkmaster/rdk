@@ -1,0 +1,244 @@
+*{
+	margin: 0;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+body{
+	font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","WenQuanYi Micro Hei",sans-serif;
+	font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #fff;
+}
+.height100,body,html{
+	height: 100%;
+}
+.container{
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-right: auto;
+	margin-left: auto;
+}
+.center{
+	display: block;
+	padding-right: 15px;
+	padding-left: 15px;
+}
+.col-md-1,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-8,.col-md-9,.col-md-10,.col-md-11,.col-md-12{
+	float: left;
+}
+
+.col-md-12{width: 100%;}
+.col-md-11{width: 91.6666666666%;}
+.col-md-10{width: 83.333333333%;}
+.col-md-9{width: 75%;}
+.col-md-8{width: 66.666666666666666%;}
+.col-md-7{width: 58.33333333333333%;}
+.col-md-6{width: 50%;}
+.col-md-5{width: 41.6666666666%;}
+.col-md-4{width: 33.333333333%;}
+.col-md-3{width: 25%;}
+.col-md-2{width: 16.666666666%;}
+.col-md-1{width: 8.33333333333%;}
+.col-md-offset-7{margin-left: 58.333333%}
+.chearfix:after,.chearfix:before{
+	content: "";
+	display: table;
+}
+.chearfix:after{
+	clear: both;
+}
+li{
+	list-style: none;
+	text-align: center;
+}
+a{
+	text-decoration: none;
+}
+.container{
+	width: 100%
+}
+header{
+	padding: 10px 0 ;
+	background-color: #101010;
+}
+header>nav>ul>li:first-child{
+	font-weight: bold;
+}
+header>nav>ul>li>a{
+	color: #9d9d9d;
+}
+header>nav>ul>li>a:hover,
+header>nav>ul>li>a:focus{
+	background-color: transparent;
+	color: #fff;
+}
+.content{
+	text-align: center;
+	text-shadow: 0 1px 3px rgba(0,0,0,.4),0 0 30px rgba(0,0,0,.075);
+	background: linear-gradient(45deg,#020031,#6d3353);
+	box-shadow: inset 0 3px 7px rgba(0,0,0,.2),inset 0 -3px 7px rgba(0,0,0,.2);
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+}
+h1{
+	font-size: 100px;
+	font-weight: 700;
+	color: #fff;
+}
+h2{
+	font-size: 30px;
+	font-weight: 500;
+	color: #fff;
+}
+.download{
+	margin-top: 30px;
+	line-height: 1.25;
+	padding-bottom: 100px;
+}
+.button{
+	box-shadow: inset 0 -4px 0 #2a6496;
+    border: 0;
+    color: #fff;
+    padding: 13px 35px 17px;
+    transition: all .2s ease-in-out;
+    background-color: #337ab7;
+    border-radius: 6px;
+    line-height: 1.3333333;
+    display: inline-block;
+}
+.button:hover{
+	background-color: #2a6496;
+}
+.manual{
+	text-align: center;
+	min-height:-o-calc(100% - 600px);
+	min-height:-moz-calc(100% - 600px);
+	min-height:-webkit-calc(100% - 600px);
+	min-height: calc(100% - 600px);
+}
+
+.manual-item{
+	border: 1px solid #ddd;
+    height: 200px;
+    line-height: 30px;
+    padding: 30px 15px;
+}
+.manual-item>h3{
+	font-size: 20px;
+	color: #337ab7;
+	transition: all .2s ease-in-out;
+}
+.manual-item>h3:hover{
+	color: #2a6496;
+	cursor: pointer;
+}
+.manual-item>p{
+	color:#555; 
+}
+.manual-item a{
+	color:#555;
+}
+footer img{
+	vertical-align: middle;
+}
+footer h3 ,footer p{
+	color: #6d3353;
+	font-size: 23px;
+	margin-left: 16.666666666%;
+}
+.marginTop0{
+	margin-top: 10px;
+}
+.marginTop1{
+	margin-top: 20px;
+}.marginTop2{
+	margin-top: 40px;
+}.marginTop3{
+	margin-top: 60px;
+}.marginTop4{
+	margin-top: 80px;
+}.marginTop5{
+	margin-top: 100px;
+}
+.marginBottom3{
+	margin-bottom: 60px;
+}
+.opacity{
+	opacity: .7;
+}
+.aniMargin{
+	-webkit-animation: aniMargin 1s;
+	animation: aniMargin 1s;
+}
+.aniFillMode{
+	-webkit-animation-fill-mode:both;
+	animation-fill-mode:both;
+	    min-width: 200px; 
+	    	width: 20%;
+}
+@media(min-width: 768px){
+	.aniFillMode{
+		width: 50%;
+	}
+}
+@media(min-width: 992px){
+	.aniFillMode{
+		width: 33.33333333%;
+	}
+}
+@media(min-width: 1200px){
+	.aniFillMode{
+		width: 20%;
+	}
+}
+@media(min-width: 768px){
+	.mainWhite{
+		width: 750px;
+	}
+}
+@media(min-width: 992px){
+	.mainWhite{
+		width: 970px;
+	}
+}
+@media(min-width: 1200px){
+	.mainWhite{
+		width: 1170px;
+	}
+}
+
+@-webkit-keyframes aniMargin /* Safari 和 Chrome */
+{
+100% {margin-top: 0;opacity: 1;}
+}
+
+@keyframes aniMargin
+{
+100% {margin-top: 0;opacity: 1;}
+}
+
+.aniStir{
+	-webkit-animation: aniStir 1s;
+	animation: aniStir 1s;
+}
+
+@-webkit-keyframes aniStir /* Safari 和 Chrome */
+{
+	0%{transform: rotateY(0deg);}
+	25%{transform: rotateY(30deg);}
+	50%{transform: rotateY(0deg);}
+	75%{transform: rotateY(-30deg);}
+	100% {transform: rotateY(0deg);}
+}
+
+@keyframes aniStir /* Safari 和 Chrome */
+{
+	0%{transform: rotateY(0deg);}
+	25%{transform: rotateY(30deg);}
+	50%{transform: rotateY(0deg);}
+	75%{transform: rotateY(-30deg);}
+	100% {transform: rotateY(0deg);}
+}

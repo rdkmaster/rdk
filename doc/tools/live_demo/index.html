@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="description" content="RunJS,在线编写、展示html、js、css代码，拥有实时预览、分享、Fork、代码高亮、自动完成等多项特性，提供文件上传、多种登录方式。" />
+<meta name="keywords" content="RunJS runjs JavaScript CSS HTML 在线运行 展示 效果"/>
+<title>RDK Live Demo - Try and Learn</title>
+<!--[if lt IE 10]>
+<script type="text/javascript">
+	var unsupport = true;
+</script>
+<![endif]-->
+<script type="text/javascript">
+	if(window.unsupport == true){
+		location.href = "/unsupport";
+	}
+</script>
+
+<link rel="stylesheet" type="text/css" href="js/CodeMirror-2.25/lib/codemirror.css" />
+<link rel="stylesheet" type="text/css" href="js/CodeMirror-2.25/theme/theme.css?20121021" />
+<link rel="stylesheet" href="css/theme.css?20121211" type="text/css"/>
+<link rel="stylesheet" href="css/zebra_dialog.css" type="text/css"/>
+<link rel="stylesheet" href="css/style1.css?2012120502" type="text/css"/>
+<link rel="stylesheet" href="js/CodeMirror-2.25/lib/util/simple-hint.css" type="text/css"/>
+<script type="text/javascript">editor_path = "/demos"</script>
+<script type="text/javascript" src="js/jQuery-1.8.0.js"></script>
+<script type="text/javascript" src="js/api.js"></script>
+<script type="text/javascript" src="js/resource.js"></script>
+<!-- <script type="text/javascript" src="js/coffeescript.js"></script> -->
+<script type="text/javascript" src="js/less.js"></script>
+<!-- <script type="text/javascript" src="js/coffee-script.js"></script> -->
+<script type="text/javascript" src="js/zebra_dialog.js"></script>
+<script type="text/javascript" src="js/resize2.js"></script>
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript" src="js/explorer.js"></script>
+<script type="text/javascript" src="js/editor.js"></script>
+<script type="text/javascript" src="js/menu.js"></script>
+<script type="text/javascript" src="js/dialog.js"></script>
+<script type="text/javascript" src="js/flow.js"></script>
+<script type="text/javascript" src="js/runjs.js"></script>
+<script type="text/javascript" src="js/plugins.js"></script>
+<!-- <script type="text/javascript" src="js/all.js"></script> -->
+
+<script type="text/javascript">
+	//初始化全局状态
+	
+g_status = {
+	once:false,
+	login:false,
+	isMyCode:false,
+	isOtherCode:false,
+	hasNoCode:true,
+	isDemo:true,
+		sign:'',
+	codeid:0,
+	codename:'',
+	project:0,
+	version:0,
+	ident:'',
+	host:'',
+	shost:'http://sandbox.runjs.cn',
+	mode:'code',
+	htmlType:1,
+	cssType:1,
+	jsType:1
+};
+User = {
+	user:0,
+	v_code:'',
+	admin:false};
+Setting = {
+	theme:"default"
+};
+if(isNotEmpty(g_status.ident))
+	updateUrl(g_status.host + editor_path+"/" + g_status.ident);
+	g_mode = 'code';
+</script>
+<link rel="stylesheet" href="./code/sys_plugins/code/css/plugin_code_css" type="text/css"/>
+<script src="./code/sys_plugins/code/js/plugin_code_js" type="text/javascript"></script>
+<script type="text/javascript">
+	var runjs;
+	$(document).ready(function(){
+		dialog = new Dialog();
+		flow = new Flow();
+		var explorer = new Explorer({
+			target:$(".explorer"),
+			fold:$(".fold_control"),
+			core:$(".core"),
+			show:false
+		});
+		var editor = new Editor({
+			target:$(".editor_wrapper"),
+			example: _getExampleId()
+		});
+		// var menu = new Menu({
+		// 	target:$(".headerMenu"),
+		// });
+		runjs = new RunJS({
+			editor:editor,
+			explorer:explorer,
+			// menu:menu,
+			flow:flow,
+			dialog:dialog,
+			plugins:plugins,
+			cur_opt:"login",
+			mode:'code'
+		});
+
+		//修正打开demo链接地址
+		document.getElementById('openDemo').href = "/doc/client/demo/" + _getExampleId();
+	});
+
+	// by 陈旭：把 ident 当做例子id传递
+	function _getExampleId() {
+		var id = location.search.substring(1)
+		return id ? id : 'welcome';
+	}
+</script>
+</head>
+<body class="DefaultTheme">
+	<div id="main_container">
+		<p style="text-align:right;font-size:10px;padding:5px;">提示：可以直接编辑代码，随即可以看到效果！也可以<a id="openDemo" href="#">打开此DEMO所在页面</a>！</p>
+		<!-- <div class="header"></div> -->
+		<div class="explorer" style="display:none;"></div>
+		<div class="fold_control on" style="display:none;"></div>
+		<div id="core" class="core core_margin1">
+			<!-- <div class="toolBar"></div> -->
+			<div class="editor_wrapper"></div>
+		</div>
+	</div>
+	<p style="position:fixed;right:15px;bottom:20px;z-index:1000;font-size:10px;text-align:right">
+		感谢 <a href="http://runjs.cn/" target="_blank">runjs.cn</a>
+	</p>
+</body>
+</html>

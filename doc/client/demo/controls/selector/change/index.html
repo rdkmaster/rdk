@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Selector Demo 4 change</title>
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='myCtrl'>
+    <!-- 用户交互后触发，支持用户自定义。参数是event和data，data是发生变化的group当前被选中的对象数组 -->
+	<rdk_selector data='groupData' selected_items='groupSelectedItems' change='changeHandler'></rdk_selector>
+
+
+</body>
+
+</html>

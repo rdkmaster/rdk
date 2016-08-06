@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Table -> demo 4 I18n</title>
+
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+	<script type="text/javascript">
+	    require.config({
+	        paths: {
+	            //这里引用了rdk应用的公共助手文件，不要改动
+	            "application": '/rdk/app/modules/rdk_app_helpers',
+	            //页面的国际化文件配置信息
+	            "i18n": '/doc/client/demo/controls/table/demo4i18n/scripts/i18n',
+	        }
+	    });
+	</script>
+
+</head>
+
+<body ng-controller='myCtrl' style="margin-top:20px">
+    <rdk-table ds="ds_table" ds-url="../mockdata/data4PageNumber" ds_query_if="ready" paging-type="server" page-size="2" page_number="6" search='true'></rdk-table>
+</body>
+
+</html>
+
+
+

@@ -1,0 +1,34 @@
+.rdk-time-module{
+	 display: inline-block;
+}
+.rdk-time-module .time-content {
+    display: inline-block;
+}
+
+.rdk-time-module .time-content .startTime,
+.rdk-time-module .time-content .endTime {
+    display: inline-block;
+    cursor: pointer
+}
+
+.rdk-time-module input{
+	width: 140px;
+	height: 28px;
+}
+
+.rdk-time-module select{
+	width: 120px;
+	height: 28px;
+}
+
+.rdk-time-module .bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]){
+	width: 120px;
+}
+
+.rdk-time-module .btn{
+	line-height: 16px;
+}
+
+.rdk-time-module .bootstrap-select.btn-group, .bootstrap-select.btn-group[class*="span"]{
+	margin-bottom: 0px;
+}

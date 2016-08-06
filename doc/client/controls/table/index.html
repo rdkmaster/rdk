@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>rdk_table</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<h1>简介</h1>
+<p><code>rdk_table</code> 主要用于提供表格展示。</p>
+<p>这是一个简单的 <code>rdk_table</code> 例子：
+<live_demo example="controls/table/basic" width="900"></live_demo></p>
+<hr />
+<h1>属性</h1>
+<h2>data <binding></binding></h2>
+<blockquote>
+<p>支持类型：对象或数据源id</p>
+</blockquote>
+<p><code>data</code> 是需要在表格中展示的全部信息，可以是某个<code>数据源</code>的id。</p>
+<p>data对象中应该包含以下<strong>必填属性</strong>：</p>
+<ul>
+<li>field 	：表中的列头信息</li>
+<li>header：field的各个列头的国际化内容</li>
+<li>data:真实的数据</li>
+</ul>
+<p><live_demo example="controls/table/basic" width="900"></live_demo></p>
+<h2>selected_index <binding></binding></h2>
+<blockquote>
+<p>支持类型：整型数据</p>
+</blockquote>
+<p><code>selected_index</code> 用于手工设置表格的默认选中行。暂定索引从0计数。例如：</p>
+<pre><code>    &lt;rdk-table id=&quot;id_table&quot; ds=&quot;ds_table&quot; 
+        ds-url=&quot;/demo/controls/table/mockdata/table_paging&quot; 
+        ds_query_if=&quot;ready&quot; selected_index=&quot;2&quot;&gt;&lt;/rdk-table&gt;
+</code></pre>
+
+<p>这里表示表格初始化完成后，默认选中第三行。</p>
+<p>详细示例如下：
+<live_demo example="controls/table/selected_index" width="900"></live_demo></p>
+<h2>setting <binding></binding></h2>
+<blockquote>
+<p>支持类型：JSON对象</p>
+</blockquote>
+<p>此属性可以设置展现列表中的列的各种属性,包括样式、显隐性等。
+可以通过列索引（从0开始索引）或者相应的<code>field</code>的值进行设置。</p>
+<h3>设置列样式</h3>
+<p>具体设置格式如下：</p>
+<pre><code>   scope.setting = {
+        &quot;columnDefs&quot; :[
+            {
+                targets : 0,
+                class : &quot;red&quot;
+            },{
+                targets : &quot;extn&quot;,
+                class : &quot;green&quot;
+            }
+        ]
+    }
+</code></pre>
+
+<p>其中的class为自定义的样式。详细示例如下：</p>
+<p><live_demo example="controls/table/columnclass" width="900"></live_demo></p>
+<h3>设置列的显隐性</h3>
+<p>具体设置格式如下：</p>
+<pre><code>    scope.setting = {
+        &quot;columnDefs&quot; :[
+            {
+                targets : 0,
+                visible : false
+            },{
+                targets : &quot;extn&quot;,
+                visible : false
+            }
+        ]
+    }
+</code></pre>
+
+<p>详细示例如下：</p>
+<p><live_demo example="controls/table/columnvisible" width="900"></live_demo></p>
+<h3>设置列的宽度</h3>
+<p>具体设置格式如下：</p>
+<pre><code>    scope.setting = {
+        &quot;columnDefs&quot; :[
+            {
+                targets : 0,
+                width : 20%
+            },{
+                targets : &quot;extn&quot;,
+                width : 40%
+            }
+        ]
+    }
+</code></pre>
+
+<p>详细示例如下：</p>
+<p><live_demo example="controls/table/columnwidth" width="900"></live_demo></p>
+<h3 id="add-column">添加自定义列</h3>
+<p>具体设置格式如下：</p>
+<pre><code>    scope.setting = {
+        &quot;columnDefs&quot; :[
+            {
+                title : &quot;编辑列&quot;,
+                render : '&lt;a ng-click=&quot;appScope.click(item)&quot;&gt;点击&lt;/a&gt;'
+            },{
+                title : &quot;索引添加&quot;,
+                targets : 1,
+                override : false,
+                render : &quot;渲染内容&quot;
+            },{
+                title : &quot;索引添加2&quot;,
+                targets : 2,
+                override : false,
+                render : &quot;渲染内容2&quot;
+            },{
+                targets:&quot;position&quot;,
+                render:function(item){
+                    if(item.position == &quot;Accountant&quot;)
+                        return &quot;&lt;p style='color:red'&gt;&quot;+item.position+&quot;&lt;/p&gt;&quot;;
+                    else 
+                        return item.position;
+                }
+            }
+        ]
+    }
+</code></pre>
+
+<ul>
+<li>
+<p>targets标记支持索引形式，和<code>field</code>字符串形式。</p>
+</li>
+<li>
+<p>override的属性为false表示新添加一列；为true将会覆盖target所对应的列。</p>
+</li>
+<li>
+<p>render为新添加列的信息，通过渲染的方式进行添加。</p>
+</li>
+</ul>
+<p>详细示例如下：</p>
+<p><live_demo example="controls/table/newcolumn" width="900"></live_demo></p>
+<h3>设置水平滚动条</h3>
+<p>具体设置格式如下：</p>
+<pre><code>    scope.setting = {
+        scrollX : true
+    }
+</code></pre>
+
+<p>详细示例如下：</p>
+<p><live_demo example="controls/table/scrollx" width="900"></live_demo></p>
+<h3>设置排序参数</h3>
+<p>RDK2.0表格支持服务端和客户端排序两种方式。</p>
+<ul>
+<li><code>sortable</code>可设置表格是否支持排序功能。缺省时，默认不支持表格排序。</li>
+<li>然后根据页面是否设置<code>paging-type</code>确定表格是服务端排序还是客户端排序。</li>
+<li>如果用户自定义了<code>sort</code>方法，表格就按照用户自定义方法排序。</li>
+<li>没有定义<code>sort</code>，就按照<code>sortas</code>排序。<code>sortas</code>支持<code>int</code>/<code>float</code>/<code>date</code>/<code>string</code>四种类型。</li>
+<li>如果<code>sort</code>和<code>sortas</code>都没定义，就按照<code>string</code>排序。</li>
+</ul>
+<p>具体定义格式如下：</p>
+<pre><code>        scope.setting = {
+            &quot;columnDefs&quot; :[
+                {
+                    targets : 0,    //第一列按string排序
+                    sortas: &quot;string&quot;,
+                    sortable: true
+                },{
+                    targets : &quot;extn&quot;,   //extn列按自定义sort方法排序
+                    sortable: true,
+                    sort: function(a, b){
+                        if(parseInt(a, 10) &lt; parseInt(b, 10)){
+                            return -1;
+                        }
+                        else {
+                            return 1;
+                        }
+                    }
+                },{
+                    targets : 3,        //第四列按date排序
+                    sortas: &quot;date&quot;,
+                    sortable: true
+                }
+
+            ]
+        }
+</code></pre>
+
+<p>客户端排序详细示例如下：</p>
+<p><live_demo example="controls/table/columnsortable" width="900"></live_demo></p>
+<h3>设置列单元格的可编辑性</h3>
+<p>通过<code>setting</code>中的<code>editable</code>控制。<code>editable</code> 缺省时默认为<code>false</code>，表示列单元格不支持编辑。</p>
+<p><code>editable</code> 设置成 <code>true</code> 时，有两种情况：</p>
+<ul>
+<li>一种是同时设置了 <code>editorRenderer</code>。这是用户自定义的支持编辑的单元格。</li>
+<li>一种是缺省 <code>editorRenderer</code>。这种情况下单击单元格，则出现可编辑的输入框。</li>
+</ul>
+<p>(1) 自定义 <code>editorRenderer</code> 时的具体格式如下：</p>
+<pre><code>        $scope.setting = {
+            &quot;columnDefs&quot; :[
+                {
+                    targets : 0,
+                    editable : true,
+                    editorRenderer: 
+                        '&lt;a ng-click=&quot;appScope.clickHandler(item, $parent.$index, $index)&quot;&gt;
+                            {{data.data[$parent.$index][$index]}}
+                        &lt;/a&gt;'
+                },
+                {
+                    targets : 2,
+                    editable : true,
+                    editorRenderer: 
+                        '&lt;a ng-click=&quot;appScope.click(item, $parent.$index, $index)&quot;&gt;
+                            {{data.data[$parent.$index][$index]}}
+                        &lt;/a&gt;'
+                }
+
+            ]
+        }
+</code></pre>
+
+<p>详细示例如下：</p>
+<p><live_demo example="controls/table/popupEditor" width="900"></live_demo></p>
+<p>(2) 缺省 <code>editorRenderer</code> 时的具体格式如下：</p>
+<pre><code>        $scope.setting = {
+            &quot;columnDefs&quot; :[
+                {
+                    targets : 0,
+                    editable : true
+                }   
+            ]
+        }
+</code></pre>
+
+<p>详细示例如下：</p>
+<p><live_demo example="controls/table/columneditable" width="900"></live_demo></p>
+<h2>自定义表头</h2>
+<p>可以使用CSS中定义的table标记中的thead、tr、th等标记来修改表头内容。</p>
+<p>例如：
+<live_demo example="controls/table/customheader" width="900"></live_demo></p>
+<h2>page_size</h2>
+<blockquote>
+<p>支持类型：字符串
+此属性支持自定义分页功能，通过此属性可以定义列表每页要展现的行数。代码如下：</p>
+</blockquote>
+<pre><code>&lt;rdk-table page_size=&quot;1&quot;&gt;&lt;/rdk-table&gt;
+</code></pre>
+
+<p><live_demo example="controls/table/localpaging" width="900"></live_demo></p>
+<h2>paging_type</h2>
+<blockquote>
+<p>支持类型：字符串</p>
+</blockquote>
+<p>此属性设置服务端的分页要求。
+示例中绑定的数据源模拟的是从服务端反馈回来的数据，在反馈的信息中有以下分页要求，客户端接收到此数据后根据数据要求进行分页显示。</p>
+<pre><code>&quot;paging&quot; :{&quot;totalRecord&quot;:14,&quot;currentPage&quot;:1,&quot;pageSize&quot;:5}
+</code></pre>
+
+<ul>
+<li>totalRecord : 返回的中的数据条数。</li>
+<li>currentPage : 当前显示第几页数据。</li>
+<li>pageSize : 每页显示的最大条数。 </li>
+</ul>
+<p>例如：
+<live_demo example="controls/table/serverpaging" width="900"></live_demo></p>
+<h2>search</h2>
+<blockquote>
+<p>支持类型：布尔型</p>
+</blockquote>
+<p><code>search</code> 设置成 <code>true</code> 时，表示表格支持过滤。缺省时默认为 <code>false</code>，不支持过滤。</p>
+<p><code>paging-type</code>设置成<code>server</code>时，表示后端过滤。缺省时表示前端过滤。</p>
+<h3>前端过滤</h3>
+<pre><code>    &lt;rdk-table data=&quot;data&quot; search='true'&gt;&lt;/rdk-table&gt;
+</code></pre>
+
+<p><code>search</code>前端过滤示例：
+<live_demo example="controls/table/search" width="900"></live_demo></p>
+<h3>后端过滤</h3>
+<pre><code>    &lt;rdk-table data=&quot;data&quot; search='true' paging-type=&quot;server&quot;&gt;&lt;/rdk-table&gt;
+</code></pre>
+
+<p>后端过滤时，如果搜索框内有输入内容，就会出现搜索字段的下拉框，方便用户指定关键字的检索字段。</p>
+<p><code>search</code>后端过滤示例：
+<live_demo example="controls/table/server_search" width="900"></live_demo></p>
+<h2>searchable</h2>
+<blockquote>
+<p>支持类型：布尔型</p>
+</blockquote>
+<p><code>searchable</code> 功能同 <code>search</code>。保留<code>search</code>属性是为了向下兼容。</p>
+<p><code>searchable</code>前端过滤示例：
+<live_demo example="controls/table/searchable" width="900"></live_demo></p>
+<h2>searchPattern</h2>
+<blockquote>
+<p>支持类型：正则表达式</p>
+</blockquote>
+<p><code>search</code>设置成<code>true</code>时，支持搜索过滤。在这基础上设置<code>searchPattern</code>，可以对输入的关键字进行校验。校验通过后才能进行过滤。</p>
+<p>详细示例如下：
+<live_demo example="controls/table/search_pattern" width="900"></live_demo></p>
+<h2>pageNumber</h2>
+<blockquote>
+<p>支持类型：数值</p>
+</blockquote>
+<p>表格分页样式目前支持两种：</p>
+<ul>
+<li><code>page_number = &quot;0&quot;</code> 时，分页栏展现成 <code>上一页 1/8 下一页</code>格式。</li>
+<li><code>page_number</code> 设置成非零数值时，分页栏展示阿拉伯数字的分页。例如 <code>上一页 4 5 6 7 下一页</code>。</li>
+</ul>
+<p>缺省 <code>page_number</code> 时，默认为 <code>0</code>，采用第一种分页样式展示。</p>
+<p>缺省 <code>page_number</code> 或者 <code>page_number = &quot;0&quot;</code> 时的详细示例如下：
+<live_demo example="controls/table/demo4PageNumber0" width="900"></live_demo></p>
+<p><code>page_number</code> 非零数值时的详细示例如下：
+<live_demo example="controls/table/demo4PageNumber" width="900"></live_demo></p>
+<h1>事件</h1>
+<p>如果设置了<code>id</code>，即可广播/监听以下事件。</p>
+<h2>HIGHLIGHT</h2>
+<p>在监听表格完成事件<code>RESULT</code>后，通过<code>HIGHLIGHT</code>事件方式，手工设置选中表格的某一行。</p>
+<pre><code>    EventService.broadcast('ds_table', EventTypes.RESULT, 
+        function(event, data){
+            EventService.broadcast('id_table', EventTypes.HIGHLIGHT, 3);
+    });
+</code></pre>
+
+<p>注意：必须在<code>RESULT</code>事件后设置，否则表格数据还没渲染好。<code>RESULT</code>事件用数据源<code>ds</code>监听。<code>HIGHLIGHT</code>事件用<code>id</code>监听。</p>
+<h2>SELECT</h2>
+<p>监听该事件，用户选中某一行后，可以拿到被选中行的数据。</p>
+<pre><code>    EventService.register('id_table', EventTypes.SELECT,
+        function(event, data){//处理被选中的数据
+            console.log(data);
+    })
+</code></pre>
+
+<h2>DOUBLE_CLICK</h2>
+<p>表格行数据双击事件，用户监听该事件，可以处理该双击行数据。</p>
+<pre><code>    EventService.register('id_table', EventTypes.DOUBLE_CLICK, 
+        function(event, data){//处理被选中的数据
+            console.log(data);
+    })
+</code></pre>
+
+<p>拿到的行数据结构如下：</p>
+<pre><code>    {
+      &quot;data&quot;: {
+        &quot;name&quot;: &quot;Garrett Winters1&quot;,
+        &quot;position&quot;: &quot;Accountant&quot;,
+        &quot;salary&quot;: &quot;$170,750&quot;,
+        &quot;start_date&quot;: &quot;2011/07/25&quot;,
+        &quot;office&quot;: &quot;Tokyo&quot;,
+        &quot;extn&quot;: &quot;8422&quot;,
+        &quot;$$hashKey&quot;: &quot;object:11&quot;
+      },
+      &quot;index&quot;: 6
+    }
+</code></pre>
+
+<h1>方法</h1>
+<p>暂无</p>
+<h1>样式</h1>
+<h3><a href="/demo/controls/table/table_style">关键样式示例</a></h3>
+<h3>表的整体属性</h3>
+<h4>font-size</h4>
+<p>字体大小，默认值：14px</p>
+<h4>line-height</h4>
+<p>行高，默认值：28px</p>
+<h3>选择行的属性</h3>
+<h4>background-color</h4>
+<p>选择行的背景色， 默认值：#849DE9</p>
+<h3>鼠标移动到行上的属性</h3>
+<h4>background-color</h4>
+<p>鼠标移动到行上的背景色， 默认值：#F1F1F1</p>
+<h3>表头、表尾属性</h3>
+<h4>text-align</h4>
+<p>文字水平对齐，默认值center</p>
+<h4>padding</h4>
+<p>属性定义元素边框与元素内容之间的空间（单位：像素）。默认值：10px 6px,padding属性的默认填充顺序为从上开始的顺时针方向。</p>
+<h4>background-color</h4>
+<p>表头或表尾背景色,默认值: #325BDB</p>
+<h4>color</h4>
+<p>表头或表尾文字色,默认值: #FFFFFF</p>
+<h3>表体数据属性</h3>
+<h4>text-align</h4>
+<p>文字水平对齐，默认值: center</p>
+<h4>vertical-align</h4>
+<p>文字的垂直对齐，默认值: middle</p>
+<h4>padding</h4>
+<p>文字与边框间距，默认值: 8px 6px</p>
+<h2>渲染器</h2>
+<p>表中的渲染其主要是进行整列数据的渲染，主要是通过table控件的<code>setting</code>属性进行设置的。详细信息可以参见本文档的<code>添加自定义列</code>的说明。</p>
+<h2>数据源绑定</h2>
+<p>表格的数据可以通过数据源绑定的方式进行数据展示。
+数据源绑定的说明请参照<code>BasicSelector控件</code>中的数据源绑定章节中的内容。以下为<code>rdk_table</code>的数据源绑定的示例：</p>
+<div>
+<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+<script src="/doc/tools/doc_js/main.js"></script>
+<script src="/doc/tools/doc_js/misc.js"></script>
+</div>
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
