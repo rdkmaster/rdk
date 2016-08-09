@@ -3,3 +3,6 @@ start.cfg
 
 #忽略日志文件
 **/logs/log.txt
+
+#忽略后端相关临时文件
+*.class
