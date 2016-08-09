@@ -4,10 +4,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
     <title>RDK 快速开发框架</title>
-    <link rel="stylesheet" href="../libs/ztree/css/globalStyle.css" type="text/css">
-    <link rel="stylesheet" href="../libs/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
-    <script type="text/javascript" src="../libs/jquery/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="../libs/ztree/jquery.ztree.all-3.5.js"></script>
+    <link rel="stylesheet" href="/rdk/app/libs/ztree/css/globalStyle.css" type="text/css">
+    <link rel="stylesheet" href="/rdk/app/libs/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+    <script type="text/javascript" src="/rdk/app/libs/jquery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/rdk/app/libs/ztree/jquery.ztree.all-3.5.js"></script>
     <style>
     iframe {
         display: inline;
@@ -47,173 +47,173 @@ var setting = {
 var zNodes = [{
     label: "通用功能",
     open: true,
-    icon: "../libs/ztree/css/zTreeStyle/img/diy/1_open.png",
+    icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/1_open.png",
     module: [{
         module: [],
         label: "数据源",
-        url: "common/datasource",
+        url: "doc/client/common/datasource",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     }, {
         module: [],
         label: "事件机制",
-        url: "common/event",
+        url: "doc/client/common/event",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     }, {
         module: [],
         label: "国际化",
-        url: "common/i18n",
+        url: "doc/client/common/i18n",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     }, {
         module: [],
         label: "对话框&模态框",
-        url: "common/modal/index.html",
+        url: "doc/client/common/modal/index.html",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     }, {
         module: [],
         label: "其他",
-        url: "common/other.html",
+        url: "doc/client/common/other.html",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     }],
 }, {
     label: "控件",
     open: true,
-    icon: "../libs/ztree/css/zTreeStyle/img/diy/1_open.png",
+    icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/1_open.png",
     module: [{
         module: [],
         label: "Graph",
-        url: "controls/graph/index.html",
+        url: "doc/client/controls/graph/index.html",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     },{
         module: [],
         label: "Bullet",
-        url: "controls/bullet/index.html",
+        url: "doc/client/controls/bullet/index.html",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     }, {
         module: [],
         label: "Table",
-        url: "controls/table/index.html",
+        url: "doc/client/controls/table/index.html",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     }, {
         module: [],
         label: "Tree",
-        url: "controls/tree_demo.html",
+        url: "doc/client/controls/tree_demo.html",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     },{
         module: [],
         label: "Map",
-        url: "controls/map/index.html",
+        url: "doc/client/controls/map/index.html",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     },
     {
         module: [],
         label: "TabSelect",
-        url: "controls/tabselect/index.html",
+        url: "doc/client/controls/tabselect/index.html",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     },
     {
         module: [],
         label: "Time",
-        url: "controls/time/index.html",
+        url: "doc/client/controls/time/index.html",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     },
     {
         module: [],
         label: "BasicSelector",
-        url: "controls/basicselector/index.html",
+        url: "doc/client/controls/basicselector/index.html",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     },   
     {
         module: [],
         label: "FoldSelector",
-        url: "controls/foldselector/index.html",
+        url: "doc/client/controls/foldselector/index.html",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     },  
     {
         module: [],
         label: "Selector",
-        url: "controls/selector/index.html",
+        url: "doc/client/controls/selector/index.html",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     },
     {
         module: [],
         label: "ComboSelect",
-        url: "controls/comboselect/index.html",
+        url: "doc/client/controls/comboselect/index.html",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     },
 	{
         module: [],
         label: "Input",
-        url: "controls/input/index.html",
+        url: "doc/client/controls/input/index.html",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     },
     {
         module: [],
         label: "Alert",
-        url: "common/alert/index.html",
+        url: "doc/client/common/alert/index.html",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     }],
 }, {
     label: "容器",
     open: true,
-    icon: "../libs/ztree/css/zTreeStyle/img/diy/1_open.png",
+    icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/1_open.png",
     module: [
     {
         module: [],
         label: "GraphGroup",
-        url: "containers/graphgroup_demo.html",
+        url: "doc/client/containers/graphgroup_demo.html",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     },
     {
         module: [],
         label: "Accordion",
-        url: "containers/accordion/index.html",
+        url: "doc/client/containers/accordion/index.html",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     },
     {
         module: [],
         label: "Panel",
-        url: "containers/Panel/index.html",
+        url: "doc/client/containers/Panel/index.html",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     },
     {
         module: [],
         label: "Tabs",
-        url: "containers/tab/index.html",
+        url: "doc/client/containers/tab/index.html",
         target: "myframe",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/8.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
     }      
 	],
 }, {
     label: "综合应用",
     open: true,
-    icon: "../libs/ztree/css/zTreeStyle/img/diy/1_open.png",
+    icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/1_open.png",
     module: [{
         module: [],
         label: "低速率定界定位",
-        url: "lowspeed/index.html",
+        url: "doc/client/lowspeed/index.html",
         target: "_blank",
-        icon: "../libs/ztree/css/zTreeStyle/img/diy/3.png",
+        icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/3.png",
         font: {
             'color': 'red'
         }
