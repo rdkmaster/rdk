@@ -3,10 +3,10 @@ define('main', ['angular', 'rd.containers.Accordion'], function() {
         'rd.containers.Accordion'
     ]);
 
-    myApp.controller('myCtrl', ['$scope', 'EventService', 'EventTypes',
-        function(scope, EventService, EventTypes) {
+    myApp.controller('myCtrl', ['$scope',
+        function(scope) {
             scope.buttonSource = [{
-                icon: "images/refresh.png",
+                icon: "/doc/client/demo/containers/accordion/img/refresh.png",
                 label: "刷新",
                 tooltips: "点击可进行图标变更",
                 callback: function(obj, htmlID) {

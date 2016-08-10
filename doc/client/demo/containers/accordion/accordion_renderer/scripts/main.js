@@ -1,11 +1,10 @@
-
 define('main', ['rd.containers.Accordion', 'rd.controls.BasicSelector'], function() {
 
 
     var app = angular.module("rdk_app", ['rd.containers.Accordion', 'rd.controls.BasicSelector']);
-    
-    app.controller('myCtrl', ['$scope', 'EventService', 'EventTypes', 'Utils', '$timeout',
-        function(scope, EventService, EventTypes, Utils, $timeout) {
+
+    app.controller('myCtrl', ['$scope', 'EventService', 'EventTypes', '$timeout',
+        function(scope, EventService, EventTypes, $timeout) {
 
             scope.accordionOpenable = false;
 
@@ -28,32 +27,24 @@ define('main', ['rd.containers.Accordion', 'rd.controls.BasicSelector'], functio
                 { id: 4, label: "河北省" }
             ];
 
-            scope.changeHandler = function(event, data){
+            scope.changeHandler = function(event, data) {
                 console.log("changeHandler in");
             }
 
-            EventService.register('testID', EventTypes.CHANGE, function(event, data){
+            EventService.register('testID', EventTypes.CHANGE, function(event, data) {
                 console.log(data);
             });
 
             EventService.broadcast('testID', EventTypes.SELECT, scope.basicSelectedItems_1);
 
             EventService.broadcast('accordionID', EventTypes.OPEN);
-                     
-            //多层transclude时，由于作用域变化，从双绑对象取值，需要借助appScope
-            // scope.changeHandler = function(event, data){
-            //     console.log(event.appScope.basicSelectedItems);//各种被包时要这么取，这么改双绑
-            //     $timeout(function(){
-            //         event.appScope.basicSelectedItems = [{ id: 7, label: "湖南省" }];
-            //     },3000);
-            // }
+
             scope.testSelectedItems = [];
-            $timeout(function(){
+            $timeout(function() {
                 scope.testSelectedItems = [
                     { id: 3, label: "广西省" }
                 ];
-                // console.log(scope.testSelectedItems);
-            },3000);
+            }, 3000);
         }
     ]);
 });

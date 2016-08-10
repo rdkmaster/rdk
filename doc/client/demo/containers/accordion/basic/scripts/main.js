@@ -1,10 +1,10 @@
-define('main',['angular', 'rd.containers.Accordion', 'rd.controls.BasicSelector'], function() {
+define('main', ['angular', 'rd.containers.Accordion', 'rd.controls.BasicSelector'], function() {
     var myApp = angular.module('rdk_app', [
         'rd.containers.Accordion',
         'rd.controls.BasicSelector'
     ]);
 
-    myApp.controller('myCtrl', ['$scope', 'RDKConst', 'BasicSelector', function(scope, RDKConst, BasicSelector) {
+    myApp.controller('myCtrl', ['$scope', function(scope) {
         scope.cityItems = [{
             id: 0,
             label: "江苏省"
