@@ -7,11 +7,11 @@ app.controller('myCtrl', ['$scope', function(scope) {
 /******************************************************
      将应用的代码逻辑添加在这个匿名函数内部
 ******************************************************/
-    scope.mapUrl = '/demo/controls/map/changemap/data/sichuan.json';
+    scope.mapUrl = '/doc/client/demo/controls/map/changemap/data/sichuan.json';
 
     scope.mapData = [
-        {"name":"四川","url":"/demo/controls/map/changemap/data/sichuan.json"},
-        {"name":"吉林","url":"/demo/controls/map/changemap/data/jilin.json"}
+        {"name":"四川","url":"/doc/client/demo/controls/map/changemap/data/sichuan.json"},
+        {"name":"吉林","url":"/doc/client/demo/controls/map/changemap/data/jilin.json"}
     ]; 
 }
 

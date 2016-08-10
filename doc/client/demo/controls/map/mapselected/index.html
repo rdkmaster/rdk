@@ -8,7 +8,7 @@
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
     -->
-    <script data-main="/libs/rdk/rdk" src="/libs/requirejs/require.js"></script>
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
     <script src="scripts/main.js"></script>
 
 </head>
@@ -17,7 +17,7 @@
     <button ng-click="selectCity()">选择长春市</button>
     <button ng-click="unSelectCity()">取消选择长春市</button>
 
-    <rdk_map id="gis" map_define="/demo/controls/map/mapselected/scripts/graph_define/map.js" map="'/demo/controls/map/mapselected/data/jilin.json'"></rdk_map>
+    <rdk_map id="gis" map_define="/doc/client/demo/controls/map/mapselected/scripts/graph_define/map.js" map="'/doc/client/demo/controls/map/mapselected/data/jilin.json'"></rdk_map>
 
     
     <div id="gisModal" rdk_modal="hide">
