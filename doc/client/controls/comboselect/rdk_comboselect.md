@@ -58,7 +58,7 @@
 
 # 样式 #
 
-### [关键样式示例](/demo/controls/comboselect/comboselect_style) ###
+### [关键样式示例](/doc/client/demo/controls/comboselect/comboselect_style) ###
 
 ### rdk-combo-select-module ###
 
