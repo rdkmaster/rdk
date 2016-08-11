@@ -1,7 +1,7 @@
 
 图形文档待补充
 
-[这是一个例子](/demo/controls/graph/basic/index.html)
+[这是一个例子](/doc/client/demo/controls/graph/basic/index.html)
 
 
 

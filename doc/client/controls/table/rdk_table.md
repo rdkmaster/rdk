@@ -248,8 +248,20 @@ RDK2.0表格支持服务端和客户端排序两种方式。
 
 可以使用CSS中定义的table标记中的thead、tr、th等标记来修改表头内容。
 
-例如：
+详细示例如下：
 <live_demo example="controls/table/customheader" width="900"></live_demo>
+
+## 复选框列 ##
+可以通过自定义表头和列渲染的方式来实现复选框的功能。
+
+详细示例如下：
+<live_demo example="controls/table/columnCheckBoxRenderer" width="900"></live_demo>
+
+## 自动添加行编号 ##
+可以通过列渲染的方式实现行号自动自动添加功能。
+
+详细示例如下：
+<live_demo example="controls/table/columnIDRenderer" width="900"></live_demo>
 
 ## page_size ##
 >支持类型：字符串
@@ -379,7 +391,7 @@ RDK2.0表格支持服务端和客户端排序两种方式。
 
 # 样式 #
 
-### [关键样式示例](/demo/controls/table/table_style) ###
+### [关键样式示例](/doc/client/demo/controls/table/table_style) ###
 
 ### 表的整体属性 ###
 
