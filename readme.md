@@ -7,7 +7,7 @@
 ## BUG!!!
 > 你提的每个bug都是在帮助rdk改进！
 
-1. [用人事在线账号在这里登录](http://gitlab.zte.com.cn/users/sign_in)
+1. 如果未登录的，请用人事在线账号在[这里登录](http://gitlab.zte.com.cn/users/sign_in)
 2. [单击这里提交一个bug](http://gitlab.zte.com.cn/10045812/rdk/issues/new)，请尽量详细描述，最好能有配图，谢谢。
 
 
@@ -34,5 +34,5 @@
 > 公网上合入的代码也会merge到这个工程上。
 
 ## 我要吐槽
-1. [用人事在线账号在这里登录](http://gitlab.zte.com.cn/users/sign_in)
+1. 如果未登录的，请用人事在线账号在[这里登录](http://gitlab.zte.com.cn/users/sign_in)
 2. [单击这里，尽情的发泄把骚年](http://gitlab.zte.com.cn/10045812/rdk/issues/new)
