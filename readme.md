@@ -29,9 +29,9 @@
 
 > 需要clone RDK在github上的工程，url是 <https://github.com/rdkmaster/rdk>
 
-> 之后过程和上述1~7点一致
+> 之后过程和上述过程一致
 
-> 公网上合入的代码也会merge到中开社的工程上。
+> 公网上合入的代码也会merge到这个工程上。
 
 ## 我要吐槽
 1. [用人事在线账号在这里登录](http://gitlab.zte.com.cn/users/sign_in)
