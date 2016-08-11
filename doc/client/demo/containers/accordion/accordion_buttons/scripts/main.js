@@ -3,20 +3,16 @@ define('main', ['angular', 'rd.containers.Accordion'], function() {
         'rd.containers.Accordion'
     ]);
 
-    myApp.controller('myCtrl', ['$scope', 'EventService', 'EventTypes', function(scope, EventService, EventTypes) {
-        EventService.init(scope);
-
+    myApp.controller('myCtrl', ['$scope', function(scope) {
         scope.buttonSource = [{
-            // icon: "doc/containers/accordion/images/edit.png", 
-            //icon: "../../../deom/containers/accordion/img/delete.png",
-            icon: "images/edit.png",
+            icon: "/doc/client/demo/containers/accordion/img/edit.png",
             label: "编辑",
             tooltips: "点击可进行编辑",
             callback: function(obj, htmlID) {
                 alert("点击了编辑按钮！");
             }
         }, {
-            icon: "images/delete.png",
+            icon: "/doc/client/demo/containers/accordion/img/delete.png",
             label: "删除",
             tooltips: "点击将删除内容",
             callback: function(obj) {

@@ -3,8 +3,8 @@ define('main', ['angular', 'rd.containers.Accordion'], function() {
         'rd.containers.Accordion'
     ]);
 
-    myApp.controller('myCtrl', ['$scope', 'EventService', 'EventTypes',
-        function(scope, EventService, EventTypes) {
+    myApp.controller('myCtrl', ['$scope',
+        function(scope) {
             scope.buttonSource = [{
                 icon: "images/edit.png",
                 label: "编辑",

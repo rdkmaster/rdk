@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>Accordion -> FoldedIcon</title>
+    <title>Accordion -> Style</title>
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
     -->
@@ -62,31 +62,31 @@
                 <!--<input type="text" ng-model="themeFontWeight" ng-change="attrChanged()"></input>-->
                 <select ng-model="themeFontWeight" ng-options="m.value as m.label for m in fontWidthRes" ng-change="attrChanged()">
                     <option value="">-- 请选择字重 --</option>
-                </select>                
+                </select>
             </form>
             <form>
                 <label>文字大小（font-size）：</label>
                 <!--<input type="text" ng-model="themeFontSize" ng-change="attrChanged()"></input>-->
                 <select ng-model="themeFontSize" ng-options="m.value as m.label for m in fontSizeRes" ng-change="attrChanged()">
                     <option value="">-- 请选择大小 --</option>
-                </select>                  
+                </select>
             </form>
             <form>
                 <label>光标样式（cursor）：</label>
                 <select ng-model="themeCursor" ng-options="m.value as m.label for m in cursorRes" ng-change="attrChanged()">
                     <option value="">-- 请选择光标 --</option>
                 </select>
-            </form>            
+            </form>
             <hr>
             <h1>文本属性</h1>
             <form>
                 <label>宽度（width）：</label>
                 <input type="text" ng-model="contentWidth" ng-change="attrChanged()"></input>
-            </form>            
+            </form>
             <form>
                 <label>边框样式（border）：</label>
                 <input type="text" ng-model="contentBorder" ng-change="attrChanged()"></input>
-            </form>            
+            </form>
             <form>
                 <label>边框圆角样式（border-radius）：</label>
                 <input type="text" ng-model="contentBorderRadius" ng-change="attrChanged()"></input>
@@ -94,7 +94,7 @@
             <form>
                 <label>边距（padding）：</label>
                 <input type="text" ng-model="contentPadding" ng-change="attrChanged()"></input>
-            </form>            
+            </form>
             <hr>
         </div>
     </div>

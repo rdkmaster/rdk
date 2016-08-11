@@ -4,8 +4,8 @@ define('main', ['angular', 'rd.containers.Tab', 'rd.controls.BasicSelector'], fu
         'rd.controls.BasicSelector'
     ]);
 
-    myApp.controller('myCtrl', ['$scope', 'EventService', 'EventTypes', 'BasicSelector',
-        function(scope, EventService, EventTypes, BasicSelector) {
+    myApp.controller('myCtrl', ['$scope',
+        function(scope) {
             scope.cityItems = [{
                 label: "江苏省"
             }, {
