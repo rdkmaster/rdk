@@ -1,6 +1,6 @@
-define(['angular', 'jquery', 'rd.core', 'css!rd.styles.TabSelect',
+define(['angular', 'jquery', 'rd.core','rd.controls.ComboSelect', 'rd.controls.TabSelector','css!rd.styles.TabSelect',
     'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function(){
-    	var tabSelectApp = angular.module('rd.controls.TabSelect',['rd.core']);
+    	var tabSelectApp = angular.module('rd.controls.TabSelect',['rd.core','rd.controls.ComboSelect','rd.controls.TabSelector']);
     	tabSelectApp.directive('rdkTabSelect', ['Utils', 'BasicSelector', function (Utils, BasicSelector) {
     		return {
     			restrict: 'E',
