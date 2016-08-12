@@ -1,6 +1,6 @@
-define('main', ['rd.controls.Selector','rd.controls.BasicSelector', 'rd.containers.Accordion', 'rd.controls.FoldSelector'], function() {
-var app = angular.module("rdk_app", ['rd.controls.Selector','rd.controls.BasicSelector', 'rd.containers.Accordion', 'rd.controls.FoldSelector']);
-    app.controller('myCtrl', ['$scope','$timeout','EventService','EventTypes', function(scope, $timeout, EventService, EventTypes){
+define('main', ['rd.controls.Selector'], function() {
+var app = angular.module("rdk_app", ['rd.controls.Selector']);
+    app.controller('myCtrl', ['$scope', function(scope){
 
             scope.allItems = [
                 { id: 0, label: "江苏省" },
