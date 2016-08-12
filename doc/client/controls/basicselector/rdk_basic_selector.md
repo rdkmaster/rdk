@@ -158,10 +158,10 @@
 
 ## child_change ##
 
-此属性为通用属性，请参见[`childChange`](/doc/controls/common/child_change.html)中的说明
+此属性为通用属性，请参见[`childChange`](/doc/client/controls/common/child_change.html)中的说明
 
 # 事件 #
-事件是RDK实现交互的主要手段之一，强大但易用。[了解更多](/doc/common/event)。
+事件是RDK实现交互的主要手段之一，强大但易用。[了解更多](/doc/client/common/event)。
 
 ## SELECT ##
 >事件类型：EventTypes.SELECT
@@ -224,7 +224,7 @@ Selector控件提供一个将所有选择项转化为相互连接的字符串函
 
 # 样式 #
 
-### [关键样式示例](/demo/controls/basicselector/select_style) ###
+### [关键样式示例](/doc/client/demo/controls/basicselector/select_style) ###
 
 ### border ###
 边框样式，默认值：1px solid #a5a6aa
@@ -290,7 +290,7 @@ Selector控件提供一个将所有选择项转化为相互连接的字符串函
 
 **注意由于渲染器的scope是独立的，所以需要使用appScope的方式来获取距离当前渲染器最近的控制器的作用域。**
 
-### [渲染器示例](/doc/controls/basicselector/render_demo.html) ###
+### [渲染器示例](/doc/client/controls/basicselector/render_demo.html) ###
 
 ## 数据源绑定 ##
 
