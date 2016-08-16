@@ -76,7 +76,7 @@
 <live_demo example="controls/map/mapselected" width="900"></live_demo>
 ## 不同地域渲染成不同颜色块并加上气泡 ##
 <live_demo example="controls/map/visualMap" width="900"></live_demo>
-## 地域砖取 ##
+## 地域钻取 ##
 <live_demo example="controls/map/drill" width="900"></live_demo>
 		
 
