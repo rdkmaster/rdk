@@ -40,19 +40,19 @@ define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector
         scope.top_param = '';
 
         scope.getSelectedParam = function(data, context, index) {
-            if(index == 1){
+            if (index == 1) {
                 scope.sort_param = 'sort:' + context[2].data[0].label + ';';
-            }else if(index == 2){
+            } else if (index == 2) {
                 scope.top_param = 'TOP:' + context[1].data[0].label + ';';
             }
             scope.selectedParamStr = scope.sort_param + scope.top_param;
             return scope.selectedParamStr;
         }
 
-        scope.getSelectedCity = function(selected,context,index){
-            if(index >= 2 ){
+        scope.getSelectedCity = function(selected, context, index) {
+            if (index >= 2) {
                 return RDKConst.STOP_PROPAGATIOIN;
-            }else{
+            } else {
                 scope.city_param = 'city：' + BasicSelector.selected2string(selected, 'label', '-');
             }
             scope.selectedParamStr = scope.sort_param + scope.top_param + scope.city_param;

@@ -4,7 +4,7 @@ define('main', ['rd.controls.Graph'], function() {
 var app = angular.module("rdk_app", ['rd.controls.Graph']);
 
 app.config(['RdkGraphProvider', function(RdkGraphProvider) {
-    RdkGraphProvider.setTheme("/demo/controls/graph/theme/scripts/theme/theme.js");
+    RdkGraphProvider.setTheme("/doc/client/demo/controls/graph/theme/scripts/theme/theme.js");
 }]);
 
 

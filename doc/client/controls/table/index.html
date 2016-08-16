@@ -314,9 +314,9 @@ img {
 <p>支持类型：整型数据</p>
 </blockquote>
 <p><code>selected_index</code> 用于手工设置表格的默认选中行。暂定索引从0计数。例如：</p>
-<pre><code>    &lt;rdk-table id=&quot;id_table&quot; ds=&quot;ds_table&quot; 
+<pre><code>    &lt;rdk_table id=&quot;id_table&quot; ds=&quot;ds_table&quot; 
         ds-url=&quot;/demo/controls/table/mockdata/table_paging&quot; 
-        ds_query_if=&quot;ready&quot; selected_index=&quot;2&quot;&gt;&lt;/rdk-table&gt;
+        ds_query_if=&quot;ready&quot; selected_index=&quot;2&quot;&gt;&lt;/rdk_table&gt;
 </code></pre>
 
 <p>这里表示表格初始化完成后，默认选中第三行。</p>
@@ -518,14 +518,22 @@ img {
 <p><live_demo example="controls/table/columneditable" width="900"></live_demo></p>
 <h2>自定义表头</h2>
 <p>可以使用CSS中定义的table标记中的thead、tr、th等标记来修改表头内容。</p>
-<p>例如：
+<p>详细示例如下：
 <live_demo example="controls/table/customheader" width="900"></live_demo></p>
+<h2>复选框列</h2>
+<p>可以通过自定义表头和列渲染的方式来实现复选框的功能。</p>
+<p>详细示例如下：
+<live_demo example="controls/table/columnCheckBoxRenderer" width="900"></live_demo></p>
+<h2>自动添加行编号</h2>
+<p>可以通过列渲染的方式实现行号自动自动添加功能。</p>
+<p>详细示例如下：
+<live_demo example="controls/table/columnIDRenderer" width="900"></live_demo></p>
 <h2>page_size</h2>
 <blockquote>
 <p>支持类型：字符串
 此属性支持自定义分页功能，通过此属性可以定义列表每页要展现的行数。代码如下：</p>
 </blockquote>
-<pre><code>&lt;rdk-table page_size=&quot;1&quot;&gt;&lt;/rdk-table&gt;
+<pre><code>&lt;rdk_table page_size=&quot;1&quot;&gt;&lt;/rdk_table&gt;
 </code></pre>
 
 <p><live_demo example="controls/table/localpaging" width="900"></live_demo></p>
@@ -552,13 +560,13 @@ img {
 <p><code>search</code> 设置成 <code>true</code> 时，表示表格支持过滤。缺省时默认为 <code>false</code>，不支持过滤。</p>
 <p><code>paging-type</code>设置成<code>server</code>时，表示后端过滤。缺省时表示前端过滤。</p>
 <h3>前端过滤</h3>
-<pre><code>    &lt;rdk-table data=&quot;data&quot; search='true'&gt;&lt;/rdk-table&gt;
+<pre><code>    &lt;rdk_table data=&quot;data&quot; search='true'&gt;&lt;/rdk_table&gt;
 </code></pre>
 
 <p><code>search</code>前端过滤示例：
 <live_demo example="controls/table/search" width="900"></live_demo></p>
 <h3>后端过滤</h3>
-<pre><code>    &lt;rdk-table data=&quot;data&quot; search='true' paging-type=&quot;server&quot;&gt;&lt;/rdk-table&gt;
+<pre><code>    &lt;rdk_table data=&quot;data&quot; search='true' paging-type=&quot;server&quot;&gt;&lt;/rdk_table&gt;
 </code></pre>
 
 <p>后端过滤时，如果搜索框内有输入内容，就会出现搜索字段的下拉框，方便用户指定关键字的检索字段。</p>
@@ -637,7 +645,7 @@ img {
 <h1>方法</h1>
 <p>暂无</p>
 <h1>样式</h1>
-<h3><a href="/demo/controls/table/table_style">关键样式示例</a></h3>
+<h3><a href="/doc/client/demo/controls/table/table_style">关键样式示例</a></h3>
 <h3>表的整体属性</h3>
 <h4>font-size</h4>
 <p>字体大小，默认值：14px</p>

@@ -26,9 +26,9 @@ data对象中应该包含以下**必填属性**：
 
 `selected_index` 用于手工设置表格的默认选中行。暂定索引从0计数。例如：
 
-		<rdk-table id="id_table" ds="ds_table" 
+		<rdk_table id="id_table" ds="ds_table" 
 			ds-url="/demo/controls/table/mockdata/table_paging" 
-			ds_query_if="ready" selected_index="2"></rdk-table>
+			ds_query_if="ready" selected_index="2"></rdk_table>
 
 这里表示表格初始化完成后，默认选中第三行。
 
@@ -248,14 +248,26 @@ RDK2.0表格支持服务端和客户端排序两种方式。
 
 可以使用CSS中定义的table标记中的thead、tr、th等标记来修改表头内容。
 
-例如：
+详细示例如下：
 <live_demo example="controls/table/customheader" width="900"></live_demo>
+
+## 复选框列 ##
+可以通过自定义表头和列渲染的方式来实现复选框的功能。
+
+详细示例如下：
+<live_demo example="controls/table/columnCheckBoxRenderer" width="900"></live_demo>
+
+## 自动添加行编号 ##
+可以通过列渲染的方式实现行号自动自动添加功能。
+
+详细示例如下：
+<live_demo example="controls/table/columnIDRenderer" width="900"></live_demo>
 
 ## page_size ##
 >支持类型：字符串
 此属性支持自定义分页功能，通过此属性可以定义列表每页要展现的行数。代码如下：
 
-    <rdk-table page_size="1"></rdk-table>
+    <rdk_table page_size="1"></rdk_table>
 
 <live_demo example="controls/table/localpaging" width="900"></live_demo>
 
@@ -282,13 +294,13 @@ RDK2.0表格支持服务端和客户端排序两种方式。
 `paging-type`设置成`server`时，表示后端过滤。缺省时表示前端过滤。
 
 ### 前端过滤 ###
-		<rdk-table data="data" search='true'></rdk-table>
+		<rdk_table data="data" search='true'></rdk_table>
 
 `search`前端过滤示例：
 <live_demo example="controls/table/search" width="900"></live_demo>
 
 ### 后端过滤 ###
-		<rdk-table data="data" search='true' paging-type="server"></rdk-table>
+		<rdk_table data="data" search='true' paging-type="server"></rdk_table>
 
 后端过滤时，如果搜索框内有输入内容，就会出现搜索字段的下拉框，方便用户指定关键字的检索字段。
 
@@ -379,7 +391,7 @@ RDK2.0表格支持服务端和客户端排序两种方式。
 
 # 样式 #
 
-### [关键样式示例](/demo/controls/table/table_style) ###
+### [关键样式示例](/doc/client/demo/controls/table/table_style) ###
 
 ### 表的整体属性 ###
 

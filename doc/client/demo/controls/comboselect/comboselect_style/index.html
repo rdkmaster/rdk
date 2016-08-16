@@ -19,7 +19,7 @@
         </rdk_combo_select>
     </div>
     <hr>
-     <div>
+    <div>
         <div style="float:right">
             <h1>生成的CSS样式字段</h1>
             <textarea ng-model="CSSValue" ng-change="attrChanged()">{{CSSValue}}</textarea>
@@ -39,13 +39,13 @@
             <form>
                 <label>宽度（width）：</label>
                 <input type="text" ng-model="captionWidthValue" ng-change="attrChanged()"></input>
-            </form>            
+            </form>
             <hr>
             <h1>combo-content-transclude属性</h1>
             <form>
                 <label>宽度（width）：</label>
                 <input type="text" ng-model="transcludeWidth" ng-change="attrChanged()"></input>
-            </form>              
+            </form>
             <form>
                 <label>边框（margin-left）：</label>
                 <input type="text" ng-model="marginLeft" ng-change="attrChanged()"></input>
@@ -55,7 +55,7 @@
                 <input type="color" ng-model="backgroundColorValue" ng-change="attrChanged()">{{backgroundColorValue}}</input>
             </form>
             <hr>
-<!--             <h1>combo-content-theme属性：</h1>            
+            <!--             <h1>combo-content-theme属性：</h1>            
             <form>
                 <label>光标样式（cursor）：</label>
                 <select ng-model="cursor_Selected" ng-options="m.value as m.label for m in cursorRes" ng-change="attrChanged()">

@@ -3,33 +3,29 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>myFirstApp</title>
-
-    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+    <title>Panel -> Close</title>
     <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
     <script src="scripts/main.js"></script>
-  
 </head>
 
 <body ng-controller='rdk_ctrl' class="rdk_main">
-
-    <rdk_panel  id="panel_close" icon="fa fa-cubes"  width="200px" height="300px" show_title='true' show_close="true" title="'My first Panel'" rdk_modal='hide'>
+    <rdk_panel id="panel_close" icon="fa fa-cubes" width="200px" height="300px" show_title='true' show_close="true" title="'My first Panel'" rdk_modal='hide'>
         <div>
             <p> Test whether the interface will be closed where a user clicks the close icon.
-            <br><br> <br>
+                <br>
+                <br>
+                <br>
             </p>
-            
-
         </div>
-       <rdk-time>
-       </rdk-time>
-       <br><br>
+        <rdk_time>
+        </rdk_time>
+        <br>
+        <br>
         <rdk_accordion caption="'城市'">
             <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
             <div>除了可以填充RDK控件，还支持标准的标签</div>
         </rdk_accordion>
     </rdk_panel>
-   
 </body>
 
 </html>

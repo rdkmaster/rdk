@@ -3,26 +3,23 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>myFirstApp</title>
-
-    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+    <title>Panel -> Title</title>
     <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
     <script src="scripts/main.js"></script>
-  
 </head>
 
 <body ng-controller='rdk_ctrl' class="rdk_main">
-    <rdk_panel title="'My firest Panel'" show_title="true" >
+    <rdk_panel title="'My firest Panel'" show_title="true">
         <div>
             <p>set show_title="true" will show the setted title,default '标题' </p>
         </div>
     </rdk_panel>
-    <rdk_panel title="'My firest Panel'" show_title="false" >
+    <rdk_panel title="'My firest Panel'" show_title="false">
         <div>
             <p>Otherwise,hide the title </p>
         </div>
     </rdk_panel>
-    <rdk_panel title="'My firest Panel'" icon="fa fa-cubes" show_title="true" >
+    <rdk_panel title="'My firest Panel'" icon="fa fa-cubes" show_title="true">
         <div>
             <p>set icon="..." will show the setted icon,now only support font-awesome </p>
         </div>
@@ -32,7 +29,6 @@
             <p>set showclose="true" will show the close icon </p>
         </div>
     </rdk_panel>
-
 </body>
 
 </html>

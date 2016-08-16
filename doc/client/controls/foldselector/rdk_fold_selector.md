@@ -69,7 +69,7 @@
 
 ## child_change ##
 
-此属性为通用属性，请参见[`childChange`](/doc/controls/common/child_change.html)中的说明
+此属性为通用属性，请参见[`childChange`](/doc/client/controls/common/child_change.html)中的说明
 
 ## 其他属性 ##
 `rdk_fold_selector` 还拥有 `rdk_accordion` 的 `folded_icon`/`unfolded_icon`,`frozen`,`open` 等属性，也拥有 `rdk_basic_selector` 的 `searchable`,`multiple_select`等属性，具体参见 `rdk_accordion` 和 `rdk_basic_selector` 的控件说明文档。
@@ -79,7 +79,7 @@
 
 
 # 事件 #
-事件是RDK实现交互的主要手段之一，强大且易用。[了解更多](/doc/common/event)。
+事件是RDK实现交互的主要手段之一，强大且易用。[了解更多](/doc/client/common/event)。
 
 ## OPEN ##
 >事件类型：EventTypes.OPEN

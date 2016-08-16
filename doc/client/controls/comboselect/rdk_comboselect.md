@@ -44,7 +44,7 @@
 >支持类型：函数
 
 此属性用于将 rdk_selector 选中的对象转为一个字符串。
-此属性为通用属性，请参见[`childChange`](/doc/controls/common/child_change.html)中的说明
+此属性为通用属性，请参见[`childChange`](/doc/client/controls/common/child_change.html)中的说明
 
 <live_demo example="controls/comboselect/comboselect_childchange"  width="605"></live_demo>
 
@@ -58,7 +58,7 @@
 
 # 样式 #
 
-### [关键样式示例](/demo/controls/comboselect/comboselect_style) ###
+### [关键样式示例](/doc/client/demo/controls/comboselect/comboselect_style) ###
 
 ### rdk-combo-select-module ###
 

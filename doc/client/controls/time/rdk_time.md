@@ -4,7 +4,7 @@
 
 所有属性都缺省时，默认展现当天，时间粒度为天。
 
-	<rdk-time></rdk-time>
+	<rdk_time></rdk_time>
 
 这是一个简单的 `rdk_time` 例子：
 
@@ -37,7 +37,7 @@
 
 页面中使用方法：
 
-		<rdk-time range setting="showGranularity"></rdk-time>
+		<rdk_time range setting="showGranularity"></rdk_time>
 
 控制器中使用方法：
 

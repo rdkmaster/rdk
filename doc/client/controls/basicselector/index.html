@@ -437,9 +437,9 @@ img {
 <p><live_demo example="controls/basicselector/select_error" width="405"></live_demo></p>
 <p><strong>注意：异常列表中的错误码对整个RDK控件来说是全局唯一的</strong></p>
 <h2>child_change</h2>
-<p>此属性为通用属性，请参见<a href="/doc/controls/common/child_change.html"><code>childChange</code></a>中的说明</p>
+<p>此属性为通用属性，请参见<a href="/doc/client/controls/common/child_change.html"><code>childChange</code></a>中的说明</p>
 <h1>事件</h1>
-<p>事件是RDK实现交互的主要手段之一，强大但易用。<a href="/doc/common/event">了解更多</a>。</p>
+<p>事件是RDK实现交互的主要手段之一，强大但易用。<a href="/doc/client/common/event">了解更多</a>。</p>
 <h2>SELECT</h2>
 <blockquote>
 <p>事件类型：EventTypes.SELECT</p>
@@ -487,7 +487,7 @@ img {
 
 <p><strong>注意：使用此方法需要依赖注入Selector，即使是rdk-selector控件本身也需要注入此依赖！</strong></p>
 <h1>样式</h1>
-<h3><a href="/demo/controls/basicselector/select_style">关键样式示例</a></h3>
+<h3><a href="/doc/client/demo/controls/basicselector/select_style">关键样式示例</a></h3>
 <h3>border</h3>
 <p>边框样式，默认值：1px solid #a5a6aa</p>
 <h3>border-radius</h3>
@@ -529,7 +529,7 @@ img {
 <p>渲染器可以理解为数据的表现方式，具体地说，是指显示每一条数据时采用的形式。我们只需要把数据按照一定的格式组织好，然后赋予给组件即可。 </p>
 <p>自定义渲染器采用嵌入式，即直接写在组件的标签中来实现自定义数据展现的形式。</p>
 <p><strong>注意由于渲染器的scope是独立的，所以需要使用appScope的方式来获取距离当前渲染器最近的控制器的作用域。</strong></p>
-<h3><a href="/doc/controls/basicselector/render_demo.html">渲染器示例</a></h3>
+<h3><a href="/doc/client/controls/basicselector/render_demo.html">渲染器示例</a></h3>
 <h2>数据源绑定</h2>
 <p>可以通过URI或URL来绑定数据源。
 数据源的绑定分为三个部分：</p>

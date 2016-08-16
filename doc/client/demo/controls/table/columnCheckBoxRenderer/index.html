@@ -12,7 +12,7 @@
 </head>
 
 <body ng-controller='myCtrl'>
-    <rdk_table ds="ds_table" ds_url="../mockdata/table" ds_query_if="ready" setting="setting">
+    <table rdk_table ds="ds_table" ds_url="/doc/client/demo/controls/table/mockdata/table" ds_query_if="ready" setting="setting">
           <thead>
             <tr>
             	<th><input type="checkbox" id="checkBoxAll" ng-click="appScope.select_all()"></th>
@@ -21,10 +21,10 @@
                 <th>薪资</th>
                 <th>入职日期</th>
                 <th>部门</th>
-                <th>其他</th>
+                <th>其他</th>               
             </tr>
         </thead>
-    </rdk_table>
+    </table>
 </body>
 
 </html>

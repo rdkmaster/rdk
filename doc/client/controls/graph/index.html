@@ -291,8 +291,98 @@ img {
 </style>
 </head>
 <body>
-<p>图形文档待补充</p>
-<p><a href="/demo/controls/graph/basic/index.html">这是一个例子</a></p>
+<h1>简介</h1>
+<p><code>rdk_graph</code> 主要用于提供图形展示。
+rdk的图形控件主要是封装了echart3的内容，因此只要符合echart3的图形模板，都可以通过rdk_graph控件来展示。
+控件展示的关键步骤：</p>
+<ul>
+<li>设置图形的模板文件</li>
+<li>在rdk_graph控件中添加对图形模板的引用</li>
+<li>在rdk_graph控件中添加数据源</li>
+</ul>
+<p>这是一个简单的 <code>rdk_graph</code> 例子：
+<live_demo example="controls/graph/basic" width="900"></live_demo></p>
+<h1>属性</h1>
+<h2>graph_define</h2>
+<blockquote>
+<p>支持类型：字符串</p>
+</blockquote>
+<p>此属性用于rdk_graph控件获取图形模板文件的路径的设定。</p>
+<pre><code>&lt;rdk_graph graph_define=&quot;/doc/client/demo/controls/graph/basic/scripts/graph_define/simple_line.js&quot;&gt;
+&lt;/rdk_graph&gt;
+</code></pre>
+
+<p>以上示例中的<code>simple_line.js</code>就是对应的图形显示的模板文件。
+此属性中的模板文件一般和<code>data</code>属性一起使用，其中<code>data</code>属性是向图形模板文件中传入对应的入参信息。</p>
+<h2>data <binding></binding></h2>
+<blockquote>
+<p>支持类型：对象或数据源id</p>
+</blockquote>
+<p><code>data</code> 是需要在图形中展示的全部信息，可以是某个<code>数据源</code>的id。</p>
+<p>data对象中应该包含以下<strong>必填属性</strong>：</p>
+<ul>
+<li>field 	：表中的列头信息</li>
+<li>header：field的各个列头的国际化内容</li>
+<li>data:真实的数据
+其详细信息可以参见<code>rdk_table</code>控件的对应属性。</li>
+</ul>
+<h2>ds</h2>
+<blockquote>
+<p>支持类型：对象或数据源id</p>
+</blockquote>
+<p>数据源绑定的变量即直接从数据源获取的反馈信息。一般和<code>data</code>属性相同，但<code>data</code>属性的信息可以根据<code>ds</code>和相关的业务逻辑将数据进行新的处理。</p>
+<p><code>ds</code>属性一般和<code>ds-url</code>属性一起使用来获取图形显示的数据信息。</p>
+<h2>ds-url</h2>
+<blockquote>
+<p>支持类型：字符串</p>
+</blockquote>
+<p>此属性用于设置数据服务的引用路径，一般和<code>ds</code>属性一起使用。</p>
+<pre><code>&lt;rdk_graph ds=&quot;ds_graph&quot; ds-url=&quot;/doc/client/demo/controls/graph/mockdata/graph_data&quot;&gt;&lt;/rdk_graph&gt;
+</code></pre>
+
+<p><live_demo example="controls/graph/ds" width="900"></live_demo></p>
+<h1>事件</h1>
+<p><code>rdk_graph</code>控件支持echart3中的所有常用的事件。</p>
+<h2>常用事件</h2>
+<ol>
+<li>click</li>
+<li>dblclick</li>
+<li>mousedown</li>
+<li>mouseup</li>
+<li>mouseover</li>
+<li>mouseout</li>
+<li>globalout</li>
+<li>legendselectchanged</li>
+<li>legendselected</li>
+<li>legendunselected</li>
+<li>datazoom</li>
+<li>datarangeselected</li>
+<li>timelinechanged</li>
+<li>timelineplaychanged</li>
+<li>restore</li>
+<li>dataviewchanged</li>
+<li>magictypechanged</li>
+<li>pieselectchanged</li>
+<li>pieselected</li>
+<li>pieunselected</li>
+<li>mapselectchanged</li>
+<li>mapselected</li>
+<li>mapunselected</li>
+</ol>
+<h1>样式</h1>
+<p><code>rdk_graph</code>的样式主要是通过主题文件来设置的。主题文件中设置了所有图形的样式。</p>
+<h2>默认主题</h2>
+<p>如果<code>rdk_graph</code>控件不手动设置主题文件，则<code>rdk_graph</code>控件会使用控件库中的默认样式。
+图形控件的默认的样式会使用rdk控件库中的<code>chart_theme.js</code>文件中的样式（app\libs\rdk\controls\assets\chart_theme.js）</p>
+<h2>自定义主题</h2>
+<p><code>rdk_graph</code>也提供了自定义主题的使用接口。<code>rdk_graph</code>控件可以通过使用<code>setTheme</code>函数来引用和使用自己的主题样式文件。
+只需要在对应<code>main.js</code>文件中添加如下代码即可实现：</p>
+<pre><code>app.config(['RdkGraphProvider', function(RdkGraphProvider) {
+    RdkGraphProvider.setTheme(&quot;/doc/client/demo/controls/graph/theme/scripts/theme/theme.js&quot;);
+}]);
+</code></pre>
+
+<p><live_demo example="controls/graph/theme" width="900"></live_demo></p>
 <div>
 <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
 <script src="/doc/tools/doc_js/main.js"></script>

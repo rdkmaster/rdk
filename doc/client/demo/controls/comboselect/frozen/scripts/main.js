@@ -1,11 +1,10 @@
-define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector', 'rd.containers.Accordion'], function() {
+define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector'], function() {
     var myApp = angular.module('rdk_app', [
-        'rd.containers.Accordion',
         'rd.controls.ComboSelect',
         'rd.controls.BasicSelector'
     ]);
 
-    myApp.controller('myCtrl', ['$scope', 'RDKConst', 'BasicSelector', '$timeout', function(scope, RDKConst, BasicSelector, $timeout) {
+    myApp.controller('myCtrl', ['$scope', 'BasicSelector', '$timeout', function(scope, BasicSelector, $timeout) {
         scope.allItems = [{
             id: 0,
             label: "江苏省"
@@ -26,7 +25,7 @@ define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector
 
         scope.frBln = true;
 
-        $timeout(function(){
+        $timeout(function() {
             scope.frBln = false;
         }, 5000);
 

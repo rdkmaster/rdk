@@ -98,7 +98,7 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 
 # 样式 #
 
-### [关键样式示例](/demo/containers/accordion/accordion_style) ###
+### [关键样式示例](/doc/client/demo/containers/accordion/accordion_style) ###
 
 ### 模块整体样式 ###
 
@@ -155,7 +155,7 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 
 详细说明参见`BasicSelector`控件中相关章节。
 
-### [渲染器示例](/doc/containers/accordion/render_demo.html) ###
+### [渲染器示例](/doc/client/containers/accordion/render_demo.html) ###
 
 ## 数据源绑定 ##
 
