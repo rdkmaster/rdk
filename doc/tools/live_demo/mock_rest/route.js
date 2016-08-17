@@ -127,12 +127,7 @@ function _fixScriptUrl(htmlData, dir) {
 
   //转为字符串
   htmlData += '';
-  idx = htmlData.indexOf('scripts/main.js');
-  if (idx == -1) {
-    return htmlData;
-  }
-  htmlData = htmlData.substring(0, idx) + dir + htmlData.substring(idx);
-  return htmlData;
+  return htmlData.replace(/<script.+src\s*=\s*"\s*scripts\/main\.js\s*">\s*<\/script\s*>/, '');
 }
 
 function _escapeString(string) {
