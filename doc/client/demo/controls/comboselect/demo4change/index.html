@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>ComboSelect -> Basic</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk_client/libs/rdk/rdk" src="/rdk_client/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='myCtrl'>
+    <rdk_combo_select id="comboID" caption="'已选项:'" open='true' style="margin-top: 100px">
+        <rdk_basic_selector id="selectorID" data="allItems" multiple_select="false" track_item_by="id"><span>{{item.label}}</span>
+        </rdk_basic_selector>
+    </rdk_combo_select>
+</body>
+
+</html>
