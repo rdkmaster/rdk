@@ -50,7 +50,11 @@
 
 # 事件 #
 
-暂无
+## CHANGE ##
+监听到 `CHANGE` 事件后，控件的显示栏里会呈现对应的字符串。
+
+<live_demo example="controls/comboselect/demo4change"  width="605"></live_demo>
+
 
 #方法 #
 
