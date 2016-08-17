@@ -41,7 +41,8 @@
         ITEM_SELECTED: "item_selected", //tab_select 从里向外抛，捕捉对象
         ITEM_MULTI: "item_multi", //selector 编码方式控制 multi属性
 
-        DATA_CHANGE:"data_change"
+        DATA_CHANGE:"data_change",
+        DOUBLE_CLICK: "double_click"
     });
 
     event.service('EventService', ['$rootScope', '$timeout', '$rootScope', 'Utils', 'EventTypes',

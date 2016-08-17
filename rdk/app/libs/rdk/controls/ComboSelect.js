@@ -18,14 +18,16 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                     childChange: '&?'
                 },
                 template:'<div class="rdk-combo-select-module" ng-click="stopPropagation()">\
-                        <span class="combo-caption">{{caption}}</span>\
-                        <div class="combo-content" tabindex="1" ng-blur="blur()"\
-                             ng-mouseenter="mouseEnterHandler()"\
-                             ng-mouseleave="mouseLeaveHandler()">\
+                        <div class="combo-content">\
+                            <span class="combo-caption" ng-show="{{!!caption}}">{{caption}}</span>\
                             <input class="form-control combo-content-theme" title="{{inputStr}}" \
-                                readonly="true" ng-model="inputStr" ng-click="toggle()" type="text"/>\
-                            <div ng-transclude ng-show="open" class="combo-content-transclude">\
-                            </div>\
+                                readonly="true" ng-model="inputStr" ng-click="toggle()" type="text"\
+                                ng-mouseenter="mouseEnterHandler()" ng-mouseleave="mouseLeaveHandler()"/>\
+                            <i class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
+                        </div>\
+                        <div class="combo-content-transclude" tabindex="1" ng-blur="blur()"\
+                             ng-mouseenter="mouseEnterHandler()" ng-mouseleave="mouseLeaveHandler()">\
+                            <div ng-transclude ng-show="open"></div>\
                         </div>\
                     </div>',
 
@@ -56,9 +58,10 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
             }
 
             function _link(scope, iEle, iAttrs, ctrl, transclude) {
-                scope.caption = Utils.getValue(scope.caption, iAttrs.caption, '标题');
                 scope.open = Utils.isTrue(scope.open, false);
                 scope.frozen = Utils.isTrue(scope.frozen, false);
+                scope.unfoldedIcon = "fa fa-angle-up";
+                scope.foldedIcon = "fa fa-angle-down";
 
                 scope.toggle = _toggle;
                 scope.mouseEnterHandler = _mouseEnterHandler;
@@ -72,8 +75,12 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                     });
                 }
 
-                if(scope.open){//初始化时如果open为true，div需获取焦点
-                    _mouseLeaveHandler();
+                _resetTranscludeFocus();
+
+                function _resetTranscludeFocus(){
+                    if(scope.open){
+                        $(iEle[0].childNodes[3]).focus();
+                    }
                 }
 
                 function _stopPropagation(){
@@ -83,6 +90,13 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 function _toggle(){
                     if(scope.frozen) return;//冻结
                     scope.open = !scope.open;
+                    _resetTranscludeFocus();
+                }
+
+                function _blur(){
+                    if (scope.leaveFlag){//非外面input和transclude内容时响应
+                        scope.open = false;
+                    }                 
                 }
 
                 function _mouseEnterHandler(){
@@ -90,16 +104,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 }
 
                 function _mouseLeaveHandler(){
-                    scope.leaveFlag = true;
-                    if (scope.open) { //多个combo时，避免另外combo获取焦点时响应原combo的blur
-                        $(iEle[0].childNodes[3]).focus();
-                    }                    
-                }
-
-                function _blur(){
-                    if (scope.leaveFlag) {
-                        scope.toggle();
-                    }                   
+                    scope.leaveFlag = true;  
+                    _resetTranscludeFocus();          
                 }
             }
         }])

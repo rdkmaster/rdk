@@ -1,18 +1,11 @@
 .rdk-progressbar-module{
-    position: relative;
     display: inline-block;
-    width: 100%;
+    margin:0 10px;
 }
 
-.rdk-progressbar-module .progress-render{
-    position: absolute;
-    left: 50%;
-    font-weight: bold;
-    text-shadow: 1px 1px 0 #fff;
+.rdk-progressbar-module .progress{
+	margin-bottom:0px;
 }
 
-.rdk-progressbar-module div{
-    border: none;
-}
 
 

@@ -2,7 +2,21 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
     'css!rd.styles.Bootstrap'
 ], function() {
     var tabApp = angular.module("rd.containers.Tab", ['rd.core']);
-    tabApp.directive('rdkTab', ['EventService', 'EventTypes', 'Utils',
+    tabApp.directive('rdkTabtitleParser', ['$compile', 'Utils', function($compile, Utils) {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attr) {
+                var html;
+                if (scope.tab.title) {
+                    html = scope.tab.title;
+                    element.html(html);
+                } else {
+                    html = scope.tab.title_renderer;
+                    element.append(html);
+                }                
+            }
+        }
+    }]).directive('rdkTab', ['EventService', 'EventTypes', 'Utils',
         function(EventService, EventTypes, Utils) {
             return {
                 restrict: 'E',
@@ -16,10 +30,12 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 replace: true,
                 template: function(tElement, tAttrs) {
                     return '<div class="rdk-tab-module">\
-                                <div class="tabs" ng-click="tabClick($event)">\
+                                <div class="tabs">\
                                     <ul class="title">\
                                         <li style="display:{{getIndex($index)==-1?\'none\':\'inline\'}}" ng-repeat="tab in tabs">\
-                                            <a href="#{{tab.tabid}}" ng-class="{\'selected\':currentSelectedIndex == $index}">{{tab.title}}</a>\
+                                            <a href="#{{tab.tabid}}" ng-click="tabClick($event)" ng-class="{\'selected\':currentSelectedIndex == $index}" rdk-tabtitle-parser>\
+                                              {{tab.title}}\
+                                            </a>\
                                             <span class="bottom_line" style="display: block;" ng-show="picShow($index)">\
                                                 <em></em>\
                                             </span>\
@@ -44,33 +60,41 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
 
                 scope.currentSelectedIndex = 0;
 
+                
                 var tabs = $(element[0].querySelector(".content")).children("div");
                 for (var i = 0; i < tabs.length; i++) {
                     var tabid = Utils.createUniqueId('tab_item_');
                     tabs[i].setAttribute('id', tabid);
-                    var title = Utils.compile(scope.$parent, tabs[i].getAttribute('title'));
-                    scope.tabs.push({ title: title, tabid: tabid });
+                    var title = tabs[i].getAttribute('title')
+                    var compileTitle, renderTitle;
+                    if (title) {
+                        compileTitle = Utils.compile(scope.$parent, title);
+                    } else {
+                        renderTitle = tabs[i].querySelector("title_renderer");
+                    }
+                    scope.tabs.push({ title: compileTitle, tabid: tabid, title_renderer: renderTitle });
                 };
 
-                scope.picShow = function(index){
+               
+
+                scope.picShow = function(index) {
                     return scope.currentSelectedIndex == index;
                 }
 
                 scope.tabClick = function(event) {
                     event.preventDefault();
                     event.stopPropagation();
-                    var tabId = event.target.id;
+                    var tabId = event.currentTarget.hash;
                     scope.currentSelectedIndex = _getTabIndex(tabId);
                 }
 
                 function _getTabIndex(tabId) {
-                    var tabIndex = -1, tab;
-                    tabId = "tab_item_"+tabId.substring(tabId.lastIndexOf("-")+1,tabId.length);
+                    var tabIndex = -1,tab;
                     for (var i = 0; i < scope.tabs.length; i++) {
                         tab = scope.tabs[i];
-                        if (tabId == tab.tabid) { 
+                        if (tabId == "#"+tab.tabid) {
                             tabIndex = i;
-                            break; 
+                            break;
                         }
                     };
                     return tabIndex;

@@ -1,6 +1,6 @@
-define(['angular', 'jquery', 'underscore', 'rd.core','rd.controls.FoldSelector',
+define(['angular', 'jquery', 'underscore', 'rd.core',
     'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function(){
-    var selectorApp = angular.module('rd.controls.Selector', ['rd.core','rd.controls.FoldSelector']);
+    var selectorApp = angular.module('rd.controls.Selector', ['rd.core']);
     selectorApp.directive('rdkSelector', ['Utils', 'EventService', 'EventTypes', function (Utils, EventService, EventTypes) {
         return {
             restrict: 'E',

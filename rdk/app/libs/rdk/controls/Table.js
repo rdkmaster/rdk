@@ -7,10 +7,9 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
             '<div class="rdk-table-module" ng-click="stopPropagation()">\
                 <div ng-if="search" class="searchWapper">\
                     <input id="searchInput" type="text" class="form-control search" placeholder="Search"\
-                            ng-change="inputChangeHandler()" ng-keyup="keyPressHandler($event)"\
-                            ng-model="$parent.globalSearch">\
+                           ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
                     <i class="glyphicon glyphicon-search search_icon"></i>\
-                    <select id="searchSelect" ng-show="selectable" ng-model="val" ng-change="selectChangeHandler(val)"\
+                    <select id="searchSelect" ng-show="(pagingType==\'server\' && $parent.globalSearch)?true:false" ng-model="val" ng-change="selectChangeHandler(val)"\
                             ng-options="columnDef.data as columnDef.name for columnDef in columnDefs"\
                             class="form-control search_select">\
                         <option value="">{{i18n.searchAll}}</option>\
@@ -39,7 +38,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         </tbody>\
                     </table>\
                 </div>\
-                <rdk-paging ng-if="pageCtrl && paging && columnDefs.length!=0 && !noData" data-page-size="pageSize" \
+                <rdk-paging ng-if="pageVisible && pageCtrl && paging && columnDefs.length!=0 && !noData" data-page-size="pageSize" \
                      data-lang="{{lang}}">\
                 </rdk-paging>\
                 <div class="clearfix"></div>\
@@ -140,6 +139,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
             controller: ['$scope', function(scope) {
                 this.setCurrentPage = function(_currentPage) {
                     scope.currentPage = _currentPage;
+                    scope.proxyDs = Utils.compile(scope.$parent,scope.proxyDs);
                     if (scope.pagingType == "server") {
                         _loadDataFromServer();
                     }
@@ -167,9 +167,9 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         attachCondition.orderBy.field = fieldStr;
                         attachCondition.orderBy.direction = directionStr;
                     }
-                    if ((!!scope.searchVal) && (scope.search) && (scope.pagingType == "server")) { //服务端过滤时
+                    if ((!!scope.globalSearch) && (scope.search) && (scope.pagingType == "server")) { //服务端过滤时
                         attachCondition.search = {};
-                        attachCondition.search.searchKey = scope.searchVal;
+                        attachCondition.search.searchKey = scope.globalSearch;
                         attachCondition.search.searchFields = scope.searchFields;
                     }
 
@@ -198,6 +198,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                 selectedIndex: '=?',
                 pageSize: "@?",
                 pagingType: "@?",
+                pagingVisible: "@?",
                 lang: "@?",
                 searchPattern: '@?',
                 proxyDs: "@?",
@@ -232,6 +233,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                 }
 
                 return function link(scope, element, attrs, ctrl, transclude) {
+                    
                     _init();
 
                     transclude(scope, function(clone, innerScope) {
@@ -261,6 +263,10 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                                 scope.baseCondition = data.condition;
                             });
                         };
+
+                        //分页栏是否展现
+                        scope.pageVisible = Utils.isTrue(scope.pagingVisible, true);
+
                         //根据data生成并且和用户自定义def合并
                         scope.columnDefs = [];
                         //每页显示N行
@@ -364,10 +370,9 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         }
 
                         scope.keyPressHandler = function(event) {
-                            scope.searchVal = element[0].querySelector("#searchInput").value;
-                            if (!_validateValue(scope.searchVal, scope.searchPattern)) { //没校验通过
-                                element[0].querySelector("#searchInput").value = scope.searchVal.substring(0, scope.searchVal.length - 1); //回到原来
-                                scope.searchVal = element[0].querySelector("#searchInput").value; //重置searchVal
+                            if(!scope.globalSearch) return;
+                            while (!_validateValue(scope.globalSearch, scope.searchPattern)){
+                                scope.globalSearch = scope.globalSearch.substring(0, scope.globalSearch.length-1);
                             }
 
                             if ((event.keyCode == 13) && (scope.pagingType == "server")) {
@@ -375,12 +380,6 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                                     scope.searchFields = _getValue(scope.columnDefs);
                                 }
                                 ctrl.setCurrentPage(scope.currentPage);
-                            }
-                        }
-
-                        scope.inputChangeHandler = function() {
-                            if (scope.pagingType == "server") {
-                                scope.selectable = (element[0].querySelector("#searchInput").value) ? true : false;
                             }
                         }
 
@@ -526,6 +525,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                     }
 
                     function _validateValue(val, pattern) {
+                        if(!val) return true;//没值了，不能再-1
                         var reg = new RegExp(pattern);
                         if (!reg.test(val)) {
                             return false;
@@ -578,26 +578,23 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         if ($.isEmptyObject(scope.data)) return;
                         if (!scope.data.data){
                             scope.noData = true;
-                            return;
                         }
                         else if (scope.data.data.length == 0){
                             scope.noData = true;
-                            return;
                         }
                         else {
                             scope.noData = false;
                         }
                         if (!scope.data.header){
                             scope.noHeader = true;
-                            return;
                         }
                         else if(scope.data.header.length == 0){//column.title是从header取
                             scope.noHeader = true;
-                            return;
                         }
                         else{
                             scope.noHeader = false;
                         }
+
                         scope.destData = _convertToObject(scope.data);
                         scope.columnDefs = [];
                         //scrollStyle
@@ -636,6 +633,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                     }
 
                     function _produceColumnDefs() {
+                        scope.columnDefs = [];
                         for (var i = 0; i < scope.data.field.length; i++) {
                             columnDef = {};
                             columnDef.data = scope.data.field[i];
@@ -822,7 +820,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
             },
             link: function($scope, element, attrs, TableCtrl) {
                 $scope.TableCtrl = TableCtrl;
-                $scope.TableCtrl.pageCtrl = $scope;              
+                $scope.TableCtrl.pageCtrl = $scope;          
 
                 /*paging国际化处理*/
                 $scope.appScope = getTableAppScope();

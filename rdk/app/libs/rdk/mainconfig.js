@@ -8,6 +8,8 @@ require.config({
         "ui.codemirror": "../angular/ui-codemirror",
         "ui.router": "../angular/angular-ui-router",
         "blockUI": "../angular/angular-block-ui.min",
+        "angular-bootstrap-progressbar":"../angular/angular.bootstap.progressbar",
+        "ngProgress":"../angular/ngprogress",
 
         "codemirror-core": "../codemirror/codemirror",
         "codemirror-css": "../codemirror/codemirror",
@@ -47,10 +49,11 @@ require.config({
         "rd.controls.TabSelect": "../rdk/controls/TabSelect",
         "rd.controls.TabSelector": "../rdk/controls/TabSelector",
         "rd.controls.Time": "../rdk/controls/Time",
+        "rd.controls.Scroller": "../rdk/controls/Scroller",
         "rd.controls.ProgressBar": "../rdk/controls/ProgressBar",
         "rd.controls.Alert": "../rdk/controls/Alert",
         "rd.controls.Tree": "../rdk/controls/Tree",
-       
+
         "rd.services.DataSourceService": "../rdk/services/DataSourceService",
         "rd.services.EventService": "../rdk/services/EventService",
         "rd.services.I18nService": "../rdk/services/I18nService",
@@ -73,6 +76,7 @@ require.config({
         "rd.styles.Bootstrap": "../bootstrap/css/bootstrap.min",
         "rd.styles.Panel": "../rdk/containers/assets/rdk-panel-style",
         "rd.styles.Tab": "../rdk/containers/assets/rdk-tab-style",
+        "rd.styles.Scroller": "../rdk/controls/assets/rdk-scroller-style",
 
         "rd.modules.i18n": "../rdk/modules/I18nModule",
     }),
@@ -88,7 +92,7 @@ require.config({
         },
 
         "angular-translate-static":{
-           deps : ['angular'],
+           deps : ['angular','angualr-translate'],
             exports: "angular-translate-static" 
         },
         // "ui-codemirror": {
@@ -134,6 +138,14 @@ require.config({
         "bootstrap": {
             deps: ["css!../bootstrap/css/bootstrap.min"],
             exports: "bootstrap"
+        },
+        "angular-bootstrap-progressbar":{
+             deps: ["angular"],
+             exports: "angular-bootstrap-progressbar"
+        },
+        "ngProgress":{
+            deps: ["angular","css!../angular/ngprogress"],
+            exports: "ngProgress"
         }
     },
     map: {

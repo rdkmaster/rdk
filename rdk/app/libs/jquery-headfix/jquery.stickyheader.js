@@ -59,8 +59,18 @@
 					// Set width of sticky table col
 					$stickyCol.find('th').add($stickyInsct.find('th')).width($t.find('thead th').width())
 				},
-				repositionStickyHead = function () {
-					if($w.scrollTop() == 0){
+				repositionStickyHead = function (event) {
+					var element = event.currentTarget;
+
+					var offsetTop;
+					if(element.location != self.location){//是否顶级窗口
+						offsetTop = getAbsPoint($t.get(0)) - getAbsPoint(element);//t相对于element的top
+					}
+					else{
+						offsetTop = $t.offset().top;
+					}
+
+					if($(element).scrollTop() == 0){//排序时，需要把排序列置上层
 						$(".sticky-thead").css("visibility", "hidden");
 					}
 					else{
@@ -68,7 +78,7 @@
 					}
 
 					// Return value of calculated allowance
-					var allowance = calcAllowance();
+					var allowance = calcAllowance(element);
 				
 					// Check if wrapper parent is overflowing along the y-axis
 					if($t.height() > $stickyWrap.height()) {
@@ -90,11 +100,11 @@
 					} else {
 						// If it is not overflowing (basic layout)
 						// Position sticky header based on viewport scrollTop
-						if($w.scrollTop() > $t.offset().top && $w.scrollTop() < $t.offset().top + $t.outerHeight() - allowance) {
+						if($(element).scrollTop() > offsetTop && $(element).scrollTop() < offsetTop + $t.outerHeight() - allowance) {
 							// When top of viewport is in the table itself
 							$stickyHead.add($stickyInsct).css({
 								opacity: 1,
-								top: $w.scrollTop() - $t.offset().top
+								top: $(element).scrollTop() - offsetTop
 							});
 						} else {
 							// When top of viewport is above or below table
@@ -119,7 +129,7 @@
 						.add($stickyInsct).css({ left: 0 });
 					}
 				},
-				calcAllowance = function () {
+				calcAllowance = function (element){
 					var a = 0;
 					// Calculate allowance
 					$t.find('tbody tr:lt(1)').each(function () {
@@ -128,8 +138,8 @@
 					
 					// Set fail safe limit (last three row might be too tall)
 					// Set arbitrary limit at 0.25 of viewport height, or you can use an arbitrary pixel value
-					if(a > $w.height()*0.25) {
-						a = $w.height()*0.25;
+					if(a > $(element).height()*0.25) {
+						a = $(element).height()*0.25;
 					}
 					
 					// Add the height of sticky header
@@ -137,23 +147,44 @@
 					return a;
 				};
 
+				getAbsPoint = function(e){
+					var x = e.offsetLeft, y = e.offsetTop;      
+					while(e = e.offsetParent){    
+						x += e.offsetLeft;      
+						y += e.offsetTop;   
+					} 
+					return y; 
+				}
+
 			setWidths();
 			if($w.scrollTop() == 0){
 				$(".sticky-thead").css("visibility", "hidden");
 			}
 
-			$t.parent('.sticky-wrap').scroll($.throttle(250, function() {
-				repositionStickyHead();
+			// $t.parent('.sticky-wrap').scroll($.throttle(250, function() {
+			// 	repositionStickyHead();
+			// 	repositionStickyCol();
+			// }));
+
+			$w.load(setWidths).resize($.debounce(250, function ($event) {
+				setWidths();
+				repositionStickyHead($event);
+				repositionStickyCol();
+			})).scroll($.throttle(250, function($event){
+				setWidths();
+				repositionStickyHead($event);
 				repositionStickyCol();
 			}));
 
-			$w.load(setWidths)
-			.resize($.debounce(250, function () {
-				setWidths();
-				repositionStickyHead();
-				repositionStickyCol();
-			}))
-			.scroll($.throttle(250, repositionStickyHead));
+			$.each($t.parents(), function(i, element){
+				if(element.location != self.location){
+					$(element).scroll($.throttle(250, function($event) {
+						setWidths();
+						repositionStickyHead($event);
+						repositionStickyCol();
+					}));
+				}
+			})
 		}
    }
 })(jQuery);

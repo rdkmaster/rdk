@@ -5,26 +5,41 @@
 
 .rdk-combo-select-module .combo-caption{
     display: inline-block;
-    margin-right: 10px;
+    border-right: 1px #ABABAB solid;
+    padding-right: 10px;
+    vertical-align: middle;
+    text-align: center;
 }
 
 .rdk-combo-select-module .combo-content{
     position: relative;
-    display: inline;
+    display: inline-block;
     outline: none;
+    border: solid 1px #ABABAB;
+    border-radius: 4px;
+    padding: 0 10px;
 }
 
 .rdk-combo-select-module .combo-content-theme{
-    cursor: pointer!important;
+    cursor: pointer !important;
     display: inline-block;
     width: 120px;
     height: 28px;
+    box-shadow: none !important;
+    border: none;
+    background-color: white !important;
+}
+
+.rdk-combo-select-module .combo-content-icon{
+    right: 5px;
+    position: absolute;
+    top: 5px;
+    pointer-events: none;
+    color: #008FD4;
 }
 
 .rdk-combo-select-module .combo-content-transclude{
     min-width: 120px;
-    width: 120%;
-    height: 100%;
     outline: none;
     position: absolute;
     z-index: 9999;

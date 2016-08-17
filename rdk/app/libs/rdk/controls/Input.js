@@ -13,7 +13,7 @@ define(['angular', 'jquery', 'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstr
                      <input type="text" class="form-control" placeholder="{{placeholder}}">\
                  <span class="glyphicon glyphicon-remove" \
                    style="position:absolute;right:10px;color:gray;font-size:14px"\
-                   ng-show="showDelete"></span>\
+                   ng-show="{{showDelete}}"></span>\
                  <div style="clear:both"></div>\
                 </div>',
             compile: function(tElement, tAttrs, transclude) {
