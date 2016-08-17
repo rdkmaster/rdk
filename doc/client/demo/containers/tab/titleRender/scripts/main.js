@@ -1,8 +1,8 @@
-define('main', ['angular', 'rd.containers.Tab', 'rd.controls.BasicSelector','rd.controls.Progressbar'], function() {
+define('main', ['angular', 'rd.containers.Tab', 'rd.controls.BasicSelector','rd.controls.ProgressBar'], function() {
     var myApp = angular.module('rdk_app', [
         'rd.containers.Tab',
         'rd.controls.BasicSelector',
-        'rd.controls.Progressbar'
+        'rd.controls.ProgressBar'
     ]);
 
     myApp.controller('myCtrl', ['$scope', 'EventService', 'EventTypes', 'BasicSelector',
