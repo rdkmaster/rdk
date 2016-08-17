@@ -21,5 +21,5 @@
 
 
 
-<div title="RDK应用开发新手宝典 - RDK应用开发最佳实践" id="__hidden__">
+<div title="天龙八步 - RDK应用开发新手宝典" id="__hidden__">
 </div>

@@ -1,8 +1,17 @@
 define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
     'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
     var accordionModule = angular.module('rd.containers.Accordion', ['rd.core']);
+
+    accordionModule.constant("PositionTypes", {
+        TOP: 'top',
+        BOTTOM: 'bottom',
+        LEFT: 'left',
+        RIGHT: 'right',
+    });
+
+
     accordionModule
-        .directive('rdkAccordion', ['Utils', 'EventService', 'EventTypes', '$compile', function(Utils, EventService, EventTypes, $compile) {
+        .directive('rdkAccordion', ['Utils', 'EventService', 'EventTypes', '$compile', 'PositionTypes',function(Utils, EventService, EventTypes, $compile, PositionTypes) {
             return{
                 restrict: 'E',
                 replace: true,
@@ -19,13 +28,14 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     childChange: '&?',
 
                     buttons: '=',
-                    id: '@'
+                    id: '@',
+                    expandDirection: '@'
                 }, 
                 template: 
                 '<div class="rdk-accordion-module" ng-click="stopPropagation()">\
                     <div class="theme" ng-click="toggle()">\
                         <i class="{{open?unfoldedIcon:foldedIcon}}"></i>\
-                        <span class="theme-caption" contentEditable="{{editable}}"\
+                        <span ng-show="!!caption" class="theme-caption" contentEditable="{{editable}}"\
                          ng-keydown="keyPressHandler($event)"\
                          >\
                             {{caption}}\
@@ -60,6 +70,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     for (var key in clone){
                         if (clone.hasOwnProperty(key) && clone[key].tagName == "HEADER_RENDERER") {
                             $(iEle).find(".theme").html("").append(clone[key].innerHTML);
+                            $(iEle[0].querySelector('.theme')).addClass("accordion-width");
                             $(clone[key]).css('display', 'none');
                         }
                     };
@@ -74,7 +85,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     $compile(iEle.contents())(scope);
                 }
 
-                _init();  
+                _init();
 
                 if(scope.id){
                     EventService.register(scope.id, EventTypes.OPEN, function(event, data){
@@ -84,18 +95,17 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                         scope.open = false;
                     });
                     EventService.broadcast(scope.id, EventTypes.READY, scope);//对ngRepeat的data回显有用
-                }                           
+                }
 
                 function _init(){
-                    scope.foldedIcon = Utils.getValue(scope.foldedIcon, iAttrs.foldedIcon, "fa fa-angle-double-down");
-                    scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, "fa fa-angle-double-up");
-                    scope.caption = Utils.getValue(scope.caption, iAttrs.caption, "标题");
-                    
+                    scope.expandDirection = Utils.getValue(scope.expandDirection, iAttrs.expandDirection, PositionTypes.BOTTOM);             
+                    scope.caption = Utils.getValue(scope.caption, iAttrs.caption, '');                                       
                     scope.open = Utils.isTrue(scope.open, false);                    
                     scope.frozen = Utils.isTrue(scope.frozen, false);
                     scope.editable = Utils.isTrue(scope.editable, false);
-
                     scope.showButtons = angular.isDefined(scope.buttons);
+                    _initFoldIconsByDirection();
+                    _resetTranscludePosition(scope.expandDirection);
 
                     scope.toggle = _toggle;
                     scope.clickHandler = _clickHandler;   
@@ -104,6 +114,54 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.keyPressHandler = _keyPressHandler;
                     scope.stopPropagation = _stopPropagation;
                 }
+
+                function _initFoldIconsByDirection(){
+                    if(scope.expandDirection == PositionTypes.BOTTOM){
+                        scope.foldedIcon = Utils.getValue(scope.foldedIcon, iAttrs.foldedIcon, "fa fa-angle-down");
+                        scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, "fa fa-angle-up");
+                        scope.normalPosition = true;
+                    }
+                    if(scope.expandDirection == PositionTypes.TOP){
+                        scope.foldedIcon = Utils.getValue(scope.foldedIcon, iAttrs.foldedIcon, "fa fa-angle-up");
+                        scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, "fa fa-angle-down"); 
+                        scope.normalPosition = true;                       
+                    }
+                    if(scope.expandDirection == PositionTypes.RIGHT){
+                        scope.foldedIcon = Utils.getValue(scope.foldedIcon, iAttrs.foldedIcon, "fa fa-angle-right");
+                        scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, "fa fa-angle-left"); 
+                        scope.normalPosition = false;                       
+                    }
+                    if(scope.expandDirection == PositionTypes.LEFT){
+                        scope.foldedIcon = Utils.getValue(scope.foldedIcon, iAttrs.foldedIcon, "fa fa-angle-left");
+                        scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, "fa fa-angle-right"); 
+                        scope.normalPosition = false;                         
+                    }
+                }
+
+                function _resetTranscludePosition(direction){
+                    var themeDom = iEle[0].querySelector(".theme");
+                    var transcludeDom = iEle[0].querySelector(".content");                              
+                    if((direction == PositionTypes.LEFT) || (direction == PositionTypes.RIGHT)){
+                        $(themeDom).addClass("accordion-inline");//标题变行元素
+                        if(direction == PositionTypes.RIGHT){
+                            $(transcludeDom).addClass("accordion-inline");
+                        }
+                        else{
+                            $(transcludeDom).css({'left': -transcludeDom.offsetWidth+'px', 'top': 0});//包裹的可以用transcludeDom
+                        }    
+                    }
+                    if((direction == PositionTypes.TOP) || (direction == PositionTypes.BOTTOM)){
+                        if(!!scope.caption){//非空时100%
+                            $(transcludeDom).addClass("accordion-width"); 
+                        }
+                        else{//空时标题inline
+                            $(themeDom).addClass("accordion-inline");
+                        }
+                        if(direction == PositionTypes.TOP){
+                            $(transcludeDom).css({'bottom': themeDom.offsetHeight+'px'});//未必包裹，需要themeDom
+                        } 
+                    }
+                }               
 
                 function _stopPropagation(){
                     event.stopPropagation();

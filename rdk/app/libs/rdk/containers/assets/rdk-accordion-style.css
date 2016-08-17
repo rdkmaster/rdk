@@ -1,20 +1,29 @@
 .rdk-accordion-module{
 	width: 100%;
+    position: relative;
 }
 
 .rdk-accordion-module .theme{
-   /* padding: 2px 6px;*/
-    width: 100%;
-    background-color: #E3E3E3;
-    border: 1px solid #CDCDCD;
-    /*border-radius: 4px;*/
+    background-color: #DFEFFF;
+    border: 1px solid #DFEFFF;
+    border-radius: 4px;
     font-weight: bold;
     font-size: medium;
     cursor: pointer;
+    padding: 5px;
+}
+
+.rdk-accordion-module .accordion-width{
+    width: 100%;
+}
+
+.rdk-accordion-module .accordion-inline{
+    display: inline-block;
 }
 
 .rdk-accordion-module .theme-caption{
     outline:none;
+    font-family: microsoft yahei regular;
 }
 
 .rdk-accordion-module .theme-buttons{
@@ -27,10 +36,10 @@
 }
 
 .rdk-accordion-module .content{
-    width: 100%;
     border: 1px solid #CDCDCD;
     border-radius: 4px;
     padding: 10px;
     background-color: white;
+    position: absolute;
 }
 
