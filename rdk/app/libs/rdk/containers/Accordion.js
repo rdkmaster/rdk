@@ -70,17 +70,15 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     for (var key in clone){
                         if (clone.hasOwnProperty(key) && clone[key].tagName == "HEADER_RENDERER") {
                             $(iEle).find(".theme").html("").append(clone[key].innerHTML);
-                            $(iEle[0].querySelector('.theme')).addClass("accordion-width");
                             $(clone[key]).css('display', 'none');
                         }
                     };
-
-                    scope.appScope = Utils.findAppScope(scope);
                     if(!iEle.attr('ng-repeat')){//ng-repeat要最后编译
                         $compile(iEle)(scope);
                     }
                     $(iEle).find(".content").html("").append(clone);
                 }); 
+
                 if(iEle.attr('ng-repeat')){
                     $compile(iEle.contents())(scope);
                 }
@@ -103,9 +101,11 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.open = Utils.isTrue(scope.open, false);                    
                     scope.frozen = Utils.isTrue(scope.frozen, false);
                     scope.editable = Utils.isTrue(scope.editable, false);
-                    scope.showButtons = angular.isDefined(scope.buttons);
+                    scope.showButtons = angular.isDefined(scope.buttons);                   
+                    scope.appScope = Utils.findAppScope(scope);
+
                     _initFoldIconsByDirection();
-                    _resetTranscludePosition(scope.expandDirection);
+                    _resetTranscludePosition(scope.expandDirection.toLowerCase());
 
                     scope.toggle = _toggle;
                     scope.clickHandler = _clickHandler;   
@@ -140,26 +140,23 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
                 function _resetTranscludePosition(direction){
                     var themeDom = iEle[0].querySelector(".theme");
-                    var transcludeDom = iEle[0].querySelector(".content");                              
-                    if((direction == PositionTypes.LEFT) || (direction == PositionTypes.RIGHT)){
-                        $(themeDom).addClass("accordion-inline");//标题变行元素
-                        if(direction == PositionTypes.RIGHT){
-                            $(transcludeDom).addClass("accordion-inline");
-                        }
-                        else{
-                            $(transcludeDom).css({'left': -transcludeDom.offsetWidth+'px', 'top': 0});//包裹的可以用transcludeDom
-                        }    
+                    var transcludeDom = iEle[0].querySelector(".content");
+                    if(!!!scope.caption){
+                        $(themeDom).css({'display': 'inline-block'});
+                    }                         
+                    if(direction == PositionTypes.TOP){
+                        $(iEle[0]).empty();
+                        $(iEle[0]).append(transcludeDom).append(themeDom);
+                        $compile(iEle.contents())(scope);
                     }
-                    if((direction == PositionTypes.TOP) || (direction == PositionTypes.BOTTOM)){
-                        if(!!scope.caption){//非空时100%
-                            $(transcludeDom).addClass("accordion-width"); 
-                        }
-                        else{//空时标题inline
-                            $(themeDom).addClass("accordion-inline");
-                        }
-                        if(direction == PositionTypes.TOP){
-                            $(transcludeDom).css({'bottom': themeDom.offsetHeight+'px'});//未必包裹，需要themeDom
-                        } 
+                    if(direction == PositionTypes.RIGHT){
+                        $(transcludeDom).css({'display': 'inline-block', 'vertical-align': 'top'});
+                    }
+                    if(direction == PositionTypes.LEFT){   
+                        $(transcludeDom).css({'display': 'inline-block', 'vertical-align': 'top'});
+                        $(iEle[0]).empty();
+                        $(iEle[0]).append(transcludeDom).append(themeDom);
+                        $compile(iEle.contents())(scope);
                     }
                 }               
 
