@@ -1,16 +1,16 @@
 organization  := "com.zte.vmax"
 
-version       := "0.1"
+version       := "2.1-beta"
 
 unmanagedBase := file("proc/bin/lib")
 
-name          := "vmax-rdk-server"
+name          := "rdk-server"
 
 scalaVersion  := "2.10.5"
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
 
-javacOptions := Seq("-encoding", "utf8")
+javacOptions  := Seq("-encoding", "utf8")
 
 libraryDependencies ++= {
   val akkaV = "2.3.5"
