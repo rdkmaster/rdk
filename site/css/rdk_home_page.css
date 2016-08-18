@@ -50,6 +50,7 @@ body{
 .chearfix:after{
 	clear: both;
 }
+
 li{
 	list-style: none;
 	text-align: center;
@@ -93,10 +94,21 @@ h2{
 	font-weight: 500;
 	color: #fff;
 }
+strong{
+	display: block;
+	padding-top: 20px;
+	padding-bottom: 80px;
+}
+strong>a{
+	color: #fff;
+}
+em{
+	font-style: normal;
+	font-size: 30px;
+}
 .download{
 	margin-top: 30px;
 	line-height: 1.25;
-	padding-bottom: 100px;
 }
 .button{
 	box-shadow: inset 0 -4px 0 #2a6496;
@@ -191,7 +203,7 @@ footer h3 ,footer p{
 }
 @media(min-width: 1200px){
 	.aniFillMode{
-		width: 20%;
+		width: 25%;
 	}
 }
 @media(min-width: 768px){
