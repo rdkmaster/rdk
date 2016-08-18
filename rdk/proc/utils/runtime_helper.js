@@ -40,45 +40,192 @@ var java = {
 
 };
 
+
 var mq = {
-    p2p: function(subject, message) {
-        return new Sequence(helper.messageQueue.p2p(subject, message), subject);
+    p2p: function (subject, message) {
+        return new Sequence(rdk_runtime.messageQueue().p2p(subject, message), subject);
     },
-    broadcast: function(subject, message, persit) {
-        var seq = helper.messageQueue.broadcast(subject, message, !!persit);
+    broadcast: function (subject, message, persit) {
+        var seq = rdk_runtime.messageQueue().broadcast(subject, message, !!persit);
         return new Sequence(seq, subject);
     },
-    subscribe: function(subject, callback, context, sequence) {
-        helper.messageQueue.subscribe(subject, callback, context, sequence);
+    subscribe: function (subject, callback, context, sequence) {
+        rdk_runtime.messageQueue().subscribe(subject, callback, context, sequence);
     },
-    unsubscribe: function(subject, callback) {
-        helper.messageQueue.unsubscribe(subject, callback);
+    unsubscribe: function (subject, callback) {
+        rdk_runtime.messageQueue().unsubscribe(subject, callback);
     }
 };
+
+var mq_new={
+    p2p: function (subject, message) {
+        return rdk_runtime.p2p(subject, message);
+    },
+    rpc: function (subject, replySubject, message, timeout) {
+        return rdk_runtime.rpc(subject, replySubject, message, timeout);
+    },
+    broadcast: function (subject, message) {
+        return rdk_runtime.broadcast(subject, message);
+    },
+    subscribe: function (topic,callback_function_name, jsfile){
+        return rdk_runtime.subscribe(topic,callback_function_name, jsfile);
+    },
+    unsubscribe: function (topic,callback_function_name, jsfile){
+        return rdk_runtime.unSubscribe(topic,callback_function_name, jsfile);
+    },
+    reply: function (dst, message){
+        return rdk_runtime.reply(dst, message);
+    }
+
+}
+var websock ={
+    broadcast: function (subject, message) {
+        return rdk_runtime.webSocketBroadcast(subject, message);
+    }
+}
+var Log = {
+    debug: function () {
+        var message = _arg2string(arguments);
+        rdk_runtime.jsLogger().debug(message);
+    },
+    info: function () {
+        var message = _arg2string(arguments);
+        rdk_runtime.jsLogger().info(message);
+    },
+    warn: function () {
+        var message = _arg2string(arguments);
+        rdk_runtime.jsLogger().warn(message);
+    },
+    error: function () {
+        var message = _arg2string(arguments);
+        rdk_runtime.jsLogger().error(message);
+    },
+    fatal: function () {
+        var message = _arg2string(arguments);
+        rdk_runtime.jsLogger().error(message);
+    },
+    crit: function () {
+        var message = _arg2string(arguments);
+        rdk_runtime.jsLogger().error(message);
+    }
+}
+
+//兼容以前日志代码
+var log = Log.debug;
+var debug = Log.debug;
+var info = Log.info;
+var warn = Log.warn;
+var error = Log.error;
+var fatal = Log.fatal;
+var crit = Log.crit;
+
+//缓存
+var Cache = {
+    put: function (k, v) {
+        return rdk_runtime.cachePut(k, v)
+    },
+    get: function (k) {
+        return rdk_runtime.cacheGet(k)
+    },
+    del: function (k) {
+        return rdk_runtime.cacheDel(k)
+    },
+    global_put: function (k, v) {
+        return rdk_runtime.globalCachePut(k, v)
+    },
+    global_get: function (k) {
+        return rdk_runtime.globalCacheGet(k)
+    },
+    global_del: function (k) {
+        return rdk_runtime.globalCacheDel(k)
+    }
+}
+
+//--json转换
+var JSON1 = {
+    stringify: function (obj) {
+        rdk_runtime.objectToJson(obj);
+    },
+    parse: function (json_string) {
+
+    }
+}
+
+
+//动态类加载
+var JVM = {
+    load_class: function loadClass(className, jar) {
+        try {
+            return rdk_runtime.jarHelper().loadClass(className, jar);
+        } catch (e) {
+            return undefined;
+        }
+    }
+
+}
+
+//国际化
+var I18n = {
+    format: function (key) {
+        if (arguments.length == 0) {
+            return undefined;
+        }
+
+        if (_.isArray(key)) {
+            return groupI18n(key);
+        }
+
+        if (!_.isString(key)) {
+            return key;
+        }
+
+        try {
+            var i18n = require('$svr/i18n.js');
+        } catch (e) {
+            return key;
+        }
+        try {
+            var val = i18n[rdk_runtime.locale()][key];
+        } catch (e) {
+            warn('get locale data error, locale =', rdk_runtime.locale());
+            return key;
+        }
+
+        val = _.isDefined(val) ? val : key;
+        for (var i = 1; i < arguments.length; i++) {
+            val = val.replace(new RegExp("\\{" + (i - 1) + "\\}", "g"), arguments[i]);
+        }
+        return val;
+    }
+}
+//兼容以前代码
+var i18n = I18n.format;
 
 function Sequence(sequence, subject) {
     this.sequence = sequence;
     this.subject = subject;
     this.data = undefined;
 
-    this.wait = function(subject) {
+    this.wait = function (subject) {
         log("waiting for ack... subject =", subject || this.subject);
         if (!subject && !this.subject) {
             error("need a valid subject!");
             return;
         }
-        var internalCallback = eval('function anonymous_' + sequence + '(msg) {this.data = msg.body;}');
-        mq.subscribe(subject || this.subject,internalCallback , this, this.sequence);
+        mq.subscribe(subject || this.subject, function (msg) {
+            this.data = msg.body;
+        }, this, this.sequence);
+
         while (!this.data) {
             sleep(20);
         }
         return this.data;
     };
 
-    this.toString = function() {
+    this.toString = function () {
         return String(this.sequence);
     };
-    this.valueOf = function() {
+    this.valueOf = function () {
         return this.sequence;
     };
 }
@@ -105,16 +252,7 @@ function _fixContent(content, excludeIndexes) {
 }
 
 var file = {
-    loadProperty:function(file){
-        if (!file) {
-            log("invalid file path:", file);
-            return false;
-        }
-        file = file.toString();
-        log("reading property file:",file);
-        return helper.fileHelper.loadProperty(file);
-    },
-    save: function(file, content, append, encoding) {
+    save: function (file, content, append, encoding) {
         if (!file) {
             log("invalid file path:", file);
             return false;
@@ -126,20 +264,20 @@ var file = {
 
         file = file.toString();
         log("saving file to:", file);
-        return helper.fileHelper.save(file, content.toString(), !!append, encoding);
+        return rdk_runtime.fileHelper().save(file, content.toString(), !!append, encoding);
     },
-    saveAsCSV: function(file, content, excludeIndexes, option) {
+    saveAsCSV: function (file, content, excludeIndexes, option) {
         file = file.toString();
         log("saving to csv:", file);
 
         var csv = _fixContent(content, excludeIndexes);
-        var b = helper.fileHelper.saveAsCSV(file, csv.data, csv.excludeIndexes, option);
+        var b = rdk_runtime.fileHelper().saveAsCSV(file, csv.data, csv.excludeIndexes, option);
         //_fixContent中修改了content.data，这里还原
         csv.data.shift();
         return b;
     },
-    list: function(path, pattern) {
-        path = java.FileHelper.fixPath(path, helper.application);
+    list: function (path, pattern) {
+        path = java.FileHelper().fixPath(path, rdk_runtime.application());
         log('listing dir: ' + path);
 
         var file = new java.File(path);
@@ -152,31 +290,52 @@ var file = {
         return files;
     },
     get web() {
-        return java.FileHelper.fixPath('$web', helper.application);
+        return java.FileHelper.fixPath('$web', rdk_runtime.application());
     },
     get base() {
-        return java.FileHelper.fixPath('$base', helper.application);
+        return java.FileHelper.fixPath('$base', rdk_runtime.application());
     },
     get svr() {
-        return java.FileHelper.fixPath('$svr', helper.application);
+        return java.FileHelper.fixPath('$svr', rdk_runtime.application());
     }
 };
 
 ///////////////////////////////////////////////////////////////////////
 
-var rest = {
-    get: function(url, option) {
-        return helper.restHelper.get(encodeURI(url), option);
+function rest(url, param, option) {
+    if (!url) {
+        return null;
+    }
+    if (_.isString(option)) {
+        option = {'method': option};
+    }
+    var method = rdk_runtime.restHelper().getProperty(option, 'method', 'GET');
+    method = method.toUpperCase();
+    var isStd = rdk_runtime.restHelper().getProperty(option, 'isStandard', 'false') === 'true';
+    if (method == 'GET') {
+        var strParam = '';
+        if (param) {
+            if (isStd) {
+                strParam = '?p={"param":' + (_.isString(param) ? param : json(param, '')) + '}';
+            } else {
+                strParam = '?' + param;
+            }
+        }
+        var result = rdk_runtime.restHelper().get(url, encodeURI(strParam), option);
+        return isStd ? eval('(' + result + ')').result : result;
+    } else {
+        error('unsupported yet!!');
+        return null;
     }
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-_.isResultSet = function(value) {
+_.isResultSet = function (value) {
     return value instanceof java.ResultSet;
 }
 
-_.isDefined = function(value) {
+_.isDefined = function (value) {
     return !_.isUndefined(value);
 }
 
@@ -206,24 +365,19 @@ function forEach(obj, iteratee, context, extra) {
 }
 
 function require(script) {
-    script = java.FileHelper.fixPath(script, helper.application);
+    script = java.FileHelper.fixPath(script, rdk_runtime.application());
     info("loading script in js: " + script);
     return load(script);
 }
 
-function json(data, indent) {
-    var i = indent === undefined ? '  ' : indent;
-    return _.isString(data) ? data : JSON.stringify(data, '', i);
-}
-
 function sql(sql) {
     log("exec sql: " + sql);
-    return helper.dbHelper.sql(sql);
+    return rdk_runtime.dbHelper().sql(sql);
 }
 
 function clear(resultSet) {
     info("clearing the resultSet and every resource else.");
-    helper.dbHelper.clear(resultSet);
+    rdk_runtime.dbHelper().clear(resultSet);
 }
 
 function mapper(resultSet, key, value, keepResultSet) {
@@ -251,14 +405,171 @@ function mapper(resultSet, key, value, keepResultSet) {
         var strValue = _bytes2string(resultSet.getBytes(value));
         map[strKey] = strValue;
     }
-    
+
     if (keepResultSet) {
         resultSet.beforeFirst();
     } else {
         clear(resultSet);
     }
-    
+
     return map;
+}
+
+var Mapper = {
+    from_object: function (jsObject, defaultValue) {
+        return function (key) {
+            return jsObject && jsObject.hasOwnProperty(key) ? jsObject[key] :
+                defaultValue === undefined ? key : defaultValue;
+        }
+    },
+
+    //from sql or dataTable 可合并
+    from_sql: function (sql, keyName, valueName, defaultValue) {
+        return Mapper.from_object(Mapper.mkMap(sql, keyName, valueName), defaultValue);
+    },
+    from_datatable: function (dataTable, keyName, valueName, defaultValue) {
+        return Mapper.from_object(Mapper.mkMap(dataTable, keyName, valueName), defaultValue);
+    },
+    mkMap: function (param, keyName, valueName) {
+        var map = {};
+        if (_.isString(param)) {
+            param = Data.fetch(param, 4000);
+        }
+
+        var data = param.data;
+        var field = param.field;
+        var keyIndex = field.indexOf(keyName);
+        var valueIndex = field.indexOf(valueName);
+        for (var row = 0; row < data.length; row++) {
+            map[data[row][keyIndex]] = data[row][valueIndex];
+        }
+
+        return map;
+    }
+}
+
+
+var Data = {
+    fetch: function (sql, maxLine) {
+        if (!maxLine || !_.isNumber(maxLine)) {
+            Log.error("maxLine is required and must be a number!");
+            return;
+        }
+        var dataObj = JSON.parse(rdk_runtime.fetch(sql, maxLine));
+        return new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data);
+    },
+    fetch_first_cell: function (sql) {
+        return rdk_runtime.fetch_first_cell(sql);
+    },
+    batch_fetch: function (sqlArray, maxLine) {  //并发实现
+
+        if (!sqlArray || !_.isArray(sqlArray)) {
+            Log.error("Array param required! " + sqlArray);
+            return;
+        }
+        if (maxLine === undefined) {
+            maxLine = 4000;
+        }
+        var dataTableArray = [];
+        each(sqlArray, function (sql) {
+            dataTableArray.push(Data.fetch(sql, maxLine));
+        })
+
+        return dataTableArray;
+    }
+}
+
+function DataTable(header, field, data) {
+    this.header = header;
+    this.field = field;
+    this.data = data;
+
+    this.transform = function (trans_object_conf) {
+        for (field in trans_object_conf) {
+            var fieldIndex = this.field.indexOf(field);
+            if (fieldIndex == -1) {
+                Log.warn("field not exist! field:" + field);
+                continue;
+            }
+            var func = trans_object_conf[field];
+            if (!_.isFunction(func)) {
+                Log.warn("function required!param value:" + func);
+                continue;
+            }
+            for (var row = 0; row < this.data.length; row++) {
+                try {
+                    this.data[row][fieldIndex] = func(this.data[row][fieldIndex]);
+                } catch (error) {
+                    Log.warn("function call error");
+                }
+            }
+        }
+        return this;
+    },
+
+    this.filter = function (func) {
+        if (!_.isFunction(func)) {
+            Log.error("function required!param value:" + func);
+            return this;
+        }
+        var data = [];
+        try {                            //try catch
+            if (func(this.data[row])) {
+                data.push(this.data[row]);
+            }
+        } catch (error) {
+            Log.warn("function call error");
+        }
+        return this;
+    },
+
+    this.select = function (colNameArray) {
+        if (!colNameArray || !_.isArray(colNameArray)) {
+                Log.error("field Array required! field param:" + colNameArray);
+                return this;
+            }
+        var field = [];
+        var header = [];  //delete
+        var data = [];    //转置？
+        var index = 0;
+        for (var i = 0; i < colNameArray.length; i++) {
+            var colName = colNameArray[i];
+            index = this.field.indexOf(colName)
+            if (index == -1) {
+                Log.warn("field not exist! " + colName);
+                continue;
+            }
+        field.push(colName);
+        header.push(this.header[index]);
+           for (row = 0; row < this.data.length; row++) {
+                var rowArray = [];
+                rowArray.push(this.data[row][index]);
+               data.push(rowArray);
+            }
+        }
+        this.header = header;
+        this.field = field;
+        this.data = data;
+        return this;
+    },
+
+    this.map = function (func) {  //log error
+        Log.error("map funciton is not supported yet!");
+            //if(!_.isFunction(func)){
+            //    Log.error("function required! parm:"+func);
+            //}
+            //each(this.data,func);
+        return this;
+    },
+
+    this.clone = function () {
+        return new DataTable(this.header, this.field, this.data);
+    }
+}
+
+function json(data, indent) {
+    var i = indent === undefined ? '  ' : indent;
+    return _.isString(data) ? data : JSON.stringify(data, '', i);
 }
 
 function matrix(resultSet, mapIterator, keepResultSet) {
@@ -301,7 +612,7 @@ function matrix(resultSet, mapIterator, keepResultSet) {
             row.push(val);
         }
     }
-    
+
     if (keepResultSet) {
         resultSet.beforeFirst();
     } else {
@@ -345,33 +656,25 @@ function kv(map, defaultValue) {
  * @param entity 变化实体，暂时未用到
  */
 function buffer(name, dataDescriptor, entity) {
-    return sync(function () {
-        var data = helper.buffer(name);
-        if (data === null) {
-            data = _.isFunction(dataDescriptor) ? dataDescriptor() : dataDescriptor;
-            helper.buffer(name, data);
-        }
-        return data;
-    }, name);
+    var data = rdk_runtime.buffer(name);
+    if (data === null) {
+        data = _.isFunction(dataDescriptor) ? dataDescriptor() : dataDescriptor;
+        rdk_runtime.buffer(name, data);
+    }
+    return data;
 }
 
 function getBuffer(name) {
-    return sync(function () {
-        return helper.buffer(name);
-    }, name);
+    return rdk_runtime.buffer(name);
+
 }
 
 function addBuffer(name, data) {
-    sync(function () {
-        helper.buffer(name, data);
-    }, name);
-
+    rdk_runtime.buffer(name, data);
 }
 
 function removeBuffer(name) {
-    sync(function () {
-        helper.removeBuffer(name);
-    }, name);
+    rdk_runtime.removeBuffer(name);
 }
 
 function sleep(milliSec) {
@@ -379,54 +682,19 @@ function sleep(milliSec) {
 }
 
 function sync(job, lockName) {
-    var lock = lockName === undefined ? "__global_lock_145812__" : lockName + "";
-    return helper.doSyncJob(job, lock);
+    return job();
 }
 
-function log() {
-    var message = _arg2string(arguments);
-    helper.jsLogger.debug(message);
-}
-
-function debug() {
-    var message = _arg2string(arguments);
-    helper.jsLogger.debug(message);
-}
-
-function info() {
-    var message = _arg2string(arguments);
-    helper.jsLogger.info(message);
-}
-
-function warn() {
-    var message = _arg2string(arguments);
-    helper.jsLogger.warn(message);
-}
-
-function error() {
-    var message = _arg2string(arguments);
-    helper.jsLogger.error(message);
-}
-
-function fatal() {
-    var message = _arg2string(arguments);
-    helper.jsLogger.fatal(message);
-}
-
-function crit() {
-    var message = _arg2string(arguments);
-    helper.jsLogger.crit(message);
-}
 
 function _arg2string(args) {
     var str = '';
-    each(args, function(item) {
+    each(args, function (item) {
         str += ( _.isObject(item) ? _obj2str(item) : item ) + ' ';
     });
     return '[' + _caller() + '] - ' + str;
 
     function _obj2str(obj) {
-        switch(typeof obj) {
+        switch (typeof obj) {
             case 'Date':
                 return obj.toString();
             default:
@@ -443,7 +711,7 @@ function _arg2string(args) {
             //找不到时idx==-1，刚好+1变成0
             idx += 1;
             var callee = line.substr(idx, line.length - idx - 1);
-            
+
             if (callee.match(/^runtime_helper\.js:/)) {
                 line = lines[lines.length - 2];
                 var idx1 = line.lastIndexOf('/');
@@ -451,7 +719,7 @@ function _arg2string(args) {
                 var scriptName = line.substring(idx1 + 1, idx2);
                 callee += '@' + scriptName;
             }
-            
+
             return callee;
         } catch (e) {
             return "unknown_source: -1";
@@ -460,40 +728,12 @@ function _arg2string(args) {
 }
 
 function i18n(key) {
-    if (arguments.length == 0) {
-        return undefined;
-    }
 
-    if (_.isArray(key)) {
-        return groupI18n(key);
-    }
-
-    if (!_.isString(key)) {
-        return key;
-    }
-
-    try {
-        var i18n = require('$svr/i18n.js');
-    } catch(e) {
-        return key;
-    }
-    try {
-        var val = i18n[helper.locale][key];
-    } catch(e) {
-        warn('get locale data error, locale =', helper.locale);
-        return key;
-    }
-
-    val = _.isDefined(val) ? val : key;
-    for (var i = 1; i < arguments.length; i++) {
-        val = val.replace(new RegExp("\\{" + (i-1) + "\\}", "g"), arguments[i]);
-    }
-    return val;
 }
 
 function groupI18n(keys) {
     var result = [];
-    each(keys, function(key) {
+    each(keys, function (key) {
         if (_.isString(key)) {
             result.push(i18n(key));
         } else {
@@ -535,10 +775,4 @@ function _callService(serviceImplement, request, script) {
     return serviceImplement.call(serviceImplement, _java2json(request), script);
 }
 
-function loadClass(className, jar) {
-    try {
-        return helper.jarHelper.loadClass(className, jar);
-    } catch (e) {
-        return undefined;
-    }
-}
+
