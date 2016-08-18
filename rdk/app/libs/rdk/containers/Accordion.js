@@ -117,31 +117,28 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
                 function _initFoldIconsByDirection(){
                     if(scope.expandDirection == PositionTypes.BOTTOM){
-                        scope.foldedIcon = Utils.getValue(scope.foldedIcon, iAttrs.foldedIcon, "fa fa-angle-down");
-                        scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, "fa fa-angle-up");
-                        scope.normalPosition = true;
+                        _foldIconsHandler("fa fa-angle-down", "fa fa-angle-up");
                     }
                     if(scope.expandDirection == PositionTypes.TOP){
-                        scope.foldedIcon = Utils.getValue(scope.foldedIcon, iAttrs.foldedIcon, "fa fa-angle-up");
-                        scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, "fa fa-angle-down"); 
-                        scope.normalPosition = true;                       
+                        _foldIconsHandler("fa fa-angle-up", "fa fa-angle-down");                    
                     }
                     if(scope.expandDirection == PositionTypes.RIGHT){
-                        scope.foldedIcon = Utils.getValue(scope.foldedIcon, iAttrs.foldedIcon, "fa fa-angle-right");
-                        scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, "fa fa-angle-left"); 
-                        scope.normalPosition = false;                       
+                        _foldIconsHandler("fa fa-angle-right", "fa fa-angle-left");
                     }
                     if(scope.expandDirection == PositionTypes.LEFT){
-                        scope.foldedIcon = Utils.getValue(scope.foldedIcon, iAttrs.foldedIcon, "fa fa-angle-left");
-                        scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, "fa fa-angle-right"); 
-                        scope.normalPosition = false;                         
+                        _foldIconsHandler("fa fa-angle-left", "fa fa-angle-right");                     
                     }
+                }
+
+                function _foldIconsHandler(foldedIconStr, unfoldedIconStr){
+                    scope.foldedIcon = Utils.getValue(scope.foldedIcon, iAttrs.foldedIcon, foldedIconStr);
+                    scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, unfoldedIconStr);
                 }
 
                 function _resetTranscludePosition(direction){
                     var themeDom = iEle[0].querySelector(".theme");
                     var transcludeDom = iEle[0].querySelector(".content");
-                    if(!!!scope.caption){
+                    if(!scope.caption){
                         $(themeDom).css({'display': 'inline-block'});
                     }                         
                     if(direction == PositionTypes.TOP){
