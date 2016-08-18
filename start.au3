@@ -39,15 +39,12 @@ GUICtrlCreateTab(2, 2, $width, $height)
 GUICtrlCreateTabItem("RDK")
 Global $rdkConsole = GUICtrlCreateEdit("", 2, 24, $width, $height)
 _GUICtrlEdit_SetLimitText($rdkConsole, 3000000000)
-GUICtrlSetStyle(-1, $ES_READONLY + $WS_VSCROLL)
 GUICtrlCreateTabItem("HTTP")
 Global $httpConsole = GUICtrlCreateEdit("", 2, 24, $width, $height)
 _GUICtrlEdit_SetLimitText($httpConsole, 3000000000)
-GUICtrlSetStyle(-1, $ES_READONLY + $WS_VSCROLL)
 GUICtrlCreateTabItem("Rest")
 Global $restConsole = GUICtrlCreateEdit("", 2, 24, $width, $height)
 _GUICtrlEdit_SetLimitText($restConsole, 3000000000)
-GUICtrlSetStyle(-1, $ES_READONLY + $WS_VSCROLL)
 
 GUICtrlCreateTabItem("") ; end tabitem definition
 
@@ -94,44 +91,9 @@ Func _startRest()
 EndFunc
 
 Func _startRDK()
-	Local $cmd = '"' & $java & '" ' & _readArg() & ' -Dfile.encoding=UTF-8 -classpath '
-	$cmd &= "proc/bin/lib/spray-servlet_2.10-1.3.2.jar"
-	$cmd &= ";proc/bin/lib/spray-http_2.10-1.3.2.jar"
-	$cmd &= ";proc/bin/lib/spray-util_2.10-1.3.2.jar"
-	$cmd &= ";proc/bin/lib/parboiled-scala_2.10-1.1.6.jar"
-	$cmd &= ";proc/bin/lib/parboiled-core-1.1.6.jar"
-	$cmd &= ";proc/bin/lib/spray-routing_2.10-1.3.2.jar"
-	$cmd &= ";proc/bin/lib/spray-httpx_2.10-1.3.2.jar"
-	$cmd &= ";proc/bin/lib/mimepull-1.9.4.jar"
-	$cmd &= ";proc/bin/lib/shapeless_2.10-1.2.4.jar"
-	$cmd &= ";proc/bin/lib/spray-can_2.10-1.3.2.jar"
-	$cmd &= ";proc/bin/lib/spray-io_2.10-1.3.2.jar"
-	$cmd &= ";proc/bin/lib/akka-actor_2.10-2.3.5.jar"
-	$cmd &= ";proc/bin/lib/config-1.2.1.jar"
-	$cmd &= ";proc/bin/lib/json4s-native_2.10-3.2.4.jar"
-	$cmd &= ";proc/bin/lib/json4s-core_2.10-3.2.4.jar"
-	$cmd &= ";proc/bin/lib/json4s-ast_2.10-3.2.4.jar"
-	$cmd &= ";proc/bin/lib/scalap-2.10.0.jar"
-	$cmd &= ";proc/bin/lib/scala-compiler-2.10.0.jar"
-	$cmd &= ";proc/bin/lib/scala-reflect-2.10.0.jar"
-	$cmd &= ";proc/bin/lib/log4j-1.2.17.jar"
-	$cmd &= ";proc/bin/lib/gson-2.2.2.jar"
-	$cmd &= ";proc/bin/lib/scala-library-2.10.5.jar"
-	$cmd &= ";proc/bin/lib/paranamer-2.6.jar"
-	$cmd &= ";proc/bin/lib/gbase-connector-java-8.3.81.53-build52.8-bin.jar"
-	$cmd &= ";proc/bin/lib/activemq-broker-5.13.1.jar"
-	$cmd &= ";proc/bin/lib/activemq-client-5.13.1.jar"
-	$cmd &= ";proc/bin/lib/activemq-vmax.jar"
-	$cmd &= ";proc/bin/lib/geronimo-j2ee-management_1.1_spec-1.0.1.jar"
-	$cmd &= ";proc/bin/lib/geronimo-jms_1.1_spec-1.1.1.jar"
-	$cmd &= ";proc/bin/lib/slf4j-api-1.7.13.jar"
-	$cmd &= ";proc/bin/lib/commons-dbcp2-2.1.1.jar"
-	$cmd &= ";proc/bin/lib/commons-pool2-2.4.2.jar"
-	$cmd &= ";proc/bin/lib/commons-logging-1.2.jar"
-	$cmd &= ";proc/bin/lib/sqlpraser.jar"
-	$cmd &= ";proc/bin/lib/opencsv-3.7.jar"
-	$cmd &= ";proc/bin/lib/rdk-server.jar"
-	$cmd &= " com.zte.vmax.rdk.Run"
+	Local $cmd = '"' & $java & '" ' & _readArg() & _
+		' -Dfile.encoding=UTF-8 -XX:+UseParallelGC -XX:ParallelGCThreads=2 ' & _
+		' -classpath proc/bin/lib/* com.zte.vmax.rdk.Run'
 	ConsoleWrite($cmd & @CRLF)
 
 	FileChangeDir(@ScriptDir & '\rdk')
