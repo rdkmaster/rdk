@@ -36,6 +36,6 @@ libraryDependencies ++= {
 postProcess in webapp := { webappDir => removeAllSvn(webappDir) }
 
 // use jetty container
-jetty(port = 9090)
+jetty(port = 9099)
 
 
