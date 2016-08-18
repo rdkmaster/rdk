@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Table组合测试</title>
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk"
+        src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/combined_table.js"></script>
+    
+
+    <!-- 应用正式运行的时候，请使用下面这个节点，RDK会使用编译后的代码，代码体积小，下载快 -->
+    <!--
+    <script data-main="main.min.js" src="/rdk/app/libs/requirejs/require.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    -->
+    
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/rdk/app/modules/rdk_app_helpers',
+                //这里引用了当前应用自身的助手文件，路径需要根据实际情况修改
+                "utils": '/rdk/app/test_attr_table/web/scripts/utils',
+                //页面的国际化文件配置信息
+                "i18n": '/rdk/app/test_attr_table/web/scripts/i18n',
+            }
+        });
+    </script>
+
+</head>
+
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    <div style="position:relative">
+        <div class="demo1">
+            <rdk_accordion ds="ds_table" ds_url="$svr/tab_select" ds_query_if="ready" 
+                caption="'表1'" style="width:500px;">
+                <rdk_table data="ds_table" id="dsTable" page_size="2"></rdk_table>
+            </rdk_accordion>
+            <textarea style="position:absolute;width:25%;height:100px;right:25%;top:45%">{{selectedInfo}}</textarea>
+        </div>
+        <div ds="ds_accordion" ds_url="$svr/ds_accordion" ds_query_if="ready" style="width:500px;margin-top:200px;" class="demo2">
+            <rdk_accordion caption="'Accordion_'+$index"  ng-repeat="table in ds_accordion" style="margin-top:300px;">
+                <rdk_table id="wks_table_{{$index}}" data="table" setting="tablesetting" 
+                ></rdk_table>
+            </rdk_accordion>
+        </div>
+        <div class="demo3" style="margin-top:300px;">
+            <rdk_tab style="width:400px;margin-left:0px">
+                <div title="1" class="title1">
+                    <rdk_table data="ds_table" id="tab_table_1"></rdk_table>
+                </div>
+                <div title="2" class="title2">
+                    <rdk_combo_select>
+                        <rdk_table data="ds_table" style="width:500px" id="tab_table_2"></rdk_table>
+                    </rdk_combo_select>
+                </div>
+                <div title="3" class="title3">
+                    <rdk_accordion caption="'t3'">
+                        <rdk_table data="ds_table" id="tab_table_3"></rdk_table>
+                    </rdk_accordion>
+                </div>
+                <div title="4" class="title4">
+                    <rdk_tab>
+                        <div title="4.01">
+                            <rdk_table data="ds_table" id="dsTable" page_size="3" id="tab_table_4"></rdk_table>
+                        </div>
+                    </rdk_tab>
+                </div>
+            </rdk_tab>
+        </div>
+    </div>
+    <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
+    <!--     这个节点可选，删除后，RDK会自动生成一个    -->
+    <!--           这个节点只支持基本HTML标签           -->
+    <div style="height:100px"></div>
+    <rdk_loading>
+        <img src="images/loding.gif" alt="loading..."/>
+    </rdk_loading>
+</body>
+
+</html>
