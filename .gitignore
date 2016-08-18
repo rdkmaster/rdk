@@ -11,3 +11,5 @@ start.cfg
 
 #忽略运行环境信息
 **/rdk/proc/bin/jre
+**/rdk/proc/bin/lib/vmax-rdk-server_2.10-0.1.jar
+
