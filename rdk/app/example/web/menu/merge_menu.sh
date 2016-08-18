@@ -18,7 +18,7 @@ mkdir -p 'i18n/'
 #生成 umain_menu.html
 echo '<li>
     <a class="iframe" id="'$appName'_col1" parentID="'$menuKey'" hparentID="'$menuKey'"
-    order="60" Horgroup="10" cacheNum="RMA" href="/rdk_server/'$appUrl'/web/index.html" iframeAutoScroll="auto"
+    order="60" Horgroup="10" cacheNum="RMA" href="/rdk/'$appUrl'/web/index.html" iframeAutoScroll="auto"
     operation="'operation.$operId'" licenseid="'$operId.limit'" >  <i class="fa fa-comments">
         </i>
         <span id="'$appName'" name_i18n="com_zte_ums_ict_framework_ui_i18n_sideMenu">
