@@ -3,15 +3,14 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>Table组合测试</title>
+    <title>RDK应用工程模板</title>
 
     <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
 
     <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
     <script data-main="/rdk/app/libs/rdk/rdk"
         src="/rdk/app/libs/requirejs/require.js"></script>
-    <script src="scripts/combined_table.js"></script>
-    
+    <script src="combined.js"></script>
 
     <!-- 应用正式运行的时候，请使用下面这个节点，RDK会使用编译后的代码，代码体积小，下载快 -->
     <!--
@@ -23,15 +22,10 @@
         require.config({
             paths: {
                 //这里引用了rdk应用的公共助手文件，不要改动
-                "application": '/rdk/app/modules/rdk_app_helpers',
-                //这里引用了当前应用自身的助手文件，路径需要根据实际情况修改
-                "utils": '/rdk/app/test_attr_table/web/scripts/utils',
-                //页面的国际化文件配置信息
-                "i18n": '/rdk/app/test_attr_table/web/scripts/i18n',
+                "application": '/test/module/testee_helper',
             }
         });
     </script>
-
 </head>
 
 <body ng-controller='rdk_ctrl' class="rdk_main">
