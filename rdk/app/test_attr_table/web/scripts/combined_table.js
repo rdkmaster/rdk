@@ -29,9 +29,6 @@ function(scope,$timeout, $filter,DSService, blockUI,EventTypes,EventService) {
 i18n.$init(scope);
 application.initDataSourceService(DSService);
 /************************ 应用的代码逻辑开始 ************************/
-
-    utils.hello('rdk');
-
 function showSelected(data){
   var array='';
   for(var key in data){
