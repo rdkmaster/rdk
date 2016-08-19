@@ -1,6 +1,11 @@
 .rdk-tab-module{
 	margin : 10px;
 }
+
+.rdk-tab-module .title li{
+    height: 38px;
+}
+
 .rdk-tab-module .title li a.selected {
 	color: #008FD4;
 }
