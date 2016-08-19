@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Table自测</title>
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk"
+        src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+    
+
+    <!-- 应用正式运行的时候，请使用下面这个节点，RDK会使用编译后的代码，代码体积小，下载快 -->
+    <!--
+    <script data-main="main.min.js" src="/rdk_server/app/libs/requirejs/require.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    -->
+    
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/rdk/app/modules/rdk_app_helpers',
+                //这里引用了当前应用自身的助手文件，路径需要根据实际情况修改
+                "utils": '/rdk/app/test_attr_table/web/scripts/utils',
+                //页面的国际化文件配置信息
+                "i18n": '/rdk/app/test_attr_table/web/scripts/i18n',
+            }
+        });
+    </script>
+</head>
+<style type="text/css">
+     .green{
+      color: green
+     }
+     .red{
+        color:red;
+     }
+     .rdk-combo-select-module{
+         width: 500px;
+         height: 300px;
+     }
+</style>
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    <div>Table</div>
+    <div style="position:relative;" class="demo1">
+        <rdk_table data="TableData" selected_index="Table.index|myFilter" setting="setting"
+         style="width:800px;" id="table_id" page_size="{{Table.pageSize}}" search="true" searchable="true" search_pattern={{Table.searchPattern}} page_number="0" lang="zh-CN">
+        </rdk_table >
+        <div style="position:absolute;top:70px;left:850px" class="section_1">
+           <span>{{Table.index}}</span><br>
+           <span>page_size={{Table.pageSize}}</span><br>
+           <span>searchPattern={{Table.searchPattern}}</span><br>
+           <span>page_number=1</span>
+        </div>
+        <div class="section_2">
+           <span>SELECT事件:{{Table.itemInfo}}</span><br>
+           <span>DOUBLECLICK事件:index={{index}};{{dclick}}</span>
+        </div>
+        <div class="section_3">
+            <input type="text" placeholder="set selected_index" ng-model="Table.index">
+            <input type="text" placeholder="set page_size" ng-model="pageSize" 
+            ng-change="getPageSize(pageSize)">
+            <input placeholder="set searchPattern" ng-model="searchPattern"
+             ng-change="getSearchPattern(searchPattern)">
+             <button class="changeWidth" ng-click="changeWidth()">第一列宽度调整</button>
+        </div>
+    </div>
+    <div style="position:relative">
+        <div class="demo2">
+            <rdk_table  ds="ds_table" ds_url={{server.url}} ds_query_if="ready" 
+                id="ds_table" style="width:800px;">
+            </rdk_table>
+            <div>
+              <span>{{selectedInfo}}</span>
+            </div>
+        </div>
+        <div class="demo3">
+            <rdk_table  ds={{server.ds}} ds_url={{server.url}} ds_query_if="ready"
+                id="dsTable" style="width:800px;">
+            </rdk_table>
+        </div>
+        <div style="position:absolute;top:70px;left:850px">
+            <span>{{Query}}</span><br>
+            <span>{{highlight}}</span>
+        </div>
+    </div>
+
+    <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
+    <!--     这个节点可选，删除后，RDK会自动生成一个    -->
+    <!--           这个节点只支持基本HTML标签           -->
+    <div style="height:100px"></div>
+    <rdk_loading>
+        <img src="images/loding.gif" alt="loading..."/>
+    </rdk_loading>
+</body>
+
+</html>
