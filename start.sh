@@ -10,16 +10,21 @@ cur_dir=$(cd "$(dirname "$0")"; pwd)
 
 START() {
     ##rdk_server
-    cd $cur_dir/rdk_server/proc/bin
-    sh run.sh
+	sed -i 's/localhost/10\.9\.233\.35/g' $cur_dir/rdk/proc/conf/rdk.cfg
+    cd $cur_dir/rdk/proc/bin/
+    sh run.sh > /dev/null
 
-    ##http&rest
     node="$cur_dir/tools/node-linux-x64/bin/node"
     chmod +x $node
+	
+    ##http
+	sed -i 's/localhost/10\.9\.233\.35/g' $cur_dir/tools/http_server/config.json
+    cd $cur_dir/tools/http_server
+    nohup $node server.js & > /dev/null
 
-    cd $cur_dir/tools/http_server/serv
-    nohup $node server.js &
-    nohup $node ../mock/rest_service.js &
+    ##http
+	cd $cur_dir/doc/tools/live_demo/mock_rest
+    nohup $node rest_service.js & > /dev/null
 }
 
 START
