@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>singleindicator -> label_position</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    <rdk_single_indicator label_position="left" ng-if="pos=='left'"></rdk_single_indicator>
+    
+    <rdk_single_indicator label_position="right" ng-if="pos=='right'" ></rdk_single_indicator>
+    
+    <rdk_single_indicator label_position="top" ng-if="pos=='top'"></rdk_single_indicator>
+   
+    <rdk_single_indicator label_position="bottom" ng-if="pos=='bottom'"></rdk_single_indicator>
+    
+    <button ng-click="pos = 'left'">left</button>
+    <button ng-click="pos = 'right'">right</button>
+    <button ng-click="pos = 'top'">top</button>
+    <button ng-click="pos = 'bottom'">bottom</button>
+</body>
+
+</html>
