@@ -1,8 +1,8 @@
-define('main', ['application', 'utils', 'i18n', 'blockUI',
+define('main', ['application', 'blockUI',
   'rd.controls.BasicSelector','rd.containers.Tab','rd.controls.TabSelector',
   'rd.controls.FoldSelector', 'rd.containers.Accordion','rd.controls.Time',
   'rd.controls.Graph','rd.controls.ComboSelect','rd.controls.Selector','rd.controls.Table'],
-function(application, utils, i18n) {
+function(application) {
 // 创建一个RDK的应用
 var app = angular.module("rdk_app", ['rd.core', 'blockUI',
   'rd.controls.BasicSelector', 'rd.containers.Accordion','rd.containers.Tab','rd.controls.TabSelector'
@@ -26,7 +26,6 @@ app.config(['blockUIConfig', function(blockUIConfig) {
 // 创建一个控制器
 app.controller('rdk_ctrl', ['$scope','$timeout','$filter', 'DataSourceService', 'blockUI','EventTypes','EventService',
 function(scope,$timeout, $filter,DSService, blockUI,EventTypes,EventService) {
-i18n.$init(scope);
 application.initDataSourceService(DSService);
 /************************ 应用的代码逻辑开始 ************************/
  scope.TableData={
