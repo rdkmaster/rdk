@@ -9,6 +9,7 @@ import jdk.nashorn.internal.runtime.Undefined;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,6 +20,34 @@ public class FileHelper extends AbstractAppLoggable {
 
     protected void initLogger() {
         logger = AppLogger.getLogger("FileHelper", appName);
+    }
+
+    public Properties loadProperty(String fileStr){
+        Properties props = new Properties();
+        FileInputStream finStream= null;
+        InputStreamReader reader=null;
+
+        try{
+            finStream=new FileInputStream(fileStr);
+            reader = new InputStreamReader(finStream, "UTF-8");
+        }catch(Exception e){
+            logger.error("create inputStream error,"+e);
+        }
+
+        try{
+            props.load(reader);
+        }catch (Exception e){
+            logger.error("propertity load error,"+e);
+        }
+
+        try{
+            finStream.close();
+            reader.close();
+        }catch (Exception e){
+            logger.error("close inputStream error,"+e);
+        }
+
+        return props;
     }
 
     private boolean ensureFileExists(File file) {

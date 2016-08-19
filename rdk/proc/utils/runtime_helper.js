@@ -252,6 +252,15 @@ function _fixContent(content, excludeIndexes) {
 }
 
 var file = {
+    loadProperty:function(file){
+        if (!file) {
+            log("invalid file path:", file);
+            return false;
+        }
+        file = file.toString();
+        log("reading property file:",file);
+        return rdk_runtime.fileHelper().loadProperty(file);
+    },
     save: function (file, content, append, encoding) {
         if (!file) {
             log("invalid file path:", file);
