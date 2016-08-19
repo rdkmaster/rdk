@@ -37,13 +37,13 @@
 <body ng-controller='rdk_ctrl' class="rdk_main">
     <div style="position:relative">
         <div class="demo1">
-            <rdk_accordion ds="ds_table" ds_url="$svr/tab_select" ds_query_if="ready" 
+            <rdk_accordion ds="ds_table" ds_url="$svr/salary1" ds_query_if="ready" 
                 caption="'表1'" style="width:500px;">
                 <rdk_table data="ds_table" id="dsTable" page_size="2"></rdk_table>
             </rdk_accordion>
             <textarea style="position:absolute;width:25%;height:100px;right:25%;top:45%">{{selectedInfo}}</textarea>
         </div>
-        <div ds="ds_accordion" ds_url="$svr/ds_accordion" ds_query_if="ready" style="width:500px;margin-top:200px;" class="demo2">
+        <div ds="ds_accordion" ds_url="$svr/salary2" ds_query_if="ready" style="width:500px;margin-top:200px;" class="demo2">
             <rdk_accordion caption="'Accordion_'+$index"  ng-repeat="table in ds_accordion" style="margin-top:300px;">
                 <rdk_table id="wks_table_{{$index}}" data="table" setting="tablesetting" 
                 ></rdk_table>

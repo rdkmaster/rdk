@@ -47,7 +47,7 @@ application.initDataSourceService(DSService);
 };
 scope.server={
   ds:"dsTable",
-  url:"$svr/tab_select",
+  url:"$svr/salary1",
   server:{
       "totalRecord":14,
       "currentPage":2,
