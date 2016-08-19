@@ -357,6 +357,14 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             }
                         }, true);
 
+                        scope.$watch("$filtered", function(newVal, oldVal){
+                            if(newVal != oldVal){
+                                if(ctrl.pageCtrl){
+                                    ctrl.pageCtrl.firstPage();
+                                }
+                            }
+                        }, true);
+
                         scope.stopPropagation = function(){
                             event.stopPropagation();
                         }
