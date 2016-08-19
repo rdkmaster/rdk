@@ -29,7 +29,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
                     buttons: '=',
                     id: '@',
-                    expandDirection: '@'
+                    expandDirection: '@',
+                    coverable: '@'
                 }, 
                 template: 
                 '<div class="rdk-accordion-module" ng-click="stopPropagation()">\
@@ -101,11 +102,12 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.open = Utils.isTrue(scope.open, false);                    
                     scope.frozen = Utils.isTrue(scope.frozen, false);
                     scope.editable = Utils.isTrue(scope.editable, false);
+                    scope.coverable = Utils.isTrue(scope.coverable, false);
                     scope.showButtons = angular.isDefined(scope.buttons);                   
                     scope.appScope = Utils.findAppScope(scope);
 
                     _initFoldIconsByDirection();
-                    _resetTranscludePosition(scope.expandDirection.toLowerCase());
+                    _beforeHandler(scope.expandDirection.toLowerCase());
 
                     scope.toggle = _toggle;
                     scope.clickHandler = _clickHandler;   
@@ -135,26 +137,52 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, unfoldedIconStr);
                 }
 
-                function _resetTranscludePosition(direction){
+                function _beforeHandler(direction){
                     var themeDom = iEle[0].querySelector(".theme");
                     var transcludeDom = iEle[0].querySelector(".content");
                     if(!scope.caption){
                         $(themeDom).css({'display': 'inline-block'});
-                    }                         
-                    if(direction == PositionTypes.TOP){
-                        $(iEle[0]).empty();
-                        $(iEle[0]).append(transcludeDom).append(themeDom);
-                        $compile(iEle.contents())(scope);
                     }
-                    if(direction == PositionTypes.RIGHT){
-                        $(transcludeDom).css({'display': 'inline-block', 'vertical-align': 'top'});
+                    if(!scope.coverable){//挤开，单击前就编译
+                        if(direction == PositionTypes.TOP){
+                            $(iEle[0]).empty();
+                            $(iEle[0]).append(transcludeDom).append(themeDom);
+                            $compile(iEle.contents())(scope);
+                        }
+                        if(direction == PositionTypes.RIGHT){
+                            $(transcludeDom).css({'display': 'inline-block', 'vertical-align': 'top'});
+                        }
+                        if(direction == PositionTypes.LEFT){   
+                            $(transcludeDom).css({'display': 'inline-block', 'vertical-align': 'top'});
+                            $(iEle[0]).empty();
+                            $(iEle[0]).append(transcludeDom).append(themeDom);
+                            $compile(iEle.contents())(scope);
+                        }
+                    }                   
+                }
+
+                function _afterHandler(direction){
+                    var themeDom = iEle[0].querySelector(".theme");
+                    var transcludeDom = iEle[0].querySelector(".content");
+
+                    if((!!scope.caption)&&((direction == PositionTypes.LEFT)||(direction == PositionTypes.RIGHT))){
+                        console.warn('主题非空时，暂不支持左右折叠！');
+                        scope.open = false;
+                        return;
                     }
-                    if(direction == PositionTypes.LEFT){   
-                        $(transcludeDom).css({'display': 'inline-block', 'vertical-align': 'top'});
-                        $(iEle[0]).empty();
-                        $(iEle[0]).append(transcludeDom).append(themeDom);
-                        $compile(iEle.contents())(scope);
-                    }
+
+                    if(scope.coverable){//覆盖，点击后编译
+                        $(transcludeDom).css({'position': 'absolute', 'z-index': '9999','width': '100%'});
+                        if(direction == PositionTypes.TOP){
+                            $(transcludeDom).css({'bottom': themeDom.offsetHeight+'px','width': '100%'});
+                        }
+                        if(direction == PositionTypes.RIGHT){
+                            $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0, 'width': ''});
+                        }
+                        if(direction == PositionTypes.LEFT){
+                            $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0, 'width': ''});
+                        }
+                    }                  
                 }               
 
                 function _stopPropagation(){
@@ -176,6 +204,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     if(($(iEle).find(".content").get(0).children.length == 1)&&($(iEle).find(".content").get(0).children[0].tagName == "HEADER_RENDERER")) return;//最外层就只有一个header_renderer，没内容
 
                     scope.open = !scope.open;
+                    _afterHandler(scope.expandDirection.toLowerCase());
 
                     if (scope.id){
                         EventService.broadcast(scope.id, EventTypes.CHANGE, scope.open); //事件

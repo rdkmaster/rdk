@@ -15,26 +15,26 @@
 
      <!-- 没主题，箭头包裹  --> 
 
-    <rdk_accordion expand_direction='bottom'>
+    <rdk_accordion style='margin-left: 200px; display: inline-block;' expand_direction='left' coverable='true'>
         <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-        <div>向下展开，不带主题不带宽度的BOTTOM</div>
+        <div>向左展开，不带主题不带宽度的left</div>
     </rdk_accordion>
 
-    <rdk_accordion style="width: 350px;" expand_direction='bottom'>
+    <rdk_accordion style="display: inline-block;" expand_direction='left' coverable='true'>
         <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-        <div>向下展开，不带主题带宽度的BOTTOM</div>
+        <div>向左展开，不带主题带宽度的left</div>
     </rdk_accordion> 
     
-    <!-- 有主题，上下一边宽  --> 
+    <!-- 有主题，上左一边宽  --> 
 
-    <rdk_accordion expand_direction='bottom' caption="'带主题的BOTTOM'">
+    <rdk_accordion expand_direction='left' caption="'带主题的left'" coverable='true'>
         <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-        <div>向下展开，带主题的BOTTOM</div>
+        <div>向左展开，带主题的left</div>
     </rdk_accordion>
 
-    <rdk_accordion style="width: 350px;" expand_direction='bottom' caption="'带主题带宽度的BOTTOM'">
+    <rdk_accordion style="width: 350px;" expand_direction='left' caption="'带主题带宽度的left'" coverable='true'>
         <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-        <div>向下展开，带主题带宽度的BOTTOM</div>
+        <div>向左展开，带主题带宽度的left</div>
     </rdk_accordion>
 
 
