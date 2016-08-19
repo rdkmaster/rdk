@@ -1,7 +1,7 @@
 'use strict';
 describe('Table Demos',function(){
     beforeEach(function(){
-        browser.get('rdk/app/test_attr_table/web/index.html');
+        browser.get('test/e2e/testee/table/web/self.html');
     });
     afterEach(function(){
     });

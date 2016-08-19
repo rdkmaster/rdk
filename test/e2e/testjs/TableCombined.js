@@ -1,7 +1,7 @@
 'use strict';
 describe('Table Combined Demos',function() {
     beforeEach(function(){
-        browser.get('rdk/app/test_attr_table/web/combined_table.html');
+        browser.get('test/e2e/testee/table/web/combined.html');
     });
     afterEach(function(){
     });
