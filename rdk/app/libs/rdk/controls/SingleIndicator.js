@@ -22,7 +22,7 @@ function() {
                               <div class="single-indicator-content label_position_{{labelPosition}}">\
                                   <span class="single-indicator-label">{{label}}</span>\
                                   <br>\
-                                  <span class="single-indicator-value">{{value}}{{formatter}}</span>\
+                                  <span class="single-indicator-value"><span>{{value}}</span> <span>{{formatter}}</span></span>\
                               </div>\
                           </div>',
                 controller: ['$scope', function(scope) {
@@ -40,6 +40,9 @@ function() {
                 scope.label = Utils.getValue(scope.label, attrs.label, '终端');
                 scope.labelPosition = Utils.getValue(scope.labelPosition, attrs.labelPosition, 'right');
                 scope.icon = Utils.getValue(scope.icon, attrs.icon, 'fa fa-mobile fa-4x');
+                // if(scope.formatter){
+                //     scope.formatter = scope.formatter.slice(1,-1);
+                // }
                 scope.formatter = Utils.getValue(scope.formatter, attrs.formatter, '%');
                 HTMLElement.prototype.__defineGetter__("currentStyle", function () { 
                     return this.ownerDocument.defaultView.getComputedStyle(this, null); 

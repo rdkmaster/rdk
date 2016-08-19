@@ -25,7 +25,7 @@
 	scope.value = '10';
 
 
-## formatter <binding></binding>##
+## formatter ##
 > 支持类型：字符串
 
 指明 `value` 的每个成员对象用于显示在界面上的单位，默认值是 "%"。可以直接在html里面设置例如：
@@ -34,7 +34,7 @@
 
 
 
-## label&#x5f;item&#x5f;by ##
+## label <binding></binding>##
 > 支持类型：字符串
 
 `label` 是文字描述可以接收后端返回信息通过js赋值，例如：
@@ -55,7 +55,7 @@
 例如：
 <live_demo example="controls/singleindicator/label_position"  width="405" height="200"></live_demo>
 
-## icon <binding></binding> ##
+## icon  ##
 >支持类型：font awesome 图标
 
 图标的样式，直接在html里设置这个属性就可以。
