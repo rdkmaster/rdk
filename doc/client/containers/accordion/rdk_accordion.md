@@ -79,12 +79,57 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 示例如下：
 <live_demo example="containers/accordion/accordion_editable" width="405"></live_demo>
 
+## expand_direction ##
+>支持类型：字符串
+
+此属性用于设置容器内容的展开方向。取值有上下左右四种情况，缺省时默认向下展开。
+
+- `expand_direction = "top"` 表示容器内容向上展开。
+- `expand_direction = "bottom"` 表示容器内容向下展开。缺省时默认为`bottom`。
+- `expand_direction = "right"` 表示容器内容向右展开。
+- `expand_direction = "left"` 表示容器内容向左展开。
+
+**注意** 主题`caption`非空时，暂不支持左/右折叠展开。
+
+向上展开示例如下：
+<live_demo example="containers/accordion/demo4ExpandDirection_top" width="405"></live_demo>
+
+向下展开示例如下：
+<live_demo example="containers/accordion/demo4ExpandDirection_bottom" width="405"></live_demo>
+
+向右展开示例如下：
+<live_demo example="containers/accordion/demo4ExpandDirection_right" width="405"></live_demo>
+
+向左展开示例如下：
+<live_demo example="containers/accordion/demo4ExpandDirection_left" width="405"></live_demo>
+
+
+## coverable ##
+>支持类型：布尔型
+
+此属性用于设置容器展开时是否脱离文档流，覆盖其他标签。缺省时默认`false`，表示挤开其他标签，不覆盖其他标签。
+
+- `coverable = "true"` 表示容器内容展开时脱离文档流，覆盖其他标签。
+- `coverable = "false"` 表示容器内容展开时不覆盖其他标签，挤开其他标签。缺省时默认不覆盖。
+
+**注意** 主题`caption`非空时，暂不支持左/右折叠展开。
+
+向上展开覆盖示例如下：
+<live_demo example="containers/accordion/demo4coverable_top" width="405"></live_demo>
+
+向下展开覆盖示例如下：
+<live_demo example="containers/accordion/demo4coverable_bottom" width="405"></live_demo>
+
+向右展开覆盖示例如下：
+<live_demo example="containers/accordion/demo4coverable_right" width="405"></live_demo>
+
+向左展开覆盖示例如下：
+<live_demo example="containers/accordion/demo4coverable_left" width="405"></live_demo>
+
 ## id ##
 >支持类型：字符串
 
 事件发出者，此字段大小写敏感。详见`事件机制`中事件发出者的说明。
-
-
 
 # 事件 #
 事件是RDK实现交互的主要手段之一，强大但易用。[了解更多](/doc/common/event)。
