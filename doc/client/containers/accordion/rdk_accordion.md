@@ -3,7 +3,7 @@
 `rdk_accordion` 控件是一个导航容器控件，此导航容器具有一组子容器，但一次只能显示其中一个。它创建和管理导航器按钮，您可以使用这些按钮在子项之间导航。每个子容器都有一个相关的导航器按钮，但是所有导航器按钮都属于`rdk_accordion`容器，并不属于子项。当用户单击导航器按钮时，就会显示相关的子容器。到另一个子项的过渡过程将使用动画效果，这样用户就可以清楚地看到一个子项消失和另一个子项的出现。 
 
 这是一个简单的 `rdk_accordion` 例子：
-<live_demo example="containers/accordion/basic" width="405"></live_demo>
+<live_demo example="containers/accordion/basic" width="800" height="300"></live_demo>
 
 ---
 # 属性 #
@@ -43,7 +43,7 @@
 - callback ： 点击按钮的回调函数，**必选项**
 
 示例如下：
-<live_demo example="containers/accordion/accordion_buttons" width="405"></live_demo>
+<live_demo example="containers/accordion/accordion_buttons" width="800"  height="300"></live_demo>
 
 ## foldedIcon 和 unfoldedIcon <binding></binding>##
 >支持类型：FontAwesome格式的图标
@@ -55,7 +55,7 @@ foldedIcon默认值"fa fa-angle-double-down"
 unfoldedIcon默认值"fa fa-angle-double-up"
 
 示例如下：
-<live_demo example="containers/accordion/accordion_foldedIcon" width="405"></live_demo>
+<live_demo example="containers/accordion/accordion_foldedIcon" width="800"  height="300"></live_demo>
 
 ## frozen <binding></binding>##
 >支持类型：字符串
@@ -67,7 +67,7 @@ unfoldedIcon默认值"fa fa-angle-double-up"
     <rdk_accordion frozen="true"></rdk_accordion>
 
 示例如下：
-<live_demo example="containers/accordion/accordion_frozen" width="405"></live_demo>
+<live_demo example="containers/accordion/accordion_frozen" width="800"  height="300"></live_demo>
 
 ## editable <binding></binding>##
 > 支持类型：字符串
@@ -77,7 +77,7 @@ unfoldedIcon默认值"fa fa-angle-double-up"
     <rdk_accordion editable="true"></rdk_accordion>
 
 示例如下：
-<live_demo example="containers/accordion/accordion_editable" width="405"></live_demo>
+<live_demo example="containers/accordion/accordion_editable" width="800"  height="300"></live_demo>
 
 ## expand_direction ##
 >支持类型：字符串
@@ -92,16 +92,16 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 **注意** 主题`caption`非空时，暂不支持左/右折叠展开。
 
 向上展开示例如下：
-<live_demo example="containers/accordion/demo4ExpandDirection_top" width="405"></live_demo>
+<live_demo example="containers/accordion/demo4ExpandDirection_top" width="800"  height="300"></live_demo>
 
 向下展开示例如下：
-<live_demo example="containers/accordion/demo4ExpandDirection_bottom" width="405"></live_demo>
+<live_demo example="containers/accordion/demo4ExpandDirection_bottom" width="800"  height="300"></live_demo>
 
 向右展开示例如下：
-<live_demo example="containers/accordion/demo4ExpandDirection_right" width="405"></live_demo>
+<live_demo example="containers/accordion/demo4ExpandDirection_right" width="800"  height="300"></live_demo>
 
 向左展开示例如下：
-<live_demo example="containers/accordion/demo4ExpandDirection_left" width="405"></live_demo>
+<live_demo example="containers/accordion/demo4ExpandDirection_left" width="800"  height="300"></live_demo>
 
 
 ## coverable ##
@@ -115,16 +115,16 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 **注意** 主题`caption`非空时，暂不支持左/右折叠展开。
 
 向上展开覆盖示例如下：
-<live_demo example="containers/accordion/demo4coverable_top" width="405"></live_demo>
+<live_demo example="containers/accordion/demo4coverable_top" width="800"  height="300"></live_demo>
 
 向下展开覆盖示例如下：
-<live_demo example="containers/accordion/demo4coverable_bottom" width="405"></live_demo>
+<live_demo example="containers/accordion/demo4coverable_bottom" width="800"  height="300"></live_demo>
 
 向右展开覆盖示例如下：
-<live_demo example="containers/accordion/demo4coverable_right" width="405"></live_demo>
+<live_demo example="containers/accordion/demo4coverable_right" width="800"  height="300"></live_demo>
 
 向左展开覆盖示例如下：
-<live_demo example="containers/accordion/demo4coverable_left" width="405"></live_demo>
+<live_demo example="containers/accordion/demo4coverable_left" width="800"  height="300"></live_demo>
 
 ## id ##
 >支持类型：字符串
