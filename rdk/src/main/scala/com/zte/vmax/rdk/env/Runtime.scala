@@ -33,6 +33,9 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   def setAppName(appName: String): Unit = {
     application = appName
+    fileHelper.setAppName(appName)
+    restHelper.setAppName(appName)
+    jarHelper.setAppName(appName)
   }
 
   def init: Unit = {
