@@ -4,7 +4,6 @@ describe('Table Demos',function(){
         browser.get('rdk/app/test_attr_table/web/index.html');
     });
     afterEach(function(){
-        expect(1).toBe(1);
     });
     //搜索框输入
     it('只显示一条结果HZ',function(){
