@@ -1,0 +1,11 @@
+
+.rdk-single-indicator .single-indicator-title {
+	width: 60px;
+	height: 60px;
+}
+.single-indicator-bc{
+	background-color: #FF7DB5;	
+}
+.single-indicator-icon{
+	color: #fff;
+}

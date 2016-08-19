@@ -54,6 +54,7 @@ require.config({
         "rd.controls.ProgressBar": "../rdk/controls/ProgressBar",
         "rd.controls.Alert": "../rdk/controls/Alert",
         "rd.controls.Tree": "../rdk/controls/Tree",
+        "rd.controls.SingleIndicator": "../rdk/controls/SingleIndicator",
 
         "rd.services.DataSourceService": "../rdk/services/DataSourceService",
         "rd.services.EventService": "../rdk/services/EventService",
@@ -78,7 +79,7 @@ require.config({
         "rd.styles.Panel": "../rdk/containers/assets/rdk-panel-style",
         "rd.styles.Tab": "../rdk/containers/assets/rdk-tab-style",
         "rd.styles.Scroller": "../rdk/controls/assets/rdk-scroller-style",
-
+        "rd.styles.SingleIndicator": "../rdk/controls/assets/rdk-singleindicator-style",
         "rd.modules.i18n": "../rdk/modules/I18nModule",
     }),
     //这个配置是你在引入依赖的时候的包名

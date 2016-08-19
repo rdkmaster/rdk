@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>singleindicator -> point_to</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    <rdk_single_indicator point_to="pointTo" ></rdk_single_indicator>
+    
+    
+    
+    <button ng-click="leftTob()">left</button>
+    <button ng-click="rightTob()">right</button>
+    <button ng-click="topTob()">top</button>
+    <button ng-click="bottomTob()">bottom</button>
+    <button ng-click="nullTob()">null</button>
+</body>
+
+</html>
