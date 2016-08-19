@@ -29,8 +29,6 @@ function(scope,$timeout, $filter,DSService, blockUI,EventTypes,EventService) {
 i18n.$init(scope);
 application.initDataSourceService(DSService);
 /************************ 应用的代码逻辑开始 ************************/
-
-    utils.hello('rdk');
  scope.TableData={
     header: ['日期', '城市名','网页响应成功率','网页下载速率','网页响应时延'],
     field: ['clttime', 'cityname','webrspsuccrate','webdownloadrate','webrspdelay'],
