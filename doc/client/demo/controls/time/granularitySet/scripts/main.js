@@ -5,7 +5,7 @@ define('main', ['rd.controls.Time'], function() {
     app.controller('myCtrl', ['$scope', function(scope) {
         scope.granularitySet = {
             value: "2015-01-01",
-            granularity: "quarter" //quarter hour date month
+            granularity: "quarter" //quarter hour date week month
         }
     }]);
 });

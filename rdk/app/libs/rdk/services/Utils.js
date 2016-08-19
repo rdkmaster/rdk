@@ -75,12 +75,11 @@
 
         function _findProp(scope, prop, defaultValue) {
             var fun;
-            try{
+            try {
                 fun = scope.$eval(prop, scope);
-            }
-            catch(err){
+            } catch (err) {
                 return null;
-            }            
+            }
             if (angular.isUndefined(fun)) {
                 return scope.$parent ? _findProp(scope.$parent, prop, defaultValue) : defaultValue;
             } else {
@@ -106,7 +105,7 @@
         this.findAppScope = function(scope) {
             function _findScope(scope) {
                 if (!scope.hasOwnProperty("_rdk_controllerName")) {
-                  return _findScope(scope.$parent)
+                    return _findScope(scope.$parent)
                 } else {
                     return scope;
                 }
@@ -148,11 +147,11 @@
             if (defaultValue == undefined) {
                 defaultValue = false;
             }
-            return angular.isDefined(value) ? (((value == 'false')||(value === false)) ? false : true) : defaultValue;
+            return angular.isDefined(value) ? (((value == 'false') || (value === false)) ? false : true) : defaultValue;
         }
 
-        this.getValue = function(scopeValue, attrValue, defaultValue){
-            return angular.isDefined(scopeValue) ? scopeValue: angular.isDefined(attrValue) ? attrValue:defaultValue;
+        this.getValue = function(scopeValue, attrValue, defaultValue) {
+            return angular.isDefined(scopeValue) ? scopeValue : angular.isDefined(attrValue) ? attrValue : defaultValue;
         }
 
         this.safeApply = function(scope, fn) {
@@ -198,20 +197,20 @@
             if (tAttrs[toProp]) {
                 return;
             }
-			if (!fromProp) {
-				fromProp = 'ds';
-			}
+            if (!fromProp) {
+                fromProp = 'ds';
+            }
             if (tAttrs[fromProp]) {
-				var expression = tAttrs[fromProp].replace(/(^|[}]{2})(.*?)([{]{2}|$)/g, '$1"$2"$3');
-				var dataProp = '';
-				angular.forEach(expression.split(/{{|}}/g), function(item) {
-					item = item.trim();
-					if (item == '""') {
-						return;
-					}
-					dataProp += '(' + item + ')+';
-				});
-				tAttrs[toProp] = 'this[' + dataProp.substring(0, dataProp.length-1) + ']';
+                var expression = tAttrs[fromProp].replace(/(^|[}]{2})(.*?)([{]{2}|$)/g, '$1"$2"$3');
+                var dataProp = '';
+                angular.forEach(expression.split(/{{|}}/g), function(item) {
+                    item = item.trim();
+                    if (item == '""') {
+                        return;
+                    }
+                    dataProp += '(' + item + ')+';
+                });
+                tAttrs[toProp] = 'this[' + dataProp.substring(0, dataProp.length - 1) + ']';
             } else {
                 console.error('至少需要提供 ds 或者 ' + toProp + ' 属性');
             }
@@ -302,6 +301,19 @@
                     console.warn('call handler error: ' + e);
                 }
             }
+        }
+
+        this.getLocale = function(scope) {
+            var lang = 'zh_cn';
+            var appScope = this.findAppScope(scope);
+
+            if ((appScope.i18n) && (appScope.i18n.$locale)) {
+                lang = appScope.i18n.$locale;
+            }
+            lang = lang.toLowerCase();
+            lang = lang.replace("-", "_");
+
+            return lang;
         }
 
 

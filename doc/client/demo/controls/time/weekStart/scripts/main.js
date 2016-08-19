@@ -3,30 +3,26 @@ define('main', ['rd.controls.Time'], function() {
     var app = angular.module("rdk_app", ['rd.controls.Time']);
     // 创建一个控制器
     app.controller('myCtrl', ['$scope', function(scope) {
-        scope.gap = {
-            value: ['2016-03-04 14:00', '2016-03-04 16:00'],
+        scope.weekStart = {
+            value: "2015-01-01",
             selectGranularity: true,
-            granularity: "hour",
+            granularity: "week",
+            weekStart :1, // 0（星期日）到6（星期六）
             granularityItems: [{
                 label: "15分钟",
-                value: "quarter",
-                gap: "inweek"
+                value: "quarter"
             }, {
                 label: "小时",
-                value: "hour",
-                gap: "2d"
+                value: "hour"
             }, {
                 label: "天",
-                value: "date",
-                gap: "inmonth"
+                value: "date"
             }, {
                 label: "周",
-                value: "week",
-                gap: "inmonth"
+                value: "week"
             },{
                 label: "月",
-                value: "month",
-                gap: "inyear"
+                value: "month"
             }]
         }
     }]);
