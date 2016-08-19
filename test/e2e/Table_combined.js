@@ -4,9 +4,8 @@ describe('Table Combined Demos',function() {
         browser.get('rdk/app/test_attr_table/web/combined_table.html');
     });
     afterEach(function(){
-        expect(1).toBe(1);
     });
-    it('test demo1 base',function(){
+    it('Accordion基础信息点击后图标改变，caption确认=‘表1’',function(){
         var ico_down=element.all(by.css(".demo1 .theme .fa-angle-down"));
         var ico_up=element.all(by.css(".demo1 .theme .fa-angle-up"));
         expect(ico_down.count()).toBe(1);
@@ -18,7 +17,7 @@ describe('Table Combined Demos',function() {
             expect(text).toBe("表1");
         });
     });
-    it('test demo1 title',function(){
+    it('显示表格后的列标题依次 姓名，职位，薪资，入职日期，部门，其他',function(){
         var ico_down=element.all(by.css(".demo1 .theme .fa-angle-down"));
         expect(ico_down.count()).toBe(1);
         element(by.css(".demo1 .theme")).click();
@@ -31,7 +30,7 @@ describe('Table Combined Demos',function() {
             })
         });
     });
-    it('test demo1 pageTopage',function(){
+    it('表格翻页后分页信息验证和当前页首条记录name确认',function(){
         var ico_down=element.all(by.css(".demo1 .theme .fa-angle-down"));
         expect(ico_down.count()).toBe(1);
         element(by.css(".demo1 .theme")).click();
@@ -56,17 +55,17 @@ describe('Table Combined Demos',function() {
             expect(text).toBe("aaa");
         });
     });
-    it("should be xxx",function(){
+    it("accordion控件下，表格每行点击后获取的数据变化，列标题确认",function(){
         var accordion=element(by.css(".demo2 .rdk-accordion-module:first-child .theme span"));
         accordion.getText().then(function(text){
             expect(text).toBe("Accordion_0");
         });
         element(by.css(".demo2 .rdk-accordion-module:first-child .theme")).click();
-        var table_list=element.all(by.css(".demo2 .rdk-accordion-module:first-child .content .sticky-enabled tbody tr"));
+        var item=element.all(by.css(".demo2 .rdk-accordion-module:first-child .content .sticky-enabled tbody tr"));
         var list=element.all(by.css(".demo2 .rdk-accordion-module:first-child .content .sticky-enabled tbody tr th"))
         var list_title=["姓名","职位","薪资","入职日期","部门","其他"];
-        expect(table_list.count()).toBe(6);
-        table_list.each(function(item,index){
+        expect(item.count()).toBe(6);
+        item.each(function(item,index){
             item.click();
         });
         list.each(function(item,index){
@@ -75,57 +74,50 @@ describe('Table Combined Demos',function() {
             });
         });
     });
-    it("test demo3 t1",function(){
+    it("tab控件下，每行记录点击，数据跟随获取",function(){
         var tab_li=element.all(by.css(".demo3 .rdk-tab-module .tabs .title"));
-        // expect(tab_li.count()).toBe(1);
         var tab_title=element.all(by.css(".demo3 .rdk-tab-module .tabs .title li a"));
         tab_title.get(0).click();
-        var table1_list=element.all(by.css(".title1 .sticky-enabled thead tr th"));
-        expect(table1_list.count()).toBe(6);
-        expect(table1_list.get(0).getText()).toBe("姓名");
-        var table1_item=element.all(by.css(".title1 .sticky-enabled tbody tr"));
-        table1_item.each(function(item,index){
+        var title=element.all(by.css(".title1 .sticky-enabled thead tr th"));
+        expect(title.count()).toBe(6);
+        expect(title.get(0).getText()).toBe("姓名");
+        var item=element.all(by.css(".title1 .sticky-enabled tbody tr"));
+        item.each(function(item,index){
             item.click();
         });
     });
-    it('test demo3 t2',function(){
+    it('combo控件下，表格逐行点击获取数据',function(){
         var tab_li=element.all(by.css(".demo3 .rdk-tab-module .tabs .title"));
-        // expect(tab_li.count()).toBe(1);
         var tab_title=element.all(by.css(".demo3 .rdk-tab-module .tabs .title li a"));
         tab_title.get(1).click();
         element(by.css(".title2 .combo-content>input")).click();
-        var table2_list=element.all(by.css(".title2 .combo-content-transclude .sticky-enabled thead tr th"));
-        expect(table2_list.count()).toBe(6);
-        expect(table2_list.get(0).getText()).toBe("姓名");
-        var table2_item=element.all(by.css(".title2 .combo-content-transclude .sticky-enabled tbody tr"));
-        table2_item.each(function(item,index){
+        var title=element.all(by.css(".title2 .combo-content-transclude .sticky-enabled thead tr th"));
+        expect(title.count()).toBe(6);
+        expect(title.get(0).getText()).toBe("姓名");
+        var item=element.all(by.css(".title2 .combo-content-transclude .sticky-enabled tbody tr"));
+        item.each(function(item,index){
             item.click();
         });
     });
-    it('test demo3 t3',function(){
+    it('tab控件下，嵌套的accordion控件点击，展开table并点击获取每条数据',function(){
         var tab_li=element.all(by.css(".demo3 .rdk-tab-module .tabs .title"));
-        // expect(tab_li.count()).toBe(1);
         var tab_title=element.all(by.css(".demo3 .rdk-tab-module .tabs .title li a"));
         tab_title.get(2).click();
         element(by.css(".title3 .theme")).click();
-        var table3_item=element.all(by.css(".title3 .content .sticky-enabled tbody tr"));
-        var table3_list=element.all(by.css(".title3 .content .sticky-enabled thead tr th"));
-        expect(table3_list.count()).toBe(6);
-        expect(table3_list.get(0).getText()).toBe("姓名");
-        table3_item.each(function(item,index){
+        var item=element.all(by.css(".title3 .content .sticky-enabled tbody tr"));
+        var title=element.all(by.css(".title3 .content .sticky-enabled thead tr th"));
+        expect(title.count()).toBe(6);
+        expect(title.get(0).getText()).toBe("姓名");
+        item.each(function(item,index){
             item.click();
         });
     });
-    it('test demo3 t4',function(){
+    it('tab控件下嵌套tab控件展开的table验证列标题',function(){
         var tab_li=element.all(by.css(".demo3 .rdk-tab-module .tabs .title"));
-        // expect(tab_li.count()).toBe(5);
-        var titles=['1','2','3','4','4.01'];
         var tab_title=element.all(by.css(".demo3 .rdk-tab-module .tabs .title li a"));
         tab_title.get(3).click();
-        tab_title.each(function(item,index){
-            item.getText().then(function(text){
-                expect(text).toBe(titles[index]);
-            });
-        });
+        var title=element.all(by.css(".title4 .sticky-enabled thead tr th"));
+        expect(title.count()).toBe(6);
+        expect(title.get(0).getText()).toBe("姓名");
     });
 })
