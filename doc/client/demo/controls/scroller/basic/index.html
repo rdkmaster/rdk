@@ -11,8 +11,9 @@
     <script src="scripts/main.js"></script>
 </head>
 
+
 <body ng-controller='myCtrl'>
-    <rdk_scroller data="images" page_num=4>
+    <rdk_scroller data="images" >
       <img ng-src="{{item.src}}"/>
       <span> {{item.title}} </span>
     </rdk_scroller>
