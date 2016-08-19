@@ -29,7 +29,7 @@ font-family: 'Open Sans', sans-serif;
 .left_arrow {
 
  position: absolute;
- top: 150px;
+ top: 50px;
  left: 0px;
  opacity: 0.5;
 }
@@ -37,7 +37,7 @@ font-family: 'Open Sans', sans-serif;
 .right_arrow {
 
  position: absolute;
- top: 150px;
+ top: 50px;
  right: 10px;
  opacity: 0.5;
 
