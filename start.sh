@@ -18,6 +18,7 @@ START() {
     chmod +x $node
 	
     ##http
+	sed -i 's/localhost/10\.9\.233\.35/g' $cur_dir/tools/http_server/config.json
     cd $cur_dir/tools/http_server
     nohup $node server.js & > /dev/null
 
