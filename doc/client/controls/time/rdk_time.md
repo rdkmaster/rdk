@@ -75,9 +75,18 @@
 
 ### granularity ###
 	
-时间粒度。也表示`value`的精确度。取值范围是 `date/month/hour/quarter` 四个值。如果设置成`hour`，则`value`精确到小时。
+时间粒度。也表示`value`的精确度。取值范围是 `date/week/month/hour/quarter` 五个值。如果设置成`hour`，则`value`精确到小时。
 
 <live_demo example="controls/time/granularitySet" width="900"></live_demo>
+
+###weekStart ###
+标志一周开始，默认为周日（0），可配置0（星期日）到6（星期六）
+<live_demo example="controls/time/weekStart" width="900"></live_demo>
+
+###gap ###
+当时间控件设置为range后，granularityItems支持gap属性，用于表示前后两个时间的时间间隔，支持
+inday/inweek/inmonth/inyear 和具体的 1d,2w,3m,4y。
+<live_demo example="controls/time/gap" width="900"></live_demo>
 
 ### startDate / endDate ###
 
@@ -97,7 +106,8 @@
 以下是时间控件的综合使用例子：
 
 <live_demo example="controls/time/showGranularity" width="900"></live_demo>
-
+# 支持国际化 #
+<live_demo example="controls/time/i18n" width="900"></live_demo>
 
 <div>
 <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>

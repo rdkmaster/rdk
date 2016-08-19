@@ -1,26 +1,28 @@
-define('main', ['rd.controls.Time'], function() {
+define('main', ['i18n','rd.controls.Time'], function(i18n) {
     // 创建一个RDK的应用
     var app = angular.module("rdk_app", ['rd.controls.Time']);
     // 创建一个控制器
     app.controller('myCtrl', ['$scope', function(scope) {
-        scope.showGranularity = {
-            value: ['2016-03-04 14:00', '2016-03-04 16:00'],
+    	i18n.$init(scope);
+        scope.i18Set = {
+            value: "2015-01-01",
             selectGranularity: true,
-            granularity: "hour",
+            granularity: "week",
+            weekStart :1, // 0（星期日）到6（星期六）
             granularityItems: [{
-                label: "15分钟",
+                label: i18n.quarter,
                 value: "quarter"
             }, {
-                label: "小时",
+                label: i18n.hour,
                 value: "hour"
             }, {
-                label: "天",
+                label: i18n.date,
                 value: "date"
             }, {
-                label: "周",
+                label: i18n.week,
                 value: "week"
             },{
-                label: "月",
+                label: i18n.month,
                 value: "month"
             }]
         }

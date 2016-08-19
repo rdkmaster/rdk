@@ -352,8 +352,15 @@ img {
 <p>注意：<code>value</code>中支持 <code>now</code> 代表当前时间。<code>now - 2y</code> 代表当前时间向前追溯两年。支持<code>y/m/w/d/h</code>四种追溯方式。</p>
 <p><live_demo example="controls/time/macroValue" width="900"></live_demo></p>
 <h3>granularity</h3>
-<p>时间粒度。也表示<code>value</code>的精确度。取值范围是 <code>date/month/hour/quarter</code> 四个值。如果设置成<code>hour</code>，则<code>value</code>精确到小时。</p>
+<p>时间粒度。也表示<code>value</code>的精确度。取值范围是 <code>date/week/month/hour/quarter</code> 五个值。如果设置成<code>hour</code>，则<code>value</code>精确到小时。</p>
 <p><live_demo example="controls/time/granularitySet" width="900"></live_demo></p>
+<h3>weekStart</h3>
+<p>标志一周开始，默认为周日（0），可配置0（星期日）到6（星期六）
+<live_demo example="controls/time/weekStart" width="900"></live_demo></p>
+<h3>gap</h3>
+<p>当时间控件设置为range后，granularityItems支持gap属性，用于表示前后两个时间的时间间隔，支持
+inday/inweek/inmonth/inyear 和具体的 1d,2w,3m,4y。
+<live_demo example="controls/time/gap" width="900"></live_demo></p>
 <h3>startDate / endDate</h3>
 <p>用于限制可选择的时间范围。不论是时间点还是时间段，用户都只能在这个时间范围内选取。</p>
 <p><live_demo example="controls/time/limitValue" width="900"></live_demo></p>
@@ -363,6 +370,8 @@ img {
 <p>时间粒度选择下拉框内容。目前只支持上述设置。</p>
 <p>以下是时间控件的综合使用例子：</p>
 <p><live_demo example="controls/time/showGranularity" width="900"></live_demo></p>
+<h1>支持国际化</h1>
+<p><live_demo example="controls/time/i18n" width="900"></live_demo></p>
 <div>
 <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
 <script src="/doc/tools/doc_js/main.js"></script>

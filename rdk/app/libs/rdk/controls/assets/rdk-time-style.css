@@ -1,34 +1,73 @@
-.rdk-time-module{
-	 display: inline-block;
+.rdk-time-module {
+    display: inline-block;
+    
 }
+
 .rdk-time-module .time-content {
     display: inline-block;
+    box-shadow:inset 0 1px 1px rgba(0,0,0,0.075);
+    -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075);
+    border:1px solid #ccc;
+    border-radius:4px;
+    padding-right:4px;
+    position :relative;
 }
 
 .rdk-time-module .time-content .startTime,
 .rdk-time-module .time-content .endTime {
     display: inline-block;
-    cursor: pointer
+    cursor: pointer;
+    width: 140px;
+    height: 30px;
+    background-color :#fff !important;
+    border:0;
+    box-shadow:inset 0 0 0 rgba(0,0,0,0.075);
+    -webkit-box-shadow:inset 0 0 0 rgba(0,0,0,0.075);
 }
 
-.rdk-time-module input{
-	width: 140px;
-	height: 28px;
+.rdk-time-module input {
+    height: 30px;
+    background-color :#fff !important;
+    text-align:center !important;
 }
 
-.rdk-time-module select{
-	width: 120px;
-	height: 28px;
+.rdk-time-module select {
+    border:0;
+    width: 70px;
+    color: transparent;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: url("arrow.png") no-repeat scroll right center transparent !important;
 }
 
-.rdk-time-module .bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]){
-	width: 120px;
+.rdk-time-module select>option{
+    color: black;
 }
 
-.rdk-time-module .btn{
-	line-height: 16px;
+.rdk-time-module select:focus{
+   outline:none;
 }
 
-.rdk-time-module .bootstrap-select.btn-group, .bootstrap-select.btn-group[class*="span"]{
-	margin-bottom: 0px;
+.rdk-time-module .bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]) {
+    width: 120px;
+}
+
+.rdk-time-module .btn {
+    line-height: 16px;
+}
+
+.rdk-time-module .bootstrap-select.btn-group,
+.bootstrap-select.btn-group[class*="span"] {
+    margin-bottom: 0px;
+}
+
+.rdk-time-module .time-content .granularity{
+    position:absolute;
+    display: inline-block;
+    width: 48px;
+    text-align: center;
+    top: 5px;
+    z-index: -1;
+    border-left:1px solid #ccc;
 }

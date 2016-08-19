@@ -22,6 +22,7 @@ require.config({
         "jquery-ui": "../jquery-ui/js/jquery-ui.min",
         "bootstrap": "../bootstrap/js/bootstrap",
         "bootstrap-datepicker": "../bootstrap-datepicker/js/bootstrap-datetimepicker",
+        "bootstrap-datepicker-i18":"../bootstrap-datepicker/js/bootstrap-datetimepicker.zh-CN",
         "bootstrap-select": "../bootstrap-select/bootstrap-select.min",
         "underscore": "../underscore/underscore-1.8.3",
         "jquery-headfix":"../jquery-headfix/jquery.stickyheader",
@@ -130,6 +131,10 @@ require.config({
         "bootstrap-datepicker": {
             deps: ["css!../bootstrap-datepicker/css/bootstrap-datetimepicker.min"],
             exports: "bootstrap-datepicker"
+        },
+        "bootstrap-datepicker-i18":{
+            deps: ["bootstrap-datepicker"],
+            exports: "bootstrap-datepicker-i18"
         },
         "bootstrap-select": {
             deps: ["css!../bootstrap-select/bootstrap-select.min"],
