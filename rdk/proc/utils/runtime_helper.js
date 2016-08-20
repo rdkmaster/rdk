@@ -381,12 +381,12 @@ function require(script) {
 
 function sql(sql) {
     log("exec sql: " + sql);
-    return rdk_runtime.dbHelper().sql(sql);
+    return rdk_runtime.dbHelper().sql(rdk_runtime.application(),sql);
 }
 
 function clear(resultSet) {
     info("clearing the resultSet and every resource else.");
-    rdk_runtime.dbHelper().clear(resultSet);
+    rdk_runtime.dbHelper().clear(rdk_runtime.application(),resultSet);
 }
 
 function mapper(resultSet, key, value, keepResultSet) {

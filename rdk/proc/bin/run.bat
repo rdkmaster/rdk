@@ -94,7 +94,7 @@ SET PSEP=;
 
 @REM Start Java program
 :runm2
-SET CMDLINE=%JAVA_EXE% %JVM_OPT% -Xmx2g -Xms512m -XX:+UseParallelGC -XX:ParallelGCThreads=2 -cp "%PROG_HOME%\proc\bin\lib\*;" com.zte.vmax.rdk.Run %CMD_LINE_ARGS%
+SET CMDLINE=%JAVA_EXE% %JVM_OPT% -server -Xmx2g -Xms512m -XX:+UseParallelGC -XX:ParallelGCThreads=2 -cp "%PROG_HOME%\proc\bin\lib\*;" com.zte.vmax.rdk.Run %CMD_LINE_ARGS%
 %CMDLINE%
 if ERRORLEVEL 1 goto error
 goto end

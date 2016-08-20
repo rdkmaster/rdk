@@ -63,7 +63,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
         parameters('level.as[String]) {
           req =>
             complete {
-              val level = req.toUpperCase();
+              val level = req.toUpperCase()
               level match {
                 case "DEBUG" => LogManager.getRootLogger.setLevel(Level.DEBUG)
                 case "INFO" => LogManager.getRootLogger.setLevel(Level.INFO)

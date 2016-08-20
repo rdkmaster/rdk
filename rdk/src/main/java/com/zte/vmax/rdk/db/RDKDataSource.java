@@ -1,11 +1,11 @@
 package com.zte.vmax.rdk.db;
 
-import com.zte.vmax.rdk.log.GlobalLogger;
 import com.zte.vmax.rdk.config.Config;
+import com.zte.vmax.rdk.log.GlobalLogger;
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
-import java.io.*;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * Created by 10045812 on 16-5-16.
@@ -17,8 +17,7 @@ public class RDKDataSource {
 
     public static Connection getConnection() {
         try {
-            Connection conn = dataSource.getConnection();
-            return new RDKConnection(conn);
+            return dataSource.getConnection();
         } catch (SQLException e) {
             logger.error("get connection failed!", e);
             return null;
