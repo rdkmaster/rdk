@@ -3,6 +3,7 @@ package com.zte.vmax.rdk.mq
 import akka.util.Timeout
 import com.zte.vmax.rdk.RdkServer
 import com.zte.vmax.rdk.actor.Messages._
+import com.zte.vmax.rdk.proxy.ActiveMQTrait
 import com.zte.vmax.rdk.util.Logger
 
 import scala.concurrent.duration._
@@ -13,7 +14,7 @@ import scala.concurrent.{Await, Future}
 /**
   * Created by 10054860 on 2016/7/28.
   */
-object MqHelper extends Logger {
+object MqHelper extends ActiveMQTrait with Logger {
 
   private val default_timeout: Int = 60
 
