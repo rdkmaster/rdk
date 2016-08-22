@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Accordion -> Left Coverable</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='myCtrl'>
+
+    <!-- 没主题，箭头包裹  --> 
+    <!-- <div style='margin-left: 250px; display: inline-block;'>你好啊随便写点什么看有没有被挤掉</div> -->
+
+    <rdk_accordion style='float: right' expand_direction='left' coverable='true' exchangable='true'>
+        <rdk_basic_selector style='width: 400px' class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
+        <div>向左展开，不带主题不带宽度的left</div>
+    </rdk_accordion>
+
+   <!--  <div style='display: inline-block;'>你好啊随便写点什么看有没有被挤掉</div> -->
+
+<!--     <rdk_accordion style="display: inline-block;" expand_direction='left' coverable='true' exchangable='true'>
+        <rdk_basic_selector style='width: 400px' class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
+        <div>向左展开，不带主题带宽度的left</div>
+    </rdk_accordion> 
+
+    <div style='display: inline-block;'>你好啊随便写点什么看有没有被挤掉</div>
+
+    <div style='width: 100%; height: 100px; background-color: red'></div> -->
+    
+    <!-- 有主题，上左一边宽  --> 
+
+<!--     <rdk_accordion expand_direction='left' caption="'带主题的left'" coverable='true'>
+        <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
+        <div>向左展开，带主题的left</div>
+    </rdk_accordion>
+
+    <rdk_accordion style="width: 350px;" expand_direction='left' caption="'带主题带宽度的left'" coverable='true'>
+        <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
+        <div>向左展开，带主题带宽度的left</div>
+    </rdk_accordion> -->
+
+
+</body>
+
+</html>

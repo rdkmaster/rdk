@@ -11,7 +11,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
 
     accordionModule
-        .directive('rdkAccordion', ['Utils', 'EventService', 'EventTypes', '$compile', 'PositionTypes',function(Utils, EventService, EventTypes, $compile, PositionTypes) {
+        .directive('rdkAccordion', ['Utils', 'EventService', 'EventTypes', '$compile', 'PositionTypes', '$timeout', function(Utils, EventService, EventTypes, $compile, PositionTypes, $timeout) {
             return{
                 restrict: 'E',
                 replace: true,
@@ -30,7 +30,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     buttons: '=',
                     id: '@',
                     expandDirection: '@',
-                    coverable: '@'
+                    coverable: '@',
+                    exchangable: '@'
                 }, 
                 template: 
                 '<div class="rdk-accordion-module" ng-click="stopPropagation()">\
@@ -103,8 +104,10 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.frozen = Utils.isTrue(scope.frozen, false);
                     scope.editable = Utils.isTrue(scope.editable, false);
                     scope.coverable = Utils.isTrue(scope.coverable, false);
+                    scope.exchangable = Utils.isTrue(scope.exchangable, false);
                     scope.showButtons = angular.isDefined(scope.buttons);                   
                     scope.appScope = Utils.findAppScope(scope);
+                    scope.outerLeft = parseInt($(iEle[0]).css('left'), 10) || 0;
 
                     _initFoldIconsByDirection();
                     _beforeHandler(scope.expandDirection.toLowerCase());
@@ -144,6 +147,10 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                         $(themeDom).css({'display': 'inline-block'});
                     }
                     if(!scope.coverable){//挤开，单击前就编译
+                        if(scope.exchangable){
+                            console.warn('未脱离文档流时，图标无需支持位置交换，请删除exchangable属性！');
+                            return;
+                        }
                         if(direction == PositionTypes.TOP){
                             $(iEle[0]).empty();
                             $(iEle[0]).append(transcludeDom).append(themeDom);
@@ -166,23 +173,64 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     var transcludeDom = iEle[0].querySelector(".content");
 
                     if((!!scope.caption)&&((direction == PositionTypes.LEFT)||(direction == PositionTypes.RIGHT))){
-                        console.warn('主题非空时，暂不支持左右折叠！');
+                        console.warn('主题非空时，暂不支持左右折叠，请删除caption属性！');
                         scope.open = false;
                         return;
                     }
 
                     if(scope.coverable){//覆盖，点击后编译
                         $(transcludeDom).css({'position': 'absolute', 'z-index': '9999','width': '100%'});
-                        if(direction == PositionTypes.TOP){
-                            $(transcludeDom).css({'bottom': themeDom.offsetHeight+'px','width': '100%'});
+                        if(scope.exchangable){
+                            if(direction == PositionTypes.LEFT){//iele相对自己
+                                $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0, 'width': ''});
+                                $timeout(function(){
+                                    if(scope.open){
+                                        $(iEle[0]).animate({'left': -transcludeDom.offsetWidth+scope.outerLeft+'px'}); 
+                                    }
+                                    else{
+                                        scope.open = true;
+                                        $(iEle[0]).animate({'left': transcludeDom.offsetWidth+scope.outerLeft+'px'}, function(){
+                                            $timeout(function(){
+                                                scope.open = false;
+                                            }, 0);
+                                        });
+                                    }  
+                                }, 0)                
+                            }
+                            else if(direction == PositionTypes.RIGHT){
+                                $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0, 'width': ''});
+                                $timeout(function(){
+                                    if(scope.open){
+                                        $(iEle[0]).animate({'left': transcludeDom.offsetWidth+scope.outerLeft+'px'});                                     
+                                    }
+                                    else{
+                                        scope.open = true;
+                                        $(iEle[0]).animate({'left': -transcludeDom.offsetWidth+scope.outerLeft+'px'}, function(){
+                                            $timeout(function(){
+                                                scope.open = false;
+                                            }, 0);
+                                        });
+                                    } 
+                                }, 0)
+                            }
+                            else{
+                                console.warn('exchange属性只支持左右覆盖折叠！');
+                                scope.open = false;
+                                return;
+                            }
                         }
-                        if(direction == PositionTypes.RIGHT){
-                            $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0, 'width': ''});
+                        else{
+                            if(direction == PositionTypes.TOP){
+                                $(transcludeDom).css({'bottom': themeDom.offsetHeight+'px','width': '100%'});
+                            }
+                            if(direction == PositionTypes.RIGHT){
+                                $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0, 'width': ''});
+                            }
+                            if(direction == PositionTypes.LEFT){
+                                $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0, 'width': ''});
+                            }
                         }
-                        if(direction == PositionTypes.LEFT){
-                            $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0, 'width': ''});
-                        }
-                    }                  
+                    }     
                 }               
 
                 function _stopPropagation(){
