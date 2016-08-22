@@ -27,21 +27,26 @@ AdlibRegister('_updateConsole', 100)
 
 Global $width = 1000
 Global $height = 600
-Global $gui = GUICreate($WIN_TITLE, $width, $height) ; will create a dialog box that when displayed is centered
+Global $gui = GUICreate($WIN_TITLE, $width, $height, Default, Default, $WS_MAXIMIZEBOX + $WS_MINIMIZEBOX + $WS_SIZEBOX)
 GUISetFont(8.5, 0, 0, 'Courier New')
 
 $width -= 4
-$height -= 25
-GUICtrlCreateTab(2, 2, $width, $height)
+$height -= 26
+GUICtrlCreateTab(2, 2, 200, 0)
 
 GUICtrlCreateTabItem("RDK")
-Global $rdkConsole = GUICtrlCreateEdit("", 2, 24, $width, $height)
+Global $rdkConsole = GUICtrlCreateEdit("", 2, 23, $width, $height)
+GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 _GUICtrlEdit_SetLimitText($rdkConsole, 3000000000)
+
 GUICtrlCreateTabItem("HTTP")
-Global $httpConsole = GUICtrlCreateEdit("", 2, 24, $width, $height)
+Global $httpConsole = GUICtrlCreateEdit("", 2, 23, $width, $height)
+GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 _GUICtrlEdit_SetLimitText($httpConsole, 3000000000)
+
 GUICtrlCreateTabItem("Rest")
-Global $restConsole = GUICtrlCreateEdit("", 2, 24, $width, $height)
+Global $restConsole = GUICtrlCreateEdit("", 2, 23, $width, $height)
+GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 _GUICtrlEdit_SetLimitText($restConsole, 3000000000)
 
 GUICtrlCreateTabItem("") ; end tabitem definition
@@ -81,24 +86,24 @@ EndFunc
 Func _startHTTP()
 	FileChangeDir(@ScriptDir & '\tools\http_server\')
 	$httpPid = Run("node server.js", "", @SW_HIDE, $STDERR_MERGED)
-	ConsoleWrite($httpPid & @CRLF)
+;~ 	ConsoleWrite($httpPid & @CRLF)
 EndFunc
 
 Func _startRest()
 	FileChangeDir(@ScriptDir & '\doc\tools\live_demo\mock_rest\')
 	$restPid = Run("node rest_service.js", "", @SW_HIDE, $STDERR_MERGED)
-	ConsoleWrite($restPid & @CRLF)
+;~ 	ConsoleWrite($restPid & @CRLF)
 EndFunc
 
 Func _startRDK()
 	Local $cmd = '"' & $java & '" ' & _readArg() & _
 		' -Dfile.encoding=UTF-8 -XX:+UseParallelGC -XX:ParallelGCThreads=2 ' & _
 		' -classpath proc/bin/lib/* com.zte.vmax.rdk.Run'
-	ConsoleWrite($cmd & @CRLF)
+;~ 	ConsoleWrite($cmd & @CRLF)
 
 	FileChangeDir(@ScriptDir & '\rdk')
 	$rdkPid = Run($cmd, @WorkingDir, @SW_HIDE, $STDOUT_CHILD)
-	ConsoleWrite('$rdkPid=' & $rdkPid & @CRLF)
+;~ 	ConsoleWrite('$rdkPid=' & $rdkPid & @CRLF)
 EndFunc
 
 Func _init()
