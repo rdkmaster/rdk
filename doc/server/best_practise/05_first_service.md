@@ -69,7 +69,7 @@ RDK的rest服务也是通过编写js代码实现，拷贝这个文件 `app/my_fi
   ]
 }  
 ~~~
-最后一行就是我们调用`log()`打印的日志。日志是调试服务的一个重要的手段，所以一定要熟练使用，[这里详细描述了rdk提供的所有日志api](/rdk_server/doc/service_api.html#日志)。
+最后一行就是我们调用`log()`打印的日志。日志是调试服务的一个重要的手段，所以一定要熟练使用，[这里详细描述了rdk提供的所有日志api](/doc/server/service_api.html#日志)。
 
 > 提示
 > 
@@ -77,7 +77,7 @@ RDK的rest服务也是通过编写js代码实现，拷贝这个文件 `app/my_fi
 > - `log()`函数可以接收任意类型的参数，它会尝试将其转为字符串。
 
 ### 查阅API函数手册
-在实现citys服务的时候，我们用到了两个API函数，分别是[`log()`](/rdk_server/doc/service_api.html#日志)和[`matrix()`](/rdk_server/doc/service_api.html#matrix())，[这个页面](/rdk_server/doc/service_api.html)提供了所有RDK的所有API函数的说明。为了更好的使用它们，建议仔细阅读。
+在实现citys服务的时候，我们用到了两个API函数，分别是[`log()`](/doc/server/service_api.html#日志)和[`matrix()`](/doc/server/service_api.html#matrix())，[这个页面](/doc/server/service_api.html)提供了所有RDK的所有API函数的说明。为了更好的使用它们，建议仔细阅读。
 
 ### 调用citys服务
 citys服务是一个标准的restful服务，它可以被任意ajax请求调用。
@@ -98,7 +98,7 @@ citys服务是一个标准的restful服务，它可以被任意ajax请求调用�
 > 
 > ![](img/invalid_city.PNG)
 
-原因很简单，我们在[上一步](04_finish_condition_bar.html#city-mock-data)提供给[`BasicSelector`](/rdk_client/doc/controls/basicselector/index.html)的数据结构和[本文前面](#log)日志中输出的数据结构不一致导致了这个问题。
+原因很简单，我们在[上一步](04_finish_condition_bar.html#city-mock-data)提供给[`BasicSelector`](/doc/client/controls/basicselector/index.html)的数据结构和[本文前面](#log)日志中输出的数据结构不一致导致了这个问题。
 
 那么如何解决它呢？我们需要对rest服务查询得到的数据做转换。
 
@@ -120,7 +120,7 @@ scope.cityProcessor = function(rawCitys) {
 到此，我们刷新页面后，就能看到和之前相同的效果了，唯一的差别是我们的地市数据是从rest访问查询而来的。
 
 ### 数据源手册
-通过前一小节的实践，你已经学会了数据源的常规使用方法了，基本上能够满足大多数开发的需要了。[访问这里](/rdk_client/doc/common/datasource/)可以查阅数据源的其他用法，以及每个属性的详细说明。
+通过前一小节的实践，你已经学会了数据源的常规使用方法了，基本上能够满足大多数开发的需要了。[访问这里](/doc/client/common/datasource/)可以查阅数据源的其他用法，以及每个属性的详细说明。
 
 ### 删除不用的文件和代码
 
@@ -129,12 +129,12 @@ scope.cityProcessor = function(rawCitys) {
 - 删除 server/mylib.js 文件
 
 ### 关于 $svr 宏
-本文前面多次使用到 `$svr` 这个宏，[这里](/rdk_server/doc/relative_path_rule.html)有关于它的使用说明。
+本文前面多次使用到 `$svr` 这个宏，[这里](/doc/server/relative_path_rule.html)有关于它的使用说明。
 
 ## 小结
-我们实现了第一个RDK服务citys，并成功利用[数据源](/rdk_client/doc/common/datasource)调用这个服务，同时对数据做了一些转换。
+我们实现了第一个RDK服务citys，并成功利用[数据源](/doc/client/common/datasource)调用这个服务，同时对数据做了一些转换。
 
-你可以下载完成此步骤之后的[源码](05_first_service.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk_server/app/my_first_app/web/index.html)就可以打开它了。
+你可以下载完成此步骤之后的[源码](05_first_service.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk/app/my_first_app/web/index.html)就可以打开它了。
 
 
 <div title="第5步 实现第一个RDK服务并调用它 - RDK应用开发最佳实践" id="__hidden__">

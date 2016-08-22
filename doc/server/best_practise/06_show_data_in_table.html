@@ -379,7 +379,7 @@ img {
 <p>完成了这一步之后，完整的代码可以通过<a href="06_show_data_in_table_1.zip">单击这里</a>下载。</p>
 <h3>在表格中添加详情列</h3>
 <p>BA要求在表格的每一行上可以做点击操作，以显示该行的详情。</p>
-<p>查阅表格的文档，找到<a href="/rdk_client/doc/controls/table/index.html#add-column">添加自定义列</a>，该小节介绍了如何在表格中添加交互列。</p>
+<p>查阅表格的文档，找到<a href="/doc/client/controls/table/index.html#add-column">添加自定义列</a>，该小节介绍了如何在表格中添加交互列。</p>
 <p>编辑页面代码，在rdk_table节点上添加属性：<code>setting=&quot;setting&quot;</code>，编辑js代码，在scope上添加一个setting属性，值如下：</p>
 <pre><code>scope.setting = {
     &quot;columnDefs&quot;: [
@@ -443,7 +443,7 @@ sql = tableUtil.generatePagingSQL(sql, request.paging.pageSize, request.paging.c
 <h2>小结</h2>
 <p>我们实现了一个数据查询服务，并利用表格呈现这些数据。同时还在表格中添加了“详情”列，可以查看表格一行数据的详情。</p>
 <p>最主要的我们实现了表格的服务端分页这个极常用的功能。</p>
-<p>你可以下载完成此步骤之后的<a href="06_show_data_in_table.zip">源码</a>，解压到 <code>app/my_first_app</code> 下，<a href="/rdk_server/app/my_first_app/web/index.html">单击这里</a>就可以打开它了。</p>
+<p>你可以下载完成此步骤之后的<a href="06_show_data_in_table.zip">源码</a>，解压到 <code>app/my_first_app</code> 下，<a href="/rdk/app/my_first_app/web/index.html">单击这里</a>就可以打开它了。</p>
 <div title="第6步 将查询得到的数据表格方式呈现 - RDK应用开发最佳实践" id="__hidden__">
 <script src="/doc/tools/doc_js/misc.js"></script>
 </div>

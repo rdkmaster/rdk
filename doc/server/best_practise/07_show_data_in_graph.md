@@ -88,7 +88,7 @@ RDK的Graph控件使用的是echart作为基础库，echart官网提供了非常
 `rdk_graph` 和 `rdk_table` 这2个标签都有ds属性，并且有相同的值，这就意味着表格和图形使用了同一份数据。
 
 ### 实现图形交互
-图形的交互，可以通过事件来完成。RDK提供了一套简单但强大的事件机制，[单击这里](/rdk_client/doc/common/event)了解详情。
+图形的交互，可以通过事件来完成。RDK提供了一套简单但强大的事件机制，[单击这里](/doc/client/common/event)了解详情。
 
 先注入EventService的依赖，编辑js代码，找到下面这行代码：
 ~~~
@@ -101,7 +101,7 @@ function(scope, DSService, blockUI, EventService)
 	...
 ~~~
 
-这样就实现了EventService的注入了。[这个小节](/rdk_client/doc/common/dependency_injection.html#ctrl)详细描述了与controller相关的依赖注入的知识，感兴趣的同学可以仔细阅读。
+这样就实现了EventService的注入了。[这个小节](/doc/client/common/dependency_injection.html#ctrl)详细描述了与controller相关的依赖注入的知识，感兴趣的同学可以仔细阅读。
 
 编辑页面代码，在rdk_graph节点上加入一个id属性：`id="myGraph"`。
 
@@ -150,7 +150,7 @@ EventService.register('myGraph', 'click', function(event, item) {
 ## 小结
 我们在页面上增加了一个柱状图和折线图，并给图形做了一个简单的交互过程。
 
-你可以下载完成此步骤之后的[源码](07_show_data_in_graph.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk_server/app/my_first_app/web/index.html)就可以打开它了。
+你可以下载完成此步骤之后的[源码](07_show_data_in_graph.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk/app/my_first_app/web/index.html)就可以打开它了。
 
 
 <div title="第7步 将查询得到的数据以图形方式呈现 - RDK应用开发最佳实践" id="__hidden__">
