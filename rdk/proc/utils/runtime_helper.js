@@ -285,8 +285,8 @@ var file = {
         csv.data.shift();
         return b;
     },
-    list: function (path, pattern) {
-        path = java.FileHelper().fixPath(path, rdk_runtime.application());
+    list: function(path, pattern) {
+        path = java.FileHelper.fixPath(path, rdk_runtime.application());
         log('listing dir: ' + path);
 
         var file = new java.File(path);
