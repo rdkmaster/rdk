@@ -23,9 +23,7 @@ Global $restPid = 0
 Global $rdkPid = 0
 
 _init()
-
 AdlibRegister('_updateConsole', 100)
-OnAutoItExitRegister('_beforeExit')
 
 Global $width = 1000
 Global $height = 600
@@ -53,6 +51,8 @@ GUISetState(@SW_SHOW)
 _startRDK()
 _startHTTP()
 _startRest()
+
+OnAutoItExitRegister('_beforeExit')
 
 While 1
 	If GUIGetMsg() <> $GUI_EVENT_CLOSE Then ContinueLoop
