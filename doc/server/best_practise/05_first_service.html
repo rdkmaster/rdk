@@ -351,7 +351,7 @@ img {
 }  
 </code></pre>
 
-<p>最后一行就是我们调用<code>log()</code>打印的日志。日志是调试服务的一个重要的手段，所以一定要熟练使用，<a href="/rdk_server/doc/service_api.html#日志">这里详细描述了rdk提供的所有日志api</a>。</p>
+<p>最后一行就是我们调用<code>log()</code>打印的日志。日志是调试服务的一个重要的手段，所以一定要熟练使用，<a href="/doc/server/service_api.html#日志">这里详细描述了rdk提供的所有日志api</a>。</p>
 <blockquote>
 <p>提示</p>
 <ul>
@@ -360,7 +360,7 @@ img {
 </ul>
 </blockquote>
 <h3>查阅API函数手册</h3>
-<p>在实现citys服务的时候，我们用到了两个API函数，分别是<a href="/rdk_server/doc/service_api.html#日志"><code>log()</code></a>和<a href="/rdk_server/doc/service_api.html#matrix()"><code>matrix()</code></a>，<a href="/rdk_server/doc/service_api.html">这个页面</a>提供了所有RDK的所有API函数的说明。为了更好的使用它们，建议仔细阅读。</p>
+<p>在实现citys服务的时候，我们用到了两个API函数，分别是<a href="/doc/server/service_api.html#日志"><code>log()</code></a>和<a href="/doc/server/service_api.html#matrix()"><code>matrix()</code></a>，<a href="/doc/server/service_api.html">这个页面</a>提供了所有RDK的所有API函数的说明。为了更好的使用它们，建议仔细阅读。</p>
 <h3>调用citys服务</h3>
 <p>citys服务是一个标准的restful服务，它可以被任意ajax请求调用。</p>
 <p>下面我们来看看如何利用RDK的数据源组件调用它。编辑 <code>app/my_first_app/web/index.html</code>，修改后的rdk_basic_selector节点代码如下：</p>
@@ -376,7 +376,7 @@ img {
 此时刷新页面，看到的应该和下图差不多：</p>
 <p><img src="img/invalid_city.PNG" /></p>
 </blockquote>
-<p>原因很简单，我们在<a href="04_finish_condition_bar.html#city-mock-data">上一步</a>提供给<a href="/rdk_client/doc/controls/basicselector/index.html"><code>BasicSelector</code></a>的数据结构和<a href="#log">本文前面</a>日志中输出的数据结构不一致导致了这个问题。</p>
+<p>原因很简单，我们在<a href="04_finish_condition_bar.html#city-mock-data">上一步</a>提供给<a href="/doc/client/controls/basicselector/index.html"><code>BasicSelector</code></a>的数据结构和<a href="#log">本文前面</a>日志中输出的数据结构不一致导致了这个问题。</p>
 <p>那么如何解决它呢？我们需要对rest服务查询得到的数据做转换。</p>
 <p>在rdk_basic_selector节点添加另一个属性 <code>ds_data_processor=&quot;cityProcessor&quot;</code>，它的作用是对服务端返回的数据做转换。它的值是scope上的一个函数。编辑main.js，在scope上添加一个名为cityProcessor的函数：</p>
 <pre><code>scope.cityProcessor = function(rawCitys) {
@@ -395,7 +395,7 @@ img {
 </blockquote>
 <p>到此，我们刷新页面后，就能看到和之前相同的效果了，唯一的差别是我们的地市数据是从rest访问查询而来的。</p>
 <h3>数据源手册</h3>
-<p>通过前一小节的实践，你已经学会了数据源的常规使用方法了，基本上能够满足大多数开发的需要了。<a href="/rdk_client/doc/common/datasource/">访问这里</a>可以查阅数据源的其他用法，以及每个属性的详细说明。</p>
+<p>通过前一小节的实践，你已经学会了数据源的常规使用方法了，基本上能够满足大多数开发的需要了。<a href="/doc/client/common/datasource/">访问这里</a>可以查阅数据源的其他用法，以及每个属性的详细说明。</p>
 <h3>删除不用的文件和代码</h3>
 <ul>
 <li>删除 main.js 中，<code>scope.citys</code> 变量</li>
@@ -403,10 +403,10 @@ img {
 <li>删除 server/mylib.js 文件</li>
 </ul>
 <h3>关于 $svr 宏</h3>
-<p>本文前面多次使用到 <code>$svr</code> 这个宏，<a href="/rdk_server/doc/relative_path_rule.html">这里</a>有关于它的使用说明。</p>
+<p>本文前面多次使用到 <code>$svr</code> 这个宏，<a href="/doc/server/relative_path_rule.html">这里</a>有关于它的使用说明。</p>
 <h2>小结</h2>
-<p>我们实现了第一个RDK服务citys，并成功利用<a href="/rdk_client/doc/common/datasource">数据源</a>调用这个服务，同时对数据做了一些转换。</p>
-<p>你可以下载完成此步骤之后的<a href="05_first_service.zip">源码</a>，解压到 <code>app/my_first_app</code> 下，<a href="/rdk_server/app/my_first_app/web/index.html">单击这里</a>就可以打开它了。</p>
+<p>我们实现了第一个RDK服务citys，并成功利用<a href="/doc/client/common/datasource">数据源</a>调用这个服务，同时对数据做了一些转换。</p>
+<p>你可以下载完成此步骤之后的<a href="05_first_service.zip">源码</a>，解压到 <code>app/my_first_app</code> 下，<a href="/rdk/app/my_first_app/web/index.html">单击这里</a>就可以打开它了。</p>
 <div title="第5步 实现第一个RDK服务并调用它 - RDK应用开发最佳实践" id="__hidden__">
 <script src="/doc/tools/doc_js/misc.js"></script>
 </div>

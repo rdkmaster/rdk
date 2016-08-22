@@ -321,8 +321,8 @@ img {
 &lt;/body&gt;
 </code></pre>
 
-<p>页面其他部分保持不变。我们碰到两个新的控件，分别是 <a href="/rdk_client/doc/controls/comboselect/index.html"><code>ComboSelect</code></a> 和 <a href="/rdk_client/doc/controls/basicselector/index.html"><code>BasicSelector</code></a>，在页面上引用之后，还需要注入对他们的依赖才能生效，<a href="03_use_first_control.html#dep-inject">参考这里</a>。</p>
-<p>编辑 <code>app/my_first_app/web/scripts/main.js</code>，增加<a href="/rdk_client/doc/controls/comboselect/index.html"><code>ComboSelect</code></a>和<a href="/rdk_client/doc/controls/basicselector/index.html"><code>BasicSelector</code></a>这两个控件的依赖，具体操作方法和上一步类似，修改后的代码为：</p>
+<p>页面其他部分保持不变。我们碰到两个新的控件，分别是 <a href="/doc/client/controls/comboselect/index.html"><code>ComboSelect</code></a> 和 <a href="/doc/client/controls/basicselector/index.html"><code>BasicSelector</code></a>，在页面上引用之后，还需要注入对他们的依赖才能生效，<a href="03_use_first_control.html#dep-inject">参考这里</a>。</p>
+<p>编辑 <code>app/my_first_app/web/scripts/main.js</code>，增加<a href="/doc/client/controls/comboselect/index.html"><code>ComboSelect</code></a>和<a href="/doc/client/controls/basicselector/index.html"><code>BasicSelector</code></a>这两个控件的依赖，具体操作方法和上一步类似，修改后的代码为：</p>
 <pre><code>define('main', ['application', 'utils', 'i18n', 'blockUI',
     'rd.controls.Time', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector'],
 function(application, utils, i18n) {
@@ -359,7 +359,7 @@ var app = angular.module(&quot;rdk_app&quot;, ['rd.core', 'blockUI',
 <h3>地市显示异常</h3>
 <p>此时刷新页面后，选中任意一个地市，地市框显示异常：</p>
 <p><img src="img/city_error.PNG" /></p>
-<p>这是<a href="/rdk_client/doc/controls/comboselect/index.html"><code>ComboSelect</code></a>控件不识别我们地市的数据结构导致的，需要增加一个属性告诉<a href="/rdk_client/doc/controls/comboselect/index.html"><code>ComboSelect</code></a>控件如何识别一个地市。</p>
+<p>这是<a href="/doc/client/controls/comboselect/index.html"><code>ComboSelect</code></a>控件不识别我们地市的数据结构导致的，需要增加一个属性告诉<a href="/doc/client/controls/comboselect/index.html"><code>ComboSelect</code></a>控件如何识别一个地市。</p>
 <p>修改页面代码，找到 <code>rdk_combo_select</code> 节点，添加一个新的属性，代码为：</p>
 <pre><code>child_change=&quot;selected2string&quot;
 </code></pre>
@@ -382,8 +382,8 @@ angular.forEach是angular提供的一个遍历函数，很有用，<a href="http
 <p>看起来条件框中所有的元素都挤在一起，我们可以增加一些留白，让每个控件看起来更独立一些。为了简单，我们直接使用style属性，你也可以在css文件中定义样式。</p>
 <p>给时间控件和ComboSelect控件增加一个这样的属性 <code>style=&quot;margin-right:30px&quot;</code></p>
 <h2>小结</h2>
-<p>我们完成了查询条件栏的剩余部分，碰到了两个新的RDK控件：<a href="/rdk_client/doc/controls/comboselect/index.html"><code>ComboSelect</code></a>和<a href="/rdk_client/doc/controls/basicselector/index.html"><code>BasicSelector</code></a></p>
-<p>你可以下载完成此步骤之后的<a href="04_finish_condition_bar.zip">源码</a>，解压到 <code>app/my_first_app</code> 下，<a href="/rdk_server/app/my_first_app/web/index.html">单击这里</a>就可以打开它了。</p>
+<p>我们完成了查询条件栏的剩余部分，碰到了两个新的RDK控件：<a href="/doc/client/controls/comboselect/index.html"><code>ComboSelect</code></a>和<a href="/doc/client/controls/basicselector/index.html"><code>BasicSelector</code></a></p>
+<p>你可以下载完成此步骤之后的<a href="04_finish_condition_bar.zip">源码</a>，解压到 <code>app/my_first_app</code> 下，<a href="/rdk/app/my_first_app/web/index.html">单击这里</a>就可以打开它了。</p>
 <div title="第4步 完成查询条件栏 - RDK应用开发最佳实践" id="__hidden__">
 <script src="/doc/tools/doc_js/misc.js"></script>
 </div>

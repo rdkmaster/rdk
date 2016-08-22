@@ -98,7 +98,7 @@ scope.search = function() {
 
 BA要求在表格的每一行上可以做点击操作，以显示该行的详情。
 
-查阅表格的文档，找到[添加自定义列](/rdk_client/doc/controls/table/index.html#add-column)，该小节介绍了如何在表格中添加交互列。
+查阅表格的文档，找到[添加自定义列](/doc/client/controls/table/index.html#add-column)，该小节介绍了如何在表格中添加交互列。
 
 编辑页面代码，在rdk_table节点上添加属性：`setting="setting"`，编辑js代码，在scope上添加一个setting属性，值如下：
 ~~~
@@ -180,7 +180,7 @@ sql = tableUtil.generatePagingSQL(sql, request.paging.pageSize, request.paging.c
 
 最主要的我们实现了表格的服务端分页这个极常用的功能。
 
-你可以下载完成此步骤之后的[源码](06_show_data_in_table.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk_server/app/my_first_app/web/index.html)就可以打开它了。
+你可以下载完成此步骤之后的[源码](06_show_data_in_table.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk/app/my_first_app/web/index.html)就可以打开它了。
 
 
 <div title="第6步 将查询得到的数据表格方式呈现 - RDK应用开发最佳实践" id="__hidden__">

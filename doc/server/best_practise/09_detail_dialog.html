@@ -317,7 +317,7 @@ img {
 </code></pre>
 
 <p>这里引入了两个新的控件rdk_panel和rdk_modal，注意要使用<a href="03_use_first_control.html#dep-inject">第三步的方法</a>注入控件的依赖。
-其中rdk_panel是一个容器，可以把多个控件放入其中，作为一个单元进行控制，具体使用参考<a href="/rdk_client/doc/containers/panel/index.html">Panel文档</a>；rdk_modal作为属性名称添加到rdk_panel后，该控件就会有弹出效果了，该属性需要初始化成hide，具体使用参考<a href="/rdk_client/doc/common/modal/index.html">对话框&amp;摸态框</a>。</p>
+其中rdk_panel是一个容器，可以把多个控件放入其中，作为一个单元进行控制，具体使用参考<a href="/doc/client/containers/panel/index.html">Panel文档</a>；rdk_modal作为属性名称添加到rdk_panel后，该控件就会有弹出效果了，该属性需要初始化成hide，具体使用参考<a href="/doc/client/common/modal/index.html">对话框&amp;摸态框</a>。</p>
 <h3>添加gis地图</h3>
 <ul>
 <li>在弹出框中显示gis地图</li>
@@ -339,7 +339,7 @@ img {
 </code></pre>
 
 <p>这里我们又引入了一个新的控件rdk_map，一定记得要使用<a href="03_use_first_control.html#dep-inject">第三步的方法</a>注入控件的依赖。
-rdk_map主要用于Echart版本的地图展现，目前仅支持json文件格式。具体使用参考<a href="/rdk_client/doc/controls/map/index.html">Map文档</a>。</p>
+rdk_map主要用于Echart版本的地图展现，目前仅支持json文件格式。具体使用参考<a href="/doc/client/controls/map/index.html">Map文档</a>。</p>
 <h2>使用对话框</h2>
 <ul>
 <li>在关闭弹出框时，希望弹出一个对话框，提示用户是否确认关闭。</li>
@@ -369,10 +369,10 @@ rdk_map主要用于Echart版本的地图展现，目前仅支持json文件格式
 </code></pre>
 
 <p>这里我们使用了RDK封装的Alert服务，用于弹出提示信息的对话框，可能包含消息、标题、按钮（“确定”、“取消”、“是”和“否”的任意组合）和图标。
-具体使用参考<a href="/rdk_client/doc/common/alert/index.html">Alert文档</a>。</p>
+具体使用参考<a href="/doc/client/common/alert/index.html">Alert文档</a>。</p>
 <h2>小结</h2>
 <p>在点击详情后，我们使用了一个弹出框，显示Gis地图，并在关闭该弹出框时，弹出一个对话框与用户交互，确认是否关闭。</p>
-<p>你可以下载完成此步骤之后的<a href="09_detail_dialog.zip">源码</a>，解压到 <code>app/my_first_app</code> 下，<a href="/rdk_server/app/my_first_app/web/index.html">单击这里</a>就可以打开它了。</p>
+<p>你可以下载完成此步骤之后的<a href="09_detail_dialog.zip">源码</a>，解压到 <code>app/my_first_app</code> 下，<a href="/rdk/app/my_first_app/web/index.html">单击这里</a>就可以打开它了。</p>
 <div title="第8步 优化详情对话框 - RDK应用开发最佳实践" id="__hidden__">
 <script src="/doc/tools/doc_js/misc.js"></script>
 </div>
