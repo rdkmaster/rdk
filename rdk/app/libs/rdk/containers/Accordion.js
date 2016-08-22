@@ -29,7 +29,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
                     buttons: '=',
                     id: '@',
-                    expandDirection: '@'
+                    expandDirection: '@',
+                    coverable: '@'
                 }, 
                 template: 
                 '<div class="rdk-accordion-module" ng-click="stopPropagation()">\
@@ -70,17 +71,15 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     for (var key in clone){
                         if (clone.hasOwnProperty(key) && clone[key].tagName == "HEADER_RENDERER") {
                             $(iEle).find(".theme").html("").append(clone[key].innerHTML);
-                            $(iEle[0].querySelector('.theme')).addClass("accordion-width");
                             $(clone[key]).css('display', 'none');
                         }
                     };
-
-                    scope.appScope = Utils.findAppScope(scope);
                     if(!iEle.attr('ng-repeat')){//ng-repeat要最后编译
                         $compile(iEle)(scope);
                     }
                     $(iEle).find(".content").html("").append(clone);
                 }); 
+
                 if(iEle.attr('ng-repeat')){
                     $compile(iEle.contents())(scope);
                 }
@@ -103,9 +102,12 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.open = Utils.isTrue(scope.open, false);                    
                     scope.frozen = Utils.isTrue(scope.frozen, false);
                     scope.editable = Utils.isTrue(scope.editable, false);
-                    scope.showButtons = angular.isDefined(scope.buttons);
+                    scope.coverable = Utils.isTrue(scope.coverable, false);
+                    scope.showButtons = angular.isDefined(scope.buttons);                   
+                    scope.appScope = Utils.findAppScope(scope);
+
                     _initFoldIconsByDirection();
-                    _resetTranscludePosition(scope.expandDirection);
+                    _beforeHandler(scope.expandDirection.toLowerCase());
 
                     scope.toggle = _toggle;
                     scope.clickHandler = _clickHandler;   
@@ -117,50 +119,70 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
                 function _initFoldIconsByDirection(){
                     if(scope.expandDirection == PositionTypes.BOTTOM){
-                        scope.foldedIcon = Utils.getValue(scope.foldedIcon, iAttrs.foldedIcon, "fa fa-angle-down");
-                        scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, "fa fa-angle-up");
-                        scope.normalPosition = true;
+                        _foldIconsHandler("fa fa-angle-down", "fa fa-angle-up");
                     }
                     if(scope.expandDirection == PositionTypes.TOP){
-                        scope.foldedIcon = Utils.getValue(scope.foldedIcon, iAttrs.foldedIcon, "fa fa-angle-up");
-                        scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, "fa fa-angle-down"); 
-                        scope.normalPosition = true;                       
+                        _foldIconsHandler("fa fa-angle-up", "fa fa-angle-down");                    
                     }
                     if(scope.expandDirection == PositionTypes.RIGHT){
-                        scope.foldedIcon = Utils.getValue(scope.foldedIcon, iAttrs.foldedIcon, "fa fa-angle-right");
-                        scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, "fa fa-angle-left"); 
-                        scope.normalPosition = false;                       
+                        _foldIconsHandler("fa fa-angle-right", "fa fa-angle-left");
                     }
                     if(scope.expandDirection == PositionTypes.LEFT){
-                        scope.foldedIcon = Utils.getValue(scope.foldedIcon, iAttrs.foldedIcon, "fa fa-angle-left");
-                        scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, "fa fa-angle-right"); 
-                        scope.normalPosition = false;                         
+                        _foldIconsHandler("fa fa-angle-left", "fa fa-angle-right");                     
                     }
                 }
 
-                function _resetTranscludePosition(direction){
+                function _foldIconsHandler(foldedIconStr, unfoldedIconStr){
+                    scope.foldedIcon = Utils.getValue(scope.foldedIcon, iAttrs.foldedIcon, foldedIconStr);
+                    scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, unfoldedIconStr);
+                }
+
+                function _beforeHandler(direction){
                     var themeDom = iEle[0].querySelector(".theme");
-                    var transcludeDom = iEle[0].querySelector(".content");                              
-                    if((direction == PositionTypes.LEFT) || (direction == PositionTypes.RIGHT)){
-                        $(themeDom).addClass("accordion-inline");//标题变行元素
-                        if(direction == PositionTypes.RIGHT){
-                            $(transcludeDom).addClass("accordion-inline");
-                        }
-                        else{
-                            $(transcludeDom).css({'left': -transcludeDom.offsetWidth+'px', 'top': 0});//包裹的可以用transcludeDom
-                        }    
+                    var transcludeDom = iEle[0].querySelector(".content");
+                    if(!scope.caption){
+                        $(themeDom).css({'display': 'inline-block'});
                     }
-                    if((direction == PositionTypes.TOP) || (direction == PositionTypes.BOTTOM)){
-                        if(!!scope.caption){//非空时100%
-                            $(transcludeDom).addClass("accordion-width"); 
-                        }
-                        else{//空时标题inline
-                            $(themeDom).addClass("accordion-inline");
-                        }
+                    if(!scope.coverable){//挤开，单击前就编译
                         if(direction == PositionTypes.TOP){
-                            $(transcludeDom).css({'bottom': themeDom.offsetHeight+'px'});//未必包裹，需要themeDom
-                        } 
+                            $(iEle[0]).empty();
+                            $(iEle[0]).append(transcludeDom).append(themeDom);
+                            $compile(iEle.contents())(scope);
+                        }
+                        if(direction == PositionTypes.RIGHT){
+                            $(transcludeDom).css({'display': 'inline-block', 'vertical-align': 'top'});
+                        }
+                        if(direction == PositionTypes.LEFT){   
+                            $(transcludeDom).css({'display': 'inline-block', 'vertical-align': 'top'});
+                            $(iEle[0]).empty();
+                            $(iEle[0]).append(transcludeDom).append(themeDom);
+                            $compile(iEle.contents())(scope);
+                        }
+                    }                   
+                }
+
+                function _afterHandler(direction){
+                    var themeDom = iEle[0].querySelector(".theme");
+                    var transcludeDom = iEle[0].querySelector(".content");
+
+                    if((!!scope.caption)&&((direction == PositionTypes.LEFT)||(direction == PositionTypes.RIGHT))){
+                        console.warn('主题非空时，暂不支持左右折叠！');
+                        scope.open = false;
+                        return;
                     }
+
+                    if(scope.coverable){//覆盖，点击后编译
+                        $(transcludeDom).css({'position': 'absolute', 'z-index': '9999','width': '100%'});
+                        if(direction == PositionTypes.TOP){
+                            $(transcludeDom).css({'bottom': themeDom.offsetHeight+'px','width': '100%'});
+                        }
+                        if(direction == PositionTypes.RIGHT){
+                            $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0, 'width': ''});
+                        }
+                        if(direction == PositionTypes.LEFT){
+                            $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0, 'width': ''});
+                        }
+                    }                  
                 }               
 
                 function _stopPropagation(){
@@ -182,6 +204,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     if(($(iEle).find(".content").get(0).children.length == 1)&&($(iEle).find(".content").get(0).children[0].tagName == "HEADER_RENDERER")) return;//最外层就只有一个header_renderer，没内容
 
                     scope.open = !scope.open;
+                    _afterHandler(scope.expandDirection.toLowerCase());
 
                     if (scope.id){
                         EventService.broadcast(scope.id, EventTypes.CHANGE, scope.open); //事件

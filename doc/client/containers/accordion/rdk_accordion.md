@@ -3,7 +3,7 @@
 `rdk_accordion` 控件是一个导航容器控件，此导航容器具有一组子容器，但一次只能显示其中一个。它创建和管理导航器按钮，您可以使用这些按钮在子项之间导航。每个子容器都有一个相关的导航器按钮，但是所有导航器按钮都属于`rdk_accordion`容器，并不属于子项。当用户单击导航器按钮时，就会显示相关的子容器。到另一个子项的过渡过程将使用动画效果，这样用户就可以清楚地看到一个子项消失和另一个子项的出现。 
 
 这是一个简单的 `rdk_accordion` 例子：
-<live_demo example="containers/accordion/basic" width="405"></live_demo>
+<live_demo example="containers/accordion/basic" width="800" height="300"></live_demo>
 
 ---
 # 属性 #
@@ -43,7 +43,7 @@
 - callback ： 点击按钮的回调函数，**必选项**
 
 示例如下：
-<live_demo example="containers/accordion/accordion_buttons" width="405"></live_demo>
+<live_demo example="containers/accordion/accordion_buttons" width="800"  height="300"></live_demo>
 
 ## foldedIcon 和 unfoldedIcon <binding></binding>##
 >支持类型：FontAwesome格式的图标
@@ -55,7 +55,7 @@ foldedIcon默认值"fa fa-angle-double-down"
 unfoldedIcon默认值"fa fa-angle-double-up"
 
 示例如下：
-<live_demo example="containers/accordion/accordion_foldedIcon" width="405"></live_demo>
+<live_demo example="containers/accordion/accordion_foldedIcon" width="800"  height="300"></live_demo>
 
 ## frozen <binding></binding>##
 >支持类型：字符串
@@ -67,7 +67,7 @@ unfoldedIcon默认值"fa fa-angle-double-up"
     <rdk_accordion frozen="true"></rdk_accordion>
 
 示例如下：
-<live_demo example="containers/accordion/accordion_frozen" width="405"></live_demo>
+<live_demo example="containers/accordion/accordion_frozen" width="800"  height="300"></live_demo>
 
 ## editable <binding></binding>##
 > 支持类型：字符串
@@ -77,14 +77,59 @@ unfoldedIcon默认值"fa fa-angle-double-up"
     <rdk_accordion editable="true"></rdk_accordion>
 
 示例如下：
-<live_demo example="containers/accordion/accordion_editable" width="405"></live_demo>
+<live_demo example="containers/accordion/accordion_editable" width="800"  height="300"></live_demo>
+
+## expand_direction ##
+>支持类型：字符串
+
+此属性用于设置容器内容的展开方向。取值有上下左右四种情况，缺省时默认向下展开。
+
+- `expand_direction = "top"` 表示容器内容向上展开。
+- `expand_direction = "bottom"` 表示容器内容向下展开。缺省时默认为`bottom`。
+- `expand_direction = "right"` 表示容器内容向右展开。
+- `expand_direction = "left"` 表示容器内容向左展开。
+
+**注意** 主题`caption`非空时，暂不支持左/右折叠展开。
+
+向上展开示例如下：
+<live_demo example="containers/accordion/demo4ExpandDirection_top" width="800"  height="300"></live_demo>
+
+向下展开示例如下：
+<live_demo example="containers/accordion/demo4ExpandDirection_bottom" width="800"  height="300"></live_demo>
+
+向右展开示例如下：
+<live_demo example="containers/accordion/demo4ExpandDirection_right" width="800"  height="300"></live_demo>
+
+向左展开示例如下：
+<live_demo example="containers/accordion/demo4ExpandDirection_left" width="800"  height="300"></live_demo>
+
+
+## coverable ##
+>支持类型：布尔型
+
+此属性用于设置容器展开时是否脱离文档流，覆盖其他标签。缺省时默认`false`，表示挤开其他标签，不覆盖其他标签。
+
+- `coverable = "true"` 表示容器内容展开时脱离文档流，覆盖其他标签。
+- `coverable = "false"` 表示容器内容展开时不覆盖其他标签，挤开其他标签。缺省时默认不覆盖。
+
+**注意** 主题`caption`非空时，暂不支持左/右折叠展开。
+
+向上展开覆盖示例如下：
+<live_demo example="containers/accordion/demo4coverable_top" width="800"  height="300"></live_demo>
+
+向下展开覆盖示例如下：
+<live_demo example="containers/accordion/demo4coverable_bottom" width="800"  height="300"></live_demo>
+
+向右展开覆盖示例如下：
+<live_demo example="containers/accordion/demo4coverable_right" width="800"  height="300"></live_demo>
+
+向左展开覆盖示例如下：
+<live_demo example="containers/accordion/demo4coverable_left" width="800"  height="300"></live_demo>
 
 ## id ##
 >支持类型：字符串
 
 事件发出者，此字段大小写敏感。详见`事件机制`中事件发出者的说明。
-
-
 
 # 事件 #
 事件是RDK实现交互的主要手段之一，强大但易用。[了解更多](/doc/common/event)。

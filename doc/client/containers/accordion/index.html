@@ -294,7 +294,7 @@ img {
 <h1>简介</h1>
 <p><code>rdk_accordion</code> 控件是一个导航容器控件，此导航容器具有一组子容器，但一次只能显示其中一个。它创建和管理导航器按钮，您可以使用这些按钮在子项之间导航。每个子容器都有一个相关的导航器按钮，但是所有导航器按钮都属于<code>rdk_accordion</code>容器，并不属于子项。当用户单击导航器按钮时，就会显示相关的子容器。到另一个子项的过渡过程将使用动画效果，这样用户就可以清楚地看到一个子项消失和另一个子项的出现。 </p>
 <p>这是一个简单的 <code>rdk_accordion</code> 例子：
-<live_demo example="containers/accordion/basic" width="405"></live_demo></p>
+<live_demo example="containers/accordion/basic" width="800" height="300"></live_demo></p>
 <hr />
 <h1>属性</h1>
 <h2>caption <binding></binding></h2>
@@ -303,8 +303,7 @@ img {
 </blockquote>
 <p>此属性设置accordion控件的标题,默认值为“标题”。<strong>如果数值为汉字时需要使用单引号</strong>，如：
       <rdk_accordion caption="theme"></rdk_accordion>
-	  <rdk_accordion caption="'城市'"></rdk_accordion>  
-</p>
+	  <rdk_accordion caption="'城市'"></rdk_accordion>  </p>
 <h2>open <binding></binding></h2>
 <blockquote>
 <p>支持类型：字符串</p>
@@ -336,7 +335,7 @@ img {
 <li>callback ： 点击按钮的回调函数，<strong>必选项</strong></li>
 </ul>
 <p>示例如下：
-<live_demo example="containers/accordion/accordion_buttons" width="405"></live_demo></p>
+<live_demo example="containers/accordion/accordion_buttons" width="800"  height="300"></live_demo></p>
 <h2>foldedIcon 和 unfoldedIcon <binding></binding></h2>
 <blockquote>
 <p>支持类型：FontAwesome格式的图标</p>
@@ -346,7 +345,7 @@ img {
 foldedIcon默认值&quot;fa fa-angle-double-down&quot;
 unfoldedIcon默认值&quot;fa fa-angle-double-up&quot;</p>
 <p>示例如下：
-<live_demo example="containers/accordion/accordion_foldedIcon" width="405"></live_demo></p>
+<live_demo example="containers/accordion/accordion_foldedIcon" width="800"  height="300"></live_demo></p>
 <h2>frozen <binding></binding></h2>
 <blockquote>
 <p>支持类型：字符串</p>
@@ -358,7 +357,7 @@ unfoldedIcon默认值&quot;fa fa-angle-double-up&quot;</p>
 </code></pre>
 
 <p>示例如下：
-<live_demo example="containers/accordion/accordion_frozen" width="405"></live_demo></p>
+<live_demo example="containers/accordion/accordion_frozen" width="800"  height="300"></live_demo></p>
 <h2>editable <binding></binding></h2>
 <blockquote>
 <p>支持类型：字符串</p>
@@ -368,7 +367,45 @@ unfoldedIcon默认值&quot;fa fa-angle-double-up&quot;</p>
 </code></pre>
 
 <p>示例如下：
-<live_demo example="containers/accordion/accordion_editable" width="405"></live_demo></p>
+<live_demo example="containers/accordion/accordion_editable" width="800"  height="300"></live_demo></p>
+<h2>expand_direction</h2>
+<blockquote>
+<p>支持类型：字符串</p>
+</blockquote>
+<p>此属性用于设置容器内容的展开方向。取值有上下左右四种情况，缺省时默认向下展开。</p>
+<ul>
+<li><code>expand_direction = &quot;top&quot;</code> 表示容器内容向上展开。</li>
+<li><code>expand_direction = &quot;bottom&quot;</code> 表示容器内容向下展开。缺省时默认为<code>bottom</code>。</li>
+<li><code>expand_direction = &quot;right&quot;</code> 表示容器内容向右展开。</li>
+<li><code>expand_direction = &quot;left&quot;</code> 表示容器内容向左展开。</li>
+</ul>
+<p><strong>注意</strong> 主题<code>caption</code>非空时，暂不支持左/右折叠展开。</p>
+<p>向上展开示例如下：
+<live_demo example="containers/accordion/demo4ExpandDirection_top" width="800"  height="300"></live_demo></p>
+<p>向下展开示例如下：
+<live_demo example="containers/accordion/demo4ExpandDirection_bottom" width="800"  height="300"></live_demo></p>
+<p>向右展开示例如下：
+<live_demo example="containers/accordion/demo4ExpandDirection_right" width="800"  height="300"></live_demo></p>
+<p>向左展开示例如下：
+<live_demo example="containers/accordion/demo4ExpandDirection_left" width="800"  height="300"></live_demo></p>
+<h2>coverable</h2>
+<blockquote>
+<p>支持类型：布尔型</p>
+</blockquote>
+<p>此属性用于设置容器展开时是否脱离文档流，覆盖其他标签。缺省时默认<code>false</code>，表示挤开其他标签，不覆盖其他标签。</p>
+<ul>
+<li><code>coverable = &quot;true&quot;</code> 表示容器内容展开时脱离文档流，覆盖其他标签。</li>
+<li><code>coverable = &quot;false&quot;</code> 表示容器内容展开时不覆盖其他标签，挤开其他标签。缺省时默认不覆盖。</li>
+</ul>
+<p><strong>注意</strong> 主题<code>caption</code>非空时，暂不支持左/右折叠展开。</p>
+<p>向上展开覆盖示例如下：
+<live_demo example="containers/accordion/demo4coverable_top" width="800"  height="300"></live_demo></p>
+<p>向下展开覆盖示例如下：
+<live_demo example="containers/accordion/demo4coverable_bottom" width="800"  height="300"></live_demo></p>
+<p>向右展开覆盖示例如下：
+<live_demo example="containers/accordion/demo4coverable_right" width="800"  height="300"></live_demo></p>
+<p>向左展开覆盖示例如下：
+<live_demo example="containers/accordion/demo4coverable_left" width="800"  height="300"></live_demo></p>
 <h2>id</h2>
 <blockquote>
 <p>支持类型：字符串</p>
