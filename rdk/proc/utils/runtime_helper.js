@@ -299,6 +299,8 @@ var file = {
         return files;
     },
     get web() {
+        log("!!!!!!!!"+java.FileHelper.fixPath('$web', rdk_runtime.application()));
+
         return java.FileHelper.fixPath('$web', rdk_runtime.application());
     },
     get base() {
@@ -649,7 +651,7 @@ function isMatrix(data) {
 
 function kv(map, defaultValue) {
     return function (value, row, index) {
-        return map && !!value && map.hasOwnProperty(value) ? map[value] :
+        return map && _.isDefined(value) && map.hasOwnProperty(value) ? map[value] :
             defaultValue === undefined ? value : defaultValue;
     }
 }
