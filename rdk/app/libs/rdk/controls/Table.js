@@ -5,7 +5,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
     tableModule.run(["$templateCache", function($templateCache) {
         $templateCache.put("/src/templates/common.html",
             '<div class="rdk-table-module" ng-click="stopPropagation()">\
-                <div ng-if="search && !noData && (noData!=undefined)" class="searchWapper">\
+                <div ng-if="search && (noData!=undefined)" class="searchWapper">\
                     <input id="searchInput" type="text" class="form-control search" placeholder="Search"\
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
                     <i class="glyphicon glyphicon-search search_icon"></i>\
