@@ -5,7 +5,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
     tableModule.run(["$templateCache", function($templateCache) {
         $templateCache.put("/src/templates/common.html",
             '<div class="rdk-table-module" ng-click="stopPropagation()">\
-                <div ng-if="search" class="searchWapper">\
+                <div ng-if="search && !noData && (noData!=undefined)" class="searchWapper">\
                     <input id="searchInput" type="text" class="form-control search" placeholder="Search"\
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
                     <i class="glyphicon glyphicon-search search_icon"></i>\
@@ -357,8 +357,9 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             }
                         }, true);
 
-                        scope.$watch("$filtered", function(newVal, oldVal){
+                        scope.$watch("globalSearch", function(newVal, oldVal){
                             if(newVal != oldVal){
+                                if(scope.pagingType == "server") return;//#115
                                 if(ctrl.pageCtrl){
                                     ctrl.pageCtrl.firstPage();
                                 }
@@ -384,6 +385,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             }
 
                             if ((event.keyCode == 13) && (scope.pagingType == "server")) {
+                                scope.currentPage = 0;
                                 if (!scope.searchFields) { //没交互时给默认值
                                     scope.searchFields = _getValue(scope.columnDefs);
                                 }
@@ -583,7 +585,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             });
                             return result;
                         }
-                        if ($.isEmptyObject(scope.data)) return;
+                        if ($.isEmptyObject(scope.data)) return;//first time
                         if (!scope.data.data){
                             scope.noData = true;
                         }
