@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>get-involved</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<h2 id="edit-online">1分钟学会如何直接编辑文件</h2>
+<h3>在Files中找到需要编辑的文件</h3>
+<p><img src="img/find-file-to-edit.PNG" /></p>
+<h3>开始编辑</h3>
+<p>选中目标文件之后，可以查看文件内容，单击右上角的EDIT按钮进入编辑状态：</p>
+<p><img src="img/start-to-edit.PNG" /></p>
+<p>如果EDIT按钮是灰色的，有两种可能：</p>
+<ol>
+<li>未登录。请用人事在线账号在<a href="http://gitlab.zte.com.cn/users/sign_in">这里登录</a>。</li>
+<li>无权限。请给rdk开发团队的 <code>陈旭145812</code> 或 <code>徐荔00111190</code> 或 <code>顾姗6092001913</code> 发邮件，取得权限。发邮件之前请至少登录过一次。</li>
+</ol>
+<h3 id="commit-edition">提交编辑</h3>
+<p>在编辑状态页面拉到最下方，可以看到下图：</p>
+<p><img src="img/commit-edition.PNG" /></p>
+<h2 id="work-flow">RDK的工作流</h2>
+<p>所有参与RDK的人都采用下面的流程来协同工作。</p>
+<p><img src="img/rdk-work-flow.PNG" /></p>
+<p>说明：</p>
+<ol>
+<li><a href="#merge-request">发起merge request的详细操作说明</a></li>
+<li><a href="#git-cmd-list">零git基础详细操作说明</a></li>
+</ol>
+<h2 id="git-cmd-list">我是git小白，需要详细的帮助</h2>
+<h3>安装</h3>
+<p>先按照这里的说明正确安装git：<a href="http://wiki.zte.com.cn/pages/viewpage.action?pageId=20197085">http://wiki.zte.com.cn/pages/viewpage.action?pageId=20197085</a></p>
+<h3>配置</h3>
+<p>配置是一次性的。</p>
+<h4>ssh-key</h4>
+<ol>
+<li>运行git-bash，进去之后输入这个命令 <code>ssh-keygen -t rsa -C &quot;myname@xxxx.com&quot;</code>，所有问题都采用默认答案就行啦。</li>
+<li>输入<code>cat ~/.ssh/id_rsa.pub</code>，将这个命令的输出拷贝到剪切板备用。输出类似这样的：
+<img src="img/ssh-key.PNG" /></li>
+<li>打开并登录<a href="http://gitlab.zte.com.cn/profile/keys">这个页面</a>，单击右上角的ADD SSH KEY，把拷贝出来的粘贴到KEY框中，点击ADD KEY就可以了。</li>
+</ol>
+<h4>git config</h4>
+<ol>
+<li>打开并登录<a href="http://gitlab.zte.com.cn/profile">这个页面</a>，拷贝Email框中的邮箱。</li>
+<li>在git-bash中输入这个命令 <code>git config --global user.email &quot;myname@xxxx.com&quot;</code>，注意邮箱使用拷贝的值。</li>
+<li>再输入这个命令 <code>git config --global user.name &quot;你的大名&quot;</code></li>
+</ol>
+<h3>日常使用</h3>
+<p>对应<a href="#work-flow">RDK的工作流</a>的每一步，把使用到的git命令列举如下：</p>
+<ol>
+<li><code>git clone git@gitlab.zte.com.cn:10045812/rdk.git</code></li>
+<li>
+顺序执行这些命令
+<ol>
+<li><code>cd rdk</code></li>
+<li><code>git checkout master</code>（可选）</li>
+<li><code>git pull origin master</code></li>
+</ol>
+</li>
+<li><code>git checkout -b my-branch-name</code></li>
+<li>
+代码编辑&amp;测试过程中，可随时顺序执行这些命令
+<ol>
+<li><code>git add .</code></li>
+<li><code>git commit -m &quot;提交说明。。。&quot;</code></li>
+</ol>
+</li>
+<li>无</li>
+<li>无</li>
+<li><code>git push origin my-branch-name</code>，如果没有报错，代码就推送到服务器上啦。注意：虽然代码已经到服务器上，但是必须合入master分支才能生效，<a href="#merge-request">这里有详细操作说明</a>。</li>
+</ol>
+<p>最后想删除本地分支，则可顺序执行这些命令:</p>
+<ol>
+<li><code>git checkout master</code></li>
+<li><code>git branch -d my-branch-name</code></li>
+</ol>
+<p>零git基础的同学最好严格按照顺序执行。<code>my-branch-name</code> 注意替换为实际分支名。</p>
+<h2 id="merge-request">发起merge request</h2>
+<p>master分支是一个非常重要的分支，一般不允许开发者直接合入，因此需要提交merge request，在RDK团队审核通过后，就可以自动合入master分支了。</p>
+<p>开发者在取得RDK的developer权限之后，可以登录<a href="http://gitlab.zte.com.cn/10045812/rdk/merge_requests/new">这个页面</a>发起merge request：</p>
+<p><img src="img/merge-request.PNG" /></p>
+<p>最后，填写合并的说明：</p>
+<p><img src="img/merge-request1.PNG" /></p>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
