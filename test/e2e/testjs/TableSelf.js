@@ -116,6 +116,19 @@ describe('Table Demos',function(){
     it("验证存在一个表格",function(){
         var lines=element.all(by.css(".demo3 .sticky-wrap"));
         expect(lines.count()).toBe(1);
-    })
+    });
+    it('后端分页，,共7页,最后一页3条数据',function(){
+        var lines=element.all(by.css(".demo4 .sticky-wrap .sticky-enabled tbody tr"));
+        element(by.css(".demo4 button")).click();
+        var nextPage=element.all(by.css(".demo4 .pagingLine>ul li a"));
+        nextPage.get(1).click();
+        expect(lines.count()).toBe(7);
+        nextPage.get(1).click();
+        nextPage.get(1).click();
+        nextPage.get(1).click();
+        nextPage.get(1).click();
+        nextPage.get(1).click();
+        expect(lines.count()).toBe(3);
+    });
     
 });

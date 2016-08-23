@@ -84,7 +84,11 @@
             <span>{{highlight}}</span>
         </div>
     </div>
-
+    <div class="demo4">
+        <button ng-click="search()">query</button>
+        <rdk_table ds_url="$svr/salary3" ds="ds_salary_3"
+        paging_type="server" page_size="7"></rdk_table>
+    </div>
     <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
     <!--     这个节点可选，删除后，RDK会自动生成一个    -->
     <!--           这个节点只支持基本HTML标签           -->
