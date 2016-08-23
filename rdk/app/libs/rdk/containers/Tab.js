@@ -13,11 +13,11 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 } else {
                     html = scope.tab.title_renderer;
                     element.append(html);
-                }                
+                }
             }
         }
-    }]).directive('rdkTab', ['EventService', 'EventTypes', 'Utils',
-        function(EventService, EventTypes, Utils) {
+    }]).directive('rdkTab', ['EventService', 'EventTypes', 'Utils', '$timeout',
+        function(EventService, EventTypes, Utils, $timeout) {
             return {
                 restrict: 'E',
                 transclude: true,
@@ -60,22 +60,24 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
 
                 scope.currentSelectedIndex = 0;
 
-                
-                var tabs = $(element[0].querySelector(".content")).children("div");
-                for (var i = 0; i < tabs.length; i++) {
-                    var tabid = Utils.createUniqueId('tab_item_');
-                    tabs[i].setAttribute('id', tabid);
-                    var title = tabs[i].getAttribute('title')
-                    var compileTitle, renderTitle;
-                    if (title) {
-                        compileTitle = Utils.compile(scope.$parent, title);
-                    } else {
-                        renderTitle = tabs[i].querySelector("title_renderer");
-                    }
-                    scope.tabs.push({ title: compileTitle, tabid: tabid, title_renderer: renderTitle });
-                };
+                $timeout(function() {
+                    var tabs = $(element[0].querySelector(".content")).children("div");
+                    for (var i = 0; i < tabs.length; i++) {
+                        var tabid = Utils.createUniqueId('tab_item_');
+                        tabs[i].setAttribute('id', tabid);
+                        var title = tabs[i].getAttribute('title')
+                        var compileTitle, renderTitle;
+                        if (title) {
+                            compileTitle = Utils.compile(scope.$parent, title);
+                        } else {
+                            renderTitle = tabs[i].querySelector("title_renderer");
+                        }
+                        scope.tabs.push({ title: compileTitle, tabid: tabid, title_renderer: renderTitle });
+                    };
 
-               
+                }, 0);
+
+
 
                 scope.picShow = function(index) {
                     return scope.currentSelectedIndex == index;
@@ -86,13 +88,17 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     event.stopPropagation();
                     var tabId = event.currentTarget.hash;
                     scope.currentSelectedIndex = _getTabIndex(tabId);
+                    if (scope.id) {
+                        EventService.broadcast(scope.id, EventTypes.CHANGE, scope.currentSelectedIndex);
+                    }
                 }
 
                 function _getTabIndex(tabId) {
-                    var tabIndex = -1,tab;
+                    var tabIndex = -1,
+                        tab;
                     for (var i = 0; i < scope.tabs.length; i++) {
                         tab = scope.tabs[i];
-                        if (tabId == "#"+tab.tabid) {
+                        if (tabId == "#" + tab.tabid) {
                             tabIndex = i;
                             break;
                         }

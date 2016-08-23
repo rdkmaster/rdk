@@ -1,0 +1,7 @@
+.rdk-tab-module .title li{
+	height: 100px;
+}
+
+.rdk-tab-module .bottom_line{
+	display: none !important;
+}
