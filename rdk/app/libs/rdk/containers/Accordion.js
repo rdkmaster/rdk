@@ -107,9 +107,11 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.exchangable = Utils.isTrue(scope.exchangable, false);
                     scope.showButtons = angular.isDefined(scope.buttons);                   
                     scope.appScope = Utils.findAppScope(scope);
+                    /*var 4 cover*/
                     scope.outerLeft = (parseInt($(iEle[0]).css('left'), 10)|| 0 )- (parseInt($(iEle[0]).css('right'), 10)||0);
                     scope.transcludeDomWidth = iEle[0].querySelector(".content").offsetWidth;
                     scope.supportable = true;
+                    /*var 4 cover*/
 
                     _initFoldIconsByDirection();
                     _refreshThemeByCaption();
@@ -159,91 +161,82 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, unfoldedIconStr);
                 }
 
-                function _uncoverHandler(){
+                function _uncoverHandler(){//挤开，单击前就编译
                     if((scope.coverable)||(!scope.supportable)) return;
+                    if(scope.exchangable){
+                        console.warn('挤开时不支持图标位置交换，请删除exchangable属性！');
+                        return;
+                    }
 
                     var themeDom = iEle[0].querySelector(".theme");
                     var transcludeDom = iEle[0].querySelector(".content");
                     var direction = scope.expandDirection.toLowerCase();
 
-                    if(!scope.coverable){//挤开，单击前就编译
-                        if(scope.exchangable){
-                            console.warn('挤开时不支持图标位置交换，请删除exchangable属性！');
-                            return;
-                        }
-                        if(direction == PositionTypes.TOP){
-                            $(iEle[0]).empty();
-                            $(iEle[0]).append(transcludeDom).append(themeDom);
-                            $compile(iEle.contents())(scope);
-                        }
-                        if(direction == PositionTypes.RIGHT){
-                            $(transcludeDom).css({'display': 'inline-block', 'vertical-align': 'top'});
-                        }
-                        if(direction == PositionTypes.LEFT){   
-                            $(transcludeDom).css({'display': 'inline-block', 'vertical-align': 'top'});
-                            $(iEle[0]).empty();
-                            $(iEle[0]).append(transcludeDom).append(themeDom);
-                            $compile(iEle.contents())(scope);
-                        }
-                    }                   
+                    if(direction == PositionTypes.TOP){
+                        $(iEle[0]).empty();
+                        $(iEle[0]).append(transcludeDom).append(themeDom);
+                        $compile(iEle.contents())(scope);
+                    }
+                    if(direction == PositionTypes.RIGHT){
+                        $(transcludeDom).css({'display': 'inline-block', 'vertical-align': 'top'});
+                    }
+                    if(direction == PositionTypes.LEFT){   
+                        $(transcludeDom).css({'display': 'inline-block', 'vertical-align': 'top'});
+                        $(iEle[0]).empty();
+                        $(iEle[0]).append(transcludeDom).append(themeDom);
+                        $compile(iEle.contents())(scope);
+                    }
+                 
                 }
 
-                function _coverHandler(){
+                function _moveCover(moveWidth){
+                    if(scope.open){
+                        $(iEle[0]).animate({'left': moveWidth+scope.outerLeft+'px'}); 
+                    }
+                    else{
+                        scope.open = true;
+                        $(iEle[0]).animate({'left': scope.outerLeft+'px'}, function(){
+                            $timeout(function(){
+                                scope.open = false;
+                            }, 0);
+                        });
+                    }
+                }
+
+                function _coverHandler(){//覆盖时，根据exchangable分类
                     if((!scope.coverable)||(!scope.supportable)) return;
 
                     var themeDom = iEle[0].querySelector(".theme");
                     var transcludeDom = iEle[0].querySelector(".content");
                     var direction = scope.expandDirection.toLowerCase();
 
-                    if(scope.coverable){//覆盖，点击后编译
-                        $(transcludeDom).css({'position': 'absolute', 'z-index': '9999', 'width': scope.transcludeDomWidth+'px'});
-                        if(scope.exchangable){
-                            if(direction == PositionTypes.LEFT){//iele相对自己
-                                $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0});
-                                if(scope.open){
-                                    $(iEle[0]).animate({'left': -scope.transcludeDomWidth+scope.outerLeft+'px'}); 
-                                }
-                                else{
-                                    scope.open = true;
-                                    $(iEle[0]).animate({'left': scope.outerLeft+'px'}, function(){
-                                        $timeout(function(){
-                                            scope.open = false;
-                                        }, 0);
-                                    });
-                                }            
-                            }
-                            else if(direction == PositionTypes.RIGHT){
-                                $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0});
-                                if(scope.open){
-                                    $(iEle[0]).animate({'left': scope.transcludeDomWidth+scope.outerLeft+'px'});                                     
-                                }
-                                else{
-                                    scope.open = true;
-                                    $(iEle[0]).animate({'left': scope.outerLeft+'px'}, function(){
-                                        $timeout(function(){
-                                            scope.open = false;
-                                        }, 0);
-                                    });
-                                } 
-                            }
-                            else{
-                                console.warn('exchange属性只支持左右覆盖折叠！');
-                                scope.open = false;
-                                return;
-                            }
+                    $(transcludeDom).css({'position': 'absolute', 'z-index': '9999', 'width': scope.transcludeDomWidth+'px'});
+                    if(scope.exchangable){
+                        if(direction == PositionTypes.LEFT){//iele相对自己
+                            $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0});
+                            _moveCover(-scope.transcludeDomWidth);
+                        }
+                        else if(direction == PositionTypes.RIGHT){
+                            $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0});
+                            _moveCover(scope.transcludeDomWidth);
                         }
                         else{
-                            if(direction == PositionTypes.TOP){
-                                $(transcludeDom).css({'bottom': themeDom.offsetHeight+'px'});
-                            }
-                            if(direction == PositionTypes.RIGHT){
-                                $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0});
-                            }
-                            if(direction == PositionTypes.LEFT){
-                                $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0});
-                            }
+                            console.warn('exchange属性只支持左右覆盖折叠！');
+                            scope.open = false;
+                            return;
                         }
-                    } 
+                    }
+                    else{
+                        if(direction == PositionTypes.TOP){
+                            $(transcludeDom).css({'bottom': themeDom.offsetHeight+'px'});
+                        }
+                        if(direction == PositionTypes.RIGHT){
+                            $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0});
+                        }
+                        if(direction == PositionTypes.LEFT){
+                            $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0});
+                        }
+                    }
                 }               
 
                 function _stopPropagation(){
