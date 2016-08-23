@@ -86,3 +86,9 @@ master分支是一个非常重要的分支，一般不允许开发者直接合�
 最后，填写合并的说明：
 
 ![](img/merge-request1.PNG)
+
+
+
+<div title="参与RDK研发说明" id="__hidden__">
+<script src="/doc/tools/doc_js/misc.js"></script>
+</div>
