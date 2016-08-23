@@ -129,6 +129,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     if(!scope.caption){
                         var themeDom = iEle[0].querySelector(".theme");
                         $(themeDom).css({'display': 'inline-block'});
+                        $(iEle[0]).css({'width': ''});//防止箭头时占位大，需要包裹
                     }
                     else{
                         if((direction == PositionTypes.LEFT)||(direction == PositionTypes.RIGHT)){
@@ -199,35 +200,31 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                         if(scope.exchangable){
                             if(direction == PositionTypes.LEFT){//iele相对自己
                                 $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0});
-                                $timeout(function(){
-                                    if(scope.open){
-                                        $(iEle[0]).animate({'left': -scope.transcludeDomWidth+scope.outerLeft+'px'}); 
-                                    }
-                                    else{
-                                        scope.open = true;
-                                        $(iEle[0]).animate({'left': scope.outerLeft+'px'}, function(){
-                                            $timeout(function(){
-                                                scope.open = false;
-                                            }, 0);
-                                        });
-                                    }  
-                                }, 0)                
+                                if(scope.open){
+                                    $(iEle[0]).animate({'left': -scope.transcludeDomWidth+scope.outerLeft+'px'}); 
+                                }
+                                else{
+                                    scope.open = true;
+                                    $(iEle[0]).animate({'left': scope.outerLeft+'px'}, function(){
+                                        $timeout(function(){
+                                            scope.open = false;
+                                        }, 0);
+                                    });
+                                }            
                             }
                             else if(direction == PositionTypes.RIGHT){
                                 $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0});
-                                $timeout(function(){
-                                    if(scope.open){
-                                        $(iEle[0]).animate({'left': scope.transcludeDomWidth+scope.outerLeft+'px'});                                     
-                                    }
-                                    else{
-                                        scope.open = true;
-                                        $(iEle[0]).animate({'left': scope.outerLeft+'px'}, function(){
-                                            $timeout(function(){
-                                                scope.open = false;
-                                            }, 0);
-                                        });
-                                    } 
-                                }, 0)
+                                if(scope.open){
+                                    $(iEle[0]).animate({'left': scope.transcludeDomWidth+scope.outerLeft+'px'});                                     
+                                }
+                                else{
+                                    scope.open = true;
+                                    $(iEle[0]).animate({'left': scope.outerLeft+'px'}, function(){
+                                        $timeout(function(){
+                                            scope.open = false;
+                                        }, 0);
+                                    });
+                                } 
                             }
                             else{
                                 console.warn('exchange属性只支持左右覆盖折叠！');
@@ -247,10 +244,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                             }
                         }
                     } 
-
-                    if(!scope.caption){
-                        $(iEle[0]).css({'width': ''});
-                    }  
                 }               
 
                 function _stopPropagation(){
