@@ -5,7 +5,7 @@
 
 ## 搭建开发环境
 
-请按照[搭建基于windows的调试环境](/doc/server/manual.html#make-dev-env)这个小节所描述的方法搭建你的开发环境。
+请按照[搭建基于windows的调试环境](/doc/manual.html#make-dev-env)这个小节所描述的方法搭建你的开发环境。
 
 > 注意
 > 

@@ -54,7 +54,7 @@
 ### 配置语言环境（可选）{#lang}
 系统启动默认使用中文启动，如果你想修改为其他语言，则必须在启动RDK时，在参数中加入 `-Dlocale=en_US`
 
-![](img/locale_config.PNG)
+![](server/img/locale_config.PNG)
 
 
 
@@ -63,7 +63,7 @@
 #### 未找到运行环境
 如果启动的时候，报错：
 
-![](img/no_jre_error.PNG)
+![](server/img/no_jre_error.PNG)
 
 说明你的环境上没有java运行环境，或者没有按照对话框提示的位置存放Java运行环境。
 
@@ -71,7 +71,7 @@
 #### 运行环境版本过低
 如果启动的时候，报错：
 
-![](img/jre_too_old_error.PNG)
+![](server/img/jre_too_old_error.PNG)
 
 说明你当前环境使用的Java运行环境版本过低，请使用至少Java1.8以上的版本。这里可以[下载](http://10.9.233.35:8080/tools/jre_win_1.8.zip)到Win32的Java8运行环境。
 
