@@ -20,6 +20,10 @@ define('main', ['angular', 'rd.containers.Tab', 'rd.controls.BasicSelector'], fu
                 label: "江苏省"
             }];
 
+            EventService.register("tab1", EventTypes.CHANGE, function(event, data) {
+                alert("你选择了Index为"+data+"的Tab页");
+            });
+
             scope.rdkSelector = "Selector控件";
 
             setTimeout(function() {

@@ -92,6 +92,11 @@
 - id号 : 当前rdk-tab控件的id
 - 要显示的选项卡索引号
 
+## CHANGE ##
+>事件类型：EventTypes.CHANGE
+
+选择的Tab页变化后，控件主动发出事件告知外部目前选择的是Index为什么的Tab页，Index从0开始
+
 <live_demo example="containers/tab/tab_event" width="800"></live_demo>
 #方法 #
 暂无
