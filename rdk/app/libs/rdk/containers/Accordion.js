@@ -29,9 +29,9 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
                     buttons: '=',
                     id: '@',
-                    expandDirection: '@',
-                    coverable: '@',
-                    exchangable: '@'
+                    expandDirection: '=?',
+                    coverable: '=?',
+                    exchangable: '=?'
                 }, 
                 template: 
                 '<div class="rdk-accordion-module" ng-click="stopPropagation()">\
@@ -103,8 +103,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.open = Utils.isTrue(scope.open, false);                    
                     scope.frozen = Utils.isTrue(scope.frozen, false);
                     scope.editable = Utils.isTrue(scope.editable, false);
-                    scope.coverable = Utils.isTrue(scope.coverable, false);
-                    scope.exchangable = Utils.isTrue(scope.exchangable, false);
                     scope.showButtons = angular.isDefined(scope.buttons);                   
                     scope.appScope = Utils.findAppScope(scope);
                     /*var 4 cover*/
@@ -113,7 +111,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.supportable = true;
                     /*var 4 cover*/
 
-                    _initFoldIconsByDirection();
+                    _initDefaultAttrByDirection();
                     _refreshThemeByCaption();
 
                     scope.toggle = _toggle;
@@ -131,28 +129,39 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     if(!scope.caption){
                         var themeDom = iEle[0].querySelector(".theme");
                         $(themeDom).css({'display': 'inline-block'});
-                        $(iEle[0]).css({'width': ''});//防止箭头时占位大，需要包裹
+                        if(scope.coverable){
+                            $(iEle[0]).css({'width': ''});//覆盖时不占位，箭头需要包裹，防止空白
+                        }
                     }
                     else{
                         if((direction == PositionTypes.LEFT)||(direction == PositionTypes.RIGHT)){
-                            console.warn('主题非空时，暂不支持左右折叠，请删除caption属性！');
+                            console.warn('caption非空，不支持left/right，left/right时请删除caption属性');
                             scope.supportable = false;
                         }
                     }
                 }
 
-                function _initFoldIconsByDirection(){
+                function _defaultCoverable(defaultBln){
+                    scope.coverable = Utils.isTrue(scope.coverable, defaultBln);
+                    scope.exchangable = Utils.isTrue(scope.exchangable, defaultBln);
+                }
+
+                function _initDefaultAttrByDirection(){
                     if(scope.expandDirection == PositionTypes.BOTTOM){
                         _foldIconsHandler("fa fa-angle-down", "fa fa-angle-up");
+                        _defaultCoverable(false);
                     }
                     if(scope.expandDirection == PositionTypes.TOP){
-                        _foldIconsHandler("fa fa-angle-up", "fa fa-angle-down");                    
+                        _foldIconsHandler("fa fa-angle-up", "fa fa-angle-down"); 
+                        _defaultCoverable(false);                   
                     }
                     if(scope.expandDirection == PositionTypes.RIGHT){
                         _foldIconsHandler("fa fa-angle-right", "fa fa-angle-left");
+                        _defaultCoverable(true);
                     }
                     if(scope.expandDirection == PositionTypes.LEFT){
-                        _foldIconsHandler("fa fa-angle-left", "fa fa-angle-right");                     
+                        _foldIconsHandler("fa fa-angle-left", "fa fa-angle-right"); 
+                        _defaultCoverable(true);                    
                     }
                 }
 
@@ -164,7 +173,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                 function _uncoverHandler(){//挤开，单击前就编译
                     if((scope.coverable)||(!scope.supportable)) return;
                     if(scope.exchangable){
-                        console.warn('挤开时不支持图标位置交换，请删除exchangable属性！');
+                        console.warn('上下左右不覆盖时均不支持互换，即coverable=false时，exchangable必须是false!');
                         return;
                     }
 
@@ -221,7 +230,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                             _moveCover(scope.transcludeDomWidth);
                         }
                         else{
-                            console.warn('exchange属性只支持左右覆盖折叠！');
+                            console.warn('上下覆盖时不支持互换，即top/bottom时，coverable=true时，exchangable必须是false');
                             scope.open = false;
                             return;
                         }
