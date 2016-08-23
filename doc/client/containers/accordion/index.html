@@ -392,12 +392,20 @@ unfoldedIcon默认值&quot;fa fa-angle-double-up&quot;</p>
 <blockquote>
 <p>支持类型：布尔型</p>
 </blockquote>
-<p>此属性用于设置容器展开时是否脱离文档流，覆盖其他标签。缺省时默认<code>false</code>，表示挤开其他标签，不覆盖其他标签。</p>
+<p>此属性用于设置容器展开时是否脱离文档流，覆盖其他标签。</p>
+<p>缺省 <code>coverable</code> 属性时，其默认值有两种情况：</p>
+<ul>
+<li><code>expand_direction</code> 取值为<code>top</code>或者<code>bottom</code>时，<code>coverable</code>缺省默认值为<code>false</code>。</li>
+<li><code>expand_direction</code> 取值为<code>left</code>或者<code>right</code>时，<code>coverable</code>缺省默认值为<code>true</code>。</li>
+</ul>
+<p><code>coverable</code>的两种取值分别代表：</p>
 <ul>
 <li><code>coverable = &quot;true&quot;</code> 表示容器内容展开时脱离文档流，覆盖其他标签。</li>
-<li><code>coverable = &quot;false&quot;</code> 表示容器内容展开时不覆盖其他标签，挤开其他标签。缺省时默认不覆盖。</li>
+<li><code>coverable = &quot;false&quot;</code> 表示容器内容展开时不覆盖其他标签，挤开其他标签。</li>
 </ul>
-<p><strong>注意</strong> 主题<code>caption</code>非空时，暂不支持左/右折叠展开。</p>
+<p><strong>注意</strong> 主题<code>caption</code>非空时，暂不支持左/右折叠展开。
+<strong>注意</strong> <code>coverable=false</code>时表示不覆盖，此时<code>exchangable</code>必须为<code>false</code>。
+<strong>注意</strong> <code>coverable=true</code>且朝上下方向展开时，<code>exchangable</code>必须为<code>false</code>。</p>
 <p>向上展开覆盖示例如下：
 <live_demo example="containers/accordion/demo4coverable_top" width="800"  height="300"></live_demo></p>
 <p>向下展开覆盖示例如下：
@@ -406,6 +414,28 @@ unfoldedIcon默认值&quot;fa fa-angle-double-up&quot;</p>
 <live_demo example="containers/accordion/demo4coverable_right" width="800"  height="300"></live_demo></p>
 <p>向左展开覆盖示例如下：
 <live_demo example="containers/accordion/demo4coverable_left" width="800"  height="300"></live_demo></p>
+<h2>exchangable</h2>
+<blockquote>
+<p>支持类型：布尔型</p>
+</blockquote>
+<p>此属性用于设置：容器朝左右方向覆盖展开后，是否交换图标位置。</p>
+<p>缺省 <code>exchangable</code> 属性时，其默认值有两种情况：</p>
+<ul>
+<li><code>expand_direction</code> 取值为<code>top</code>或者<code>bottom</code>时，<code>exchangable</code>缺省默认值为<code>false</code>。</li>
+<li><code>expand_direction</code> 取值为<code>left</code>或者<code>right</code>时，<code>exchangable</code>缺省默认值为<code>true</code>。</li>
+</ul>
+<p><code>exchangable</code>的两种取值分别代表：</p>
+<ul>
+<li><code>exchangable = &quot;true&quot;</code> 表示展开后交换图标位置。</li>
+<li><code>exchangable = &quot;false&quot;</code> 表示展开后不交换图标位置。</li>
+</ul>
+<p><strong>注意</strong> 主题<code>caption</code>非空时，暂不支持左/右折叠展开。
+<strong>注意</strong> <code>coverable=false</code>时表示不覆盖，此时<code>exchangable</code>必须为<code>false</code>。
+<strong>注意</strong> <code>coverable=true</code>且朝上下方向展开时，<code>exchangable</code>必须为<code>false</code>。</p>
+<p>向右展开覆盖，且图标位置交换，示例如下：
+<live_demo example="containers/accordion/demo4RightCoverable" width="800"  height="300"></live_demo></p>
+<p>向左展开覆盖，且图标位置交换，示例如下：
+<live_demo example="containers/accordion/demo4LeftCoverable" width="800"  height="300"></live_demo></p>
 <h2>id</h2>
 <blockquote>
 <p>支持类型：字符串</p>
