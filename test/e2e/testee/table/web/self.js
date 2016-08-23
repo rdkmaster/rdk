@@ -1,4 +1,4 @@
-define('main', ['application', 'blockUI',
+﻿define('main', ['application', 'blockUI',
   'rd.controls.BasicSelector','rd.containers.Tab','rd.controls.TabSelector',
   'rd.controls.FoldSelector', 'rd.containers.Accordion','rd.controls.Time',
   'rd.controls.Graph','rd.controls.ComboSelect','rd.controls.Selector','rd.controls.Table'],
@@ -140,7 +140,17 @@ scope.getSearchPattern=function(searchPattern){
 };
 scope.getPageSize=function(pageSize){
   scope.Table.pageSize=pageSize;
-}
+};
+//demo4 后端分页
+
+scope.search=function(){
+	var condition = {
+		"paging":{"currentPage":1,"pageSize":7}
+	};
+	var ds = DSService.get('ds_salary_3');
+	console.log(ds);
+	ds.query(condition);
+};
 
 /************************ 应用的代码逻辑结束 ************************/
 }]).filter('myFilter',function(){
