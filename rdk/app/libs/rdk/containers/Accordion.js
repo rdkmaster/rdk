@@ -107,10 +107,12 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.exchangable = Utils.isTrue(scope.exchangable, false);
                     scope.showButtons = angular.isDefined(scope.buttons);                   
                     scope.appScope = Utils.findAppScope(scope);
-                    scope.outerLeft = parseInt($(iEle[0]).css('left'), 10) || 0;
+                    scope.outerLeft = (parseInt($(iEle[0]).css('left'), 10)|| 0 )- (parseInt($(iEle[0]).css('right'), 10)||0);
+                    scope.transcludeDomWidth = iEle[0].querySelector(".content").offsetWidth;
+                    scope.supportable = true;
 
                     _initFoldIconsByDirection();
-                    _beforeHandler(scope.expandDirection.toLowerCase());
+                    _refreshThemeByCaption();
 
                     scope.toggle = _toggle;
                     scope.clickHandler = _clickHandler;   
@@ -118,6 +120,22 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
                     scope.keyPressHandler = _keyPressHandler;
                     scope.stopPropagation = _stopPropagation;
+
+                    _uncoverHandler();//挤开时的处理
+                }
+
+                function _refreshThemeByCaption(){
+                    var direction = scope.expandDirection.toLowerCase();
+                    if(!scope.caption){
+                        var themeDom = iEle[0].querySelector(".theme");
+                        $(themeDom).css({'display': 'inline-block'});
+                    }
+                    else{
+                        if((direction == PositionTypes.LEFT)||(direction == PositionTypes.RIGHT)){
+                            console.warn('主题非空时，暂不支持左右折叠，请删除caption属性！');
+                            scope.supportable = false;
+                        }
+                    }
                 }
 
                 function _initFoldIconsByDirection(){
@@ -140,15 +158,16 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, unfoldedIconStr);
                 }
 
-                function _beforeHandler(direction){
+                function _uncoverHandler(){
+                    if((scope.coverable)||(!scope.supportable)) return;
+
                     var themeDom = iEle[0].querySelector(".theme");
                     var transcludeDom = iEle[0].querySelector(".content");
-                    if(!scope.caption){
-                        $(themeDom).css({'display': 'inline-block'});
-                    }
+                    var direction = scope.expandDirection.toLowerCase();
+
                     if(!scope.coverable){//挤开，单击前就编译
                         if(scope.exchangable){
-                            console.warn('未脱离文档流时，图标无需支持位置交换，请删除exchangable属性！');
+                            console.warn('挤开时不支持图标位置交换，请删除exchangable属性！');
                             return;
                         }
                         if(direction == PositionTypes.TOP){
@@ -168,28 +187,25 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     }                   
                 }
 
-                function _afterHandler(direction){
+                function _coverHandler(){
+                    if((!scope.coverable)||(!scope.supportable)) return;
+
                     var themeDom = iEle[0].querySelector(".theme");
                     var transcludeDom = iEle[0].querySelector(".content");
-
-                    if((!!scope.caption)&&((direction == PositionTypes.LEFT)||(direction == PositionTypes.RIGHT))){
-                        console.warn('主题非空时，暂不支持左右折叠，请删除caption属性！');
-                        scope.open = false;
-                        return;
-                    }
+                    var direction = scope.expandDirection.toLowerCase();
 
                     if(scope.coverable){//覆盖，点击后编译
-                        $(transcludeDom).css({'position': 'absolute', 'z-index': '9999','width': '100%'});
+                        $(transcludeDom).css({'position': 'absolute', 'z-index': '9999', 'width': scope.transcludeDomWidth+'px'});
                         if(scope.exchangable){
                             if(direction == PositionTypes.LEFT){//iele相对自己
-                                $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0, 'width': ''});
+                                $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0});
                                 $timeout(function(){
                                     if(scope.open){
-                                        $(iEle[0]).animate({'left': -transcludeDom.offsetWidth+scope.outerLeft+'px'}); 
+                                        $(iEle[0]).animate({'left': -scope.transcludeDomWidth+scope.outerLeft+'px'}); 
                                     }
                                     else{
                                         scope.open = true;
-                                        $(iEle[0]).animate({'left': transcludeDom.offsetWidth+scope.outerLeft+'px'}, function(){
+                                        $(iEle[0]).animate({'left': scope.outerLeft+'px'}, function(){
                                             $timeout(function(){
                                                 scope.open = false;
                                             }, 0);
@@ -198,14 +214,14 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                                 }, 0)                
                             }
                             else if(direction == PositionTypes.RIGHT){
-                                $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0, 'width': ''});
+                                $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0});
                                 $timeout(function(){
                                     if(scope.open){
-                                        $(iEle[0]).animate({'left': transcludeDom.offsetWidth+scope.outerLeft+'px'});                                     
+                                        $(iEle[0]).animate({'left': scope.transcludeDomWidth+scope.outerLeft+'px'});                                     
                                     }
                                     else{
                                         scope.open = true;
-                                        $(iEle[0]).animate({'left': -transcludeDom.offsetWidth+scope.outerLeft+'px'}, function(){
+                                        $(iEle[0]).animate({'left': scope.outerLeft+'px'}, function(){
                                             $timeout(function(){
                                                 scope.open = false;
                                             }, 0);
@@ -221,16 +237,20 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                         }
                         else{
                             if(direction == PositionTypes.TOP){
-                                $(transcludeDom).css({'bottom': themeDom.offsetHeight+'px','width': '100%'});
+                                $(transcludeDom).css({'bottom': themeDom.offsetHeight+'px'});
                             }
                             if(direction == PositionTypes.RIGHT){
-                                $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0, 'width': ''});
+                                $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0});
                             }
                             if(direction == PositionTypes.LEFT){
-                                $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0, 'width': ''});
+                                $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0});
                             }
                         }
-                    }     
+                    } 
+
+                    if(!scope.caption){
+                        $(iEle[0]).css({'width': ''});
+                    }  
                 }               
 
                 function _stopPropagation(){
@@ -245,14 +265,14 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     if (event.keyCode == 27) {
                         $(iEle[0]).find('span').text(scope.caption);
                     }               
-                } 
+                }
 
                 function _toggle(){
                     if(scope.frozen) return;//冻结
                     if(($(iEle).find(".content").get(0).children.length == 1)&&($(iEle).find(".content").get(0).children[0].tagName == "HEADER_RENDERER")) return;//最外层就只有一个header_renderer，没内容
 
                     scope.open = !scope.open;
-                    _afterHandler(scope.expandDirection.toLowerCase());
+                    _coverHandler();//覆盖时的处理
 
                     if (scope.id){
                         EventService.broadcast(scope.id, EventTypes.CHANGE, scope.open); //事件
