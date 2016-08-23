@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>Accordion -> expandDirection</title>
+    <title>Accordion -> Right Coverable</title>
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
     -->
@@ -15,15 +15,17 @@
 
      <!-- 没主题，箭头包裹  --> 
 
-    <rdk_accordion style='display: inline-block;' expand_direction='right' coverable='true' exchangable='false'>
-        <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
+    <rdk_accordion style='float: left;' expand_direction='right'>
+        <rdk_basic_selector style='width: 470px' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
         <div>向右展开，不带主题不带宽度的right</div>
     </rdk_accordion>
 
-    <rdk_accordion style='display: inline-block;' expand_direction='right' coverable='true' exchangable='false'>
-        <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
+<!--     <div style='display: inline-block;'>你好啊随便写点什么看有没有被挤掉</div>
+
+    <rdk_accordion style='display: inline-block;' expand_direction='right' coverable='true' exchangable='true'>
+        <rdk_basic_selector style='width: 400px' class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
         <div>向右展开，不带主题带宽度的right</div>
-    </rdk_accordion> 
+    </rdk_accordion>  -->
     
     <!-- 有主题，上右一边宽  --> 
 
