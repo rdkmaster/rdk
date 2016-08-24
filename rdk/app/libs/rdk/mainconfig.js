@@ -55,7 +55,7 @@ require.config({
         "rd.controls.Alert": "../rdk/controls/Alert",
         "rd.controls.Tree": "../rdk/controls/Tree",
         "rd.controls.SingleIndicator": "../rdk/controls/SingleIndicator",
-
+        "rd.controls.ScoreIndicator": "../rdk/controls/ScoreIndicator", 
         "rd.services.DataSourceService": "../rdk/services/DataSourceService",
         "rd.services.EventService": "../rdk/services/EventService",
         "rd.services.I18nService": "../rdk/services/I18nService",
@@ -80,6 +80,7 @@ require.config({
         "rd.styles.Tab": "../rdk/containers/assets/rdk-tab-style",
         "rd.styles.Scroller": "../rdk/controls/assets/rdk-scroller-style",
         "rd.styles.SingleIndicator": "../rdk/controls/assets/rdk-singleindicator-style",
+        "rd.styles.ScoreIndicator": "../rdk/controls/assets/rdk-scoreindicator-style",
         "rd.modules.i18n": "../rdk/modules/I18nModule",
     }),
     //这个配置是你在引入依赖的时候的包名
