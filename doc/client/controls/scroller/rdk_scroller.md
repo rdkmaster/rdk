@@ -1,5 +1,5 @@
 # 简介 #
-`rdk_scroller` 是可以自定义内容的轮播器。翻页策略支持timeout和click的组合，分别是超时自动翻页、鼠标单击翻页，以及同时支持。此外，也可以自定义轮播时同时显示的页数。
+`rdk_scroller` 是可以自定义内容的轮播器。翻页策略支持timeout和manual的组合，分别是超时自动翻页、鼠标单击翻页，默认同时支持。当设置了超时自动翻页后，支持自定义超时时间。此外，也可以自定义轮播同时显示的页数。
 
 
 # 属性 #
@@ -32,16 +32,25 @@
 ## scroll_policy ##
 > 支持类型：字符串
 
-`readonly`只支持三种：'click'--单击翻页；'timer'--超时翻页，默认5s；'click,timer'--同时支持。默认同时支持单击翻页和超时翻页。设置为click时，示例如下：
+`scroll_policy`只支持三种：'manual'--单击翻页；'timer'--超时翻页；默认同时支持单击翻页和超时翻页。设置为manual时，示例如下：
 
-<live_demo example="controls/scroller/click" width="900"></live_demo>
+<live_demo example="controls/scroller/manual" width="900"></live_demo>
 
 ---
-设置为timer时，方向图标也会被删除，示例如下：
+## timeout ##
+> 支持类型：整型
+
+`timeout`属性可以让用户设置超时时间，以毫秒为单位，默认为5000ms。结合`scroll_policy`设置为timer或者默认全支持使用，示例如下：
 
 <live_demo example="controls/scroller/timer" width="900"></live_demo>
 
 ---
+
+## has_vertical\_scrollbar ##
+> 支持类型：布尔型
+
+`has_vertical_scrollbar`属性在出现垂直滚动条时，需要设置为'true'，以方便计算显示视图的宽度,默认为false。
+
 
 #样式修改#
 ##箭头的透明度##
@@ -50,11 +59,11 @@
 	<style type="text/css">
 	  .left_arrow  {
 	   opacity: 0.9;
-	   top:60px;
+	   top:200px;
 	  }
 	  .right_arrow {
 	   opacity: 0.9;
-	   top:60px;
+	   top:200px;
 	  }
 	</style>
 
