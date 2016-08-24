@@ -7,7 +7,7 @@
     width: 100%;
     padding: 10px;
 
-    background:url("graph_bg.jpg") repeat scroll!important;
+    background:url("no_data_bg.png") no-repeat center;
     border-radius: 4px;
 
     color: #111;

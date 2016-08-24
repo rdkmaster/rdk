@@ -22,7 +22,7 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
                 replace: true,
                 template: '<div class="rdk-graph-module"> \
                             <div style="width:100%;height:100%" ng-hide="noData"></div> \
-                            <div class="no-data" ng-show="noData">图形暂时没有数据</div> \
+                            <div class="no-data" ng-show="noData"></div> \
                         </div>',
                 scope: {
                     id: '@',
