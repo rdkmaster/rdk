@@ -154,14 +154,13 @@ var JSON1 = {
 
 //动态类加载
 var JVM = {
-    load_class: function loadClass(className, jar) {
+    load_class: function loadClass(jar,className) {
         try {
-            return rdk_runtime.jarHelper().loadClass(className, jar);
+            return rdk_runtime.jarHelper().loadClass(jar, className);
         } catch (e) {
             return undefined;
         }
     }
-
 }
 
 //国际化
@@ -299,15 +298,19 @@ var file = {
         return files;
     },
     get web() {
-        log("!!!!!!!!"+java.FileHelper.fixPath('$web', rdk_runtime.application()));
-
-        return java.FileHelper.fixPath('$web', rdk_runtime.application());
+        return function(){
+            return java.FileHelper.fixPath('$web', rdk_runtime.application());
+        }
     },
     get base() {
-        return java.FileHelper.fixPath('$base', rdk_runtime.application());
+        return function(){
+            return java.FileHelper.fixPath('$base', rdk_runtime.application());
+        }
     },
     get svr() {
-        return java.FileHelper.fixPath('$svr', rdk_runtime.application());
+        return function(){
+            return java.FileHelper.fixPath('$svr', rdk_runtime.application());
+        }
     }
 };
 
