@@ -2,8 +2,9 @@
 	margin : 10px;
 }
 
-.rdk-tab-module .title li{
-    height: 38px;
+.rdk-tab-module .title{
+    display: flex;
+    display: -webkit-flex;
 }
 
 .rdk-tab-module .title li a.selected {
