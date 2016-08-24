@@ -1,21 +1,6 @@
-*{
-font-family: 'Open Sans', sans-serif;
-}
-.center-grey{
-       background:#f2f2f2;
-}
+
 .slider{
 	position: relative;
-	padding:5px;
-	width:800px;
-	margin: auto;
-	margin-top: 40px;
-}
-.slide{
-	position:absolute;
-	top:0;
-	left:0;
-	box-shadow: 0px 0px 15px #999;
 	
 }
 .slide img{
@@ -25,30 +10,25 @@ font-family: 'Open Sans', sans-serif;
 	display:inline-block;
 	overflow: hidden;
 }
+.arrows{
+ opacity: 0.5;
+ font-size:50px;
+}
 
 .left_arrow {
-
+ top: 50%;
  position: absolute;
- top: 50px;
- left: 0px;
- opacity: 0.5;
+ left: 7px;
+ transform: translate(-50%,-50%);
 }
 
 .right_arrow {
-
+ top: 50%;
  position: absolute;
- top: 50px;
- right: 10px;
- opacity: 0.5;
-
+ right: -7px;
+ transform: translate(-50%,-50%);
 }
 
 
-h1{
-text-align: center;
-padding: 10px;
-font-size: 40px;
-color: #222;
-}
  
 
