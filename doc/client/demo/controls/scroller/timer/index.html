@@ -13,7 +13,7 @@
 
 
 <body ng-controller='myCtrl'>
-    <rdk_scroller data="images" scroll_policy="timer">
+    <rdk_scroller data="images" scroll_policy="timer" timeout="1000" style="width:600px;height:400px">
       <img ng-src="{{item.src}}"/>
       <span> {{item.title}} </span>
     </rdk_scroller>

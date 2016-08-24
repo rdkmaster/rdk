@@ -15,16 +15,16 @@
 
   .left_arrow  {
    opacity: 0.9;
-   top:250px;
+   top:200px;
   }
   .right_arrow {
    opacity: 0.9;
-   top:250px;
+   top:200px;
   }
 
 </style>
 <body ng-controller='myCtrl'>
-    <rdk_scroller data="images" >
+    <rdk_scroller data="images" style="width:600px;height:400px" >
       <img ng-src="{{item.src}}"/>
       <span> {{item.title}} </span>
     </rdk_scroller>
