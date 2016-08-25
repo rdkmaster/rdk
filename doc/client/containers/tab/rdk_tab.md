@@ -107,7 +107,8 @@
 
 ## 渲染器 ##
 
-暂无
+Tab 的 title还支持动态渲染,以title_renderer标签去标志
+<live_demo example="containers/tab/titleRender" width="800"></live_demo>
 
 ## 数据源绑定 ##
 
