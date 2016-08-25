@@ -29,6 +29,11 @@
 
 ---
 
+## loop ##
+>支持类型：布尔型
+
+`loop`属性可以让用户配置是否一直循环下去，默认为true；如何设置为false，则轮播到最后一页后，箭头会灰化，不允许继续往下。
+
 ## scroll_policy ##
 > 支持类型：字符串
 
@@ -45,12 +50,6 @@
 <live_demo example="controls/scroller/timer" width="900"></live_demo>
 
 ---
-
-## has_vertical\_scrollbar ##
-> 支持类型：布尔型
-
-`has_vertical_scrollbar`属性在出现垂直滚动条时，需要设置为'true'，以方便计算显示视图的宽度,默认为false。
-
 
 #样式修改#
 ##箭头的透明度##
