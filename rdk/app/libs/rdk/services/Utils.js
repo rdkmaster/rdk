@@ -193,7 +193,7 @@
             return uuid.join('');
         }
 
-        this.bindDataSource = function(tAttrs, toProp, fromProp) {
+        this.bindDataSource = function(tAttrs, toProp, fromProp, propError) {
             if (tAttrs[toProp]) {
                 return;
             }
@@ -212,6 +212,7 @@
                 });
                 tAttrs[toProp] = 'this[' + dataProp.substring(0, dataProp.length - 1) + ']';
             } else {
+                if (propError === false) return;
                 console.error('至少需要提供 ds 或者 ' + toProp + ' 属性');
             }
         }

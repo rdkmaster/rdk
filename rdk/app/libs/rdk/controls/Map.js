@@ -1,8 +1,8 @@
 define(['rd.controls.Graph'], function() {
     var gisApp = angular.module('rd.controls.Map', ['rd.controls.Graph']);
 
-    gisApp.directive('rdkMap', ['GraphService', 'DataSourceService', 'EventService','EventTypes','Utils',
-        function(GraphService,DataSourceService, EventService, EventTypes,Utils) {
+    gisApp.directive('rdkMap', ['GraphService', 'DataSourceService', 'EventService', 'EventTypes', 'Utils',
+        function(GraphService, DataSourceService, EventService, EventTypes, Utils) {
             return {
                 restrict: 'E',
                 replace: true,
@@ -26,26 +26,26 @@ define(['rd.controls.Graph'], function() {
 
             function _compile(tElement, tAttributes) {
                 tAttributes.graphContext = 'this';
-                Utils.bindDataSource(tAttributes, 'data');
+                Utils.bindDataSource(tAttributes, 'data', undefined, false);
                 return _postLink;
             }
 
             function _postLink(scope, element, attrs) {
                 var ds = DataSourceService.create(Utils.uuid(), "$DataUrl$");
-                var mapData ,nameDataMap; 
+                var mapData, nameDataMap;
 
                 EventService.register(ds.id, 'result', function(event, data) {
-                    mapData = data; 
+                    mapData = data;
                     var mapType = scope.$$childHead.setMapData(data);
                     EventService.broadcast(scope.id, EventTypes.UPDATE_GRAPH);
                     generateNameDataMap();
                 });
 
                 scope.$watch('map', function(newValue, oldValue) {
-                    ds.query({DataUrl: newValue});
+                    ds.query({ DataUrl: newValue });
                 }, false);
 
-                scope.gisEventHandler = function(param){
+                scope.gisEventHandler = function(param) {
                     if (param.type == "mapselected") {
                         var coordinateSystem = scope.$$childHead.chart.getModel().getSeriesByIndex(0).coordinateSystem;
                         var center = coordinateSystem.getRegion(param.name).center;
@@ -60,12 +60,12 @@ define(['rd.controls.Graph'], function() {
                     return param;
                 }
 
-                function generateNameDataMap(){
+                function generateNameDataMap() {
                     nameDataMap = {};
                     for (var i = 0; i < mapData.features.length; i++) {
                         var feature = mapData.features[i];
                         nameDataMap[feature.properties.name] = feature;
-                    }; 
+                    };
                 }
 
             }
