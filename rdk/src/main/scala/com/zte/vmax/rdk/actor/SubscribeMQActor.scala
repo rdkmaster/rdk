@@ -4,6 +4,7 @@ import akka.actor.{Actor}
 import com.zte.vmax.activemq.rdk.RDKActiveMQ
 import com.zte.vmax.rdk.RdkServer
 import com.zte.vmax.rdk.actor.Messages._
+import com.zte.vmax.rdk.proxy.ProxyManager
 import scala.concurrent.duration._
 import com.zte.vmax.rdk.mq.MQCreator
 import com.zte.vmax.rdk.util.{HashTrait, RdkUtil}
@@ -56,7 +57,7 @@ class SubscribeMQActor extends Actor with MQCreator {
     callbackMap.get(rm.topic) match {
       case Some(set) => set.foreach(callback => {
         logger.info(s"${self.path}-> callback for file=${callback.jsFile} method=${callback.func_name}")
-        RdkServer.appRouter ! ServiceRequest(ctx = NoneContext, script = callback.jsFile, app = null, param = rm.msg, method = callback.func_name)
+        RdkServer.appRouter ! ServiceRequest(ctx = NoneContext, script = callback.jsFile, app = null, param = rm.msg, method = callback.func_name,timeStamp = System.currentTimeMillis())
       })
       case None =>
     }
@@ -95,5 +96,5 @@ class SubscribeMQActor extends Actor with MQCreator {
     case CheckCallBack => onCheckCallBack
   }
 
-  override def createActiveMQ: Try[RDKActiveMQ] = RdkUtil.createActiveMQ(false)
+  override def createActiveMQ: Try[RDKActiveMQ] = ProxyManager.mqAccess(false)
 }

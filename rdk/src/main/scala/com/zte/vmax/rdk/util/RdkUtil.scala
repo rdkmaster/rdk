@@ -14,6 +14,8 @@ import com.zte.vmax.activemq.rdk.RDKActiveMQ
 import com.zte.vmax.rdk.RdkServer
 import com.zte.vmax.rdk.actor.Messages.{NoneContext, RDKContext, MQ_Message, ServiceRequest}
 import com.zte.vmax.rdk.config.Config
+import com.zte.vmax.rdk.db.DataBaseHelper._
+import com.zte.vmax.rdk.db.GbaseOptimizer
 import com.zte.vmax.rdk.defaults.RequestMethod
 import com.zte.vmax.rdk.env.Runtime
 import jdk.nashorn.api.scripting.ScriptObjectMirror
@@ -27,6 +29,11 @@ import scala.util.Try
   * Created by 10054860 on 2016/7/15.
   */
 object RdkUtil extends Logger {
+
+
+  private val usingStandardSQL: Boolean = Config.getBool("database.StandardSQL.on", false)
+  private val strictMode: Boolean = Config.getBool("database.StandardSQL.strict", false)
+
   /**
     * 获取真实的app名称
     */
@@ -43,7 +50,7 @@ object RdkUtil extends Logger {
       else {
         script
       }
-      logger.warn("invalid app name: app == null, so using '" + realApp + "' as app name.")
+      logger.info("invalid app name: app == null, so using '" + realApp + "' as app name.")
       realApp
     } else {
       app
@@ -80,7 +87,6 @@ object RdkUtil extends Logger {
     }
 
   }
-
 
 
   /**
@@ -135,15 +141,16 @@ object RdkUtil extends Logger {
     * @return
     */
   def makeMQ_Message(json: String): Option[MQ_Message] = {
-    json2Object[MQ_Message] (json)
+    json2Object[MQ_Message](json)
   }
+
   /**
     * 通过json字符串构造对象
     *
     * @param json
     * @return
     */
-  def json2Object[T: ClassTag](json: String ): Option[T] = {
+  def json2Object[T: ClassTag](json: String): Option[T] = {
     try {
       val msg = new Gson().fromJson(json, implicitly[ClassTag[T]].runtimeClass).asInstanceOf[T]
       Some(msg)
@@ -172,19 +179,19 @@ object RdkUtil extends Logger {
   def genUUID: String = UUID.randomUUID().toString
 
 
-
   /**
     * RDK启动时，调用应用的初始化脚本
     */
   def initApplications: Unit = {
     val initScripts: List[String] = forEachDir(Paths.get("app"))
     initScripts.foreach(script => {
-      val request = ServiceRequest(ctx = NoneContext, script = script.substring(script.indexOf("app")).replaceAllLiterally("\\", "/"), app = null, param = null, method = "init")
+      val request = ServiceRequest(ctx = NoneContext, script = script.substring(script.indexOf("app")).replaceAllLiterally("\\", "/"),
+        app = null, param = null, method = "init", timeStamp = System.currentTimeMillis())
       RdkServer.appRouter ! request
     })
   }
 
-  def forEachDir(path: Path):List[String] = {
+  def forEachDir(path: Path): List[String] = {
     var pathLst: List[String] = Nil
     if (path.toFile.isDirectory)
       Files.walkFileTree(path, new SimpleFileVisitor[Path] {
@@ -199,5 +206,46 @@ object RdkUtil extends Logger {
         }
       })
     pathLst
+  }
+
+
+  /**
+    * 获取标准sql
+    */
+  def getStandardSql(sql: String): Option[String] = {
+    usingStandardSQL match {
+      case true =>
+        try {
+          Some(GbaseOptimizer.optimizeSql(sql))
+        } catch {
+          case e: Exception => {
+            logger.warn("optimize sql error", e)
+            strictMode match {
+              case true =>
+                logger.warn("sql not standard, return null in strictMode, sql=" + sql)
+                None
+              case false => Some(sql)
+            }
+          }
+        }
+      case false => Some(sql)
+    }
+
+  }
+
+  /**
+    * 安全关闭对象
+    *
+    * @param closeable
+    */
+  def safeClose(closeable: AutoCloseable) {
+    try {
+      closeable.close
+    }
+    catch {
+      case e: Exception => {
+        logger.error(e.getMessage)
+      }
+    }
   }
 }

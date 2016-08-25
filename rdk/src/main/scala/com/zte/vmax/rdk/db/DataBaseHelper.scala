@@ -5,10 +5,9 @@ import java.sql.{Statement, Connection}
 import akka.util.Timeout
 import com.zte.vmax.rdk.RdkServer
 import com.zte.vmax.rdk.actor.Messages.DataTable
-import com.zte.vmax.rdk.config.Config
 import com.zte.vmax.rdk.defaults.Misc
-import com.zte.vmax.rdk.proxy.DBAccessTrait
-import com.zte.vmax.rdk.util.Logger
+import com.zte.vmax.rdk.proxy.{ProxyManager}
+import com.zte.vmax.rdk.util.{RdkUtil, Logger}
 
 import scala.collection.mutable.ArrayBuffer
 import scala.concurrent.{Await, Future}
@@ -18,41 +17,17 @@ import scala.concurrent.duration._
 /**
   * Created by 10054860 on 2016/7/19.
   */
-object DataBaseHelper extends DBAccessTrait with Logger {
-  private val usingStandardSQL: Boolean = Config.getBool("database.StandardSQL.on", false)
-  private val strictMode: Boolean = Config.getBool("database.StandardSQL.strict", false)
-
-  //获取标准sql
-  private def getStandardSql(sql: String): Option[String] = {
-    usingStandardSQL match {
-      case true =>
-        try {
-          Some(GbaseOptimizer.optimizeSql(sql))
-        } catch {
-          case e: Exception => {
-            logger.warn("optimize sql error", e)
-            strictMode match {
-              case true =>
-                logger.warn("sql not standard, return null in strictMode, sql=" + sql)
-                None
-              case false => Some(sql)
-            }
-          }
-        }
-      case false => Some(sql)
-    }
-
-  }
+object DataBaseHelper extends Logger {
 
   //设置结果集的最大行数
   private def setMaxRows(st: Statement, maxLine: Long): Unit = {
-    try {
-      st.setLargeMaxRows(maxLine)
-    } catch {
-      //可能不支持这个调用
-      case e: Throwable =>
-        logger.warn(e.getMessage)
-    }
+//    try {
+//      st.setLargeMaxRows(maxLine)
+//    } catch {
+//      //可能不支持这个调用
+//      case e: Throwable =>
+//        logger.warn(e.getMessage)
+//    }
 
   }
 
@@ -67,10 +42,10 @@ object DataBaseHelper extends DBAccessTrait with Logger {
 
     getConnection(appName).map(connection =>
       try {
-        appLogger(appName).debug(s"begin execute:$sql,maxLine=$maxLine")
+        val currentTime = System.currentTimeMillis()
         val statement = connection.createStatement
         setMaxRows(statement, maxLine)
-        val opSql = getStandardSql(sql)
+        val opSql = RdkUtil.getStandardSql(sql)
         if (opSql.isEmpty) {
           return None
         }
@@ -94,15 +69,16 @@ object DataBaseHelper extends DBAccessTrait with Logger {
           i = i + 1
         }
 
-        safeClose(appName, rs)
-        safeClose(appName, statement)
-        safeClose(appName, connection)
+        RdkUtil.safeClose(rs)
+        RdkUtil.safeClose(statement)
+        RdkUtil.safeClose(connection)
+        appLogger(appName).debug(s"fetch->$sql (${System.currentTimeMillis - currentTime} ms)")
         Some(DataTable(fieldNames, fieldTypes, dataArray.toArray))
       }
       catch {
         case e: Throwable =>
           appLogger(appName).error("fetch data error", e)
-          safeClose(appName, connection, e.getMessage)
+          RdkUtil.safeClose(connection)
           None
 
       }).flatten
@@ -119,10 +95,12 @@ object DataBaseHelper extends DBAccessTrait with Logger {
     * @param timeout 超时时间（秒）
     * @return 数据表集合
     */
-  def batchFetch(appName: String, sqlArr: List[String], maxLine: Long, timeout: Long): List[DataTable] = {
+  def batchFetch(appName: String, sqlArr: List[String], maxLine: Long, timeout: Long): List[Option[DataTable]] = {
     if (sqlArr.isEmpty) {
       return Nil
     }
+    val currentTime = System.currentTimeMillis()
+
     implicit val ec = RdkServer.system.dispatchers.lookup(Misc.blocking_io_dispatcher)
     implicit val myTimeout = Timeout(timeout seconds)
     val result = sqlArr.map(sql => {
@@ -131,7 +109,10 @@ object DataBaseHelper extends DBAccessTrait with Logger {
       }(ec)
     })
 
-    Await.result(Future.sequence(result), myTimeout.duration).asInstanceOf[List[DataTable]]
+    val value = Await.result(Future.sequence(result), myTimeout.duration)
+    appLogger(appName).debug(s"batchFetch->${sqlArr mkString} (${System.currentTimeMillis - currentTime} ms)")
+    value
+
   }
 
   /**
@@ -157,44 +138,32 @@ object DataBaseHelper extends DBAccessTrait with Logger {
   def batchExecuteUpdate(appName: String, sqlArr: List[String]): Option[List[Int]] = {
     getConnection(appName).map(connection =>
       try {
-        appLogger(appName).info(sqlArr mkString)
+        val currentTime = System.currentTimeMillis()
         connection.setAutoCommit(false)
         val statement = connection.createStatement()
         val result = sqlArr.map(sql => statement.executeUpdate(sql))
         connection.commit()
-        safeClose(appName, statement)
-        safeClose(appName, connection)
+        RdkUtil.safeClose(statement)
+        RdkUtil.safeClose(connection)
+        appLogger(appName).debug(s"ExecuteUpdate->${sqlArr mkString} (${System.currentTimeMillis - currentTime} ms)")
         result.toList
       }
       catch {
         case e: Throwable =>
           appLogger(appName).error(e.getMessage)
           connection.rollback()
-          safeClose(appName, connection)
+          RdkUtil.safeClose(connection)
           Nil
       })
 
   }
 
   private def getConnection(appName: String): Option[Connection] = {
-    val connection: Connection = RDKDataSource.getConnection
-    if (connection == null) {
+    val opConn = ProxyManager.dbAccess()
+    if (opConn.isEmpty) {
       appLogger(appName).error("create RDKDataSource.getConnection() failed.")
-      None
-    } else {
-      Some(connection)
     }
-  }
-
-  private def safeClose(appName: String, closeable: AutoCloseable, extraErrMsg: String = ""): Unit = {
-    try {
-      closeable.close
-    }
-    catch {
-      case e: Exception => {
-        appLogger(appName).error(extraErrMsg, e)
-      }
-    }
+    opConn
   }
 
 }

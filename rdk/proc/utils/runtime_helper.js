@@ -28,6 +28,7 @@ var java = {
     Thread: Java.type('java.lang.Thread'),
 
     BigDecimal: Java.type('java.math.BigDecimal'),
+    StringArray: Java.type('java.lang.String[]'),
 
     ResultSet: Java.type('java.sql.ResultSet'),
 
@@ -380,7 +381,7 @@ function forEach(obj, iteratee, context, extra) {
 
 function require(script) {
     script = java.FileHelper.fixPath(script, rdk_runtime.application());
-    info("loading script in js: " + script);
+  //  log("loading script in js: " + script);
     return load(script);
 }
 
@@ -475,7 +476,7 @@ var Data = {
     fetch_first_cell: function (sql) {
         return rdk_runtime.fetch_first_cell(sql);
     },
-    batch_fetch: function (sqlArray, maxLine) {  //并发实现
+    batch_fetch: function (sqlArray, maxLine,timeout) {  //并发实现
 
         if (!sqlArray || !_.isArray(sqlArray)) {
             Log.error("Array param required! " + sqlArray);
@@ -485,10 +486,10 @@ var Data = {
             maxLine = 4000;
         }
         var dataTableArray = [];
-        each(sqlArray, function (sql) {
-            dataTableArray.push(Data.fetch(sql, maxLine));
-        })
-
+        var dataObj = JSON.parse(rdk_runtime.batchFetch(sqlArray, maxLine,timeout));
+        for(idx in dataObj){
+           dataTableArray.push(new DataTable(i18n(dataObj[idx].fieldNames), dataObj[idx].fieldNames, dataObj[idx].data))
+        }
         return dataTableArray;
     }
 }

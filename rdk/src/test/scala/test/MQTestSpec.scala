@@ -1,112 +1,83 @@
 package test
 
-import akka.pattern.ask
-import akka.util.Timeout
-import com.zte.vmax.rdk.RdkServer
+import akka.actor.ActorSystem
+import akka.actor.Props
+import akka.testkit.{TestActorRef, TestKit, ImplicitSender}
 import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.config.Config
-import com.zte.vmax.rdk.util.RdkUtil
+import com.zte.vmax.rdk.proxy.ProxyManager
 import org.apache.log4j.PropertyConfigurator
-import org.specs2.mutable.Specification
+import org.scalatest.WordSpecLike
+import org.scalatest.Matchers
+import org.scalatest.BeforeAndAfterAll
+import com.zte.vmax.rdk.actor.{SubscribeMQActor, P2PMQActor}
+import test.mock.mq.BaseRDKActiveMQMock
 
-import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, Future}
+import scala.util.Success
 
 
 /**
   * Created by 10054860 on 2016/7/26.
   */
-class MQTestSpec extends Specification {
-  PropertyConfigurator.configure("proc/conf/log4j.properties")
-  Config.setConfig("proc/conf/")
 
-  implicit val system = RdkServer.system
-  implicit val dispatcher = system.dispatcher
+class MQTestSpec() extends TestKit(ActorSystem("MQTestSpec")) with ImplicitSender
+  with WordSpecLike with Matchers with BeforeAndAfterAll {
 
-  implicit val timeout = Timeout(Duration(30, "seconds"))
+  override def afterAll {
+    TestKit.shutdownActorSystem(system)
+  }
 
+  override def beforeAll: Unit = {
+    PropertyConfigurator.configure("proc/conf/log4j.properties")
 
-  def subscribe(id: Int): Unit = {
-    //订阅主题，然后取消订阅
-    val topic = s"alarm-topic_${id}"
-    Future {
-      Thread.sleep(100)
-      val callback = SubCallback("showAlarm", "app/example/server/alarm.js")
-      RdkServer.mqRouter ! MQ_Subscribe(topic, callback)
-      Thread.sleep(10000)
-      RdkServer.mqRouter ! MQ_UnSubscribe(topic, callback)
-     // Thread.sleep(30000)
-      RdkServer.mqRouter ! MQ_Subscribe(topic, callback)
+    //config setting
+    Config.setConfig("proc/conf/")
+    ProxyManager.mqAccess = _ => Success(new BaseRDKActiveMQMock("1.2.3.4", "2222", self))
+  }
 
+  "P2PMQActor Tests" must {
+    val p2p = system.actorOf(Props[P2PMQActor])
+    "p2p back messages unchanged topic" in {
+      p2p ! MQ_P2P("topic", "body")
+      expectMsg("topic")
     }
+    "rpc call return Some(ok)" in {
+      val mqMsg = MQ_Message(MQ_Head("reply_topic"), "body")
+      p2p ! MQ_Rpc("rpc", mqMsg)
+      expectMsg(Some("ok"))
+    }
+    "reply call return ok " in {
 
-    //广播消息
-    Future {
-      Thread.sleep(1000)
-      (1 `to` 1).foreach(it => RdkServer.mqRouter ! MQ_BroadCast(topic,  s" id =$id ,yes,$it ", false))
+      p2p ! MQ_Reply("ok", "body")
+      expectMsg("ok")
+    }
+    "broadcast call return ok " in {
+
+      p2p ! MQ_BroadCast("ok", "body")
+      expectMsg("ok")
 
     }
 
   }
+  "SubscribeMQActor Tests" must {
 
-  def rpc_call(i:Int): Unit ={
-    val answer = "OK,It is RPC ANSWER"
-    //延迟启动对端应答，模拟一问一答
-    Future {
-      Thread.sleep(100)
-      RdkServer.mqRouter ! MQ_Reply("test.ack", answer)
+    val sub = TestActorRef[SubscribeMQActor]
+    val callback = SubCallback("testFun", "abc.js")
+    "subscribe topic return true" in {
+
+      sub ! MQ_Subscribe("topic", callback)
+      expectMsg("topic")
+      val set = sub.underlyingActor.callbackMap.get("topic").get
+      set.contains(callback) should be(true)
+
     }
+    "unSubscribe topic return None" in {
 
-    val req =
-      s"""
-         |{
-         |    "head": {
-         |        "reply_topic": "test.ack",
-         |        "sequence": "123",
-         |        "ver": "1.0"
-         |    },
-         |    "body": "How Are You?"
-         |}
-        """.stripMargin
-    val future = RdkServer.mqRouter ? MQ_Rpc("test", RdkUtil.makeMQ_Message(req).get)
-  }
+      sub ! MQ_UnSubscribe("topic", callback)
 
-  def p2p_call(i:Int): Unit ={
-
-    val req =
-      s"""
-         |{
-         |    "head": {
-         |        "reply_topic": "test.ack",
-         |        "sequence": "123",
-         |        "ver": "1.0"
-         |    },
-         |    "body": "How Are You?"
-         |}
-        """.stripMargin
-      RdkServer.mqRouter ! MQ_P2P("test", req)
-  }
-
-  "ActiveMQ Test Units" >> {
-    "rpc-reply test passed" >> {
-
-      (1 to 10000).foreach(i => p2p_call(i))
-      Thread.sleep(200000*1000)
-      Nil
-      1 must_== (1)
+      sub.underlyingActor.callbackMap.get("topic") should be(None)
 
     }
 
-//    "subscribe call test" >> {
-//
-//      (1 to 1).foreach(i => subscribe(i))
-////      (List(1,1,2)).foreach(i => subscribe(i))
-//
-//      Thread.sleep(200000*1000)
-//      1 must_== (1)
-//
-//    }
   }
-
-
 }

@@ -12,8 +12,9 @@ import akka.actor.{ActorRef, ActorSystem, Props}
 
 import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
-import com.zte.vmax.rdk.actor.{WebSocketServer, AppRouter, MQRouter, SequenceGenActor}
+import com.zte.vmax.rdk.actor.{WebSocketServer, AppRouter, MQRouter}
 import com.zte.vmax.rdk.config.Config
+import com.zte.vmax.rdk.monitor.MemMonitor
 import com.zte.vmax.rdk.service.RestHandler
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 
@@ -41,7 +42,7 @@ object Run extends App with SimpleRoutingApp with Logger {
     //bind http 端口
     val ip = Config.get("listen.ip")
     val port = Config.getInt("listen.port")
-    val wsPort = Config.getInt("listen.websock.port",0)
+    val wsPort = Config.getInt("listen.websocket.port",0)
     if(wsPort != 0){
       WebSocketServer.startWebSocket(ip,wsPort)
     }
@@ -71,11 +72,12 @@ object RdkServer {
   val system = ActorSystem("rdk-server", akkaConfig.withFallback(ConfigFactory.load()))
   //http-rest处理路由
   val appRouter: ActorRef = system.actorOf(Props[AppRouter], "appRouter")
+
+  val memMonitor: ActorRef = system.actorOf(Props(classOf[MemMonitor], appRouter), "MemMonitor")
+
   //MQ 处理路由
   val mqRouter: ActorRef = system.actorOf(Props[MQRouter], "mqRouter")
 
-  //生成Sequence序号的actor
-  val sequenceActor = system.actorOf(Props[SequenceGenActor], "SequenceGenActor")
   //本RDK-server的唯一标识
   val uuid:String = UUID.randomUUID().toString
 

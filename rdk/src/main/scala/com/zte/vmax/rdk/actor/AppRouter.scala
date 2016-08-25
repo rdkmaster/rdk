@@ -2,7 +2,7 @@ package com.zte.vmax.rdk.actor
 
 import akka.actor._
 import akka.routing.FromConfig
-import com.zte.vmax.rdk.actor.Messages.{WSCallJSMethod, ServiceRequest}
+import com.zte.vmax.rdk.actor.Messages.{MemoryOverrunRestore, MemoryOverrunAlarm, WSCallJSMethod, ServiceRequest}
 import com.zte.vmax.rdk.defaults.Misc
 import com.zte.vmax.rdk.util.Logger
 
@@ -14,6 +14,18 @@ class AppRouter extends Actor with Logger {
   var msgCount = 0L
 
   def receive = {
+    case MemoryOverrunAlarm =>
+      logger.error(s"Memory Overrun Alarm, service offline...")
+      context.become({
+        case MemoryOverrunRestore =>
+          logger.error(s"Memory Overrun Restore,service online...")
+          context.unbecome()
+        case msg:ServiceRequest =>
+          sender() ! "Memory is overrun,please try later"
+        case msg: WSCallJSMethod =>
+          sender() ! "Memory is overrun,please try later"
+
+      })
     case msg: ServiceRequest =>
       printLog(msg)
       httpRouter.forward(msg)

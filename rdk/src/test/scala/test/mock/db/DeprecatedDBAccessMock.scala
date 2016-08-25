@@ -1,4 +1,4 @@
-package test.mock
+package test.mock.db
 
 import java.sql.ResultSet
 
@@ -14,6 +14,8 @@ object DeprecatedDBAccessMock extends DeprecatedDBAccessTrait {
     def next() = true
 
     def getString(columnIndex: Int) = "ok"
+
+    def getMetaData = null
   }
 
   override def sql(appName: String, sql: String): ResultSet = {

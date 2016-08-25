@@ -7,6 +7,7 @@ import com.zte.vmax.activemq.ActiveMQ
 import com.zte.vmax.activemq.rdk.RDKActiveMQ
 import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.mq.MQCreator
+import com.zte.vmax.rdk.proxy.ProxyManager
 import com.zte.vmax.rdk.util.{RdkUtil}
 
 import scala.util.{Failure, Success, Try}
@@ -105,5 +106,5 @@ class P2PMQActor extends Actor with MQCreator {
       messageCount = 0
   }
 
-  override def createActiveMQ: Try[RDKActiveMQ] = RdkUtil.createActiveMQ(true)
+  override def createActiveMQ: Try[RDKActiveMQ] = ProxyManager.mqAccess(true)
 }
