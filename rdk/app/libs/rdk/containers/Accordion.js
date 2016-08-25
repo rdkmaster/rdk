@@ -31,12 +31,13 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     id: '@',
                     expandDirection: '=?',
                     coverable: '=?',
-                    exchangable: '=?'
+                    exchangable: '=?',
+                    minWidth: '=?'
                 }, 
                 template: 
                 '<div class="rdk-accordion-module" ng-click="stopPropagation()">\
                     <div class="theme" ng-click="toggle()">\
-                        <i class="{{open?unfoldedIcon:foldedIcon}}"></i>\
+                        <i class="{{(minWidth==0)?(open?unfoldedIcon:foldedIcon):(opened?unfoldedIcon:foldedIcon)}}"></i>\
                         <span ng-show="!!caption" class="theme-caption" contentEditable="{{editable}}"\
                          ng-keydown="keyPressHandler($event)"\
                          >\
@@ -100,7 +101,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                 function _init(){
                     scope.expandDirection = Utils.getValue(scope.expandDirection, iAttrs.expandDirection, PositionTypes.BOTTOM);             
                     scope.caption = Utils.getValue(scope.caption, iAttrs.caption, '');                                       
-                    scope.open = Utils.isTrue(scope.open, false);                    
+                    scope.open = Utils.isTrue(scope.open, false);   
+                    scope.minWidth =  Utils.getValue(scope.minWidth, iAttrs.minWidth, 0);                           
                     scope.frozen = Utils.isTrue(scope.frozen, false);
                     scope.editable = Utils.isTrue(scope.editable, false);
                     scope.showButtons = angular.isDefined(scope.buttons);                   
@@ -114,28 +116,76 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     _initDefaultAttrByDirection();
                     _refreshThemeByCaption();
 
+                    _unCoverStartStateHandler();
+                    _coverStartStateHandler();
+
                     scope.toggle = _toggle;
                     scope.clickHandler = _clickHandler;   
                     scope.getTooltips = _getTooltips;
 
                     scope.keyPressHandler = _keyPressHandler;
                     scope.stopPropagation = _stopPropagation;
+                }
 
-                    _uncoverHandler();//挤开时的处理
+                function _coverStartStateHandler(){
+                    if(!scope.coverable) return;
+                    _coverStartState();
+                    _minWidthHandler();
+                }
+
+                function _unCoverStartStateHandler(){
+                    if(scope.coverable) return;
+                    _uncoverStartState();
+                    _minWidthHandler();                  
+                }
+
+                function _minWidthHandler(){
+                    if(scope.minWidth == 0) return;
+                    scope.open = true;
+                    scope.opened = false;
+                    var transcludeDom = iEle[0].querySelector(".content");
+                    $(transcludeDom).css({'width': scope.minWidth+'px', 'overflow': 'hidden'});
+                }
+
+                function _uncoverStartState(){
+                    if((scope.coverable)||(!scope.supportable)) return;
+                    if((!scope.coverable) && (scope.exchangable)) return;
+
+                    var themeDom = iEle[0].querySelector(".theme");
+                    var transcludeDom = iEle[0].querySelector(".content");
+                    var direction = scope.expandDirection.toLowerCase();
+
+                    if(direction == PositionTypes.RIGHT){
+                        $(transcludeDom).css({'display': 'inline-block'});
+                    }
+                    if(direction == PositionTypes.LEFT){   
+                        $(transcludeDom).css({'display': 'inline-block'});
+                        $(iEle[0]).empty();
+                        $(iEle[0]).append(transcludeDom).append(themeDom);
+                        $compile(iEle.contents())(scope);
+                    } 
+                    if(direction == PositionTypes.TOP){
+                        $(iEle[0]).empty();
+                        $(iEle[0]).append(transcludeDom).append(themeDom);
+                        $compile(iEle.contents())(scope);
+                    }                 
                 }
 
                 function _refreshThemeByCaption(){
                     var direction = scope.expandDirection.toLowerCase();
                     if(!scope.caption){
                         var themeDom = iEle[0].querySelector(".theme");
-                        $(themeDom).css({'display': 'inline-block'});
-                        if(scope.coverable){
-                            $(iEle[0]).css({'width': ''});//覆盖时不占位，箭头需要包裹，防止空白
-                        }
+                        $(themeDom).css({'display': 'inline-block', 'vertical-align': 'top'});
                     }
                     else{
                         if((direction == PositionTypes.LEFT)||(direction == PositionTypes.RIGHT)){
                             console.warn('caption非空，不支持left/right，left/right时请删除caption属性');
+                            scope.supportable = false;
+                        }
+                    }
+                    if((scope.coverable && scope.exchangable)||(scope.minWidth!=0)){
+                        if((direction == PositionTypes.TOP)||(direction == PositionTypes.BOTTOM)){
+                            console.warn('上下覆盖时不支持互换，上下挤开和覆盖都不支持minWidth');
                             scope.supportable = false;
                         }
                     }
@@ -172,44 +222,110 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
                 function _uncoverHandler(){//挤开，单击前就编译
                     if((scope.coverable)||(!scope.supportable)) return;
-                    if(scope.exchangable){
-                        console.warn('上下左右不覆盖时均不支持互换，即coverable=false时，exchangable必须是false!');
-                        return;
-                    }
+                    if((!scope.coverable) && (scope.exchangable)) return;
 
                     var themeDom = iEle[0].querySelector(".theme");
                     var transcludeDom = iEle[0].querySelector(".content");
                     var direction = scope.expandDirection.toLowerCase();
 
-                    if(direction == PositionTypes.TOP){
-                        $(iEle[0]).empty();
-                        $(iEle[0]).append(transcludeDom).append(themeDom);
-                        $compile(iEle.contents())(scope);
-                    }
-                    if(direction == PositionTypes.RIGHT){
-                        $(transcludeDom).css({'display': 'inline-block', 'vertical-align': 'top'});
-                    }
-                    if(direction == PositionTypes.LEFT){   
-                        $(transcludeDom).css({'display': 'inline-block', 'vertical-align': 'top'});
-                        $(iEle[0]).empty();
-                        $(iEle[0]).append(transcludeDom).append(themeDom);
-                        $compile(iEle.contents())(scope);
-                    }
-                 
-                }
-
-                function _moveCover(moveWidth){
-                    if(scope.open){
-                        $(iEle[0]).animate({'left': moveWidth+scope.outerLeft+'px'}); 
+                    if(scope.minWidth == 0){
+                        scope.open = !scope.open;
                     }
                     else{
-                        scope.open = true;
-                        $(iEle[0]).animate({'left': scope.outerLeft+'px'}, function(){
+                        scope.opened = !scope.opened;
+                        $(transcludeDom).css({'width': ((scope.opened)?"":(scope.minWidth+'px'))});                      
+                    }               
+                }
+
+                function _coverStartState(){
+                    if((!scope.coverable)||(!scope.supportable)) return;
+
+                    var themeDom = iEle[0].querySelector(".theme");
+                    var transcludeDom = iEle[0].querySelector(".content");
+                    var direction = scope.expandDirection.toLowerCase();
+
+
+                    $(transcludeDom).css({'position': 'absolute', 'z-index': '9999'}); 
+                    if(scope.exchangable){
+                        if(direction == PositionTypes.LEFT){
                             $timeout(function(){
-                                scope.open = false;
+                                $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0});
                             }, 0);
-                        });
+                        }
+                        if(direction == PositionTypes.RIGHT){
+                            $timeout(function(){
+                                $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0});
+                            }, 0);
+                        }
                     }
+                    else{
+                        $(transcludeDom).css({'width': '100%'});
+                        if(direction == PositionTypes.TOP){
+                            $timeout(function(){
+                                $(transcludeDom).css({'bottom': themeDom.offsetHeight+'px'});
+                            }, 0);
+                        }
+                        if(direction == PositionTypes.RIGHT){
+                            $timeout(function(){
+                                $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0});
+                            }, 0);
+                        }
+                        if(direction == PositionTypes.LEFT){
+                            $timeout(function(){
+                                $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0});
+                            }, 0);
+                        }
+                    }
+
+                }
+
+                function _coverExchangeHandler(){
+                    if(!scope.exchangable) return;
+                    if(scope.minWidth == 0){
+                        if(scope.open){
+                            $timeout(function(){
+                                _move();
+                            }, 0);
+                        }
+                        else{
+                            scope.open = true;
+                            $(iEle[0]).animate({'left': scope.outerLeft+'px'}, function(){
+                                $timeout(function(){
+                                    scope.open = false;
+                                }, 0);
+                            });
+                        }
+                    }
+                    else{
+                        if(scope.opened){
+                            $timeout(function(){
+                                _move();
+                            }, 0);
+                        }
+                        else{
+                            scope.opened = true;
+                            $(iEle[0]).animate({'left': scope.outerLeft+'px'}, function(){
+                                $timeout(function(){
+                                    scope.opened = false;
+                                }, 0);
+                            });
+                        }                        
+                    }
+                }
+
+                function _move(){
+                    var direction = scope.expandDirection.toLowerCase();
+                    var moveStep = iEle[0].querySelector(".content").offsetWidth;
+                    if(direction == PositionTypes.LEFT){
+                        _moveCover(-moveStep);
+                    }
+                    if(direction == PositionTypes.RIGHT){
+                        _moveCover(moveStep);
+                    }
+                }
+
+                function _moveCover(moveStep){
+                    $(iEle[0]).animate({'left': moveStep+scope.outerLeft+'px'}); 
                 }
 
                 function _coverHandler(){//覆盖时，根据exchangable分类
@@ -219,33 +335,15 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     var transcludeDom = iEle[0].querySelector(".content");
                     var direction = scope.expandDirection.toLowerCase();
 
-                    $(transcludeDom).css({'position': 'absolute', 'z-index': '9999', 'width': scope.transcludeDomWidth+'px'});
-                    if(scope.exchangable){
-                        if(direction == PositionTypes.LEFT){//iele相对自己
-                            $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0});
-                            _moveCover(-scope.transcludeDomWidth);
-                        }
-                        else if(direction == PositionTypes.RIGHT){
-                            $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0});
-                            _moveCover(scope.transcludeDomWidth);
-                        }
-                        else{
-                            console.warn('上下覆盖时不支持互换，即top/bottom时，coverable=true时，exchangable必须是false');
-                            scope.open = false;
-                            return;
-                        }
+                    if(scope.minWidth == 0){
+                        scope.open = !scope.open;
                     }
                     else{
-                        if(direction == PositionTypes.TOP){
-                            $(transcludeDom).css({'bottom': themeDom.offsetHeight+'px'});
-                        }
-                        if(direction == PositionTypes.RIGHT){
-                            $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0});
-                        }
-                        if(direction == PositionTypes.LEFT){
-                            $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0});
-                        }
+                        scope.opened = !scope.opened;
+                        $(transcludeDom).css({'width': ((scope.opened)?"":(scope.minWidth+'px'))});                      
                     }
+
+                    _coverExchangeHandler();
                 }               
 
                 function _stopPropagation(){
@@ -265,8 +363,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                 function _toggle(){
                     if(scope.frozen) return;//冻结
                     if(($(iEle).find(".content").get(0).children.length == 1)&&($(iEle).find(".content").get(0).children[0].tagName == "HEADER_RENDERER")) return;//最外层就只有一个header_renderer，没内容
-
-                    scope.open = !scope.open;
+                     
+                    _uncoverHandler();//挤开时的处理
                     _coverHandler();//覆盖时的处理
 
                     if (scope.id){

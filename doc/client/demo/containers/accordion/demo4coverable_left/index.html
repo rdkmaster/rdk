@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>Accordion -> expandDirection</title>
+    <title>Accordion -> 向左覆盖</title>
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
     -->
@@ -13,29 +13,17 @@
 
 <body ng-controller='myCtrl'>
 
-     <!-- 没主题，箭头包裹  --> 
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
 
-    <rdk_accordion style='margin-left: 200px; display: inline-block;' expand_direction='left' coverable='true' exchangable='false'>
-        <rdk_basic_selector id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-        <div>向左展开，不带主题不带宽度的left</div>
+    <rdk_accordion style='display: inline-block;' expand_direction='left' coverable='true' exchangable='false' min_width='100'>
+
+        <rdk_basic_selector style='width: 300px;' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
+        
+        <div style='width: 300px; height: 100px; background-color: red'></div>
+
     </rdk_accordion>
 
-    <rdk_accordion style="display: inline-block;" expand_direction='left' coverable='true' exchangable='false'>
-        <rdk_basic_selector id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-        <div>向左展开，不带主题带宽度的left</div>
-    </rdk_accordion> 
-    
-    <!-- 有主题，上左一边宽  --> 
-
-<!--     <rdk_accordion expand_direction='left' caption="'带主题的left'" coverable='true'>
-        <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-        <div>向左展开，带主题的left</div>
-    </rdk_accordion>
-
-    <rdk_accordion style="width: 350px;" expand_direction='left' caption="'带主题带宽度的left'" coverable='true'>
-        <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-        <div>向左展开，带主题带宽度的left</div>
-    </rdk_accordion> -->
+    wwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 
 
 </body>

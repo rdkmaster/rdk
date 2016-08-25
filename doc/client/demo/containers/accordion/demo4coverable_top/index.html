@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>Accordion -> expandDirection</title>
+    <title>Accordion -> 向上覆盖</title>
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
     -->
@@ -13,29 +13,18 @@
 
 <body ng-controller='myCtrl'>
 
-     <!-- 没主题，箭头包裹  --> 
+     <div style='width: 300px; height: 400px; background-color: yellow'></div>
 
-<!--     <rdk_accordion style='margin-top: 600px' expand_direction='top' coverable='true'>
-        <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-        <div>向下展开，不带主题不带宽度的top</div>
+    <rdk_accordion style='width: 500px;' expand_direction='top' coverable='true'>
+
+        <rdk_basic_selector style='width: 300px;' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
+        
+        <div style='width: 300px; height: 100px; background-color: red'></div>
+
     </rdk_accordion>
 
-    <rdk_accordion style="width: 350px;" expand_direction='top' coverable='true'>
-        <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-        <div>向下展开，不带主题带宽度的top</div>
-    </rdk_accordion>  -->
-    
-    <!-- 有主题，上下一边宽  --> 
+    wwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 
-    <rdk_accordion style='margin-top: 400px' expand_direction='top' caption="'带主题的top'" coverable='true'>
-        <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-        <div>向下展开，带主题的top</div>
-    </rdk_accordion>
-
-    <rdk_accordion style="width: 350px;" expand_direction='top' caption="'带主题带宽度的top'" coverable='true'>
-        <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-        <div>向下展开，带主题带宽度的top</div>
-    </rdk_accordion>
 
 
 </body>
