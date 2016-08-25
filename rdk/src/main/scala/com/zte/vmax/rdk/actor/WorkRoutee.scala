@@ -14,8 +14,10 @@ class WorkRoutee extends Actor with Logger {
   lazy val runtime: Runtime = Runtime.newInstance
 
   override def receive: Receive = {
-    case ServiceRequest(ctx, script, app, param, method) =>
+    case ServiceRequest(ctx, script, app, param, method,timeStamp) =>
       val result = RdkUtil.handleJsRequest(runtime, ctx, script, app, param, method)
+      logger.debug(s"$script (${System.currentTimeMillis() - timeStamp}ms)")
+
       if (sender != context.system.deadLetters) {
         sender ! result
       }

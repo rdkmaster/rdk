@@ -7,7 +7,9 @@ import com.zte.vmax.rdk.actor.Messages.{WSBroadcast}
 import com.zte.vmax.rdk.actor.WebSocketServer
 import com.zte.vmax.rdk.cache.CacheHelper
 import com.zte.vmax.rdk.config.Config
+import com.zte.vmax.rdk.db.DataBaseHelper
 import com.zte.vmax.rdk.jsr._
+import com.zte.vmax.rdk.mq.MqHelper
 import com.zte.vmax.rdk.proxy.ProxyManager
 import com.zte.vmax.rdk.util.Logger
 import jdk.nashorn.api.scripting.ScriptObjectMirror
@@ -29,7 +31,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   val restHelper = new RestHelper
   val jarHelper = new JarHelper
-  val dbHelper = ProxyManager.deprecatedDbAccess.apply()
+  val dbHelper = ProxyManager.deprecatedDbAccess()
 
   def setAppName(appName: String): Unit = {
     application = appName
@@ -129,19 +131,19 @@ class Runtime(engine: ScriptEngine) extends Logger {
   }
 
   def fetch(sql: String, maxLine: Int): String = {
-    val data = ProxyManager.dbAccess.map(_.fetch(application, sql, maxLine)).flatten
+    val data = DataBaseHelper.fetch(application, sql, maxLine)
     objectToJson(data getOrElse "null") //转json？
-
   }
 
-  //  def batchFetch(sqlArr: Array[String], maxLine: Int): String = {
-  //    val data = ProxyManager.dbAccess.map(_.batchFetch(application, sqlArr, maxLine))
-  //    objectToJson(data.getOrElse("null")) //转json？
-  //
-  //  }
+  def batchFetch(sqlArr: ScriptObjectMirror, maxLine: Int, timeout: Long): String = {
+    val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
+    val data = DataBaseHelper.batchFetch(application, lst.toList, maxLine, timeout)
+    val ret = data.map(it => if (it.nonEmpty) it.get else Nil)
+    objectToJson(ret.toArray)
+  }
 
   def fetch_first_cell(sql: String): String = {
-    val option = ProxyManager.dbAccess.map(_.fetch(application, sql, 1)).flatten
+    val option = DataBaseHelper.fetch(application, sql, 1)
     option.map(it => {
       if (it.data.length >= 1) Some(objectToJson(it.data(0)(0))) else None
     }).flatten getOrElse objectToJson("null")
@@ -154,7 +156,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
     * @param topic 发送的主题
     * @param body  消息体内容
     */
-  def p2p(topic: String, body: String): Unit = ProxyManager.mqAccess.foreach(_.p2p(topic, body))
+  def p2p(topic: String, body: String): Unit = MqHelper.p2p(topic, body)
 
 
   /**
@@ -167,7 +169,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
     * @return 失败或超时返回空字符串
     */
   def rpc(topic: String, replyTopic: String, body: String, timeout: Int): String = {
-    ProxyManager.mqAccess.map(_.rpc(application, topic, replyTopic, body, timeout)) getOrElse ""
+    MqHelper.rpc(application, topic, replyTopic, body, timeout)
   }
 
   /**
@@ -176,7 +178,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
     * @param topic 主题名称
     * @param body  消息内容
     */
-  def broadcast(topic: String, body: String): Unit = ProxyManager.mqAccess.foreach(_.broadcast(topic, body))
+  def broadcast(topic: String, body: String): Unit = MqHelper.broadcast(topic, body)
 
   /**
     * 回复消息
@@ -184,8 +186,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
     * @param replyTopic 回复的主题
     * @param body       消息内容
     */
-  def reply(replyTopic: String, body: String): Unit = ProxyManager.mqAccess.foreach(
-    _.reply(application, replyTopic, body))
+  def reply(replyTopic: String, body: String): Unit = MqHelper.reply(application, replyTopic, body)
 
   /**
     * 订阅主题
@@ -194,8 +195,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
     * @param functionName 回调函数名
     * @param jsFile       回调的js文件名，文件路径自动拼装到文件名前面
     */
-  def subscribe(topic: String, functionName: String, jsFile: String): Unit = ProxyManager.mqAccess.foreach(
-    _.subscribe(application, topic, functionName, jsFile))
+  def subscribe(topic: String, functionName: String, jsFile: String): Unit = MqHelper.subscribe(application, topic, functionName, jsFile)
 
   /**
     * 取消订阅主题
@@ -204,8 +204,8 @@ class Runtime(engine: ScriptEngine) extends Logger {
     * @param functionName 回调函数名
     * @param jsFile       回调的js文件名，文件路径自动拼装到文件名前面
     */
-  def unSubscribe(topic: String, functionName: String, jsFile: String): Unit = ProxyManager.mqAccess.foreach(
-    _.unSubscribe(application, topic, functionName, jsFile))
+  def unSubscribe(topic: String, functionName: String, jsFile: String): Unit = MqHelper.unSubscribe(application, topic, functionName, jsFile)
+
 
   /**
     * 通过websocket广播消息

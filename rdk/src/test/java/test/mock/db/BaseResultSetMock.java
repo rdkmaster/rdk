@@ -1,4 +1,4 @@
-package test.mock;
+package test.mock.db;
 
 import java.io.InputStream;
 import java.io.Reader;
@@ -190,11 +190,6 @@ public abstract class BaseResultSetMock implements ResultSet {
 
     @Override
     public String getCursorName() throws SQLException {
-        return null;
-    }
-
-    @Override
-    public ResultSetMetaData getMetaData() throws SQLException {
         return null;
     }
 

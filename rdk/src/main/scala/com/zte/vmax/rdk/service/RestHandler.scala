@@ -5,7 +5,7 @@ import akka.pattern.ask
 import akka.util.Timeout
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.zte.vmax.rdk.actor.Messages.{HttpRequestContext, ServiceParam, ServiceRequest, ServiceResult}
+import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.util.Logger
 import org.apache.log4j.{Level, LogManager}
 import org.json4s.{DefaultFormats, Formats, JObject}
@@ -48,9 +48,10 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
     }
   }
 
-  def doDispatch(rct:RequestContext,url: List[String], app: String, param: AnyRef): Future[ServiceResult] = {
+  def doDispatch(rct: RequestContext, url: List[String], app: String, param: AnyRef): Future[ServiceResult] = {
     val method = rct.request.method.name.toLowerCase
-    val future = (router ? ServiceRequest(HttpRequestContext(rct),url.mkString("/"), app, param,method)).mapTo[String]
+    val begin = System.currentTimeMillis()
+    val future = (router ? ServiceRequest(HttpRequestContext(rct), url.mkString("/"), app, param, method,begin)).mapTo[String]
     for (
       x <- future
     ) yield ServiceResult(x)
@@ -83,21 +84,21 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
             parameters('p.as[ServiceParam]) {
               req => ctx =>
                 ctx.complete {
-                  doDispatch(ctx,url, req.app, req.param)
+                  doDispatch(ctx, url, req.app, req.param)
                 }
             }
           }
         } ~
           get { ctx =>
             ctx.complete {
-              doDispatch(ctx,url, null, null)
+              doDispatch(ctx, url, null, null)
             }
           } ~
           put {
             entity(as[ServiceParam]) {
               req => ctx =>
                 ctx.complete {
-                  doDispatch(ctx,url, req.app, req.param)
+                  doDispatch(ctx, url, req.app, req.param)
                 }
             }
           } ~
@@ -105,7 +106,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
             entity(as[ServiceParam]) {
               req => ctx =>
                 ctx.complete {
-                  doDispatch(ctx,url, req.app, req.param)
+                  doDispatch(ctx, url, req.app, req.param)
                 }
             }
           } ~
@@ -113,7 +114,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
             entity(as[ServiceParam]) {
               req => ctx =>
                 ctx.complete {
-                  doDispatch(ctx,url, req.app, req.param)
+                  doDispatch(ctx, url, req.app, req.param)
                 }
             }
           }
@@ -123,7 +124,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
           parameters('p.as[ServiceParam]) {
             req => ctx =>
               ctx.complete {
-                doDispatch(ctx,req.service :: Nil, req.app, req.param)
+                doDispatch(ctx, req.service :: Nil, req.app, req.param)
               }
           }
         } ~
@@ -131,7 +132,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
             entity(as[ServiceParam]) {
               req => ctx =>
                 ctx.complete {
-                  doDispatch(ctx,req.service :: Nil, req.app, req.param)
+                  doDispatch(ctx, req.service :: Nil, req.app, req.param)
                 }
             }
           } ~
@@ -139,7 +140,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
             entity(as[ServiceParam]) {
               req => ctx =>
                 ctx.complete {
-                  doDispatch(ctx,req.service :: Nil, req.app, req.param)
+                  doDispatch(ctx, req.service :: Nil, req.app, req.param)
                 }
             }
           } ~
@@ -147,7 +148,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
             entity(as[ServiceParam]) {
               req => ctx =>
                 ctx.complete {
-                  doDispatch(ctx,req.service :: Nil, req.app, req.param)
+                  doDispatch(ctx, req.service :: Nil, req.app, req.param)
                 }
             }
           }

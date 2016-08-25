@@ -14,7 +14,7 @@ import scala.concurrent.{Await, Future}
 /**
   * Created by 10054860 on 2016/7/28.
   */
-object MqHelper extends ActiveMQTrait with Logger {
+object MqHelper extends Logger {
 
   private val default_timeout: Int = 60
 
