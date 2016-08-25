@@ -3,16 +3,18 @@
 	position: relative;
 	
 }
-.slide img{
-    width: inherit;
+.slide {
+	display:flex;
+	box-sizing:border-box;
 }
 .context{
-	display:inline-block;
+
 	overflow: hidden;
 }
 .arrows{
  opacity: 0.5;
  font-size:50px;
+ color: #209DD3;
 }
 
 .left_arrow {
@@ -20,13 +22,27 @@
  position: absolute;
  left: 7px;
  transform: translate(-50%,-50%);
-}
 
+}
+.left_deny {
+ top: 50%;
+ position: absolute;
+ left: 7px;
+ transform: translate(-50%,-50%);
+ color: #E0E0E0;
+}
 .right_arrow {
  top: 50%;
  position: absolute;
  right: -7px;
  transform: translate(-50%,-50%);
+}
+.right_deny {
+ top: 50%;
+ position: absolute;
+ right: -7px;
+ transform: translate(-50%,-50%);
+ color: #E0E0E0;
 }
 
 

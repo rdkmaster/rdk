@@ -12,27 +12,30 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                     pageNum: '@?',
                     scrollPolicy: '@?',
                     timeout: '@?',
-                    hasVerticalScrollbar: '@?',
+                    loop: '@?',
+                   
                 },
                 //要想ng-repeat开始的时候不编译，这样才能使用其中的数组项
                 // terminal: true,
 
                 controller: ['$scope', function(scope) {
+                    
                 }],
                 template: '<div class="slider" > \
                             <div class="slide" rdk-repeat="item in data"  > \
                             </div> \
                             <div class="arrows"> \
-                                <div class="left_arrow">  \
+                                <div ng-class="{\'left_deny\':left_deny,\'left_arrow\':left_arrow}">  \
                                   <i class="fa fa-angle-left" ng-click="prev()"></i>\
                                 </div> \
-                                <div class="right_arrow"> \
+                                <div ng-class="{\'right_deny\':right_deny,\'right_arrow\':right_arrow}"> \
                                   <i class="fa fa-angle-right" ng-click="next()"></i>\
                                 </div> \
                             </div> \
                            </div>',
 
                 compile: function(tEle, tAttrs) {
+                        Utils.bindDataSource(tAttrs, 'data', 'ds');
                         return {
                             post: _link
                         }
@@ -41,12 +44,28 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
             }
 
             function _link(scope, elem, attrs, ctrl, transclude) {
+
                 //如果pageNum未配置，默认为1
                 scope.pageNum = Utils.getValue(scope.pageNum, attrs.pageNum, 1);
                 //获取超时时间
                 timeout= Utils.getValue(scope.timeout, attrs.timeout, 5000);
-
+                //判断是否循环轮播，默认为true
+                scope.loop = Utils.isTrue(scope.loop, true);
+                //appScope 为获取父元素
+                scope.appScope = Utils.findAppScope(scope);
                 //scrollstatus:1-click,2-timer,3-都支持，默认3
+
+                scope.left_arrow=true;
+                scope.right_arrow=true;
+
+           
+                // if (!attrs.hasOwnProperty('data')) {
+                //     attrs.data = attrs.ds;
+                // }
+               
+                
+                
+
                 var scrollstatus;
 
                 //获取轮播策略
@@ -62,29 +81,17 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                 if(scrollstatus & 2 && !(scrollstatus & 1)){
                     elem.find(".arrows").remove();
                 }
-
-                //判断是否有垂直滚动条，如果有总宽度减去15
-                scope.hasVerticalScrollbar=Utils.isTrue(scope.hasVerticalScrollbar, false);
-
-                //获取控件设置的总宽度,如果设置了总宽度，取css配置
-                if ($(elem[0]).width()!=0){
-                    var totalwidth=$(elem[0]).width();
-                }
-                else{
-                    if(scope.hasVerticalScrollbar){
-                        var totalwidth= elem[0].offsetWidth-15;
-                    }
-                    else{
-                        var totalwidth= elem[0].offsetWidth;
-                    }
-                }
-                //每个要显示区域的平均宽度
-                var pagewidth = parseInt(totalwidth / scope.pageNum);
-
                 scope.showdata = []; //存储需要显示的数据
-                scope.data.forEach(function(item){
-                    scope.showdata.push(item);
-                })
+
+                scope.$watch('data', function(newVal, oldVal) {
+                    if (scope.data && scope.data.length > 0) {    
+                        scope.data.forEach(function(item){
+                        scope.showdata.push(item);
+                    })
+                    }
+                    
+                }, true);
+                
 
                 var parentEle = elem.find(".slide");
                 var elements = [];
@@ -116,8 +123,6 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                             div.attr('class', 'context');
                             var newclone = div.append(clone);
                             parentEle.append(newclone);
-                            //设置context的宽度
-                            $(elem.find(".context")).css('width', pagewidth);
 
                             var element = {};
                             element.el = newclone;
@@ -134,22 +139,55 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
 
                   //对数据项进行右移，并赋值给showdata数组
                 scope.next = function() {
+
                     var count = scope.data.length; //图片总数量
-                    var tmp=scope.showdata[count - 1]
-                    for (var i = count - 1; i > 0; i--) {
-                        scope.showdata[i] = scope.showdata[i - 1];
+                    //如果设置loop为false，则轮询到最后一个，则灰化右箭头
+                    if (scope.loop=='false' && scope.showdata[scope.pageNum-1]==scope.data[count-1]){
+                        console.log('no need to move right!');
+                        // $(elem.find('.right_arrow')).css('color', "#E0E0E0");
+                        scope.right_deny=true;
+
                     }
-                    scope.showdata[0] = tmp;
+                    else{
+                        if (scope.left_deny){
+                            scope.left_deny=false;
+                            scope.left_arrow=true;
+                        }
+                        
+                        var tmp=scope.showdata[0];
+                        for (var i = 0; i < count - 1; i++) {
+                            scope.showdata[i] = scope.showdata[i + 1];
+                        }
+                        scope.showdata[count - 1] = tmp;
+
+                    }
+
+                    
                 };
 
                 //对数据项进行左移，并赋值给showdata数组
                 scope.prev = function() {
                     var count = scope.data.length; //图片总数量
-                    var tmp=scope.showdata[0];
-                    for (var i = 0; i < count - 1; i++) {
-                        scope.showdata[i] = scope.showdata[i + 1];
+                    if (scope.loop=='false' && scope.showdata[0]==scope.data[0]){
+                        console.log('no need to move left!');
+                        // $(elem.find('.left_arrow')).css('color', "#E0E0E0");
+                        scope.left_deny=true;
+
                     }
-                    scope.showdata[count - 1] = tmp;
+
+                    else{
+                        if (scope.right_deny){
+                            scope.right_deny=false;
+                            scope.right_arrow=true;
+                        }
+                        var tmp=scope.showdata[count - 1]
+                        for (var i = count - 1; i > 0; i--) {
+                            scope.showdata[i] = scope.showdata[i - 1];
+                        }
+                        scope.showdata[0] = tmp;
+                    }
+                    
+
                 };
 
                 var timer;
