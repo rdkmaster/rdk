@@ -4,6 +4,9 @@
  */
 (function() {
     return function(req) {
+		if (!req.script.match(/\.js$/)) {
+			req.script += '.js';
+		}
 		var service = require(req.script);
         return service(req.param, req.script);
     }

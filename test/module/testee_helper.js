@@ -30,9 +30,6 @@ define(['rd.core'], function() {
             var svr = location.href.match(/\/test\/(.*)\/web\//)[1];
             url = url.replace(/\$svr/, '../test/' + svr + '/server');
         }
-		if (!url.match(/\.js$/)) {
-			url += '.js'
-		}
         return url;
     }
 
