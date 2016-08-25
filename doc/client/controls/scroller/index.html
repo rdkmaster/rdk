@@ -315,6 +315,11 @@ img {
 <p><code>page_num</code> 属性可以让用户自定义轮播显示的页数。默认为1,示例如下：</p>
 <p><live_demo example="controls/scroller/page_num" width="900"></live_demo></p>
 <hr />
+<h2>loop</h2>
+<blockquote>
+<p>支持类型：布尔型</p>
+</blockquote>
+<p><code>loop</code>属性可以让用户配置是否一直循环下去，默认为true；如何设置为false，则轮播到最后一页后，箭头会灰化，不允许继续往下。</p>
 <h2>scroll_policy</h2>
 <blockquote>
 <p>支持类型：字符串</p>
@@ -329,11 +334,6 @@ img {
 <p><code>timeout</code>属性可以让用户设置超时时间，以毫秒为单位，默认为5000ms。结合<code>scroll_policy</code>设置为timer或者默认全支持使用，示例如下：</p>
 <p><live_demo example="controls/scroller/timer" width="900"></live_demo></p>
 <hr />
-<h2>has_vertical_scrollbar</h2>
-<blockquote>
-<p>支持类型：布尔型</p>
-</blockquote>
-<p><code>has_vertical_scrollbar</code>属性在出现垂直滚动条时，需要设置为'true'，以方便计算显示视图的宽度,默认为false。</p>
 <h1>样式修改</h1>
 <h2>箭头的透明度</h2>
 <p>在style中，设置class为left-arrow和right-arrow的样式，opacity设置透明度，top设置箭头的相对高度，默认透明度0.5：</p>
