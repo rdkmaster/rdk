@@ -8,7 +8,7 @@ describe('Graph DoubleClick demo',function(){
     });
     //测试规则单击 双击 每个点都这样测试
     it('周一最高气温should be 11 by click',function(){
-        var canvas=element.all(by.css(".graph_1 .rdk-graph-module div div")).get(1);
+        // var canvas=element.all(by.css(".graph_1 .rdk-graph-module div div")).get(1);
         var info=element(by.css(".fromClick"));
         browser.actions().mouseMove(element(by.css(".graph_1 canvas")),{x:78,y:130}).click().perform();
         expect(info.getText()).toBe("周一最高气温:11");
