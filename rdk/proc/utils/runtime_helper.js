@@ -156,12 +156,11 @@ var JSON1 = {
 //动态类加载
 var JVM = {
     load_class: function loadClass(jar,className) {
-        try {
-            return rdk_runtime.jarHelper().loadClass(jar, className);
-        } catch (e) {
-            return undefined;
+            if (rdk_runtime.jarHelper().loadClass(jar, className)==null){
+                return undefined;
+            }
+          return rdk_runtime.jarHelper().loadClass(jar, className);
         }
-    }
 }
 
 //国际化
@@ -654,9 +653,9 @@ function isMatrix(data) {
 }
 
 function kv(map, defaultValue) {
-    return function (value, row, index) {
-        return map && _.isDefined(value) && map.hasOwnProperty(value) ? map[value] :
-            defaultValue === undefined ? value : defaultValue;
+    return function (key, row, index) {
+        return map && _.isDefined(key) && map.hasOwnProperty(key) ? map[key] :
+            defaultValue === undefined ? key : defaultValue;
     }
 }
 

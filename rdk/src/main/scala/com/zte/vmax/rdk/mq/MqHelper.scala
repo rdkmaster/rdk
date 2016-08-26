@@ -3,7 +3,6 @@ package com.zte.vmax.rdk.mq
 import akka.util.Timeout
 import com.zte.vmax.rdk.RdkServer
 import com.zte.vmax.rdk.actor.Messages._
-import com.zte.vmax.rdk.proxy.ActiveMQTrait
 import com.zte.vmax.rdk.util.Logger
 
 import scala.concurrent.duration._
