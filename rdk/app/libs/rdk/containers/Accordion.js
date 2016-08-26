@@ -172,11 +172,15 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                             scope.supportable = false;
                         }
                     }
-                    if((scope.coverable && scope.exchangable)||(scope.minWidth!=0)||((!scope.coverable) && (scope.exchangable))){
+                    if((scope.coverable && scope.exchangable)||(scope.minWidth!=0)){
                         if((direction == PositionTypes.TOP)||(direction == PositionTypes.BOTTOM)){
-                            console.warn('上下覆盖时不支持互换，上下挤开和覆盖都不支持minWidth，挤开时不支持交换位置');
+                            console.warn('上下覆盖时不支持互换，上下挤开和覆盖都不支持minWidth');
                             scope.supportable = false;
                         }
+                    }
+                    if((!scope.coverable) && (scope.exchangable)){
+                        console.warn('挤开时不支持交换位置');
+                        scope.supportable = false;
                     }
                 }
 
@@ -257,10 +261,10 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
                 function _move(){
                     if(direction == PositionTypes.LEFT){
-                        _moveCover(-transcludeDom.offsetWidth);
+                        _moveCover(-transcludeDom.offsetWidth+scope.minWidth);
                     }
                     if(direction == PositionTypes.RIGHT){
-                        _moveCover(transcludeDom.offsetWidth);
+                        _moveCover(transcludeDom.offsetWidth-scope.minWidth);
                     }
                 }
 
