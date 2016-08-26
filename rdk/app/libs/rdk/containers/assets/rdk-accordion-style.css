@@ -29,6 +29,7 @@
 .rdk-accordion-module .content{
     border: 1px solid #CDCDCD;
     border-radius: 4px;
-    padding: 10px;
+    padding: 5px;
     background-color: white;
+    width: inherit;
 }

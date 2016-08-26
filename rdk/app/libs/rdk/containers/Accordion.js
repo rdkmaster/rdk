@@ -68,6 +68,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
             function _link(scope, iEle, iAttrs, ctrl, transclude){
 
+                var themeDom, transcludeDom, direction;
+
                 var transcludeScope = scope.$parent.$new();
                 transclude(transcludeScope, function(clone,innerScope) {
                     for (var key in clone){
@@ -107,17 +109,18 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.editable = Utils.isTrue(scope.editable, false);
                     scope.showButtons = angular.isDefined(scope.buttons);                   
                     scope.appScope = Utils.findAppScope(scope);
-                    /*var 4 cover*/
+                    scope.supportable = true;//是否异常
                     scope.outerLeft = (parseInt($(iEle[0]).css('left'), 10)|| 0 )- (parseInt($(iEle[0]).css('right'), 10)||0);
-                    scope.transcludeDomWidth = iEle[0].querySelector(".content").offsetWidth;
-                    scope.supportable = true;
-                    /*var 4 cover*/
 
                     _initDefaultAttrByDirection();
-                    _refreshThemeByCaption();
+                    _initGlobalDom();
+                    _exceptionHandler();
 
-                    _unCoverStartStateHandler();
-                    _coverStartStateHandler();
+                    $timeout(function(){//使渲染完成时大小生效,caption等
+                        _unCoverStartStateHandler();
+                        _coverStartStateHandler();
+                        _minWidthHandler();
+                    }, 0);
 
                     scope.toggle = _toggle;
                     scope.clickHandler = _clickHandler;   
@@ -127,33 +130,21 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.stopPropagation = _stopPropagation;
                 }
 
-                function _coverStartStateHandler(){
-                    if(!scope.coverable) return;
-                    _coverStartState();
-                    _minWidthHandler();
-                }
-
-                function _unCoverStartStateHandler(){
-                    if(scope.coverable) return;
-                    _uncoverStartState();
-                    _minWidthHandler();                  
+                function _initGlobalDom(){
+                   themeDom = iEle[0].querySelector(".theme");
+                   transcludeDom = iEle[0].querySelector(".content");
+                   direction = scope.expandDirection.toLowerCase();                   
                 }
 
                 function _minWidthHandler(){
                     if(scope.minWidth == 0) return;
                     scope.open = true;
                     scope.opened = false;
-                    var transcludeDom = iEle[0].querySelector(".content");
                     $(transcludeDom).css({'width': scope.minWidth+'px', 'overflow': 'hidden'});
                 }
 
-                function _uncoverStartState(){
+                function _unCoverStartStateHandler(){
                     if((scope.coverable)||(!scope.supportable)) return;
-                    if((!scope.coverable) && (scope.exchangable)) return;
-
-                    var themeDom = iEle[0].querySelector(".theme");
-                    var transcludeDom = iEle[0].querySelector(".content");
-                    var direction = scope.expandDirection.toLowerCase();
 
                     if(direction == PositionTypes.RIGHT){
                         $(transcludeDom).css({'display': 'inline-block'});
@@ -171,10 +162,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     }                 
                 }
 
-                function _refreshThemeByCaption(){
-                    var direction = scope.expandDirection.toLowerCase();
+                function _exceptionHandler(){
                     if(!scope.caption){
-                        var themeDom = iEle[0].querySelector(".theme");
                         $(themeDom).css({'display': 'inline-block', 'vertical-align': 'top'});
                     }
                     else{
@@ -183,9 +172,9 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                             scope.supportable = false;
                         }
                     }
-                    if((scope.coverable && scope.exchangable)||(scope.minWidth!=0)){
+                    if((scope.coverable && scope.exchangable)||(scope.minWidth!=0)||((!scope.coverable) && (scope.exchangable))){
                         if((direction == PositionTypes.TOP)||(direction == PositionTypes.BOTTOM)){
-                            console.warn('上下覆盖时不支持互换，上下挤开和覆盖都不支持minWidth');
+                            console.warn('上下覆盖时不支持互换，上下挤开和覆盖都不支持minWidth，挤开时不支持交换位置');
                             scope.supportable = false;
                         }
                     }
@@ -220,107 +209,58 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, unfoldedIconStr);
                 }
 
-                function _uncoverHandler(){//挤开，单击前就编译
+                function _uncoverHandler(){
                     if((scope.coverable)||(!scope.supportable)) return;
-                    if((!scope.coverable) && (scope.exchangable)) return;
-
-                    var themeDom = iEle[0].querySelector(".theme");
-                    var transcludeDom = iEle[0].querySelector(".content");
-                    var direction = scope.expandDirection.toLowerCase();
-
-                    if(scope.minWidth == 0){
-                        scope.open = !scope.open;
-                    }
-                    else{
-                        scope.opened = !scope.opened;
-                        $(transcludeDom).css({'width': ((scope.opened)?"":(scope.minWidth+'px'))});                      
-                    }               
+                    _endStateHandler();               
                 }
 
-                function _coverStartState(){
+                function _coverStartStateHandler(){
                     if((!scope.coverable)||(!scope.supportable)) return;
-
-                    var themeDom = iEle[0].querySelector(".theme");
-                    var transcludeDom = iEle[0].querySelector(".content");
-                    var direction = scope.expandDirection.toLowerCase();
-
 
                     $(transcludeDom).css({'position': 'absolute', 'z-index': '9999'}); 
                     if(scope.exchangable){
                         if(direction == PositionTypes.LEFT){
-                            $timeout(function(){
-                                $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0});
-                            }, 0);
+                            $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0});
                         }
                         if(direction == PositionTypes.RIGHT){
-                            $timeout(function(){
-                                $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0});
-                            }, 0);
+                            $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0});
                         }
                     }
                     else{
-                        $(transcludeDom).css({'width': '100%'});
                         if(direction == PositionTypes.TOP){
-                            $timeout(function(){
-                                $(transcludeDom).css({'bottom': themeDom.offsetHeight+'px'});
-                            }, 0);
+                            $(transcludeDom).css({'bottom': themeDom.offsetHeight+'px'});
                         }
                         if(direction == PositionTypes.RIGHT){
-                            $timeout(function(){
-                                $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0});
-                            }, 0);
+                            $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0});
                         }
                         if(direction == PositionTypes.LEFT){
-                            $timeout(function(){
-                                $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0});
-                            }, 0);
+                            $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0});
                         }
                     }
-
                 }
 
                 function _coverExchangeHandler(){
                     if(!scope.exchangable) return;
-                    if(scope.minWidth == 0){
-                        if(scope.open){
-                            $timeout(function(){
-                                _move();
-                            }, 0);
-                        }
-                        else{
-                            scope.open = true;
-                            $(iEle[0]).animate({'left': scope.outerLeft+'px'}, function(){
-                                $timeout(function(){
-                                    scope.open = false;
-                                }, 0);
-                            });
-                        }
+
+                    if((scope.minWidth == 0)?(scope.open):(scope.opened)){
+                        _move();
                     }
                     else{
-                        if(scope.opened){
-                            $timeout(function(){
-                                _move();
+                        (scope.minWidth == 0) ? (scope.open = true) : (scope.opened = true);
+                        $(iEle[0]).animate({'left': scope.outerLeft+'px'}, function(){
+                            $timeout(function(){//使图标切换生效
+                                (scope.minWidth == 0) ? (scope.open = false) : (scope.opened = false);
                             }, 0);
-                        }
-                        else{
-                            scope.opened = true;
-                            $(iEle[0]).animate({'left': scope.outerLeft+'px'}, function(){
-                                $timeout(function(){
-                                    scope.opened = false;
-                                }, 0);
-                            });
-                        }                        
+                        });                            
                     }
                 }
 
                 function _move(){
-                    var direction = scope.expandDirection.toLowerCase();
-                    var moveStep = iEle[0].querySelector(".content").offsetWidth;
                     if(direction == PositionTypes.LEFT){
-                        _moveCover(-moveStep);
+                        _moveCover(-transcludeDom.offsetWidth);
                     }
                     if(direction == PositionTypes.RIGHT){
-                        _moveCover(moveStep);
+                        _moveCover(transcludeDom.offsetWidth);
                     }
                 }
 
@@ -328,23 +268,24 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     $(iEle[0]).animate({'left': moveStep+scope.outerLeft+'px'}); 
                 }
 
-                function _coverHandler(){//覆盖时，根据exchangable分类
+                function _coverHandler(){
                     if((!scope.coverable)||(!scope.supportable)) return;
+                    _endStateHandler();
 
-                    var themeDom = iEle[0].querySelector(".theme");
-                    var transcludeDom = iEle[0].querySelector(".content");
-                    var direction = scope.expandDirection.toLowerCase();
+                    $timeout(function(){
+                        _coverExchangeHandler();//交换位置时位移
+                    }, 0);
+                }
 
+                function _endStateHandler(){
                     if(scope.minWidth == 0){
                         scope.open = !scope.open;
                     }
                     else{
                         scope.opened = !scope.opened;
-                        $(transcludeDom).css({'width': ((scope.opened)?"":(scope.minWidth+'px'))});                      
+                        $(transcludeDom).css({'width': ((scope.opened)?"inherit":(scope.minWidth+'px'))});                      
                     }
-
-                    _coverExchangeHandler();
-                }               
+                }             
 
                 function _stopPropagation(){
                     event.stopPropagation();
