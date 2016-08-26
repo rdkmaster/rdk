@@ -80,19 +80,6 @@ define(['rd.core', 'css!rd.styles.ScoreIndicator',
                         "width": tmpWidth + "px"
                     };
                 }
-
-                // scope.$watch('scope.config', function(newValue, oldValue) {
-                //     angular.forEach(newValue, function(item, key) {
-                //         if (newValue != oldValue) {
-                //             item.label = newValue[key].label;
-                //             item.color = newValue[key].color;
-                //             item.emotion = newValue[key].emotion;
-                //             item.value = newValue[key].value;
-                //             item.mark = newValue[key].mark;
-                //         }
-                //     });
-                // }, true);
-
             }
 
         }
