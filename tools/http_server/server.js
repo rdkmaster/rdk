@@ -27,6 +27,13 @@ function getRemoteIp (req) {
   return ip;
 }
 
+app.use('/rdk_server', function(req, res) {
+  var url = req.url[0] == '/' ? req.url : '/' + req.url;
+  url = '/rdk' + url;
+  console.log('redirect to: ' + url);
+  res.redirect(url);
+})
+
 app.use(function(req, res) {
   var _reqUrl = url.parse(req.url).pathname;
   var _targetUrl = '';
@@ -38,7 +45,7 @@ app.use(function(req, res) {
     _proxy = config.proxy[i];
     if (_reqUrl.match(_proxy.url) ) {
       _targetUrl = 'http://' + _proxy.host + ':' + _proxy.port + req.url;
-      console.log('req from ' + getRemoteIp(req) + ' : proxy to ' + _targetUrl + ' ... ');
+      console.log('proxy to: ' + _targetUrl);
       /*jshint -W083*/
       proxy.web(req, res, {
         target: _targetUrl
