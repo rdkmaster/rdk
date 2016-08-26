@@ -39,17 +39,26 @@ application.initDataSourceService(DSService);
       ]
   };
   function getHeadAndData(obj){
-      return obj.name+" "+obj.seriesName+":"+obj.data;
+      return obj.name+""+obj.seriesName+":"+obj.data;
   };
   //click
   EventService.register("graph",'click',function(event,data){
+    scope.showContent=getHeadAndData(data);
+  });
+
+  EventService.register("graph_2",'click',function(event,data){
     scope.showContent=getHeadAndData(data);
   });
   //dblclick
   EventService.register("graph",'dblclick',function(event,data){
     scope.dblclickDat=getHeadAndData(data);
   });
- 
+ scope.reloadData=function(){
+   scope.graphdata.data=[
+     [1, 4, 6, 4, 9, 6, 3]
+     
+   ];
+ };
 /************************ 应用的代码逻辑结束 ************************/
 }]);
 

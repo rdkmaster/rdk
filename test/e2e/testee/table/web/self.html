@@ -54,7 +54,9 @@
         </div>
         <div class="section_2">
            <span>SELECT事件:{{Table.itemInfo}}</span><br>
-           <span>DOUBLECLICK事件:index={{index}};{{dclick}}</span>
+           <span>DOUBLECLICK事件:index=</span>
+           <span>{{index}}</span><a href="#">;</a>
+           <span>{{dclick}}</span>
         </div>
         <div class="section_3">
             <input type="text" placeholder="set selected_index" ng-model="Table.index">

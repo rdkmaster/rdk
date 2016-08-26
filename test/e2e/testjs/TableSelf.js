@@ -74,6 +74,7 @@ describe('Table Demos',function(){
     it('表格逐行点击获取数据',function(){
     	var lines=element.all(by.css(".demo1 .sticky-wrap .sticky-enabled tbody tr"));
     	expect(lines.count()).toBe(4);
+        var showInfo=element.all(by.css(".section_2 span")).get(0);
     	lines.each(function(item,index){
     		item.click();
             // item.dblclick();
