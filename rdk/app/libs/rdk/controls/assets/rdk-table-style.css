@@ -134,7 +134,7 @@
 }
 
 .rdk-table-module .no-data{
-    background:url("table_white_bg.png") repeat scroll!important;
+    background:url("no_data_bg.png") no-repeat center;
     border-radius: 4px;
     width: 150px;
     height: 160px;

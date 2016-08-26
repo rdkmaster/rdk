@@ -186,3 +186,6 @@ footer h3 ,footer p{
 .marginBottom1{
 	margin-bottom: 20px;
 }
+.plain-text {
+	color: white;
+}

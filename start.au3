@@ -3,7 +3,7 @@
 #include <WindowsConstants.au3>
 #include <Misc.au3>
 
-#AutoIt3Wrapper_Icon=doc/favicon.ico
+#AutoIt3Wrapper_Icon=favicon.ico
 
 #NoTrayIcon
 

@@ -107,12 +107,22 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 ## coverable ##
 >支持类型：布尔型
 
-此属性用于设置容器展开时是否脱离文档流，覆盖其他标签。缺省时默认`false`，表示挤开其他标签，不覆盖其他标签。
+此属性用于设置容器展开时是否脱离文档流，覆盖其他标签。
+
+缺省 `coverable` 属性时，其默认值有两种情况：
+
+- `expand_direction` 取值为`top`或者`bottom`时，`coverable`缺省默认值为`false`。
+- `expand_direction` 取值为`left`或者`right`时，`coverable`缺省默认值为`true`。
+
+`coverable`的两种取值分别代表：
 
 - `coverable = "true"` 表示容器内容展开时脱离文档流，覆盖其他标签。
-- `coverable = "false"` 表示容器内容展开时不覆盖其他标签，挤开其他标签。缺省时默认不覆盖。
+- `coverable = "false"` 表示容器内容展开时不覆盖其他标签，挤开其他标签。
 
 **注意** 主题`caption`非空时，暂不支持左/右折叠展开。
+**注意** `coverable=false`时表示不覆盖，此时`exchangable`必须为`false`。
+**注意** `coverable=true`且朝上下方向展开时，`exchangable`必须为`false`。
+
 
 向上展开覆盖示例如下：
 <live_demo example="containers/accordion/demo4coverable_top" width="800"  height="300"></live_demo>
@@ -125,6 +135,32 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 
 向左展开覆盖示例如下：
 <live_demo example="containers/accordion/demo4coverable_left" width="800"  height="300"></live_demo>
+
+## exchangable ##
+>支持类型：布尔型
+
+此属性用于设置：容器朝左右方向覆盖展开后，是否交换图标位置。
+
+缺省 `exchangable` 属性时，其默认值有两种情况：
+
+- `expand_direction` 取值为`top`或者`bottom`时，`exchangable`缺省默认值为`false`。
+- `expand_direction` 取值为`left`或者`right`时，`exchangable`缺省默认值为`true`。
+
+`exchangable`的两种取值分别代表：
+
+- `exchangable = "true"` 表示展开后交换图标位置。
+- `exchangable = "false"` 表示展开后不交换图标位置。
+
+**注意** 主题`caption`非空时，暂不支持左/右折叠展开。
+**注意** `coverable=false`时表示不覆盖，此时`exchangable`必须为`false`。
+**注意** `coverable=true`且朝上下方向展开时，`exchangable`必须为`false`。
+
+向右展开覆盖，且图标位置交换，示例如下：
+<live_demo example="containers/accordion/demo4RightCoverable" width="800"  height="300"></live_demo>
+
+向左展开覆盖，且图标位置交换，示例如下：
+<live_demo example="containers/accordion/demo4LeftCoverable" width="800"  height="300"></live_demo>
+
 
 ## id ##
 >支持类型：字符串
