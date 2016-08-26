@@ -17,6 +17,8 @@
 ## 我想参与
 我们热忱欢迎所内外的热心人来参与RDK的研发，[查看如何参与](http://10.9.233.35:8080/doc/get-involved.html#work-flow)。
 
+RDK在GitHub上的工程：<https://github.com/rdkmaster/rdk>。我们也欢迎在github上提交代码。
+
 ## 我要吐槽
 1. 如果未登录的，请用人事在线账号在[这里登录](http://gitlab.zte.com.cn/users/sign_in)
 2. [单击这里，尽情的发泄把骚年](http://gitlab.zte.com.cn/10045812/rdk/issues/new)
