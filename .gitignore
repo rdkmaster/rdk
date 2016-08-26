@@ -13,3 +13,7 @@ start.cfg
 **/rdk/proc/bin/jre
 **/rdk/proc/bin/lib/rdk-server_2.10-*.jar
 
+#忽略测试运行相关
+test/report
+test/npm-debug.log
+
