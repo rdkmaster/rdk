@@ -2,6 +2,7 @@
 describe('Table Demos',function(){
     beforeEach(function(){
         browser.get('test/e2e/testee/table/web/self.html');
+        browser.sleep(2000);
     });
     afterEach(function(){
     });

@@ -2,9 +2,9 @@
 describe('Graph DoubleClick demo',function(){
     beforeEach(function(){
         browser.get('test/e2e/testee/graph/web/self.html');
+        browser.sleep(2000);
     });
     afterEach(function(){
-        expect(0).toBe(0);
     });
     //测试规则单击 双击 每个点都这样测试
     it('周一最高气温should be 11 by click',function(){
