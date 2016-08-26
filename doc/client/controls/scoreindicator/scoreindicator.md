@@ -5,7 +5,7 @@
 主要是通过提供给`rdk_score_indicator`控件的config参数（JSON对象）来指定要展示的信息（如占比值，占比柱状图的颜色等）。
 
 这是一个简单的 `rdk_score_indicator` 例子：
-<live_demo example="controls/scoreindicator/basic" width="400"></
+<live_demo example="controls/scoreindicator/basic" width="600" height="400"></live_demo>
 
 
 # 属性 #
@@ -52,7 +52,8 @@
 - **value（必选）**得分区间的占比值
 - mark（可选） 是否展示`emotion`属性中的图片，默认值为false
 
-
+示例如下：
+<live_demo example="controls/scoreindicator/scoreindicator_update" width="600" height="400"></live_demo>
 #事件#
 暂无
 
