@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Scroller -> Basic</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+    <script type="text/javascript">
+    require.config({
+        paths: {
+            //这里引用了rdk应用的公共助手文件，不要改动
+            "application": '/doc/tools/doc_js/doc_app_helper',
+        }
+    });
+    </script>
+    <style type="text/css">
+    .red {
+        color: red;
+    }
+    
+    .green {
+        color: green;
+    }
+
+    .left_arrow,.left_deny{
+        left : -20px;
+    }
+    </style>
+</head>
+
+<body ng-controller='myCtrl' class="rdk_main">
+    <rdk_scroller ds="dsScroller" ds_url="$svr/data"  ds_query_if="ready" loop="false"
+     scroll_policy="manual" page_num="{{dsScroller.length -1 }}" style="width:600px;margin:0 auto">
+        <div style="width:200px;text-align: center;border-left:1px solid #5BA9DD;" ng-click="appScope.clickItem(item)" ng-class="{true :'red', false :'green'}[item.selected == '1']">
+            <span ng-bind="item.title"></span>
+            <br>
+            <span ng-bind="item.oldPercent"></span>
+            <span ng-bind="item.newPercent"></span>
+        </div>
+    </rdk_scroller>
+</body>
+
+</html>
