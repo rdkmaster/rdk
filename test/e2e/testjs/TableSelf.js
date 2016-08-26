@@ -56,6 +56,12 @@ describe('Table Demos',function(){
         //setting的双向绑定支持测试
         element(by.css(".section_3 .changeWidth")).click();
     });
+    it('改变绑定的data 验证data数量 should be 2',function(){
+        var lines=element.all(by.css(".demo1 .sticky-wrap .sticky-enabled tbody tr"));
+        var showPage=element(by.css(".demo1 .pagingLine>ul li .regularRecords"));
+        element(by.css(".section_3 .changeData")).click();
+        expect(lines.count()).toBe(2);
+    });
     //翻页和分页信息检查
     it('翻页点击与分页动态一致2/3 3/3 2/3',function(){
         var showPage=element(by.css(".demo1 .pagingLine>ul li .regularRecords"));
@@ -77,13 +83,9 @@ describe('Table Demos',function(){
         var showInfo=element.all(by.css(".section_2 span")).get(0);
     	lines.each(function(item,index){
     		item.click();
-            // item.dblclick();
     	});
     });
-    //模拟双击效果
-    // it('dbclick',function(){
-
-    // });
+   
     it('设置页面显示条数4条变10条',function(){
         var lines=element.all(by.css(".demo1 .sticky-wrap .sticky-enabled tbody tr"));
         var inputs=element.all(by.css(".section_3 input"));
@@ -118,17 +120,24 @@ describe('Table Demos',function(){
         var lines=element.all(by.css(".demo3 .sticky-wrap"));
         expect(lines.count()).toBe(1);
     });
-    it('后端分页，,共7页,最后一页3条数据',function(){
+    it('后端分页 共7页 最后一页3条数据',function(){
         var lines=element.all(by.css(".demo4 .sticky-wrap .sticky-enabled tbody tr"));
+        var showPage=element(by.css(".demo4 .pagingLine>ul li .regularRecords"));
         element(by.css(".demo4 button")).click();
         var nextPage=element.all(by.css(".demo4 .pagingLine>ul li a"));
         nextPage.get(1).click();
         expect(lines.count()).toBe(7);
+        expect(showPage.getText()).toBe("2/7");
         nextPage.get(1).click();
+        expect(showPage.getText()).toBe("3/7");
         nextPage.get(1).click();
+        expect(showPage.getText()).toBe("4/7");
         nextPage.get(1).click();
+        expect(showPage.getText()).toBe("5/7");
         nextPage.get(1).click();
+        expect(showPage.getText()).toBe("6/7");
         nextPage.get(1).click();
+        expect(showPage.getText()).toBe("7/7");
         expect(lines.count()).toBe(3);
     });
     
