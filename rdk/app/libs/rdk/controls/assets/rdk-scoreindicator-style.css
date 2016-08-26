@@ -1,12 +1,13 @@
-.distributionNew{ 
-  height:43%;
-  display: flex;
+.distributionNew{
+  height:100%; 
+  display: inline-flex;
   flex-direction: column; 
   line-height:1.2; 
 }
 .distributionSub{
   margin-left:0px;
-  margin-top: 10px;
+  margin-top: 0px;
+  height:100%;
 }
 .hrLinePart0{
   height: 1px;

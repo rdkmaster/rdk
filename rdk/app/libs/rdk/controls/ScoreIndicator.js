@@ -8,27 +8,27 @@ define(['rd.core', 'css!rd.styles.ScoreIndicator',
                 restrict: 'E',
                 replace: true,
                 template: '<div class="distributionNew">\
-                            <div style="display:flex;justify-content: space-between;">\
-                            <div class="distributionSub">\
-                                <div ng-repeat = "item in config" style="display:flex;">\
-                                    <div style="display:flex;">\
-                                        <span style="color:#D5CCBE;" ng-show="{{$index == 0 ? true : false}}">100%</span>\
-                                        <hr class="hrLinePart5" ng-show="{{$index == 0 ? true : false}}"/>\
-                                    </div>\
-                                    <div style="display:flex;align-items: center;margin-left: {{$index == 0 ? -26 : 60}}px;">\
-                                        <img alt="img" src="{{item.emotion}}" ng-show="{{item.mark ? true : false}}"/>\
-                                        <hr class={{"hrLinePart"+$index}} style="width:6px;" ng-show="{{item.mark ? true : false}}"/>\
-                                        <div style="margin-left: {{item.mark ? 0 : 26}}px;background-color:{{item.color}};width:15px;height:{{item.value >= 20 ? item.value : 20}}px;"></div>\
-                                    </div>\
-                                    <div style="display:flex;">\
-                                        <p ng-show=false>{{initFaceSpanWidth()}}</p>\
-                                        <hr class={{"hrLinePart"+$index}} ng-style="getRealWidth($index)">\
-                                        <span class="faceSpan" style="color:{{item.color}};">{{item.label + item.value + "%"}}</span>\
-                                    </div>\
+                        <div style="display:flex;justify-content: space-between;">\
+                        <div class="distributionSub">\
+                            <div ng-repeat = "item in config" style="display:flex;">\
+                                <div style="display:flex;">\
+                                    <span style="color:#D5CCBE;" ng-show="{{$index == 0 ? true : false}}">100%</span>\
+                                    <hr class="hrLinePart5" ng-show="{{$index == 0 ? true : false}}"/>\
+                                </div>\
+                                <div style="display:flex;align-items: center;margin-left: {{$index == 0 ? -26 : 60}}px;">\
+                                    <img alt="img" src="{{item.emotion}}" ng-show="setMark(item)"/>\
+                                    <hr class={{"hrLinePart"+$index}} style="width:6px;" ng-show="setMark(item)"/>\
+                                    <div style="margin-left: {{item.mark ? 0 : 26}}px;background-color:{{item.color}};width:15px;height:{{setHeight(item.value)}}px;"></div>\
+                                </div>\
+                                <div style="display:flex;">\
+                                    <p ng-show=false>{{initFaceSpanWidth()}}</p>\
+                                    <hr class={{"hrLinePart"+$index}} ng-style="getRealWidth($index)">\
+                                    <span class="faceSpan" style="color:{{item.color}};">{{item.label + item.value + "%"}}</span>\
                                 </div>\
                             </div>\
-                            </div>\
-                           </div>',
+                        </div>\
+                        </div>\
+                       </div>',
                 scope: {
                     config: '=?'
                 },
@@ -38,58 +38,61 @@ define(['rd.core', 'css!rd.styles.ScoreIndicator',
                     }
                 }
             };
+
             function _link(scope, iEle, iAttrs, ctrl, transclude) {
-                scope.Width0 = 0;
-                scope.Width1 = 0;
-                scope.Width2 = 0;
-                scope.Width3 = 0;
-                scope.Width4 = 0;
+                scope.initWidth = 10; //初始横线长度
+                scope.widthArr = new Array();
+                var height = iEle[0].offsetHeight > 0 ? iEle[0].offsetHeight : 300;
 
-                scope.initWidth = 10;//初始横线长度
-                scope.MaxItem = 5;//config数组的最大长度
+                scope.setHeight = function(proValue) {
+                    var parentHeight = height;
+                    var itemHeight = parentHeight * proValue / 100;
+                    return itemHeight;
+                }
 
-                scope.initFaceSpanWidth = function(){
-                    var labelEleObj = angular.element(iEle).find('.faceSpan');                    
-                    if(!labelEleObj || labelEleObj.length > scope.MaxItem){
-                        console.log("未找到对应的元素");
-                        return ;
+                scope.setMark = function(item){
+                    return item.mark ? true : false;
+                }
+
+                scope.initFaceSpanWidth = function() {
+                    var labelEleObj = iEle.find('.faceSpan');
+                    if (!labelEleObj) {
+                        console.error("未找到对应的元素");
+                        return;
                     }
-                    angular.forEach(labelEleObj, function(data,index){
-                        //console.log(index + "的值为" + data.innerHTML);
-                        if (index == "0") {
-                            scope.Width0 = labelEleObj[index].offsetWidth;;
-                        } else if (index == "1") {
-                            scope.Width1 = labelEleObj[index].offsetWidth;;
-                        } else if (index == "2") {
-                            scope.Width2 = labelEleObj[index].offsetWidth;;
-                        } else if (index == "3") {
-                            scope.Width3 = labelEleObj[index].offsetWidth;;
-                        } else if (index == "4") {
-                            scope.Width4 = labelEleObj[index].offsetWidth;;
+                    angular.forEach(labelEleObj, function(data, index) {
+                        if (scope.widthArr.length < index + 1) {
+                            scope.widthArr.push(labelEleObj[index].offsetWidth);
                         } else {
-                            console.log("未找到对应的元素");
+                            scope.widthArr[index] = labelEleObj[index].offsetWidth;
                         }
-                     
                     });
                 }
 
-                scope.getRealWidth = function(elemID){
-                    var tmpWidth = 0;
-                    if(elemID == "0"){
-                        tmpWidth = scope.initWidth + scope.Width1+scope.Width2+scope.Width3 + scope.Width4;
-                    }else if(elemID == "1"){
-                        tmpWidth = scope.initWidth + scope.Width2+scope.Width3 + scope.Width4;
-                    }else if(elemID == "2"){
-                        tmpWidth = scope.initWidth + scope.Width3 + scope.Width4;
-                    }else if(elemID == "3"){
-                        tmpWidth = scope.initWidth + scope.Width4;
-                    }else if(elemID == "4"){
-                        tmpWidth = scope.initWidth;
-                    }else{
-                        tmpWidth = scope.initWidth;
-                    }
-                    return {"width" : tmpWidth + "px"};
+                scope.getRealWidth = function(elemID) {
+                    var tmpWidth = scope.initWidth;
+                    var tmpWidthArr = scope.widthArr;
+                    tmpWidthArr.splice(0, elemID + 1);
+                    angular.forEach(tmpWidthArr, function(data) {
+                        tmpWidth = tmpWidth + data;
+                    });
+                    return {
+                        "width": tmpWidth + "px"
+                    };
                 }
+
+                // scope.$watch('scope.config', function(newValue, oldValue) {
+                //     angular.forEach(newValue, function(item, key) {
+                //         if (newValue != oldValue) {
+                //             item.label = newValue[key].label;
+                //             item.color = newValue[key].color;
+                //             item.emotion = newValue[key].emotion;
+                //             item.value = newValue[key].value;
+                //             item.mark = newValue[key].mark;
+                //         }
+                //     });
+                // }, true);
+
             }
 
         }
