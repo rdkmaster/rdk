@@ -32,12 +32,13 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     expandDirection: '=?',
                     coverable: '=?',
                     exchangable: '=?',
-                    minWidth: '=?'
+                    minWidth: '=?',
+                    expand: '=?'
                 }, 
                 template: 
                 '<div class="rdk-accordion-module" ng-click="stopPropagation()">\
                     <div class="theme" ng-click="toggle()">\
-                        <i class="{{(minWidth==0)?(open?unfoldedIcon:foldedIcon):(opened?unfoldedIcon:foldedIcon)}}"></i>\
+                        <i class="{{(minWidth==0)?(open?unfoldedIcon:foldedIcon):(expand?unfoldedIcon:foldedIcon)}}"></i>\
                         <span ng-show="!!caption" class="theme-caption" contentEditable="{{editable}}"\
                          ng-keydown="keyPressHandler($event)"\
                          >\
@@ -102,9 +103,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
                 function _init(){
                     scope.expandDirection = Utils.getValue(scope.expandDirection, iAttrs.expandDirection, PositionTypes.BOTTOM);             
-                    scope.caption = Utils.getValue(scope.caption, iAttrs.caption, '');                                       
-                    scope.open = Utils.isTrue(scope.open, false);   
-                    scope.minWidth =  Utils.getValue(scope.minWidth, iAttrs.minWidth, 0);                           
+                    scope.caption = Utils.getValue(scope.caption, iAttrs.caption, '');                                      
+                    scope.minWidth = Utils.getValue(scope.minWidth, iAttrs.minWidth, 0);                       
                     scope.frozen = Utils.isTrue(scope.frozen, false);
                     scope.editable = Utils.isTrue(scope.editable, false);
                     scope.showButtons = angular.isDefined(scope.buttons);                   
@@ -116,11 +116,12 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     _initGlobalDom();
                     _exceptionHandler();
 
-                    $timeout(function(){//使渲染完成时大小生效,caption等
+                    scope.$watch(["open", "expand"], function(newVal, oldVal){
+                        _resetVar();
                         _unCoverStartStateHandler();
                         _coverStartStateHandler();
                         _minWidthHandler();
-                    }, 0);
+                    }, true);
 
                     scope.toggle = _toggle;
                     scope.clickHandler = _clickHandler;   
@@ -130,17 +131,47 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.stopPropagation = _stopPropagation;
                 }
 
+                function _resetVar(){
+                    if(scope.open == undefined){
+                        if((scope.minWidth == 0)&&(scope.expand!=undefined)){
+                            scope.expand = Utils.isTrue(scope.expand, false);
+                            scope.open = scope.expand;//只有expand时，open取expand值
+                        }
+                    }
+                    else{
+                        scope.open = Utils.isTrue(scope.open, false);//取外面定义的open
+                        if(!scope.open){
+                            scope.minWidth = 0;//open=false时重置minWidth，后续的处理都是基于minWidth的
+                        }
+                    }
+                }
+
                 function _initGlobalDom(){
                    themeDom = iEle[0].querySelector(".theme");
                    transcludeDom = iEle[0].querySelector(".content");
                    direction = scope.expandDirection.toLowerCase();                   
                 }
 
-                function _minWidthHandler(){
-                    if(scope.minWidth == 0) return;
+                function _zeroStateHandler(){
+                    if(scope.minWidth!=0) return;//目前是open决定open，后面废弃open后，由expand决定open
+                    scope.open = Utils.isTrue(scope.open, false); 
+                }
+
+                function _nonZeroStateHandler(){
+                    if(scope.minWidth==0) return;//open=true,expand决定伸缩
                     scope.open = true;
-                    scope.opened = false;
-                    $(transcludeDom).css({'width': scope.minWidth+'px', 'overflow': 'hidden'});
+                    scope.expand = Utils.isTrue(scope.expand, false);
+                    var initialWidth =  scope.expand ? 'inherit' : scope.minWidth;
+                    $(transcludeDom).css({'width': initialWidth + 'px', 'overflow': 'hidden'});                     
+                }
+
+                function _minWidthHandler(){
+                    _zeroStateHandler();//零时初始显隐
+                    _nonZeroStateHandler();//非零时初始width
+
+                    $timeout(function(){//位置互换时，初始状态需位移
+                        _expandMove();
+                    }, 0) 
                 }
 
                 function _unCoverStartStateHandler(){
@@ -245,21 +276,24 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
                 function _coverExchangeHandler(){
                     if(!scope.exchangable) return;
-
-                    if((scope.minWidth == 0)?(scope.open):(scope.opened)){
-                        _move();
-                    }
-                    else{
-                        (scope.minWidth == 0) ? (scope.open = true) : (scope.opened = true);
-                        $(iEle[0]).animate({'left': scope.outerLeft+'px'}, function(){
-                            $timeout(function(){//使图标切换生效
-                                (scope.minWidth == 0) ? (scope.open = false) : (scope.opened = false);
-                            }, 0);
-                        });                            
-                    }
+                    _expandMove();//变大
+                    _shrinkMove();//变小
                 }
 
-                function _move(){
+                function _shrinkMove(){
+                    if(!scope.exchangable) return;
+                    if(((scope.minWidth == 0)?(scope.open):(scope.expand))) return;
+                    (scope.minWidth == 0) ? (scope.open = true) : (scope.expand = true);
+                    $(iEle[0]).animate({'left': scope.outerLeft+'px'}, function(){
+                        $timeout(function(){//使图标切换生效
+                            (scope.minWidth == 0) ? (scope.open = false) : (scope.expand = false);
+                        }, 0);
+                    });                   
+                }
+
+                function _expandMove(){
+                    if(!scope.exchangable) return;
+                    if(!((scope.minWidth == 0)?(scope.open):(scope.expand))) return;
                     if(direction == PositionTypes.LEFT){
                         _moveCover(-transcludeDom.offsetWidth+scope.minWidth);
                     }
@@ -277,7 +311,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     _endStateHandler();
 
                     $timeout(function(){
-                        _coverExchangeHandler();//交换位置时位移
+                        _coverExchangeHandler();//图标交换位置情况下，不是简单的显隐或width设置，需位移
                     }, 0);
                 }
 
@@ -286,8 +320,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                         scope.open = !scope.open;
                     }
                     else{
-                        scope.opened = !scope.opened;
-                        $(transcludeDom).css({'width': ((scope.opened)?"inherit":(scope.minWidth+'px'))});                      
+                        scope.expand = !scope.expand;
+                        $(transcludeDom).css({'width': ((scope.expand)?"inherit":(scope.minWidth+'px'))});                      
                     }
                 }             
 

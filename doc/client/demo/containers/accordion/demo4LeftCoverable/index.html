@@ -13,25 +13,17 @@
 
 <body ng-controller='myCtrl'>
 
-
-    <rdk_accordion style='float: right; margin-right: 100px' expand_direction='left' min_width='100'>
-
-        <rdk_basic_selector style='width: 500px' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-        
+    <rdk_accordion style='float: right;' expand_direction='left' open='true'>
+        <rdk_basic_selector style='width: 500px' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>       
         <div style='width: 300px; height: 100px; background-color: red'></div>
+    </rdk_accordion> 
 
+    <div style="clear: both"></div>  
+
+    <rdk_accordion style='float: right; margin-top: 300px; margin-right: 100px' expand_direction='left' min_width='100' expand='true'>
+        <rdk_basic_selector style='width: 500px' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>     
+        <div style='width: 300px; height: 100px; background-color: red'></div>
     </rdk_accordion>
-
-    <div style="clear: both"></div>
-
-    <rdk_accordion style='float: right; margin-top: 300px; margin-right: 0' expand_direction='left'>
-
-        <rdk_basic_selector style='width: 500px' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-        
-        <div style='width: 300px; height: 100px; background-color: red'></div>
-
-    </rdk_accordion>    
-
 
 </body>
 
