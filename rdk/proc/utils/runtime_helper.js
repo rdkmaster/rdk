@@ -156,10 +156,11 @@ var JSON1 = {
 //动态类加载
 var JVM = {
     load_class: function loadClass(jar,className) {
-            if (rdk_runtime.jarHelper().loadClass(jar, className)==null){
+        var loadclazz=rdk_runtime.jarHelper().loadClass(jar, className);
+            if (loadclazz==null){
                 return undefined;
             }
-          return rdk_runtime.jarHelper().loadClass(jar, className);
+          return loadclazz;
         }
 }
 
