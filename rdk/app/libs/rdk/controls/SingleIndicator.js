@@ -28,7 +28,7 @@ function() {
                 controller: ['$scope', function(scope) {
                 }],
                 compile: function(tEle, tAttrs) {
-                    Utils.bindDataSource(tAttrs, 'data');
+                    Utils.bindDataSource(tAttrs, 'value');
                     return {
                         post: _link
                     }
