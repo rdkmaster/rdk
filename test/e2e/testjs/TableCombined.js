@@ -2,6 +2,7 @@
 describe('Table Combined Demos',function() {
     beforeEach(function(){
         browser.get('test/e2e/testee/table/web/combined.html');
+        browser.sleep(2000);
     });
     afterEach(function(){
     });

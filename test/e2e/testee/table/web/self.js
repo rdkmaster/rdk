@@ -44,14 +44,16 @@ application.initDataSourceService(DSService);
            [12,4,5,67,89]
     ],
 };
+//改变data 验证双向绑定的支持性
+scope.changData=function(){
+  scope.TableData.data=[
+    ['2016-08-26','南京','98%','90%','10%'],
+    ['2016-08-27','北京','95%','92%','5']
+  ];
+}
 scope.server={
   ds:"dsTable",
-  url:"$svr/salary1",
-  server:{
-      "totalRecord":14,
-      "currentPage":2,
-      "pageSize":5
-   }
+  url:"$svr/salary1"
 };
 scope.Table={
   index:0,
