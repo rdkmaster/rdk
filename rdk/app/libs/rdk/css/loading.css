@@ -1,0 +1,14 @@
+
+.rdk_main {
+	display: none;
+}
+
+.rdk_loading {
+	position: absolute;
+    top: 35%;
+    left: 0;
+    right: 0;
+    height: 0;
+    text-align: center;
+    z-index: 10001;
+}

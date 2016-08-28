@@ -1,8 +1,6 @@
 
-define([
-        'angular', 'jquery', 'rd.core', 'css!rd.styles.FontAwesome'
-    ], function() {
-var module = angular.module('rd.demo.Directives', ['rd.core']);
+define([ 'rd.core' ], function() {
+var module = angular.module('rd.demo.Directives', [ 'rd.core' ]);
 
 module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function(DSService, Utils, $timeout) {
     return {
@@ -36,7 +34,6 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
 
             DSService.create(Utils.createUniqueId('live_demo_ds_'), {
                 url: '/demos/data',
-                queryIf: 'ready',
                 conditionProcessor: function() {
                     return {example: scope.example}
                 },
@@ -47,7 +44,7 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                     ifrmDoc.write(src);
                     ifrmDoc.close();
                 }
-            });
+            }).query();
         }
     };
 
@@ -81,7 +78,102 @@ module.directive('binding', [function() {
         restrict: 'E',
         replace: true,
         template: '<a style="font-size:10px" title="该属性应用了双向绑定，单击了解更多" \
-                    href="/doc/client/common/two_way_data_binding.html"><kbd>B</kbd></a>',
+                    href="/doc/client/common/two_way_data_binding.md"><kbd>B</kbd></a>',
+    }
+}]);
+
+module.directive('a', [function() {
+    return {
+        restrict: 'E',
+        template: '',
+        compile: function(tEle, tAttr) {
+            tEle.attr('href', 'javascript:loadMarkdown("' + tAttr.href + '")');
+        }
+    }
+}]);
+
+module.service('MarkdownService', ['$compile', function($compile) {
+    var currentFile;
+    var mdService = this;
+    var timer = -1;
+    var ajaxInstance = undefined;
+    
+    this.scope = undefined;
+    
+    var markdownConverter = new Markdown.Converter();
+    var markdownContainer = $('#main')[0];
+    markdownContainer = $(markdownContainer ? markdownContainer : document.body);
+    
+    $(window).bind('hashchange', function() {
+        loadMarkdown('/doc/' + location.hash.substring(1));
+    });
+    
+    this.loadPath = function(path) {
+        if (!path) {
+            mdService.loadText('无效的Markdown路径！');
+            currentFile = undefined;
+            return;
+        }
+        
+        path = toAbsPath(path);
+		var pathParts = path.split('#');
+        if (currentFile === pathParts[0]) {
+			misc.scrollToTarget();
+            return;
+        }
+        currentFile = pathParts[0];
+        location.hash = path.substring(5);
+        
+        timer = setTimeout(function() {
+            mdService.loadText('---\n\n正在加载 `' + path + '` ...\n\n---');
+        }, 500);
+        
+		if (!!ajaxInstance) {
+			ajaxInstance.abort();
+		}
+        ajaxInstance = $.ajax({
+            url: path,
+            type: 'GET',
+            timeout: 20000,
+            dataType: 'text',
+            success: function(data) {
+                if (timer != -1) {
+                    clearTimeout(timer);
+					timer = -1;
+                }
+                mdService.loadText(data);
+				ajaxInstance = null;
+            },
+            error: function(data) {
+                mdService.loadText('---\n\n找不到文档 `' + path + '`，以下是详细信息：\n\n' +
+                            '    ' + JSON.stringify(data) + '\n\n---');
+				ajaxInstance = null;
+            }
+        });
+        
+        var match = path.match(/(.*\/).*?\.md/i);
+        $('#base').attr('href', match[1]);
+    }
+    
+    function toAbsPath(path) {
+        path = path[0] == '/' ? path : $('#base').attr('href') + path;
+        while (path.match(/(?:[^\\?\/\*\|<>:"']+)*\/\.\.\//)) {
+            path = path.replace(/(?:[^\\?\/\*\|<>:"']+)*\/\.\.\//, '');
+        }
+        return path;
+    }
+    
+    this.loadText = function(mdText) {
+        //清空原来的内容
+        markdownContainer.empty();
+        markdownContainer.html(markdownConverter.makeHtml(mdText));
+        $compile(markdownContainer.contents())(mdService.scope);
+		
+		misc.markdownContainer = markdownContainer[0];
+		setTimeout(misc.scrollToTarget, 200);
+		misc.resetDir();
+		misc.fixTitle();
+		misc.makeDir();
     }
 }]);
 

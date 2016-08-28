@@ -1,15 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>RDK文档</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>RDK文档</title>
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/loading.css">
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+	
+	<base id="base" href="/doc/" />
+    
+    <script type="text/javascript">
+		require.config({
+			paths: {
+				"directives": "/doc/tools/doc_js/directives",
+				"misc": "/doc/tools/doc_js/misc",
+				"markdown": "/doc/tools/doc_js/Markdown.Converter",
+				"md-style-github": "/doc/tools/md-style-github",
+			}
+		});
+		
+		define('main', ['directives', 'misc', 'markdown', 'css!md-style-github'], function() {
+			var app = angular.module("rdk_app", ['rd.demo.Directives']);
+			app.controller('rdk_ctrl', ['$scope', 'MarkdownService', main]);
+		});
+		
+		function main(scope, MarkdownService) {
+			var path = !!location.hash ? location.hash.substring(1) : undefined;
+			MarkdownService.scope = scope;
+			window.loadMarkdown = MarkdownService.loadPath;
+			loadMarkdown(path);
+		}
+    </script>
 </head>
-<body>
-	<ul>
-		<li><a href="best_practise/index.html">天龙八步 - RDK入门秘笈，新手必读</a><span style="color:red"> 推荐</span></li>
-		<li><a href="manual.html">RDK应用开发基础</a></li>
-		<li><a href="server/service_api.html">查看后端服务API</a></li>
-		<li><a href="client/index.html">查看前端开发手册</a></li>
-	</ul>
+
+<body ng-controller="rdk_ctrl" class="rdk_main">
+<div id="main"></div>
 </body>
+
 </html>

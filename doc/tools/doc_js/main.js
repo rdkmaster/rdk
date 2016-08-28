@@ -7,5 +7,3 @@ require.config({
 define('main', ["directives" ], function() {
     angular.module("rdk_app", [ 'rd.demo.Directives' ]);
 });
-
-document.body.className = 'rdk_main';
