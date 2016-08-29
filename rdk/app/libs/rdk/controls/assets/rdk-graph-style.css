@@ -5,6 +5,7 @@
 
 .rdk-graph-module .no-data {
     width: 100%;
+    height: 100%;
     padding: 10px;
 
     background:url("no_data_bg.png") no-repeat center;
