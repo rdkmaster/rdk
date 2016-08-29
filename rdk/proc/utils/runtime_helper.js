@@ -317,30 +317,9 @@ var file = {
 
 ///////////////////////////////////////////////////////////////////////
 
-function rest(url, param, option) {
-    if (!url) {
-        return null;
-    }
-    if (_.isString(option)) {
-        option = {'method': option};
-    }
-    var method = rdk_runtime.restHelper().getProperty(option, 'method', 'GET');
-    method = method.toUpperCase();
-    var isStd = rdk_runtime.restHelper().getProperty(option, 'isStandard', 'false') === 'true';
-    if (method == 'GET') {
-        var strParam = '';
-        if (param) {
-            if (isStd) {
-                strParam = '?p={"param":' + (_.isString(param) ? param : json(param, '')) + '}';
-            } else {
-                strParam = '?' + param;
-            }
-        }
-        var result = rdk_runtime.restHelper().get(url, encodeURI(strParam), option);
-        return isStd ? eval('(' + result + ')').result : result;
-    } else {
-        error('unsupported yet!!');
-        return null;
+var rest = {
+    get: function(url, option) {
+        return helper.restHelper.get(encodeURI(url), option);
     }
 }
 
