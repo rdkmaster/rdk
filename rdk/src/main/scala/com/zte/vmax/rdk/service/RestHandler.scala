@@ -9,7 +9,9 @@ import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.util.Logger
 import org.apache.log4j.{Level, LogManager}
 import org.json4s.{DefaultFormats, Formats, JObject}
+import spray.http.HttpRequest
 import spray.httpx.Json4sSupport
+import spray.httpx.unmarshalling._
 import spray.routing.{Directives, RequestContext}
 
 import scala.concurrent.Future
@@ -38,6 +40,8 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
     }
   }
 
+
+
   implicit def str2ServiceCallParam(json: JObject): ServiceParam = {
     try {
       val gson = new Gson
@@ -47,6 +51,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
       case t: Throwable => t.printStackTrace(); null;
     }
   }
+
 
   def doDispatch(rct: RequestContext, url: List[String], app: String, param: AnyRef): Future[ServiceResult] = {
     val method = rct.request.method.name.toLowerCase
@@ -95,7 +100,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
             }
           } ~
           put {
-            entity(as[ServiceParam]) {
+            entity(as[ServiceParamStr]) {
               req => ctx =>
                 ctx.complete {
                   doDispatch(ctx, url, req.app, req.param)
@@ -103,7 +108,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
             }
           } ~
           post {
-            entity(as[ServiceParam]) {
+            entity(as[ServiceParamStr]) {
               req => ctx =>
                 ctx.complete {
                   doDispatch(ctx, url, req.app, req.param)
@@ -111,7 +116,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
             }
           } ~
           delete {
-            entity(as[ServiceParam]) {
+            entity(as[ServiceParamStr]) {
               req => ctx =>
                 ctx.complete {
                   doDispatch(ctx, url, req.app, req.param)
@@ -129,7 +134,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
           }
         } ~
           put {
-            entity(as[ServiceParam]) {
+            entity(as[ServiceParamStr]) {
               req => ctx =>
                 ctx.complete {
                   doDispatch(ctx, req.service :: Nil, req.app, req.param)
@@ -137,7 +142,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
             }
           } ~
           post {
-            entity(as[ServiceParam]) {
+            entity(as[ServiceParamStr]) {
               req => ctx =>
                 ctx.complete {
                   doDispatch(ctx, req.service :: Nil, req.app, req.param)
@@ -145,7 +150,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
             }
           } ~
           delete {
-            entity(as[ServiceParam]) {
+            entity(as[ServiceParamStr]) {
               req => ctx =>
                 ctx.complete {
                   doDispatch(ctx, req.service :: Nil, req.app, req.param)

@@ -9,6 +9,7 @@ import com.zte.vmax.activemq.rdk.RDKMessage
 import spray.routing.RequestContext
 
 import scala.language.existentials
+import scala.util.parsing.json.JSONObject
 
 /**
   * Created by 10054860 on 2016/7/12.
@@ -25,7 +26,8 @@ object Messages {
 
   case class Session(appName: String)
 
-  case class ServiceParam(service: String, param: String, app: String)
+  case class  ServiceParam(service: String, param: AnyRef, app: String)
+  case class  ServiceParamStr(service: String, param: String, app: String)
 
   case class ServiceRequest(ctx: RDKContext, script: String,
                             app: String, param: AnyRef, method: String,timeStamp:Long)
