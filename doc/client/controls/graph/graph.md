@@ -98,6 +98,83 @@ data对象中应该包含以下**必填属性**：
 
 <live_demo example="controls/graph/theme" width="900"></live_demo>
 
+#GraphService服务#
+
+Graph控件提供了一些常见的对数据进行操作的服务，可在使用Graph模板文件的时候用到
+
+如
+
+~~~
+define([], function() {
+
+return function(data, context, GraphService, attributes) {  
+	return {
+	   
+    series : [
+         {
+            name: "hello",
+            yAxisIndex: 0,
+            type:'bar',
+            data: GraphService.column(data.data,1), 
+        }
+    ]
+};
+}});
+
+~~~
+##column##
+定义：
+	function column(matrix, idx);
+
+参数：
+
+- matrix 二维数组。
+- idx 数组，表示第几列。
+
+返回：返回二维数组的 idx 列组成的一维数组
+
+##row##
+定义：
+	function row(matrix, idx);
+
+参数：
+
+- matrix 二维数组。
+- idx 数组，表示第几行。
+
+返回：返回二维数组的 idx 行组成的一维数组
+
+##distinct##
+定义：
+	function distinct(array);
+
+参数：
+
+- array 一维数组。
+
+返回：将该一维数组重复的部分去除后返回。
+
+##classify##
+定义：
+	function classify(data, column);
+
+参数：
+
+- data 二维数组。
+- column 一维数组，按照哪些值去进行分组
+
+返回：按照column的值按列对data对进行分组。
+
+说明：
+~~~
+如果data值为[[南京,74],[南京,65],[盐城,74],[盐城,80]]
+调用 classify（data,[南京，盐城，南京])之后返回
+  {
+    "南京":[[南京, 74],[南京, 65]],
+    "盐城":[[盐城,74],[盐城, 80]]
+  }
+~~~
+
 
 <div>
 <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
