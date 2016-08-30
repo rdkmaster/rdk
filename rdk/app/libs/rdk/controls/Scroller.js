@@ -15,6 +15,7 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                     loop: '@?',
                     change: '&?',
                     id: '@?',
+                    offset: '@?',
                    
                 },
                 //要想ng-repeat开始的时候不编译，这样才能使用其中的数组项
@@ -23,17 +24,19 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                 controller: ['$scope', function(scope) {
                     
                 }],
-                template: '<div class="slider" > \
-                            <div class="slide" rdk-repeat="item in data"  > \
-                            </div> \
-                            <div class="arrows"> \
-                                <div class="left_arrow" ng-class="{\'left_deny\':left_deny}">  \
-                                  <i class="fa fa-angle-left" ng-click="prev()"></i>\
+                template: '<div> \
+                                <div class="slider" > \
+                                    <div class="slide" rdk-repeat="item in data"  > \
+                                    </div> \
+                                    <div class="arrows"> \
+                                        <div class="left_arrow" ng-class="{\'left_deny\':left_deny}">  \
+                                          <i class="fa fa-angle-left" ng-click="prev()"></i>\
+                                        </div> \
+                                        <div class="right_arrow" ng-class="{\'right_deny\':right_deny}"> \
+                                          <i class="fa fa-angle-right" ng-click="next()"></i>\
+                                        </div> \
+                                    </div> \
                                 </div> \
-                                <div class="right_arrow" ng-class="{\'right_deny\':right_deny}"> \
-                                  <i class="fa fa-angle-right" ng-click="next()"></i>\
-                                </div> \
-                            </div> \
                            </div>',
 
                 compile: function(tEle, tAttrs) {
@@ -56,6 +59,18 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                 //appScope 为获取父元素
                 scope.appScope = Utils.findAppScope(scope);
                 //scrollstatus:1-click,2-timer,3-都支持，默认3
+                //获取偏移量
+                scope.offset=Utils.getValue(scope.offset, attrs.offset, 0);
+
+                if (scope.offset>0){
+                    var left=$(elem.find('.left_arrow')).css('left');
+                    left=parseInt(left)-parseInt(scope.offset);
+                    $(elem.find('.left_arrow')).css('left',left+'px');
+                    var right=$(elem.find('.right_arrow')).css('right');
+                    rigth=parseInt(right)-parseInt(scope.offset);
+                    $(elem.find('.right_arrow')).css('right',rigth+'px');
+                    $(elem.find('.slider')).css('border','solid transparent').css('border-width',scope.offset);
+                }
                 totalWidth=$(elem[0]).width();
                 var scrollstatus;
 
@@ -80,10 +95,15 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                         scope.showdata.push(item);
                     })
                     }
+                    Init();
                     
                 }, true);
                 
-
+                var Init = function(){
+                    if(scope.showdata[0]==scope.data[0]){
+                        scope.left_deny=true;
+                    }
+                }
                 var parentEle = elem.find(".slide");
                 var elements = [];
 
@@ -128,6 +148,7 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                         // $compile(elements)(scope);   
 
                         //如果设置了子元素宽度，则调整父宽度适配子元素
+                        $(elem.find('.context')).css('overflow','hidden');
                         var contextWidth=$(elem.find('.context')).width();
                         var siderWidth=contextWidth*scope.pageNum;
                         if (contextWidth>=100 && totalWidth>siderWidth){
@@ -193,9 +214,6 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                         }
                     }
                                             
-
-
-
                 };
 
                 function _raise(action, data) {
@@ -223,6 +241,7 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                 }
 
                 var timer;
+
 
                 var sliderFunc = function() {
                     timer = $timeout(function() {
