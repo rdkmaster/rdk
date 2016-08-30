@@ -305,7 +305,11 @@ img {
 <blockquote>
 <p>支持类型：字符串</p>
 </blockquote>
-<p><code>label</code> 用于设置时间选择控件左侧的主题名称。</p>
+<p><code>label</code> 用于设置时间选择控件左侧的主题名称。默认为时间，<strong>如果设置为汉字时需要使用单引号</strong>
+ 如:</p>
+<pre><code>&lt;rdk_time label=&quot;'我的时间控件'&quot;&gt;&lt;/rdk_time&gt;
+</code></pre>
+
 <h2>range</h2>
 <p>缺省<code>range</code>时，只会生成一个时间选择控件。用于选择某个时间点。
 然后结合<code>setting</code>属性的<code>value</code>可以设置这个时间点的默认值。</p>
