@@ -147,6 +147,8 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                             scope.showdata[i] = scope.showdata[i + 1];
                         }
                         scope.showdata[count - 1] = tmp;
+                        //广播change事件
+                        _raise(EventTypes.CHANGE, scope.showdata);
 
                     }
                     
@@ -155,20 +157,15 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                         console.log('no need to move right!');
                         // $(elem.find('.right_arrow')).css('color', "#E0E0E0");
                         scope.right_deny=true;
+                        scope.left_deny=false;
                         
                     }
                     else{
                         if (scope.left_deny){
                             scope.left_deny=false;
                         }
-                                            //广播change事件
-                        _raise(EventTypes.CHANGE, scope.showdata);
-                        return;
-
-
-                    }
-
-                    
+                    }  
+              
                 };
 
                 //对数据项进行左移，并赋值给showdata数组
@@ -180,24 +177,24 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                             scope.showdata[i] = scope.showdata[i - 1];
                         }
                         scope.showdata[0] = tmp; 
+                        //广播change事件
+                        _raise(EventTypes.CHANGE, scope.showdata);
+
                     }
 
                     if (scope.loop=='false' && scope.showdata[0]==scope.data[0]){
-                        console.log('no need to move left!');
-                        // $(elem.find('.left_arrow')).css('color', "#E0E0E0");
                         scope.left_deny=true;
+                        scope.right_deny=false;
                     }
 
                     else{
                         if (scope.right_deny){
                             scope.right_deny=false;
                         }
-                        
-                        //广播change事件
-                        _raise(EventTypes.CHANGE, scope.showdata);
-                        return;
                     }
-                    
+                                            
+
+
 
                 };
 
