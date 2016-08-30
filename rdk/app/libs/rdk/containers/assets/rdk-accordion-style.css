@@ -1,6 +1,5 @@
 .rdk-accordion-module{
     position: relative !important;
-    display: inline-block !important;
 }
 
 .rdk-accordion-module .theme{
@@ -11,6 +10,7 @@
     font-size: medium;
     cursor: pointer;
     padding: 5px;
+    position: relative;
 }
 
 .rdk-accordion-module .theme-caption{

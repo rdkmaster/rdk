@@ -20,7 +20,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     foldedIcon: '=?',
                     unfoldedIcon: '=?',
                     caption: '=?',
-
                     frozen: '=?',
                     open: '=?',
                     editable: '=?',
@@ -29,11 +28,11 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
                     buttons: '=',
                     id: '@',
+
                     expandDirection: '=?',
                     coverable: '=?',
                     exchangable: '=?',
-                    minWidth: '=?',
-                    expand: '=?'
+                    minWidth: '=?'
                 }, 
                 template: 
                 '<div class="rdk-accordion-module" ng-click="stopPropagation()">\
@@ -94,33 +93,40 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                 if(scope.id){
                     EventService.register(scope.id, EventTypes.OPEN, function(event, data){
                         scope.open = true;
+                        _resetAttrByOuterOpen();
                     });
                     EventService.register(scope.id, EventTypes.CLOSE, function(event, data){
                         scope.open = false;
+                        _resetAttrByOuterOpen();
                     });
                     EventService.broadcast(scope.id, EventTypes.READY, scope);//对ngRepeat的data回显有用
                 }
 
                 function _init(){
-                    scope.expandDirection = Utils.getValue(scope.expandDirection, iAttrs.expandDirection, PositionTypes.BOTTOM);             
-                    scope.caption = Utils.getValue(scope.caption, iAttrs.caption, '');                                      
-                    scope.minWidth = Utils.getValue(scope.minWidth, iAttrs.minWidth, 0);                       
+                    scope.caption = Utils.getValue(scope.caption, iAttrs.caption, '');                                                                               
                     scope.frozen = Utils.isTrue(scope.frozen, false);
                     scope.editable = Utils.isTrue(scope.editable, false);
                     scope.showButtons = angular.isDefined(scope.buttons);                   
                     scope.appScope = Utils.findAppScope(scope);
+
+                    /*支持上下左右，支持最小尺寸*/
+                    scope.expandDirection = Utils.getValue(scope.expandDirection, iAttrs.expandDirection, PositionTypes.BOTTOM);             
+                    scope.minWidth = Utils.getValue(scope.minWidth, iAttrs.minWidth, 0); 
                     scope.supportable = true;//是否异常
                     scope.outerLeft = (parseInt($(iEle[0]).css('left'), 10)|| 0 )- (parseInt($(iEle[0]).css('right'), 10)||0);
 
                     _initDefaultAttrByDirection();
+                    _resetAttrByOuterOpen();
                     _initGlobalDom();
                     _exceptionHandler();
 
-                    scope.$watch(["open", "expand"], function(newVal, oldVal){
-                        _resetVar();
-                        _unCoverStartStateHandler();
-                        _coverStartStateHandler();
-                        _minWidthHandler();
+                    scope.$watchGroup(["open", "expand"], function(newVal, oldVal){
+                        _unCoverStateHandler();
+                        _coverStateHandler();
+                        _minWidthHandler(); 
+
+                        _move2Center(); //居中            
+                        _moveExchangeCoverHandler(); //交换时需位移
                     }, true);
 
                     scope.toggle = _toggle;
@@ -131,18 +137,56 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.stopPropagation = _stopPropagation;
                 }
 
-                function _resetVar(){
-                    if(scope.open == undefined){
-                        if((scope.minWidth == 0)&&(scope.expand!=undefined)){
-                            scope.expand = Utils.isTrue(scope.expand, false);
-                            scope.open = scope.expand;//只有expand时，open取expand值
-                        }
+                function _moveExchangeCoverHandler(){
+                    if(!scope.exchangable) return;
+                    $timeout(function(){
+                        _expandMove();
+                        _shrinkMove();
+                    }, 0) 
+                }
+
+                function _move2Center(){
+                    $timeout(function(){
+                        _uncoverMove2Center();
+                        _coverMove2Center();
+                    }, 0);
+                }
+
+                function _uncoverMove2Center(){
+                    if((scope.coverable)||(!scope.supportable)) return;
+
+                    var topHeight = (transcludeDom.offsetHeight - themeDom.offsetHeight)/2;
+                    var leftWidth = (transcludeDom.offsetWidth - themeDom.offsetWidth)/2;
+
+                    if((direction == PositionTypes.RIGHT)||(direction == PositionTypes.LEFT)){
+                        $(iEle[0]).css({'top': -topHeight+'px'});
+                        $(themeDom).css({'top': topHeight+'px'}) ;  
                     }
-                    else{
-                        scope.open = Utils.isTrue(scope.open, false);//取外面定义的open
-                        if(!scope.open){
-                            scope.minWidth = 0;//open=false时重置minWidth，后续的处理都是基于minWidth的
-                        }
+                    if((direction == PositionTypes.TOP)||(direction == PositionTypes.BOTTOM)){
+                        $(iEle[0]).css({'left': -leftWidth+'px'});
+                        $(themeDom).css({'left': leftWidth+'px'}) ;                       
+                    }                    
+                }
+
+                function _coverMove2Center(){
+                    if((!scope.coverable)||(!scope.supportable)) return;
+
+                    var topHeight = (transcludeDom.offsetHeight - themeDom.offsetHeight)/2;
+                    var leftWidth = (transcludeDom.offsetWidth - themeDom.offsetWidth)/2;
+
+                    if((direction == PositionTypes.TOP)||(direction == PositionTypes.BOTTOM)){
+                        $(transcludeDom).css({'left': -leftWidth+'px'});
+                    }
+                    if((direction == PositionTypes.RIGHT)||(direction == PositionTypes.LEFT)){
+                        $(transcludeDom).css({'top': -topHeight+'px'});
+                    }                                    
+                }
+
+                function _resetAttrByOuterOpen(){
+                    scope.open = Utils.isTrue(scope.open, false);
+                    if(scope.minWidth != 0){
+                        scope.expand =  scope.open; //翻译成内部的
+                        scope.open = true;
                     }
                 }
 
@@ -152,29 +196,14 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                    direction = scope.expandDirection.toLowerCase();                   
                 }
 
-                function _zeroStateHandler(){
-                    if(scope.minWidth!=0) return;//目前是open决定open，后面废弃open后，由expand决定open
-                    scope.open = Utils.isTrue(scope.open, false); 
-                }
+                function _minWidthHandler(){//状态根据minWidth再处理
+                    if(scope.minWidth != 0){
+                        var initialWidth =  scope.expand ? 'inherit' : scope.minWidth;
+                        $(transcludeDom).css({'width': ((scope.expand)?"inherit":(scope.minWidth+'px')), 'overflow': 'hidden'}); 
+                    }
+                }              
 
-                function _nonZeroStateHandler(){
-                    if(scope.minWidth==0) return;//open=true,expand决定伸缩
-                    scope.open = true;
-                    scope.expand = Utils.isTrue(scope.expand, false);
-                    var initialWidth =  scope.expand ? 'inherit' : scope.minWidth;
-                    $(transcludeDom).css({'width': initialWidth + 'px', 'overflow': 'hidden'});                     
-                }
-
-                function _minWidthHandler(){
-                    _zeroStateHandler();//零时初始显隐
-                    _nonZeroStateHandler();//非零时初始width
-
-                    $timeout(function(){//位置互换时，初始状态需位移
-                        _expandMove();
-                    }, 0) 
-                }
-
-                function _unCoverStartStateHandler(){
+                function _unCoverStateHandler(){
                     if((scope.coverable)||(!scope.supportable)) return;
 
                     if(direction == PositionTypes.RIGHT){
@@ -184,13 +213,38 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                         $(transcludeDom).css({'display': 'inline-block'});
                         $(iEle[0]).empty();
                         $(iEle[0]).append(transcludeDom).append(themeDom);
-                        $compile(iEle.contents())(scope);
+                        $compile(iEle)(scope);
                     } 
                     if(direction == PositionTypes.TOP){
                         $(iEle[0]).empty();
                         $(iEle[0]).append(transcludeDom).append(themeDom);
-                        $compile(iEle.contents())(scope);
-                    }                 
+                        $compile(iEle)(scope);
+                    }              
+                }
+
+                function _coverStateHandler(){
+                    if((!scope.coverable)||(!scope.supportable)) return;
+
+                    $(transcludeDom).css({'position': 'absolute', 'z-index': '9999'}); 
+                    if(scope.exchangable){
+                        if(direction == PositionTypes.LEFT){
+                            $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0});
+                        }
+                        if(direction == PositionTypes.RIGHT){
+                            $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0});
+                        }
+                    }
+                    else{
+                        if(direction == PositionTypes.TOP){
+                            $(transcludeDom).css({'bottom': themeDom.offsetHeight+'px'});
+                        }
+                        if(direction == PositionTypes.RIGHT){
+                            $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0});
+                        }
+                        if(direction == PositionTypes.LEFT){
+                            $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0});
+                        }
+                    }
                 }
 
                 function _exceptionHandler(){
@@ -216,6 +270,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                 }
 
                 function _defaultCoverable(defaultBln){
+                    /*支持上下左右，支持最小尺寸 部分属性*/
                     scope.coverable = Utils.isTrue(scope.coverable, defaultBln);
                     scope.exchangable = Utils.isTrue(scope.exchangable, defaultBln);
                 }
@@ -244,86 +299,31 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, unfoldedIconStr);
                 }
 
-                function _uncoverHandler(){
-                    if((scope.coverable)||(!scope.supportable)) return;
-                    _endStateHandler();               
-                }
-
-                function _coverStartStateHandler(){
-                    if((!scope.coverable)||(!scope.supportable)) return;
-
-                    $(transcludeDom).css({'position': 'absolute', 'z-index': '9999'}); 
-                    if(scope.exchangable){
-                        if(direction == PositionTypes.LEFT){
-                            $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0});
-                        }
-                        if(direction == PositionTypes.RIGHT){
-                            $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0});
-                        }
-                    }
-                    else{
-                        if(direction == PositionTypes.TOP){
-                            $(transcludeDom).css({'bottom': themeDom.offsetHeight+'px'});
-                        }
-                        if(direction == PositionTypes.RIGHT){
-                            $(transcludeDom).css({'left': themeDom.offsetWidth+'px', 'top': 0});
-                        }
-                        if(direction == PositionTypes.LEFT){
-                            $(transcludeDom).css({'right': themeDom.offsetWidth+'px', 'top': 0});
-                        }
-                    }
-                }
-
-                function _coverExchangeHandler(){
-                    if(!scope.exchangable) return;
-                    _expandMove();//变大
-                    _shrinkMove();//变小
-                }
-
                 function _shrinkMove(){
-                    if(!scope.exchangable) return;
-                    if(((scope.minWidth == 0)?(scope.open):(scope.expand))) return;
-                    (scope.minWidth == 0) ? (scope.open = true) : (scope.expand = true);
+                    if((scope.minWidth == 0)?(scope.open):(scope.expand)) return;
+
+                    //(scope.minWidth == 0) ? (scope.open = true) : (scope.expand = true);
                     $(iEle[0]).animate({'left': scope.outerLeft+'px'}, function(){
-                        $timeout(function(){//使图标切换生效
-                            (scope.minWidth == 0) ? (scope.open = false) : (scope.expand = false);
-                        }, 0);
+                        // $timeout(function(){//使图标切换生效
+                        //     (scope.minWidth == 0) ? (scope.open = false) : (scope.expand = false);
+                        // }, 0);
                     });                   
                 }
 
                 function _expandMove(){
-                    if(!scope.exchangable) return;
                     if(!((scope.minWidth == 0)?(scope.open):(scope.expand))) return;
+
                     if(direction == PositionTypes.LEFT){
                         _moveCover(-transcludeDom.offsetWidth+scope.minWidth);
                     }
                     if(direction == PositionTypes.RIGHT){
-                        _moveCover(transcludeDom.offsetWidth-scope.minWidth);
+                        _moveCover(transcludeDom.offsetWidth-scope.minWidth);  
                     }
                 }
 
                 function _moveCover(moveStep){
                     $(iEle[0]).animate({'left': moveStep+scope.outerLeft+'px'}); 
-                }
-
-                function _coverHandler(){
-                    if((!scope.coverable)||(!scope.supportable)) return;
-                    _endStateHandler();
-
-                    $timeout(function(){
-                        _coverExchangeHandler();//图标交换位置情况下，不是简单的显隐或width设置，需位移
-                    }, 0);
-                }
-
-                function _endStateHandler(){
-                    if(scope.minWidth == 0){
-                        scope.open = !scope.open;
-                    }
-                    else{
-                        scope.expand = !scope.expand;
-                        $(transcludeDom).css({'width': ((scope.expand)?"inherit":(scope.minWidth+'px'))});                      
-                    }
-                }             
+                }          
 
                 function _stopPropagation(){
                     event.stopPropagation();
@@ -342,14 +342,23 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                 function _toggle(){
                     if(scope.frozen) return;//冻结
                     if(($(iEle).find(".content").get(0).children.length == 1)&&($(iEle).find(".content").get(0).children[0].tagName == "HEADER_RENDERER")) return;//最外层就只有一个header_renderer，没内容
-                     
-                    _uncoverHandler();//挤开时的处理
-                    _coverHandler();//覆盖时的处理
+                                        
+                    _changeState();
 
                     if (scope.id){
-                        EventService.broadcast(scope.id, EventTypes.CHANGE, scope.open); //事件
+                        var bln = (scope.minWidth == 0)?(scope.open):(scope.expand);
+                        EventService.broadcast(scope.id, EventTypes.CHANGE, bln); //事件
                     }
-                }               
+                }
+
+                function _changeState(){
+                    if(scope.minWidth == 0){
+                        scope.open = !scope.open;
+                    }
+                    else{
+                        scope.expand = !scope.expand;                  
+                    }                  
+                }              
 
                 function _clickHandler(callback, button, htmlID){
                     callback(button, htmlID);
