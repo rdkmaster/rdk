@@ -13,9 +13,11 @@
 
 
 <body ng-controller='myCtrl'>
-    <rdk_scroller data="images" style="width:600px;height:400px" >
+    <rdk_scroller id="scroller" data="images" scroll_policy='manual' loop="false" >
+	<div  >
       <img ng-src="{{item.src}}"/>
-      <span> {{item.title}} </span>
+      <span>{{item.title}} </span>
+	</div>
     </rdk_scroller>
 </body>
 
