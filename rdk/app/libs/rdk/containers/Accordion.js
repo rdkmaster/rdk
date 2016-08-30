@@ -111,7 +111,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
                     /*支持上下左右，支持最小尺寸*/
                     scope.expandDirection = Utils.getValue(scope.expandDirection, iAttrs.expandDirection, PositionTypes.BOTTOM);             
-                    scope.minWidth = Utils.getValue(scope.minWidth, iAttrs.minWidth, 0); 
+                    scope.minWidth = parseInt(Utils.getValue(scope.minWidth, iAttrs.minWidth, 0), 10); 
                     scope.supportable = true;//是否异常
                     scope.outerLeft = (parseInt($(iEle[0]).css('left'), 10)|| 0 )- (parseInt($(iEle[0]).css('right'), 10)||0);
 
