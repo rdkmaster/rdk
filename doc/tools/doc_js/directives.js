@@ -82,15 +82,15 @@ module.directive('binding', [function() {
     }
 }]);
 
-module.directive('a', [function() {
-    return {
-        restrict: 'E',
-        template: '',
-        compile: function(tEle, tAttr) {
-            tEle.attr('href', 'javascript:loadMarkdown("' + tAttr.href + '")');
-        }
-    }
-}]);
+//module.directive('a', [function() {
+//    return {
+//        restrict: 'E',
+//        template: '',
+//        compile: function(tEle, tAttr) {
+//            tEle.attr('href', 'javascript:loadMarkdown("' + tAttr.href + '")');
+//        }
+//    }
+//}]);
 
 module.service('MarkdownService', ['$compile', function($compile) {
     var currentFile;
