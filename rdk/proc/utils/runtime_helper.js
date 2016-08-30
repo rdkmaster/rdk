@@ -570,7 +570,6 @@ function matrix(resultSet, mapIterator, keepResultSet) {
     if (_.isString(resultSet)) {
         return matrix(sql(resultSet), mapIterator);
     }
-
     var its = mapIterator === undefined ? {} : mapIterator;
     var mtx = {header: [], field: [], data: []};
 
@@ -599,7 +598,7 @@ function matrix(resultSet, mapIterator, keepResultSet) {
             var it = its[mtx.field[i - 1]];
             var val = _bytes2string(resultSet.getBytes(i));
             try {
-                val = it ? it(val, resultSet, row.length) : val;
+                val = _.isDefined(it) ? it(val, resultSet, row.length) : val;
             } catch (e) {
                 error("call matrix iterator error: " + e);
             }
