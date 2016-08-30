@@ -24,6 +24,7 @@
             paths: {
                 //这里引用了rdk应用的公共助手文件，不要改动
                 "application": '/test/module/testee_helper',
+                "echarts": '/rdk/app/libs/echarts/echarts3.common.min.modified'
             }
         });
     </script>
@@ -35,11 +36,30 @@
 </style>
 <body ng-controller='rdk_ctrl' class="rdk_main">
     <div class="demo jilin">
-        <rdk_map id="jilin" map="'../server/jilin.json'" map_define="map.js">
+        <button ng-click="setJS()">江苏</button>
+        <button ng-click="setJL()">吉林</button>
+        <rdk_map id="jilin" map="mapUrl" map_define="map.js">
         </rdk_map>
         <span class="cityname">{{cityname}}</span>
     </div>
-
+    <div class="demo jiangsu">
+        <button ng-click="select()">选择淮安市</button>
+        <button ng-click="unSelect()">取消选择淮安市</button>
+        <rdk_map id="jiangsu" map="'../server/jiangsu.json'" map_define="map.js"></rdk_map>
+        <div id="gisModel" rdk_model="hide">{{city}}</div>
+    </div>
+    <div class="demo markPoint">
+        <button ng-click="setMarkPoint()" ds="markPoint" ds_url="$svr/markPoint.js">markPoint</button>
+        <rdk_map id="JiLin" map="'../server/jilin.json'" map_define="visualMap/map.js" 
+        ds="colorMap" ds_url="$svr/colorMap.js" ds_query_if="ready">
+        </rdk_map>
+        <span>{{pointName}}</span>
+    </div>
+    <div class="demo area-drill">
+        <rdk_map id="china" map="drillUrl" map_define="map.js">
+        </rdk_map>
+        <span class="area-name">{{currentArea}}</span>
+    </div>
     <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
     <!--     这个节点可选，删除后，RDK会自动生成一个    -->
     <!--           这个节点只支持基本HTML标签           -->

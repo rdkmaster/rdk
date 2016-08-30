@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+<testsuite name="Map demo" errors="0" tests="9" failures="0" time="49.235" timestamp="2016-08-30T19:11:28">
+  <testcase classname="Map demo" name="module click test should show module name 白城市" time="7.938"></testcase>
+  <testcase classname="Map demo" name="module click test should show module name 松原市" time="5.374"></testcase>
+  <testcase classname="Map demo" name="module click test should show module name 长春市" time="5.125"></testcase>
+  <testcase classname="Map demo" name="module click test should show module name 吉林市" time="5.066"></testcase>
+  <testcase classname="Map demo" name="module click test should show module name 通化市" time="4.982"></testcase>
+  <testcase classname="Map demo" name="module click test should show module name 盐城市" time="5.306"></testcase>
+  <testcase classname="Map demo" name="markPoint name should be 白城市" time="5.033"></testcase>
+  <testcase classname="Map demo" name="module name should be 新疆维吾尔自治区..." time="5.242"></testcase>
+  <testcase classname="Map demo" name="module name should be 和田地区" time="5.165"></testcase>
+</testsuite>
+</testsuites>

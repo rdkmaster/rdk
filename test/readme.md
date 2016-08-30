@@ -34,7 +34,7 @@ it('动态操作 输入123456',function(){
 element(by.css(".form-control")).sendKeys(123456);  
 //element(by.css(".form-control")).sendKeys(123456,protractor.Key.ENTER);  
 element(by.css("span")).getText().then(function(){  
-expect(text).toBe(123456);
+expect(text).toBe('123456');
 });  
 });  
 });

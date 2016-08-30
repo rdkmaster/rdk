@@ -3,7 +3,7 @@ exports.config = {
     allScriptsTimeout: 11000,
 
     specs: [
-        'e2e/testjs/*.js'
+        'e2e/testjs/MapSelf.js'
     ],
 
     multiCapabilities: [{

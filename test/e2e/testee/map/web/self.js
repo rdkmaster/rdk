@@ -33,6 +33,59 @@ application.initDataSourceService(DSService);
 EventService.register('jilin','click',function(event,data){
   scope.cityname=data.name;
 });
+scope.mapUrl='../server/jilin.json';
+scope.setJS=function(){
+  scope.mapUrl='../server/jiangsu.json';
+};
+scope.setJL=function(){
+  scope.mapUrl='../server/jilin.json';
+};
+//demo jiangsu
+EventService.register("jiangsu","click",function(event,data){
+  console.log(data);
+});
+
+EventService.register("jiangsu",'mapselected',function(event,data){
+  scope.city=data.name;
+});
+EventService.register("jiangsu",'mapunselected',function(event,data){
+  scope.city='';
+});
+scope.select=function(){
+  EventService.broadcast("jiangsu",'mapSelect',{name:'淮安市'});
+};
+scope.unSelect=function(){
+  EventService.broadcast("jiangsu",'mapUnSelect',{name:'淮安市'});
+};
+//demo JiLin
+//根据broadcast传播的data
+EventService.register('JiLin', 'click', function(event, data) {
+  // console.log(data.name);
+  scope.pointName=data.name;
+});
+
+EventService.register("markPoint",'result',function(event,data){
+  // console.log(data);
+  scope.markPointData = data;
+  EventService.broadcast('JiLin', EventTypes.UPDATE_GRAPH);
+  EventService.broadcast('JiLin','click',data[0]);
+});
+scope.setMarkPoint=function(){
+  EventService.broadcast("markPoint",EventTypes.START_QUERY);
+};
+
+//demo drill
+scope.drillUrl="../server/china.json";
+
+EventService.register("china",'click',function(event,data){
+  var id=data.rawData.properties.id;
+  scope.currentArea=data.name;
+  if(id.length==2){
+    scope.drillUrl="../server/geometryProvince/"+id+".json";
+  }else if(id.length==4){
+    scope.drillUrl="../server/geometryCouties/"+id+"00.json";
+  }
+});
 
 /************************ 应用的代码逻辑结束 ************************/
 }]);

@@ -1,4 +1,4 @@
-rem 更改当前目录为批处理本身的目录
+rem 锟斤拷锟侥碉拷前目录为锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷目录
 cd /d %~dp0
 npm run protractor
 pause
