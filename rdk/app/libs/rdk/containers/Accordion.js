@@ -120,11 +120,13 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     _initGlobalDom();
                     _exceptionHandler();
 
-                    scope.$watchGroup(["open", "expand"], function(newVal, oldVal){
-                        _unCoverStateHandler();
+                    _unCoverStateHandler();
+                    $timeout(function(){//使得caption包裹生效
                         _coverStateHandler();
-                        _minWidthHandler(); 
+                    }, 0);
 
+                    scope.$watchGroup(["open", "expand"], function(newVal, oldVal){
+                        _minWidthHandler(); 
                         _move2Center(); //居中            
                         _moveExchangeCoverHandler(); //交换时需位移
                     }, true);
@@ -139,14 +141,14 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
                 function _moveExchangeCoverHandler(){
                     if(!scope.exchangable) return;
-                    $timeout(function(){
+                    $timeout(function(){//使得expand等生效
                         _expandMove();
                         _shrinkMove();
                     }, 0) 
                 }
 
                 function _move2Center(){
-                    $timeout(function(){
+                    $timeout(function(){//使得width调整后的高度生效
                         _uncoverMove2Center();
                         _coverMove2Center();
                     }, 0);
@@ -209,7 +211,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     if(direction == PositionTypes.RIGHT){
                         $(transcludeDom).css({'display': 'inline-block'});
                     }
-                    if(direction == PositionTypes.LEFT){   
+                    if(direction == PositionTypes.LEFT){  
                         $(transcludeDom).css({'display': 'inline-block'});
                         $(iEle[0]).empty();
                         $(iEle[0]).append(transcludeDom).append(themeDom);
