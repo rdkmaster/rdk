@@ -161,6 +161,11 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 向左展开覆盖，且图标位置交换，示例如下：
 <live_demo example="containers/accordion/demo4LeftCoverable" width="800"  height="300"></live_demo>
 
+## min_width ##
+> 支持类型：数值型字符串
+
+`expand_direction='right'`或者`expand_direction='left'`时，支持`min_width`属性。此属性用于设置容器左右打开缩小时的最小宽度。缺省时默认 `min_width=0`。
+
 
 ## id ##
 >支持类型：字符串

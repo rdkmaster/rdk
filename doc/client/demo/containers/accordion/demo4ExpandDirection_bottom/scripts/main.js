@@ -4,7 +4,7 @@ define('main',['angular', 'rd.containers.Accordion', 'rd.controls.BasicSelector'
         'rd.controls.BasicSelector'
     ]);
 
-    myApp.controller('myCtrl', ['$scope', 'RDKConst', 'BasicSelector', function(scope, RDKConst, BasicSelector) {
+    myApp.controller('myCtrl', ['$scope', 'RDKConst', 'BasicSelector', 'EventService', 'EventTypes', '$timeout', function(scope, RDKConst, BasicSelector, EventService, EventTypes, $timeout) {
         scope.cityItems = [{
             id: 0,
             label: "江苏省"
@@ -36,6 +36,12 @@ define('main',['angular', 'rd.containers.Accordion', 'rd.controls.BasicSelector'
             id: 7,
             label: "湖南省"
         }];
+
+        $timeout(function(){
+           EventService.broadcast('accordionID', EventTypes.CLOSE);
+        }, 3000);
+
+        EventService.broadcast('accordionID', EventTypes.OPEN);
 
     }]);
 });
