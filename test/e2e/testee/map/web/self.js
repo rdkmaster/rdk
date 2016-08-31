@@ -57,20 +57,33 @@ scope.select=function(){
 scope.unSelect=function(){
   EventService.broadcast("jiangsu",'mapUnSelect',{name:'淮安市'});
 };
-//demo JiLin
+//demo JiLin markPoint
 //根据broadcast传播的data
 EventService.register('JiLin', 'click', function(event, data) {
-  // console.log(data.name);
   scope.pointName=data.name;
 });
 
 EventService.register("markPoint",'result',function(event,data){
-  // console.log(data);
-  scope.markPointData = data;
+  //data是关于吉林省的城市 区域颜色和number的数组对象
+  var array;
+  for(var i=0;i<data.length;i++){
+    if(data[i].name==scope.cityname){
+      array= new Array(data[i]);
+    }
+  }
+  scope.markPointData = array;
+  scope.point=array[0].value;
   EventService.broadcast('JiLin', EventTypes.UPDATE_GRAPH);
-  EventService.broadcast('JiLin','click',data[0]);
+  EventService.broadcast('JiLin','click',array[0]);
 });
-scope.setMarkPoint=function(){
+var citys={
+  'bcs':'白城市',
+  'sys':'松原市',
+  'jls':'吉林市',
+  'ccs':'长春市'
+};
+scope.setMarkPoint=function(str){
+  scope.cityname=citys[str];
   EventService.broadcast("markPoint",EventTypes.START_QUERY);
 };
 

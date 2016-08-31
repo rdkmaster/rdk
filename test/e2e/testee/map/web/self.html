@@ -49,11 +49,16 @@
         <div id="gisModel" rdk_model="hide">{{city}}</div>
     </div>
     <div class="demo markPoint">
-        <button ng-click="setMarkPoint()" ds="markPoint" ds_url="$svr/markPoint.js">markPoint</button>
+        <div ds="markPoint" ds_url="$svr/markPoint.js">markPoint</div>
+        <button ng-click="setMarkPoint('sys')">松原市</button>
+        <button ng-click="setMarkPoint('ccs')">长春市</button>
+        <button ng-click="setMarkPoint('jls')">吉林市</button>
+        <button ng-click="setMarkPoint('bcs')">白城市</button>
         <rdk_map id="JiLin" map="'../server/jilin.json'" map_define="visualMap/map.js" 
         ds="colorMap" ds_url="$svr/colorMap.js" ds_query_if="ready">
         </rdk_map>
         <span>{{pointName}}</span>
+        <span>{{point}}</span>
     </div>
     <div class="demo area-drill">
         <rdk_map id="china" map="drillUrl" map_define="map.js">

@@ -51,11 +51,28 @@ describe('Map demo',function(){
             expect(text).toBe("盐城市");
         });
     });
-    it('markPoint name should be 白城市',function(){
-        element(by.css(".markPoint button")).click();
-        var pointname=element(by.css(".markPoint span"));
-        expect(pointname.getText()).toBe("白城市");
+    //markPoint test
+    it('选择松原市冒泡 数字应该为80',function(){
+        element.all(by.css(".markPoint button")).get(0).click();
+        var point=element.all(by.css(".markPoint span")).get(1);
+        expect(point.getText()).toBe("80");
     });
+    it('选择长春市冒泡 数字应该为87',function(){
+        element.all(by.css(".markPoint button")).get(1).click();
+        var point=element.all(by.css(".markPoint span")).get(1);
+        expect(point.getText()).toBe("87");
+    });
+    it('选择吉林市冒泡 数字应该为43',function(){
+        element.all(by.css(".markPoint button")).get(2).click();
+        var point=element.all(by.css(".markPoint span")).get(1);
+        expect(point.getText()).toBe("43");
+    });
+    it('选择白城市冒泡 数字应该为87',function(){
+        element.all(by.css(".markPoint button")).get(3).click();
+        var point=element.all(by.css(".markPoint span")).get(1);
+        expect(point.getText()).toBe("87");
+    });
+    
     //地域钻取 province city
     it('module name should be 新疆维吾尔自治区...',function(){
         var area=element(by.css(".area-name"));
