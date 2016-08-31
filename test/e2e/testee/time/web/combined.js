@@ -28,48 +28,112 @@ app.controller('rdk_ctrl', ['$scope','$timeout','$filter', 'DataSourceService', 
 function(scope,$timeout, $filter,DSService, blockUI,EventTypes,EventService) {
 application.initDataSourceService(DSService);
 /************************ 应用的代码逻辑开始 ************************/
-function showSelected(data){
-  var array='';
-  for(var key in data){
-    array+=key+"="+data[key]+";";
-  }
-  return array;
-}
-EventService.register("dsTable","select",function(event,data){
-  scope.selectedInfo=showSelected(data);
-});
-EventService.register("wks_table_0","select",function(event,data){
-  scope.selectedInfo=showSelected(data);
-});
-EventService.register("wks_table_1","select",function(event,data){
-  scope.selectedInfo=showSelected(data);
-});
-EventService.register("tab_table_1","select",function(event,data){
-  scope.selectedInfo=showSelected(data);
-});
-EventService.register("tab_table_2","select",function(event,data){
-  scope.selectedInfo=showSelected(data);
-});
-EventService.register("tab_table_3","select",function(event,data){
-  scope.selectedInfo=showSelected(data);
-});
-EventService.register("tab_table_4","select",function(event,data){
-  scope.selectedInfo=showSelected(data);
-});
-//accordion下表格样式设置
-scope.tablesetting={
-  "scrollX":true
-};
-scope.changeWidth=function(){
-  scope.tablesetting={
-    "columnDefs":[
-      {targets:"name",width:"40%"}
-    ]
-  }
-};
 
+
+scope.TimeGranularity={
+    value:['2015-08-04 14:00','2016-08-04 14:00'],//支持y/m/w/d
+    granularity: "quarter",//quarter hour date week month
+    weekStart:'0',// 0（星期日）到6（星期六）
+    selectGranularity: true,
+    startDate: "2010-01-01 00:00",
+    granularityItems: [{
+        label: "15分钟",
+        value: "quarter"
+    }, {
+        label: "小时",
+        value: "hour"
+    }, {
+        label: "天",
+        value: "date",
+    }, {
+        label: "周",
+        value: "week",
+    },{
+        label: "月",
+        value: "month",
+    }]
+}
+
+scope.TimeGap={
+    value:['2016-08-04 14:00','2016-08-30 14:00'],//支持y/m/w/d
+    granularity: "date",//quarter hour date week month
+    selectGranularity: true,
+    startDate: "2010-01-01 00:00",
+    granularityItems: [{
+        label: "天",
+        value: "date",
+        
+    }, {
+        label: "周",
+        value: "week",
+        
+    },{
+        label: "月",
+        value: "month",
+       
+    }]
+}
+
+scope.items = [
+    {label: "aaa", range: true, setting: {
+    value:['2016-08-04 14:00','now'],//支持y/m/w/d
+    granularity: "date",//quarter hour date week month
+    selectGranularity: true,
+    startDate: "2010-01-01 00:00",
+    granularityItems: [{
+        label: "天",
+        value: "date",
+        gap:"3d"
+    }, {
+        label: "周",
+        value: "week",
+        gap:"3w"
+    },{
+        label: "月",
+        value: "month",
+        gap:"3m"
+    }]
+}},
+    {label: "bbb", range: false, setting: {
+    value: "now - 2y", //支持y/m/w/d
+}},
+    {label: "ccc", range: true, setting: {
+    value:['2016-08-04 14:00','now -1d'],//支持y/m/w/d
+    granularity: "quarter",//quarter hour date week month
+    weekStart:'0',// 0（星期日）到6（星期六）
+    startDate: "2010-01-01 00:00",
+    endDate: "2016-08-29",
+    selectGranularity: true,
+    granularityItems: [{
+        label: "15分钟",
+        value: "quarter"
+    }, {
+        label: "小时",
+        value: "hour"
+    }, {
+        label: "天",
+        value: "date",
+    }, {
+        label: "周",
+        value: "week",
+    },{
+        label: "月",
+        value: "month",
+    }]
+}}
+];
+
+       
 /************************ 应用的代码逻辑结束 ************************/
-}]);
+}]).filter('myFilter',function(){
+  return function(input){
+    if(input==""){
+      return 0;
+    }else{
+      return Number(input);
+    }
+  }
+});
 
 /********************************************************************
           应用如果将代码写在此处，可能会导致双向绑定失效
