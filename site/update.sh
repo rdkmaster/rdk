@@ -3,8 +3,8 @@
 basepath=$(cd `dirname $0`; pwd)
 cd $basepath/..
 
-echo "=================================================" >> update.log
-echo "updating... time: `date`" >> update.log
+echo "=================================================" >> $basepath/update.log
+echo "updating... time: `date`" >> $basepath/update.log
 
 # pull code.....
 nodePid=`ps gaux | grep tools/node-linux-x64 | grep -v grep | awk '{print $2}'`
@@ -14,7 +14,7 @@ fi
 git checkout -- rdk/proc/conf/rdk.cfg
 git checkout -- tools/http_server/config.json
 git checkout master
-git pull origin master >> update.log
+git pull origin master >> $basepath/update.log
 
 # restart rdk...
 cd rdk/proc/bin
