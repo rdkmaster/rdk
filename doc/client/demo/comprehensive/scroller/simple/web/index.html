@@ -21,8 +21,8 @@
 </head>
 
 <body ng-controller='myCtrl' class="rdk_main">
-    <rdk_scroller ds="dsScroller" ds_url="$svr/data"  ds_query_if="ready" loop="false" 
-     scroll_policy="manual" page_num="{{dsScroller.length -1 }}" class="scollerDiv">
+    <rdk_scroller id="dsScroller" ds="dsScroller" ds_url="$svr/data"  ds_query_if="ready" loop="false" 
+     scroll_policy="manual" page_num="{{dsScroller.length -1 }}" class="scollerDiv" offset="20">
         <div class="wrapper" ng-click="appScope.clickItem(item)" ng-class="{true :'selected', false :'normal'}[item.selected == '1']">
             <span ng-bind="item.title"></span>
             <br>

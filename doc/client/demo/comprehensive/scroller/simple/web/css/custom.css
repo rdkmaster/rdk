@@ -14,7 +14,6 @@
     border-left: 1px solid #5BA9DD;
     padding: 10px 0;
     cursor:pointer;
-   /* margin: 0 10px;*/
 }
 
 .context:last-child .wrapper {
@@ -24,10 +23,7 @@
 .scollerDiv {
     background-color: #eee;
     border: 1px solid #ccc;
-    width: 650px;
     margin: 0 auto;
-    padding: 0px 20px;
-
 }
 
 .oldPercent {
