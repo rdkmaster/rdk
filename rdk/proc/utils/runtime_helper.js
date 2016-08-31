@@ -470,6 +470,18 @@ var Data = {
            dataTableArray.push(new DataTable(i18n(dataObj[idx].fieldNames), dataObj[idx].fieldNames, dataObj[idx].data))
         }
         return dataTableArray;
+    },
+    executeUpdate: function (sql) {
+        if (_.isString(sql)) {
+            return JSON.parse(rdk_runtime.executeUpdate(rdk_runtime.application(),sql));
+        }
+
+        if (_.isArray(sql)) {
+            return JSON.parse(rdk_runtime.batchExecuteUpdate(rdk_runtime.application(),sql));
+        }
+
+        Log.error("String or Array[String] param required!");
+        return;
     }
 }
 
