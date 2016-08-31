@@ -29,8 +29,23 @@ app.controller('rdk_ctrl', ['$scope', 'DataSourceService', 'blockUI','EventServi
 function(scope, DSService, blockUI,EventService,EventTypes) {
 application.initDataSourceService(DSService);
 /************************ 应用的代码逻辑开始 ************************/
-
-
+scope.mapUrl='../server/jilin.json';
+EventService.register("accordion-jilin",'mouseover',function(event,data){
+    scope.ename='mouseover';
+    scope.name=data.name;
+    console.log(data);
+});
+EventService.register("accordion-jilin",'mouseout',function(event,data){
+    scope.ename='mouseout';
+    scope.name=data.name;
+});
+var ids=['accordion-jilin','tab-jilin','combo-shanghai'];
+for(var i=0;i<ids.length;i++){
+    EventService.register(ids[i],'click',function(event,data){
+        scope.ename='click';
+        scope.name=data.name;
+    });
+}
 
 /************************ 应用的代码逻辑结束 ************************/
 }]);
