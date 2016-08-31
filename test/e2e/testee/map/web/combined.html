@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Map 组合</title>
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk"
+        src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="combined.js"></script>
+    
+
+    <!-- 应用正式运行的时候，请使用下面这个节点，RDK会使用编译后的代码，代码体积小，下载快 -->
+    <!--
+    <script data-main="main.min.js" src="/rdk_server/app/libs/requirejs/require.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    -->
+    
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/test/module/testee_helper',
+            }
+        });
+    </script>
+</head>
+<style>
+    .map{
+        width:600px;
+    }
+    .combo-content{
+        width:600px;
+    }
+    .text{
+        position:absolute;
+        top:350px;
+        right:35%;
+    }
+</style>
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    <div class="accordion map">
+        <rdk_accordion caption="'accordion'">
+            <rdk_map id="accordion-jilin" map="mapUrl" map_define="map.js">
+            </rdk_map>
+        </rdk_accordion>
+    </div>
+    
+    <div class="tab map">
+        <rdk_tab>
+            <div title="test">
+                test
+            </div>
+            <div title="jilin map">
+                <rdk_map id="tab-jilin" map="'../server/jilin.json'" map_define="map.js"></rdk_map>
+            </div>
+        </rdk_tab>
+    </div>
+    <div class="combo map">
+        <rdk_combo_select>
+            <rdk_map id="combo-shanghai" map="'../server/shanghai.json'" map_define="map.js" width="500">
+            </rdk_map>
+        </rdk_combo_select>
+    </div>
+    <div class="text">
+        <span>{{ename}}</span>
+        <span>{{name}}</span>
+    </div>
+    <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
+    <!--     这个节点可选，删除后，RDK会自动生成一个    -->
+    <!--           这个节点只支持基本HTML标签           -->
+    <div style="height:100px"></div>
+    <rdk_loading>
+        <img src="images/loding.gif" alt="loading..."/>
+    </rdk_loading>
+</body>
+
+</html>

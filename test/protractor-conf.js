@@ -1,6 +1,6 @@
 exports.config = {
-    
-    allScriptsTimeout: 11000,
+    //出现过11秒页面载入没完成时候，改为15秒
+    allScriptsTimeout: 15000,
 
     specs: [
         'e2e/testjs/*.js'
