@@ -1,4 +1,4 @@
-rem ���ĵ�ǰĿ¼Ϊ������������Ŀ¼
+@echo off
 cd /d %~dp0
 npm run protractor
 pause
