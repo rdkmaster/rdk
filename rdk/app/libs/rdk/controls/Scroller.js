@@ -137,19 +137,11 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                             div.attr('class', 'context');
                             var newclone = div.append(clone);
                             parentEle.append(newclone);
-
-
                             var element = {};
                             element.el = newclone;
                             element.scope = newScope;
-                            element.scope.$on('$destroy', function() {
-
-                                console.log('被移除')
-                            });
                             elements.push(element);
                         });
-                        // $compile(elements)(scope);   
-
                         //如果设置了子元素宽度，则调整父宽度适配子元素
                         $(elem.find('.context')).css('overflow','hidden');
                         var contextWidth=$(elem.find('.context')).width();
@@ -178,11 +170,8 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                     
                     //如果设置loop为false，则轮询到最后一个，则灰化右箭头
                     if (scope.loop=='false' && scope.showdata[scope.pageNum-1]==scope.data[count-1]){
-                        console.log('no need to move right!');
-                        // $(elem.find('.right_arrow')).css('color', "#E0E0E0");
                         scope.right_deny=true;
                         scope.left_deny=false;
-                        
                     }
                     else{
                         if (scope.left_deny){
@@ -203,7 +192,6 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                         scope.showdata[0] = tmp; 
                         //广播change事件
                         _raise(EventTypes.CHANGE, scope.showdata);
-
                     }
 
                     if (scope.loop=='false' && scope.showdata[0]==scope.data[0]){
@@ -242,23 +230,16 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                         console.error('call "' + action + '" handler failed! msg=' + e.message);
                     }
                 }
-
                 var timer;
-
-
                 var sliderFunc = function() {
                     timer = $timeout(function() {
                         scope.next();
-                        // bindData();
-                        console.log("timeout,perform again")
                         timer = $timeout(sliderFunc, timeout);
                     }, timeout);
                 };
                 if(scrollstatus&2){
                   sliderFunc();
                 }
-
-
                 scope.$on('$destroy', function() {
                     $timeout.cancel(timer);
                 });
