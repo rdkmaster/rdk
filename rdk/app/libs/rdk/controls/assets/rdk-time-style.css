@@ -32,7 +32,7 @@
 }
 
 .rdk-time-module select {
-    border:0;
+    border:0 !important;
     width: 70px;
     color: transparent;
     appearance: none;
@@ -68,6 +68,6 @@
     width: 48px;
     text-align: center;
     top: 5px;
-    z-index: -1;
+    pointer-events:none;
     border-left:1px solid #ccc;
 }
