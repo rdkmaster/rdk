@@ -6,7 +6,7 @@ cd $basepath/..
 echo "=================================================" >> update.log
 echo "updating... time: `date`" >> update.log
 
-# pull code....
+# pull code.....
 nodePid=`ps gaux | grep tools/node-linux-x64 | grep -v grep | awk '{print $2}'`
 if [ ! $nodePid = "" ]; then
 	kill -9 $nodePid
