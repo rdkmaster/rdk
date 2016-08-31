@@ -3,10 +3,13 @@
 1. windows下双击*e2ebuild.bat*运行
 2. linux下 双击*e2ebuild.sh*运行
 
-## 测试结果查看路径 test/report/e2e(默认，一般不作更改)
+## 测试结果查看路径
 
-##测试用例编写演示
-###被测对象目录:e2e/testee/Input
+test/report/e2e(默认，一般不作更改)
+
+## 测试用例编写演示
+
+被测对象目录 e2e/testee/Input
 
 	//HTML代码  
 	<rdk_input ng-model="mm" placeholder="aaa" style="width:150px"></rdk_input>  
@@ -14,10 +17,10 @@
 	//js代码  
 	scope.mm=10;  
 
-###测试用例目录:e2e/testjs
-自己定义，配合protractor-config.js中的相关配置路径
+### 测试用例目录
+放在e2e/testjs目录下，子目录名自己定义，配合protractor-config.js中的相关配置路径
 
-###文件名：InputSelf.js
+### 文件名：InputSelf.js
 
 	'use strict';
 	describe('描述你的测试对象名字等',
@@ -49,7 +52,7 @@
 	    });
 	});
 
-###Tips:
+### Tips:
 如果没有可以选择到的dom结构，比如canvas，则点击的点需要具体定位，语法如下：
 
 	browser.actions().mouseMove(element(by.css("选择器")),{x:181.4,y:110}).click().perform();
