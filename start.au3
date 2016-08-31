@@ -23,7 +23,6 @@ Global $restPid = 0
 Global $rdkPid = 0
 
 _init()
-AdlibRegister('_updateConsole', 100)
 
 Global $width = 1000
 Global $height = 600
@@ -57,6 +56,7 @@ _startRDK()
 _startHTTP()
 _startRest()
 
+AdlibRegister('_updateConsole', 100)
 OnAutoItExitRegister('_beforeExit')
 
 While 1
