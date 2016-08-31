@@ -69,7 +69,10 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                     var right=$(elem.find('.right_arrow')).css('right');
                     rigth=parseInt(right)-parseInt(scope.offset);
                     $(elem.find('.right_arrow')).css('right',rigth+'px');
-                    $(elem.find('.slider')).css('border','solid transparent').css('border-width',scope.offset);
+                    $(elem.find('.slider')).css('border',' solid transparent')
+					.css('border-left-width',parseInt(scope.offset))
+					.css('border-right-width',parseInt(scope.offset));
+					
                 }
                 totalWidth=$(elem[0]).width();
                 var scrollstatus;
@@ -153,7 +156,7 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                         var siderWidth=contextWidth*scope.pageNum;
                         if (contextWidth>=100 && totalWidth>siderWidth){
                             
-                            $(elem[0]).css('width',siderWidth);
+                            $(elem[0]).css('width',siderWidth+2*parseInt(scope.offset)+2);
                         }                   
                     }
                 };
