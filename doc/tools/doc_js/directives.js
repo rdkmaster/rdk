@@ -150,10 +150,20 @@ module.service('MarkdownService', ['$compile', function($compile) {
     
     function toAbsPath(path) {
         path = path[0] == '/' ? path : $('#base').attr('href') + path;
-        while (path.match(/(?:[^\\?\/\*\|<>:"']+)*\/\.\.\//)) {
-            path = path.replace(/(?:[^\\?\/\*\|<>:"']+)*\/\.\.\//, '');
+		//path永远是 /doc/ 开头
+        var pathParts = path.substring(5).split('/');
+        while(true) {
+            var idx = pathParts.indexOf('..');
+            if (idx == -1) {
+                break;
+            }
+            pathParts.splice(idx, 1);
+            idx -= 1;
+            if (idx != -1) {
+                pathParts.splice(idx, 1);
+            }
         }
-        return path;
+		return '/doc/' + pathParts.join('/');
     }
     
     this.loadText = function(mdText) {
