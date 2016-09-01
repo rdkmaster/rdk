@@ -104,7 +104,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         else{
                             html += '<div ng-bind="item[columnDef.data]"> </div>';
                             html += '<div ng-show="false">'+
-                                        '<input class="editInput" value="{{item[columnDef.data]}}" ng-keyup="inputPressHandler($event, item.$index, $index)" ng-blur="editorBlurHandler($event, item.$index, $index, columnDef)">'+
+                                        '<input class="editInput" value="{{item[columnDef.data]}}" ng-keyup="inputPressHandler($event, item.$index, $index)" ng-blur="editorBlurHandler($event, item.$index, columnDef)">'+
                                     '</div>';
                         }
                     }
@@ -422,13 +422,13 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             }
                         }
 
-                        scope.editorBlurHandler = function(event, row, column, columnDef){
+                        scope.editorBlurHandler = function(event, row, columnDef){
                             var inputTarget = event.currentTarget;
                             var divTarget = inputTarget.parentNode;
 
                             _blurHandler(divTarget);
                             if((columnDef.editable)&&(!columnDef.editorRenderer)){
-                                scope.refreshData(inputTarget, row, column);
+                                scope.refreshData(inputTarget, row, columnDef.columnIdx);
                             }
                         }
 
@@ -649,6 +649,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             columnDef.data = scope.data.field[i];
                             columnDef.title = scope.data.header[i];
                             columnDef.targets = i;
+                            columnDef.columnIdx = i;
                             columnDef.visible = true;
                             columnDef.sortable = false;
                             columnDef.sortas = 'string';
