@@ -6,21 +6,19 @@ import java.nio.file._
 import java.nio.file.attribute.BasicFileAttributes
 import java.util.UUID
 import java.util.regex.{Matcher, Pattern}
-import javax.script.ScriptException
-
 
 import com.google.gson.{Gson, GsonBuilder}
 import com.zte.vmax.activemq.rdk.RDKActiveMQ
 import com.zte.vmax.rdk.RdkServer
-import com.zte.vmax.rdk.actor.Messages.{NoneContext, RDKContext, MQ_Message, ServiceRequest}
+import com.zte.vmax.rdk.actor.Messages.{MQ_Message, NoneContext, RDKContext, ServiceRequest}
 import com.zte.vmax.rdk.config.Config
-import com.zte.vmax.rdk.db.DataBaseHelper._
 import com.zte.vmax.rdk.db.GbaseOptimizer
 import com.zte.vmax.rdk.defaults.RequestMethod
 import com.zte.vmax.rdk.env.Runtime
+import com.zte.vmax.rdk.jsr.FileHelper
 import jdk.nashorn.api.scripting.ScriptObjectMirror
 import jdk.nashorn.internal.runtime.Undefined
-import spray.routing.RequestContext
+import spray.http.{IllegalRequestException, StatusCodes}
 
 import scala.reflect.ClassTag
 import scala.util.Try
@@ -99,7 +97,7 @@ object RdkUtil extends Logger {
     * @param method
     * @return
     */
-  def handleJsRequest(runtime: Runtime, ctx: RDKContext, script: String, app: String, param: AnyRef, method: String): String = {
+  def handleJsRequest(runtime: Runtime, ctx: RDKContext, script: String, app: String, param: AnyRef, method: String): Either[Exception, String] = {
     def isDefined(obj: AnyRef): Boolean = {
       return !(obj.isInstanceOf[Undefined])
     }
@@ -108,27 +106,31 @@ object RdkUtil extends Logger {
     val realApp = RdkUtil.getRealApp(realJs, app)
     runtime.setAppName(realApp)
     appLogger(realApp).info(s"handling request($realApp), script=$realJs , method=$method param=$param")
+    if (false == fileExist(FileHelper.fixPath(realJs, realApp))) {
+      return Left(new IllegalRequestException(StatusCodes.NotFound, realJs))
+    }
 
     try {
+      val begin = System.currentTimeMillis()
       val service = runtime.require(realJs).asInstanceOf[ScriptObjectMirror]
       val callable: AnyRef = service.getMember(method)
-
       if (isDefined(callable) && callable.isInstanceOf[ScriptObjectMirror]) {
-        runtime.callService(callable.asInstanceOf[ScriptObjectMirror], param, realJs)
+        Right(runtime.callService(callable.asInstanceOf[ScriptObjectMirror], param, realJs))
       }
       else if (method == RequestMethod.GET) {
-        runtime.callService(service, param, realJs)
+        Right(runtime.callService(service, param, realJs))
       }
       else {
-        "invalid service implement, need '" + method + "' method!"
+        Left(new IllegalRequestException(StatusCodes.MethodNotAllowed, "invalid service implement, need '" + method + "' method!"))
       }
 
     }
     catch {
-      case e: ScriptException => {
+      case e: Exception => {
         val error: String = "service error: " + e.getMessage + ", param=" + param + "service path='" + realJs
         appLogger(app).error(error, e)
-        return error
+
+        Left(new IllegalRequestException(StatusCodes.BadRequest, e.getMessage))
       }
     }
 
@@ -247,5 +249,15 @@ object RdkUtil extends Logger {
         logger.error(e.getMessage)
       }
     }
+  }
+
+  /**
+    * 判断文件是否存在
+    *
+    * @param file
+    * @return
+    */
+  def fileExist(file: String): Boolean = {
+    new File(file).exists()
   }
 }

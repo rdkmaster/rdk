@@ -65,8 +65,11 @@ class Runtime(engine: ScriptEngine) extends Logger {
   @throws(classOf[ScriptException])
   def require(script: String): AnyRef = {
     val realScript = FileHelper.fixPath(script, application)
-    appLogger(application).info("loading script:{} ", script)
-    return engine.eval("load('" + realScript + "')")
+    val begin = System.currentTimeMillis()
+    val result = engine.eval("load('" + realScript + "')")
+    val timeUsed = System.currentTimeMillis() - begin
+    appLogger(application).info(s"loading script:$script (${timeUsed}ms)")
+    result
   }
 
   @throws(classOf[ScriptException])
@@ -132,7 +135,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   def fetch(sql: String, maxLine: Int): String = {
     val data = DataBaseHelper.fetch(application, sql, maxLine)
-    objectToJson(data getOrElse "null")
+    objectToJson(data getOrElse "null") //转json？
   }
 
   def batchFetch(sqlArr: ScriptObjectMirror, maxLine: Int, timeout: Long): String = {
@@ -142,6 +145,13 @@ class Runtime(engine: ScriptEngine) extends Logger {
     objectToJson(ret.toArray)
   }
 
+  def fetch_first_cell(sql: String): String = {
+    val option = DataBaseHelper.fetch(application, sql, 1)
+    option.map(it => {
+      if (it.data.length >= 1) Some(objectToJson(it.data(0)(0))) else None
+    }).flatten getOrElse objectToJson("null")
+
+  }
   def executeUpdate(appName:String,sql:String)={
     var affectNums:Option[Int]=DataBaseHelper.executeUpdate(appName,sql)
     affectNums.getOrElse(0)
@@ -152,14 +162,6 @@ class Runtime(engine: ScriptEngine) extends Logger {
     val res = DataBaseHelper.batchExecuteUpdate(appName,lst.toList)
     val ret:List[Int] = if (res.nonEmpty) res.get else Nil
     objectToJson(ret.toArray)
-  }
-
-  def fetch_first_cell(sql: String): String = {
-    val option = DataBaseHelper.fetch(application, sql, 1)
-    option.map(it => {
-      if (it.data.length >= 1) Some(objectToJson(it.data(0)(0))) else None
-    }).flatten getOrElse objectToJson("null")
-
   }
 
   /**

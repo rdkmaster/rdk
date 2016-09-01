@@ -91,23 +91,23 @@ class TestOldJsAPI extends FunSpec with Matchers{
 
 
     it("list()=>ok return file lists") {
-      val fileList:String=RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_list")
-      fileList.contains("conf1.propertites") should be (true)
+      val fileList=RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_list")
+      fileList.right.get.contains("conf1.propertites") should be (true)
     }
 
    it("web()=>test cases passed!") {
-          val fixWeb:String=RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "file_web")
-          fixWeb should be ("app/test/web")
+          val fixWeb=RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "file_web")
+          fixWeb.right.get should be ("app/test/web")
   }
 
   it("svr()=>test cases passed!") {
-    val fixWeb:String=RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "file_svr")
-    fixWeb should be ("app/test/server")
+    val fixWeb=RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "file_svr")
+    fixWeb.right.get should be ("app/test/server")
   }
 
   it("base()=>test cases passed!") {
-    val fixWeb:String=RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "file_base")
-    fixWeb should be ("app/test")
+    val fixWeb=RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "file_base")
+    fixWeb.right.get should be ("app/test")
   }
 
     it("kv()=>test cases passed!"){
