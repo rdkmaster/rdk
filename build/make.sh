@@ -50,6 +50,7 @@ if [ "${branch}" != "" ] ; then
 	git checkout -b ${branch} 
 else
 	git checkout -b master 
+	
 fi
 ##clone rdk编译依赖
 if [ x"${rdk_resource}" = x ] ; then
@@ -70,7 +71,7 @@ $rdk_resource/sbt/bin/sbt \
 -Dsbt.ivy.home=$rdk_resource/rdk-resource/sbt-repo/ivy/ \
 -Dsbt.global.base=$rdk_resource/rdk-resource/sbt-repo/   package
 
-
+cp ../target/scala-2.10/rdk_*.jar  ../rdk/proc/bin/lib/ 
 	
 }
 
@@ -131,7 +132,6 @@ MAIN(){
   rm -rf ../rdk_release
 }
 MAIN
-
 
 
 
