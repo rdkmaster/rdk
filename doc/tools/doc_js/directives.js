@@ -116,9 +116,9 @@ module.service('MarkdownService', ['$compile', function($compile) {
         }
         
         path = toAbsPath(path);
-		var pathParts = path.split('#');
+        var pathParts = path.split('#');
         if (currentFile === pathParts[0]) {
-			misc.scrollToTarget();
+            misc.scrollToTarget();
             return;
         }
         currentFile = pathParts[0];
@@ -128,9 +128,9 @@ module.service('MarkdownService', ['$compile', function($compile) {
             mdService.loadText('---\n\n正在加载 `' + path + '` ...\n\n---');
         }, 500);
         
-		if (!!ajaxInstance) {
-			ajaxInstance.abort();
-		}
+        if (!!ajaxInstance) {
+            ajaxInstance.abort();
+        }
         ajaxInstance = $.ajax({
             url: path,
             type: 'GET',
@@ -139,15 +139,15 @@ module.service('MarkdownService', ['$compile', function($compile) {
             success: function(data) {
                 if (timer != -1) {
                     clearTimeout(timer);
-					timer = -1;
+                    timer = -1;
                 }
                 mdService.loadText(data);
-				ajaxInstance = null;
+                ajaxInstance = null;
             },
             error: function(data) {
                 mdService.loadText('---\n\n找不到文档 `' + path + '`，以下是详细信息：\n\n' +
                             '    ' + JSON.stringify(data) + '\n\n---');
-				ajaxInstance = null;
+                ajaxInstance = null;
             }
         });
         
@@ -157,10 +157,20 @@ module.service('MarkdownService', ['$compile', function($compile) {
     
     function toAbsPath(path) {
         path = path[0] == '/' ? path : $('#base').attr('href') + path;
-        while (path.match(/(?:[^\\?\/\*\|<>:"']+)*\/\.\.\//)) {
-            path = path.replace(/(?:[^\\?\/\*\|<>:"']+)*\/\.\.\//, '');
+		//path永远是 /doc/ 开头
+        var pathParts = path.substring(5).split('/');
+        while(true) {
+            var idx = pathParts.indexOf('..');
+            if (idx == -1) {
+                break;
+            }
+            pathParts.splice(idx, 1);
+            idx -= 1;
+            if (idx != -1) {
+                pathParts.splice(idx, 1);
+            }
         }
-        return path;
+		return '/doc/' + pathParts.join('/');
     }
     
     this.loadText = function(mdText) {
@@ -168,12 +178,12 @@ module.service('MarkdownService', ['$compile', function($compile) {
         markdownContainer.empty();
         markdownContainer.html(markdownConverter.makeHtml(mdText));
         $compile(markdownContainer.contents())(mdService.scope);
-		
-		misc.markdownContainer = markdownContainer[0];
-		setTimeout(misc.scrollToTarget, 200);
-		misc.resetDir();
-		misc.fixTitle();
-		misc.makeDir();
+        
+        misc.markdownContainer = markdownContainer[0];
+        setTimeout(misc.scrollToTarget, 200);
+        misc.resetDir();
+        misc.fixTitle();
+        misc.makeDir();
     }
 }]);
 
