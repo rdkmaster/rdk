@@ -41,24 +41,7 @@ var java = {
 
 };
 
-
-var mq = {
-    p2p: function (subject, message) {
-        return new Sequence(rdk_runtime.messageQueue().p2p(subject, message), subject);
-    },
-    broadcast: function (subject, message, persit) {
-        var seq = rdk_runtime.messageQueue().broadcast(subject, message, !!persit);
-        return new Sequence(seq, subject);
-    },
-    subscribe: function (subject, callback, context, sequence) {
-        rdk_runtime.messageQueue().subscribe(subject, callback, context, sequence);
-    },
-    unsubscribe: function (subject, callback) {
-        rdk_runtime.messageQueue().unsubscribe(subject, callback);
-    }
-};
-
-var mq_new={
+var mq={
     p2p: function (subject, message) {
         return rdk_runtime.p2p(subject, message);
     },
@@ -78,7 +61,8 @@ var mq_new={
         return rdk_runtime.reply(dst, message);
     }
 
-}
+};
+
 var websock ={
     broadcast: function (subject, message) {
         return rdk_runtime.webSocketBroadcast(subject, message);
@@ -156,12 +140,12 @@ var JSON1 = {
 //动态类加载
 var JVM = {
     load_class: function loadClass(jar,className) {
-        try {
-            return rdk_runtime.jarHelper().loadClass(jar, className);
-        } catch (e) {
-            return undefined;
+        var loadclazz=rdk_runtime.jarHelper().loadClass(jar, className);
+            if (loadclazz==null){
+                return undefined;
+            }
+          return loadclazz;
         }
-    }
 }
 
 //国际化
@@ -200,35 +184,6 @@ var I18n = {
 }
 //兼容以前代码
 var i18n = I18n.format;
-
-function Sequence(sequence, subject) {
-    this.sequence = sequence;
-    this.subject = subject;
-    this.data = undefined;
-
-    this.wait = function (subject) {
-        log("waiting for ack... subject =", subject || this.subject);
-        if (!subject && !this.subject) {
-            error("need a valid subject!");
-            return;
-        }
-        mq.subscribe(subject || this.subject, function (msg) {
-            this.data = msg.body;
-        }, this, this.sequence);
-
-        while (!this.data) {
-            sleep(20);
-        }
-        return this.data;
-    };
-
-    this.toString = function () {
-        return String(this.sequence);
-    };
-    this.valueOf = function () {
-        return this.sequence;
-    };
-}
 
 ///////////////////////////////////////////////////////////////////////
 function _fixContent(content, excludeIndexes) {
@@ -317,30 +272,9 @@ var file = {
 
 ///////////////////////////////////////////////////////////////////////
 
-function rest(url, param, option) {
-    if (!url) {
-        return null;
-    }
-    if (_.isString(option)) {
-        option = {'method': option};
-    }
-    var method = rdk_runtime.restHelper().getProperty(option, 'method', 'GET');
-    method = method.toUpperCase();
-    var isStd = rdk_runtime.restHelper().getProperty(option, 'isStandard', 'false') === 'true';
-    if (method == 'GET') {
-        var strParam = '';
-        if (param) {
-            if (isStd) {
-                strParam = '?p={"param":' + (_.isString(param) ? param : json(param, '')) + '}';
-            } else {
-                strParam = '?' + param;
-            }
-        }
-        var result = rdk_runtime.restHelper().get(url, encodeURI(strParam), option);
-        return isStd ? eval('(' + result + ')').result : result;
-    } else {
-        error('unsupported yet!!');
-        return null;
+var rest = {
+    get: function(url, option) {
+        return helper.restHelper.get(encodeURI(url), option);
     }
 }
 
@@ -491,6 +425,18 @@ var Data = {
            dataTableArray.push(new DataTable(i18n(dataObj[idx].fieldNames), dataObj[idx].fieldNames, dataObj[idx].data))
         }
         return dataTableArray;
+    },
+    executeUpdate: function (sql) {
+        if (_.isString(sql)) {
+            return JSON.parse(rdk_runtime.executeUpdate(rdk_runtime.application(),sql));
+        }
+
+        if (_.isArray(sql)) {
+            return JSON.parse(rdk_runtime.batchExecuteUpdate(rdk_runtime.application(),sql));
+        }
+
+        Log.error("String or Array[String] param required!");
+        return;
     }
 }
 
@@ -591,7 +537,6 @@ function matrix(resultSet, mapIterator, keepResultSet) {
     if (_.isString(resultSet)) {
         return matrix(sql(resultSet), mapIterator);
     }
-
     var its = mapIterator === undefined ? {} : mapIterator;
     var mtx = {header: [], field: [], data: []};
 
@@ -620,7 +565,7 @@ function matrix(resultSet, mapIterator, keepResultSet) {
             var it = its[mtx.field[i - 1]];
             var val = _bytes2string(resultSet.getBytes(i));
             try {
-                val = it ? it(val, resultSet, row.length) : val;
+                val = _.isDefined(it) ? it(val, resultSet, row.length) : val;
             } catch (e) {
                 error("call matrix iterator error: " + e);
             }
@@ -654,9 +599,9 @@ function isMatrix(data) {
 }
 
 function kv(map, defaultValue) {
-    return function (value, row, index) {
-        return map && _.isDefined(value) && map.hasOwnProperty(value) ? map[value] :
-            defaultValue === undefined ? value : defaultValue;
+    return function (key, row, index) {
+        return map && _.isDefined(key) && map.hasOwnProperty(key) ? map[key] :
+            defaultValue === undefined ? key : defaultValue;
     }
 }
 

@@ -65,8 +65,11 @@ class Runtime(engine: ScriptEngine) extends Logger {
   @throws(classOf[ScriptException])
   def require(script: String): AnyRef = {
     val realScript = FileHelper.fixPath(script, application)
-    appLogger(application).info("loading script:{} ", script)
-    return engine.eval("load('" + realScript + "')")
+    val begin = System.currentTimeMillis()
+    val result = engine.eval("load('" + realScript + "')")
+    val timeUsed = System.currentTimeMillis() - begin
+    appLogger(application).info(s"loading script:$script (${timeUsed}ms)")
+    result
   }
 
   @throws(classOf[ScriptException])
@@ -148,6 +151,17 @@ class Runtime(engine: ScriptEngine) extends Logger {
       if (it.data.length >= 1) Some(objectToJson(it.data(0)(0))) else None
     }).flatten getOrElse objectToJson("null")
 
+  }
+  def executeUpdate(appName:String,sql:String)={
+    var affectNums:Option[Int]=DataBaseHelper.executeUpdate(appName,sql)
+    affectNums.getOrElse(0)
+  }
+
+  def batchExecuteUpdate(appName:String,sqlArr:ScriptObjectMirror):String={
+    val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
+    val res = DataBaseHelper.batchExecuteUpdate(appName,lst.toList)
+    val ret:List[Int] = if (res.nonEmpty) res.get else Nil
+    objectToJson(ret.toArray)
   }
 
   /**

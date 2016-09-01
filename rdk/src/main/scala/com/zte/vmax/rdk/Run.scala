@@ -14,7 +14,6 @@ import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
 import com.zte.vmax.rdk.actor.{WebSocketServer, AppRouter, MQRouter}
 import com.zte.vmax.rdk.config.Config
-import com.zte.vmax.rdk.monitor.MemMonitor
 import com.zte.vmax.rdk.service.RestHandler
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 
@@ -72,9 +71,6 @@ object RdkServer {
   val system = ActorSystem("rdk-server", akkaConfig.withFallback(ConfigFactory.load()))
   //http-rest处理路由
   val appRouter: ActorRef = system.actorOf(Props[AppRouter], "appRouter")
-
-  val memMonitor: ActorRef = system.actorOf(Props(classOf[MemMonitor], appRouter), "MemMonitor")
-
   //MQ 处理路由
   val mqRouter: ActorRef = system.actorOf(Props[MQRouter], "mqRouter")
 

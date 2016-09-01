@@ -49,7 +49,7 @@ public class LogHelper {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        RollingFileAppender rfa = createRollingFileAppender(layout, "/proc/logs/log.txt");
+        RollingFileAppender rfa = createRollingFileAppender(layout, "./proc/logs/log.txt");
         if (rfa != null) {
             logger.addAppender(rfa);
         }
@@ -62,7 +62,7 @@ public class LogHelper {
 
         logger.addAppender(new ConsoleAppender(layout, ConsoleAppender.SYSTEM_OUT));
 
-        RollingFileAppender rfa = createRollingFileAppender(layout, "/proc/logs/log.txt");
+        RollingFileAppender rfa = createRollingFileAppender(layout, "./proc/logs/log.txt");
         if (rfa != null) {
             logger.addAppender(rfa);
         }

@@ -69,6 +69,7 @@ public class JarHelper extends AbstractAppLoggable {
             clazz = urlLoader.loadClass(className);
         } catch (Exception e) {
             logger.error("loadClass error: ", e);
+            return null;
         }
         try {
             urlLoader.close();
