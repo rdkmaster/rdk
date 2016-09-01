@@ -25,7 +25,7 @@ DEV_ENV_DIR=./rdk_release/rdk-develop-environment
 RUN_ENV_DIR=./rdk_release/rdk-runtime-environment
 ##RDK版本号
 dos2unix ../rdk/build.sbt
-RDK_VERSION=`cat ../rdk/build.sbt |grep version|awk -F '=' '{print $2}'| grep -o "[^ ]\+\( \+[^ ]\+\)*"|sed 's/\"//g'`
+RDK_VERSION=`cat ../rdk/build.sbt |grep version|awk -F '=' '{print $2}'| grep -o "[^ ]\+\( \+[^ ]\+\)*"|sed 's/\"//g'|dos2unix`
 
 USAGE() {
 	echo "para1:rdk_path 用于clone git@gitlab.zte.com.cn:10045812/rdk.git的路径 default:/home/rdk_git"
