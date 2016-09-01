@@ -104,7 +104,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         else{
                             html += '<div ng-bind="item[columnDef.data]"> </div>';
                             html += '<div ng-show="false">'+
-                                        '<input class="editInput" value="{{item[columnDef.data]}}" ng-keyup="inputPressHandler($event, item.$index, $index)" ng-blur="editorBlurHandler($event, item.$index, columnDef)">'+
+                                        '<input class="editInput" value="{{item[columnDef.data]}}" ng-keyup="inputPressHandler($event, item.$index, columnDef.columnIdx)" ng-blur="editorBlurHandler($event, item.$index, columnDef)">'+
                                     '</div>';
                         }
                     }
