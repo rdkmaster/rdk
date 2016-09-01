@@ -17,30 +17,19 @@
         }
     });
     </script>
-    <style type="text/css">
-    .red {
-        color: red;
-    }
-    
-    .green {
-        color: green;
-    }
-
-    .left_arrow,.left_deny{
-        left : -20px;
-    }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
 </head>
 
 <body ng-controller='myCtrl' class="rdk_main">
-    <rdk_scroller ds="dsScroller" ds_url="$svr/data"  ds_query_if="ready" loop="false"
-     scroll_policy="manual" page_num="{{dsScroller.length -1 }}" style="width:600px;margin:0 auto">
-        <div style="width:200px;text-align: center;border-left:1px solid #5BA9DD;" ng-click="appScope.clickItem(item)" ng-class="{true :'red', false :'green'}[item.selected == '1']">
+    <rdk_scroller id="dsScroller" ds="dsScroller" ds_url="$svr/data"  ds_query_if="ready" loop="false" 
+     scroll_policy="manual" page_num="{{dsScroller.length -1 }}" class="scollerDiv" offset="20">
+        <div class="wrapper" ng-click="appScope.clickItem(item)" ng-class="{true :'selected', false :'normal'}[item.selected == '1']">
             <span ng-bind="item.title"></span>
             <br>
-            <span ng-bind="item.oldPercent"></span>
-            <span ng-bind="item.newPercent"></span>
+            <span class="oldPercent">{{item.oldPercent}}%</span>
+            <span class="newPercent">{{item.newPercent}}%</span>
         </div>
+        <div class="bottom_line"  ng-show="{{item.selected == '1'}}"></div>
     </rdk_scroller>
 </body>
 

@@ -13,6 +13,9 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                     scrollPolicy: '@?',
                     timeout: '@?',
                     loop: '@?',
+                    change: '&?',
+                    id: '@?',
+                    offset: '@?',
                    
                 },
                 //要想ng-repeat开始的时候不编译，这样才能使用其中的数组项
@@ -21,17 +24,19 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                 controller: ['$scope', function(scope) {
                     
                 }],
-                template: '<div class="slider" > \
-                            <div class="slide" rdk-repeat="item in data"  > \
-                            </div> \
-                            <div class="arrows"> \
-                                <div ng-class="{\'left_deny\':left_deny,\'left_arrow\':left_arrow}">  \
-                                  <i class="fa fa-angle-left" ng-click="prev()"></i>\
+                template: '<div> \
+                                <div class="slider" > \
+                                    <div class="slide" rdk-repeat="item in data"  > \
+                                    </div> \
+                                    <div class="arrows"> \
+                                        <div class="left_arrow" ng-class="{\'left_deny\':left_deny}">  \
+                                          <i class="fa fa-angle-left" ng-click="prev()"></i>\
+                                        </div> \
+                                        <div class="right_arrow" ng-class="{\'right_deny\':right_deny}"> \
+                                          <i class="fa fa-angle-right" ng-click="next()"></i>\
+                                        </div> \
+                                    </div> \
                                 </div> \
-                                <div ng-class="{\'right_deny\':right_deny,\'right_arrow\':right_arrow}"> \
-                                  <i class="fa fa-angle-right" ng-click="next()"></i>\
-                                </div> \
-                            </div> \
                            </div>',
 
                 compile: function(tEle, tAttrs) {
@@ -54,18 +59,22 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                 //appScope 为获取父元素
                 scope.appScope = Utils.findAppScope(scope);
                 //scrollstatus:1-click,2-timer,3-都支持，默认3
+                //获取偏移量
+                scope.offset=Utils.getValue(scope.offset, attrs.offset, 0);
 
-                scope.left_arrow=true;
-                scope.right_arrow=true;
-
-           
-                // if (!attrs.hasOwnProperty('data')) {
-                //     attrs.data = attrs.ds;
-                // }
-               
-                
-                
-
+                if (scope.offset>0){
+                    var left=$(elem.find('.left_arrow')).css('left');
+                    left=parseInt(left)-parseInt(scope.offset);
+                    $(elem.find('.left_arrow')).css('left',left+'px');
+                    var right=$(elem.find('.right_arrow')).css('right');
+                    rigth=parseInt(right)-parseInt(scope.offset);
+                    $(elem.find('.right_arrow')).css('right',rigth+'px');
+                    $(elem.find('.slider')).css('border',' solid transparent')
+					.css('border-left-width',parseInt(scope.offset))
+					.css('border-right-width',parseInt(scope.offset));
+					
+                }
+                totalWidth=$(elem[0]).width();
                 var scrollstatus;
 
                 //获取轮播策略
@@ -89,10 +98,15 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                         scope.showdata.push(item);
                     })
                     }
+                    Init();
                     
                 }, true);
                 
-
+                var Init = function(){
+                    if(scope.showdata[0]==scope.data[0]){
+                        scope.left_deny=true;
+                    }
+                }
                 var parentEle = elem.find(".slide");
                 var elements = [];
 
@@ -123,88 +137,109 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                             div.attr('class', 'context');
                             var newclone = div.append(clone);
                             parentEle.append(newclone);
-
                             var element = {};
                             element.el = newclone;
                             element.scope = newScope;
-                            element.scope.$on('$destroy', function() {
-
-                                console.log('被移除')
-                            });
                             elements.push(element);
                         });
-                        // $compile(elements)(scope);                      
+                        //如果设置了子元素宽度，则调整父宽度适配子元素
+                        $(elem.find('.context')).css('overflow','hidden');
+                        var contextWidth=$(elem.find('.context')).width();
+                        var siderWidth=contextWidth*scope.pageNum;
+                        if (contextWidth>=100 && totalWidth>siderWidth){
+                            
+                            $(elem[0]).css('width',siderWidth+2*parseInt(scope.offset)+2);
+                        }                   
                     }
                 };
 
                   //对数据项进行右移，并赋值给showdata数组
                 scope.next = function() {
 
-                    var count = scope.data.length; //图片总数量
-                    //如果设置loop为false，则轮询到最后一个，则灰化右箭头
-                    if (scope.loop=='false' && scope.showdata[scope.pageNum-1]==scope.data[count-1]){
-                        console.log('no need to move right!');
-                        // $(elem.find('.right_arrow')).css('color', "#E0E0E0");
-                        scope.right_deny=true;
-
-                    }
-                    else{
-                        if (scope.left_deny){
-                            scope.left_deny=false;
-                            scope.left_arrow=true;
-                        }
-                        
+                    if (!scope.right_deny){
+                        var count = scope.data.length; //图片总数量
                         var tmp=scope.showdata[0];
                         for (var i = 0; i < count - 1; i++) {
                             scope.showdata[i] = scope.showdata[i + 1];
                         }
                         scope.showdata[count - 1] = tmp;
+                        //广播change事件
+                        _raise(EventTypes.CHANGE, scope.showdata);
 
                     }
-
                     
+                    //如果设置loop为false，则轮询到最后一个，则灰化右箭头
+                    if (scope.loop=='false' && scope.showdata[scope.pageNum-1]==scope.data[count-1]){
+                        scope.right_deny=true;
+                        scope.left_deny=false;
+                    }
+                    else{
+                        if (scope.left_deny){
+                            scope.left_deny=false;
+                        }
+                    }  
+              
                 };
 
                 //对数据项进行左移，并赋值给showdata数组
                 scope.prev = function() {
                     var count = scope.data.length; //图片总数量
-                    if (scope.loop=='false' && scope.showdata[0]==scope.data[0]){
-                        console.log('no need to move left!');
-                        // $(elem.find('.left_arrow')).css('color', "#E0E0E0");
-                        scope.left_deny=true;
+                    if (!scope.left_deny){
+                        var tmp=scope.showdata[count - 1]
+                        for (var i = count - 1; i > 0; i--) {
+                            scope.showdata[i] = scope.showdata[i - 1];
+                        }
+                        scope.showdata[0] = tmp; 
+                        //广播change事件
+                        _raise(EventTypes.CHANGE, scope.showdata);
+                    }
 
+                    if (scope.loop=='false' && scope.showdata[0]==scope.data[0]){
+                        scope.left_deny=true;
+                        scope.right_deny=false;
                     }
 
                     else{
                         if (scope.right_deny){
                             scope.right_deny=false;
-                            scope.right_arrow=true;
                         }
-                        var tmp=scope.showdata[count - 1]
-                        for (var i = count - 1; i > 0; i--) {
-                            scope.showdata[i] = scope.showdata[i - 1];
-                        }
-                        scope.showdata[0] = tmp;
                     }
-                    
-
+                                            
                 };
 
-                var timer;
+                function _raise(action, data) {
+                    if (action == EventTypes.CHANGE) {
+                        Utils.childChange(scope, data);
+                    }
 
+                    if (scope.id) {
+                        EventService.broadcast(scope.id, action, data);
+                    }
+
+                    var fn;
+                    if (scope[action]) {
+                        fn = scope[action](scope);
+                    }
+                    if (!fn) {
+                        return;
+                    }
+
+                    try {
+                        fn({ name: action, dispatcher: scope.id}, data);
+                    } catch (e) {
+                        console.error('call "' + action + '" handler failed! msg=' + e.message);
+                    }
+                }
+                var timer;
                 var sliderFunc = function() {
                     timer = $timeout(function() {
                         scope.next();
-                        // bindData();
-                        console.log("timeout,perform again")
                         timer = $timeout(sliderFunc, timeout);
                     }, timeout);
                 };
                 if(scrollstatus&2){
                   sliderFunc();
                 }
-
-
                 scope.$on('$destroy', function() {
                     $timeout.cancel(timer);
                 });

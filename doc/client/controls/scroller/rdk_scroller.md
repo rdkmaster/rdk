@@ -52,6 +52,14 @@
 ---
 
 #样式修改#
+
+## offset ##
+>支持类型：整型
+
+`offset`属性可以让用户设置左右的偏移量，以px为单位，默认偏移量为0，则此时箭头悬浮在页面上，如何设置了偏移量，显示区域会向内压缩，示例如下：
+
+<live_demo example="controls/scroller/offset" width="900"></live_demo>
+
 ##箭头的透明度##
 在style中，设置class为left-arrow和right-arrow的样式，opacity设置透明度，top设置箭头的相对高度，默认透明度0.5：
 
@@ -72,6 +80,8 @@
 <live_demo example="controls/scroller/style" width="900"></live_demo>
 
 ---
+#事件#
+当控件id不为空，点击左右箭头会发出一个以该id为key的'EventTypes.CHANGE'事件。
 
 `rdk_scroller`也支持内嵌其他rdk控件，这里以图像结合`rdk_graph`为例,设置显示页数为3，如下所示：
 
