@@ -2,11 +2,11 @@
 describe('Table Demos',function(){
     beforeEach(function(){
         browser.get('test/e2e/testee/table/web/self.html');
-        browser.sleep(2000);
+        browser.sleep(3000);
     });
     afterEach(function(){
     });
-    //搜索框输入
+    搜索框输入
     it('只显示一条结果HZ',function(){
         //直接输入搜索显示结果
         var lines=element.all(by.css(".demo1 .sticky-wrap .sticky-enabled tbody tr"));
@@ -16,7 +16,7 @@ describe('Table Demos',function(){
         expect(lines.count()).toBe(1);
         expect(showPage.getText()).toBe("1/1");
     });
-    it('结果还是显示一条在当前页HZ',function(){
+    it('先翻页，再输入hz结果还是显示一条在当前页HZ',function(){
         //先翻页在搜索结果显示
         var lines=element.all(by.css(".demo1 .sticky-wrap .sticky-enabled tbody tr"));
         var showPage=element(by.css(".demo1 .pagingLine>ul li .regularRecords"));
@@ -48,7 +48,6 @@ describe('Table Demos',function(){
     //分页信息
     it('分页信息包含记录数 10条',function(){
         var paging=element.all(by.css(".demo1 .pagingLine>span"));
-        expect(paging.count()).toBe(1);
         paging.get(0).getText().then(function(text){
             expect(text).toBe("共 10 条记录");
         });
@@ -125,19 +124,20 @@ describe('Table Demos',function(){
         var lines=element.all(by.css(".demo4 .sticky-wrap .sticky-enabled tbody tr"));
         var showPage=element(by.css(".demo4 .pagingLine>ul li .regularRecords"));
         element(by.css(".demo4 button")).click();
+        browser.sleep(2000);
         var nextPage=element.all(by.css(".demo4 .pagingLine>ul li a"));
-        nextPage.get(1).click();
+        nextPage.get(2).click();
         expect(lines.count()).toBe(7);
         expect(showPage.getText()).toBe("2/7");
-        nextPage.get(1).click();
+        nextPage.get(2).click();
         expect(showPage.getText()).toBe("3/7");
-        nextPage.get(1).click();
+        nextPage.get(2).click();
         expect(showPage.getText()).toBe("4/7");
-        nextPage.get(1).click();
+        nextPage.get(2).click();
         expect(showPage.getText()).toBe("5/7");
-        nextPage.get(1).click();
+        nextPage.get(2).click();
         expect(showPage.getText()).toBe("6/7");
-        nextPage.get(1).click();
+        nextPage.get(2).click();
         expect(showPage.getText()).toBe("7/7");
         expect(lines.count()).toBe(3);
     });

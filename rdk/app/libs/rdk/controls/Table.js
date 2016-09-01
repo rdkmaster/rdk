@@ -49,6 +49,11 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
             '<div class="pagingLine">\
                 <span class="disabledRecords spanRecords">{{i18n.total}} {{count}} {{i18n.records}}</span>\
                 <ul class="pagination">\
+                    <li ng-class="prevPageDisabled()"> \
+                        <a href ng-click="firstPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==0]">\
+                            {{i18n.first}}\
+                        </a>\
+                    </li>\
                     <li ng-class="prevPageDisabled()">\
                         <a href ng-click= "prevPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==0]">\
                             {{i18n.prev}}\
@@ -63,6 +68,11 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                     <li ng-class="nextPageDisabled()"> \
                         <a href ng-click="nextPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==pageCount()]">\
                              {{i18n.next}}\
+                        </a>\
+                    </li>\
+                    <li ng-class="nextPageDisabled()"> \
+                        <a href ng-click="lastPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==pageCount()]">\
+                            {{i18n.last}}\
                         </a>\
                     </li>\
                 </ul>\
@@ -848,7 +858,9 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             'total': '共',
                             'records': '条记录',
                             'next': '下一页',
-                            'prev': '上一页'
+                            'prev': '上一页',
+                            'first': '首页',
+                            'last': '尾页'
                         }
                     }
                     else{
@@ -856,7 +868,9 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             'total': 'Total ',
                             'records': 'Records',
                             'next': 'Next',
-                            'prev': 'Prev'
+                            'prev': 'Prev',
+                            'first': 'First',
+                            'last': 'Last'
                         }
                     }
                 }
@@ -867,6 +881,8 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                     $scope.i18n.records = $scope.appScope.i18n.table_records ? $scope.appScope.i18n.table_records : $scope.i18n.records;
                     $scope.i18n.next = $scope.appScope.i18n.table_next ? $scope.appScope.i18n.table_next : $scope.i18n.next;
                     $scope.i18n.prev = $scope.appScope.i18n.table_prev ? $scope.appScope.i18n.table_prev : $scope.i18n.prev;
+                    $scope.i18n.first = $scope.appScope.i18n.table_first ? $scope.appScope.i18n.table_first : $scope.i18n.first;
+                    $scope.i18n.last = $scope.appScope.i18n.table_last ? $scope.appScope.i18n.table_last : $scope.i18n.last;
                 }
 
                 function getTableAppScope(){

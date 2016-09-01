@@ -1,5 +1,5 @@
 .rdk-accordion-module{
-    position: relative;
+    position: relative !important;
 }
 
 .rdk-accordion-module .theme{
@@ -10,6 +10,7 @@
     font-size: medium;
     cursor: pointer;
     padding: 5px;
+    position: relative;
 }
 
 .rdk-accordion-module .theme-caption{
@@ -29,6 +30,7 @@
 .rdk-accordion-module .content{
     border: 1px solid #CDCDCD;
     border-radius: 4px;
-    padding: 10px;
+    padding: 5px;
     background-color: white;
+    width: inherit;
 }

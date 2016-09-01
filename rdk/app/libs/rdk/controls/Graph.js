@@ -49,62 +49,58 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
             function _postLink(scope, element, attrs) {
                 // width和height在没有给的情况下，可以从父级节点中获取
                 // 但是父级dom的尺寸变化了，怎么得知？
-                scope.width = scope.width || element[0].offsetWidth || 400;
-                scope.height = scope.height || element[0].offsetHeight || 300;
+                scope.realWidth = scope.width || element[0].offsetWidth || 400;
+                scope.realHeight = scope.height || element[0].offsetHeight || 300;
+
+
+                window.onresize = function() {
+                    if (!scope.width) {
+                        _resize(0, 0, scope.chart);
+                        scope.realWidth = element[0].offsetWidth || 400;
+                        scope.realHeight = element[0].offsetHeight || 300;
+                        _resize(scope.realWidth, scope.realHeight, scope.chart);
+                    }
+                }
+
+
                 scope.noData = false;
                 var mapData, mapType;
                 _initChart();
                 scope.$watch("data", function(newVal, oldVal) {
-                    if (newVal == undefined || Object.getOwnPropertyNames(newVal).length ==0 ) {
+                    if (newVal == undefined || Object.getOwnPropertyNames(newVal).length == 0) {
                         return;
                     }
                     _loadGraphData();
                 }, true);
                 scope.$watch('width', function(newValue, oldValue) {
-                    _resize(scope.width, scope.height, scope.chart);
+                    if (newValue) {
+                        scope.realWidth = newValue;
+                        _resize(scope.realWidth, scope.realHeight, scope.chart);
+                    }
                 }, false);
 
                 scope.$watch('height', function(newValue, oldValue) {
-                    _resize(scope.width, scope.height, scope.chart);
+                    if (newValue) {
+                        scope.realHeight = newValue;
+                        _resize(scope.realWidth, scope.realHeight, scope.chart);
+                    }
                 }, false);
 
 
                 function _resize(width, height, chart) {
-                        var w = parseInt(width);
-                        w = isNaN(w) ? 0 : w;
-                        var h = parseInt(height);
-                        h = isNaN(h) ? 0 : h;
-
-                        var rootDom = element[0];
-                        var graphDom = element[0].childNodes[1];
-                        rootDom.style.width = graphDom.style.width = w + 'px';
-                        rootDom.style.height = graphDom.style.height = h + 'px';
-
-                        var labelDom = element[0].childNodes[3];
-                        labelDom.style.width = w + 'px';
-                        labelDom.style.height = h + 'px';
-                        labelDom.style['line-height'] = h + 'px';
-
-                        chart.resize();
-
+                    var h = parseInt(height);
+                    h = isNaN(h) ? 0 : h;
+                    var labelDom = element[0].childNodes[3];
+                    labelDom.style['line-height'] = h + 'px';
+                    chart.resize();
                 }
-
-                // function _setTheme() {
-                //     var themeDefine = RdkGraph.getTheme();
-                //     if (themeDefine) {
-                //         require([themeDefine], function(themeTarget) {
-                //             theme = themeTarget;
-                //             scope.chart._theme = theme;
-                //         });
-                //     }
-                // }
 
                 function _initChart() {
                     var dom = element[0].childNodes[1];
                     var myChart = echarts.init(dom);
                     scope.chart = myChart;
-                    //_setTheme();
-                    _resize(scope.width, scope.height, scope.chart);
+
+                    _resize(scope.realWidth, scope.realHeight, scope.chart);
 
                     scope.setMapData = function(data) {
                         mapType = Utils.uuid();
@@ -140,7 +136,7 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
                         myChart.on('mapselected', _defaultEventHandler);
                         myChart.on('mapunselected', _defaultEventHandler);
 
-                        
+
                         EventService.register(scope.id, EventTypes.UPDATE_GRAPH, _loadGraphData);
                         EventService.register(scope.id, EventTypes.LOADING, function(event, data) {
                             !!data ? scope.chart.showLoading() : scope.chart.hideLoading();
@@ -188,14 +184,14 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
                     }
                 };
 
-                function _setThemeAndValidateOption(option){
+                function _setThemeAndValidateOption(option) {
                     var themeDefine = RdkGraph.getTheme();
                     if (themeDefine && !scope.chart._theme) {
                         require([themeDefine], function(themeTarget) {
                             scope.chart._theme = themeTarget;
                             _validateOption(option);
                         });
-                    }else{
+                    } else {
                         _validateOption(option);
                     }
                 }
@@ -211,7 +207,7 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
                         scope.noData = false;
                         try {
                             scope.option = option;
-                            scope.chart.setOption(option, true,false);
+                            scope.chart.setOption(option, true, false);
 
                         } catch (e) {
                             console.error(e);

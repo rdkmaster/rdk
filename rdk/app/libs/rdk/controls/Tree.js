@@ -1,4 +1,4 @@
-define(['angular', 'rd.services.EventService','ztree'], function() {
+    define(['angular', 'rd.services.EventService','ztree'], function() {
     var menuTreeApp = angular.module("rd.controls.Tree", [
         'rd.services.EventService'
     ]);
@@ -18,7 +18,7 @@ define(['angular', 'rd.services.EventService','ztree'], function() {
                 replace: true,
                 template: '<div><ul id="__unique_id__" class="ztree"></ul></div>',
                 compile: function(element, attrs) {
-
+                    Utils.bindDataSource(attrs, 'data');
                     return {
                         post: function(scope, iElement, iAttrs, controller) {
                             scope.checkable = Utils.isTrue(iAttrs.checkable);

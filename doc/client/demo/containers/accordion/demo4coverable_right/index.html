@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>Accordion -> expandDirection</title>
+    <title>Accordion -> 向右覆盖</title>
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
     -->
@@ -13,30 +13,27 @@
 
 <body ng-controller='myCtrl'>
 
-     <!-- 没主题，箭头包裹  --> 
 
-    <rdk_accordion style='display: inline-block;' expand_direction='right' coverable='true' exchangable='false'>
+wwwwwwwwwwwwwwwwwwwww
+    <rdk_accordion id='accordionID' style='margin-top: 150px' expand_direction='right' coverable='true' exchangable='false' open='true' >
+
         <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-        <div>向右展开，不带主题不带宽度的right</div>
+
+        <div style='width: 300px; height: 100px; background-color: red'></div>
+
     </rdk_accordion>
+wwwwwwwwwwwwwwwwwwwww
 
-    <rdk_accordion style='display: inline-block;' expand_direction='right' coverable='true' exchangable='false'>
-        <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-        <div>向右展开，不带主题带宽度的right</div>
-    </rdk_accordion> 
-    
-    <!-- 有主题，上右一边宽  --> 
 
-<!--     <rdk_accordion style='display: inline-block;' expand_direction='right' caption="'带主题的right'" coverable='true'>
+wwwwwwwwwwwwwwwwwwwww
+    <rdk_accordion id='accordionID' style='margin-top: 350px' expand_direction='right' coverable='true' exchangable='false' min_width='100' >
+
         <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-        <div>向右展开，带主题的right</div>
+
+        <div style='width: 300px; height: 100px; background-color: red'></div>
+
     </rdk_accordion>
-
-    <rdk_accordion style="width: 350px;display: inline-block;" expand_direction='right' caption="'带主题带宽度的right'" coverable='true'>
-        <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-        <div>向右展开，带主题带宽度的right</div>
-    </rdk_accordion> -->
-
+wwwwwwwwwwwwwwwwwwwww
 
 </body>
 

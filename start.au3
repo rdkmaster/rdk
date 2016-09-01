@@ -23,7 +23,6 @@ Global $restPid = 0
 Global $rdkPid = 0
 
 _init()
-AdlibRegister('_updateConsole', 100)
 
 Global $width = 1000
 Global $height = 600
@@ -57,6 +56,7 @@ _startRDK()
 _startHTTP()
 _startRest()
 
+AdlibRegister('_updateConsole', 100)
 OnAutoItExitRegister('_beforeExit')
 
 While 1
@@ -109,17 +109,19 @@ EndFunc
 Func _init()
 	Local $pid = Run('node --version', @WorkingDir, @SW_HIDE)
 	If $pid == 0 Then
-		_error('请先安装nodejs的运行环境！下载地址：' & @CRLF & @CRLF & _
-				'http://10.9.233.35:8080/tools/node-v5.10.1-x86.msi')
+		_error('请先安装nodejs的运行环境！' & @CRLF & @CRLF & _
+				'下载地址：' & @CRLF & 'http://10.9.233.35:8080/tools/node-v5.10.1-x86.msi' & @CRLF & @CRLF & _
+				'Ctrl+C 可复制链接。')
 	EndIf
 
 	$java = @WorkingDir & '\proc\bin\jre\bin\java.exe'
 	If Not FileExists($java) Then $java = EnvGet ( "JAVA_HOME" ) & '\bin\java.exe'
 
 	If Not FileExists($java) Then
-		_error('找不到 Java(>1.8) 运行环境！请将 Java 运行环境按照下面的目录存放：' & @CRLF _
-			& @WorkingDir & '\proc\bin\jre\bin\java.exe' & @CRLF & @CRLF & _
-			'或者正确配置 JAVA_HOME 环境变量的值。')
+		_error('找不到 Java1.8 运行环境。' & @CRLF & @CRLF & _
+			'【解决方法】' & @CRLF & '请将 Java1.8 运行环境拷贝到这个目录：'  _
+			& @WorkingDir & '\proc\bin\jre' & @CRLF & _
+			'或者 正确配置 JAVA_HOME 环境变量的值。')
 	EndIf
 
 	ToolTip('正在检查 JRE 版本。。。', @DesktopWidth/2, @DesktopHeight/2-50, '', 0, 2)
@@ -128,7 +130,7 @@ Func _init()
 	ToolTip('')
 	Local $version = Number(StringMid(StderrRead($pid), 15, 3))
 	If $version < 1.8 Then
-		_error('当前 Java 运行环境版本(' & $version & ') 版本过低，至少需要 JDK1.8 以上的版本。')
+		_error('当前 Java 运行环境版本(' & $version & ') 版本过低，至少需要 JRE1.8 以上的版本。')
 	EndIf
 
 	Local $jreOpt = ''
