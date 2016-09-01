@@ -39,21 +39,21 @@ USAGE() {
 
 BEF_COMPILE(){
 if [ x"${rdk_path}" = x ] ;then
-	rdk_path=/home/rdk_git 
+	rdk_path=/home/rdk_git/rdk 
 fi
 cd $rdk_path
 git clone git@gitlab.zte.com.cn:10045812/rdk.git
 
 ###切换到设置的分支上，默认为master
-cd /home/rdk_git/
+cd $rdk_path
 if [ "${branch}" != "" ] ; then
-	git checkout -b ${branch} remotes/origin/${branch}
+	git checkout -b ${branch} 
 else
-	git checkout -b master remotes/origin/master
+	git checkout -b master 
 fi
 ##clone rdk编译依赖
 if [ x"${rdk_resource}" = x ] ; then
-    rdk_resource=/home/rdk_git/
+    rdk_resource=/home/rdk_git/rdk-resource
 fi
 cd $rdk_resource
 git clone git@gitlab.zte.com.cn:10045812/rdk-resource.git		
@@ -65,8 +65,7 @@ export PATH=$JAVA_HOME/bin:$PATH
 
 COMPILE_RDKSERVER(){
 cd $rdk_path
-cd rdk
-$rdk_resource/rdk-resource/sbt/bin/sbt \
+$rdk_resource/sbt/bin/sbt \
 -Dsbt.boot.directory=$rdk_resource/rdk-resource/sbt-repo/boot/ \
 -Dsbt.ivy.home=$rdk_resource/rdk-resource/sbt-repo/ivy/ \
 -Dsbt.global.base=$rdk_resource/rdk-resource/sbt-repo/   package
@@ -132,6 +131,7 @@ MAIN(){
   rm -rf ../rdk_release
 }
 MAIN
+
 
 
 
