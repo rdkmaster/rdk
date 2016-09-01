@@ -69,13 +69,14 @@ function fixHandlerPosition() {
 }
 
 function scrollToTarget() {
+	window.scrollTo(0, 0);
+	
 	var match = location.hash.substring(1).match(/#(.*?)$/);
 	var target = !!match ? match[1] : undefined;
 	if (!target) {
 		return;
 	}
 	
-	window.scrollTo(0, 0);
 	var dom = document.getElementById(target);
 	if (!dom) {
 		return;

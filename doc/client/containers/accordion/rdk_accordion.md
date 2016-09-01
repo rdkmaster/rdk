@@ -177,7 +177,7 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 
 ## child_change ##
 
-此属性为通用属性，请参见[`childChange`](/doc/controls/common/child_change.html)中的说明
+此属性为通用属性，请参见[`childChange`](/doc/controls/common/child_change.md)中的说明
 
 #方法 #
 暂无
@@ -241,7 +241,9 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 
 详细说明参见`BasicSelector`控件中相关章节。
 
-### [渲染器示例](/doc/client/containers/accordion/render_demo.html) ###
+### 渲染器示例 ###
+
+<live_demo example="containers/accordion/accordion_renderer" width="810" height="800"></live_demo>
 
 ## 数据源绑定 ##
 

@@ -7,12 +7,12 @@
 
 ## 文件操作 {#file_oper}
 
-[查看文件操作API](service_file_api.html)
+[查看文件操作API](service_file_api.md)
 
 ## 消息队列 ##
 
-- [查看消息队列API -- JS](service_mq_js_api.html)
-- [查看消息队列API -- JAVA](service_mq_java_api.html)
+- [查看消息队列API -- JS](service_mq_js_api.md)
+- [查看消息队列API -- JAVA](service_mq_java_api.md)
 - [其他手册](ActiveMQ_menual.chm)
 
 ## API
@@ -372,7 +372,7 @@ RDK提供了众多的处理结果集的函数，包括 `matrix()` / `mapper()` /
 
 参数：
 
-- script 一个字符串。待加载的脚本url，可使用[路径宏](relative_path_rule.html)简化路径。
+- script 一个字符串。待加载的脚本url，可使用[路径宏](relative_path_rule.md)简化路径。
 
 返回：对应脚本的运行结果。
 
@@ -504,7 +504,7 @@ RDK提供了 `getBuffer()` 和 `removeBuffer()` 这两个函数来处理缓冲�
 
 参数：
 
-- jarPath 一个字符串。jar包所在路径，如果是一个jar文件，则只加载该文件，如果是一个目录，则加载该目录下所有的扩展名为jar的文件。可使用[路径宏](relative_path_rule.html)简化路径。
+- jarPath 一个字符串。jar包所在路径，如果是一个jar文件，则只加载该文件，如果是一个目录，则加载该目录下所有的扩展名为jar的文件。可使用[路径宏](relative_path_rule.md)简化路径。
 - className 一个字符串。class的全类名。
 
 返回：Java的Class。
@@ -579,12 +579,12 @@ Java返回数据给JS，原则也是尽量只返回简单类型。当然也可�
 
 ## 日期相关 ##
 
-[单击这里](service_date_api.html)
+[单击这里](service_date_api.md)
 
 
 ## COMMON包相关 ##
 
-[单击这里](common.html)
+[单击这里](common.md)
 
 
 <div title="后端服务API" id="__hidden__">

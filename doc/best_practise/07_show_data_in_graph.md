@@ -16,7 +16,7 @@
 <rdk_graph ds="dsWebAnalysis" ds_url="$svr/webAnalysis"
 	graph_define="scripts/graphDefine.js"></rdk_graph>
 ~~~
-这里引入了一个新的控件rdk_graph，注意要使用[第三步的方法](03_use_first_control.html#dep-inject)注入图形的依赖。
+这里引入了一个新的控件rdk_graph，注意要使用[第三步的方法](03_use_first_control.md#dep-inject)注入图形的依赖。
 
 在scripts目录中，创建一个graphDefine.js文件，它用于描述一个图形，代码如下：
 ~~~
@@ -101,7 +101,7 @@ function(scope, DSService, blockUI, EventService)
 	...
 ~~~
 
-这样就实现了EventService的注入了。[这个小节](/doc/client/common/dependency_injection.html#ctrl)详细描述了与controller相关的依赖注入的知识，感兴趣的同学可以仔细阅读。
+这样就实现了EventService的注入了。[这个小节](/doc/client/common/dependency_injection.md#ctrl)详细描述了与controller相关的依赖注入的知识，感兴趣的同学可以仔细阅读。
 
 编辑页面代码，在rdk_graph节点上加入一个id属性：`id="myGraph"`。
 

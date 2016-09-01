@@ -135,7 +135,7 @@
 
 ## 开发第一个应用
 
-新手宝典：[天龙八步](/rdk_server/doc/best_practise/index.html)，把一个应用拆分出若干个步骤讲解开发过程，隆重推荐。
+新手宝典：[天龙八步](/rdk_server/doc/best_practise/index.md)，把一个应用拆分出若干个步骤讲解开发过程，隆重推荐。
 
 ## 开发前端部分
 
@@ -265,7 +265,7 @@ RDK提供了一组记录日志的函数，它们有共同的定义：
 
 为了能够设置断点，我们需要在本地搭建一个后端服务的运行环境，听起来好像很复杂，实际上，的确有些麻烦。
 
-[点击这里继续](how_to_debug_service.html)
+[点击这里继续](how_to_debug_service.md)
 
 
 ### Web页面中使用服务

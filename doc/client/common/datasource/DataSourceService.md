@@ -41,7 +41,7 @@
 	//在js中创建出来的数据源必须赋予scope属性才能实现双向绑定
 	ds.scope = $scope;
 
-注意上面代码使用到了 `DataSourceService` 服务，需要将这个服务的依赖注入到应用的控制器中。关于依赖注入，[请访问这里](../dependency_injection.html)。
+注意上面代码使用到了 `DataSourceService` 服务，需要将这个服务的依赖注入到应用的控制器中。关于依赖注入，[请访问这里](../dependency_injection.md)。
 
 ## 数据源的使用 ##
 我们可以像使用本地数据一样方便的使用网络上的资源，请看下面例子

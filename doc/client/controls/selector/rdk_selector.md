@@ -103,19 +103,16 @@
 ## error ##
 >支持类型：函数
 
-通过回调方式控件会返回相关异常信息，可以通过控件反馈的具体的错误码来自定义错误信息。控件默认的错误码及异常信息对照请参见[`异常列表`](/doc/controls/common/error_list.html)。代码如下：
+通过回调方式控件会返回相关异常信息，可以通过控件反馈的具体的错误码来自定义错误信息。代码如下：
 
      <rdk_selector error="raiseErrorAct"></rdk_selector>
 
 <live_demo example="controls/selector/error"  width="405"></live_demo>
 
 
-
-**注意：异常列表中的错误码对整个RDK控件来说是全局唯一的**
-
 ## child_change ##
 
-此属性为通用属性，请参见[`childChange`](/doc/controls/common/child_change.html)中的说明
+此属性为通用属性，请参见[`childChange`](/doc/controls/common/child_change.md)中的说明
 
 ## 其他属性 ##
 `rdk_selector` 还拥有 `rdk_accordion` 的 `folded_icon`/`unfolded_icon`,`frozen`,`open` 等属性，也拥有 `rdk_basic_selector` 的 `searchable`,`multiple_select`等属性，具体参见 `rdk_accordion` 和 `rdk_basic_selector` 的控件说明文档。

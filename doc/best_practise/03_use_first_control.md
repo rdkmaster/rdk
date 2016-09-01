@@ -81,7 +81,7 @@ RDK的每个控件都有文档说明各个配置项的使用，时间控件也�
 
 	http://localhost:8080/doc/client
 
-在左侧控件树上单击Time节点，打开时间控件的手册。找到 [`granularityItems`](/doc/client/controls/time/index.html#granularityItems) 和 [`range`](/doc/client/controls/time/index.html#range) 这2个属性，这就是我们想要的功能。
+在左侧控件树上单击Time节点，打开时间控件的手册。找到 [`granularityItems`](/doc/client/controls/time/rdk_time.md#granularityItems) 和 [`range`](/doc/client/controls/time/rdk_time.md#range) 这2个属性，这就是我们想要的功能。
 
 通过仔细阅读这2个属性的说明，我们知道，在控件的html节点上添加一个range属性可以使得时间控件能够选择一个时间段，而添加一个setting属性则可以配置可选的粒度。
 
@@ -125,7 +125,7 @@ scope.timeSetting  = {
 	]
 }
 > ~~~
-> 刷新一下页面看看，开始时间框是当前时间前两个小时了。访问这里可以得到[关于vaule的更多描述](/doc/client/controls/time/index.html#value)。
+> 刷新一下页面看看，开始时间框是当前时间前两个小时了。访问这里可以得到[关于vaule的更多描述](/doc/client/controls/time/rdk_time.md#value)。
 
 ## 小结
 本小节用了非常大的篇幅介绍了时间控件的使用过程，目的不仅仅是为了介绍时间控件，这个过程实际上是通用的，RDK的所有控件的使用过程和时间控件是一样的：

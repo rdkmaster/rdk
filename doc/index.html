@@ -14,12 +14,13 @@
 			paths: {
 				"directives": "/doc/tools/doc_js/directives",
 				"misc": "/doc/tools/doc_js/misc",
-				"markdown": "/doc/tools/doc_js/Markdown.Converter",
+				"md": "/doc/tools/doc_js/Markdown.Converter",
+				"md-plugin": "/doc/tools/doc_js/Markdown.Plugin",
 				"md-style-github": "/doc/tools/md-style-github",
 			}
 		});
 		
-		define('main', ['directives', 'misc', 'markdown', 'css!md-style-github'], function() {
+		define('main', ['directives', 'misc', 'md', 'md-plugin', 'css!md-style-github'], function() {
 			var app = angular.module("rdk_app", ['rd.demo.Directives']);
 			app.controller('rdk_ctrl', ['$scope', 'MarkdownService', main]);
 		});
