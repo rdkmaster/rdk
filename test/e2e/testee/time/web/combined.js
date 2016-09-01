@@ -29,9 +29,28 @@ function(scope,$timeout, $filter,DSService, blockUI,EventTypes,EventService) {
 application.initDataSourceService(DSService);
 /************************ 应用的代码逻辑开始 ************************/
 
+scope.TimeGap={
+    value:['2010-01-01 14:00','2016-08-05 14:00'],//支持y/m/w/d
+    granularity: "date",//quarter hour date week month
+    selectGranularity: true,
+    startDate: "2010-01-01 00:00",
+    granularityItems: [{
+        label: "天",
+        value: "date",
+        
+    }, {
+        label: "周",
+        value: "week",
+        
+    },{
+        label: "月",
+        value: "month",
+        
+    }]
+}
 
 scope.TimeGranularity={
-    value:['2015-08-04 14:00','2016-08-04 14:00'],//支持y/m/w/d
+    value:['2010-01-01 14:00','2016-08-04 14:00'],//支持y/m/w/d
     granularity: "quarter",//quarter hour date week month
     weekStart:'0',// 0（星期日）到6（星期六）
     selectGranularity: true,
@@ -54,25 +73,6 @@ scope.TimeGranularity={
     }]
 }
 
-scope.TimeGap={
-    value:['2016-08-04 14:00','2016-08-30 14:00'],//支持y/m/w/d
-    granularity: "date",//quarter hour date week month
-    selectGranularity: true,
-    startDate: "2010-01-01 00:00",
-    granularityItems: [{
-        label: "天",
-        value: "date",
-        
-    }, {
-        label: "周",
-        value: "week",
-        
-    },{
-        label: "月",
-        value: "month",
-       
-    }]
-}
 
 scope.items = [
     {label: "aaa", range: true, setting: {
@@ -98,7 +98,7 @@ scope.items = [
     value: "now - 2y", //支持y/m/w/d
 }},
     {label: "ccc", range: true, setting: {
-    value:['2016-08-04 14:00','now -1d'],//支持y/m/w/d
+    value:['2010-01-01 14:00','now -1d'],//支持y/m/w/d
     granularity: "quarter",//quarter hour date week month
     weekStart:'0',// 0（星期日）到6（星期六）
     startDate: "2010-01-01 00:00",

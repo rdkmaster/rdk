@@ -38,11 +38,11 @@ scope.TimeBucket = {
 }
 
 scope.TimeGranularity={
-    value:['2015-08-04 14:00','2016-08-04 14:00'],//支持y/m/w/d
+    value:['2010-01-01 00:00','2016-08-04 14:00'],//支持y/m/w/d
     granularity: "quarter",//quarter hour date week month
     weekStart:'0',// 0（星期日）到6（星期六）
     selectGranularity: true,
-    startDate: "2015-01-01",
+    startDate: "2010-01-01 00:00",
     granularityItems: [{
         label: "15分钟",
         value: "quarter"
@@ -67,7 +67,7 @@ scope.TimeGap={
     value:['2016-08-04 14:00','now'],//支持y/m/w/d
     granularity: "date",//quarter hour date week month
     selectGranularity: true,
-    startDate: "2015-01-01",
+    startDate: "2010-01-01 00:00",
     granularityItems: [{
         label: "天",
         value: "date",
