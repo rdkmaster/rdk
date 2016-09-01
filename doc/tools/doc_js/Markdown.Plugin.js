@@ -8,15 +8,14 @@ mdPlugin = (function() {
 			});
 		},
 		transMDLink: function(converter) {
-			converter.hooks.chain("postNormalization", function (text) {
+			converter.hooks.chain("postConversion", function (text) {
 				//关于这个牛逼的正则表达式，请参考 Markdown.Converter.js 623行
-				return text.replace(/(\[((?:\[[^\]]*\]|[^\[\]])*)\]\([ \t]*()<?((?:\([^)]*\)|[^()\s])*?)>?[ \t]*((['"])(.*?)\6[ \t]*)?\))/g, transAnchorTag);
+				return text.replace(/<a([\s]+|[\s]+[^<>]+[\s]+)href=(\"([^<>"\']*)\"|\'([^<>"\']*)\')[^<>]*>/gi, transAnchorTag);
 			});
 		}
 	}
 	
-	function transAnchorTag(wholeMatch, m1, m2, m3, m4, m5, m6, m7) {
-		var href = m4.match(/\.md\s*$/i) ? 'javascript:loadMarkdown("' + m4 + '")' : m4;
-		return '[' + m2 + '](' + href + ');';
+	function transAnchorTag(wholeMatch, m1, m2, m3) {
+		return m3.match(/\.md\s*$/i) ? wholeMatch.replace(m3, "javascript:loadMarkdown('" + m3 + "')") : m3;
 	}
 })();
