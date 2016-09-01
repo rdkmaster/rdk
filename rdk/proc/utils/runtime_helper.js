@@ -470,6 +470,18 @@ var Data = {
            dataTableArray.push(new DataTable(i18n(dataObj[idx].fieldNames), dataObj[idx].fieldNames, dataObj[idx].data))
         }
         return dataTableArray;
+    },
+    executeUpdate: function (sql) {
+        if (_.isString(sql)) {
+            return JSON.parse(rdk_runtime.executeUpdate(rdk_runtime.application(),sql));
+        }
+
+        if (_.isArray(sql)) {
+            return JSON.parse(rdk_runtime.batchExecuteUpdate(rdk_runtime.application(),sql));
+        }
+
+        Log.error("String or Array[String] param required!");
+        return;
     }
 }
 
@@ -570,7 +582,6 @@ function matrix(resultSet, mapIterator, keepResultSet) {
     if (_.isString(resultSet)) {
         return matrix(sql(resultSet), mapIterator);
     }
-
     var its = mapIterator === undefined ? {} : mapIterator;
     var mtx = {header: [], field: [], data: []};
 
@@ -599,7 +610,7 @@ function matrix(resultSet, mapIterator, keepResultSet) {
             var it = its[mtx.field[i - 1]];
             var val = _bytes2string(resultSet.getBytes(i));
             try {
-                val = it ? it(val, resultSet, row.length) : val;
+                val = _.isDefined(it) ? it(val, resultSet, row.length) : val;
             } catch (e) {
                 error("call matrix iterator error: " + e);
             }

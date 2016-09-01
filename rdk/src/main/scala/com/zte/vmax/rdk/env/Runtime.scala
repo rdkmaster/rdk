@@ -132,13 +132,25 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   def fetch(sql: String, maxLine: Int): String = {
     val data = DataBaseHelper.fetch(application, sql, maxLine)
-    objectToJson(data getOrElse "null") //转json？
+    objectToJson(data getOrElse "null")
   }
 
   def batchFetch(sqlArr: ScriptObjectMirror, maxLine: Int, timeout: Long): String = {
     val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
     val data = DataBaseHelper.batchFetch(application, lst.toList, maxLine, timeout)
     val ret = data.map(it => if (it.nonEmpty) it.get else Nil)
+    objectToJson(ret.toArray)
+  }
+
+  def executeUpdate(appName:String,sql:String)={
+    var affectNums:Option[Int]=DataBaseHelper.executeUpdate(appName,sql)
+    affectNums.getOrElse(0)
+  }
+
+  def batchExecuteUpdate(appName:String,sqlArr:ScriptObjectMirror):String={
+    val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
+    val res = DataBaseHelper.batchExecuteUpdate(appName,lst.toList)
+    val ret:List[Int] = if (res.nonEmpty) res.get else Nil
     objectToJson(ret.toArray)
   }
 
