@@ -1,54 +1,16 @@
-package com.zte.vmax.rdk.db;
-
-import com.zte.vmax.rdk.log.GlobalLogger;
-import com.zte.vmax.rdk.config.Config;
+package test.mock.db;
 
 import java.sql.*;
 
 /**
- * Created by 10045812 on 16-5-17.
+ * Created by 10054860 on 2016/8/23.
  */
-public class RDKStatement implements Statement {
-    private static final boolean usingStandardSQL = Config.getBool("database.StandardSQL.on", false);
-    private static final boolean strictMode = Config.getBool("database.StandardSQL.strict", false);
-    private static final GlobalLogger logger = GlobalLogger.getLogger("RDKStatement");
+public abstract class BaseStatementMock implements Statement {
 
-    public Statement statement;
-
-    public RDKStatement(Statement statement) {
-        this.statement = statement;
-    }
-
-    @Override
-    public ResultSet executeQuery(String sql) throws SQLException {
-        if (statement == null) {
-            return null;
-        }
-
-        if (usingStandardSQL) {
-            try {
-                sql = GbaseOptimizer.optimizeSql(sql);
-            } catch (Exception e) {
-                logger.warn("optimize sql error", e);
-                if (strictMode) {
-                    logger.warn("sql not standard, return null in strictMode, sql=" + sql);
-                    return null;
-                }
-            }
-        }
-        return statement.executeQuery(sql);
-    }
-
-    @Override
-    public int executeUpdate(String sql) throws SQLException {
-        return 0;
-    }
 
     @Override
     public void close() throws SQLException {
-        if (statement != null) {
-            statement.close();
-        }
+
     }
 
     @Override
@@ -164,11 +126,6 @@ public class RDKStatement implements Statement {
     @Override
     public void clearBatch() throws SQLException {
 
-    }
-
-    @Override
-    public int[] executeBatch() throws SQLException {
-        return new int[0];
     }
 
     @Override

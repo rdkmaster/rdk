@@ -1,11 +1,11 @@
 package com.zte.vmax.rdk.db;
 
-import com.zte.vmax.rdk.log.GlobalLogger;
 import com.zte.vmax.rdk.config.Config;
+import com.zte.vmax.rdk.log.GlobalLogger;
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
-import java.io.*;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * Created by 10045812 on 16-5-16.
@@ -17,8 +17,7 @@ public class RDKDataSource {
 
     public static Connection getConnection() {
         try {
-            Connection conn = dataSource.getConnection();
-            return new RDKConnection(conn);
+            return dataSource.getConnection();
         } catch (SQLException e) {
             logger.error("get connection failed!", e);
             return null;
@@ -36,13 +35,13 @@ public class RDKDataSource {
         // 数据库初始化时，创建的连接个数
         bs.setInitialSize(Config.getInt("database.pool.initialSize", 10));
         // 最大活跃连接数
-        bs.setMaxActive(Config.getInt("database.pool.maxTotal", 100));
+        bs.setMaxActive(Config.getInt("database.pool.maxTotal", 128));
         // 最小空闲连接数
         bs.setMinIdle(Config.getInt("database.pool.minIdle", 10));
         // 数据库最大空闲连接数
         bs.setMaxIdle(Config.getInt("database.pool.maxIdle", 50));
         // 空闲连接60秒中后释放
-        bs.setMinEvictableIdleTimeMillis(Config.getInt("database.pool.minEvictableIdleTimeMillis", 60000));
+        bs.setMinEvictableIdleTimeMillis(Config.getInt("database.pool.minEvictableIdleTimeMillis", 15000));
         // 在获取连接的时候检查有效性, 默认false
         bs.setTestOnBorrow(Config.getBool("database.pool.testOnBorrow", true));
         //回收泄露连接

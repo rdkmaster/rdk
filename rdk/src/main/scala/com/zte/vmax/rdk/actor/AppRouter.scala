@@ -10,23 +10,25 @@ import com.zte.vmax.rdk.util.Logger
   * Created by 10054860 on 2016/7/7.
   */
 class AppRouter extends Actor with Logger {
-  val httpRouter = context.actorOf(FromConfig.props(Props[WorkRoutee].withDispatcher(Misc.routeDispatcher)), Misc.router)
-  var msgCount = 0L
+  val httpRouter = context.actorOf(FromConfig.props(Props[WorkRoutee].
+    withDispatcher(Misc.routeDispatcher).
+    withMailbox("akka.actor.boundedmailbox")), Misc.router)
+  var msgNO = 0L
 
   def receive = {
     case msg: ServiceRequest =>
       printLog(msg)
-      httpRouter.forward(msg)
-    case msg :WSCallJSMethod =>
+      httpRouter.forward((msgNO, msg))
+    case msg: WSCallJSMethod =>
       printLog(msg)
       httpRouter.forward(msg)
     case Terminated(a) =>
       logger.error(s"Terminated:${a.path}")
   }
 
-  def printLog(msg:AnyRef): Unit ={
-    msgCount = msgCount + 1
-    logger.debug(s">>>>>>Request No. ${msgCount}, ${msg.toString}")
+  def printLog(msg: AnyRef): Unit = {
+    msgNO = msgNO + 1
+    logger.info(s">>>>>>Request No. ${msgNO}, ${msg.toString}")
   }
 
 }

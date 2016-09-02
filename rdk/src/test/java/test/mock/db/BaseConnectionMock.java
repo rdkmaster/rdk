@@ -1,4 +1,4 @@
-package com.zte.vmax.rdk.db;
+package test.mock.db;
 
 import java.sql.*;
 import java.util.Map;
@@ -6,26 +6,9 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 
 /**
- * Created by 10045812 on 16-5-17.
+ * Created by 10054860 on 2016/8/23.
  */
-public class RDKConnection implements Connection {
-    public Connection connection;
-
-    public RDKConnection(Connection connection) {
-        this.connection = connection;
-    }
-
-    @Override
-    public Statement createStatement() throws SQLException {
-        return connection == null ? null : new RDKStatement(connection.createStatement());
-    }
-
-    @Override
-    public void close() throws SQLException {
-        if (connection != null) {
-            connection.close();
-        }
-    }
+public abstract class BaseConnectionMock implements Connection{
 
     @Override
     public PreparedStatement prepareStatement(String sql) throws SQLException {
@@ -59,6 +42,11 @@ public class RDKConnection implements Connection {
 
     @Override
     public void rollback() throws SQLException {
+
+    }
+
+    @Override
+    public void close() throws SQLException {
 
     }
 

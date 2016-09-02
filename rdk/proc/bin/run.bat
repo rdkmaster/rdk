@@ -32,7 +32,7 @@ cd ..\..
 @REM set local scope for the variables with windows NT shell
 if "%OS%"=="Windows_NT" @setlocal
 
-SET JAVA_HOME="%PROG_HOME%\jre_win_1.8"
+SET JAVA_HOME="proc\bin\jre"
 
 echo %JAVA_HOME%
 
@@ -94,7 +94,8 @@ SET PSEP=;
 
 @REM Start Java program
 :runm2
-SET CMDLINE=%JAVA_EXE% %JVM_OPT% -Xmx2g -Xms512m -XX:+UseParallelGC -XX:ParallelGCThreads=2 -cp "%PROG_HOME%\proc\bin\lib\*;" com.zte.vmax.rdk.Run %CMD_LINE_ARGS%
+set JVM_OPT="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n"
+SET CMDLINE=%JAVA_EXE% -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n -server -Xmx2g -Xms512m -XX:+UseParallelGC -XX:ParallelGCThreads=2 -cp "%PROG_HOME%\proc\bin\lib\*;" com.zte.vmax.rdk.Run %CMD_LINE_ARGS%
 %CMDLINE%
 if ERRORLEVEL 1 goto error
 goto end

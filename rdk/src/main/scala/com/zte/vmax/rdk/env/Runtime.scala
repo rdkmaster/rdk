@@ -3,12 +3,14 @@ package com.zte.vmax.rdk.env
 import javax.script._
 
 import com.google.gson.GsonBuilder
-import com.zte.vmax.rdk.actor.Messages.{WSBroadcast, DataTable}
+import com.zte.vmax.rdk.actor.Messages.{WSBroadcast}
 import com.zte.vmax.rdk.actor.WebSocketServer
 import com.zte.vmax.rdk.cache.CacheHelper
 import com.zte.vmax.rdk.config.Config
+import com.zte.vmax.rdk.db.DataBaseHelper
 import com.zte.vmax.rdk.jsr._
 import com.zte.vmax.rdk.mq.MqHelper
+import com.zte.vmax.rdk.proxy.ProxyManager
 import com.zte.vmax.rdk.util.Logger
 import jdk.nashorn.api.scripting.ScriptObjectMirror
 
@@ -29,10 +31,13 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   val restHelper = new RestHelper
   val jarHelper = new JarHelper
-
+  val dbHelper = ProxyManager.deprecatedDbAccess()
 
   def setAppName(appName: String): Unit = {
     application = appName
+    fileHelper.setAppName(appName)
+    restHelper.setAppName(appName)
+    jarHelper.setAppName(appName)
   }
 
   def init: Unit = {
@@ -60,8 +65,11 @@ class Runtime(engine: ScriptEngine) extends Logger {
   @throws(classOf[ScriptException])
   def require(script: String): AnyRef = {
     val realScript = FileHelper.fixPath(script, application)
-    appLogger(application).info("loading script:{} ", script)
-    return engine.eval("load('" + realScript + "')")
+    val begin = System.currentTimeMillis()
+    val result = engine.eval("load('" + realScript + "')")
+    val timeUsed = System.currentTimeMillis() - begin
+    appLogger(application).info(s"loading script:$script (${timeUsed}ms)")
+    result
   }
 
   @throws(classOf[ScriptException])
@@ -126,27 +134,34 @@ class Runtime(engine: ScriptEngine) extends Logger {
   }
 
   def fetch(sql: String, maxLine: Int): String = {
-    import com.zte.vmax.rdk.db.DataBaseHelper
     val data = DataBaseHelper.fetch(application, sql, maxLine)
-    objectToJson(data.getOrElse("null")) //转json？
+    objectToJson(data getOrElse "null") //转json？
+  }
 
+  def batchFetch(sqlArr: ScriptObjectMirror, maxLine: Int, timeout: Long): String = {
+    val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
+    val data = DataBaseHelper.batchFetch(application, lst.toList, maxLine, timeout)
+    val ret = data.map(it => if (it.nonEmpty) it.get else Nil)
+    objectToJson(ret.toArray)
   }
 
   def fetch_first_cell(sql: String): String = {
-    import com.zte.vmax.rdk.db.DataBaseHelper
     val option = DataBaseHelper.fetch(application, sql, 1)
-    val tabaleData = option.get
-    if (tabaleData.isInstanceOf[DataTable]) {
-      if (tabaleData.data.length >= 1) {
-        objectToJson(tabaleData.data(0)(0))
-      }
-      else {
-        objectToJson("null") //Undefined
-      }
-    } else {
-      objectToJson("null")
-    }
+    option.map(it => {
+      if (it.data.length >= 1) Some(objectToJson(it.data(0)(0))) else None
+    }).flatten getOrElse objectToJson("null")
 
+  }
+  def executeUpdate(appName:String,sql:String)={
+    var affectNums:Option[Int]=DataBaseHelper.executeUpdate(appName,sql)
+    affectNums.getOrElse(0)
+  }
+
+  def batchExecuteUpdate(appName:String,sqlArr:ScriptObjectMirror):String={
+    val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
+    val res = DataBaseHelper.batchExecuteUpdate(appName,lst.toList)
+    val ret:List[Int] = if (res.nonEmpty) res.get else Nil
+    objectToJson(ret.toArray)
   }
 
   /**
@@ -205,14 +220,15 @@ class Runtime(engine: ScriptEngine) extends Logger {
     */
   def unSubscribe(topic: String, functionName: String, jsFile: String): Unit = MqHelper.unSubscribe(application, topic, functionName, jsFile)
 
+
   /**
     * 通过websocket广播消息
     *
     * @param topic
     * @param message
     */
-  def webSocketBroadcast(topic: String, message: String): Unit ={
-    WebSocketServer.broadcast(WSBroadcast(topic,message))
+  def webSocketBroadcast(topic: String, message: String): Unit = {
+    WebSocketServer.broadcast(WSBroadcast(topic, message))
   }
 }
 
