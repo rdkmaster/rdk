@@ -1,22 +1,18 @@
-misc = (function() {
+DocCategory = (function() {
     
 document.body.onresize = fixHandlerPosition;
 
-var misc = {
-    makeDir: function() {
-        var nodes = findAndFixHeaders(misc.markdownContainer);
+return {
+    make: function(container) {
+		$('#___dir___').remove();
+        var nodes = findAndFixHeaders(container);
         if (nodes.length > 0) {
             createDirDiv();
             createDir(createUl($('#___dir___')[0]), nodes);
             fixHandlerPosition();
         }
-    },
-    resetDir: function() {
-        $('#___dir___').remove();
-    },
-    scrollToTarget: scrollToTarget
+    }
 }
-return misc;
 
 function createDir(parent, nodes) {
     var pNode = nodes.shift();
@@ -57,23 +53,6 @@ function fixHandlerPosition() {
     dirDiv.childNodes[1].style.overflow = 'auto';
 }
 
-function scrollToTarget() {
-    window.scrollTo(0, 0);
-    
-    var match = location.hash.substring(1).match(/#(.*?)$/);
-    var target = !!match ? match[1] : undefined;
-    if (!target) {
-        return;
-    }
-    
-    var dom = document.getElementById(target);
-    if (!dom) {
-        return;
-    }
-    var pos = dom.getBoundingClientRect();
-    window.scrollTo(0, pos.top);
-}
-
 function createLi(parent, nodeInfo) {
     var li = document.createElement('li');
     parent.appendChild(li);
@@ -99,10 +78,10 @@ function createUl(parent) {
     return ul;
 }
 
-function findAndFixHeaders(markdownContainer) {
+function findAndFixHeaders(container) {
     var nodeIdIndex = 0;
     var nodes = [];
-    var tags = markdownContainer.getElementsByTagName('*');
+    var tags = container.getElementsByTagName('*');
     for (var i = 0; i < tags.length; i++) {
         var tag = tags[i];
         if (!tag.localName.match(/^h\d$/)) {

@@ -13,23 +13,21 @@
 		require.config({
 			paths: {
 				"directives": "/doc/tools/doc_js/directives",
-				"misc": "/doc/tools/doc_js/misc",
+				"dc": "/doc/tools/doc_js/DocCategory",
 				"md": "/doc/tools/doc_js/Markdown.Converter",
 				"md-plugin": "/doc/tools/doc_js/Markdown.Plugin",
-				"md-style-github": "/doc/tools/md-style-github",
+				"md-style": "/doc/tools/md-style-github",
 			}
 		});
 		
-		define('main', ['directives', 'misc', 'md', 'md-plugin', 'css!md-style-github'], function() {
+		define('main', ['directives', 'dc', 'md', 'md-plugin', 'css!md-style'], function() {
 			var app = angular.module("rdk_app", ['rd.demo.Directives']);
 			app.controller('rdk_ctrl', ['$scope', 'MarkdownService', main]);
 		});
 		
 		function main(scope, MarkdownService) {
-			var path = !!location.hash ? location.hash.substring(1) : undefined;
-			MarkdownService.scope = scope;
-			window.loadMarkdown = MarkdownService.loadPath;
-			loadMarkdown(path);
+			MarkdownService.setScope(scope);
+			MarkdownService.handleHashchange();
 		}
     </script>
 </head>

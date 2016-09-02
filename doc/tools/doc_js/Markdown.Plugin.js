@@ -22,7 +22,15 @@ mdPlugin = (function() {
     }
     
     function transAnchorTag(wholeMatch, m1, m2, m3) {
-        return m3.match(/\.md(#.*)?\s*$/i) ? wholeMatch.replace(m3, "javascript:loadMarkdown('" + m3 + "')") : wholeMatch;
+		if (!m3) {
+			return wholeMatch;
+		}
+		m3 = m3.trim();
+		if (m3[0] == '#' || m3.match(/\.md(#.*)?\s*$/i)) {
+			//文件内部跳转
+			return wholeMatch.replace(m3, "javascript:requestMarkdown('" + m3 + "')");
+		}
+        return wholeMatch;
     }
     
     function transHeader(wholeMatch, m1, m2, m3) {
