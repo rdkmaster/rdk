@@ -27,7 +27,7 @@ public class RestHelper extends AbstractAppLoggable {
 
     private static Pattern URL_PTN = Pattern.compile("^http://.+", Pattern.CASE_INSENSITIVE);
 
-    public String get(String url, String param, Object option) {
+    public String get(String url, Object option) {
         url = url.trim();
         Matcher m = URL_PTN.matcher(url);
         if (!m.find()) {
@@ -38,7 +38,6 @@ public class RestHelper extends AbstractAppLoggable {
             }
             url = prefix + url;
         }
-        url += param;
         logger.debug("requesting(get) url=" + url);
 
         //需要请求的restful地址
