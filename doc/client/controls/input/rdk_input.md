@@ -1,3 +1,5 @@
+<rdk_title>Input</rdk_title>
+
 # 简介 #
 `rdk_input` 是带删除功能的输入框。
 
@@ -31,4 +33,3 @@
 
 
 
-<rdk_title>Input</rdk_title>

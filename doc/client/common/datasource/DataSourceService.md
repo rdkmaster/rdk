@@ -1,3 +1,5 @@
+<rdk_title>数据源</rdk_title>
+
 # 数据源 #
 数据源是RDK中的一个重要概念，它是RDK前后端交互的纽带。
 
@@ -251,4 +253,3 @@
 ![](数据源查询流程图.PNG)
 
 
-<rdk_title>数据源</rdk_title>

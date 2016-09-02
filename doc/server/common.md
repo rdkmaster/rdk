@@ -1,3 +1,5 @@
+<rdk_title>后端SQL相关通用功能</rdk_title>
+
 ##公共配置信息查询服务
 服务URI：common/server/dim
 
@@ -261,4 +263,3 @@
 
 
 
-<rdk_title>后端SQL相关通用功能</rdk_title>

@@ -1,3 +1,5 @@
+<rdk_title>第2步 编写第一个应用 - RDK应用开发最佳实践</rdk_title>
+
 ## 目标与收获
 
 本小节描述了如何利用[example应用](/rdk/app/example/web/index.html)来开始一个RDK应用的开发，通过本小节的学习，你将学会如何以最快的速度开始一个应用的开发。
@@ -72,4 +74,3 @@ RDK推出新的功能后，会第一时间更新[example应用](/rdk/app/example
 你可以下载完成此步骤之后的[源码](02_first_rdk_app.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk/app/my_first_app/web/index.html)就可以打开它了。
 
 
-<rdk_title>第2步 编写第一个应用 - RDK应用开发最佳实践</rdk_title>

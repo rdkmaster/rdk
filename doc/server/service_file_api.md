@@ -1,3 +1,5 @@
+<rdk_title>Rest服务中的文件操作API</rdk_title>
+
 ### `file.loadProperty()` ###
 
 定义：
@@ -81,4 +83,3 @@
 
 
 
-<rdk_title>Rest服务中的文件操作API</rdk_title>

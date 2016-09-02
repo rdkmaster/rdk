@@ -1,3 +1,5 @@
+<rdk_title>参与RDK研发说明</rdk_title>
+
 
 
 ## 1分钟学会如何直接编辑文件 {#edit-online}
@@ -89,4 +91,3 @@ master分支是一个非常重要的分支，一般不允许开发者直接合�
 
 
 
-<rdk_title>参与RDK研发说明</rdk_title>

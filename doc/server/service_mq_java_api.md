@@ -1,3 +1,5 @@
+<rdk_title>Java程序与RDK应用交互的消息队列API</rdk_title>
+
 
 
 RDK的消息对列功能可以完美的支持java程序
@@ -99,4 +101,3 @@ RDK推荐一个消息事务使用一个特定字符串主题，比如 mysubject�
 
 
 
-<rdk_title>Java程序与RDK应用交互的消息队列API</rdk_title>

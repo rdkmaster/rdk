@@ -1,3 +1,5 @@
+<rdk_title>Rest服务中的消息队列API</rdk_title>
+
 
 RDK可以利用ActiveMQ与其他进程实现通信，可以给任意进程或者其他RDK应用发送任意消息，也可以监听其他进程或者其他RDK应用的消息。
 
@@ -145,4 +147,3 @@ RDK的 `mq` 变量提供了一组处理消息的函数：
 
 
 
-<rdk_title>Rest服务中的消息队列API</rdk_title>

@@ -1,3 +1,5 @@
+<rdk_title>ScoreIndicator</rdk_title>
+
 
 # 简介 #
 
@@ -61,4 +63,3 @@
 暂无
 
 
-<rdk_title>ScoreIndicator</rdk_title>

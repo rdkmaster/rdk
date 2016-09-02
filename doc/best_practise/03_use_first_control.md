@@ -1,3 +1,5 @@
+<rdk_title>第3步 使用第一个RDK控件 - RDK应用开发最佳实践</rdk_title>
+
 ## 目标与收获
 
 本小节将在 `my_first_app` 应用中添加一个时如间控件，通过本小结的学习，你将了解到
@@ -139,4 +141,3 @@ scope.timeSetting  = {
 你可以下载完成此步骤之后的[源码](03_use_first_control.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk/app/my_first_app/web/index.html)就可以打开它了。
 
 
-<rdk_title>第3步 使用第一个RDK控件 - RDK应用开发最佳实践</rdk_title>

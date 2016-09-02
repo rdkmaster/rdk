@@ -1,3 +1,5 @@
+<rdk_title>Map地图</rdk_title>
+
 # 简介 #
 
 `rdk_map` 主要用于Echart版本的地图展现
@@ -81,4 +83,3 @@
 		
 
 
-<rdk_title>Map地图</rdk_title>

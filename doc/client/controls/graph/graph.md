@@ -1,3 +1,5 @@
+<rdk_title>Graph图形</rdk_title>
+
 
 # 简介 #
 
@@ -176,4 +178,3 @@ return function(data, context, GraphService, attributes) {
 ~~~
 
 
-<rdk_title>Graph图形</rdk_title>

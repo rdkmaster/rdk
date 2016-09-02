@@ -14,17 +14,6 @@ var misc = {
     resetDir: function() {
         $('#___dir___').remove();
     },
-    fixTitle: function() {
-        var cfgTag = document.getElementById('__hidden__');
-        if (!cfgTag) {
-            return;
-        }
-        var title = cfgTag.getAttribute('title');
-        if (!title) {
-            return;
-        }
-        document.title = title;
-    },
     scrollToTarget: scrollToTarget
 }
 return misc;

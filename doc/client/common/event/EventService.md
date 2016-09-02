@@ -1,3 +1,5 @@
+<rdk_title>事件机制</rdk_title>
+
 事件机制 #
 在RDK中，组件与组件间的交互，组件与应用间的交互，都是通过事件来实现的，事件是整个网页动态化的纽带。事件虽然很重要，但是却非常易用。
 
@@ -88,4 +90,3 @@
 <live_demo example="common/event/" width="800"></live_demo>
 
 
-<rdk_title>事件机制</rdk_title>

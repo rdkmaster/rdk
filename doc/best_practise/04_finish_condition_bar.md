@@ -1,3 +1,5 @@
+<rdk_title>第4步 完成查询条件栏 - RDK应用开发最佳实践</rdk_title>
+
 ## 目标与收获
 
 本小节将完成 `my_first_app` 的条件查询栏剩余部分，通过本小结的学习，你将了解到
@@ -109,4 +111,3 @@ var app = angular.module("rdk_app", ['rd.core', 'blockUI',
 你可以下载完成此步骤之后的[源码](04_finish_condition_bar.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk/app/my_first_app/web/index.html)就可以打开它了。
 
 
-<rdk_title>第4步 完成查询条件栏 - RDK应用开发最佳实践</rdk_title>

@@ -1,3 +1,5 @@
+<rdk_title>Accordion</rdk_title>
+
 # 简介 #
 
 `rdk_accordion` 控件是一个导航容器控件，此导航容器具有一组子容器，但一次只能显示其中一个。它创建和管理导航器按钮，您可以使用这些按钮在子项之间导航。每个子容器都有一个相关的导航器按钮，但是所有导航器按钮都属于`rdk_accordion`容器，并不属于子项。当用户单击导航器按钮时，就会显示相关的子容器。到另一个子项的过渡过程将使用动画效果，这样用户就可以清楚地看到一个子项消失和另一个子项的出现。 
@@ -251,4 +253,3 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 
 
 
-<rdk_title>Accordion</rdk_title>

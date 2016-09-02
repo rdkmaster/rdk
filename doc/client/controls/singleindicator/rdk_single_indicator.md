@@ -1,3 +1,5 @@
+<rdk_title>SingleIndicator</rdk_title>
+
 # 简介 #
 
 `rdk_single_indicator` 主要用于提供单值，它支持
@@ -100,4 +102,3 @@
 当前值可以自由设置样式
 
 
-<rdk_title>SingleIndicator</rdk_title>

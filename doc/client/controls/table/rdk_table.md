@@ -1,3 +1,5 @@
+<rdk_title>Table</rdk_title>
+
 # 简介 #
 
 `rdk_table` 主要用于提供表格展示。
@@ -444,4 +446,3 @@ RDK2.0表格支持服务端和客户端排序两种方式。
 数据源绑定的说明请参照`BasicSelector控件`中的数据源绑定章节中的内容。以下为`rdk_table`的数据源绑定的示例：
 
 
-<rdk_title>Table</rdk_title>

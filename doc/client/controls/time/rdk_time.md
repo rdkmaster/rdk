@@ -1,3 +1,5 @@
+<rdk_title>Time</rdk_title>
+
 # 简介 #
 
 `rdk_time` 主要用于时间选择
@@ -115,4 +117,3 @@ inday/inweek/inmonth/inyear 和具体的 1d,2w,3m,4y。
 
 
 
-<rdk_title>Time</rdk_title>

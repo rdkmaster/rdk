@@ -1,3 +1,5 @@
+<rdk_title>Selector</rdk_title>
+
 # 简介 #
 
 `rdk_selector` 内部按规则封装了多个 `rdk_fold_selector`， 拥有 `rdk_accordion` 和 `rdk_basic_selector` 的所有属性。
@@ -140,4 +142,3 @@
 >事件类型：EventTypes.CHANGE
 同 `rdk_basic_selector` 的 `CHANGE` 事件，监听捕获 `rdk_basic_selector` 控件内部修改后的最新的数据信息。关于监听事件请参见`事件机制`中的`监听`部分
 
-<rdk_title>Selector</rdk_title>

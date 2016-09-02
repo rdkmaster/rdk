@@ -192,7 +192,6 @@ module.service('MarkdownService', ['$compile', function($compile) {
         misc.markdownContainer = markdownContainer[0];
         setTimeout(misc.scrollToTarget, 200);
         misc.resetDir();
-        misc.fixTitle();
         misc.makeDir();
     }
 }]);

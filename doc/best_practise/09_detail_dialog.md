@@ -1,3 +1,5 @@
+<rdk_title>第8步 优化详情对话框 - RDK应用开发最佳实践</rdk_title>
+
 ## 目标与收获
 
 本小节将优化 `my_first_app` 详情对话框的内容，你将了解到
@@ -88,4 +90,3 @@ rdk_map主要用于Echart版本的地图展现，目前仅支持json文件格式
 你可以下载完成此步骤之后的[源码](09_detail_dialog.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk/app/my_first_app/web/index.html)就可以打开它了。
 
 
-<rdk_title>第8步 优化详情对话框 - RDK应用开发最佳实践</rdk_title>

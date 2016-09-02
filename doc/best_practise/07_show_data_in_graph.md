@@ -1,3 +1,5 @@
+<rdk_title>第7步 将查询得到的数据以图形方式呈现 - RDK应用开发最佳实践</rdk_title>
+
 ## 目标与收获
 
 本小节将让 `my_first_app` 可以将查询得到的数据以图形方式显示。通过本小节的学习，你将了解到
@@ -153,4 +155,3 @@ EventService.register('myGraph', 'click', function(event, item) {
 你可以下载完成此步骤之后的[源码](07_show_data_in_graph.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk/app/my_first_app/web/index.html)就可以打开它了。
 
 
-<rdk_title>第7步 将查询得到的数据以图形方式呈现 - RDK应用开发最佳实践</rdk_title>

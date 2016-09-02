@@ -1,3 +1,5 @@
+<rdk_title>双向数据绑定</rdk_title>
+
 # 双向数据绑定 #
 双向数据绑定，也称为双向绑定或者简称绑定。它是AngularJS提供的一个非常有意义的功能，它能够极大地减少编码量，以及完全隔离对UI的操作，它是应用MVVM思想来开发web应用的基础。
 
@@ -76,4 +78,4 @@
 	graph_template="'my/templates/xxx.js'"
 
 
-<rdk_title>双向数据绑定</rdk_title>
+

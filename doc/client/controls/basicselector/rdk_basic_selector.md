@@ -1,3 +1,5 @@
+<rdk_title>BasicSelector</rdk_title>
+
 # 简介 #
 
 `rdk_basic_selector` 主要用于提供一些备选项给用户选择的场景，它支持
@@ -305,4 +307,3 @@ Selector控件提供一个将所有选择项转化为相互连接的字符串函
 **注意 当使用JSON格式的数据源时，JSON的格式必须正确，否则无法正确返回数据源的内容.**
 
 
-<rdk_title>BasicSelector</rdk_title>

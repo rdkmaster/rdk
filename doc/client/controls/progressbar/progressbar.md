@@ -1,3 +1,5 @@
+<rdk_title>ProgressBar进度条</rdk_title>
+
 # 简介 #
 
 `rdk_progressbar` 主要用于进度渲染
@@ -51,4 +53,3 @@ bootstrap的样式类型，'success', 'info', 'warning', 'danger' 可以应用bo
 
 
 
-<rdk_title>ProgressBar进度条</rdk_title>

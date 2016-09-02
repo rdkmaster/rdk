@@ -1,3 +1,5 @@
+<rdk_title>ComboSelect组合框</rdk_title>
+
 # 简介 #
 
 `rdk_combo_select` 控件为复合控件，其为一个包含下拉选择项的控件，用户可从中选择单个值或多个值。下拉列表可以支持任何形式的节点。一般来说是一个或者多个div / rdk控件的组合。
@@ -118,4 +120,3 @@
 
 
 
-<rdk_title>ComboSelect组合框</rdk_title>

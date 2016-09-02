@@ -1,3 +1,5 @@
+<rdk_title>弹出功能</rdk_title>
+
 # 简介 #
 
 在某些场景下，用户需要在进行某些操作后弹出对话框。`rdk_modal` 作为属性名称添加到某个块级元素后，该块级元素就会成为对话框元素。该属性需要初始化成 `hide`。
@@ -127,4 +129,3 @@ rdk可以通过事件的方式来实现对话框的模态/非模态/固定到文
 <live_demo example="common/modal/offSet_rightBottom" width="900" height="400"></live_demo>
 
 
-<rdk_title>弹出功能</rdk_title>
