@@ -10,7 +10,7 @@ import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 /**
   * Created by 10054860 on 2016/8/19.
   */
-@deprecated("DO NOT USE IT", "2.1")
+//@deprecated("DO NOT USE IT", "2.1")
 class DeprecatedDataBaseHelper extends DeprecatedDBAccessTrait with Logger {
 
   case class DBContext(conn: Connection, stm: Statement, timestamp: Long = System.currentTimeMillis())

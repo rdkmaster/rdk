@@ -41,24 +41,7 @@ var java = {
 
 };
 
-
-var mq = {
-    p2p: function (subject, message) {
-        return new Sequence(rdk_runtime.messageQueue().p2p(subject, message), subject);
-    },
-    broadcast: function (subject, message, persit) {
-        var seq = rdk_runtime.messageQueue().broadcast(subject, message, !!persit);
-        return new Sequence(seq, subject);
-    },
-    subscribe: function (subject, callback, context, sequence) {
-        rdk_runtime.messageQueue().subscribe(subject, callback, context, sequence);
-    },
-    unsubscribe: function (subject, callback) {
-        rdk_runtime.messageQueue().unsubscribe(subject, callback);
-    }
-};
-
-var mq_new={
+var mq={
     p2p: function (subject, message) {
         return rdk_runtime.p2p(subject, message);
     },
@@ -78,7 +61,8 @@ var mq_new={
         return rdk_runtime.reply(dst, message);
     }
 
-}
+};
+
 var websock ={
     broadcast: function (subject, message) {
         return rdk_runtime.webSocketBroadcast(subject, message);
@@ -200,35 +184,6 @@ var I18n = {
 }
 //兼容以前代码
 var i18n = I18n.format;
-
-function Sequence(sequence, subject) {
-    this.sequence = sequence;
-    this.subject = subject;
-    this.data = undefined;
-
-    this.wait = function (subject) {
-        log("waiting for ack... subject =", subject || this.subject);
-        if (!subject && !this.subject) {
-            error("need a valid subject!");
-            return;
-        }
-        mq.subscribe(subject || this.subject, function (msg) {
-            this.data = msg.body;
-        }, this, this.sequence);
-
-        while (!this.data) {
-            sleep(20);
-        }
-        return this.data;
-    };
-
-    this.toString = function () {
-        return String(this.sequence);
-    };
-    this.valueOf = function () {
-        return this.sequence;
-    };
-}
 
 ///////////////////////////////////////////////////////////////////////
 function _fixContent(content, excludeIndexes) {

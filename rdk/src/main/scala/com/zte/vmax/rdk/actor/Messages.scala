@@ -1,15 +1,11 @@
 package com.zte.vmax.rdk.actor
 
 
-import java.nio.file.{Path, WatchEvent}
-
-import akka.actor.ActorRef
 import akka.routing.ConsistentHashingRouter.ConsistentHashable
 import com.zte.vmax.activemq.rdk.RDKMessage
 import spray.routing.RequestContext
 
 import scala.language.existentials
-import scala.util.parsing.json.JSONObject
 
 /**
   * Created by 10054860 on 2016/7/12.
@@ -26,11 +22,12 @@ object Messages {
 
   case class Session(appName: String)
 
-  case class  ServiceParam(service: String, param: AnyRef, app: String)
-  case class  ServiceParamStr(service: String, param: String, app: String)
+  case class ServiceParam(service: String, param: String, app: String)
+
+  case class ServiceParamJson(service: String, param: AnyRef, app: String)
 
   case class ServiceRequest(ctx: RDKContext, script: String,
-                            app: String, param: AnyRef, method: String,timeStamp:Long)
+                            app: String, param: AnyRef, method: String, timeStamp: Long)
 
   case class ServiceResult(result: String)
 
@@ -162,20 +159,5 @@ object Messages {
   case class CacheGet(app: String, key: String, initValue: AnyRef)
 
   case class CacheRemove(app: String, key: String)
-
-  /**
-    * Message case class for telling a MonitorActor that an
-    * event has happened and at what path
-    *
-    * @param event WatchEvent.Kind[Path], one of ENTRY_CREATE, ENTRY_MODIFY, ENTRY_DELETE
-    * @param path  Path (Java object) pointing to a file/directory
-    */
-  case class EventAtPath(event: WatchEvent.Kind[_], path: Path)
-
-
-  case class GetMemory(receiver: ActorRef)
-
-  case object MemoryOverrunAlarm
-  case object MemoryOverrunRestore
 
 }

@@ -35,13 +35,13 @@ public class RDKDataSource {
         // 数据库初始化时，创建的连接个数
         bs.setInitialSize(Config.getInt("database.pool.initialSize", 10));
         // 最大活跃连接数
-        bs.setMaxActive(Config.getInt("database.pool.maxTotal", 100));
+        bs.setMaxActive(Config.getInt("database.pool.maxTotal", 128));
         // 最小空闲连接数
         bs.setMinIdle(Config.getInt("database.pool.minIdle", 10));
         // 数据库最大空闲连接数
         bs.setMaxIdle(Config.getInt("database.pool.maxIdle", 50));
         // 空闲连接60秒中后释放
-        bs.setMinEvictableIdleTimeMillis(Config.getInt("database.pool.minEvictableIdleTimeMillis", 60000));
+        bs.setMinEvictableIdleTimeMillis(Config.getInt("database.pool.minEvictableIdleTimeMillis", 15000));
         // 在获取连接的时候检查有效性, 默认false
         bs.setTestOnBorrow(Config.getBool("database.pool.testOnBorrow", true));
         //回收泄露连接
