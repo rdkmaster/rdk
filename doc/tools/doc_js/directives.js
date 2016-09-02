@@ -82,6 +82,22 @@ module.directive('binding', [function() {
     }
 }]);
 
+module.directive('rdkTitle', [function() {
+    return {
+        restrict: 'E',
+        replace: true,
+        template: '',
+		link: function(scope, iEle) {
+			var title = iEle.text().trim();
+			iEle.empty();
+			if (!title) {
+				title = 'RDK文档';
+			}
+			document.title = title;
+		}
+    }
+}]);
+
 module.service('MarkdownService', ['$compile', function($compile) {
     var currentFile;
     var mdService = this;
