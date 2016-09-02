@@ -96,11 +96,9 @@ MAKE_DEP_VERSION(){
 MAKE_RUN_VERSION(){
   cd $pwdPath
   mkdir -p $RUN_ENV_DIR
-  \cp ../start.sh $RUN_ENV_DIR
-  \cp ../start.exe  $RUN_ENV_DIR
   mkdir $RUN_ENV_DIR/rdk
-  \cp -r ../rdk/app/  $RUN_ENV_DIR/rdk
-  \cp -r ../rdk/proc/  $RUN_ENV_DIR/rdk
+  \cp -r ../rdk/app  $RUN_ENV_DIR/rdk
+  \cp -r ../rdk/proc  $RUN_ENV_DIR/rdk
   MAKR_RDK_RELEASE rdk-runtime-environment
 }
 
