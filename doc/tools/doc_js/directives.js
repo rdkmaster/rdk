@@ -87,14 +87,14 @@ module.directive('rdkTitle', [function() {
         restrict: 'E',
         replace: true,
         template: '',
-		link: function(scope, iEle) {
-			var title = iEle.text().trim();
-			iEle.empty();
-			if (!title) {
-				title = 'RDK文档';
-			}
-			document.title = title;
-		}
+        link: function(scope, iEle) {
+            var title = iEle.text().trim();
+            iEle.empty();
+            if (!title) {
+                title = 'RDK文档';
+            }
+            document.title = title;
+        }
     }
 }]);
 
@@ -107,9 +107,9 @@ module.service('MarkdownService', ['$compile', function($compile) {
     this.scope = undefined;
     
     var markdownConverter = new Markdown.Converter();
-	mdPlugin.fenceCodeBlock(markdownConverter);
-	mdPlugin.transMDLink(markdownConverter);
-	mdPlugin.headerId(markdownConverter);
+    mdPlugin.fenceCodeBlock(markdownConverter);
+    mdPlugin.transMDLink(markdownConverter);
+    mdPlugin.headerId(markdownConverter);
     var markdownContainer = $('#main')[0];
     markdownContainer = $(markdownContainer ? markdownContainer : document.body);
     
@@ -166,7 +166,7 @@ module.service('MarkdownService', ['$compile', function($compile) {
     
     function toAbsPath(path) {
         path = path[0] == '/' ? path : $('#base').attr('href') + path;
-		//path永远是 /doc/ 开头
+        //path永远是 /doc/ 开头
         var pathParts = path.substring(5).split('/');
         while(true) {
             var idx = pathParts.indexOf('..');
@@ -179,13 +179,13 @@ module.service('MarkdownService', ['$compile', function($compile) {
                 pathParts.splice(idx, 1);
             }
         }
-		return '/doc/' + pathParts.join('/');
+        return '/doc/' + pathParts.join('/');
     }
     
     this.loadText = function(mdText) {
         //清空原来的内容
         markdownContainer.empty();
-		var html = markdownConverter.makeHtml(mdText);
+        var html = markdownConverter.makeHtml(mdText);
         markdownContainer.html(html);
         $compile(markdownContainer.contents())(mdService.scope);
         
