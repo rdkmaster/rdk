@@ -1,5 +1,7 @@
 .rdk-accordion-module{
-    position: relative !important;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
 }
 
 .rdk-accordion-module .theme{
