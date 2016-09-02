@@ -6,7 +6,7 @@ import akka.util.Timeout
 import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 import org.apache.log4j.{Level, LogManager}
-import org.json4s.{DefaultFormats, Formats}
+import org.json4s.{JObject, DefaultFormats, Formats}
 import spray.httpx.Json4sSupport
 import spray.routing.{Directives, RequestContext}
 
@@ -21,9 +21,19 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
   implicit val dispatcher = system.dispatcher
 
 
+  implicit def str2ServiceCallParam(json: String): ServiceParamObj = {
+    val result = RdkUtil.json2Object[ServiceParamObj](json).getOrElse(null)
+    if (result == null) {
+      val t = RdkUtil.json2Object[ServiceParam](json).getOrElse(null)
+      ServiceParamObj(t.service,t.param,t.app)
+    } else {
+      result
+    }
+  }
 
-  implicit def str2ServiceCallParam(json: String): ServiceParam = {
-    RdkUtil.json2Object[ServiceParam](json).getOrElse(null)
+  implicit def str2ServiceCallParam(json: JObject): ServiceParam = {
+    RdkUtil.json2Object[ServiceParam](json.toString).getOrElse(null)
+
   }
 
   private lazy val breaker = new CircuitBreaker(system.scheduler,
@@ -86,7 +96,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
       path("rdk" / "service" / Segments) {
         url => {
           get {
-            parameters('p.as[ServiceParam]) {
+            parameters('p.as[ServiceParamObj]) {
               req => ctx =>
                 doDispatch(ctx, url, req.app, req.param)
             }
@@ -95,7 +105,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
               doDispatch(ctx, url, null, null)
             } ~
             (put | post | delete) {
-              entity(as[ServiceParamJson]) {
+              entity(as[ServiceParam]) {
                 req => ctx =>
                   doDispatch(ctx, url, req.app, req.param)
               }
@@ -103,13 +113,13 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
         } ~
           path("rdk" / "service") {
             get {
-              parameters('p.as[ServiceParam]) {
+              parameters('p.as[ServiceParamObj]) {
                 req => ctx =>
                   doDispatch(ctx, req.service :: Nil, req.app, req.param)
               }
             } ~
               (put | post | delete) {
-                entity(as[ServiceParamJson]) {
+                entity(as[ServiceParam]) {
                   req => ctx =>
                     doDispatch(ctx, req.service :: Nil, req.app, req.param)
                 }

@@ -3,6 +3,7 @@ package com.zte.vmax.rdk.actor
 
 import akka.routing.ConsistentHashingRouter.ConsistentHashable
 import com.zte.vmax.activemq.rdk.RDKMessage
+import org.json4s.JObject
 import spray.routing.RequestContext
 
 import scala.language.existentials
@@ -22,9 +23,9 @@ object Messages {
 
   case class Session(appName: String)
 
-  case class ServiceParam(service: String, param: String, app: String)
+  case class ServiceParam(service: String, param: JObject, app: String)
 
-  case class ServiceParamJson(service: String, param: AnyRef, app: String)
+  case class ServiceParamObj(service: String, param: AnyRef, app: String)
 
   case class ServiceRequest(ctx: RDKContext, script: String,
                             app: String, param: AnyRef, method: String, timeStamp: Long)
