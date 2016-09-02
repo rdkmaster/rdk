@@ -1,13 +1,5 @@
 #!/bin/sh
 
-####启动时干掉*menu.json文件
-
-jsonpath="/home/netnumen/ems/ums-server/procs/ppus/rdk_server.ppu/rdk_server-webapp.pmu/rdk_server.ear/rdk_server.war/app/portal/server"
-
-for i in `ls $jsonpath|grep menu.json$`;do
-    rm -rf $jsonpath"/"$i
-done
-
 . ./check_proc.sh
 
 if [ "" != "$pid" ]; then
