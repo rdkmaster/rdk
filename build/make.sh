@@ -66,12 +66,14 @@ export PATH=$JAVA_HOME/bin:$PATH
 
 COMPILE_RDKSERVER(){
 cd $rdk_path
+cd rdk
 $rdk_resource/sbt/bin/sbt \
--Dsbt.boot.directory=$rdk_resource/rdk-resource/sbt-repo/boot/ \
--Dsbt.ivy.home=$rdk_resource/rdk-resource/sbt-repo/ivy/ \
--Dsbt.global.base=$rdk_resource/rdk-resource/sbt-repo/   package
+-java-home $rdk_resource/jdk \
+-Dsbt.boot.directory=$rdk_resource/sbt-repo/boot/ \
+-Dsbt.ivy.home=$rdk_resource/sbt-repo/ivy/ \
+-Dsbt.global.base=$rdk_resource/sbt-repo/   package
 
-cp ../target/scala-2.10/rdk_*.jar  ../rdk/proc/bin/lib/ 
+cp target/scala-2.10/rdk*.jar  ../rdk/proc/bin/lib/ 
 	
 }
 
@@ -97,8 +99,8 @@ MAKE_RUN_VERSION(){
   \cp ../start.sh $RUN_ENV_DIR
   \cp ../start.exe  $RUN_ENV_DIR
   mkdir $RUN_ENV_DIR/rdk
-  \cp -r ../rdk/app/*  $RUN_ENV_DIR/rdk
-  \cp -r ../rdk/proc/*  $RUN_ENV_DIR/rdk
+  \cp -r ../rdk/app/  $RUN_ENV_DIR/rdk
+  \cp -r ../rdk/proc/  $RUN_ENV_DIR/rdk
   MAKR_RDK_RELEASE rdk-runtime-environment
 }
 
