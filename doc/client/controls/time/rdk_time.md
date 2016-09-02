@@ -113,8 +113,6 @@ inday/inweek/inmonth/inyear 和具体的 1d,2w,3m,4y。
 # 支持国际化 #
 <live_demo example="controls/time/i18n" width="900"></live_demo>
 
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+
+
+<rdk_title>Time</rdk_title>

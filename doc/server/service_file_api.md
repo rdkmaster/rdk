@@ -81,6 +81,4 @@
 
 
 
-<div title="Rest服务中的文件操作API" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+<rdk_title>Rest服务中的文件操作API</rdk_title>

@@ -127,8 +127,4 @@ rdk可以通过事件的方式来实现对话框的模态/非模态/固定到文
 <live_demo example="common/modal/offSet_rightBottom" width="900" height="400"></live_demo>
 
 
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+<rdk_title>弹出功能</rdk_title>

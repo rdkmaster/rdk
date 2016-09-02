@@ -14,8 +14,7 @@
        return Selector.selected2string(selected, 'label', '...');
     }
     <rdk_selector child_change="selected2string"></rdk_selector>
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+
+	
+
+<rdk_title>child_change</rdk_title>

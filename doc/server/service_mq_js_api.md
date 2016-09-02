@@ -145,6 +145,4 @@ RDK的 `mq` 变量提供了一组处理消息的函数：
 
 
 
-<div title="Rest服务中的消息队列API" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+<rdk_title>Rest服务中的消息队列API</rdk_title>

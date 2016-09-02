@@ -70,8 +70,4 @@
 滑块拖动后，会向外发事件，发的内容为 sliders的值
 		
 
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+<rdk_title>Bullet子弹图</rdk_title>

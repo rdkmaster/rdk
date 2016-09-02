@@ -305,8 +305,4 @@ Selector控件提供一个将所有选择项转化为相互连接的字符串函
 **注意 当使用JSON格式的数据源时，JSON的格式必须正确，否则无法正确返回数据源的内容.**
 
 
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+<rdk_title>BasicSelector</rdk_title>

@@ -35,6 +35,4 @@
 其中 `Utils` 是RDK提供的一个服务，在使用它之前，必须先将它注入到你的控制器中去。
 
 
-<div>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+<rdk_title>其他</rdk_title>

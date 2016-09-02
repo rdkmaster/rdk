@@ -21,5 +21,4 @@
 
 
 
-<div title="天龙八步 - RDK应用开发新手宝典" id="__hidden__">
-</div>
+<rdk_title>天龙八步 - RDK应用开发新手宝典</rdk_title>

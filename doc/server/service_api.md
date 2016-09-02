@@ -587,6 +587,4 @@ Java返回数据给JS，原则也是尽量只返回简单类型。当然也可�
 [单击这里](common.md)
 
 
-<div title="后端服务API" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+<rdk_title>后端服务API</rdk_title>

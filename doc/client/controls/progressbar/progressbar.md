@@ -49,8 +49,6 @@ bootstrap的样式类型，'success', 'info', 'warning', 'danger' 可以应用bo
 ##跟表格结合使用
 <live_demo example="controls/progressbar/withTable" width="900"></live_demo>
 
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+
+
+<rdk_title>ProgressBar进度条</rdk_title>

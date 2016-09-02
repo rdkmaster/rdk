@@ -26,6 +26,4 @@
 
 
 
-<div title="第1步 搭建开发环境 - RDK应用开发最佳实践" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+<rdk_title>第1步 搭建开发环境 - RDK应用开发最佳实践</rdk_title>

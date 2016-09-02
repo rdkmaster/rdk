@@ -76,6 +76,4 @@
 	graph_template="'my/templates/xxx.js'"
 
 
-<div>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+<rdk_title>双向数据绑定</rdk_title>

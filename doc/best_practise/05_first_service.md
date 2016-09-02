@@ -137,6 +137,4 @@ scope.cityProcessor = function(rawCitys) {
 你可以下载完成此步骤之后的[源码](05_first_service.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk/app/my_first_app/web/index.html)就可以打开它了。
 
 
-<div title="第5步 实现第一个RDK服务并调用它 - RDK应用开发最佳实践" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+<rdk_title>第5步 实现第一个RDK服务并调用它 - RDK应用开发最佳实践</rdk_title>

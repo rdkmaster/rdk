@@ -102,6 +102,4 @@
 
 
 
-<div title="如何断点调试Rest服务" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+<rdk_title>如何断点调试Rest服务</rdk_title>

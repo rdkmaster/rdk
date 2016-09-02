@@ -44,6 +44,4 @@ RDK提供了一组宏来描述应用目录，包括：
 
 
 
-<div title="路径宏" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+<rdk_title>路径宏</rdk_title>

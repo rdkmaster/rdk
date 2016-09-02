@@ -416,6 +416,4 @@ RDK提供了一组记录日志的函数，它们有共同的定义：
 	...
 
 
-<div title="RDK应用开发基础" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+<rdk_title>RDK应用开发基础</rdk_title>

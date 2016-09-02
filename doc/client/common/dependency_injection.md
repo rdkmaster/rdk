@@ -261,6 +261,4 @@ function($scope,   DataSourceService,   blockUI,   EventService) {
 除了各种服务可以出现在这个列表中，还有其他很多各种类型的功能，都可以出现在列表中。感兴趣的同学可以仔细阅读这偏文章：<http://docs.ngnice.com/guide/di>
 
 
-<div title="依赖注入相关知识" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+<rdk_title>依赖注入相关知识</rdk_title>
