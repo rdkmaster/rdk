@@ -32,7 +32,7 @@ cd ..\..
 @REM set local scope for the variables with windows NT shell
 if "%OS%"=="Windows_NT" @setlocal
 
-SET JAVA_HOME="E:\rdk-server\jre_win_1.8"
+SET JAVA_HOME="proc\bin\jre"
 
 echo %JAVA_HOME%
 
