@@ -274,7 +274,7 @@ var file = {
 
 var rest = {
     get: function(url, option) {
-        return helper.restHelper.get(encodeURI(url), option);
+        return rdk_runtime.restHelper().get(encodeURI(url),option);
     }
 }
 
