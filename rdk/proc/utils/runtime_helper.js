@@ -428,7 +428,7 @@ var Data = {
     },
     executeUpdate: function (sql) {
         if (_.isString(sql)) {
-            return JSON.parse(rdk_runtime.executeUpdate(rdk_runtime.application(),sql));
+            return rdk_runtime.executeUpdate(rdk_runtime.application(),sql);
         }
 
         if (_.isArray(sql)) {
