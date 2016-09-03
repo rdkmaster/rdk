@@ -117,16 +117,15 @@ scope.timeSetting = {
 
 > 实践<br>
 > 此时时间控件的两个时间选择框刚好相差一天的时间，我们通过一些简单的配置可以随意控制时段的开始时间和结束时间。试一下在 `scope.timeSetting` 中加入这个代码 `value: ['now-2h', 'now']`，此时代码看起是这样的：
-> ~~~
-scope.timeSetting  = {
-	value: ['now-2h', 'now'],
-	selectGranularity: true,
-	granularity: "hour",
-	granularityItems: [
-		//省略。。。
-	]
-}
-> ~~~
+>
+	scope.timeSetting  = {
+		value: ['now-2h', 'now'],
+		selectGranularity: true,
+		granularity: "hour",
+		granularityItems: [
+			//省略。。。
+		]
+	}
 > 刷新一下页面看看，开始时间框是当前时间前两个小时了。访问这里可以得到[关于vaule的更多描述](/doc/client/controls/time/rdk_time.md#value)。
 
 ## 小结

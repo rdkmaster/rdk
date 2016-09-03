@@ -16,6 +16,8 @@ hhhhhhhhh{#ff}
 
 [internal](#dd)
 
+[anchor](#anchor)
+
 ~~~
 <a href="ss.md">fff</a>
 ~~~
@@ -37,11 +39,17 @@ ffffffffffffffffff
 
 [Graph](../client/controls/graph/graph.md)
 
-![](find-file-to-edit.PNG)
+anchor
+<a name='anchor'></a>
 
 ![](find-file-to-edit.PNG)
 
 ![](find-file-to-edit.PNG)
+
+![](find-file-to-edit.PNG)
+
+anchor
+<a name='anchor'></a>
 
 ![](find-file-to-edit.PNG)
 

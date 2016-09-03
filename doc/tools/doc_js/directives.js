@@ -131,6 +131,9 @@ module.service('MarkdownService', ['$compile', function($compile) {
 			hash += '#' + parsed.target;
 		}
 		location.hash = hash;
+		if (parsed.file != curFile) {
+			window.scrollTo(0, 0);
+		}
 	}
 
 	function hashchangeHandler() {
@@ -203,7 +206,7 @@ module.service('MarkdownService', ['$compile', function($compile) {
 		ajaxInstance = $.ajax({
 			url: file,
 			type: 'GET',
-			timeout: 20000,
+			timeout: 5000,
 			dataType: 'text',
 			success: function(data) {
 				if (timer != -1) {
@@ -213,7 +216,6 @@ module.service('MarkdownService', ['$compile', function($compile) {
 				ajaxInstance = null;
 				
 				loadText(data);
-				//window.scrollTo(0, 0);
 				scrollToTarget(target);
 				
 				if (document.title == LOADING_TITLE) {
@@ -245,152 +247,37 @@ module.service('MarkdownService', ['$compile', function($compile) {
 		//按下浏览器后退按钮的情况需要考虑！
 		var dom = document.getElementById(target);
 		if (!dom) {
-			return;
+			dom = document.getElementsByName(target);
+			if (dom.length == 0) {
+				return;
+			}
 		}
 		$("html,body").animate({scrollTop: $(dom).offset().top}, 300);
 	}
 
 	function getLoadingText(file) {
 		return '\
----\
-\
-正在加载 `' + file + '` ...\
-\
----\
+---\n\
+\n\
+正在加载 `' + file + '` ...\n\
+\n\
+---\n\
 ';
 	}
 
 	function getLoadFailedText(file, errInfo) {
 		return '\
----\
-\
-找不到文档 `' + file + '`，以下是详细信息：\
-\
-~~~\
-' + JSON.stringify(errInfo, '', '  ') + '\
-~~~\
----\
-'
+---\n\
+\n\
+找不到文档 `' + file + '`，以下是详细信息：\n\
+\n\
+~~~\n\
+' + JSON.stringify(errInfo, '', '  ') + '\n\
+~~~\n\
+\n\
+---\n\
+';
 	}
-	
-	/////////////////////////////////////////
-/*
-    var currentFile;
-    var mdService = this;
-    var timer = -1;
-    var ajaxInstance = undefined;
-    
-    this.scope = undefined;
-    
-    var markdownConverter = new Markdown.Converter();
-    mdPlugin.fenceCodeBlock(markdownConverter);
-    mdPlugin.transMDLink(markdownConverter);
-    mdPlugin.headerId(markdownConverter);
-    var markdownContainer = $('#main')[0];
-    markdownContainer = $(markdownContainer ? markdownContainer : document.body);
-    
-    $(window).bind('hashchange', function() {
-        loadMarkdown('/doc/' + location.hash.substring(1));
-    });
-    
-    this.loadPath = function(path) {
-        if (!path) {
-            mdService.loadText('无效的Markdown路径！');
-            currentFile = undefined;
-            return;
-        }
-        
-        path = toAbsPath(path);
-        var pathParts = path.split('#');
-        if (currentFile === pathParts[0]) {
-            scrollToTarget(pathParts[1]);
-            return;
-        }
-        currentFile = pathParts[0];
-        location.hash = path.substring(5);
-        
-        timer = setTimeout(function() {
-            mdService.loadText('---\n\n正在加载 `' + path + '` ...\n\n---');
-        }, 500);
-        
-        if (!!ajaxInstance) {
-            ajaxInstance.abort();
-        }
-        ajaxInstance = $.ajax({
-            url: path,
-            type: 'GET',
-            timeout: 20000,
-            dataType: 'text',
-            success: function(data) {
-                if (timer != -1) {
-                    clearTimeout(timer);
-                    timer = -1;
-                }
-                mdService.loadText(data);
-                ajaxInstance = null;
-            },
-            error: function(data) {
-                mdService.loadText('---\n\n找不到文档 `' + path + '`，以下是详细信息：\n\n' +
-                            '    ' + JSON.stringify(data) + '\n\n---');
-                ajaxInstance = null;
-            }
-        });
-        
-        var match = path.match(/(.*\/).*?\.md/i);
-        $('#base').attr('href', match[1]);
-    }
-    
-    function toAbsPath(path) {
-		path = path[0] == '#' ? currentFile + path : path;
-        path = path[0] == '/' ? path : $('#base').attr('href') + path;
-        //path永远是 /doc/ 开头
-        var pathParts = path.substring(5).split('/');
-        while(true) {
-            var idx = pathParts.indexOf('..');
-            if (idx == -1) {
-                break;
-            }
-            pathParts.splice(idx, 1);
-            idx -= 1;
-            if (idx != -1) {
-                pathParts.splice(idx, 1);
-            }
-        }
-        return pathParts.join('/');
-    }
-    
-    this.loadText = function(mdText) {
-        //清空原来的内容
-        markdownContainer.empty();
-        var html = markdownConverter.makeHtml(mdText);
-        markdownContainer.html(html);
-        $compile(markdownContainer.contents())(mdService.scope);
-        
-        misc.markdownContainer = markdownContainer[0];
-        scrollToTarget();
-        misc.resetDir();
-        misc.makeDir();
-    }
-	
-	function scrollToTarget(target) {
-		if (!!target) {
-			//target非空刚好表示是当前文件内部跳转
-			//文件内部跳转需要先跳到文档顶部，否则不需要先跳转到顶部
-			window.scrollTo(0, 0);
-			location.hash = currentFile.substring(5) + '#' + target;
-		} else {
-			var match = location.hash.substring(1).match(/#(.*?)$/);
-			target = !!match ? match[1] : undefined;
-		}
-		
-		var dom = document.getElementById(target);
-		if (!dom) {
-			return;
-		}
-		var pos = dom.getBoundingClientRect();
-		window.scrollTo(0, pos.top);
-	}
-*/
 }]);
 
 return module;

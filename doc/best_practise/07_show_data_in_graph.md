@@ -90,7 +90,7 @@ RDK的Graph控件使用的是echart作为基础库，echart官网提供了非常
 `rdk_graph` 和 `rdk_table` 这2个标签都有ds属性，并且有相同的值，这就意味着表格和图形使用了同一份数据。
 
 ### 实现图形交互
-图形的交互，可以通过事件来完成。RDK提供了一套简单但强大的事件机制，[单击这里](/doc/client/common/event)了解详情。
+图形的交互，可以通过事件来完成。RDK提供了一套简单但强大的事件机制，[单击这里](/doc/client/common/event/EventService.md)了解详情。
 
 先注入EventService的依赖，编辑js代码，找到下面这行代码：
 ~~~
