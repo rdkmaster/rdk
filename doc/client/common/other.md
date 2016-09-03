@@ -28,7 +28,7 @@
 		console.log('rdk is ready...');
 	}
 
-也可以通过[事件](/doc/common/event/EventService.md)的方式：
+也可以通过[事件](/client/doc/common/event/EventService.md)的方式：
 
 	EventService.register('EventService', 'ready', function() {
 		console.log('rdk is ready...');

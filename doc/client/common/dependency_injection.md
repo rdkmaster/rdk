@@ -83,14 +83,14 @@ define('main', ['application', 'utils', 'i18n', 'blockUI', 'sichuan_map'],
 ~~~
 
 > 扩展：如果你未[定义依赖别名](#dep-name)，那么代码看起来是这样的
-> ~~~
-define('main', ['application', 'utils', 'i18n', 'blockUI',
-				'/rdk_server/app/portal/web/pages/scripts/maps/sichuan_map'],
-	function(application, utils, i18n) {
-		...
-	}
-);
-> ~~~
+>
+	define('main', ['application', 'utils', 'i18n', 'blockUI',
+					'/rdk_server/app/portal/web/pages/scripts/maps/sichuan_map'],
+		function(application, utils, i18n) {
+			...
+		}
+	);
+>
 > 这这样的代码看起来很乱不是吗？
 > 
 > 注意这里依然**没有使用文件的扩展名**。
@@ -162,19 +162,19 @@ define('main', ['application', 'utils', 'i18n', 'echarts3', 'blockUI'],
 > 扩展：
 > 
 > 为了让代码更容易维护，你可以把最里边的匿名函数挪到外头来，代码重构一下：
-> ~~~
-define('main', ['application', 'utils', 'i18n', 'echarts3', 'blockUI'],
-	function(application, utils, i18n, echarts) {
-		define(['sichuan_map'], start);
-	}
-);
 >
-function start(application, utils, i18n, echarts) {
-	//此时可以放心的使用 echarts 的各个函数了
-	echarts.registerMap(...);			
-	//example应用的其他代码写在这里
-}
-> ~~~
+	define('main', ['application', 'utils', 'i18n', 'echarts3', 'blockUI'],
+		function(application, utils, i18n, echarts) {
+			define(['sichuan_map'], start);
+		}
+	);
+	>
+	function start(application, utils, i18n, echarts) {
+		//此时可以放心的使用 echarts 的各个函数了
+		echarts.registerMap(...);			
+		//example应用的其他代码写在这里
+	}
+>
 > 代码这样看起来就清晰多了，不是吗？
 
 <font color=red>有一点需要特别注意：</font>鉴于jquery和angular这两个库非常常用，因此rdk已经强制他们预先下载了，所以应用的代码可以放心的使用这2个库提供的功能。
@@ -182,7 +182,7 @@ function start(application, utils, i18n, echarts) {
 
 
 ### rdk预定义的依赖 {#predef-dep}
-[这里](/libs/rdk/mainconfig.js)罗列了rdk预定义的所有依赖。
+[这里](/rdk/app/libs/rdk/mainconfig.js)罗列了rdk预定义的所有依赖。
 
 
 ### CSS类型和Rest服务类型
