@@ -16,13 +16,26 @@ hhhhhhhhh{#ff}
 
 [internal](#dd)
 
+~~~
+<a href="ss.md">fff</a>
+~~~
+fff
+~~~
+fff
+~~~
 
 ffffffffffffffffff
 
 [ddd.md](ddd.md#ff)  [ddd.html](ddd.html#ff)  
 
 
-[Graph](../../client/controls/graph/graph.md)  [Graph](../../client/controls/graph/graph.md)
+[Graph](/doc/client/controls/graph/graph.md#常用事件)
+
+[Graph](../../../../../../client/controls/graph/graph.md)
+
+[Graph](../../client/controls/graph/graph.md)
+
+[Graph](../client/controls/graph/graph.md)
 
 ![](find-file-to-edit.PNG)
 
