@@ -119,8 +119,6 @@ module.service('MarkdownService', ['$compile', function($compile) {
 
 	window.requestMarkdown = reqMarkdown;
 	$(window).bind('hashchange', hashchangeHandler );
-	$(window).bind('back', function() {console.log('back')} );
-
 
 
 	//给链接跳转，链接跳转后，只修改location.hash，由hashchange事件触发下载md

@@ -261,117 +261,53 @@
 			},
 			],
 		}];
-
-		require.config({
-			paths: {
-				"directives": "/doc/tools/doc_js/directives",
-				"dc": "/doc/tools/doc_js/DocCategory",
-				"md": "/doc/tools/doc_js/Markdown.Converter",
-				"md-plugin": "/doc/tools/doc_js/Markdown.Plugin",
-				"md-style": "/doc/tools/md-style-github",
-			}
+		
+		define('main', ['rd.controls.Tree'], function() {
+			var app = angular.module("rdk_app", ['rd.controls.Tree']);
+			app.controller('rdk_ctrl', ['$scope', main]);
 		});
 		
-		var deps = ['directives', 'dc', 'md', 'md-plugin', 'css!md-style', 'rd.controls.Tree'];
-		define('main', deps, function() {
-			var app = angular.module("rdk_app", ['rd.demo.Directives', 'rd.controls.Tree']);
-			app.controller('rdk_ctrl', ['$scope', 'MarkdownService', main]);
-		});
-		
-		location.hash = 'client/common/datasource/DataSourceService.md';
 		function main(scope, MarkdownService) {
-			MarkdownService.setScope(scope);
-			MarkdownService.loadFromHash();
-			
-			scope.isMarkdown = false;
+			scope.isMarkdown = true;
 			scope.menuCfg = menuCfg;
 			
 			scope.clickHandler = function(event, item) {
 				scope.isMarkdown = !!item.doc;
 				if (scope.isMarkdown) {
-					requestMarkdown(item.doc);
+					$('#markdown').attr('src', '/doc/#' + item.doc.substring(5));
 				}
 				scope.$apply()
 			}
+			
 		}
 		
 		function getFont(treeId, node) {
 			return node.font ? node.font : {};
 		}
 		
-		
 		window.onload = function(){
 			document.getElementById('tree').style.height = (document.body.scrollHeight + 20) + "px";
+			document.getElementById('markdown').style.width = (document.body.scrollWidth - 260) + "px";
+			document.getElementById('markdown').style.height = (document.body.scrollHeight - 10) + "px";
+			document.getElementById('outterLink').style.width = (document.body.scrollWidth - 260) + "px";
+			document.getElementById('outterLink').style.height = (document.body.scrollHeight - 10) + "px";
 		}
 
-		 
-
+		window.onresize = function() {
+			$('#markdown').css('width', $(window).width() - 260);
+			$('#markdown').css('height', $(window).height() - 10);
+			$('#outterLink').css('width', $(window).width() - 260);
+			$('#outterLink').css('height', $(window).height() - 10);
+		}
     </script>
 </head>
 
 <style>
-html,body,.center{
-	height: -o- calc(100% - 20px);
-	height: -moz- calc(100% - 20px);
-	height: -webkit- calc(100% - 20px);
-	height: calc(100% - 20px);
-}
-.main {
-	display: inline-block;
+
+iframe {
 	border:1px solid #CCC;
 	border-radius:2px;
-	width: 100%;
-	height: 100%;
-	margin-top: 20px;
-	overflow: auto;
-}
-.main:first-child{
-	padding: 0 20px;
-}
-body::before{
-		content: '';
-		display: block;
-		height:100px;
-		background-color: transparent; 
-		float: left;
-	}
-body::after{
-	content: '';
-	display: table;
-	clear: both;
-}
-@media (min-width: 0px){
-	body::before{
-		width: 230px;
-	}
-	.center{
-		width: -o- calc(100% - 230px);
-		width: -moz- calc(100% - 230px);
-		width: -webkit- calc(100% - 230px);
-		width:calc(100% - 230px);
-		float: left;
-	}
-}
-
-@media (min-width: 1144px){
-	body::before{
-		width: 150px;
-	}
-	.center{
-		width: -o- calc(100% - 150px);
-		width: -moz- calc(100% - 150px);
-		width: -webkit- calc(100% - 150px);
-		width: calc(100% - 150px);
-		float:left;
-	}
-}
-@media (min-width: 1440px){
-	body::before{
-		display:none;
-	}
-	.center{
-		width: 100%;
-	}
+	margin-left: 250px;
 }
 #tree{
 	position:fixed;
@@ -386,9 +322,9 @@ body::after{
         <rdk_tree data="menuCfg" node_field="module" rdk_click="clickHandler">
 		</rdk_tree>
     </div>
-	<div class="center">
-		<div id="main" class="main" ng-show="isMarkdown" ></div>
-		<iframe name="outterLink" class="main" ng-hide="isMarkdown"></iframe>
+	<div>
+		<iframe id="markdown" ng-show="isMarkdown"></iframe>
+		<iframe id="outterLink" name="outterLink" ng-hide="isMarkdown"></iframe>
 	</div>
 </body>
 
