@@ -38,7 +38,7 @@ define(['rd.core'], function() {
 
     function _fixUrl(url) {
         if (url.search(/\$svr/) != -1) {
-            var svr = location.href.match(/\/rdk_server|rdk\/(.*)\/web\//)[1] + "/server";
+            var svr = location.href.match(/\/(rdk_server|rdk)\/(.*)\/web\//)[2] + "/server";
             url = url.replace(/\$svr/, svr);
         }
         return url;
