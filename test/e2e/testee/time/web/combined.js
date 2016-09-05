@@ -1,13 +1,14 @@
 define('main', ['application', 'blockUI',
   'rd.controls.BasicSelector','rd.containers.Tab','rd.controls.TabSelector',
   'rd.controls.FoldSelector', 'rd.containers.Accordion','rd.controls.Time',
-  'rd.controls.Graph','rd.controls.ComboSelect','rd.controls.Selector','rd.controls.Table'],
+  'rd.controls.Graph','rd.controls.ComboSelect','rd.controls.Selector','rd.controls.Table','rd.containers.Panel',
+  'rd.controls.Scroller'],
 function(application) {
 // 创建一个RDK的应用
-var app = angular.module("rdk_app", ['rd.core', 'blockUI',
+var app = angular.module("rdk_app", ['rd.core', 'blockUI','rd.containers.Panel',
   'rd.controls.BasicSelector', 'rd.containers.Accordion','rd.containers.Tab','rd.controls.TabSelector'
   , 'rd.controls.FoldSelector','rd.controls.Time','rd.controls.Graph',
-  'rd.controls.ComboSelect','rd.controls.Selector','rd.controls.Table']);
+  'rd.controls.ComboSelect','rd.controls.Selector','rd.controls.Table','rd.controls.Scroller']);
 app.config(['blockUIConfig', function(blockUIConfig) {
     // blockUI默认只要有ajax请求在进行，就会自动启动，阻止页面响应鼠标事件
     // 使用下面代码可以阻止自动模式，启用手动模式
@@ -50,7 +51,7 @@ scope.TimeGap={
 }
 
 scope.TimeGranularity={
-    value:['2010-01-01 14:00','2016-08-04 14:00'],//支持y/m/w/d
+    value:['2010-01-01 00:00','2016-08-04 14:00'],//支持y/m/w/d
     granularity: "quarter",//quarter hour date week month
     weekStart:'0',// 0（星期日）到6（星期六）
     selectGranularity: true,
@@ -98,7 +99,7 @@ scope.items = [
     value: "now - 2y", //支持y/m/w/d
 }},
     {label: "ccc", range: true, setting: {
-    value:['2010-01-01 14:00','now -1d'],//支持y/m/w/d
+    value:['2010-01-01 00:00','now -1d'],//支持y/m/w/d
     granularity: "quarter",//quarter hour date week month
     weekStart:'0',// 0（星期日）到6（星期六）
     startDate: "2010-01-01 00:00",
@@ -123,7 +124,84 @@ scope.items = [
 }}
 ];
 
-       
+scope.timePanel={
+    value:['2010-01-01 00:00','2016-08-04 14:00'],//支持y/m/w/d
+    granularity: "quarter",//quarter hour date week month
+    weekStart:'0',// 0（星期日）到6（星期六）
+    selectGranularity: true,
+    startDate: "2010-01-01 00:00",
+    granularityItems: [{
+        label: "15分钟",
+        value: "quarter"
+    }, {
+        label: "小时",
+        value: "hour"
+    }, {
+        label: "天",
+        value: "date",
+    }, {
+        label: "周",
+        value: "week",
+    },{
+        label: "月",
+        value: "month",
+    }]
+}
+
+scope.time=[
+    {
+        timeScroller:{
+            value:['2010-01-01 00:00','2016-08-04 14:00'],//支持y/m/w/d
+            granularity: "quarter",//quarter hour date week month
+            weekStart:'0',// 0（星期日）到6（星期六）
+            selectGranularity: true,
+            startDate: "2010-01-01 00:00",
+            granularityItems: [{
+                label: "15分钟",
+                value: "quarter"
+            }, {
+                label: "小时",
+                value: "hour"
+            }, {
+                label: "天",
+                value: "date",
+            }, {
+                label: "周",
+                value: "week",
+            },{
+                label: "月",
+                value: "month",
+            }]
+        }
+    }
+]
+
+
+
+  
+scope.timeCombo={
+    value:['2010-01-01 00:00','2016-08-04 14:00'],//支持y/m/w/d
+    granularity: "quarter",//quarter hour date week month
+    weekStart:'0',// 0（星期日）到6（星期六）
+    selectGranularity: true,
+    startDate: "2010-01-01 00:00",
+    granularityItems: [{
+        label: "15分钟",
+        value: "quarter"
+    }, {
+        label: "小时",
+        value: "hour"
+    }, {
+        label: "天",
+        value: "date",
+    }, {
+        label: "周",
+        value: "week",
+    },{
+        label: "月",
+        value: "month",
+    }]
+}       
 /************************ 应用的代码逻辑结束 ************************/
 }]).filter('myFilter',function(){
   return function(input){
