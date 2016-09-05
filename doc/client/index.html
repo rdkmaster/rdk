@@ -285,16 +285,16 @@
 		window.onload = function(){
 			document.getElementById('tree').style.height = (document.body.scrollHeight + 20) + "px";
 			document.getElementById('markdown').style.width = (document.body.scrollWidth - 260) + "px";
-			document.getElementById('markdown').style.height = (document.body.scrollHeight - 10) + "px";
+			document.getElementById('markdown').style.height = (document.body.scrollHeight - 22) + "px";
 			document.getElementById('outterLink').style.width = (document.body.scrollWidth - 260) + "px";
-			document.getElementById('outterLink').style.height = (document.body.scrollHeight - 10) + "px";
+			document.getElementById('outterLink').style.height = (document.body.scrollHeight - 22) + "px";
 		}
 
 		window.onresize = function() {
 			$('#markdown').css('width', $(window).width() - 260);
-			$('#markdown').css('height', $(window).height() - 10);
+			$('#markdown').css('height', $(window).height() - 22);
 			$('#outterLink').css('width', $(window).width() - 260);
-			$('#outterLink').css('height', $(window).height() - 10);
+			$('#outterLink').css('height', $(window).height() - 22);
 		}
     </script>
 </head>
@@ -304,7 +304,7 @@
 iframe {
 	border:1px solid #CCC;
 	border-radius:2px;
-	margin-left: 250px;
+	margin: 12px 0 0 250px;
 }
 #tree{
 	position:fixed;
