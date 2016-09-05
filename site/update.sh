@@ -11,9 +11,9 @@ nodePid=`ps gaux | grep tools/node-linux-x64 | grep -v grep | awk '{print $2}'`
 if [ ! "$nodePid" = "" ]; then
 	kill -9 $nodePid
 fi
-git checkout -- rdk/proc/conf/rdk.cfg
-git checkout -- tools/http_server/config.json
-git checkout master
+git checkout -- ../rdk/proc/conf/rdk.cfg >> $basepath/update.log
+git checkout -- ../tools/http_server/config.json >> $basepath/update.log
+git checkout master >> $basepath/update.log
 git pull origin master >> $basepath/update.log
 
 # restart rdk...
