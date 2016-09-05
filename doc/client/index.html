@@ -313,12 +313,14 @@
 </style>
 
 <body ng-controller="rdk_ctrl" class="rdk_main">
-    <div style="display: absolute;left:0px;">
+    <div style="position:fixed; left:0px;">
         <rdk_tree data="menuCfg" node_field="module" rdk_click="clickHandler">
 		</rdk_tree>
     </div>
-	<div id="main" class="main" ng-show="isMarkdown"></div>
-	<iframe name="outterLink" class="main" ng-hide="isMarkdown"></iframe>
+	<div style="position:absolute; left:200px;">
+		<div id="main" class="main" ng-show="isMarkdown"></div>
+		<iframe name="outterLink" class="main" ng-hide="isMarkdown"></iframe>
+	</div>
 </body>
 
 </html>
