@@ -9,6 +9,12 @@
     -->
     <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
     <script src="scripts/main.js"></script>
+    <style type="text/css">
+    .hello{
+        width: 600px;
+    }
+
+    </style>
 </head>
 
 <body ng-controller='myCtrl'>
@@ -21,6 +27,19 @@
         <button style="float: right; margin: 10px" ng-click="open()">发事件展开容器</button>
         <button style="float: right; margin: 10px" ng-click="close()">发事件缩小容器</button>
     </div>
+
+<!--     <rdk_accordion id='accordionID' style='margin-left: 500px' expand_direction='bottom' coverable='true'>
+        <rdk_basic_selector style='width: 500px;' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
+    </rdk_accordion>
+
+    <rdk_accordion id='accordionID' caption="'有标题有默认宽度'" expand_direction='bottom' coverable='true'>
+        <rdk_basic_selector style='width: 500px;' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
+    </rdk_accordion>
+
+    <rdk_accordion id='accordionID' style='width: 600px;' caption="'有标题自定义宽度'" expand_direction='bottom' coverable='true'>
+        <rdk_basic_selector style='width: 500px;' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
+    </rdk_accordion> -->
+
 
 </body>
 

@@ -1,6 +1,6 @@
 .rdk-accordion-module{
     position: relative;
-    display: inline-block;
+    /*display: inline-block;*/
     vertical-align: top;
 }
 
@@ -34,5 +34,5 @@
     border-radius: 4px;
     padding: 5px;
     background-color: white;
-    width: inherit;
+    width: 100%;
 }
