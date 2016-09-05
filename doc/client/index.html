@@ -13,8 +13,7 @@
     <script type="text/javascript">
 
 		var menuCfg = [{
-			label: "通用功能",
-			open: true,
+			label: "通用功能", type: 'folder', open: true,
 			icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/1_open.png",
 			module: [{
 				label: "数据源",
@@ -38,8 +37,7 @@
 				icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
 			}],
 		}, {
-			label: "控件",
-			open: true,
+			label: "控件", type: 'folder', open: true,
 			icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/1_open.png",
 			module: [{
 				label: "Graph",
@@ -116,8 +114,7 @@
 				icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
 			}],
 		}, {
-			label: "容器",
-			open: true,
+			label: "容器", type: 'folder', open: true,
 			icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/1_open.png",
 			module: [
 			{
@@ -137,8 +134,7 @@
 			}
 			],
 		}, {
-			label: "原生HTML标签",
-			open: false,
+			label: "原生HTML标签", type: 'folder', open: false,
 			icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/1_open.png",
 			module: [
 			{
@@ -153,9 +149,7 @@
 			}
 			],
 		}, {
-			label: "AngularJS 常用",
-			open: false,
-			url: "http://docs.ngnice.com/api", target: 'outterLink',
+			label: "AngularJS 常用", type: 'folder', open: false,
 			icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/1_open.png",
 			module: [
 			{
@@ -272,13 +266,16 @@
 			scope.menuCfg = menuCfg;
 			
 			scope.clickHandler = function(event, item) {
+				if (item.type == 'folder') {
+					return;
+				}
+				
 				scope.isMarkdown = !!item.doc;
 				if (scope.isMarkdown) {
 					$('#markdown').attr('src', '/doc/#' + item.doc.substring(5));
 				}
 				scope.$apply()
 			}
-			
 		}
 		
 		function getFont(treeId, node) {
