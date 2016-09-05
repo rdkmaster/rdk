@@ -2,7 +2,7 @@
 start.cfg
 
 #忽略日志文件
-**/logs/log.txt
+**/logs
 
 #忽略工程临时文件
 **/rdk/target
