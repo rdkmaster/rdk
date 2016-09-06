@@ -124,7 +124,7 @@
 
 
 # 事件 #
-事件是RDK实现交互的主要手段之一，强大且易用。[了解更多](/doc/common/event)。
+事件是RDK实现交互的主要手段之一，强大且易用。[了解更多](/doc/client/common/event/EventService.md)。
 
 ## OPEN ##
 >事件类型：EventTypes.OPEN

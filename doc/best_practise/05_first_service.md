@@ -122,7 +122,7 @@ scope.cityProcessor = function(rawCitys) {
 到此，我们刷新页面后，就能看到和之前相同的效果了，唯一的差别是我们的地市数据是从rest访问查询而来的。
 
 ### 数据源手册
-通过前一小节的实践，你已经学会了数据源的常规使用方法了，基本上能够满足大多数开发的需要了。[访问这里](/doc/client/common/datasource/)可以查阅数据源的其他用法，以及每个属性的详细说明。
+通过前一小节的实践，你已经学会了数据源的常规使用方法了，基本上能够满足大多数开发的需要了。[访问这里](/doc/client/common/datasource/DataSourceService.md)可以查阅数据源的其他用法，以及每个属性的详细说明。
 
 ### 删除不用的文件和代码
 
@@ -134,7 +134,7 @@ scope.cityProcessor = function(rawCitys) {
 本文前面多次使用到 `$svr` 这个宏，[这里](/doc/server/relative_path_rule.md)有关于它的使用说明。
 
 ## 小结
-我们实现了第一个RDK服务citys，并成功利用[数据源](/doc/client/common/datasource)调用这个服务，同时对数据做了一些转换。
+我们实现了第一个RDK服务citys，并成功利用[数据源](/doc/client/common/datasource/DataSourceService.md)调用这个服务，同时对数据做了一些转换。
 
 你可以下载完成此步骤之后的[源码](05_first_service.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk/app/my_first_app/web/index.html)就可以打开它了。
 

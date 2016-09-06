@@ -175,7 +175,7 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 事件发出者，此字段大小写敏感。详见`事件机制`中事件发出者的说明。
 
 # 事件 #
-事件是RDK实现交互的主要手段之一，强大但易用。[了解更多](/doc/common/event)。
+事件是RDK实现交互的主要手段之一，强大但易用。[了解更多](/doc/client/common/event/EventService.md)。
 
 ## child_change ##
 

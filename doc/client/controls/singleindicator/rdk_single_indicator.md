@@ -87,18 +87,16 @@
 
 # 样式 #
 
-### [关键样式示例](/demo/controls/basicselector/select_style) ###
-
-#### color ####
+## color ##
 图标的颜色，默认值：#fff
 
-### background-color ###
+## background-color ##
 图标背景色，默认值：#FF7DB5
 
-###label ###
+## label ##
 文字描述可以自由设置样式
 
-#### value ####
+## value ##
 当前值可以自由设置样式
 
 

@@ -162,7 +162,7 @@
 此属性为通用属性，请参见[`childChange`](/doc/client/controls/common/child_change.md)中的说明
 
 # 事件 #
-事件是RDK实现交互的主要手段之一，强大但易用。[了解更多](/doc/client/common/event)。
+事件是RDK实现交互的主要手段之一，强大但易用。[了解更多](/doc/client/common/event/EventService.md)。
 
 ## SELECT ##
 >事件类型：EventTypes.SELECT

@@ -151,7 +151,7 @@
 下面是例子，注意到数据源先执行了 `toString()` 把一个复杂结构的数据转成了字符串，然后才调用 `showMessage()` 将结果 alert 出来。
 <live_demo example="common/datasource/result_handler/" width="400" height="40"></live_demo>
 
-除了使用 `ds_result_handler` 添加结果回调的方式，还可以通过[事件](/demo/common/event)的方式。每个数据源访问网络有了结果（成功/失败），都会通过数据源id发出一个 `result` 事件，监听此事件可以处理改数据源的结果。与 `ds_result_handler` 的方式相比，事件方式更加灵活，可以在代码的不同位置给同一个数据源添加多个事件回调，这样对提高代码的内聚性有帮助。
+除了使用 `ds_result_handler` 添加结果回调的方式，还可以通过[事件](/doc/client/common/event/EventService.md)的方式。每个数据源访问网络有了结果（成功/失败），都会通过数据源id发出一个 `result` 事件，监听此事件可以处理改数据源的结果。与 `ds_result_handler` 的方式相比，事件方式更加灵活，可以在代码的不同位置给同一个数据源添加多个事件回调，这样对提高代码的内聚性有帮助。
 
 	//下面代码执行的结果和 ds_result_handler 一样
 	EventService.register('ds_city', 'result', function(event, data) {

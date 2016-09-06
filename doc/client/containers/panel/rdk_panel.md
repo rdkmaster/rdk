@@ -62,7 +62,7 @@
 
 
 # 事件 #
-事件是RDK实现交互的主要手段之一，强大但易用。[了解更多](/doc/common/event)。控件会广播“BEFORE_CLOSE”事件，同时注册监听“CLOSE”事件，这样用户在点击关闭图标后，可以执行一些其他操作。
+事件是RDK实现交互的主要手段之一，强大但易用。[了解更多](/doc/client/common/event/EventService.md)。控件会广播“BEFORE_CLOSE”事件，同时注册监听“CLOSE”事件，这样用户在点击关闭图标后，可以执行一些其他操作。
 
 示例如下：
 <live_demo example="containers/panel/panel_close" width="405"></live_demo>
