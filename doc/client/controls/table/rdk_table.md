@@ -244,6 +244,72 @@ RDK2.0表格支持服务端和客户端排序两种方式。
 
 <live_demo example="controls/table/columneditable" width="900"></live_demo>
 
+### 设置单元格的合并 ###
+通过`setting`中的`columnDefs` 的 `group`控制。`group` 缺省时默认为`false`，表示列不是合并列。
+`group` 可设置成 true 或者设置成一回调函数。函数的定义为
+
+> function(rowspans,filedName,filterData,target)
+
+其中 rowspans 是控件自动计算出的该列的合并单元的rowspan数量。
+比如说表格的数据如下所示，
+    
+    
+    Field: f1 f2 f3  f4      
+    Data:  a  b  c   d 
+		   a  b  c   e
+		   a  b  e   e
+		   a  d  e   f
+		   b  f  f   f
+		   b  f  d   h 
+   
+
+      $scope.setting = {
+    		"columnDefs" :[
+    		{
+    			targets : 0,
+    			group :（rowspans,fieldName,filterData，targets）
+    		},{
+    			targets : "f2",
+    			group : true
+    		},{
+    			targets : "f3",
+    			group : true
+    		}
+    		]
+       }  
+
+此时的回调函数的rowspans的值为 [4,0,0,0,2,0].
+
+fieldName 为 f1
+
+filterData 为 表格的数据
+
+targets 为 0 
+
+另外当配合Edit功能一起使用时，Edit完毕之后会将受影响的表格数据的原始行列信息广播出去，数据结构如下
+    
+	{
+    'oldValue': scope.data.data[row][column],
+    'newValue': $(inputTarget).val(),
+    'rowIndex': row,
+    'columnIndex': column,
+    'cells': cells
+    }
+其中oldValue 为 改变之前的值
+
+newValue 为 改变之后的值
+
+rowIndex 为 改变的行
+
+columnIndex 为改变的列
+
+cells 为 改变的行列信息的数组信息
+
+**目前情况下当Edit功能和Group功能一起使用时，rowIndex和columnIndex的值均不正确，该两个属性为了兼容以前版本存在，请使用cells去操作**
+    
+详细举例如下
+<live_demo example="controls/table/rowSpan" width="900"></live_demo>
+
 ## 自定义表头 ##
 
 可以使用CSS中定义的table标记中的thead、tr、th等标记来修改表头内容。
