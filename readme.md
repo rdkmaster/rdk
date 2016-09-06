@@ -1,5 +1,5 @@
 ## RDK 官网
-- 内网1 [vmax.rdkapp.com](http://vmax.rdkapp.com)
+- 内网1 [www.rdkapp.com](http://www.rdkapp.com) (内测中)
 - 内网2 <http://10.9.233.35:8080> 
 
 ## 第一步
