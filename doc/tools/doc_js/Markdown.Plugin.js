@@ -22,14 +22,14 @@ mdPlugin = (function() {
     }
     
     function transAnchorTag(wholeMatch, m1, m2, m3) {
-		if (!m3) {
-			return wholeMatch;
-		}
-		m3 = m3.trim();
-		if (m3[0] == '#' || m3.match(/\.md(#.*)?\s*$/i)) {
-			//文件内部跳转
-			return wholeMatch.replace(m3, "javascript:requestMarkdown('" + m3 + "')");
-		}
+        if (!m3) {
+            return wholeMatch;
+        }
+        m3 = m3.trim();
+        if (m3[0] == '#' || m3.match(/\.md(#.*)?\s*$/i)) {
+            //文件内部跳转
+            return wholeMatch.replace(m3, "javascript:requestMarkdown('" + m3 + "')");
+        }
         return wholeMatch;
     }
     

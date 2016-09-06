@@ -4,7 +4,7 @@ document.body.onresize = fixHandlerPosition;
 
 return {
     make: function(container) {
-		$('#___dir___').remove();
+        $('#___dir___').remove();
         var nodes = findAndFixHeaders(container);
         if (nodes.length > 0) {
             createDirDiv();
