@@ -158,37 +158,37 @@
 				icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/1_open.png",
 				module: [
 				{
-					label: "angular.forEach", target: 'outterLink',
+					label: "angular.forEach", target: 'content',
 					url: "http://docs.ngnice.com/api/ng/function/angular.forEach",
 					icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
 				},
 				{
-					label: "ngClass", target: 'outterLink',
+					label: "ngClass", target: 'content',
 					url: "http://docs.ngnice.com/api/ng/directive/ngClass",
 					icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
 				},
 				{
-					label: "ngClick", target: 'outterLink',
+					label: "ngClick", target: 'content',
 					url: "http://docs.ngnice.com/api/ng/directive/ngClick",
 					icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
 				},
 				{
-					label: "ngDisabled", target: 'outterLink',
+					label: "ngDisabled", target: 'content',
 					url: "http://docs.ngnice.com/api/ng/directive/ngDisabled",
 					icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
 				},
 				{
-					label: "ngRepeat", target: 'outterLink',
+					label: "ngRepeat", target: 'content',
 					doc: "/dco/client/common/ng-repeat.md",
 					icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
 				},
 				{
-					label: "ngShow", target: 'outterLink',
+					label: "ngShow", target: 'content',
 					url: "http://docs.ngnice.com/api/ng/directive/ngShow",
 					icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
 				},
 				{
-					label: "$timeout", target: 'outterLink',
+					label: "$timeout", target: 'content',
 					url: "http://docs.ngnice.com/api/ng/service/$timeout",
 					icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
 				},
@@ -200,37 +200,37 @@
 				icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/1_open.png",
 				module: [
 				{
-					label: "ngBlur", target: 'outterLink',
+					label: "ngBlur", target: 'content',
 					url: "http://docs.ngnice.com/api/ng/directive/ngBlur",
 					icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
 				},
 				{
-					label: "ngChange", target: 'outterLink',
+					label: "ngChange", target: 'content',
 					url: "http://docs.ngnice.com/api/ng/directive/ngChange",
 					icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
 				},
 				{
-					label: "ngHide", target: 'outterLink',
+					label: "ngHide", target: 'content',
 					url: "http://docs.ngnice.com/api/ng/directive/ngHide",
 					icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
 				},
 				{
-					label: "ngHref", target: 'outterLink',
+					label: "ngHref", target: 'content',
 					url: "http://docs.ngnice.com/api/ng/directive/ngHref",
 					icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
 				},
 				{
-					label: "ngKeydown", target: 'outterLink',
+					label: "ngKeydown", target: 'content',
 					url: "http://docs.ngnice.com/api/ng/directive/ngKeydown",
 					icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
 				},
 				{
-					label: "ngModel", target: 'outterLink',
+					label: "ngModel", target: 'content',
 					url: "http://docs.ngnice.com/api/ng/directive/ngModel",
 					icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
 				},
 				{
-					label: "ngSrc", target: 'outterLink',
+					label: "ngSrc", target: 'content',
 					url: "http://docs.ngnice.com/api/ng/directive/ngSrc",
 					icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
 				},
@@ -242,12 +242,12 @@
 				icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/1_open.png",
 				module: [
 				{
-					label: "ngController", target: 'outterLink',
+					label: "ngController", target: 'content',
 					url: "http://docs.ngnice.com/api/ng/directive/ngController",
 					icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
 				},
 				{
-					label: "何为作用域(Scope)", target: 'outterLink',
+					label: "何为作用域(Scope)", target: 'content',
 					url: "http://docs.ngnice.com/guide/scope",
 					icon: "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/8.png",
 				},
@@ -262,19 +262,19 @@
 		});
 		
 		function main(scope, MarkdownService) {
-			scope.isMarkdown = true;
 			scope.menuCfg = menuCfg;
 			
 			scope.clickHandler = function(event, item) {
 				if (item.type == 'folder') {
 					return;
 				}
-				
-				scope.isMarkdown = !!item.doc;
-				if (scope.isMarkdown) {
-					$('#markdown').attr('src', '/doc/#' + item.doc.substring(5));
+				if (item.doc) {
+					$('#content').attr('src', '/doc/#' + item.doc.substring(5));
+				} else if (item.url) {
+					$('#content').attr('src', item.url);
+				} else {
+					console.error('invalid menu config');
 				}
-				scope.$apply()
 			}
 		}
 		
@@ -284,17 +284,13 @@
 		
 		window.onload = function(){
 			document.getElementById('tree').style.height = (document.body.scrollHeight + 20) + "px";
-			document.getElementById('markdown').style.width = (document.body.scrollWidth - 260) + "px";
-			document.getElementById('markdown').style.height = (document.body.scrollHeight - 22) + "px";
-			document.getElementById('outterLink').style.width = (document.body.scrollWidth - 260) + "px";
-			document.getElementById('outterLink').style.height = (document.body.scrollHeight - 22) + "px";
+			document.getElementById('content').style.width = (document.body.scrollWidth - 260) + "px";
+			document.getElementById('content').style.height = (document.body.scrollHeight - 22) + "px";
 		}
 
 		window.onresize = function() {
-			$('#markdown').css('width', $(window).width() - 260);
-			$('#markdown').css('height', $(window).height() - 22);
-			$('#outterLink').css('width', $(window).width() - 260);
-			$('#outterLink').css('height', $(window).height() - 22);
+			$('#content').css('width', $(window).width() - 260);
+			$('#content').css('height', $(window).height() - 22);
 		}
     </script>
 </head>
@@ -320,8 +316,7 @@ iframe {
 		</rdk_tree>
     </div>
 	<div>
-		<iframe id="markdown" ng-show="isMarkdown"></iframe>
-		<iframe id="outterLink" name="outterLink" ng-hide="isMarkdown"></iframe>
+		<iframe id="content" name="content"></iframe>
 	</div>
 </body>
 
