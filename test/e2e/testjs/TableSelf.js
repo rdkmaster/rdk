@@ -6,7 +6,7 @@ describe('Table Demos',function(){
     });
     afterEach(function(){
     });
-    搜索框输入
+    // 搜索框输入
     it('只显示一条结果HZ',function(){
         //直接输入搜索显示结果
         var lines=element.all(by.css(".demo1 .sticky-wrap .sticky-enabled tbody tr"));
@@ -22,7 +22,7 @@ describe('Table Demos',function(){
         var showPage=element(by.css(".demo1 .pagingLine>ul li .regularRecords"));
         var nextPage=element.all(by.css(".demo1 .pagingLine>ul li a"));
         var paging=element.all(by.css(".demo1 .pagingLine>span"));
-        nextPage.get(1).click();
+        nextPage.get(2).click();
         element(by.css(".demo1 .searchWapper input")).sendKeys("hz",protractor.Key.ENTER);
         expect(lines.count()).toBe(1);
         expect(showPage.getText()).toBe("1/1");
@@ -68,13 +68,26 @@ describe('Table Demos',function(){
         var nextPage=element.all(by.css(".demo1 .pagingLine>ul li a"));
         expect(showPage.getText()).toBe("1/3");
 
-        expect(nextPage.count()).toBe(2);
-        nextPage.get(1).click();
+        expect(nextPage.count()).toBe(4);
+        nextPage.get(2).click();
         expect(showPage.getText()).toBe("2/3");
-        nextPage.get(1).click();
+        nextPage.get(2).click();
         expect(showPage.getText()).toBe("3/3");
-        nextPage.get(0).click();
+        nextPage.get(1).click();
         expect(showPage.getText()).toBe("2/3");
+    });
+    it('首页尾页点击验证分页信息和显示条目',function(){
+        var firstPage=element.all(by.css(".demo1 .pagingLine>ul li a")).get(0);
+        var lastPage=element.all(by.css(".demo1 .pagingLine>ul li a")).get(3);
+        var lines=element.all(by.css(".demo1 .sticky-wrap .sticky-enabled tbody tr"));
+        var showPage=element(by.css(".demo1 .pagingLine>ul li .regularRecords"));
+        lastPage.click();
+        browser.sleep(1000);
+        expect(showPage.getText()).toBe("3/3");
+        expect(lines.count()).toBe(2);
+        firstPage.click();
+        expect(showPage.getText()).toBe("1/3");
+        expect(lines.count()).toBe(4);
     });
     //逐行点击
     it('表格逐行点击获取数据',function(){

@@ -1,13 +1,13 @@
 define('main', ['application', 'blockUI','rd.controls.BasicSelector','rd.controls.Selector',
   'rd.controls.FoldSelector','rd.containers.Accordion','rd.controls.Input','rd.controls.Table',
   'rd.controls.TabSelect','rd.controls.ComboSelect','rd.controls.TabSelector','rd.controls.Graph',
-  'rd.containers.Tab','rd.controls.Map','rd.controls.Scroller','rd.containers.Panel'],
+  'rd.containers.Tab','rd.controls.Map'],
 function(application) {
 // 创建一个RDK的应用
 var app = angular.module("rdk_app", ['rd.core', 'blockUI','rd.controls.BasicSelector','rd.controls.Selector',
   'rd.controls.FoldSelector','rd.containers.Accordion','rd.controls.Input','rd.controls.Table',
   'rd.controls.TabSelect','rd.controls.ComboSelect','rd.controls.TabSelector','rd.controls.Graph',
-  'rd.containers.Tab','rd.controls.Map','rd.controls.Scroller','rd.containers.Panel']);
+  'rd.containers.Tab','rd.controls.Map']);
 app.config(['blockUIConfig', function(blockUIConfig) {
     // blockUI默认只要有ajax请求在进行，就会自动启动，阻止页面响应鼠标事件
     // 使用下面代码可以阻止自动模式，启用手动模式
@@ -24,38 +24,67 @@ app.config(['blockUIConfig', function(blockUIConfig) {
 }]);
 
 // 创建一个控制器
-app.controller('rdk_ctrl', ['$scope', 'DataSourceService', 'blockUI','EventService','EventTypes',
+app.controller('rdk_ctrl', ['$scope' ,'DataSourceService', 'blockUI','EventService','EventTypes',
   
-function(scope, DSService, blockUI,EventService,EventTypes) {
+function(scope,DSService, blockUI,EventService,EventTypes) {
 application.initDataSourceService(DSService);
 /************************ 应用的代码逻辑开始 ************************/
-scope.mapUrl='../server/jilin.json';
-EventService.register("accordion-jilin",'mouseover',function(event,data){
-    scope.ename='mouseover';
-    scope.name=data.name;
-    console.log(data);
-});
-EventService.register("accordion-jilin",'mouseout',function(event,data){
-    scope.ename='mouseout';
-    scope.name=data.name;
-});
-var ids=['accordion_0','accordion_1','tab-jilin','combo-shanghai','scroller_jilin','scroller_shanghai','panel_map'];
-for(var i=0;i<ids.length;i++){
-    EventService.register(ids[i],'click',function(event,data){
-        scope.ename='click';
-        scope.name=data.name;
-    });
-}
-scope.scrollerData=[
-    {
-        id:'scroller_jilin',
-        map:'../server/jilin.json'
-    },
-    {
-        id:'scroller_shanghai',
-        map:'../server/shanghai.json'
+scope.accordion={
+  caption:'child',
+  isOpen:false,
+  buttons:[],
+  frozen:false,
+  editable:false,
+  direction:'top'
+};
+scope.isOpen=scope.accordion.isOpen;
+scope.child=111;
+scope.addButton=function(){
+  scope.accordion.buttons=[{
+      icon:'images/delete.png',
+      label:'删除',
+      callback:function(obj){
+        console.log(obj);
+      }
+    },{
+      label:'刷新',
+      callback:function(obj){
+        if(scope.isNewico){
+            scope.foldedIcon = "fa fa-arrow-circle-down";
+            scope.unfoldedIcon = "fa fa-arrow-circle-up";
+        }else {
+            scope.foldedIcon = "fa fa-angle-double-down";
+            scope.unfoldedIcon = "fa fa-angle-double-up";
+        }
+        scope.isNewico=!scope.isNewico;
+      }
+    },{
+      label:'冻结',
+      callback:function(obj){
+        scope.accordion.frozen=!scope.accordion.frozen;
+      }
+    },{
+      label:'编辑',
+      callback:function(obj){
+        scope.accordion.editable=!scope.accordion.editable;
+      }
     }
-];
+  ];
+}
+//
+scope.isNewico=true;
+scope.foldedIcon = "fa fa-angle-double-down";
+scope.unfoldedIcon = "fa fa-angle-double-up";
+//
+scope.$watch('isOpen',function(newV,oldV){
+  if(newV!=oldV){
+    scope.isOpen=newV;
+  }
+});
+//expand direction
+scope.setExpandDirecttion=function(direction){
+  scope.accordion.direction='bottom';
+};
 /************************ 应用的代码逻辑结束 ************************/
 }]);
 

@@ -32,7 +32,7 @@
     .map{
         width:600px;
     }
-    .combo-content{
+    .combo-content-transclude{
         width:600px;
     }
     .text{
@@ -40,15 +40,23 @@
         top:350px;
         right:35%;
     }
+    .panel{
+        margin-top: 100px;
+    }
 </style>
 <body ng-controller='rdk_ctrl' class="rdk_main">
     <div class="accordion map">
-        <rdk_accordion caption="'accordion'">
-            <rdk_map id="accordion-jilin" map="mapUrl" map_define="map.js">
+        <rdk_accordion caption="'accordion'" ng-repeat="list in scrollerData">
+            <rdk_map id="accordion_{{$index}}" map="list.map" map_define="map.js">
             </rdk_map>
         </rdk_accordion>
     </div>
-    
+    <!-- scroller组合 -->
+    <div class="scroller map">
+        <rdk_scroller data="scrollerData" scroll_policy="manual">
+            <rdk_map map_define="map.js" map="item.map" id={{item.id}} style="width:500px;height:300px;"></rdk_map>
+        </rdk_scroller>
+    </div>
     <div class="tab map">
         <rdk_tab>
             <div title="test">
@@ -61,10 +69,18 @@
     </div>
     <div class="combo map">
         <rdk_combo_select>
-            <rdk_map id="combo-shanghai" map="'../server/shanghai.json'" map_define="map.js" width="500">
+            <rdk_map id="combo-shanghai" map="'../server/shanghai.json'" map_define="map.js">
             </rdk_map>
         </rdk_combo_select>
     </div>
+    <!-- panel组合 -->
+    <div class="panel map">
+        <rdk_panel show_close="true" title="'panel map'" show_title="true" width="500px">
+            <!-- 不自行定义width则不会撑满panel -->
+            <rdk_map map="'../server/jiangsu.json'" map_define="map.js" id="panel_map" width="500"></rdk_map>
+        </rdk_panel>
+    </div>
+    
     <div class="text">
         <span>{{ename}}</span>
         <span>{{name}}</span>
