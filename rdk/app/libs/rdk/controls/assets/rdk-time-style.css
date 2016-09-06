@@ -1,6 +1,6 @@
 .rdk-time-module {
     display: inline-block;
-    
+    overflow-x: auto;
 }
 
 .rdk-time-module .time-content {

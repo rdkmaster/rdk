@@ -265,6 +265,20 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                     handleWeekValue();
                                 });
                             }
+
+                            if(scope.range){
+                                if(scope.setting.selectGranularity === true){
+                                    $('.rdk-time-module').find('div')[0].style.minWidth = "380px";
+                                }else{
+                                    $('.rdk-time-module').find('div')[0].style.minWidth = "300px";
+                                }
+                            }else{
+                                if(scope.setting.selectGranularity === true){
+                                    $('.rdk-time-module').find('div')[0].style.minWidth = "225px";
+                                }else{
+                                    $('.rdk-time-module').find('div')[0].style.minWidth = "140px";
+                                }
+                            };
                         }
 
                         function handleWeekValue() {
