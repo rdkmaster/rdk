@@ -263,20 +263,27 @@
         
         function main(scope) {
             scope.menuCfg = menuCfg;
-            $('#content').attr('src', '/doc/#client/common/datasource/DataSourceService.md');
+            scope.location = '/doc/#client/common/datasource/DataSourceService.md';
+            $('#content').attr('src', scope.location);
             
             scope.clickHandler = function(event, item) {
                 if (item.type == 'folder') {
                     return;
                 }
                 if (item.doc) {
-                    $('#content').attr('src', '/doc/#' + item.doc.substring(5));
+                    scope.location = '/doc/#' + item.doc.substring(5);
                 } else if (item.url) {
-                    $('#content').attr('src', item.url);
+                    scope.location = item.url;
                 } else {
-                    console.error('invalid menu config');
+                    scope.location = '/doc/#tools/404.md';
                 }
-                $('#content')[0].contentWindow.scrollTo(0, 0)
+                
+                $('#content').attr('src', scope.location);
+				scope.$apply();
+				try {
+					$('#content')[0].contentWindow.scrollTo(0, 0);
+				} catch(e) {
+				}
             }
         }
         
@@ -308,7 +315,14 @@ iframe {
     position:fixed;
     left:0px; 
     overflow:auto;
-    top:0;
+    top:0px;
+	padding-top: 10px;
+}
+.location {
+    font-size: 16px;
+    color: #000;
+    padding: 12px 0 8px 27px;
+	position: fixed;
 }
 </style>
 
@@ -317,9 +331,8 @@ iframe {
         <rdk_tree data="menuCfg" node_field="module" rdk_click="clickHandler">
         </rdk_tree>
     </div>
-    <div>
-        <iframe id="content" name="content"></iframe>
-    </div>
+	<a class="location" ng-href="{{location}}" target="_blank"><img src="/rdk/app/libs/ztree/css/zTreeStyle/img/diy/3.png"></img> 在新页面中打开</a>
+    <iframe id="content" name="content"></iframe>
 </body>
 
 </html>
