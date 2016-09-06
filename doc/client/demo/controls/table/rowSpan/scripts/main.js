@@ -12,7 +12,7 @@ define('main', ['rd.controls.Table'], function() {
                     editable : true
                 },{
                     targets : "position",
-                    group : function(rowspans,filedName,filterData){
+                    group : function(rowspans,filedName,filterData,target){
                         console.log(rowspans);
                         console.log(filedName);
                         console.log(filterData);

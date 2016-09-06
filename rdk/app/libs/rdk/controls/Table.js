@@ -546,8 +546,8 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         scope.refreshData = function(inputTarget, row, column, itemRowSpan, filterIndex, columnDef) {
                             if (angular.isDefined(attrs.id)) {
                                 var cells = new Array();
-                                if (itemRowSpan && itemRowSpan[columnDef["data"]]) {
-                                    var destData = scope.$filtered.slice(filterIndex, filterIndex + itemRowSpan[columnDef["data"]]);
+                                if (itemRowSpan && itemRowSpan[columnDef["targets"]]) {
+                                    var destData = scope.$filtered.slice(filterIndex, filterIndex + itemRowSpan[columnDef["targets"]]);
                                     for (var i = 0; i < destData.length; i++) {
                                         cells.push(new Array(destData[i].$index, column));
                                     };
