@@ -6,10 +6,10 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
         $templateCache.put("/src/templates/common.html",
             '<div class="rdk-table-module" ng-click="stopPropagation()">\
                 <div ng-if="search && (noData!=undefined)" class="searchWapper">\
-                    <input id="searchInput" type="text" class="form-control search" placeholder="Search"\
+                    <input type="text" class="form-control search" placeholder="Search"\
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
                     <i class="glyphicon glyphicon-search search_icon"></i>\
-                    <select id="searchSelect" ng-show="(pagingType==\'server\' && $parent.globalSearch)?true:false" ng-model="val" ng-change="selectChangeHandler(val)"\
+                    <select ng-show="(pagingType==\'server\' && $parent.globalSearch)?true:false" ng-model="val" ng-change="selectChangeHandler(val)"\
                             ng-options="columnDef.data as columnDef.name for columnDef in columnDefs"\
                             class="form-control search_select">\
                         <option value="">{{i18n.searchAll}}</option>\
@@ -25,9 +25,9 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             </tr>\
                         </thead>\
                         <tbody>\
-                            <tr id="rowTr" on-finish-render  ng-click="setSelected(item,$event)"\
+                            <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
                                 ng-class="{\'selected-row\':ifSelected(item)}" ng-dblclick="dbClickHandler(item,$index)">\
-                                <td ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" style="width:{{columnDef.width}};cursor:move">\
+                                <td  rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" style="width:{{columnDef.width}};cursor:move;{{getRowStyle(itemRowSpan,columnDef)}}">\
                                 </td>\
                             </tr>\
                              <tr ng-if="noData">\
@@ -90,6 +90,100 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                 return input.slice(offset, offset + pageSize);
             };
         })
+        .directive('rdkRowParser', function($compile, $parse) {
+            return {
+                restrict: 'A',
+                link: function(scope, element, attr) {
+                    if (scope.groupTargets) {
+                        if (scope.$index == 0) {
+                            scope.$parent.rowSpans = undefined;
+                        }
+                        if (!scope.$parent.rowSpans) {
+                            var rowspans = scope.$parent.rowSpans = new Array();
+                            var rowSpan, previousRowSpan, item;
+                            for (var i = 0; i < scope.$filtered.length; i++) {
+                                rowSpan = {};
+                                item = scope.$filtered[i];
+                                if (i != 0) previousRowSpan = rowspans[i - 1];
+                                for (var j = 0; j < scope.groupTargets.length; j++) {
+                                    var name = scope.groupFields[j];
+                                    var target = scope.groupTargets[j];
+                                    if (previousRowSpan && previousRowSpan[target + "real"] > 1) {
+                                        rowSpan[target + "real"] = previousRowSpan[target + "real"] - 1;
+                                        rowSpan[target] = 0;
+                                    } else {
+                                        length = generateRowSpan(name, j, i,target);
+                                        rowSpan[target] = length;
+                                        rowSpan[target + "real"] = length;
+                                    }
+                                }
+                                rowspans.push(rowSpan);
+                            };
+                            for (var i = 0; i < scope.groupTargets.length; i++) {
+                                var groupTarget = scope.groupTargets[i];
+                                for (var j = 0; j < scope.columnDefs.length; j++) {
+                                    var columnDef = scope.columnDefs[j];
+                                    if (groupTarget == columnDef.targets) {
+                                        if (angular.isFunction(columnDef.group)) {
+                                            var sourceRowSpan = generateSourceRowSpan(groupTarget);
+                                            var destRowSpan = columnDef.group.call(undefined, sourceRowSpan, columnDef.data, scope.$filtered,groupTarget);
+                                            handleRealRowSpan(destRowSpan, groupTarget);
+                                        }
+                                    }
+                                };
+                            };
+                        }
+                        scope.itemRowSpan = scope.$parent.rowSpans[scope.$index];
+
+                    }
+
+                    function generateSourceRowSpan(groupTarget) {
+                        var result = new Array();
+                        for (var i = 0; i < rowspans.length; i++) {
+                            result.push(rowspans[i][groupTarget]);
+                        };
+                        return result;
+                    }
+
+                    function handleRealRowSpan(destRowSpan, groupTarget) {
+                        for (var i = 0; i < rowspans.length; i++) {
+                            rowspans[i][groupTarget] = destRowSpan[i];
+                        };
+                    }
+
+                    function generateRowSpan(name, index, rowIndex,target) {
+                        var data = item[name];
+                        //TODO 添加 Render 处理
+                        var rowspan = 1;
+                        var destData, i;
+                        if (index == 0) {
+                            var datas = new Array();
+                            datas.push(scope.item);
+                            scope.groupData = scope.$filtered;
+                            destData = scope.groupData;
+                            i = rowIndex + 1;
+                        } else {
+                            destData = scope.groupData.slice(-rowSpan[scope.groupTargets[index - 1] + "real"]);
+                            i = 1;
+                        }
+                        for (; i < destData.length; i++) {
+                            if (destData[i][name] == data) {
+                                rowspan++;
+                                if (index == 0) {
+                                    datas.push(destData[i]);
+                                }
+                            } else {
+                                break;
+                            }
+                        };
+                        if (index == 0) {
+                            scope.groupData = datas;
+                        }
+                        return rowspan;
+                    }
+                }
+            }
+        })
         .directive('rdkColumnParser', function($compile, $parse) {
             return {
                 restrict: 'A',
@@ -101,24 +195,20 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         } else {
                             html += '<div>' + scope.columnDef.render + '</div>';
                         }
-                    }
-                    else if(scope.columnDef.editable){
-                        if(scope.columnDef.editorRenderer){
-                            if(angular.isFunction(scope.columnDef.editorRenderer)){
+                    } else if (scope.columnDef.editable) {
+                        if (scope.columnDef.editorRenderer) {
+                            if (angular.isFunction(scope.columnDef.editorRenderer)) {
                                 html += '<div ng-show="true">' + scope.columnDef.editorRenderer.call(undefined, scope.item) + '</div>';
-                            }
-                            else{
+                            } else {
                                 html += '<div ng-show="true">' + scope.columnDef.editorRenderer + '</div>';
                             }
-                        }
-                        else{
+                        } else {
                             html += '<div ng-bind="item[columnDef.data]"> </div>';
-                            html += '<div ng-show="false">'+
-                                        '<input class="editInput" value="{{item[columnDef.data]}}" ng-keyup="inputPressHandler($event, item.$index, columnDef.columnIdx)" ng-blur="editorBlurHandler($event, item.$index, columnDef)">'+
-                                    '</div>';
+                            html += '<div ng-show="false">' +
+                                '<input class="editInput" value="{{item[columnDef.data]}}" ng-keyup="inputPressHandler($event, item.$index, columnDef,itemRowSpan,$parent.$index)" ng-blur="editorBlurHandler($event, item.$index, columnDef,itemRowSpan,$parent.$index)">' +
+                                '</div>';
                         }
-                    }
-                    else{
+                    } else {
                         html += '<div ng-bind="item[columnDef.data]"> </div>'
                     }
 
@@ -149,17 +239,17 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
             controller: ['$scope', function(scope) {
                 this.setCurrentPage = function(_currentPage) {
                     scope.currentPage = _currentPage;
-                    scope.proxyDs = Utils.compile(scope.$parent,scope.proxyDs);
+                    scope.proxyDs = Utils.compile(scope.$parent, scope.proxyDs);
                     if (scope.pagingType == "server") {
                         _loadDataFromServer();
                     }
                 };
 
-                this.getTablePageNumber = function(){
+                this.getTablePageNumber = function() {
                     return scope.pageNumber;
                 }
 
-                this.getTableAppScope = function(){
+                this.getTableAppScope = function() {
                     return scope.appScope;
                 }
 
@@ -199,7 +289,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             finallyCondition.search = attachCondition.search;
                         };
                     }
-                    ds.query(finallyCondition,{"directQuery":true,"supressEvent":false});
+                    ds.query(finallyCondition, { "directQuery": true, "supressEvent": false });
                 }
             }],
             scope: {
@@ -236,14 +326,26 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
 
                 if (tAttributes.pagingType !== "server") {
                     tElement.find("rdk-paging").attr("count", "$filtered.length");
-                    tElement[0].querySelector("#rowTr").setAttribute("ng-repeat", "item in $filtered = (destData" + rowFilter + ")" + pagingFilter);
+                    tElement[0].querySelector(".rowTr").setAttribute("ng-repeat", "item in $filtered = (destData" + rowFilter + ")" + pagingFilter);
                 } else {
                     tElement.find("rdk-paging").attr("count", "data.paging.totalRecord");
-                    tElement[0].querySelector("#rowTr").setAttribute("ng-repeat", "item in $filtered = destData");
+                    tElement[0].querySelector(".rowTr").setAttribute("ng-repeat", "item in $filtered = destData");
                 }
 
                 return function link(scope, element, attrs, ctrl, transclude) {
-                    
+
+                    scope.getRowSpan = function(itemRowSpan, item) {
+                        return  itemRowSpan && itemRowSpan[item["targets"]] ? itemRowSpan[item["targets"]] : 1;
+                    }
+
+                    scope.getRowStyle = function(itemRowSpan, item) {
+                        var result = "";
+                        if (itemRowSpan && itemRowSpan[item["targets"]] == 0) {
+                            result = "display:none";
+                        }
+                        return result;
+                    }
+
                     _init();
 
                     transclude(scope, function(clone, innerScope) {
@@ -306,9 +408,9 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         scope.pageNumber = parseInt(scope.pageNumber) || 0;
 
                         //默认国际化
-                        if (typeof(attrs.lang) === 'undefined') {//今后会废弃lang属性
+                        if (typeof(attrs.lang) === 'undefined') { //今后会废弃lang属性
                             scope.lang = 'zh-CN';
-                            if((scope.appScope.i18n)&&(scope.appScope.i18n.$locale)){
+                            if ((scope.appScope.i18n) && (scope.appScope.i18n.$locale)) {
                                 scope.lang = scope.appScope.i18n.$locale;
                             }
                         }
@@ -323,7 +425,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             });
                         }
 
-                        function initializeTableI18n(){
+                        function initializeTableI18n() {
                             scope.lang = scope.lang.toLowerCase();
                             if (scope.lang == 'zh-cn' || scope.lang == 'zh_cn') {
                                 scope.i18n = {
@@ -341,42 +443,42 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                                 };
                             };
                         }
-               
-                        function refreshTableI18n(){
-                            if(!scope.appScope.i18n) return;
+
+                        function refreshTableI18n() {
+                            if (!scope.appScope.i18n) return;
                             scope.i18n.noData = scope.appScope.i18n.table_noData ? scope.appScope.i18n.table_noData : scope.i18n.noData;
                             scope.i18n.searchBy = scope.appScope.i18n.table_searchBy ? scope.appScope.i18n.table_searchBy : scope.i18n.searchBy;
                             scope.i18n.search = scope.appScope.i18n.table_search ? scope.appScope.i18n.table_search : scope.i18n.search;
                             scope.i18n.searchAll = scope.appScope.i18n.table_searchAll ? scope.appScope.i18n.table_searchAll : scope.i18n.searchAll;
-                        }       
+                        }
 
                         scope.$watch("data", function(newVal, oldVal) {
                             scope.currentPage = 0;
                             _reloadLocalData();
                             if (scope.pagingType == "server") {
-                                scope.currentPage = scope.data.paging?(scope.data.paging.currentPage - 1):0;
+                                scope.currentPage = scope.data.paging ? (scope.data.paging.currentPage - 1) : 0;
                             }
                             if (ctrl.pageCtrl) {
                                 ctrl.pageCtrl.setPageByTable(scope.currentPage);
                             }
                         }, true);
-                        
-                        scope.$watch("setting.columnDefs", function(newVal, oldVal){
-                            if(newVal != oldVal){
+
+                        scope.$watch("setting.columnDefs", function(newVal, oldVal) {
+                            if (newVal != oldVal) {
                                 _reloadLocalData();
                             }
                         }, true);
 
-                        scope.$watch("globalSearch", function(newVal, oldVal){
-                            if(newVal != oldVal){
-                                if(scope.pagingType == "server") return;//#115
-                                if(ctrl.pageCtrl){
+                        scope.$watch("globalSearch", function(newVal, oldVal) {
+                            if (newVal != oldVal) {
+                                if (scope.pagingType == "server") return; //#115
+                                if (ctrl.pageCtrl) {
                                     ctrl.pageCtrl.firstPage();
                                 }
                             }
                         }, true);
 
-                        scope.stopPropagation = function(){
+                        scope.stopPropagation = function() {
                             event.stopPropagation();
                         }
 
@@ -389,9 +491,9 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         }
 
                         scope.keyPressHandler = function(event) {
-                            if(!scope.globalSearch) return;
-                            while (!_validateValue(scope.globalSearch, scope.searchPattern)){
-                                scope.globalSearch = scope.globalSearch.substring(0, scope.globalSearch.length-1);
+                            if (!scope.globalSearch) return;
+                            while (!_validateValue(scope.globalSearch, scope.searchPattern)) {
+                                scope.globalSearch = scope.globalSearch.substring(0, scope.globalSearch.length - 1);
                             }
 
                             if ((event.keyCode == 13) && (scope.pagingType == "server")) {
@@ -409,20 +511,19 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             }
                         }
 
-                        scope.changeShape = function(event, columnDef){
-                            if(columnDef.editable){
-                                $(event.currentTarget).addClass("mouseShape");  
+                        scope.changeShape = function(event, columnDef) {
+                            if (columnDef.editable) {
+                                $(event.currentTarget).addClass("mouseShape");
+                            } else {
+                                $(event.currentTarget).css({ 'cursor': 'text' });
                             }
-                            else{
-                                $(event.currentTarget).css({'cursor': 'text'});
-                            }                            
                         }
 
-                        scope.editHandler = function(event, columnDef){
+                        scope.editHandler = function(event, columnDef) {
                             var tdDivTarget = event.currentTarget;
                             var firstDivTarget = tdDivTarget.childNodes[0];
                             var lastDivTarget = tdDivTarget.childNodes[1];
-                            if((columnDef.editable)&&(!columnDef.editorRenderer)){//单元格td
+                            if ((columnDef.editable) && (!columnDef.editorRenderer)) { //单元格td
                                 var tdWidthCache = event.currentTarget.parentNode.offsetWidth;
                                 $(firstDivTarget).css('display', "none");
                                 $(lastDivTarget).css('display', "inline");
@@ -432,36 +533,47 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             }
                         }
 
-                        scope.editorBlurHandler = function(event, row, columnDef){
+                        scope.editorBlurHandler = function(event, row, columnDef, itemRowSpan, filterIndex) {
                             var inputTarget = event.currentTarget;
                             var divTarget = inputTarget.parentNode;
 
                             _blurHandler(divTarget);
-                            if((columnDef.editable)&&(!columnDef.editorRenderer)){
-                                scope.refreshData(inputTarget, row, columnDef.columnIdx);
+                            if ((columnDef.editable) && (!columnDef.editorRenderer)) {
+                                scope.refreshData(inputTarget, row, columnDef.columnIdx, itemRowSpan, filterIndex, columnDef);
                             }
                         }
 
-                        scope.refreshData = function(inputTarget, row, column){
-                            if(angular.isDefined(attrs.id)){
+                        scope.refreshData = function(inputTarget, row, column, itemRowSpan, filterIndex, columnDef) {
+                            if (angular.isDefined(attrs.id)) {
+                                var cells = new Array();
+                                if (itemRowSpan && itemRowSpan[columnDef["data"]]) {
+                                    var destData = scope.$filtered.slice(filterIndex, filterIndex + itemRowSpan[columnDef["data"]]);
+                                    for (var i = 0; i < destData.length; i++) {
+                                        cells.push(new Array(destData[i].$index, column));
+                                    };
+                                } else {
+                                    cells.push(new Array(row, column));
+                                }
                                 EventService.broadcast(attrs.id, EventTypes.CHANGE, {
                                     'oldValue': scope.data.data[row][column],
                                     'newValue': $(inputTarget).val(),
                                     'rowIndex': row,
-                                    'columnIndex': column
+                                    'columnIndex': column,
+                                    'cells': cells
                                 });
-                            }                            
+                            }
                         }
 
-                        scope.inputPressHandler = function(event, row, column){//input上的event
+                        scope.inputPressHandler = function(event, row, columnDef, itemRowSpan, filterIndex) { //input上的event
                             var inputTarget = event.currentTarget;
                             var divTarget = $(inputTarget).parent().get(0);
+                            var column = columnDef.columnIdx;
 
-                            if(event.keyCode == 13){
-                                scope.refreshData(inputTarget, row, column);
+                            if (event.keyCode == 13) {
+                                scope.refreshData(inputTarget, row, column, itemRowSpan, filterIndex, columnDef);
                                 _blurHandler(divTarget);
                             }
-                            if(event.keyCode == 27){
+                            if (event.keyCode == 27) {
                                 $(inputTarget).val(scope.data.data[row][column]);
                                 _blurHandler(divTarget);
                             }
@@ -500,10 +612,9 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         };
 
                         scope.setSelected = function(item, event) {
-                            if (item.$$hashKey == scope.selectedModel.$$hashKey){
+                            if (item.$$hashKey == scope.selectedModel.$$hashKey) {
                                 // scope.selectedModel = {};
-                            }
-                            else{
+                            } else {
                                 scope.selectedModel = item;
                             }
                             if (angular.isDefined(attrs.id)) {
@@ -520,7 +631,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             }
                         }
 
-                        scope.isFirstPage = function(){
+                        scope.isFirstPage = function() {
                             return scope.currentPage == 0;
                         }
 
@@ -539,13 +650,13 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                     };
                     //END INIT
 
-                    function _blurHandler(target){
+                    function _blurHandler(target) {
                         $(target).css('display', "none");
                         $(target).prev().css('display', "inline");
                     }
 
                     function _validateValue(val, pattern) {
-                        if(!val) return true;//没值了，不能再-1
+                        if (!val) return true; //没值了，不能再-1
                         var reg = new RegExp(pattern);
                         if (!reg.test(val)) {
                             return false;
@@ -590,33 +701,32 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                                 angular.forEach(input.field, function(field, index) {
                                     obj[field] = data[index];
                                 });
-                                obj["$index"] = index;//item上存原行
+                                obj["$index"] = index; //item上存原行
                                 result.push(obj);
                             });
                             return result;
                         }
-                        if ($.isEmptyObject(scope.data)) return;//first time
-                        if (!scope.data.data){
+                        if ($.isEmptyObject(scope.data)) return; //first time
+                        if (!scope.data.data) {
                             scope.noData = true;
-                        }
-                        else if (scope.data.data.length == 0){
+                        } else if (scope.data.data.length == 0) {
                             scope.noData = true;
-                        }
-                        else {
+                        } else {
                             scope.noData = false;
                         }
-                        if (!scope.data.header){
+                        if (!scope.data.header) {
                             scope.noHeader = true;
-                        }
-                        else if(scope.data.header.length == 0){//column.title是从header取
+                        } else if (scope.data.header.length == 0) { //column.title是从header取
                             scope.noHeader = true;
-                        }
-                        else{
+                        } else {
                             scope.noHeader = false;
                         }
 
                         scope.destData = _convertToObject(scope.data);
                         scope.columnDefs = [];
+                        scope.groupFields = undefined;
+                        //预留以实现自定义列的Group
+                        scope.groupTargets = undefined;
                         //scrollStyle
                         if (scope.setting && scope.setting.scrollX) {
                             scope.scrollStyle = "overflow:auto;width:100%;";
@@ -687,7 +797,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                                 if (def.sort == undefined) {
                                     def.sort = undefined;
                                 }
-                                if (def.editable == undefined){
+                                if (def.editable == undefined) {
                                     def.editable = false;
                                 }
                                 if (target === undefined) {
@@ -703,6 +813,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                                     columnDef.editorRenderer = def.editorRenderer;
                                     columnDef.class = def.class;
                                     columnDef.width = def.width;
+                                    columnDef.group = def.group;
                                     columnDef.targets = scope.columnDefs.length + 1;
                                     scope.columnDefs.push(columnDef);
                                 } else {
@@ -734,13 +845,14 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                                                 if (def.sort != undefined) {
                                                     scope.columnDefs[j].sort = def.sort;
                                                 }
-                                                if (def.editable != undefined){
+                                                if (def.editable != undefined) {
                                                     scope.columnDefs[j].editable = def.editable;
                                                 }
                                                 scope.columnDefs[j].render = def.render;
                                                 scope.columnDefs[j].editorRenderer = def.editorRenderer;
                                                 scope.columnDefs[j].class = def.class;
                                                 scope.columnDefs[j].width = def.width;
+                                                scope.columnDefs[j].group = def.group;
                                                 break;
                                             }
                                         };
@@ -755,6 +867,24 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         scope.columnDefs.sort(function(a, b) {
                             return a.targets > b.targets ? 1 : -1
                         });
+
+                        //generate groupFields
+
+                        for (var i = 0; i < scope.columnDefs.length; i++) {
+                            if (scope.columnDefs[i].group) {
+                                if (!scope.groupFields) {
+                                    scope.groupFields = new Array();
+                                    scope.groupTargets = new Array();
+                                }
+                                if (scope.columnDefs[i].data) {
+                                    scope.groupFields.push(scope.columnDefs[i].data);
+                                }else{
+                                    scope.groupFields.push(undefined);
+                                }
+                                scope.groupTargets.push(scope.columnDefs[i].targets);
+                                
+                            }
+                        };
                     }
                     //END produceColumnDefs
 
@@ -841,7 +971,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
             },
             link: function($scope, element, attrs, TableCtrl) {
                 $scope.TableCtrl = TableCtrl;
-                $scope.TableCtrl.pageCtrl = $scope;          
+                $scope.TableCtrl.pageCtrl = $scope;
 
                 /*paging国际化处理*/
                 $scope.appScope = getTableAppScope();
@@ -852,9 +982,9 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
 
                 $scope.pageNumber = getPageNumber();
 
-                function initializePagingI18n(){
+                function initializePagingI18n() {
                     $scope.lang = $scope.lang.toLowerCase();
-                    if($scope.lang == 'zh-cn' || $scope.lang == 'zh_cn'){
+                    if ($scope.lang == 'zh-cn' || $scope.lang == 'zh_cn') {
                         $scope.i18n = {
                             'total': '共',
                             'records': '条记录',
@@ -863,8 +993,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             'first': '首页',
                             'last': '尾页'
                         }
-                    }
-                    else{
+                    } else {
                         $scope.i18n = {
                             'total': 'Total ',
                             'records': 'Records',
@@ -876,8 +1005,8 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                     }
                 }
 
-                function refreshPagingI18n(){
-                    if(!$scope.appScope.i18n) return;
+                function refreshPagingI18n() {
+                    if (!$scope.appScope.i18n) return;
                     $scope.i18n.total = $scope.appScope.i18n.table_total ? $scope.appScope.i18n.table_total : $scope.i18n.total;
                     $scope.i18n.records = $scope.appScope.i18n.table_records ? $scope.appScope.i18n.table_records : $scope.i18n.records;
                     $scope.i18n.next = $scope.appScope.i18n.table_next ? $scope.appScope.i18n.table_next : $scope.i18n.next;
@@ -886,15 +1015,15 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                     $scope.i18n.last = $scope.appScope.i18n.table_last ? $scope.appScope.i18n.table_last : $scope.i18n.last;
                 }
 
-                function getTableAppScope(){
+                function getTableAppScope() {
                     return $scope.TableCtrl.getTableAppScope();
                 }
 
-                function getPageNumber(){
+                function getPageNumber() {
                     return $scope.TableCtrl.getTablePageNumber();
                 }
 
-                $scope.getPageShow = function(){
+                $scope.getPageShow = function() {
                     return $scope.pageNumber == 0;
                 }
 
@@ -951,15 +1080,15 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
 
                     var distance = (totalPage < pageNumber) ? totalPage : pageNumber;
                     var ret = [];
-                    var start = 0;//注意start是从0取的
+                    var start = 0; //注意start是从0取的
 
-                    if(currentPage >= Math.ceil(distance/2)){
-                        start = currentPage - Math.ceil(distance/2);
-                        if(start + distance > totalPage){
+                    if (currentPage >= Math.ceil(distance / 2)) {
+                        start = currentPage - Math.ceil(distance / 2);
+                        if (start + distance > totalPage) {
                             start = totalPage - distance;
                         }
                     }
-                                       
+
                     for (var i = start; i < start + distance; i++) {
                         ret.push(i);
                     }
