@@ -16,13 +16,13 @@
     <div style='width: 200px; height: 200px; background-color: #BEEAFF; text-align: center; display: inline-block; vertical-align: top;'>
     </div>   
 
-    <rdk_accordion id='accordionID' style='display: inline-block;' expand_direction='right' coverable='false' exchangable='false' >
+    <rdk_accordion id='accordionID' style='display: inline-block;' expand_direction='right' coverable='false' exchangable='false' open='localOpen'>
         <rdk_basic_selector style=' width: 500px' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
     </rdk_accordion>
 
-    <div style='width: 200px; height: 200px; background-color: #BEEAFF; text-align: center; display: inline-block;'>
-        <button style="float: right; margin: 10px" ng-click="open()">发事件展开容器</button>
-        <button style="float: right; margin: 10px" ng-click="close()">发事件缩小容器</button>
+    <div style='width: 200px; height: 200px; background-color: #BEEAFF; text-align: center; display: inline-block;vertical-align: top;'>
+        <button style=" margin: 10px" ng-click="open()">展开容器</button>
+        <button style=" margin: 10px" ng-click="close()">缩小容器</button>
         容器展开后该色块会被挤开
     </div>    
 

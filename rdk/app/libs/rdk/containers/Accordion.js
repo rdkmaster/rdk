@@ -153,8 +153,13 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     var leftWidth = (transcludeDom.offsetWidth - themeDom.offsetWidth)/2;
 
                     if((direction == PositionTypes.RIGHT)||(direction == PositionTypes.LEFT)){
-                        $(iEle[0]).css({'top': -topHeight+'px'});
-                        $(themeDom).css({'top': topHeight+'px'}) ;  
+                        $(themeDom).css({'top': topHeight+'px'}) ; 
+                        var heightCache = iEle[0].offsetHeight;
+                        var _width = scope.open ? 'inherit' : initialWidth;
+                        if(_width==0){
+                            $(iEle[0]).css({'height': heightCache});
+                            $(transcludeDom).css({'display': 'none'});
+                        }
                     }
                     if((direction == PositionTypes.TOP)||(direction == PositionTypes.BOTTOM)){
                         $(iEle[0]).css({'left': -leftWidth+'px'});
@@ -186,7 +191,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
                 function _minShapeHandler(){
                     if(!scope.supportable) return;
-                    scope.firstTimeBln ? _initialStateHandler() : _interAnimate();
+                    scope.exchangable ? _interAnimate() : (scope.firstTimeBln ? _initialStateHandler() : _interAnimate());
                 }
 
                 function _interAnimate(){
@@ -200,16 +205,14 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
                 function _initialStateHandler(){
                     if((direction == PositionTypes.TOP)||(direction == PositionTypes.BOTTOM)){
-                        $(transcludeDom).css({'height': initialHeight, 'overflow': 'hidden', 'display': ''});
-                        if(initialHeight==0){
+                        var _height = scope.open ? 'inherit' : initialHeight;
+                        $(transcludeDom).css({'height': _height, 'overflow': 'hidden', 'display': ''});
+                        if(_height==0){
                             $(transcludeDom).css({'display': 'none'});
                         }
                     }
                     if((direction == PositionTypes.LEFT)||(direction == PositionTypes.RIGHT)){
-                        $(transcludeDom).css({'width': initialWidth, 'overflow': 'hidden', 'display': 'inline-block',' vertical-align': 'bottom'});
-                        if(initialWidth==0){
-                            $(transcludeDom).css({'display': 'none'});
-                        }
+                        $(transcludeDom).css({'width': 'inherit', 'overflow': 'hidden', 'display': 'inline-block'});
                     }
                     scope.firstTimeBln = !scope.firstTimeBln;
                 }
@@ -242,6 +245,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                         $(transcludeDom).css({'visibility': 'visible'});
                         $(transcludeDom).animate({'width': initialWidth}, 100, function(){//变小，且不占地方
                             if(initialWidth==0){
+                                var heightCache = iEle[0].offsetHeight;
+                                $(iEle[0]).css({'height': heightCache});
                                 $(transcludeDom).css({'display': 'none'});
                             } 
                         });
@@ -251,44 +256,41 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
                 function _moveExchangeCoverHandler(widthCache){
                     if(!scope.exchangable) return;
+                    $(document.body).css({'overflow-x': 'hidden'});
                     $(transcludeDom).css({'width': widthCache});//原大小
                     scope.open ? _expandMove() : _shrinkMove();
+                }
+
+                function _afterShrink(){
+                    $(document.body).css({'overflow-x': ''}); 
+                    $(transcludeDom).css({'width': initialWidth});
+                    if(initialWidth==0){
+                        $(transcludeDom).css({'display': 'none'});
+                    }
                 }
 
                 function _shrinkMove(){
                     if(direction == PositionTypes.LEFT){
                         if(scope.outerRight == 'auto'){
                             $(iEle[0]).animate({'left': scope.outerLeft+'px'}, 100, function(){
-                                $(transcludeDom).css({'width': initialWidth});
-                                if(initialWidth==0){
-                                    $(transcludeDom).css({'display': 'none'});
-                                } 
+                                _afterShrink();
                             }); 
                         }
                         else{
                             $(iEle[0]).animate({'right': scope.outerRight+'px'}, 100, function(){
-                                $(transcludeDom).css({'width': initialWidth});
-                                if(initialWidth==0){
-                                    $(transcludeDom).css({'display': 'none'});
-                                } 
+                                _afterShrink();
                             }); 
                         }
                     }
                     if(direction == PositionTypes.RIGHT){
                         if((scope.outerLeft == 'auto') && (scope.outerRight != 'auto')){
                             $(iEle[0]).animate({'right': scope.outerRight+'px'}, 100, function(){
-                                $(transcludeDom).css({'width': initialWidth});
-                                if(initialWidth==0){
-                                    $(transcludeDom).css({'display': 'none'});
-                                } 
+                                _afterShrink(); 
                             });                          
                         }
                         else{
                             $(iEle[0]).animate({'left': scope.outerLeft+'px'}, 100, function(){
-                                $(transcludeDom).css({'width': initialWidth});
-                                if(initialWidth==0){
-                                    $(transcludeDom).css({'display': 'none'});
-                                } 
+                                _afterShrink(); 
                             }); 
                         }
                     }                  

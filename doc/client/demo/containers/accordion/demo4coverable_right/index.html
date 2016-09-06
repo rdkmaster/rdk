@@ -13,18 +13,22 @@
 
 <body ng-controller='myCtrl'>
 
-    <rdk_accordion id='accordionID' style='margin-top: 100px' expand_direction='right' coverable='true' exchangable='false'>
+    <rdk_accordion id='accordionID' style='margin-top: 100px' expand_direction='right' coverable='true' exchangable='false' open='localOpen'>
         <rdk_basic_selector style='width: 350px;' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
     </rdk_accordion>
 
     <div style='width: 100%; height: 150px; background-color: #BEEAFF; text-align: center;'>
-        <button style="float: right; margin: 10px" ng-click="open()">发事件展开容器</button>
-        <button style="float: right; margin: 10px" ng-click="close()">发事件缩小容器</button>容器展开后该色块会被覆盖</div>
+        <button style="float: right; margin: 10px" ng-click="open()">展开容器</button>
+        <button style="float: right; margin: 10px" ng-click="close()">缩小容器</button>容器展开后该色块会被覆盖</div>
 
-    <rdk_accordion id='accordionID' expand_direction='right' coverable='true' exchangable='false' min_width='100'>
+    <rdk_accordion id='accordionID' expand_direction='right' coverable='true' exchangable='false' min_width='100' open='localOpen'>
         <rdk_basic_selector style='width: 350px;' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
     </rdk_accordion>
 
+
+<!--     <rdk_accordion id='accordionID' style='position: fixed; top: 100px; left: 0;' expand_direction='right' coverable='true' exchangable='false'>
+        <rdk_basic_selector style='width: 350px;' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>  
+    </rdk_accordion> -->
 
 </body>
 
