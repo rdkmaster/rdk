@@ -212,7 +212,16 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                         }
                     }
                     if((direction == PositionTypes.LEFT)||(direction == PositionTypes.RIGHT)){
-                        $(transcludeDom).css({'width': 'inherit', 'overflow': 'hidden', 'display': 'inline-block'});
+                        if(!scope.coverable){
+                            $(transcludeDom).css({'width': 'inherit', 'overflow': 'hidden', 'display': 'inline-block'});
+                        }
+                        else{
+                            var _width = scope.open ? 'inherit' : initialWidth;
+                            $(transcludeDom).css({'width': _width, 'overflow': 'hidden', 'display': ''});
+                            if(_width==0){
+                                $(transcludeDom).css({'display': 'none'});
+                            }                           
+                        }
                     }
                     scope.firstTimeBln = !scope.firstTimeBln;
                 }
