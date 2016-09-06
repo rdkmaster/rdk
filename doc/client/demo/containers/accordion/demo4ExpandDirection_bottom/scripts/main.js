@@ -37,11 +37,23 @@ define('main',['angular', 'rd.containers.Accordion', 'rd.controls.BasicSelector'
             label: "湖南省"
         }];
 
-        $timeout(function(){
-           EventService.broadcast('accordionID', EventTypes.CLOSE);
-        }, 3000);
+        scope.localOpen = true;
 
-        EventService.broadcast('accordionID', EventTypes.OPEN);
+        scope.close = function(){
+            scope.localOpen = false;
+        }
+
+        scope.open = function(){
+            scope.localOpen = true;
+        }
+
+        // scope.close = function(){
+        //     EventService.broadcast('accordionID', EventTypes.CLOSE);
+        // }
+
+        // scope.open = function(){
+        //     EventService.broadcast('accordionID', EventTypes.OPEN);
+        // }
 
     }]);
 });

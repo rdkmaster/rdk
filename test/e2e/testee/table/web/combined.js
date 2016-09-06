@@ -1,13 +1,14 @@
 define('main', ['application', 'blockUI',
   'rd.controls.BasicSelector','rd.containers.Tab','rd.controls.TabSelector',
   'rd.controls.FoldSelector', 'rd.containers.Accordion','rd.controls.Time',
-  'rd.controls.Graph','rd.controls.ComboSelect','rd.controls.Selector','rd.controls.Table'],
+  'rd.controls.Graph','rd.controls.ComboSelect','rd.controls.Selector',
+  'rd.controls.Table','rd.containers.Panel','rd.controls.Scroller'],
 function(application) {
 // 创建一个RDK的应用
 var app = angular.module("rdk_app", ['rd.core', 'blockUI',
   'rd.controls.BasicSelector', 'rd.containers.Accordion','rd.containers.Tab','rd.controls.TabSelector'
   , 'rd.controls.FoldSelector','rd.controls.Time','rd.controls.Graph',
-  'rd.controls.ComboSelect','rd.controls.Selector','rd.controls.Table']);
+  'rd.controls.ComboSelect','rd.controls.Selector','rd.controls.Table','rd.containers.Panel','rd.controls.Scroller']);
 app.config(['blockUIConfig', function(blockUIConfig) {
     // blockUI默认只要有ajax请求在进行，就会自动启动，阻止页面响应鼠标事件
     // 使用下面代码可以阻止自动模式，启用手动模式
@@ -35,27 +36,13 @@ function showSelected(data){
   }
   return array;
 }
-EventService.register("dsTable","select",function(event,data){
-  scope.selectedInfo=showSelected(data);
-});
-EventService.register("wks_table_0","select",function(event,data){
-  scope.selectedInfo=showSelected(data);
-});
-EventService.register("wks_table_1","select",function(event,data){
-  scope.selectedInfo=showSelected(data);
-});
-EventService.register("tab_table_1","select",function(event,data){
-  scope.selectedInfo=showSelected(data);
-});
-EventService.register("tab_table_2","select",function(event,data){
-  scope.selectedInfo=showSelected(data);
-});
-EventService.register("tab_table_3","select",function(event,data){
-  scope.selectedInfo=showSelected(data);
-});
-EventService.register("tab_table_4","select",function(event,data){
-  scope.selectedInfo=showSelected(data);
-});
+var ids=['dsTable','wks_table_0','wks_table_1','tab_table_1','tab_table_2','tab_table_3','tab_table_4','panel_table'];
+for(var i=0;i<ids.length;i++){
+  EventService.register(ids[i],'select',function(event,data){
+    scope.selectedInfo=showSelected(data);
+  });
+};
+
 //accordion下表格样式设置
 scope.tablesetting={
   "scrollX":true
@@ -68,6 +55,16 @@ scope.changeWidth=function(){
   }
 };
 
+scope.scrollerData=[
+  {
+    ds:'salary1',
+    dsUrl:'$svr/salary1'
+  },
+  {
+    ds:'salary2',
+    dsUrl:'$svr/salary2'
+  }
+];
 /************************ 应用的代码逻辑结束 ************************/
 }]);
 

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Graph 组合</title>
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk"
+        src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="combined.js"></script>
+    
+
+    <!-- 应用正式运行的时候，请使用下面这个节点，RDK会使用编译后的代码，代码体积小，下载快 -->
+    <!--
+    <script data-main="main.min.js" src="/rdk_server/app/libs/requirejs/require.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    -->
+    
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/test/module/testee_helper',
+            }
+        });
+    </script>
+</head>
+<style>
+   .graph{
+       width:800px;
+   }
+   .combo-content-transclude{
+        width:600px;
+    }
+    .context{
+        width:100%;
+    }
+    .infos{
+        position:absolute;
+        top:350px;
+        right:150px;
+    }
+</style>
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    <div class="accordion graph">
+        <!--ng-repeat-->
+        <rdk_accordion caption="'child is graph'" ng-repeat="list in accordions">
+            <rdk_graph data="list" graph_define="graph_define/simple_line.js" id="accordion_{{$index}}">
+            </rdk_graph>
+        </rdk_accordion>
+    </div>
+
+    <div class="combo graph">
+        <rdk_combo_select ds="combo_graph" ds_url="$svr/temperature" ds_query_if="ready">
+            <rdk_graph data="combo_graph" graph_define="graph_define/simple_line.js" id="combo_graph"></rdk_graph>
+        </rdk_combo_select>
+    </div>
+    <div class="infos">
+        <span class="name">{{name}}</span>
+        <span class="series">{{series}}</span>
+        <span class="temperature">{{temperature}}</span>
+    </div>
+    <div class="tab graph">
+        <rdk_tab>
+            <div title="tab1">
+                <rdk_graph graph_define="graph_define/simple_line.js" ds="tab1_graph" ds_url="$svr/temperature"
+                ds_query_if="ready" id="tab1_graph"></rdk_graph>
+            </div>
+            <div title="tab2">
+                <rdk_graph graph_define="graph_define/simple_line.js" ds="tab2_graph" ds_url="$svr/temperature"
+                ds_query_if="ready" id="tab2_graph"></rdk_graph>
+            </div>
+        </rdk_tab>
+    </div>
+
+    <div class="panel graph">
+        <rdk_panel show_close="true" title="'panel graph'" show_title="true" width="600px">
+            <rdk_graph data="panelData" graph_define="graph_define/simple_line.js" id="panel_graph"
+            style="width:600px"></rdk_graph>
+        </rdk_panel>
+    </div>
+    <!--源码是否需要自行添加清楚浮动？-->
+    <div style="clear:both"></div>
+    
+    <div class="scroller graph">
+        <rdk_scroller timeout="10000" data="scrollerData" scroll_policy="manual">
+            <rdk_graph graph_define="graph_define/simple_line.js" id={{item.id}} data="item"></rdk_graph>
+        </rdk_scroller>
+    </div>
+    <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
+    <!--     这个节点可选，删除后，RDK会自动生成一个    -->
+    <!--           这个节点只支持基本HTML标签           -->
+    <div style="height:100px"></div>
+    <rdk_loading>
+        <img src="images/loding.gif" alt="loading..."/>
+    </rdk_loading>
+</body>
+
+</html>

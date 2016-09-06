@@ -14,7 +14,7 @@ fi
 git checkout -- ../rdk/proc/conf/rdk.cfg >> $basepath/update.log
 git checkout -- ../tools/http_server/config.json >> $basepath/update.log
 git checkout master >> $basepath/update.log
-git pull origin master >> $basepath/update.log
+git pull >> $basepath/update.log
 
 # restart rdk...
 cd rdk/proc/bin

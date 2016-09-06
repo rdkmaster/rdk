@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Accordion 自测</title>
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk"
+        src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="self.js"></script>
+    
+
+    <!-- 应用正式运行的时候，请使用下面这个节点，RDK会使用编译后的代码，代码体积小，下载快 -->
+    <!--
+    <script data-main="main.min.js" src="/rdk_server/app/libs/requirejs/require.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    -->
+    
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/test/module/testee_helper',
+            }
+        });
+    </script>
+</head>
+<style>
+    .demo1{
+        width:500px;
+    }
+    .demo2,.demo3,.demo4{
+        width:500px;
+        margin-bottom:50px;
+        margin:auto;
+    }
+    .demo3 .test{
+        height:50px;
+    }
+    
+</style>
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    
+    <div class="demo1">
+        <button class="addBtn" ng-click="addButton()">添加button渲染</button>
+        <rdk_accordion caption="accordion.caption" open="isOpen" buttons="accordion.buttons"
+        folded_icon="foldedIcon" unfolded_icon="unfoldedIcon" frozen="accordion.frozen" editable="accordion.editable">
+            <div>{{child}}</div>
+        </rdk_accordion>
+        <span class="open">{{isOpen}}</span>
+     </div>
+     <!--折叠方向 不覆盖-->
+     <div class="demo2 bottom">
+        <rdk_accordion caption="'bottom'" expand_direction="bottom">
+            <span>564646546464</span>
+        </rdk_accordion>
+     </div>
+     <div class="demo2 top">
+        <rdk_accordion caption="'top'" expand_direction="top">
+            <span>564646546464</span>
+        </rdk_accordion>
+     </div>
+     <div class="demo2 left">
+        <rdk_accordion expand_direction="left" coverable="false" exchangable="false">
+            <span>564646546464</span>
+        </rdk_accordion>
+     </div>
+     <div class="demo2 right">
+        <rdk_accordion expand_direction="right" coverable="false" exchangable="false">
+            <span>564646546464</span>
+        </rdk_accordion>
+     </div>
+     <!--覆盖,根据高度判断-->
+     <div class="demo3 bottom">
+         <rdk_accordion coverable="true" expand_direction="bottom">
+             <div class="test">123</div>
+         </rdk_accordion>
+         <div>123456</div>
+     </div>
+     <div class="demo3 top">
+         <div>123456</div>
+         <rdk_accordion coverable="true" expand_direction="top">
+             <div class="test">123</div>
+         </rdk_accordion>
+     </div>
+     <div class="demo3 left">
+         <rdk_accordion coverable="true" expand_direction="left" exchangable="false"
+         style="float:right">
+             <div class="test">123</div>
+         </rdk_accordion>
+     </div>
+     <div style="clear:both"></div>
+     <div class="demo3 right">
+         <rdk_accordion coverable="true" expand_direction="right" exchangable="false">
+             <div class="test">123</div>
+         </rdk_accordion>
+     </div>
+     <!--图标位置交换-->
+     <h4>图标位置交换</h4>
+     <div class="demo4 left">
+         <rdk_accordion coverable="true" expand_direction="left" exchangable="true"
+         style="float:right">
+         <!--浮动实际是影响内部包裹的元素位置-->
+             <div class="test">123</div>
+         </rdk_accordion>
+     </div>
+     <div style="clear:both"></div>
+     <div class="demo4 right">
+         <rdk_accordion coverable="true" expand_direction="right" exchangable="true"
+         style="float:left">
+             <div class="test">123</div>
+         </rdk_accordion>
+     </div>
+    <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
+    <!--     这个节点可选，删除后，RDK会自动生成一个    -->
+    <!--           这个节点只支持基本HTML标签           -->
+    <div style="height:100px"></div>
+    <rdk_loading>
+        <img src="images/loding.gif" alt="loading..."/>
+    </rdk_loading>
+</body>
+
+</html>
