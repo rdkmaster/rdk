@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>ScoreIndicator -> Basic</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/doc/tools/doc_js/doc_app_helper',
+            }
+        });
+    </script>
+    <style type="text/css">
+    .distributionSub{
+        font-size:12px!important;
+    }
+    .distributionSub>.ng-scope{
+        margin-bottom:1px;
+    }
+    .distributionSub>.ng-scope>div:last-child{
+        height:1px;
+    }
+    .distributionSub>div.ng-scope>div:nth-child(2){
+        margin-left:55.5px!important;
+    }
+    .distributionSub>div.ng-scope:first-child>div:nth-child(2){
+        margin-left:-26px!important;
+    }
+    .distributionSub>div.ng-scope>div:nth-child(2)>div{
+        width:10px!important;
+    }
+    .distributionSub>.ng-scope>div:first-child span{
+        color:#ccc!important;
+    }
+    .hrLinePart0,.hrLinePart1,.hrLinePart2,.hrLinePart3,.hrLinePart4,.hrLinePart5{
+        border-top-width:1px;
+    }
+    .hrLinePart5{
+      border-top-color:#ccc;  
+    }
+    .score_indicator {
+        height:120px;
+    }
+    </style>
+</head>
+
+<body ng-controller='myCtrl'>
+    <rdk_score_indicator class="score_indicator" config="config" ds="my_ds" ds_url="$svr/data" ds_query_if="ready"></rdk_score_indicator>
+</body>
+
+</html>
