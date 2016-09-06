@@ -29,33 +29,63 @@ app.controller('rdk_ctrl', ['$scope', 'DataSourceService', 'blockUI','EventServi
 function(scope, DSService, blockUI,EventService,EventTypes) {
 application.initDataSourceService(DSService);
 /************************ 应用的代码逻辑开始 ************************/
-scope.mapUrl='../server/jilin.json';
-EventService.register("accordion-jilin",'mouseover',function(event,data){
-    scope.ename='mouseover';
-    scope.name=data.name;
-    console.log(data);
-});
-EventService.register("accordion-jilin",'mouseout',function(event,data){
-    scope.ename='mouseout';
-    scope.name=data.name;
-});
-var ids=['accordion_0','accordion_1','tab-jilin','combo-shanghai','scroller_jilin','scroller_shanghai','panel_map'];
-for(var i=0;i<ids.length;i++){
-    EventService.register(ids[i],'click',function(event,data){
-        scope.ename='click';
-        scope.name=data.name;
-    });
-}
-scope.scrollerData=[
+scope.accordions=[
     {
-        id:'scroller_jilin',
-        map:'../server/jilin.json'
+        rowDescriptor: ['最高气温'],
+        header: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+        data: [
+            [11, 13, 15, 18, 15, 12, 10]
+        ]
     },
     {
-        id:'scroller_shanghai',
-        map:'../server/shanghai.json'
+        rowDescriptor: ['最低气温'],
+        header: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+        data: [
+            [1, 4, 6, 4, 9, 6, 3]
+        ]
     }
 ];
+scope.scrollerData=[
+    {
+        rowDescriptor: ['最高气温', '最低气温','平均气温'],
+        header: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+        data: [
+            [11, 13, 15, 18, 15, 12, 10],
+            [1, 4, 6, 4, 9, 6, 3],
+            [6,8.5,10.5,11,12,9,6.5]
+        ],
+        id:'scroller_graph0'
+    },
+    {
+        rowDescriptor: ['最高气温', '最低气温'],
+        header: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+        data: [
+            [12, 14, 16, 19, 16, 13, 11],
+            [1, 4, 6, 4, 9, 6, 3],
+        ],
+        id:'scroller_graph1'
+    }
+];
+//
+scope.panelData={
+    rowDescriptor: ['最高气温', '最低气温','平均气温'],
+    header: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+    data: [
+        [11, 13, 15, 18, 15, 12, 10],
+        [1, 4, 6, 4, 9, 6, 3],
+        [6,8.5,10.5,11,12,9,6.5]
+    ]
+};
+var ids=['accordion_0','accordion_1','combo_graph','tab1_graph','tab2_graph','panel_graph','scroller_graph0','scroller_graph1'];
+for(var i=0;i<ids.length;i++){
+    EventService.register(ids[i],'click',function(event,data){
+        console.log(data);
+        scope.name=data.name;
+        scope.series=data.seriesName;
+        scope.temperature=data.value;
+    });
+}
+
 /************************ 应用的代码逻辑结束 ************************/
 }]);
 

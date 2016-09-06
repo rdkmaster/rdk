@@ -1,13 +1,13 @@
 define('main', ['application', 'blockUI','rd.controls.BasicSelector','rd.controls.Selector',
   'rd.controls.FoldSelector','rd.containers.Accordion','rd.controls.Input','rd.controls.Table',
   'rd.controls.TabSelect','rd.controls.ComboSelect','rd.controls.TabSelector','rd.controls.Graph',
-  'rd.containers.Tab','rd.controls.Map','rd.controls.Scroller','rd.containers.Panel'],
+  'rd.containers.Tab','rd.controls.Map','rd.containers.Panel','rd.controls.Scroller'],
 function(application) {
 // 创建一个RDK的应用
 var app = angular.module("rdk_app", ['rd.core', 'blockUI','rd.controls.BasicSelector','rd.controls.Selector',
   'rd.controls.FoldSelector','rd.containers.Accordion','rd.controls.Input','rd.controls.Table',
   'rd.controls.TabSelect','rd.controls.ComboSelect','rd.controls.TabSelector','rd.controls.Graph',
-  'rd.containers.Tab','rd.controls.Map','rd.controls.Scroller','rd.containers.Panel']);
+  'rd.containers.Tab','rd.controls.Map','rd.containers.Panel','rd.controls.Scroller']);
 app.config(['blockUIConfig', function(blockUIConfig) {
     // blockUI默认只要有ajax请求在进行，就会自动启动，阻止页面响应鼠标事件
     // 使用下面代码可以阻止自动模式，启用手动模式
@@ -24,37 +24,25 @@ app.config(['blockUIConfig', function(blockUIConfig) {
 }]);
 
 // 创建一个控制器
-app.controller('rdk_ctrl', ['$scope', 'DataSourceService', 'blockUI','EventService','EventTypes',
+app.controller('rdk_ctrl', ['$scope', 'DataSourceService', 'blockUI','EventService','EventTypes','BasicSelector',
   
-function(scope, DSService, blockUI,EventService,EventTypes) {
+function(scope, DSService, blockUI,EventService,EventTypes,BasicSelector) {
 application.initDataSourceService(DSService);
 /************************ 应用的代码逻辑开始 ************************/
-scope.mapUrl='../server/jilin.json';
-EventService.register("accordion-jilin",'mouseover',function(event,data){
-    scope.ename='mouseover';
-    scope.name=data.name;
-    console.log(data);
-});
-EventService.register("accordion-jilin",'mouseout',function(event,data){
-    scope.ename='mouseout';
-    scope.name=data.name;
-});
-var ids=['accordion_0','accordion_1','tab-jilin','combo-shanghai','scroller_jilin','scroller_shanghai','panel_map'];
-for(var i=0;i<ids.length;i++){
-    EventService.register(ids[i],'click',function(event,data){
-        scope.ename='click';
-        scope.name=data.name;
-    });
+scope.cityProcessor=function(data){
+  console.log(data);
+  return data.data;
 }
+scope.select2string=function(selected,context,index){
+  return BasicSelector.selected2string(selected,"label",",");
+}
+
 scope.scrollerData=[
-    {
-        id:'scroller_jilin',
-        map:'../server/jilin.json'
-    },
-    {
-        id:'scroller_shanghai',
-        map:'../server/shanghai.json'
-    }
+  {url:'./images/Chrysanthemum.jpg'},
+  {url:'./images/Hydrangeas.jpg'},
+  {url:'./images/Jellyfish.jpg'},
+  {url:'./images/Koala.jpg'},
+  {url:'./images/Lighthouse.jpg'}
 ];
 /************************ 应用的代码逻辑结束 ************************/
 }]);

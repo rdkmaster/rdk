@@ -37,13 +37,13 @@
             </rdk_accordion>
             <textarea style="position:absolute;width:25%;height:100px;right:25%;top:45%">{{selectedInfo}}</textarea>
         </div>
-        <div ds="ds_accordion" ds_url="$svr/salary2" ds_query_if="ready" style="width:500px;margin-top:200px;" class="demo2">
-            <rdk_accordion caption="'Accordion_'+$index"  ng-repeat="table in ds_accordion" style="margin-top:300px;">
+        <div ds="ds_accordion" ds_url="$svr/salary2" ds_query_if="ready" style="width:500px;" class="demo2">
+            <rdk_accordion caption="'Accordion_'+$index"  ng-repeat="table in ds_accordion">
                 <rdk_table id="wks_table_{{$index}}" data="table" setting="tablesetting" 
                 ></rdk_table>
             </rdk_accordion>
         </div>
-        <div class="demo3" style="margin-top:300px;">
+        <div class="demo3">
             <rdk_tab style="width:400px;margin-left:0px">
                 <div title="1" class="title1">
                     <rdk_table data="ds_table" id="tab_table_1"></rdk_table>
@@ -66,6 +66,17 @@
                     </rdk_tab>
                 </div>
             </rdk_tab>
+        </div>
+        <!-- table与scroller组合时，table显现不出来 noData-->
+        <div class="demo4">
+            <rdk_scroller style="width:600px;height:500px;" data="scrollerData" scroll_policy="manual" loop="false" timeout="10000">
+                <rdk_table ds={{item.ds}} ds_url={{item.dsUrl}} ds_query_if="ready" id={{item.ds}} style="width:300px;height:300px"></rdk_table>
+            </rdk_scroller>
+        </div>
+        <div class="demo5">
+            <rdk_panel title="'panel table'" show_title="true" show_close="true" width="600px">
+                <rdk_table data="ds_table" id="panel_table" page_size="4"></rdk_table>
+            </rdk_panel>
         </div>
     </div>
     <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
