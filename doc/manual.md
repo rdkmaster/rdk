@@ -75,7 +75,7 @@
 
 ![](server/img/jre_too_old_error.PNG)
 
-说明你当前环境使用的Java运行环境版本过低，请使用至少Java1.8以上的版本。这里可以[下载](http://10.9.233.35:8080/tools/jre_win_1.8.zip)到Win32的Java8运行环境。
+说明你当前环境使用的Java运行环境版本过低，请使用至少Java1.8以上的版本。这里可以下载到 [Win32](http://10.9.233.35:8080/tools/jre1.8.0_32_101.zip) 或者 [Win64](http://10.9.233.35:8080/tools/jre1.8.0_64_101.zip) 的Java8运行环境。
 
 
 #### example页面长时间都是空白 {#can-not-open-example}
