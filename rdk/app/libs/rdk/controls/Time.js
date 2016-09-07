@@ -249,7 +249,11 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                     if (scope.selectedGranularity.gap) {
                                         _handlerGap(newVal, scope.selectedGranularity.gap);
                                     }
-                                    scope.endTimeOption.startDate = scope.startTimeOption.realValue;
+                                    if(scope.selectedGranularity.value == "week"){
+                                        scope.endTimeOption.startDate = scope.startTimeOption.realValue;
+                                    }else{
+                                        scope.endTimeOption.startDate = newVal;
+                                    }
                                     if (scope.condition.endTime < scope.endTimeOption.startDate) {
                                         scope.condition.endTime = scope.endTimeOption.startDate;
                                     }
