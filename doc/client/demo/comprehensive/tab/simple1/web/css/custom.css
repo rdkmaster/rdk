@@ -13,6 +13,9 @@
     text-decoration-color: #2a6496;
     color:#2a6496;
 }
+.ui-tabs .ui-tabs-nav li:hover a.selected{
+	text-decoration: none;
+}
 .ui-tabs .ui-tabs-nav li:hover a .title_score{
     color:#2a6496;
 }
@@ -55,7 +58,7 @@
 .ui-tabs .ui-tabs-panel{
     padding:0;
 }
-.sub-title .ui-tabs-anchor{
+.sub-title .sub-title-content .ui-tabs-anchor{
     font-size:12px!important;
 }
 .sub-title ul li>span{
@@ -63,4 +66,8 @@
 }
 .sub-title-content .content{
     padding:0 .8em;
+}
+.sub-title-content a.selected title_renderer{
+	border-bottom:1px solid #008FD4;
+	padding:3px 0;
 }

@@ -8,9 +8,6 @@ app.controller('myCtrl', ['$scope', '$timeout','DataSourceService', 'EventServic
 /******************************************************
      将应用的代码逻辑添加在这个匿名函数内部
 ******************************************************/
-	// document.body.addEventListener('app_loaded',function(){
-	// 	console.log($('.hrLinePart1')[0]);
-	// });
 	EventService.register('my_ds', 'result', function(event, data) {
 		scope.isMark = false;
 		scope.config = [{
@@ -39,15 +36,6 @@ app.controller('myCtrl', ['$scope', '$timeout','DataSourceService', 'EventServic
 		    mark: false
 		}];
 	});
-	// EventService.register('EventService', 'ready', function() {
-	//     console.log($('.hrLinePart1')[0]);
-	// });
-	// Utils.onReady = function(EventService) {
-	// 	console.log($('.hrLinePart1')[0]);
-	// 	// EventService.ready=function(){
-	// 	// 	console.log($('.hrLinePart1')[0]);
-	// 	// }
-	//  }
 }
 ]);
 });
