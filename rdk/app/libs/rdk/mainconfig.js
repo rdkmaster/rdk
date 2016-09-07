@@ -123,7 +123,7 @@ require.config({
             exports: "jquery-freezeheader"
        },
         "ztree": {
-            deps: ['css!../ztree/css/zTreeStyle/zTreeStyle', 'css!../ztree/css/globalStyle'],
+            deps: ['css!../ztree/css/zTreeStyle/zTreeStyle'],
             exports: "ztree",
         },
         "jquery-ui": {
