@@ -279,11 +279,11 @@
                 }
                 
                 $('#content').attr('src', scope.location);
-				scope.$apply();
-				try {
-					$('#content')[0].contentWindow.scrollTo(0, 0);
-				} catch(e) {
-				}
+                scope.$apply();
+                try {
+                    $('#content')[0].contentWindow.scrollTo(0, 0);
+                } catch(e) {
+                }
             }
         }
         
@@ -291,10 +291,17 @@
             return node.font ? node.font : {};
         }
         
-        window.onload = function() {
+            //window.onload 和 document.ready 有可能不触发，不知道为啥
+        var interval = setInterval(resizeContent, 5);
+        
+        function resizeContent() {
+            if (!document.body) {
+                return;
+            }
             document.getElementById('tree').style.height = (document.body.scrollHeight + 20) + "px";
             document.getElementById('content').style.width = (document.body.scrollWidth - 270) + "px";
             document.getElementById('content').style.height = (document.body.scrollHeight - 22) + "px";
+            clearInterval(interval);
         }
 
         window.onresize = function() {
@@ -316,17 +323,17 @@ iframe {
     left:0px; 
     overflow:auto;
     top:0px;
-	padding-top: 40px;
+    padding-top: 40px;
 }
 .location {
     font-size: 16px;
     color: #000;
     padding: 12px 0 8px 18px;
-	position: fixed;
-	text-decoration: none;
+    position: fixed;
+    text-decoration: none;
 }
 .location:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 </style>
 
@@ -335,7 +342,7 @@ iframe {
         <rdk_tree data="menuCfg" node_field="module" rdk_click="clickHandler">
         </rdk_tree>
     </div>
-	<a class="location" ng-href="{{location}}" target="_blank"><img src="/rdk/app/libs/ztree/css/zTreeStyle/img/diy/5.png"></img> 打开当前文档</a>
+    <a class="location" ng-href="{{location}}" target="_blank"><img src="/rdk/app/libs/ztree/css/zTreeStyle/img/diy/5.png"></img> 打开当前文档</a>
     <iframe id="content" name="content"></iframe>
 </body>
 
