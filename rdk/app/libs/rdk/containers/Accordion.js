@@ -68,7 +68,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
             function _link(scope, iEle, iAttrs, ctrl, transclude){
 
-                var themeDom, transcludeDom, direction, initialWidth, initialHeight;
+                var themeDom, transcludeDom, direction, initialWidth, initialHeight, heightCache, widthCache;
 
                 var transcludeScope = scope.$parent.$new();
                 transclude(transcludeScope, function(clone,innerScope) {
@@ -112,23 +112,20 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.expandDirection = Utils.getValue(scope.expandDirection, iAttrs.expandDirection, PositionTypes.BOTTOM);             
                     scope.minWidth = parseInt(Utils.getValue(scope.minWidth, iAttrs.minWidth, 0), 10); 
                     scope.minHeight = parseInt(Utils.getValue(scope.minHeight, iAttrs.minHeight, 0), 10); 
+                    scope.firstTimeBln = true;//是否是第一次
+                    scope.supportable = true;//是否异常
                     scope.outerLeft = $(iEle[0]).css('left');
                     scope.outerRight = $(iEle[0]).css('right');
-                    scope.supportable = true;//是否异常
-                    scope.firstTimeBln = true;//是否是第一次
 
                     _initDefaultAttrByDirection();
                     _initGlobalDom();
                     _exceptionHandler();
 
                     _unCoverStateHandler();
-                    $timeout(function(){//使得caption包裹生效
-                        _coverStateHandler();
-                    }, 0);
+                    _coverStateHandler();
 
                     scope.$watch("open", function(newVal, oldVal){
-                        _minShapeHandler(); 
-                        _move2Center(); //居中            
+                        _minShapeHandler();          
                     }, true);
 
                     scope.toggle = _toggle;
@@ -140,29 +137,27 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                 }
 
                 function _move2Center(){
-                    $timeout(function(){//使得width调整后的高度生效
-                        _uncoverMove2Center();
-                        _coverMove2Center();                       
-                    }, 0);
+                    _uncoverMove2Center();
+                    _coverMove2Center();                       
+                }
+
+                function _initGlobalShape(){
+                    initialWidth = scope.open ? 'inherit' : ((scope.minWidth==0) ? 0 : scope.minWidth+'px');
+                    initialHeight = scope.open ? 'inherit' : ((scope.minHeight==0) ? 0 : scope.minHeight+'px');
+                    widthCache = transcludeDom.offsetWidth;
+                    heightCache = transcludeDom.offsetHeight;
                 }
 
                 function _uncoverMove2Center(){
                     if((scope.coverable)||(!scope.supportable)) return;
 
-                    var topHeight = (transcludeDom.offsetHeight - themeDom.offsetHeight)/2;
-                    var leftWidth = (transcludeDom.offsetWidth - themeDom.offsetWidth)/2;
+                    var topHeight = (heightCache - themeDom.offsetHeight)/2;
+                    var leftWidth = (widthCache - themeDom.offsetWidth)/2;
 
                     if((direction == PositionTypes.RIGHT)||(direction == PositionTypes.LEFT)){
                         $(themeDom).css({'top': topHeight+'px'}) ; 
-                        var heightCache = iEle[0].offsetHeight;
-                        var _width = scope.open ? 'inherit' : initialWidth;
-                        if(_width==0){
-                            $(iEle[0]).css({'height': heightCache});
-                            $(transcludeDom).css({'display': 'none'});
-                        }
                     }
                     if((direction == PositionTypes.TOP)||(direction == PositionTypes.BOTTOM)){
-                        $(iEle[0]).css({'left': -leftWidth+'px'});
                         $(themeDom).css({'left': leftWidth+'px'}) ;                       
                     }                    
                 }
@@ -170,8 +165,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                 function _coverMove2Center(){
                     if((!scope.coverable)||(!scope.supportable)) return;
 
-                    var topHeight = (transcludeDom.offsetHeight - themeDom.offsetHeight)/2;
-                    var leftWidth = (transcludeDom.offsetWidth - themeDom.offsetWidth)/2;
+                    var topHeight = (heightCache - themeDom.offsetHeight)/2;
+                    var leftWidth = (widthCache - themeDom.offsetWidth)/2;
 
                     if((direction == PositionTypes.TOP)||(direction == PositionTypes.BOTTOM)){
                         $(transcludeDom).css({'left': -leftWidth+'px'});
@@ -184,17 +179,17 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                 function _initGlobalDom(){
                    themeDom = iEle[0].querySelector(".theme");
                    transcludeDom = iEle[0].querySelector(".content");
-                   direction = scope.expandDirection.toLowerCase(); 
-                   initialWidth = (scope.minWidth==0) ? 0 : scope.minWidth+'px';
-                   initialHeight = (scope.minHeight==0) ? 0 : scope.minHeight+'px';           
+                   direction = scope.expandDirection.toLowerCase();            
                 }
 
                 function _minShapeHandler(){
                     if(!scope.supportable) return;
-                    scope.exchangable ? _interAnimate() : (scope.firstTimeBln ? _initialStateHandler() : _interAnimate());
+                    scope.firstTimeBln ? _initialStateHandler() : _unExchangeInterAnimate();
+                    _moveExchangeCoverHandler();
                 }
 
-                function _interAnimate(){
+                function _unExchangeInterAnimate(){
+                    if(scope.exchangable) return;
                     if((direction == PositionTypes.TOP)||(direction == PositionTypes.BOTTOM)){
                         _tbAnimate();
                     }
@@ -203,40 +198,49 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     } 
                 }
 
+                function _tbInitialState(){
+                    $(transcludeDom).css({'height': initialHeight});
+                    if(initialHeight==0){
+                        $(transcludeDom).css({'display': 'none'});
+                    }
+                }
+
+                function _lrInitialState(){
+                    $(transcludeDom).css({'width': initialWidth});
+                    if(initialWidth==0){
+                        $(transcludeDom).css({'display': 'none'});
+                    }    
+                }
+
                 function _initialStateHandler(){
-                    if((direction == PositionTypes.TOP)||(direction == PositionTypes.BOTTOM)){
-                        var _height = scope.open ? 'inherit' : initialHeight;
-                        $(transcludeDom).css({'height': _height, 'overflow': 'hidden', 'display': ''});
-                        if(_height==0){
-                            $(transcludeDom).css({'display': 'none'});
-                        }
-                    }
-                    if((direction == PositionTypes.LEFT)||(direction == PositionTypes.RIGHT)){
-                        if(!scope.coverable){
-                            $(transcludeDom).css({'width': 'inherit', 'overflow': 'hidden', 'display': 'inline-block'});
-                        }
-                        else{
-                            var _width = scope.open ? 'inherit' : initialWidth;
-                            $(transcludeDom).css({'width': _width, 'overflow': 'hidden', 'display': ''});
-                            if(_width==0){
-                                $(transcludeDom).css({'display': 'none'});
-                            }                           
-                        }
-                    }
+                    /*展开占位置不可见*/
+                    $(transcludeDom).css({'width': 'inherit', 'height': 'inherit', 'overflow': 'hidden'});                    
+                    $timeout(function(){
+                        _initGlobalShape();                    
+                        _move2Center();
+                        _initialState();
+                    }, 0)
                     scope.firstTimeBln = !scope.firstTimeBln;
                 }
 
+                function _initialState(){
+                    if((direction == PositionTypes.TOP)||(direction == PositionTypes.BOTTOM)){
+                        _tbInitialState();
+                    }
+                    if((direction == PositionTypes.LEFT)||(direction == PositionTypes.RIGHT)){
+                        _lrInitialState();
+                    }
+                }
+
                 function _tbAnimate(){
-                    $(transcludeDom).css({'height': 'inherit', 'overflow': 'hidden', 'display': '', 'visibility': 'hidden'});//原来大小，但又不希望被看见
-                    var heightCache = transcludeDom.offsetHeight;
+                    $(transcludeDom).css({'display': ''});
                     if(scope.open){                           
-                        $(transcludeDom).css({'height': initialHeight, 'visibility': 'visible'});                         
+                        $(transcludeDom).css({'height': scope.minHeight});                         
                         $(transcludeDom).animate({'height': heightCache}, 100);//变大
                     }
                     else{
-                        $(transcludeDom).css({'visibility': 'visible'});
-                        $(transcludeDom).animate({'height': initialHeight}, 100, function(){//变小，且不占地方
-                            if(initialHeight==0){
+                        $(transcludeDom).animate({'height': scope.minHeight}, 100, function(){//变小
+                            if(scope.minHeight==0){
                                 $(transcludeDom).css({'display': 'none'});
                             }
                         });
@@ -244,38 +248,38 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                 }
 
                 function _lrAnimate(){
-                    $(transcludeDom).css({'width': 'inherit', 'overflow': 'hidden', 'display': 'inline-block', 'visibility': 'hidden'});/*看不见，但占位置*/                   
-                    var widthCache = transcludeDom.offsetWidth;
+                    $(transcludeDom).css({'display': 'inline-block'});                 
                     if(scope.open){                           
-                        $(transcludeDom).css({'width': initialWidth, 'visibility': 'visible'});                            
+                        $(transcludeDom).css({'width': scope.minWidth});                            
                         $(transcludeDom).animate({'width': widthCache}, 100);//变大
                     }
                     else{
-                        $(transcludeDom).css({'visibility': 'visible'});
-                        $(transcludeDom).animate({'width': initialWidth}, 100, function(){//变小，且不占地方
-                            if(initialWidth==0){
-                                var heightCache = iEle[0].offsetHeight;
-                                $(iEle[0]).css({'height': heightCache});
+                        $(transcludeDom).animate({'width': scope.minWidth}, 100, function(){//变小
+                            if(scope.minWidth==0){
                                 $(transcludeDom).css({'display': 'none'});
                             } 
                         });
-                    }
-                    _moveExchangeCoverHandler(widthCache);
+                    }            
                 }
 
-                function _moveExchangeCoverHandler(widthCache){
+                function _moveExchangeCoverHandler(){
                     if(!scope.exchangable) return;
                     $(document.body).css({'overflow-x': 'hidden'});
-                    $(transcludeDom).css({'width': widthCache});//原大小
+                    $(transcludeDom).css({'display': 'inline-block'});//消除display的影响
+                    $(transcludeDom).css({'width': widthCache});//恢复原大小后拖动
                     scope.open ? _expandMove() : _shrinkMove();
                 }
 
                 function _afterShrink(){
                     $(document.body).css({'overflow-x': ''}); 
-                    $(transcludeDom).css({'width': initialWidth});
-                    if(initialWidth==0){
+                    $(transcludeDom).css({'width': scope.minWidth});
+                    if(scope.minWidth==0){
                         $(transcludeDom).css({'display': 'none'});
                     }
+                }
+
+                function _afterExpand(){
+                    $(document.body).css({'overflow-x': ''});
                 }
 
                 function _shrinkMove(){
@@ -306,25 +310,33 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                 }
 
                 function _expandMove(){
-                    var moveStep = Math.abs(-transcludeDom.offsetWidth+scope.minWidth);
+                    var moveStep = Math.abs(transcludeDom.offsetWidth-scope.minWidth);
                     if(direction == PositionTypes.LEFT){
                         if(scope.outerRight == 'auto'){
                             scope.outerLeft = parseInt(scope.outerLeft, 10) || 0;
-                            $(iEle[0]).animate({'left': scope.outerLeft-moveStep+'px'}, 100);
+                            $(iEle[0]).animate({'left': scope.outerLeft-moveStep+'px'}, 100, function(){
+                                _afterExpand();
+                            });
                         }
                         else{
                             scope.outerRight = parseInt(scope.outerRight, 10) || 0;
-                            $(iEle[0]).animate({'right': moveStep+scope.outerRight+'px'}, 100);
+                            $(iEle[0]).animate({'right': moveStep+scope.outerRight+'px'}, 100, function(){
+                                _afterExpand();
+                            });
                         } 
                     }
                     if(direction == PositionTypes.RIGHT){
                         if((scope.outerLeft == 'auto') && (scope.outerRight != 'auto')){
                             scope.outerRight = parseInt(scope.outerRight, 10) || 0;
-                            $(iEle[0]).animate({'right': scope.outerRight-moveStep+'px'}, 100);
+                            $(iEle[0]).animate({'right': scope.outerRight-moveStep+'px'}, 100, function(){
+                                _afterExpand();
+                            });
                         }
                         else{
                             scope.outerLeft = parseInt(scope.outerLeft, 10) || 0;
-                            $(iEle[0]).animate({'left': moveStep+scope.outerLeft+'px'}, 100);
+                            $(iEle[0]).animate({'left': moveStep+scope.outerLeft+'px'}, 100, function(){
+                                _afterExpand();
+                            });
                         } 
                     }
                 }
@@ -375,7 +387,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
                 function _exceptionHandler(){
                     if(!scope.caption){
-                        $(themeDom).css({'display': 'inline-block', 'vertical-align': 'top'});
+                        $(themeDom).css({'display': 'inline-block', 'vertical-align': 'top', 'width': '22px'});
                     }
                     else{
                         if((direction == PositionTypes.LEFT)||(direction == PositionTypes.RIGHT)){
