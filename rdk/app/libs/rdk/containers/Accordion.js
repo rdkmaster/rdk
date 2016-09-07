@@ -125,7 +125,12 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     _coverStateHandler();
 
                     scope.$watch("open", function(newVal, oldVal){
-                        _minShapeHandler();          
+                        _minShapeHandler();
+
+                        $timeout(function(){
+                            _protect4Renderer();  
+                        }, 150);//animate完后保证height
+
                     }, true);
 
                     scope.toggle = _toggle;
@@ -136,14 +141,18 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.stopPropagation = _stopPropagation;
                 }
 
+                function _protect4Renderer(){
+                    if(scope.open){
+                        $(transcludeDom).css({'height': ''});
+                    } 
+                }
+
                 function _move2Center(){
                     _uncoverMove2Center();
                     _coverMove2Center();                       
                 }
 
                 function _initGlobalShape(){
-                    initialWidth = scope.open ? 'inherit' : ((scope.minWidth==0) ? 0 : scope.minWidth+'px');
-                    initialHeight = scope.open ? 'inherit' : ((scope.minHeight==0) ? 0 : scope.minHeight+'px');
                     widthCache = transcludeDom.offsetWidth;
                     heightCache = transcludeDom.offsetHeight;
                 }
@@ -177,14 +186,16 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                 }
 
                 function _initGlobalDom(){
-                   themeDom = iEle[0].querySelector(".theme");
-                   transcludeDom = iEle[0].querySelector(".content");
-                   direction = scope.expandDirection.toLowerCase();            
+                    themeDom = iEle[0].querySelector(".theme");
+                    transcludeDom = iEle[0].querySelector(".content");
+                    direction = scope.expandDirection.toLowerCase(); 
+                    initialWidth = scope.open ? 'inherit' : ((scope.minWidth==0) ? 0 : scope.minWidth+'px');
+                    initialHeight = scope.open ? 'inherit' : ((scope.minHeight==0) ? 0 : scope.minHeight+'px');         
                 }
 
                 function _minShapeHandler(){
                     if(!scope.supportable) return;
-                    scope.firstTimeBln ? _initialStateHandler() : _unExchangeInterAnimate();
+                    scope.firstTimeBln ? _initializeState() : _unExchangeInterAnimate();
                     _moveExchangeCoverHandler();
                 }
 
@@ -212,18 +223,21 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     }    
                 }
 
-                function _initialStateHandler(){
-                    /*展开占位置不可见*/
-                    $(transcludeDom).css({'width': 'inherit', 'height': 'inherit', 'overflow': 'hidden'});                    
+                function _initializeState(){
+                    $(transcludeDom).css({'width': 'inherit', 'height': 'inherit', 'overflow': 'hidden'});
                     $timeout(function(){
-                        _initGlobalShape();                    
-                        _move2Center();
-                        _initialState();
-                    }, 0)
-                    scope.firstTimeBln = !scope.firstTimeBln;
+                        _moveArrowPosition();
+                        _initialStateHandler();//居中完了才能根据open改变尺寸
+                        scope.firstTimeBln = false;
+                    }, 0)                                   
                 }
 
-                function _initialState(){
+                function _moveArrowPosition(){
+                    _initGlobalShape();//原大小cache                   
+                    _move2Center();//箭头居中
+                }
+
+                function _initialStateHandler(){
                     if((direction == PositionTypes.TOP)||(direction == PositionTypes.BOTTOM)){
                         _tbInitialState();
                     }
