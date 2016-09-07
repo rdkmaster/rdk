@@ -15,7 +15,7 @@
 
     <!-- 注意向左展开时，不支持accordion外层写width，大小是由内层包裹的内容决定的 -->
     <!-- 可以用position:fixed来左右漂浮，也可以用float -->
-    <rdk_accordion id='accordionID' style='float: right; margin-top: 100px;' open='localOpen' expand_direction='left' coverable='true' exchangable='false'>
+    <rdk_accordion id='accordionID' style='float: right; margin-top: 100px;' open='localOpen_1' expand_direction='left' coverable='true' exchangable='false'>
         <rdk_basic_selector style='width: 350px;' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>  
     </rdk_accordion>
 
@@ -24,7 +24,7 @@
         <button style="float: left; margin: 10px" ng-click="close()">缩小容器</button>
     容器展开后该色块会被覆盖</div>
 
-    <rdk_accordion id='accordionID' style='float: right;' expand_direction='left' open='localOpen' coverable='true' exchangable='false' min_width='100'>
+    <rdk_accordion id='accordionID' style='float: right;' expand_direction='left' open='localOpen_2' coverable='true' exchangable='false' min_width='100'>
         <rdk_basic_selector style='width: 350px;' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
     </rdk_accordion>
 
