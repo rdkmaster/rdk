@@ -697,6 +697,25 @@ Data:  a  b  c   d
     }
 </code></pre>
 
+<h2>CHANGE</h2>
+<p>表格单元格编辑过后发出的事件，用户监听该事件，可以处理编辑后的数据。</p>
+<pre><code>    EventService.register('id_table', EventTypes.CHANGE, 
+        function(event, data){//处理被编辑的数据
+            console.log(data);
+    })
+</code></pre>
+
+<p>拿到的行数据结构如下：</p>
+<pre><code>    {
+      'oldValue': scope.data.data[row][column], //改变之前的值
+      'newValue': $(inputTarget).val(),//改变之后的值
+      'rowIndex': row,//改变的行索引
+      'columnIndex': column,//改变的列索引
+      'cells': cells//改变的行列信息的数组信息
+     }
+</code></pre>
+
+<p><strong>目前情况下当Edit功能和Group功能一起使用时，rowIndex和columnIndex的值均不正确，该两个属性为了兼容以前版本存在，请使用cells去操作</strong></p>
 <h1>方法</h1>
 <p>暂无</p>
 <h1>样式</h1>
