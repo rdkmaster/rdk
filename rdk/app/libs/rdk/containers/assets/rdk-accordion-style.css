@@ -3,7 +3,6 @@
 }
 
 .rdk-accordion-module .theme{
-    background-color: #E2EEF9;
     border: 1px solid #CDCDCD;
     border-radius: 4px;
     font-weight: bold;
@@ -12,6 +11,14 @@
     padding: 5px;
     position: relative;
     margin-top: -1px;
+}
+
+.rdk-accordion-module .normal-theme{
+    background-color: #E2EEF9;
+}
+
+.rdk-accordion-module .frozen-theme{
+    background-color: #E4E4E4;
 }
 
 .rdk-accordion-module .theme-caption{

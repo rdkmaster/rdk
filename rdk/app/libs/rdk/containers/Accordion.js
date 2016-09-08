@@ -36,7 +36,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                 }, 
                 template: 
                  '<div class="rdk-accordion-module" ng-click="stopPropagation()">\
-                        <div class="theme" ng-click="toggle()">\
+                        <div class="theme" ng-click="toggle()"\
+                             ng-class="{true:\'frozen-theme\', false:\'normal-theme\'}[frozen]">\
                             <i class="{{open?unfoldedIcon:foldedIcon}}"></i>\
                             <span ng-show="!!caption" class="theme-caption" contentEditable="{{editable}}"\
                              ng-keydown="keyPressHandler($event)"\
@@ -131,10 +132,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                             _protect4Renderer();  
                         }, 150);//animate完后保证height
 
-                    }, true);
-
-                    scope.$watch('frozen', function(newVal, oldVal){
-                        scope.frozen ? ($(themeDom).css({'background-color' : '#E4E4E4'})) : ($(themeDom).css({'background-color' : '#E2EEF9'}));
                     }, true);
 
                     scope.toggle = _toggle;
