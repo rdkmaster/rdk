@@ -51,9 +51,8 @@ fi
 ###切换到设置的分支上，默认为master
 cd $rdk_path
 if [ "${branch}" != "" ] ; then
-	git checkout -b ${branch} 
-else
-	git checkout -b master 	
+    git branch -D ${branch}
+	git checkout -b ${branch} origin/${branch}
 fi
 
 if [ $? -ne 0 ] ;then
