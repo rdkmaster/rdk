@@ -133,6 +133,10 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
 
                     }, true);
 
+                    scope.$watch('frozen', function(newVal, oldVal){
+                        scope.frozen ? ($(themeDom).css({'background-color' : '#E4E4E4'})) : ($(themeDom).css({'background-color' : '#E2EEF9'}));
+                    }, true);
+
                     scope.toggle = _toggle;
                     scope.clickHandler = _clickHandler;   
                     scope.getTooltips = _getTooltips;
