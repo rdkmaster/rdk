@@ -40,7 +40,7 @@ RDK推出新的功能后，会第一时间更新[example应用](/rdk/app/example
 
 再将：
 ~~~
-"i18n": '/rdk/app/my_first_app/web/scripts/i18n',
+"i18n": '/rdk/app/example/web/scripts/i18n',
 ~~~
 修改为：
 ~~~
