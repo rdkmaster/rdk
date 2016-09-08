@@ -44,7 +44,7 @@ rdk可以通过事件的方式来实现对话框的模态/非模态/固定到文
 
 ### 非模态框 ###
 
-		EventService.broadcast('topModal', 'modal', {x:100, y:100});
+		EventService.broadcast('topModal', 'none_modal', {x:100, y:100});
 
 表示`id`为`topModal`的对话框以非模态框的方式弹出，坐标位置(100, 100)。
 
