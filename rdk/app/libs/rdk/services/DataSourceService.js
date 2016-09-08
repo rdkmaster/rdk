@@ -253,8 +253,7 @@
                         }
 
 
-                         var destCondition = {};
-                         angular.copy(condition,destCondition);
+                         var destCondition = Utils.shallowCopy(condition);
 
                         // method  {String} 请求方式e.g. "GET"."POST"
                         // url {String} 请求的URL地址
