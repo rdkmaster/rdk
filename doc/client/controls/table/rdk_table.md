@@ -452,6 +452,25 @@ cells 为 改变的行列信息的数组信息
 		  "index": 6
 		}
 
+## CHANGE ##
+
+表格单元格编辑过后发出的事件，用户监听该事件，可以处理编辑后的数据。
+
+		EventService.register('id_table', EventTypes.CHANGE, 
+			function(event, data){//处理被编辑的数据
+        		console.log(data);
+        })
+拿到的行数据结构如下：
+
+		{
+          'oldValue': scope.data.data[row][column], //改变之前的值
+          'newValue': $(inputTarget).val(),//改变之后的值
+          'rowIndex': row,//改变的行索引
+          'columnIndex': column,//改变的列索引
+          'cells': cells//改变的行列信息的数组信息
+         }
+**目前情况下当Edit功能和Group功能一起使用时，rowIndex和columnIndex的值均不正确，该两个属性为了兼容以前版本存在，请使用cells去操作**
+
 #方法 #
 暂无
 
