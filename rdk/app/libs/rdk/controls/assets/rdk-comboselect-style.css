@@ -23,7 +23,7 @@
 .rdk-combo-select-module .combo-content-theme{
     cursor: pointer !important;
     display: inline-block;
-    width: 120px;
+    min-width: 120px;
     height: 28px;
     box-shadow: none !important;
     border: none;
