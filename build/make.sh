@@ -12,12 +12,12 @@
 cd "$(dirname "$0")"
 pwdPath=`pwd`
 
-###默认在/home/rdk_git/目录下clone rdk版本
-rdk_path=$1
 ##分支名
-branch=$2
+branch=$1
 ##sbt编译路径名
-rdk_resource=$3
+rdk_resource=$2
+###默认在/home/rdk_git/目录下clone rdk版本
+rdk_path=$3
 
 ##开发环境路径
 DEV_ENV_DIR=./rdk_release/rdk-develop-environment
@@ -28,33 +28,47 @@ dos2unix ../rdk/build.sbt
 RDK_VERSION=`cat ../rdk/build.sbt |grep version|awk -F '=' '{print $2}'| grep -o "[^ ]\+\( \+[^ ]\+\)*"|sed 's/\"//g'|dos2unix`
 
 USAGE() {
-	echo "para1:rdk_path 用于clone git@gitlab.zte.com.cn:10045812/rdk.git的路径 default:/home/rdk_git"
-	echo "para2:branch 用于rdk的git分支 default:master"
-	echo "para3:rdk_resource 用于编译rdk后端的sbt git clone git@gitlab.zte.com.cn:10045812/rdk-resource.git default:/home/rdk_git/"
+	echo "para1:branch 用于rdk的git分支 default:master"
+	echo "para2:rdk_resource 用于编译rdk后端的sbt git clone git@gitlab.zte.com.cn:10045812/rdk-resource.git default:/tmp/rdk_git"
 	echo "USAGE:"
 	echo "  ./make.sh     -->para all use default values "
-	echo "  ./make.sh \$rdk_path \$branch \$rdk_resource --> "
-	echo " if you want rdk_path be the default value,the command may be ./make.sh \" \" \$branch \$rdk_resource,others the same"
+	echo "  ./make.sh  \$branch \$rdk_resource --> "
+	echo " if you want \$branch be the default value,the command may be ./make.sh \" \" \$rdk_resource,others the same"
 }
 
 BEF_COMPILE(){
 if [ x"${rdk_path}" = x ] ;then
-	rdk_path=/home/rdk_git/rdk 
+	rdk_path=/tmp/rdk_git/rdk 
+	rm -rf $rdk_path
+	mkdir -p $rdk_path
+	cd $rdk_path
+	git clone git@gitlab.zte.com.cn:10045812/rdk.git
 fi
-cd $rdk_path
-git clone git@gitlab.zte.com.cn:10045812/rdk.git
-
+if [ ! -d $rdk_path ] ;then
+    echo "$rdk_path not exists,please make sure"
+	exit 127
+fi
 ###切换到设置的分支上，默认为master
 cd $rdk_path
 if [ "${branch}" != "" ] ; then
 	git checkout -b ${branch} 
 else
-	git checkout -b master 
-	
+	git checkout -b master 	
+fi
+
+if [ $? -ne 0 ] ;then
+   echo "${branch} not exist,please make sure"
+   exit 126
 fi
 ##clone rdk编译依赖
 if [ x"${rdk_resource}" = x ] ; then
     rdk_resource=/home/rdk_git/rdk-resource
+fi
+
+cd $pwdPath
+if [ ! -d $rdk_resource ] ;then
+    echo "$rdk_resource not exists,please make sure"
+	exit 125
 fi
 cd $rdk_resource
 git clone git@gitlab.zte.com.cn:10045812/rdk-resource.git		
@@ -80,13 +94,17 @@ cp target/scala-2.10/rdk*.jar  ../rdk/proc/bin/lib/
 
 ###清理当前目录下版本
 DEL_VERSION(){
-    cd $pwdPath
+    cd $rdk_path
+	cd rdk
+	cd build
 	rm -rf rdk*.zip
 	rm -rf rdk_release
 }
 ###制作开发版本
 MAKE_DEP_VERSION(){
-  cd $pwdPath
+  cd $rdk_path
+  cd rdk 
+  cd build
   mkdir -p $DEV_ENV_DIR
   \cp -r ../[^b]* $DEV_ENV_DIR 
   MAKR_RDK_RELEASE rdk-develop-environment
@@ -94,7 +112,9 @@ MAKE_DEP_VERSION(){
 
 ###制作运行版本
 MAKE_RUN_VERSION(){
-  cd $pwdPath
+  cd $rdk_path
+  cd rdk 
+  cd build
   mkdir -p $RUN_ENV_DIR
   mkdir $RUN_ENV_DIR/rdk
   \cp -r ../rdk/app  $RUN_ENV_DIR/rdk
