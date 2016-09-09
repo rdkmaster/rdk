@@ -66,8 +66,7 @@ public class RestHelper extends AbstractAppLoggable {
             return null;
         }
 
-        //设置访问提交模式，表单提交
-        conn.setRequestProperty("Content-Type", getProperty(option, "contentType", "application/json"));
+        setRequestProperties(conn, option);
 
         int connTimeout = Integer.parseInt(getProperty(option, "connectTimeout", "60000"));
         conn.setConnectTimeout(connTimeout);
@@ -107,8 +106,23 @@ public class RestHelper extends AbstractAppLoggable {
         }
         return result;
     }
+	
+	private void setRequestProperties(HttpURLConnection conn, Object option) {
+        if (option instanceof Undefined) {
+            return;
+        }
+		ScriptObjectMirror som = (ScriptObjectMirror) option;
+        if (!som.hasMember("requestProperty")) {
+            return;
+        }
+		ScriptObjectMirror properties = (ScriptObjectMirror) som.getMember("requestProperty");
+        String[] keys = properties.getOwnKeys(false);
+        for (String key : keys) {
+            conn.setRequestProperty(key, properties.getMember(key).toString());
+        }
+    }
 
-    public String getProperty(Object option, String prop, String defaultValue) {
+    private String getProperty(Object option, String prop, String defaultValue) {
         if (option instanceof Undefined) {
             return defaultValue;
         }
