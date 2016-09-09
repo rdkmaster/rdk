@@ -73,7 +73,7 @@
 用于设置默认时间点或者时间段。缺省`range`时设置的是默认时间点，否则设置默认时间段。
 具体可参考`range`属性中的两个例子。
 
-注意：`value`中支持 `now` 代表当前时间。`now - 2y` 代表当前时间向前追溯两年。支持`y/m/w/d/h`四种追溯方式。
+注意：`value`中支持 `now` 代表当前时间。`now - 2y` 代表当前时间向前追溯两年。支持`y/m/w/d/h`五种追溯方式。
 
 <live_demo example="controls/time/macroValue" width="900"></live_demo>
 
