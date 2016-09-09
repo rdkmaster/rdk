@@ -7,13 +7,13 @@
     display: inline-block;
     border-right: 1px #ABABAB solid;
     padding-right: 10px;
-    vertical-align: middle;
-    text-align: center;
 }
 
 .rdk-combo-select-module .combo-content{
     position: relative;
-    display: inline-block;
+    display: inline-flex;
+    flex-flow: row;
+    align-items:center;
     outline: none;
     border: solid 1px #ABABAB;
     border-radius: 4px;
@@ -23,6 +23,7 @@
 .rdk-combo-select-module .combo-content-theme{
     cursor: pointer !important;
     display: inline-block;
+    flex:1;
     min-width: 120px;
     height: 28px;
     box-shadow: none !important;
