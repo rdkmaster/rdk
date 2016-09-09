@@ -500,7 +500,7 @@ cells 为 改变的行列信息的数组信息
 
 ### 表头、表尾属性 ###
 
-#### text-align ####
+#### text-align {#text-align1}
 文字水平对齐，默认值center
 
 #### padding ####
@@ -514,7 +514,7 @@ cells 为 改变的行列信息的数组信息
 
 ### 表体数据属性 ###
 
-#### text-align ####
+#### text-align {#text-align2}
 文字水平对齐，默认值: center
 
 #### vertical-align ####
