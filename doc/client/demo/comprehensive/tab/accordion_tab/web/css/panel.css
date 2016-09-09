@@ -1,0 +1,118 @@
+.panel-wrap{
+    position: absolute;
+    top: 300px;
+    transition: top 0.35s linear;
+    margin: 100px 200px;
+}
+.rdk-panel{
+    border: 0;
+    opacity: 0;
+}
+.rdk-panel-module {
+    border-top: 0;
+}
+.sticky-wrap {
+    padding: 0 10px;
+}
+.panel-title {
+    border: 0;
+}
+.panel-caption{
+    line-height: 30px;
+}
+.panel-caption i{
+    font-style: normal;
+}
+.btn{
+    position: absolute;
+    top: 0;
+    right: 10px;
+}
+.btn-show{
+    width: 64px;
+    height: 13px;
+    border: 0;
+    outline: 0;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    position: absolute;
+    top: -12px;
+    left: 44.2%;
+}
+.btn-icon-down{
+    background: url("../../btn-up.png") no-repeat;
+}
+.btn-icon-up{
+    background: url("../../btn-down.png") no-repeat;
+}
+/* panel animation*/
+@keyframes slideUp {
+    0%{
+        opacity: 0;
+    }
+    25%{
+        opacity: 0;
+    }
+    50%{
+        opacity: 0.5;
+    }
+    75%{
+        opacity: 0.7;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+.wrap-animation{
+    top:20px;
+}
+.panel-up{
+    animation:  slideUp 0.35s linear;
+    /*animation-fill-mode:forwards;*/
+    transition: opacity 0.35s linear;
+    opacity: 1;
+}
+.panel-down{
+    /*animation:  slideUp 0.5s linear alternate-reverse;*/
+    transition: opacity 0.35s linear;
+    opacity: 0;
+}
+.panel-title {
+    /*background-color: #33A5DD;*/
+    background-color: #eee;
+    font-weight: normal;
+}
+
+/* table */
+.rdk-panel .rdk-table-module .rdk-table thead>tr {
+    color: #008fd4;
+    font-size: 14px;
+    /*background-color: #eeeeee;*/
+    border-bottom: 0;
+    /*border-bottom: 1px solid #008FD4;*/
+}
+/* tr 隔行不同颜色*/
+.rdk-panel .rdk-table-module .rdk-table > tbody > tr:nth-child(even){
+    background-color: #f3f3f3;
+}
+.rdk-table-module .rdk-table > thead > tr > th {
+    text-align: left; 
+}
+/* td 第2,3,列居中对齐*/
+.text-align,.rdk-panel .rdk-table-module .rdk-table thead>tr>th:nth-of-type(2),.rdk-panel .rdk-table-module .rdk-table thead>tr>th:nth-of-type(3){
+    text-align: center!important;
+}
+/*表格详细列*/
+.col-detail > div >div{
+    overflow: hidden;
+    width:8rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+/*设置head tr 固定在表格头部时的偏移量*/
+.sticky-wrap .sticky-thead, .sticky-wrap .sticky-col, .sticky-wrap .sticky-intersect {
+    left: 10px;
+}
+.rdk-table-module .rdk-table tbody tr.selected-row td {
+    background-color: #e3eef2
+}
