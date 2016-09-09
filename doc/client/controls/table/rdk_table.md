@@ -415,7 +415,7 @@ RDK2.0表格支持服务端和客户端排序两种方式。
 
 ### 表头、表尾属性 ###
 
-#### text-align ####
+#### text-align {#text-align1}
 文字水平对齐，默认值center
 
 #### padding ####
@@ -429,7 +429,7 @@ RDK2.0表格支持服务端和客户端排序两种方式。
 
 ### 表体数据属性 ###
 
-#### text-align ####
+#### text-align {#text-align2}
 文字水平对齐，默认值: center
 
 #### vertical-align ####
