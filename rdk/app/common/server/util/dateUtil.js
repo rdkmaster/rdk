@@ -46,10 +46,10 @@
                     return getFirstDateOfWeek(date);
                 case "month":
                     var date = new Date(date.getFullYear(),date.getMonth(),1);
-                    return dateFormate(date,'yyyy-MM-dd');
+                    return dateFormate(date,'yyyy-MM-dd hh:mm:ss');
                 case "year":
                     var date = new Date(date.getFullYear(),0,1);
-                    return dateFormate(date,'yyyy-MM-dd');
+                    return dateFormate(date,'yyyy-MM-dd hh:mm:ss');
             }
         },
         getNumOfYear: function(interval, date) {
@@ -110,6 +110,7 @@
                 case 'year':
                     return new Date((date.getFullYear() + Number), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds());
             }
-        }
+        },
+        _dataFormat_:dateFormate
     }
 })();
