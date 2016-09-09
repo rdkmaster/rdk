@@ -13,10 +13,12 @@
 </head>
 
 <body ng-controller='myCtrl' class="rdk_main tab_main">
-    <rdk-tab draggable="false">
+    <!--根据一级标题个数设置class 如：个数为1,2,3分别设置为main_title01,main_title02,main_title03  可支持最多10个标题-->
+    <rdk-tab draggable="false" class="main_title03">
     <!--若标签结构相同，请保持所有class名称与此设置一致-->
     <!--一级标题  标题名称也可写在标签内部，用title属性：'title'='重要指标'-->
-        <div class="sub-title">
+        <!--根据二级标题个数设置class 如：个数为1,2,3分别设置为sub_title01,sub_title02,sub_title03 可支持最多10个标题-->
+        <div class="sub-title sub_title05">
             <title_renderer>
                 <span>重要指标</span> 
             </title_renderer>
@@ -65,7 +67,7 @@
                 </div>
             </rdk-tab>
         </div>
-        <div class="sub-title">
+        <div class="sub-title sub_title04">
             <title_renderer>
                 <span>业务体验</span> 
                 <span class="title_score">{{value2}}/{{value20}}</span>
@@ -101,7 +103,7 @@
                 </div>
             </rdk-tab>
         </div>
-        <div class="sub-title">
+        <div class="sub-title sub_title04">
             <title_renderer>
                 <span>无线质量</span> 
                 <span class="title_score">{{value3}}/{{value30}}</span>

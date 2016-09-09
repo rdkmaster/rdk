@@ -25,6 +25,37 @@
 .rdk-tab-module .title li a.selected .title_score{
     color:#008FD4;
 }
+/*一二级标题自适应宽度设置*/
+.main_title01>div>.ui-widget-header li,.sub_title01 .ui-widget-header li{
+    width:100%;
+}
+.main_title02>div>.ui-widget-header li,.sub_title02 .ui-widget-header li{
+    width:50%;
+}
+.main_title03>div>.ui-widget-header li,.sub_title03 .ui-widget-header li{
+    width:33.33%;
+}
+.main_title04>div>.ui-widget-header li,.sub_title04 .ui-widget-header li{
+    width:25%;
+}
+.main_title05>div>.ui-widget-header li,.sub_title05 .ui-widget-header li{
+    width:20%;
+}
+.main_title06>div>.ui-widget-header li,.sub_title06 .ui-widget-header li{
+    width:16.66%;
+}
+.main_title07>div>.ui-widget-header li,.sub_title07 .ui-widget-header li{
+    width:14.28%;
+}
+.main_title08>div>.ui-widget-header li,.sub_title08 .ui-widget-header li{
+    width:12.5%;
+}
+.main_title09>div>.ui-widget-header li,.sub_title09 .ui-widget-header li{
+    width:11.11%;
+}
+.main_title10>div>.ui-widget-header li,.sub_title10 .ui-widget-header li{
+    width:10%;
+}
 /*一级表头样式设置*/
 .rdk-tab-module .ui-widget-header{
     border-bottom-right-radius:0;
@@ -32,7 +63,6 @@
     margin: .2em 1.2em 0;
 }
 .rdk-tab-module .ui-widget-header li{
-    width:33.33%;
     text-align: center;
 }
 .rdk-tab-module .ui-widget-header li a{
