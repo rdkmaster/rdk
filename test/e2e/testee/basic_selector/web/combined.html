@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>BasicSelector 组合</title>
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk"
+        src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="combined.js"></script>
+    
+
+    <!-- 应用正式运行的时候，请使用下面这个节点，RDK会使用编译后的代码，代码体积小，下载快 -->
+    <!--
+    <script data-main="main.min.js" src="/rdk_server/app/libs/requirejs/require.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    -->
+    
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/test/module/testee_helper',
+            }
+        });
+    </script>
+</head>
+<style>
+    .basic{
+        width:400px;
+        margin-bottom:50px;
+        margin-left:20px;
+    }
+</style>
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    <!-- combo_selecct -->
+    <div class="combo basic">
+        <rdk_combo_select ds="dsCity" ds_url="$svr/city.js" ds_query_if="ready" ds_data_processor="dataProcessor" caption="'已选项'">
+            <rdk_basic_selector data="dsCity" id="city_selector" child_change="select2string" multiple_select="false">
+            </rdk_basic_selector>
+        </rdk_combo_select>
+    </div>
+    <div class="accordion basic">
+        <rdk_accordion caption="'basic'">
+            <rdk_basic_selector id="city" data="city" track_item_by="id" change="selectedCity" multiple_select="false">
+            </rdk_basic_selector>
+            <span class="cityname">{{cityname}}</span>
+        </rdk_accordion>
+    </div>
+    <div class="tab basic">
+        <rdk_tab selected_tab="2" collapsible="true">
+            <div title="basic">
+                <rdk_basic_selector data="dsCity"></rdk_basic_selector>
+            </div>
+            <div title="text">
+                此处省略...
+            </div>
+        </rdk_tab>
+    </div>
+    <div class="scroller basic">
+        <rdk_scroller data="scrollerData" scroll_policy="manual">
+            <rdk_basic_selector data="item" style="width:250px;"></rdk_basic_selector>
+        </rdk_scroller> 
+    </div>
+    <div class="panel basic">
+        <rdk_panel title="'panel basic'" show_title="true" show_close="true" width="300px">
+            <rdk_basic_selector ds="captial" ds_url="$svr/captial" ds_query_if="ready" multiple_select="false">
+            </rdk_basic_selector>
+        </rdk_panel>
+    </div>
+    <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
+    <!--     这个节点可选，删除后，RDK会自动生成一个    -->
+    <!--           这个节点只支持基本HTML标签           -->
+    <div style="height:200px"></div>
+    <rdk_loading>
+        <img src="images/loding.gif" alt="loading..."/>
+    </rdk_loading>
+</body>
+
+</html>
