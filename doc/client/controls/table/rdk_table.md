@@ -405,12 +405,12 @@ RDK2.0表格支持服务端和客户端排序两种方式。
 
 ### 选择行的属性 ###
 
-#### background-color ####
+#### background-color {#bgc1}
 选择行的背景色， 默认值：#849DE9
 
 ### 鼠标移动到行上的属性 ###
 
-#### background-color ####
+#### background-color {#bgc2}
 鼠标移动到行上的背景色， 默认值：#F1F1F1
 
 ### 表头、表尾属性 ###
@@ -421,7 +421,7 @@ RDK2.0表格支持服务端和客户端排序两种方式。
 #### padding ####
 属性定义元素边框与元素内容之间的空间（单位：像素）。默认值：10px 6px,padding属性的默认填充顺序为从上开始的顺时针方向。
 
-#### background-color ####
+#### background-color {#bgc3}
 表头或表尾背景色,默认值: #325BDB
 
 #### color #####
