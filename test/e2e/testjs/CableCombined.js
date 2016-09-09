@@ -1,12 +1,13 @@
 'use strict';
-describe('Table Combined Demos',function() {
+describe('Table Combined Demos',function(){
     beforeEach(function(){
         browser.get('test/e2e/testee/table/web/combined.html');
-        browser.sleep(3000);
+        browser.sleep(5000);
     });
     afterEach(function(){
+
     });
-    it('Accordion基础信息点击后图标改变，caption确认=‘表1’',function(){
+    it('Accordion基础信息点击后图标改变 caption确认=‘表1’',function(){
         var ico_down=element.all(by.css(".demo1 .theme .fa-angle-down"));
         var ico_up=element.all(by.css(".demo1 .theme .fa-angle-up"));
         expect(ico_down.count()).toBe(1);
@@ -86,6 +87,7 @@ describe('Table Combined Demos',function() {
         var tab_title=element.all(by.css(".demo3 .rdk-tab-module .tabs .title li a"));
         tab_title.get(1).click();
         element(by.css(".title2 .combo-content>input")).click();
+        browser.sleep(1500);
         var title=element.all(by.css(".title2 .combo-content-transclude .sticky-enabled thead tr th"));
         expect(title.count()).toBe(6);
         expect(title.get(0).getText()).toBe("姓名");
@@ -124,9 +126,10 @@ describe('Table Combined Demos',function() {
         expect(lines.count()).toBe(4);
         var name=element.all(by.css(".demo5 .sticky-enabled tbody tr td .ng-binding"));
         expect(name.get(0).getText()).toBe('aaa');
-        //翻页
-        var nextPage=element.all(by.css(".demo1 .pagingLine ul a"));
+        // //翻页
+        var nextPage=element.all(by.css(".demo5 .pagingLine ul a"));
         nextPage.get(2).click();
+        browser.sleep(2000);
         expect(name.get(0).getText()).toBe('eee');
     });
-})
+});
