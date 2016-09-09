@@ -81,8 +81,8 @@
     border: 0;
 }
 /*背景3：#e4e4e4*/
-.accordion-disabled{
-    background-color: #e44045;
+.theme-disabled{
+    background-color: #e4e4e4 !important;
 }
 /* icon */
 .fa{

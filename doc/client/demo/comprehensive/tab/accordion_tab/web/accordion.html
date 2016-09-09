@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
     <title>RDK控件Demo : Tabs And Accordion</title>
     <link rel="stylesheet" type="text/css" href="css/accortion.css">
+
     <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
     <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
     <script src="scripts/accordion.js"></script>
@@ -53,7 +54,6 @@
                 <rdk_table data="accordionData" paging-visible="false"></rdk_table>
                 <rdk_table data="accordionData" paging-visible="false"></rdk_table>
             </rdk_accordion>
-
             <rdk_accordion caption="'RAB建立失败原因'">
                 <div>除了可以填充RDK控件，还支持标准的标签</div>
             </rdk_accordion>
@@ -64,7 +64,12 @@
             </rdk_accordion>
         </div>
         <div title="掉线问题">
-            <p>RDK最突出的特点就是易用！</p>
+            <rdk_accordion caption="'RAB建立失败TOP小区'">
+                <div>除了可以填充RDK控件，还支持标准的标签</div>
+            </rdk_accordion>
+            <rdk_accordion caption="'RAB建立失败TOP小区'">
+                <div>除了可以填充RDK控件，还支持标准的标签</div>
+            </rdk_accordion>
         </div>
         <div title="切换问题">
             <p>RDK最突出的特点就是易用！</p>
@@ -75,7 +80,6 @@
     </rdk_tab>
     <button class="tab_btn" ng-click="changeTabsStatus()" ng-class="{true:'tab_btn_down',false:'tab_btn_up'}[btnStatus]"></button>
 </div>
-
 </body>
 
 </html>

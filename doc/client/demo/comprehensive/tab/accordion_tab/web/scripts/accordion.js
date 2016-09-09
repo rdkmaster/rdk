@@ -2,7 +2,12 @@ define('main', ['application', 'blockUI','rd.controls.Table', 'rd.containers.Tab
     function(application) {
 // 创建一个RDK的应用
         var app = angular.module("rdk_app", ['rd.core', 'blockUI','rd.controls.Table', 'rd.containers.Tab', 'rd.containers.Accordion']);
-
+        app.config(['blockUIConfig', function(blockUIConfig) {
+            // blockUI的详细用法参考 https://github.com/McNull/angular-block-ui
+            blockUIConfig.template = '<div class="block-ui-message-container">\
+                                  <img src="images/loding.gif" />\
+                              </div>';
+        }]);
 // 创建一个控制器
         app.controller('rdk_ctrl', ['$scope', 'DataSourceService',
             function(scope, DSService,$timeout) {
@@ -14,7 +19,7 @@ define('main', ['application', 'blockUI','rd.controls.Table', 'rd.containers.Tab
                 scope.changeTabsStatus =function(){
                     scope.btnStatus=!scope.btnStatus;
                     //折叠收缩content的显示，TODO:控制器中不应该进行DOM操作。。
-                    $(".tab_wrap").find(".content").slideToggle("normal");
+                    //$(".tab_wrap").find(".content").slideToggle("normal");
                 }
                 scope.accordionData = {};
                 scope.accordionData.header = ["一级原因", "原因名称1", "原因名称2", "原因名称3"];
