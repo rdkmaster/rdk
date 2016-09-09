@@ -37,7 +37,7 @@
                     v_startTime = v_startTime + "" + commonLib.padLeft(num.toString(), 2);
                 }
                 var firstDate = dateLib.getFirstDate(dateMap[granularity],startTimeDate);
-                if (dateLib._dataFormat_(endTimeDate,'yyyy-MM-dd hh:mm:ss')>= firstDate) {
+                if (dateLib.dataFormate(endTimeDate,'yyyy-MM-dd hh:mm:ss')>= firstDate) {
                     var v_tablename = baseTableName + "_" + granularityMap[granularity] + "_" + v_startTime;
                     if (existTable(v_tablename)) {
                         result.push(v_tablename);

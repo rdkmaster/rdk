@@ -11,7 +11,7 @@
         return Math.ceil((dayOfYear - firstWeekDays) / 7) + 1;
     }
 
-    function dateFormate(date, formatStr) {
+    function _dataFormate_(date, formatStr) {
         var str = formatStr;
         var Week = ['日', '一', '二', '三', '四', '五', '六'];
         str = str.replace(/yyyy|YYYY/, date.getFullYear());
@@ -36,7 +36,7 @@
         theDate.setHours(0,0,0);
 
         firstDateOfWeek = theDate;
-        return dateFormate(firstDateOfWeek,'yyyy-MM-dd hh:mm:ss');
+        return _dataFormate_(firstDateOfWeek,'yyyy-MM-dd hh:mm:ss');
     }
     return {
         getFirstDateOfWeek: getFirstDateOfWeek,
@@ -46,10 +46,10 @@
                     return getFirstDateOfWeek(date);
                 case "month":
                     var date = new Date(date.getFullYear(),date.getMonth(),1);
-                    return dateFormate(date,'yyyy-MM-dd hh:mm:ss');
+                    return _dataFormate_(date,'yyyy-MM-dd hh:mm:ss');
                 case "year":
                     var date = new Date(date.getFullYear(),0,1);
-                    return dateFormate(date,'yyyy-MM-dd hh:mm:ss');
+                    return _dataFormate_(date,'yyyy-MM-dd hh:mm:ss');
             }
         },
         getNumOfYear: function(interval, date) {
@@ -111,6 +111,6 @@
                     return new Date((date.getFullYear() + Number), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds());
             }
         },
-        _dataFormat_:dateFormate
+        dataFormate:_dataFormate_
     }
 })();
