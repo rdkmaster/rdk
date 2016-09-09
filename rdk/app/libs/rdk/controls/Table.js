@@ -528,6 +528,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                                 $(firstDivTarget).css('display', "none");
                                 $(lastDivTarget).css('display', "inline");
                                 $(lastDivTarget).removeAttr("class");
+                                $(lastDivTarget.childNodes[0]).val($(lastDivTarget.childNodes[0]).attr("value"));
                                 $(lastDivTarget.childNodes[0]).focus();
                                 event.currentTarget.parentNode.style.width = tdWidthCache + 'px';
                             }
