@@ -8,6 +8,7 @@ describe('Map demo',function(){
     });
     it('module click test should show module name 白城市',function(){
         browser.actions().mouseMove(element(by.css(".jilin canvas")),{x:80,y:80}).click().perform();
+        browser.sleep(2000);
         var city=element(by.css(".cityname"));
         city.getText().then(function(text){
             expect(text).toBe("白城市");
@@ -15,6 +16,7 @@ describe('Map demo',function(){
     });
     it('module click test should show module name 松原市',function(){
         browser.actions().mouseMove(element(by.css(".jilin canvas")),{x:120,y:100}).click().perform();
+        browser.sleep(2000);
         var city=element(by.css(".cityname"));
         city.getText().then(function(text){
             expect(text).toBe("松原市");
@@ -22,6 +24,7 @@ describe('Map demo',function(){
     });
     it('module click test should show module name 长春市',function(){
         browser.actions().mouseMove(element(by.css(".jilin canvas")),{x:160,y:120}).click().perform();
+        browser.sleep(2000);
         var city=element(by.css(".cityname"));
         city.getText().then(function(text){
             expect(text).toBe("长春市");
@@ -29,6 +32,7 @@ describe('Map demo',function(){
     });
     it('module click test should show module name 吉林市',function(){
         browser.actions().mouseMove(element(by.css(".jilin canvas")),{x:209,y:121}).click().perform();
+        browser.sleep(2000);
         var city=element(by.css(".cityname"));
         city.getText().then(function(text){
             expect(text).toBe("吉林市");
@@ -36,6 +40,7 @@ describe('Map demo',function(){
     });
     it('module click test should show module name 通化市',function(){
         browser.actions().mouseMove(element(by.css(".jilin canvas")),{x:177,y:207}).click().perform();
+        browser.sleep(2000);
         var city=element(by.css(".cityname"));
         city.getText().then(function(text){
             expect(text).toBe("通化市");
@@ -47,6 +52,7 @@ describe('Map demo',function(){
         var buttons=element.all(by.css(".jilin button"));
         buttons.get(0).click();
         browser.actions().mouseMove(element(by.css(".jilin canvas")),{x:234,y:105}).click().perform();
+        browser.sleep(2000);
         city.getText().then(function(text){
             expect(text).toBe("盐城市");
         });
@@ -78,6 +84,7 @@ describe('Map demo',function(){
     it('module name should be 新疆维吾尔自治区...',function(){
         var area=element(by.css(".area-name"));
         browser.actions().mouseMove(element(by.css(".area-drill canvas")),{x:92,y:109}).click().perform();
+        browser.sleep(2000);
         area.getText().then(function(text){
             expect(text).toBe("新疆维吾尔自治区");
         });
@@ -85,6 +92,7 @@ describe('Map demo',function(){
     it('module name should be 和田地区',function(){
         var area=element(by.css(".area-name"));
         browser.actions().mouseMove(element(by.css(".area-drill canvas")),{x:92,y:109}).click().perform();
+        browser.sleep(2000);
         browser.actions().mouseMove(element(by.css(".area-drill canvas")),{x:145,y:226}).click().perform();
         //此次点击后页面需要等待几秒dom加载完毕
         setTimeout('expectVal()',5000);
