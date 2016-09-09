@@ -1,6 +1,6 @@
-define(['angular', 'jquery', 'rd.core',
+define(['angular', 'jquery', 'rd.core','rd.containers.Accordion','rd.controls.BasicSelector',
     'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
-        var foldSelectorApp = angular.module('rd.controls.FoldSelector',['rd.core']);
+        var foldSelectorApp = angular.module('rd.controls.FoldSelector',['rd.core','rd.containers.Accordion','rd.controls.BasicSelector']);
         foldSelectorApp.directive('rdkFoldSelector', ['Utils','$compile', 'EventService', 'EventTypes', 
             function (Utils, $compile, EventService, EventTypes) {
             return {

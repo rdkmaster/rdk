@@ -1,6 +1,6 @@
-define(['angular', 'jquery', 'underscore', 'rd.core',
+define(['angular', 'jquery', 'underscore', 'rd.core','rd.controls.FoldSelector',
     'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function(){
-    var selectorApp = angular.module('rd.controls.Selector', ['rd.core']);
+    var selectorApp = angular.module('rd.controls.Selector', ['rd.core','rd.controls.FoldSelector']);
     selectorApp.directive('rdkSelector', ['Utils', 'EventService', 'EventTypes', function (Utils, EventService, EventTypes) {
         return {
             restrict: 'E',
@@ -8,7 +8,7 @@ define(['angular', 'jquery', 'underscore', 'rd.core',
             transclude: true,
             scope: {
                 foldedIcon: '=?',
-                unfoldedIcon: '=?',
+                unfoldedIcon: '=?',  
                 frozen: '=?',
                 open: '=?',
                 captionEditable: '=?',
