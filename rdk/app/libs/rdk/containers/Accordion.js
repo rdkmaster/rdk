@@ -149,6 +149,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                 }
 
                 function _move2Center(){
+                    if(scope.caption) return;
                     _uncoverMove2Center();
                     _coverMove2Center();                       
                 }
