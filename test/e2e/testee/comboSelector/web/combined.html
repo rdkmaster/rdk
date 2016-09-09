@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>RDK应用工程模板</title>
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk"
+        src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="combined.js"></script>
+
+    <!-- 应用正式运行的时候，请使用下面这个节点，RDK会使用编译后的代码，代码体积小，下载快 -->
+    <!--
+    <script data-main="main.min.js" src="/rdk/app/libs/requirejs/require.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    -->
+    
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/test/module/testee_helper',
+            }
+        });
+    </script>
+    <style type="text/css">
+    .demo{
+        margin-bottom: 200px;
+    }
+    .slide{
+        height: 500px;
+        text-align: center;
+    }
+    </style>
+</head>
+
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    <div class="demo1 demo">
+        <rdk_accordion caption="'城市'" id="accordion">
+            <rdk_combo_select caption="'已选项:'" id="comboCity" ng-show="city">
+                 <rdk_basic_selector multiple_select="false" class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems" >
+                 </rdk_basic_selector>
+            </rdk_combo_select>
+        </rdk_accordion>
+        <span>{{str}}</span>
+    </div>
+    <div class="demo2 demo clearfix">
+        <rdk_panel title="'My firest Panel'" height="100px" icon="fa fa-cubes" show_title="true" hide_on_close="false" 
+show_close="true" width="300px" id='panelRDK' before_close="panelfun()">
+            <rdk_combo_select caption="'已选项:'">
+                    <div>RDK是一款特别好用的框架</div>
+            </rdk_combo_select>
+        </rdk_panel>
+        <div>{{panelClose}}</div>
+    </div>
+    <div class="demo3 demo">
+        <rdk_tab>
+            <div title="RDK">
+                <rdk_combo_select caption="'已选项:'" open='true'>
+                    <p>RDK最突出的特点就是易用！</p>
+                </rdk_combo_select>
+            </div>
+            <div title="select">
+                <rdk_combo_select id="tab" caption="'已选项:'">
+                    <rdk_basic_selector multiple_select="false" class="rdk_selector_style" id="strSelect" track_item_by="id" data="cityItems" >
+                    </rdk_basic_selector>
+                </rdk_combo_select>
+            </div>
+        </rdk_tab>
+        <div>{{strSelect}}</div>
+    </div>
+
+
+
+
+
+
+
+    <div class="demo4 demo">
+        <rdk_scroller id="scroller" data="images" scroll_policy='manual' loop="false" >
+            <div>
+                <img ng-src="{{item.src}}"  style="width:100%;height:100%" />
+                <rdk_combo_select caption="'已选项:'" open='true' id={{item.comId}}>
+                     <rdk_basic_selector multiple_select="false" class="rdk_selector_style" id="scrollerBasic" data="item.cityItems.rowDescriptor" >
+                     </rdk_basic_selector>
+                </rdk_combo_select>
+            </div>
+        </rdk_scroller>
+        <div>{{basicSelect}}</div>
+    </div>
+
+
+
+
+
+
+    <div class="demo5 demo">
+        <rdk_table ds="ds_table" ds-url="/doc/client/demo/controls/table/mockdata/table" ds_query_if="ready"
+        setting="setting">
+        </rdk_table>
+        <div>{{tableStr}}</div>
+    </div>
+
+      
+    <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
+    <!--     这个节点可选，删除后，RDK会自动生成一个    -->
+    <!--           这个节点只支持基本HTML标签           -->
+    <div style="height:100px"></div>
+    <rdk_loading>
+        <img src="images/loding.gif" alt="loading..."/>
+    </rdk_loading>
+</body>
+
+</html>
