@@ -33,11 +33,14 @@
         .dis-inbl{
             display:inline-block;
         }
+        .demo1 .selector li:first-child,.demo1 p,.demo1 .combo-content span{
+            background-color: red;
+        }
     </style>
 </head>
 <body ng-controller='rdk_ctrl' class="rdk_main">
     <div>ComboSelect</div>
-    <div class="demo1 demo">
+    <div class="demo1 demo" id="demo1">
         <h2>frozen</h2>
         <rdk_combo_select caption='title1' open="open" frozen="frBln">
             <rdk_basic_selector data="allItems" multiple_select="true" track_item_by="id" child_change="selected2string">
@@ -54,6 +57,7 @@
         
         <div class="dis-inbl">
             <button class="switchBut" ng-click="open=!open">点击开关</button>
+            <span>{{open}}</span>
         </div>
         <p class="dis-inbl">{{province}}</p>
     </div>
@@ -63,10 +67,10 @@
     <div class="demo2 demo">
         <h2>change</h2>  
         <rdk_combo_select id="comboID" caption="'已选项:'" open='true' style="margin-top: 100px">
-            <rdk_basic_selector id="selectorID" data="allItems" multiple_select="false" track_item_by="id"><span>{{item.label}}</span>
+            <rdk_basic_selector id="selectorID" data="allItems" multiple_select="false" track_item_by="id">
             </rdk_basic_selector>
         </rdk_combo_select>
-        <div class="dis-inbl"><span>{{str}}</span></div>
+        <div class="dis-inbl"><p>{{str}}</p></div>
     </div>
     <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
     <!--     这个节点可选，删除后，RDK会自动生成一个    -->

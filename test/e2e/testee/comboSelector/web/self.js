@@ -50,7 +50,7 @@ application.initDataSourceService(DSService);
             label: "湖北省"
         }, ];
         scope.selected2string = function(selected, context, index) {
-            scope.province = selected[0].label;
+            scope.province = BasicSelector.selected2string(selected, 'label', '...');
             return BasicSelector.selected2string(selected, 'label', '...');
         }
         scope.frBln = true;
