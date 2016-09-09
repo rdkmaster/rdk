@@ -1,3 +1,5 @@
+<rdk_title>Panel</rdk_title>
+
 # 简介 #
 
 `rdk_panel` 提供了一种用于组织控件的分组机制，在页面内为其他控件提供了一个容器，可以将多个控件放入一个Panel容器中，作为一个单元进行控制，如隐藏或显示等；用户可以定制Panel的宽度、高度，高度自适应，且支持文本超出宽度后自动换行；用户也可以设置容器的标题和图标（暂只支持Font Awesome),且在用户点击关闭图标后，容器会广播“预关闭”事件，用户可以实施其他工作，如弹出提示框等，再确定关闭。
@@ -60,7 +62,7 @@
 
 
 # 事件 #
-事件是RDK实现交互的主要手段之一，强大但易用。[了解更多](/doc/common/event)。控件会广播“BEFORE_CLOSE”事件，同时注册监听“CLOSE”事件，这样用户在点击关闭图标后，可以执行一些其他操作。
+事件是RDK实现交互的主要手段之一，强大但易用。[了解更多](/doc/client/common/event/EventService.md)。控件会广播“BEFORE_CLOSE”事件，同时注册监听“CLOSE”事件，这样用户在点击关闭图标后，可以执行一些其他操作。
 
 示例如下：
 <live_demo example="containers/panel/panel_close" width="405"></live_demo>
@@ -110,8 +112,3 @@
 #### cursor####
 使用的光标样式，默认值: pointer
 
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

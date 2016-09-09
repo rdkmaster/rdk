@@ -1,3 +1,5 @@
+<rdk_title>Map地图</rdk_title>
+
 # 简介 #
 
 `rdk_map` 主要用于Echart版本的地图展现
@@ -81,8 +83,3 @@
 		
 
 
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

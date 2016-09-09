@@ -1,3 +1,5 @@
+<rdk_title>Table</rdk_title>
+
 # 简介 #
 
 `rdk_table` 主要用于提供表格展示。
@@ -488,12 +490,12 @@ cells 为 改变的行列信息的数组信息
 
 ### 选择行的属性 ###
 
-#### background-color ####
+#### background-color {#bgc1}
 选择行的背景色， 默认值：#849DE9
 
 ### 鼠标移动到行上的属性 ###
 
-#### background-color ####
+#### background-color {#bgc2}
 鼠标移动到行上的背景色， 默认值：#F1F1F1
 
 ### 表头、表尾属性 ###
@@ -504,7 +506,7 @@ cells 为 改变的行列信息的数组信息
 #### padding ####
 属性定义元素边框与元素内容之间的空间（单位：像素）。默认值：10px 6px,padding属性的默认填充顺序为从上开始的顺时针方向。
 
-#### background-color ####
+#### background-color {#bgc3}
 表头或表尾背景色,默认值: #325BDB
 
 #### color #####
@@ -529,8 +531,3 @@ cells 为 改变的行列信息的数组信息
 数据源绑定的说明请参照`BasicSelector控件`中的数据源绑定章节中的内容。以下为`rdk_table`的数据源绑定的示例：
 
 
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

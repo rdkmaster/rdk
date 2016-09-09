@@ -1,3 +1,5 @@
+<rdk_title>后端SQL相关通用功能</rdk_title>
+
 ##公共配置信息查询服务
 服务URI：common/server/dim
 
@@ -258,16 +260,6 @@
 返回：返回 时间增加Number个粒度的时间
 
 说明：无
-
-
-
-
-
-
-
-
-
-
 
 
 

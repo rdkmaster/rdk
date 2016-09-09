@@ -1,3 +1,5 @@
+<rdk_title>Selector</rdk_title>
+
 # 简介 #
 
 `rdk_selector` 内部按规则封装了多个 `rdk_fold_selector`， 拥有 `rdk_accordion` 和 `rdk_basic_selector` 的所有属性。
@@ -103,19 +105,16 @@
 ## error ##
 >支持类型：函数
 
-通过回调方式控件会返回相关异常信息，可以通过控件反馈的具体的错误码来自定义错误信息。控件默认的错误码及异常信息对照请参见[`异常列表`](/doc/controls/common/error_list.html)。代码如下：
+通过回调方式控件会返回相关异常信息，可以通过控件反馈的具体的错误码来自定义错误信息。代码如下：
 
      <rdk_selector error="raiseErrorAct"></rdk_selector>
 
 <live_demo example="controls/selector/error"  width="405"></live_demo>
 
 
-
-**注意：异常列表中的错误码对整个RDK控件来说是全局唯一的**
-
 ## child_change ##
 
-此属性为通用属性，请参见[`childChange`](/doc/controls/common/child_change.html)中的说明
+此属性为通用属性，请参见[`childChange`](/doc/controls/common/child_change.md)中的说明
 
 ## 其他属性 ##
 `rdk_selector` 还拥有 `rdk_accordion` 的 `folded_icon`/`unfolded_icon`,`frozen`,`open` 等属性，也拥有 `rdk_basic_selector` 的 `searchable`,`multiple_select`等属性，具体参见 `rdk_accordion` 和 `rdk_basic_selector` 的控件说明文档。
@@ -125,7 +124,7 @@
 
 
 # 事件 #
-事件是RDK实现交互的主要手段之一，强大且易用。[了解更多](/doc/common/event)。
+事件是RDK实现交互的主要手段之一，强大且易用。[了解更多](/doc/client/common/event/EventService.md)。
 
 ## OPEN ##
 >事件类型：EventTypes.OPEN
@@ -143,8 +142,3 @@
 >事件类型：EventTypes.CHANGE
 同 `rdk_basic_selector` 的 `CHANGE` 事件，监听捕获 `rdk_basic_selector` 控件内部修改后的最新的数据信息。关于监听事件请参见`事件机制`中的`监听`部分
 
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

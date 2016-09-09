@@ -1,3 +1,5 @@
+<rdk_title>第8步 优化详情对话框 - RDK应用开发最佳实践</rdk_title>
+
 ## 目标与收获
 
 本小节将优化 `my_first_app` 详情对话框的内容，你将了解到
@@ -24,8 +26,8 @@
        style="background-color:rgb(214, 220, 221) " >
    </rdk_panel>
 ~~~
-这里引入了两个新的控件rdk_panel和rdk_modal，注意要使用[第三步的方法](03_use_first_control.html#dep-inject)注入控件的依赖。
-其中rdk_panel是一个容器，可以把多个控件放入其中，作为一个单元进行控制，具体使用参考[Panel文档](/doc/client/containers/panel/index.html)；rdk_modal作为属性名称添加到rdk_panel后，该控件就会有弹出效果了，该属性需要初始化成hide，具体使用参考[对话框&摸态框](/doc/client/common/modal/index.html)。
+这里引入了两个新的控件rdk_panel和rdk_modal，注意要使用[第三步的方法](03_use_first_control.md#dep-inject)注入控件的依赖。
+其中rdk_panel是一个容器，可以把多个控件放入其中，作为一个单元进行控制，具体使用参考[Panel文档](/doc/client/containers/panel/rdk_panel.md)；rdk_modal作为属性名称添加到rdk_panel后，该控件就会有弹出效果了，该属性需要初始化成hide，具体使用参考[对话框&摸态框](/doc/client/common/modal/rdk_modal.md)。
 
 ### 添加gis地图
 - 在弹出框中显示gis地图
@@ -46,8 +48,8 @@ rdk_panel是一个多控件的容器，为了满足上述要求，这里我们�
        </rdk_map>
    </rdk_panel>
 ~~~
-这里我们又引入了一个新的控件rdk_map，一定记得要使用[第三步的方法](03_use_first_control.html#dep-inject)注入控件的依赖。
-rdk_map主要用于Echart版本的地图展现，目前仅支持json文件格式。具体使用参考[Map文档](/doc/client/controls/map/index.html)。
+这里我们又引入了一个新的控件rdk_map，一定记得要使用[第三步的方法](03_use_first_control.md#dep-inject)注入控件的依赖。
+rdk_map主要用于Echart版本的地图展现，目前仅支持json文件格式。具体使用参考[Map文档](/doc/client/controls/map/map.md)。
 
 
 ## 使用对话框
@@ -79,7 +81,7 @@ rdk_map主要用于Echart版本的地图展现，目前仅支持json文件格式
 	}
 ~~~
 这里我们使用了RDK封装的Alert服务，用于弹出提示信息的对话框，可能包含消息、标题、按钮（“确定”、“取消”、“是”和“否”的任意组合）和图标。
-具体使用参考[Alert文档](/doc/client/common/alert/index.html)。
+具体使用参考[Alert文档](/doc/client/common/alert/alert.md)。
 
 
 ## 小结
@@ -88,6 +90,3 @@ rdk_map主要用于Echart版本的地图展现，目前仅支持json文件格式
 你可以下载完成此步骤之后的[源码](09_detail_dialog.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk/app/my_first_app/web/index.html)就可以打开它了。
 
 
-<div title="第8步 优化详情对话框 - RDK应用开发最佳实践" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

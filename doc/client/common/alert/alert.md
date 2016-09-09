@@ -1,3 +1,5 @@
+<rdk_title>Alert</rdk_title>
+
 # 简介 #
 
 Alert 服务用于弹出提示信息的对话框，可能包含消息、标题、按钮（“确定”、“取消”、“是”和“否”的任意组合）和图标。
@@ -135,8 +137,3 @@ Alert 服务用于弹出提示信息的对话框，可能包含消息、标题�
 <live_demo example="common/alert/param_default" width="900" height="400"></live_demo>
 
 
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

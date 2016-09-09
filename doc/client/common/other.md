@@ -1,3 +1,5 @@
+<rdk_title>其他</rdk_title>
+
 
 ## RDK初始化事件
 
@@ -26,7 +28,7 @@
 		console.log('rdk is ready...');
 	}
 
-也可以通过[事件](/doc/common/event/index.html)的方式：
+也可以通过[事件](/doc/client/common/event/EventService.md)的方式：
 
 	EventService.register('EventService', 'ready', function() {
 		console.log('rdk is ready...');
@@ -35,6 +37,3 @@
 其中 `Utils` 是RDK提供的一个服务，在使用它之前，必须先将它注入到你的控制器中去。
 
 
-<div>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

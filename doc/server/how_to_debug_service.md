@@ -1,3 +1,5 @@
+<rdk_title>如何断点调试Rest服务</rdk_title>
+
 
 ## 检出代码 ##
 
@@ -95,13 +97,10 @@
 
 ## 调试服务 ##
 
-打开任意一个服务，单击行号附近空白位置可以添加一个断点，然后使用[前面的方法](/doc/manual.html#debug)启动一个服务的调试，注意把ip换成localhost。
+打开任意一个服务，单击行号附近空白位置可以添加一个断点，然后使用[前面的方法](/doc/manual.md#debug)启动一个服务的调试，注意把ip换成localhost。
 
 正常的话，系统运行到断点处就会停下来，可以单步跟踪了。
 
 
 
 
-<div title="如何断点调试Rest服务" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

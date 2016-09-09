@@ -1,3 +1,5 @@
+<rdk_title>第7步 将查询得到的数据以图形方式呈现 - RDK应用开发最佳实践</rdk_title>
+
 ## 目标与收获
 
 本小节将让 `my_first_app` 可以将查询得到的数据以图形方式显示。通过本小节的学习，你将了解到
@@ -16,7 +18,7 @@
 <rdk_graph ds="dsWebAnalysis" ds_url="$svr/webAnalysis"
 	graph_define="scripts/graphDefine.js"></rdk_graph>
 ~~~
-这里引入了一个新的控件rdk_graph，注意要使用[第三步的方法](03_use_first_control.html#dep-inject)注入图形的依赖。
+这里引入了一个新的控件rdk_graph，注意要使用[第三步的方法](03_use_first_control.md#dep-inject)注入图形的依赖。
 
 在scripts目录中，创建一个graphDefine.js文件，它用于描述一个图形，代码如下：
 ~~~
@@ -88,7 +90,7 @@ RDK的Graph控件使用的是echart作为基础库，echart官网提供了非常
 `rdk_graph` 和 `rdk_table` 这2个标签都有ds属性，并且有相同的值，这就意味着表格和图形使用了同一份数据。
 
 ### 实现图形交互
-图形的交互，可以通过事件来完成。RDK提供了一套简单但强大的事件机制，[单击这里](/doc/client/common/event)了解详情。
+图形的交互，可以通过事件来完成。RDK提供了一套简单但强大的事件机制，[单击这里](/doc/client/common/event/EventService.md)了解详情。
 
 先注入EventService的依赖，编辑js代码，找到下面这行代码：
 ~~~
@@ -101,7 +103,7 @@ function(scope, DSService, blockUI, EventService)
 	...
 ~~~
 
-这样就实现了EventService的注入了。[这个小节](/doc/client/common/dependency_injection.html#ctrl)详细描述了与controller相关的依赖注入的知识，感兴趣的同学可以仔细阅读。
+这样就实现了EventService的注入了。[这个小节](/doc/client/common/dependency_injection.md#ctrl)详细描述了与controller相关的依赖注入的知识，感兴趣的同学可以仔细阅读。
 
 编辑页面代码，在rdk_graph节点上加入一个id属性：`id="myGraph"`。
 
@@ -153,6 +155,3 @@ EventService.register('myGraph', 'click', function(event, item) {
 你可以下载完成此步骤之后的[源码](07_show_data_in_graph.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk/app/my_first_app/web/index.html)就可以打开它了。
 
 
-<div title="第7步 将查询得到的数据以图形方式呈现 - RDK应用开发最佳实践" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

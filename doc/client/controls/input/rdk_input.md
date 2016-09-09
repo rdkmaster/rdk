@@ -1,3 +1,5 @@
+<rdk_title>Input</rdk_title>
+
 # 简介 #
 `rdk_input` 是带删除功能的输入框。
 
@@ -30,8 +32,4 @@
 <live_demo example="controls/input/readonly" width="900"></live_demo>
 
 
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+

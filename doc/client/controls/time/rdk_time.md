@@ -1,3 +1,5 @@
+<rdk_title>Time</rdk_title>
+
 # 简介 #
 
 `rdk_time` 主要用于时间选择
@@ -13,7 +15,7 @@
 ---
 # 属性 #
 
-## label ##
+## label <binding></binding> ##
 > 支持类型：字符串
 
 `label` 用于设置时间选择控件左侧的主题名称。默认为时间，**如果设置为汉字时需要使用单引号**
@@ -113,8 +115,5 @@ inday/inweek/inmonth/inyear 和具体的 1d,2w,3m,4y。
 # 支持国际化 #
 <live_demo example="controls/time/i18n" width="900"></live_demo>
 
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+
+

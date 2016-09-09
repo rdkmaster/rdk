@@ -1,3 +1,5 @@
+<rdk_title>Tab页</rdk_title>
+
 # 简介 #
 
 `rdk_tab` 控件是一个导航容器控件，`rdk_tab` 容器可以包含 `tab` 容器用于在其子容器间导航。
@@ -115,9 +117,3 @@ Tab 的 title还支持动态渲染,以title_renderer标签去标志
 暂无
 
 
-
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

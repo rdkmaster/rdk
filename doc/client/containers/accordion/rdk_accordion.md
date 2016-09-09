@@ -1,3 +1,5 @@
+<rdk_title>Accordion</rdk_title>
+
 # 简介 #
 
 `rdk_accordion` 控件是一个导航容器控件，此导航容器具有一组子容器，但一次只能显示其中一个。它创建和管理导航器按钮，您可以使用这些按钮在子项之间导航。每个子容器都有一个相关的导航器按钮，但是所有导航器按钮都属于`rdk_accordion`容器，并不属于子项。当用户单击导航器按钮时，就会显示相关的子容器。到另一个子项的过渡过程将使用动画效果，这样用户就可以清楚地看到一个子项消失和另一个子项的出现。 
@@ -173,11 +175,11 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 事件发出者，此字段大小写敏感。详见`事件机制`中事件发出者的说明。
 
 # 事件 #
-事件是RDK实现交互的主要手段之一，强大但易用。[了解更多](/doc/common/event)。
+事件是RDK实现交互的主要手段之一，强大但易用。[了解更多](/doc/client/common/event/EventService.md)。
 
 ## child_change ##
 
-此属性为通用属性，请参见[`childChange`](/doc/controls/common/child_change.html)中的说明
+此属性为通用属性，请参见[`childChange`](/doc/controls/common/child_change.md)中的说明
 
 #方法 #
 暂无
@@ -241,7 +243,9 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 
 详细说明参见`BasicSelector`控件中相关章节。
 
-### [渲染器示例](/doc/client/containers/accordion/render_demo.html) ###
+### 渲染器示例 ###
+
+<live_demo example="containers/accordion/accordion_renderer" width="810" height="800"></live_demo>
 
 ## 数据源绑定 ##
 
@@ -249,8 +253,3 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 
 
 
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

@@ -1,3 +1,5 @@
+<rdk_title>第4步 完成查询条件栏 - RDK应用开发最佳实践</rdk_title>
+
 ## 目标与收获
 
 本小节将完成 `my_first_app` 的条件查询栏剩余部分，通过本小结的学习，你将了解到
@@ -35,9 +37,9 @@ Ux团队要求我们把时段框，地市框，查询按钮这3个控件放在�
     </rdk_loading>
 </body>
 ~~~
-页面其他部分保持不变。我们碰到两个新的控件，分别是 [`ComboSelect`](/doc/client/controls/comboselect/index.html) 和 [`BasicSelector`](/doc/client/controls/basicselector/index.html)，在页面上引用之后，还需要注入对他们的依赖才能生效，[参考这里](03_use_first_control.html#dep-inject)。
+页面其他部分保持不变。我们碰到两个新的控件，分别是 [`ComboSelect`](/doc/client/controls/comboselect/rdk_comboselect.md) 和 [`BasicSelector`](/doc/client/controls/basicselector/rdk_basic_selector.md)，在页面上引用之后，还需要注入对他们的依赖才能生效，[参考这里](03_use_first_control.md#dep-inject)。
 
-编辑 `app/my_first_app/web/scripts/main.js`，增加[`ComboSelect`](/doc/client/controls/comboselect/index.html)和[`BasicSelector`](/doc/client/controls/basicselector/index.html)这两个控件的依赖，具体操作方法和上一步类似，修改后的代码为：
+编辑 `app/my_first_app/web/scripts/main.js`，增加[`ComboSelect`](/doc/client/controls/comboselect/rdk_comboselect.md)和[`BasicSelector`](/doc/client/controls/basicselector/rdk_basic_selector.md)这两个控件的依赖，具体操作方法和上一步类似，修改后的代码为：
 
 ~~~
 define('main', ['application', 'utils', 'i18n', 'blockUI',
@@ -79,7 +81,7 @@ var app = angular.module("rdk_app", ['rd.core', 'blockUI',
 
 ![](img/city_error.PNG)
 
-这是[`ComboSelect`](/doc/client/controls/comboselect/index.html)控件不识别我们地市的数据结构导致的，需要增加一个属性告诉[`ComboSelect`](/doc/client/controls/comboselect/index.html)控件如何识别一个地市。
+这是[`ComboSelect`](/doc/client/controls/comboselect/rdk_comboselect.md)控件不识别我们地市的数据结构导致的，需要增加一个属性告诉[`ComboSelect`](/doc/client/controls/comboselect/rdk_comboselect.md)控件如何识别一个地市。
 
 修改页面代码，找到 `rdk_combo_select` 节点，添加一个新的属性，代码为：
 
@@ -104,11 +106,8 @@ var app = angular.module("rdk_app", ['rd.core', 'blockUI',
 给时间控件和ComboSelect控件增加一个这样的属性 `style="margin-right:30px"`
 
 ## 小结
-我们完成了查询条件栏的剩余部分，碰到了两个新的RDK控件：[`ComboSelect`](/doc/client/controls/comboselect/index.html)和[`BasicSelector`](/doc/client/controls/basicselector/index.html)
+我们完成了查询条件栏的剩余部分，碰到了两个新的RDK控件：[`ComboSelect`](/doc/client/controls/comboselect/rdk_comboselect.md)和[`BasicSelector`](/doc/client/controls/basicselector/rdk_basic_selector.md)
 
 你可以下载完成此步骤之后的[源码](04_finish_condition_bar.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk/app/my_first_app/web/index.html)就可以打开它了。
 
 
-<div title="第4步 完成查询条件栏 - RDK应用开发最佳实践" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

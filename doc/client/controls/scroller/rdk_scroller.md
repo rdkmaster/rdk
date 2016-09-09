@@ -1,3 +1,5 @@
+<rdk_title>Scroller翻页</rdk_title>
+
 # 简介 #
 `rdk_scroller` 是可以自定义内容的轮播器。翻页策略支持timeout和manual的组合，分别是超时自动翻页、鼠标单击翻页，默认同时支持。当设置了超时自动翻页后，支持自定义超时时间。此外，也可以自定义轮播同时显示的页数。
 
@@ -89,8 +91,3 @@
 
 ---
 
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

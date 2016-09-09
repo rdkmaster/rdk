@@ -1,3 +1,5 @@
+<rdk_title>数据源</rdk_title>
+
 # 数据源 #
 数据源是RDK中的一个重要概念，它是RDK前后端交互的纽带。
 
@@ -41,7 +43,7 @@
 	//在js中创建出来的数据源必须赋予scope属性才能实现双向绑定
 	ds.scope = $scope;
 
-注意上面代码使用到了 `DataSourceService` 服务，需要将这个服务的依赖注入到应用的控制器中。关于依赖注入，[请访问这里](../dependency_injection.html)。
+注意上面代码使用到了 `DataSourceService` 服务，需要将这个服务的依赖注入到应用的控制器中。关于依赖注入，[请访问这里](../dependency_injection.md)。
 
 ## 数据源的使用 ##
 我们可以像使用本地数据一样方便的使用网络上的资源，请看下面例子
@@ -149,7 +151,7 @@
 下面是例子，注意到数据源先执行了 `toString()` 把一个复杂结构的数据转成了字符串，然后才调用 `showMessage()` 将结果 alert 出来。
 <live_demo example="common/datasource/result_handler/" width="400" height="40"></live_demo>
 
-除了使用 `ds_result_handler` 添加结果回调的方式，还可以通过[事件](/demo/common/event)的方式。每个数据源访问网络有了结果（成功/失败），都会通过数据源id发出一个 `result` 事件，监听此事件可以处理改数据源的结果。与 `ds_result_handler` 的方式相比，事件方式更加灵活，可以在代码的不同位置给同一个数据源添加多个事件回调，这样对提高代码的内聚性有帮助。
+除了使用 `ds_result_handler` 添加结果回调的方式，还可以通过[事件](/doc/client/common/event/EventService.md)的方式。每个数据源访问网络有了结果（成功/失败），都会通过数据源id发出一个 `result` 事件，监听此事件可以处理改数据源的结果。与 `ds_result_handler` 的方式相比，事件方式更加灵活，可以在代码的不同位置给同一个数据源添加多个事件回调，这样对提高代码的内聚性有帮助。
 
 	//下面代码执行的结果和 ds_result_handler 一样
 	EventService.register('ds_city', 'result', function(event, data) {
@@ -251,8 +253,3 @@
 ![](数据源查询流程图.PNG)
 
 
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

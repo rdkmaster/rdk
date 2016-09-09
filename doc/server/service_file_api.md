@@ -1,3 +1,5 @@
+<rdk_title>Rest服务中的文件操作API</rdk_title>
+
 ### `file.loadProperty()` ###
 
 定义：
@@ -26,7 +28,7 @@
 
 参数：
 
-- file 字符串。需要保存的文件路径，如果是目录则会报错。可使用[路径宏](relative_path_rule.html)简化路径。
+- file 字符串。需要保存的文件路径，如果是目录则会报错。可使用[路径宏](relative_path_rule.md)简化路径。
 - content 字符串。需要保存的内容。
 - append 布尔，默认值是false。是否追加到已有文件的末尾。
 - encoding 字符串，默认值是utf-8。写文件的编码，常用备选的是utf-8/gb2312/gbk。
@@ -43,7 +45,7 @@
 
 参数：
 
-- file 字符串。需要保存的文件路径，如果是目录则会报错。可使用[路径宏](relative_path_rule.html)简化路径。
+- file 字符串。需要保存的文件路径，如果是目录则会报错。可使用[路径宏](relative_path_rule.md)简化路径。
 - content 二维数组或者 `matrix()` 的返回值。需要保存的内容。
 - excludeIndexes 数组，可选，默认值是false。排除的列索引，如果content是 `matrix()` 的返回值，则此数组的元素可以是字段名。
 - option 对象，可选。写csv文件的选项，支持下面的配置项：
@@ -81,6 +83,3 @@
 
 
 
-<div title="Rest服务中的文件操作API" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
