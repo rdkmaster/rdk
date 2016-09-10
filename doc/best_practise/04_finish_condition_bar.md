@@ -108,6 +108,5 @@ var app = angular.module("rdk_app", ['rd.core', 'blockUI',
 ## 小结
 我们完成了查询条件栏的剩余部分，碰到了两个新的RDK控件：[`ComboSelect`](/doc/client/controls/comboselect/rdk_comboselect.md)和[`BasicSelector`](/doc/client/controls/basicselector/rdk_basic_selector.md)
 
-你可以下载完成此步骤之后的[源码](04_finish_condition_bar.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk/app/my_first_app/web/index.html)就可以打开它了。
-
-
+## 源码
+[04_finish_condition_bar.zip](04_finish_condition_bar.zip) 下载后解压到 `rdk/app/my_first_app` 目录下即可。
