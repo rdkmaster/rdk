@@ -182,6 +182,6 @@ sql = tableUtil.generatePagingSQL(sql, request.paging.pageSize, request.paging.c
 
 最主要的我们实现了表格的服务端分页这个极常用的功能。
 
-你可以下载完成此步骤之后的[源码](06_show_data_in_table.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk/app/my_first_app/web/index.html)就可以打开它了。
-
+## 源码
+[06_show_data_in_table.zip](06_show_data_in_table.zip) 下载后解压到 `rdk/app/my_first_app` 目录下即可。
 

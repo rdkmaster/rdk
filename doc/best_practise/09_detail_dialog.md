@@ -87,6 +87,7 @@ rdk_map主要用于Echart版本的地图展现，目前仅支持json文件格式
 ## 小结
 在点击详情后，我们使用了一个弹出框，显示Gis地图，并在关闭该弹出框时，弹出一个对话框与用户交互，确认是否关闭。
 
-你可以下载完成此步骤之后的[源码](09_detail_dialog.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk/app/my_first_app/web/index.html)就可以打开它了。
+## 源码
+[09_detail_dialog.zip](09_detail_dialog.zip) 下载后解压到 `rdk/app/my_first_app` 目录下即可。
 
 

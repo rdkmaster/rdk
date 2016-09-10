@@ -71,6 +71,6 @@ RDK推出新的功能后，会第一时间更新[example应用](/rdk/app/example
 
 我们创建了第一个应用。
 
-你可以下载完成此步骤之后的[源码](02_first_rdk_app.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk/app/my_first_app/web/index.html)就可以打开它了。
-
+## 源码
+[02_first_rdk_app.zip](02_first_rdk_app.zip) 下载后解压到 `rdk/app/my_first_app` 目录下即可。
 

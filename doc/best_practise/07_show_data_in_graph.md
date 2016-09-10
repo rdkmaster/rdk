@@ -152,6 +152,6 @@ EventService.register('myGraph', 'click', function(event, item) {
 ## 小结
 我们在页面上增加了一个柱状图和折线图，并给图形做了一个简单的交互过程。
 
-你可以下载完成此步骤之后的[源码](07_show_data_in_graph.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk/app/my_first_app/web/index.html)就可以打开它了。
-
+## 源码
+[07_show_data_in_graph.zip](07_show_data_in_graph.zip) 下载后解压到 `rdk/app/my_first_app` 目录下即可。
 

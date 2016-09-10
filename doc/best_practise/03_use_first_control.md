@@ -135,8 +135,6 @@ scope.timeSetting = {
 2. 在main.js中注入相应控件的依赖，如果你发现控件不显示出来，那很可能就是忘记注入它的依赖了
 3. 对控件进行配置，一般就是查询该控件的手册，在手册中获得你需要信息
 
-
-
-你可以下载完成此步骤之后的[源码](03_use_first_control.zip)，解压到 `app/my_first_app` 下，[单击这里](/rdk/app/my_first_app/web/index.html)就可以打开它了。
-
+## 源码
+[03_use_first_control.zip](03_use_first_control.zip) 下载后解压到 `rdk/app/my_first_app` 目录下即可。
 
