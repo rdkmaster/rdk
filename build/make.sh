@@ -24,8 +24,10 @@ DEV_ENV_DIR=./rdk_release/rdk-develop-environment
 ##运行环境路径
 RUN_ENV_DIR=./rdk_release/rdk-runtime-environment
 ##RDK版本号
-dos2unix ../rdk/build.sbt
-RDK_VERSION=`cat ../rdk/build.sbt |grep version|awk -F '=' '{print $2}'| grep -o "[^ ]\+\( \+[^ ]\+\)*"|sed 's/\"//g'|dos2unix`
+#dos2unix ../rdk/build.sbt
+#RDK_VERSION=`cat ../rdk/build.sbt |grep version|awk -F '=' '{print $2}'| grep -o "[^ ]\+\( \+[^ ]\+\)*"|sed 's/\"//g'|dos2unix`
+RDK_VERSION=`cat ../rdk/build.sbt |grep version|awk -F '=' '{print $2}'| grep -o "[^ ]\+\( \+[^ ]\+\)*"|sed 's/\"//g'`
+
 
 USAGE() {
 	echo "para1:branch 用于rdk的git分支 default:master"
@@ -43,6 +45,10 @@ if [ x"${rdk_path}" = x ] ;then
 	mkdir -p $rdk_path
 	cd $rdk_path
 	git clone git@gitlab.zte.com.cn:10045812/rdk.git
+	if [ $? -ne 0 ] ;then
+		echo "Remote GitLab not stable，plese try again!"
+		exit 122
+	fi
 fi
 if [ ! -d $rdk_path ] ;then
     echo "$rdk_path not exists,please make sure"
@@ -51,17 +57,25 @@ fi
 ###切换到设置的分支上，默认为master
 cd $rdk_path
 if [ "${branch}" != "" ] ; then
-    git branch -D ${branch}
+    git branch |grep ${branch}
+	if [ $? -eq 0 ] ;then
+	    git checkout master
+		git branch -D ${branch}
+    fi
 	git checkout -b ${branch} origin/${branch}
+	if [ $? -ne 0 ] ;then
+		echo " can not checkout ${branch},please make sure"
+		exit 126
+	fi
 fi
 
-if [ $? -ne 0 ] ;then
-   echo "${branch} not exist,please make sure"
-   exit 126
-fi
 ##clone rdk编译依赖
 if [ x"${rdk_resource}" = x ] ; then
-    rdk_resource=/home/rdk_git/rdk-resource
+    rdk_resource=/home/rdk_git/
+	mkdir -p $rdk_resource
+	cd  $rdk_resource
+	git clone git@gitlab.zte.com.cn:10045812/rdk-resource.git
+	rdk_resource=$rdk_resource/rdk-resource
 fi
 
 cd $pwdPath
@@ -70,16 +84,34 @@ if [ ! -d $rdk_resource ] ;then
 	exit 125
 fi
 cd $rdk_resource
-git clone git@gitlab.zte.com.cn:10045812/rdk-resource.git		
+git branch |grep master
+if [ $? -eq 0 ];then
+	git checkout *
+	git status|grep "Untracked"
+	if [ $? -eq 0 ] ;then
+	  echo "Buffer not clean,git add . ~~"
+	  exit 124
+	fi
+	git status|grep "Changes not staged"
+	if [ $? -eq 0 ] ;then
+	  echo "Buffer not clean,fix it"
+	  exit 121
+	fi   
+fi
+		
 
-export JAVA_HOME=/home/rdk_git/rdk-resource/jdk
-export PATH=$JAVA_HOME/bin:$PATH
 
 }
 
 COMPILE_RDKSERVER(){
+export JAVA_HOME=$rdk_resource/jdk
+export PATH=$JAVA_HOME/bin:$PATH
+cd $pwdPath
 cd $rdk_path
 cd rdk
+cd rdk
+chmod 777 $rdk_resource/sbt/bin/sbt
+chmod 777 -R $rdk_resource/jdk
 $rdk_resource/sbt/bin/sbt \
 -java-home $rdk_resource/jdk \
 -Dsbt.boot.directory=$rdk_resource/sbt-repo/boot/ \
@@ -93,27 +125,38 @@ cp target/scala-2.10/rdk*.jar  ../rdk/proc/bin/lib/
 
 ###清理当前目录下版本
 DEL_VERSION(){
+    cd $pwdPath
     cd $rdk_path
-	cd rdk
-	cd build
+	buildpath=`find . -name make.sh`
+	cd ${buildpath%/*}
 	rm -rf rdk*.zip
 	rm -rf rdk_release
 }
 ###制作开发版本
 MAKE_DEP_VERSION(){
+  cd $pwdPath
   cd $rdk_path
-  cd rdk 
-  cd build
+  buildpath=`find . -name make.sh`
+  cd ${buildpath%/*}
   mkdir -p $DEV_ENV_DIR
-  \cp -r ../[^b]* $DEV_ENV_DIR 
+  if [ -d ../rdk-resource ];then
+	 rm -rf ../rdk-resource
+  fi
+  \cp -r ../doc $DEV_ENV_DIR 
+  \cp -r ../rdk $DEV_ENV_DIR
+  \cp -r ../site $DEV_ENV_DIR
+  \cp -r ../test $DEV_ENV_DIR
+  \cp -r ../tools $DEV_ENV_DIR
+  \cp -r ../start*  ../CHANGELOG ../index.html ../readme.md  ../favicon.ico  $DEV_ENV_DIR
   MAKR_RDK_RELEASE rdk-develop-environment
 }
 
 ###制作运行版本
 MAKE_RUN_VERSION(){
+  cd $pwdPath
   cd $rdk_path
-  cd rdk 
-  cd build
+  buildpath=`find . -name make.sh`
+  cd ${buildpath%/*}
   mkdir -p $RUN_ENV_DIR
   mkdir $RUN_ENV_DIR/rdk
   \cp -r ../rdk/app  $RUN_ENV_DIR/rdk
