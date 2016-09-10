@@ -9,7 +9,7 @@
 	- 本文还简要的描述了AngularJS的依赖注入在rdk中是如何使用的，特别是如何与requirejs配合。
 
 
-本文一切均以[example应用](/rdk_server/app/example/web/index.html)为例说明，所以在开始之前，最好能够阅读一下它的源码。
+本文一切均以[example应用](/rdk/app/example/web/index.html)为例说明，所以在开始之前，最好能够阅读一下它的源码。
 
 ## requirejs相关
 
@@ -23,7 +23,7 @@
 
 分两步：
 #### 增加依赖别名（可选）{#dep-name}
-打开[example应用](/rdk_server/app/example/web/index.html)的index.html，在文档头中有下面的代码
+打开[example应用](/rdk/app/example/web/index.html)的index.html，在文档头中有下面的代码
 ~~~
 <script type="text/javascript">
     require.config({
@@ -58,7 +58,7 @@
 
 #### 依赖注入
 
-打开[example应用](/rdk_server/app/example/web/index.html)的main.js文件，如果你把所有的匿名函数都叠起来，你会发现整个应用的代码看起来是这样的
+打开[example应用](/rdk/app/example/web/index.html)的main.js文件，如果你把所有的匿名函数都叠起来，你会发现整个应用的代码看起来是这样的
 ~~~
 define('main', ['application', 'utils', 'i18n', 'blockUI'],
 	function(application, utils, i18n) {
