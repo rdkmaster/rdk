@@ -42,82 +42,12 @@ application.initDataSourceService(DSService);
                 id: 3,
                 label: "湖北省"
         }];
+        
+        scope.table = []
+        angular.extend(scope.table,scope.cityItems)
+
         scope.city = false;
-        EventService.register('accordion',EventTypes.CHANGE,function(event,data){
-            scope.city = data;
-        })
-        EventService.register("cityid",EventTypes.CHANGE,function(event,data){
-            if(data.length!=0){
-                var str = data[0].label;
-            }
-            EventService.broadcast('comboCity',EventTypes.CHANGE,str);
-            scope.str = '江苏省'
-        })
 
-        EventService.register("strSelect",EventTypes.CHANGE,function(event,data){
-            if(data.length!=0){
-                var strSelect = data[0].label;
-            }
-            EventService.broadcast('tab',EventTypes.CHANGE,strSelect);
-            scope.strSelect = '江苏省'
-        })
-
-
-        EventService.register("scrollerBasic",EventTypes.CHANGE,function(event,data){
-            if(data.length!=0){
-                var basicSelect = data[0].label;
-            }
-            EventService.broadcast('comId1',EventTypes.CHANGE,basicSelect);
-            scope.basicSelect = '江苏省'
-        })
-        
-        EventService.register("scrollerTable_0",EventTypes.CHANGE,function(event,data){
-            if(data.length!=0){
-                var basicSelect = data[0].label;
-            }
-            EventService.broadcast('table_0',EventTypes.CHANGE,basicSelect);
-            scope.tableStr = '江苏省'
-        })
-        EventService.register("scrollerTable_1",EventTypes.CHANGE,function(event,data){
-            if(data.length!=0){
-                var basicSelect = data[0].label;
-            }
-            EventService.broadcast('table_1',EventTypes.CHANGE,basicSelect);
-            scope.tableStr = '江苏省'
-        })
-        EventService.register("scrollerTable_2",EventTypes.CHANGE,function(event,data){
-            if(data.length!=0){
-                var basicSelect = data[0].label;
-            }
-            EventService.broadcast('table_2',EventTypes.CHANGE,basicSelect);
-            scope.tableStr = '江苏省'
-        })
-        EventService.register("scrollerTable_3",EventTypes.CHANGE,function(event,data){
-            if(data.length!=0){
-                var basicSelect = data[0].label;
-            }
-            EventService.broadcast('table_3',EventTypes.CHANGE,basicSelect);
-            scope.tableStr = '江苏省'
-        })
-        EventService.register("scrollerTable_4",EventTypes.CHANGE,function(event,data){
-            if(data.length!=0){
-                var basicSelect = data[0].label;
-            }
-            EventService.broadcast('table_4',EventTypes.CHANGE,basicSelect);
-            scope.tableStr = '江苏省'
-        })
-        EventService.register("scrollerTable_5",EventTypes.CHANGE,function(event,data){
-            if(data.length!=0){
-                var basicSelect = data[0].label;
-            }
-            EventService.broadcast('table_5',EventTypes.CHANGE,basicSelect);
-            scope.tableStr = '江苏省'
-        })
-        
-        scope.panelRDK = false;
-        EventService.register('panelRDK',EventTypes.BEFORE_CLOSE,function(event,data){
-            scope.panelRDK = true;
-        })
         scope.images=[{src:'/doc/client/demo/controls/scroller/basic/img/img1.png',title:'Pic 1',
                         cityItems:{
                             rowDescriptor: [{
@@ -136,6 +66,7 @@ application.initDataSourceService(DSService);
                             
                         },
                         comId:'comId1',
+                        selID: 'selID1'
                        
                     },
                     {src:'/doc/client/demo/controls/scroller/basic/img/img2.jpg',title:'Pic 2',
@@ -156,7 +87,7 @@ application.initDataSourceService(DSService);
                             
                         },
                         comId:'comId2',
-                       
+                        selID: 'selID2'
                     },
                     {src:'/doc/client/demo/controls/scroller/basic/img/img3.jpg',title:'Pic 3',
                         cityItems:{
@@ -176,7 +107,7 @@ application.initDataSourceService(DSService);
                                 
                         },
                         comId:'comId3',
-                       
+                        selID: 'selID3'
                     },
                     {src:'/doc/client/demo/controls/scroller/basic/img/img4.png',title:'Pic 4',
                         cityItems:{
@@ -196,7 +127,7 @@ application.initDataSourceService(DSService);
                             
                         },
                         comId:'comId4',
-                       
+                        selID: 'selID4'
                     },
                     {src:'/doc/client/demo/controls/scroller/basic/img/img5.png',title:'Pic 5',
                         cityItems:{
@@ -216,9 +147,60 @@ application.initDataSourceService(DSService);
                                 
                             },
                         comId:'comId5',
-                        
+                        selID: 'selID5'
                     }
         ]; 
+
+        EventService.register('accordion',EventTypes.CHANGE,function(event,data){
+            scope.city = data;
+        })
+        EventService.register("cityid",EventTypes.CHANGE,function(event,data){
+            if(data.length!=0){
+                var str = data[0].label;
+            }
+            EventService.broadcast('comboCity',EventTypes.CHANGE,str);
+            scope.str = str;
+        })
+
+        EventService.register("strSelect",EventTypes.CHANGE,function(event,data){
+            if(data.length!=0){
+                var strSelect = data[0].label;
+            }
+            EventService.broadcast('tab',EventTypes.CHANGE,strSelect);
+            scope.strSelect = '江苏省'
+        })
+
+        for(var a = 0;a<=scope.images.length;a++){
+            (function (idx) {
+                EventService.remove('selID'+idx, EventTypes.CHANGE);
+                EventService.register('selID'+idx, EventTypes.CHANGE, function(event, data) {
+                    if(data.length!=0){
+                        var scrollerBasic = data[0].label;
+                    }
+                    EventService.broadcast('comId'+idx, EventTypes.CHANGE, scrollerBasic);
+                    scope.scrollerBasic = scrollerBasic;   
+                });
+            })(a);
+        };
+
+
+        for(var i = 0;i <= 5;i++){
+            (function(b){
+                EventService.remove('scrollerTable_'+b, EventTypes.CHANGE);
+                EventService.register("scrollerTable_"+b,EventTypes.CHANGE,function(event,data){
+                    if(data.length!=0){
+                        var basicSelect = data[0].label;
+                    }
+                    EventService.broadcast('table_'+b,EventTypes.CHANGE,basicSelect);
+                    scope.tableStr = basicSelect
+                })
+            })(i)
+        }
+        
+        scope.panelRDK = false;
+        EventService.register('panelRDK',EventTypes.BEFORE_CLOSE,function(event,data){
+            scope.panelRDK = true;
+        })
 
         scope.setting = {
             "columnDefs" :[
@@ -230,19 +212,7 @@ application.initDataSourceService(DSService);
                 }
             ]
         }
-        scope.table = [{
-                id: 0,
-                label: "江苏省"
-            }, {
-                id: 1,
-                label: "浙江省"
-            }, {
-                id: 2,
-                label: "河南省"
-            }, {
-                id: 3,
-                label: "湖北省"
-        }];
+
 
         scope.panelfun = function() {
             scope.panelClose = '江苏省'

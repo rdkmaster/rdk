@@ -34,9 +34,9 @@
         height: 500px;
         text-align: center;
     }
+    
     </style>
 </head>
-
 <body ng-controller='rdk_ctrl' class="rdk_main">
     <div class="demo1 demo">
         <rdk_accordion caption="'城市'" id="accordion">
@@ -70,38 +70,25 @@ show_close="true" width="300px" id='panelRDK' before_close="panelfun()">
                 </rdk_combo_select>
             </div>
         </rdk_tab>
-        <div>{{strSelect}}</div>
+        <span>{{strSelect}}</span>
     </div>
-
-
-
-
-
-
-
     <div class="demo4 demo">
         <rdk_scroller id="scroller" data="images" scroll_policy='manual' loop="false" >
             <div>
                 <img ng-src="{{item.src}}"  style="width:100%;height:100%" />
                 <rdk_combo_select caption="'已选项:'" open='true' id={{item.comId}}>
-                     <rdk_basic_selector multiple_select="false" class="rdk_selector_style" id="scrollerBasic" data="item.cityItems.rowDescriptor" >
+                     <rdk_basic_selector multiple_select="false" track_item_by="id" class="rdk_selector_style" id={{item.selID}} data="item.cityItems.rowDescriptor" >
                      </rdk_basic_selector>
                 </rdk_combo_select>
             </div>
         </rdk_scroller>
-        <div>{{basicSelect}}</div>
+        <span>{{scrollerBasic}}</span>
     </div>
-
-
-
-
-
-
     <div class="demo5 demo">
         <rdk_table ds="ds_table" ds-url="/doc/client/demo/controls/table/mockdata/table" ds_query_if="ready"
         setting="setting">
         </rdk_table>
-        <div>{{tableStr}}</div>
+        <span>{{tableStr}}</span>
     </div>
 
       

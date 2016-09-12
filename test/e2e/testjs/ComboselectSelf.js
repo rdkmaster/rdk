@@ -18,7 +18,7 @@ describe('Table Demos',function(){
         comboSelector1.click();
         li.click();
         p.getText().then(function(txt){
-            expect(txt).toBe("江苏省");
+            expect(comboSelector1.getAttribute("title")).toBe(txt);
         });       
     });
 
@@ -49,7 +49,7 @@ describe('Table Demos',function(){
         comboSelector1.click();
         li.click();
         p.getText().then(function(txt){
-            expect(txt).toBe("江苏省");
+            expect(comboSelector1.getAttribute("title")).toBe(txt);
         });       
     });
     it('测试change',function(){
@@ -61,7 +61,7 @@ describe('Table Demos',function(){
         comboSelector1.click();
         li.click();
         p.getText().then(function(txt){
-            expect(txt).toBe("浙江省");
+            expect(comboSelector1.getAttribute("title")).toBe(txt);
         });       
     });
     it('测试change',function(){
@@ -73,7 +73,7 @@ describe('Table Demos',function(){
         comboSelector1.click();
         li.click();
         p.getText().then(function(txt){
-            expect(txt).toBe("河南省");
+            expect(comboSelector1.getAttribute("title")).toBe(txt);
         });       
     });
     it('测试change',function(){
@@ -85,7 +85,7 @@ describe('Table Demos',function(){
         comboSelector1.click();
         li.click();
         p.getText().then(function(txt){
-            expect(txt).toBe("湖北省");
+            expect(comboSelector1.getAttribute("title")).toBe(txt);
         });       
     });
     

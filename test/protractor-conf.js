@@ -3,7 +3,7 @@ exports.config = {
     allScriptsTimeout: 15000,
 
     specs: [
-        'e2e/testjs/ComboselectSelf.js'
+        'e2e/testjs/*.js'
     ],
 
     multiCapabilities: [{
