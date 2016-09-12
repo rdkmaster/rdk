@@ -1,6 +1,6 @@
 .rdk-selector-module{
     min-width: 120px;
-    width: 200px;
+    width: 100%;
     max-height: 800px;
     border: 1px solid #A5A6AA;
     border-radius: 4px;
