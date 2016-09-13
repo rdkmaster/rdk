@@ -149,7 +149,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                 }
 
                 function _move2Center(){
-                    if(scope.caption) return;
+                    if((scope.caption)||(iEle[0].querySelector("HEADER_RENDERER"))) return;
                     _uncoverMove2Center();
                     _coverMove2Center();                       
                 }
@@ -401,30 +401,62 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     }
                 }
 
-                function _exceptionHandler(){
-                    if(!scope.caption){
-                        $(themeDom).css({'display': 'inline-block', 'vertical-align': 'top', 'width': '22px'});
+                function _hasCaptionHandler(){
+                    if((direction == PositionTypes.LEFT)||(direction == PositionTypes.RIGHT)){
+                        console.warn('caption非空时只支持上下展开，左右展开时请删除caption属性');
+                        scope.supportable = false;
                     }
-                    else{
+                }
+
+                function _noCaptionHandler(){
+                    if(!iEle[0].querySelector("HEADER_RENDERER")){
+                        $(themeDom).css({'display': 'inline-block', 'vertical-align': 'top', 'width': '22px'});//只支持top对齐
+                    }                    
+                }
+
+                function _coverExceptionHandler(){
+                    if((direction == PositionTypes.TOP)||(direction == PositionTypes.BOTTOM)){
+                        if(scope.exchangable){
+                            console.warn('上下覆盖展开时不支持icon互换，请去掉exchange属性');
+                            scope.supportable = false;
+                        }
+                    }
+                }
+
+                function _uncoverExceptionHandler(){
+                    if(scope.exchangable){
+                        console.warn('上下左右挤开时不支持icon互换，请去掉exchange属性');
+                        scope.supportable = false;
+                    }                    
+                }
+
+                function _tbExceptionHandler(){
+                    if((direction == PositionTypes.TOP)||(direction == PositionTypes.BOTTOM)){
+                        if(scope.minWidth!=0){
+                            console.warn('上下挤开和覆盖展开情况下都不支持非零的minWidth设置，请去掉minWidth属性');
+                            scope.supportable = false;                            
+                        }
+
+                    }
+                }
+
+                function _lrExceptionHandler(){
+                    //交换位置的animate设计iEle[0]的位移，同时设置left/right可能有异常
+                    $timeout(function(){
                         if((direction == PositionTypes.LEFT)||(direction == PositionTypes.RIGHT)){
-                            console.warn('caption非空，不支持left/right，left/right时请删除caption属性');
-                            scope.supportable = false;
+                            if((scope.coverable) && (scope.exchangable) && (iEle[0].offsetWidth > themeDom.offsetWidth)){
+                                console.error('左右覆盖且交换图标展开情况下，同时设置left和right时出异常，请去掉其中之一');
+                                scope.supportable = false;  
+                            }
                         }
-                    }
-                    if((scope.coverable && scope.exchangable)||(scope.minWidth!=0)){
-                        if((direction == PositionTypes.TOP)||(direction == PositionTypes.BOTTOM)){
-                            console.warn('上下覆盖时不支持互换，上下挤开和覆盖都不支持minWidth');
-                            scope.supportable = false;
-                        }
-                    }
-                    if((!scope.coverable) && (scope.exchangable)){
-                        console.warn('挤开时不支持交换位置');
-                        scope.supportable = false;
-                    }
-                    if((scope.outerLeft != 'auto') && (scope.outerRight != 'auto')){
-                        console.warn('左右展开时不能同时设置left和right');
-                        scope.supportable = false;
-                    }
+                    }, 0)
+                }
+
+                function _exceptionHandler(){
+                    scope.caption ? _hasCaptionHandler() : _noCaptionHandler();
+                    scope.coverable ? _coverExceptionHandler() : _uncoverExceptionHandler();
+                    _tbExceptionHandler();
+                    _lrExceptionHandler();
                 }
 
                 function _defaultCoverable(defaultBln){
