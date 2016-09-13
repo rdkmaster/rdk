@@ -36,6 +36,7 @@ function() {
                                        </div>\
                                    </div>\
                               </div>\
+							  <div style="clear:both"></div>\
                           </div>',
 
                 controller: ['$scope', function(scope) {
