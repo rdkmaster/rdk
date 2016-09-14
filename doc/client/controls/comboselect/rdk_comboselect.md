@@ -71,23 +71,23 @@
 #### height ####
 控件高度，默认值：200px
 
-#### width ####
+#### width {#width1}
 控件宽度，默认值400px
 
-#### position ####
+#### position {#position1}
 定位属性， 默认值：relative
 
 ### combo-caption ###
 
-#### width ####
+#### width {#width2}
 控件宽度，默认值20%。
 
 ### combo-content-transclude ###
 
-#### width ####
+#### width {#width3}
 选择信息控件宽度，默认值75%。
 
-####position ####
+####position {#position2}
 定位属性,默认值: absolute
 
 #### margin-left ####

@@ -227,11 +227,11 @@ Selector控件提供一个将所有选择项转化为相互连接的字符串函
 
 ### [关键样式示例](/doc/client/demo/controls/basicselector/select_style) ###
 
-### border ###
+### border {#border1}
 边框样式，默认值：1px solid #a5a6aa
 
-### border-radius ###
-向元素添加圆角边框样式，默认值：4px
+### border-radius {#borderRadius1}
+向元素添加圆角边框样式，默认值：4px 
 
 ### background-color ###
 背景色，默认值：#FFFFFF
@@ -242,10 +242,10 @@ Selector控件提供一个将所有选择项转化为相互连接的字符串函
 ### max-height ###
 控件最大高度，默认值：800px
 
-### width ###
+### width {#width}
 控件宽度，默认值400px
 
-### padding ###
+### padding {#padding1}
 属性定义元素边框与元素内容之间的空间（单位：像素）。默认值：10px（即属性元素与上边框的间隔为10px）,padding属性的默认填充顺序为从上开始的顺时针方向。
 
 ### original-item ###
@@ -259,13 +259,13 @@ Selector控件提供一个将所有选择项转化为相互连接的字符串函
 #### margin ####
 定义元素周围的空间即外边距。默认属性:0px 10px 7px 0
 
-#### border ####
+#### border {#border2}
 参见上文中的相关属性解释，默认值: 2px solid #A5A6AA
 
-#### padding ####
+#### padding {#padding2}
 参见上文中的相关属性解释，默认值: 3px
 
-#### border-radius ####
+#### border-radius  {#borderRadius2}
 参见上文中的相关属性解释，默认值: 4px
 
 #### cursor####
@@ -277,10 +277,10 @@ Selector控件提供一个将所有选择项转化为相互连接的字符串函
 ### selector-editor ###
 属性值同original-item
 
-#### width ####
+#### width  {#width2}
 参见上文中的相关属性解释，默认值: 100px
 
-#### border-radius ####
+#### border-radius {#borderRadius3}
 参见上文中的相关属性解释，默认值: 4px
 
 ## 渲染器 ##

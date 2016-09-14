@@ -190,7 +190,7 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 
 ### 模块整体样式 ###
 
-#### width ####
+#### width {#width1}
 控件宽度，默认值400px
 
 #### max-height ####
@@ -198,10 +198,10 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 
 ### 导航按钮（框）属性 ###
 
-#### padding ####
+#### padding {#padding1}
 属性定义元素边框与元素内容之间的空间（单位：像素）。默认值：5px（即属性元素与上边框的间隔为5px）,padding属性的默认填充顺序为从上开始的顺时针方向。
 
-#### width ####
+#### width {#width2}
 宽度 默认值：100%
 
 #### background-color ####
@@ -210,10 +210,10 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 #### position ####
 定位 默认值：absolute
 
-#### border ####
+#### border {#border1}
 边框样式 默认值：1px solid #CDCDCD
 
-#### border-radius ####
+#### border-radius {#border-radius1}
 向元素添加圆角边框样式，默认值：4px
 
 #### font-weight ####
@@ -227,16 +227,16 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 
 ### 文本属性 ###
 
-#### width ####
+#### width {#width3}
 宽度 默认值: 100%
 
-#### border ####
+#### border {#border2}
 参见上文中的相关属性解释，默认值: 1px solid #CDCDCD
 
-#### border-radius ####
+#### border-radius {#border-radius2}
 参见上文中的相关属性解释，默认值: 4px
 
-#### padding ####
+#### padding {#padding2}
 参见上文中的相关属性解释，默认值: 3px
 
 ## 渲染器 ##

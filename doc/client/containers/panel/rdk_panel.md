@@ -74,14 +74,12 @@
 
 ### 模块整体样式 ###
 
-#### width ####
+#### width {#width1}
 控件宽度，默认值200px
 
 #### float ####
 浮动，默认值left
 
-#### border ####
-边框样式 默认值：1px solid #A5A6AA
 
 #### position ####
 定位 默认值：relative
@@ -100,7 +98,7 @@
 #### overflow-y:auto ####
 属性定义文本超出后自动换行
 
-#### width ####
+#### width {#width2}
 宽度 默认值：100%
 
 #### font-weight ####
