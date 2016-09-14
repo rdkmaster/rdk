@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>BasicSelector 自测</title>
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk"
+        src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="self.js"></script>
+    
+
+    <!-- 应用正式运行的时候，请使用下面这个节点，RDK会使用编译后的代码，代码体积小，下载快 -->
+    <!--
+    <script data-main="main.min.js" src="/rdk_server/app/libs/requirejs/require.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    -->
+    
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/test/module/testee_helper',
+            }
+        });
+    </script>
+</head>
+
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    <div style="position:relative" class="demo1">
+         <rdk_basic_selector data="BasicData" searchable="BasicSelect.isSearchAble" 
+            selected_items="selectedItems" multiple_select="BasicSelect.isMultiple"
+            least="BasicSelect.least" error="BasicSelect.ErrorMsg" child_change="ChildChange"
+            label_field="BasicSelect.labelField" editable="BasicSelect.isEditable" 
+            restrict="validateByfun" max_length="{{BasicSelect.max_length}}" change="changehandle" id="selector">
+         </rdk_basic_selector>
+         <div style="position:absolute;top:10px;left:250px;" class="showArea">
+            <span>selectText:</span><p>{{showText}}</p>
+            <span>least:{{BasicSelect.least}}</span><br>
+            <span>errorMsg:{{errorMsg}}</span><br>
+            <span>child_change属性,点击目标时获取选中项：{{child_changeVal}}</span><br>
+            <span>chang属性获取选中目标信息:{{changeVal}}</span>
+        </div>
+        <div style="position:absolute;top:10px;left:550px;">
+            <span>max_length:{{BasicSelect.max_length}}</span><br>
+        </div>
+     </div>
+     
+     <div style="margin-top:20px;" class="option">
+        <button class="showSelect" ng-click="getSelectedVal(selectedItems)">显示选中项</button>
+        <button class="search" ng-click="toggleSearchable(BasicSelect.isSearchAble)">
+            searchable={{BasicSelect.isSearchAble}}
+        </button>
+        <button class="multiple" ng-click="toggleMultiple(BasicSelect.isMultiple)">
+            multiple_select={{BasicSelect.isMultiple}}
+        </button>
+        <input class="least" type="text" ng-model="BasicSelect.least" placeholder="set least" ><br>
+        <button class="labelToId" ng-click="toggleLabelField(BasicSelect.labelField)">
+            label_field={{BasicSelect.labelField}}
+        </button>
+        <button class="editable" ng-click="toggleEditable(BasicSelect.isEditable)">
+            editable={{BasicSelect.isEditable}}
+        </button>
+        <button class="restrict" ng-click="toggleRestrict()">
+            isRestrict={{BasicSelect.isRestrict}}
+        </button>
+        <input ng-model="BasicSelector.RegExpStr" ng-change="getRegStr(BasicSelector.RegExpStr)" class="getReg">
+        <input type="text" ng-model="BasicSelect.max_length" placeholder="set max_length">
+     </div>
+     
+     <div style="position:relative" class="demo2">
+        <rdk_basic_selector ds="ds_city" ds_url="$svr/city" id="id_selector" 
+            ds_data_processor="dataProcessor" ds_query_if="ready" data="ds_city"
+            multiple_select="false">
+        </rdk_basic_selector>
+        <div class="test-ds" style="position:absolute;top:10px;left:250px;">
+            <span>{{rs}}</span>
+        </div>
+     </div>
+    
+    <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
+    <!--     这个节点可选，删除后，RDK会自动生成一个    -->
+    <!--           这个节点只支持基本HTML标签           -->
+    <div style="height:100px"></div>
+    <rdk_loading>
+        <img src="images/loding.gif" alt="loading..."/>
+    </rdk_loading>
+</body>
+
+</html>

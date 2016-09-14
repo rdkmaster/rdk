@@ -37,7 +37,7 @@
             </rdk_accordion>
             <textarea style="position:absolute;width:25%;height:100px;right:25%;top:45%">{{selectedInfo}}</textarea>
         </div>
-        <div ds="ds_accordion" ds_url="$svr/salary2" ds_query_if="ready" style="width:500px;" class="demo2">
+        <div class="demo2" ds="ds_accordion" ds_url="$svr/salary2" ds_query_if="ready" style="width:500px;">
             <rdk_accordion caption="'Accordion_'+$index"  ng-repeat="table in ds_accordion">
                 <rdk_table id="wks_table_{{$index}}" data="table" setting="tablesetting" 
                 ></rdk_table>

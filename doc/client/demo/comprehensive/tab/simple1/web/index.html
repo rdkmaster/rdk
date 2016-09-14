@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Tab -> Basic</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
+</head>
+
+<body ng-controller='myCtrl' class="rdk_main tab_main">
+    <!--根据一级标题个数设置class 如：个数为1,2,3分别设置为main_title01,main_title02,main_title03  可支持最多10个标题-->
+    <rdk-tab draggable="false" class="main_title03">
+    <!--若标签结构相同，请保持所有class名称与此设置一致-->
+    <!--一级标题  标题名称也可写在标签内部，用title属性：'title'='重要指标'-->
+        <!--根据二级标题个数设置class 如：个数为1,2,3分别设置为sub_title01,sub_title02,sub_title03 可支持最多10个标题-->
+        <div class="sub-title sub_title05">
+            <title_renderer>
+                <span>重要指标</span> 
+            </title_renderer>
+            <rdk-tab class="sub-title-content" draggable="false">
+            <!--二级标题  标题名称也可写在标签内部，用title属性：'title'='重要指标'-->
+                <div>
+                    <title_renderer>
+                        <span>重要指标</span> 
+                        <span class="title_score">({{value11}}/{{value12}})</span>
+                    </title_renderer>
+                    <!--详细内容-->
+                    <p>网页打开时延</p>
+                    <p>网页响应成功率</p>
+                </div>
+                <div>
+                    <title_renderer>
+                        <span>无线需求</span> 
+                        <span class="title_score">({{value13}}/{{value14}})</span>
+                    </title_renderer>
+                    <p>网页下载速率</p>
+                    <p>业务时长</p>
+                </div>
+                <div>
+                    <title_renderer>
+                        <span>无线</span> 
+                        <span class="title_score">({{value15}}/{{value16}})</span>
+                    </title_renderer>
+                    <p>网页首包时延</p>
+                    <p>网页响应成功率</p>
+                </div>
+                <div>
+                    <title_renderer>
+                        <span>视频</span> 
+                        <span class="title_score">({{value17}}/{{value18}})</span>
+                    </title_renderer>
+                    <p>网页下载速率</p>
+                    <p>网页响应成功率</p>
+                </div>
+                <div>
+                    <title_renderer>
+                        <span>大数据</span> 
+                        <span class="title_score">({{value19}}/{{value1a}})</span>
+                    </title_renderer>
+                    <p>网页打开时延</p>
+                    <p>网页响应成功率</p>
+                </div>
+            </rdk-tab>
+        </div>
+        <div class="sub-title sub_title04">
+            <title_renderer>
+                <span>业务体验</span> 
+                <span class="title_score">{{value2}}/{{value20}}</span>
+            </title_renderer>
+            <rdk-tab class="sub-title-content" draggable="false">
+                <div>
+                    <title_renderer>
+                        <span>网页浏览</span> 
+                        <span class="title_score">({{value21}}/{{value22}})</span>
+                    </title_renderer>
+                    <p>123</p>
+                    <p>123</p>
+                </div>
+                <div>
+                    <title_renderer>
+                        <span>即时通讯</span> 
+                        <span class="title_score">({{value23}}/{{value24}})</span>
+                    </title_renderer>
+                    <p>123</p>
+                    <p>234</p>
+                </div>
+                <div>
+                    <title_renderer>
+                        <span>社交媒体</span> 
+                        <span class="title_score">({{value25}}/{{value26}})</span>
+                    </title_renderer>
+                </div>
+                <div>
+                    <title_renderer>
+                        <span>视频</span> 
+                        <span class="title_score">({{value27}}/{{value28}})</span>
+                    </title_renderer>
+                </div>
+            </rdk-tab>
+        </div>
+        <div class="sub-title sub_title04">
+            <title_renderer>
+                <span>无线质量</span> 
+                <span class="title_score">{{value3}}/{{value30}}</span>
+            </title_renderer>
+            <rdk-tab class="sub-title-content" draggable="false">
+                <div>
+                    <title_renderer>
+                        <span>无线概览</span> 
+                        <span class="title_score">({{value31}}/{{value32}})</span>
+                    </title_renderer>
+                    <p>123</p>
+                    <p>123</p>
+                </div>
+                <div>
+                    <title_renderer>
+                        <span>无线需求</span> 
+                        <span class="title_score">({{value33}}/{{value34}})</span>
+                    </title_renderer>
+                    <p>123</p>
+                    <p>234</p>
+                </div>
+                <div>
+                    <title_renderer>
+                        <span>无线</span> 
+                        <span class="title_score">({{value35}}/{{value36}})</span>
+                    </title_renderer>
+                </div>
+                <div>
+                    <title_renderer>
+                        <span>视频</span> 
+                        <span class="title_score">({{value37}}/{{value38}})</span>
+                    </title_renderer>
+                </div>
+            </rdk-tab>
+        </div>
+    </rdk-tab>
+</body>
+
+</html>

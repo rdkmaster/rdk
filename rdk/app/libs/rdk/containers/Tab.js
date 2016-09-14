@@ -66,7 +66,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                         var tabid = Utils.createUniqueId('tab_item_');
                         tabs[i].setAttribute('id', tabid);
                         var title = tabs[i].getAttribute('title')
-                        var compileTitle, renderTitle;
+                        var compileTitle = undefined, renderTitle=undefined;
                         if (title) {
                             compileTitle = Utils.compile(scope.$parent, title);
                         } else {

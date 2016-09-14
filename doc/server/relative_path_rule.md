@@ -1,3 +1,5 @@
+<rdk_title>路径宏</rdk_title>
+
 RDK提供了一组宏来描述应用目录，包括：
 
 - `$web`：对应应用的web目录，以example应用为例，该目录为 app/example/web；
@@ -44,6 +46,3 @@ RDK提供了一组宏来描述应用目录，包括：
 
 
 
-<div title="路径宏" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

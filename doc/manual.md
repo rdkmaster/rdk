@@ -1,3 +1,5 @@
+<rdk_title>RDK应用开发基础</rdk_title>
+
 ## 应用包结构
 
 下面是一个应用的目录结构，所有应用都采用下面的结构保存文件
@@ -73,7 +75,7 @@
 
 ![](server/img/jre_too_old_error.PNG)
 
-说明你当前环境使用的Java运行环境版本过低，请使用至少Java1.8以上的版本。这里可以[下载](http://10.9.233.35:8080/tools/jre_win_1.8.zip)到Win32的Java8运行环境。
+说明你当前环境使用的Java运行环境版本过低，请使用至少Java1.8以上的版本。这里可以下载到 [Win32](http://10.9.233.35:8080/tools/jre1.8.0_32_101.zip) 或者 [Win64](http://10.9.233.35:8080/tools/jre1.8.0_64_101.zip) 的Java8运行环境。
 
 
 #### example页面长时间都是空白 {#can-not-open-example}
@@ -135,11 +137,11 @@
 
 ## 开发第一个应用
 
-新手宝典：[天龙八步](/rdk_server/doc/best_practise/index.html)，把一个应用拆分出若干个步骤讲解开发过程，隆重推荐。
+新手宝典：[天龙八步](/rdk_server/doc/best_practise/index.md)，把一个应用拆分出若干个步骤讲解开发过程，隆重推荐。
 
 ## 开发前端部分
 
-这部分请参考[rdk客户端部分的文档](/rdk_client/doc)。注意最好查看当前环境所使用的rdk客户端对应版本的文档。
+这部分请参考[rdk客户端部分的文档](/doc/client/index.html)。注意最好查看当前环境所使用的rdk客户端对应版本的文档。
 
 
 ## 开发后端部分
@@ -265,7 +267,7 @@ RDK提供了一组记录日志的函数，它们有共同的定义：
 
 为了能够设置断点，我们需要在本地搭建一个后端服务的运行环境，听起来好像很复杂，实际上，的确有些麻烦。
 
-[点击这里继续](how_to_debug_service.html)
+[点击这里继续](how_to_debug_service.md)
 
 
 ### Web页面中使用服务
@@ -416,6 +418,3 @@ RDK提供了一组记录日志的函数，它们有共同的定义：
 	...
 
 
-<div title="RDK应用开发基础" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

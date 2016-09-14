@@ -6,7 +6,7 @@ if [ "" != "$pid" ]; then
 	echo "RDK Server (pid=$pid) has been already running..."
 	exit
 fi
-jvm_opts="$jvm_opts -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n"
+#jvm_opts="$jvm_opts -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n"
 jvm_opts="-server -Xms4g -Xmx4g -XX:-UseGCOverheadLimit $jvm_opts"
 
 if [ -d "./jre" ]; then

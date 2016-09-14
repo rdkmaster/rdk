@@ -4,7 +4,7 @@ define('main', ['rd.controls.Time'], function() {
     // 创建一个控制器
     app.controller('myCtrl', ['$scope', function(scope) {
         scope.macroValue = {
-            value: "now - 2y", //支持y/m/w/d
+            value: "now - 2y", //支持y/m/w/d/h
             granularity: "quarter"
         }
     }]);

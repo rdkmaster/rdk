@@ -1,0 +1,30 @@
+.distributionSub{
+    font-size:12px!important;
+}
+.distributionSub>.ng-scope{
+    margin-bottom:1px;
+}
+.distributionSub>.ng-scope>div:last-child{
+    height:1px;
+}
+.distributionSub>div.ng-scope>div:nth-child(2){
+    margin-left:55.5px!important;
+}
+.distributionSub>div.ng-scope:first-child>div:nth-child(2){
+    margin-left:-26px!important;
+}
+.distributionSub>div.ng-scope>div:nth-child(2)>div{
+    width:10px!important;
+}
+.distributionSub>.ng-scope>div:first-child span{
+    color:#ccc!important;
+}
+.hrLinePart0,.hrLinePart1,.hrLinePart2,.hrLinePart3,.hrLinePart4,.hrLinePart5{
+    border-top-width:1px;
+}
+.hrLinePart5{
+  border-top-color:#ccc;  
+}
+.score_indicator {
+    height:120px;
+}

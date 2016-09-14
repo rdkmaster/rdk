@@ -1,3 +1,5 @@
+<rdk_title>第1步 搭建开发环境 - RDK应用开发最佳实践</rdk_title>
+
 ## 目标与收获
 
 本小节描述了如何在windows本地搭建RDK应用开发环境。通过本小节的学习，你将学会如何在本地搭建RDK应用开发环境。
@@ -5,7 +7,7 @@
 
 ## 搭建开发环境
 
-请按照[搭建基于windows的调试环境](/doc/manual.html#make-dev-env)这个小节所描述的方法搭建你的开发环境。
+请按照[搭建基于windows的调试环境](/doc/manual.md#make-dev-env)这个小节所描述的方法搭建你的开发环境。
 
 > 注意
 > 
@@ -26,6 +28,3 @@
 
 
 
-<div title="第1步 搭建开发环境 - RDK应用开发最佳实践" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

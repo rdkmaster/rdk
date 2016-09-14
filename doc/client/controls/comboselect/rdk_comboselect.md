@@ -1,3 +1,5 @@
+<rdk_title>ComboSelect组合框</rdk_title>
+
 # 简介 #
 
 `rdk_combo_select` 控件为复合控件，其为一个包含下拉选择项的控件，用户可从中选择单个值或多个值。下拉列表可以支持任何形式的节点。一般来说是一个或者多个div / rdk控件的组合。
@@ -44,7 +46,7 @@
 >支持类型：函数
 
 此属性用于将 rdk_selector 选中的对象转为一个字符串。
-此属性为通用属性，请参见[`childChange`](/doc/client/controls/common/child_change.html)中的说明
+此属性为通用属性，请参见[`childChange`](/doc/client/controls/common/child_change.md)中的说明
 
 <live_demo example="controls/comboselect/comboselect_childchange"  width="605"></live_demo>
 
@@ -118,8 +120,3 @@
 
 
 
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

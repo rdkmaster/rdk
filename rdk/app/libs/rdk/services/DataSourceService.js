@@ -251,7 +251,9 @@
                         if( !option || (option && option.supressEvent!==false)){
                             EventService.broadcast(_this.id, EventTypes.BEFORE_QUERY, {"condition":condition,"ds":_this});
                         }
-                    
+
+
+                         var destCondition = Utils.shallowCopy(condition);
 
                         // method  {String} 请求方式e.g. "GET"."POST"
                         // url {String} 请求的URL地址
@@ -263,10 +265,10 @@
 
                         var config = {
                             method: method,
-                            url: _parseUrl(condition),
+                            url: _parseUrl(destCondition),
                             headers: { 'Content-Type': 'application/json' }
                         }
-                        config[method == DSConst.HTTP_GET ? 'params' : 'data'] = condition;
+                        config[method == DSConst.HTTP_GET ? 'params' : 'data'] = destCondition;
 
                         config = _callAjaxConfigProcessor(config);
 

@@ -1,3 +1,5 @@
+<rdk_title>TabSelect</rdk_title>
+
 # 简介 #
 
 `rdk_tabselect` 主要用于提供一些具有逻辑关系或层级关系的备选项给用户选择的场景，它支持
@@ -112,7 +114,7 @@
 
 ## child_change ##
 
-此属性为通用属性，请参见[`childChange`](/doc/client/controls/common/child_change.html)中的说明
+此属性为通用属性，请参见[`childChange`](/doc/client/controls/common/child_change.md)中的说明
 
 # 事件 #
 
@@ -127,8 +129,3 @@
 此控件没有独立的样式，它的样式都是继承于其各组合控件的样式。详细信息请参见`ComboSelect`,`TabSelector`,`BasicSelector`控件中关于样式的说明。
 
 
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

@@ -1,3 +1,5 @@
+<rdk_title>SingleIndicator</rdk_title>
+
 # 简介 #
 
 `rdk_single_indicator` 主要用于提供单值，它支持
@@ -85,23 +87,16 @@
 
 # 样式 #
 
-### [关键样式示例](/demo/controls/basicselector/select_style) ###
-
-#### color ####
+## color ##
 图标的颜色，默认值：#fff
 
-### background-color ###
+## background-color ##
 图标背景色，默认值：#FF7DB5
 
-###label ###
+## label ##
 文字描述可以自由设置样式
 
-#### value ####
+## value ##
 当前值可以自由设置样式
 
 
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

@@ -1,3 +1,5 @@
+<rdk_title>BasicSelector</rdk_title>
+
 # 简介 #
 
 `rdk_basic_selector` 主要用于提供一些备选项给用户选择的场景，它支持
@@ -148,20 +150,19 @@
 ## error ##
 >支持类型：函数
 
-通过回调方式控件会返回相关异常信息，可以通过控件反馈的具体的错误码来自定义错误信息。控件默认的错误码及异常信息对照请参见[`异常列表`](/doc/controls/common/error_list.html)。代码如下：
+通过回调方式控件会返回相关异常信息，可以通过控件反馈的具体的错误码来自定义错误信息。代码如下：
 
      <rdk_basic_selector error="raiseErrorAct"></rdk_basic_selector>
 
 <live_demo example="controls/basicselector/select_error" width="405"></live_demo>
 
-**注意：异常列表中的错误码对整个RDK控件来说是全局唯一的**
 
 ## child_change ##
 
-此属性为通用属性，请参见[`childChange`](/doc/client/controls/common/child_change.html)中的说明
+此属性为通用属性，请参见[`childChange`](/doc/client/controls/common/child_change.md)中的说明
 
 # 事件 #
-事件是RDK实现交互的主要手段之一，强大但易用。[了解更多](/doc/client/common/event)。
+事件是RDK实现交互的主要手段之一，强大但易用。[了解更多](/doc/client/common/event/EventService.md)。
 
 ## SELECT ##
 >事件类型：EventTypes.SELECT
@@ -290,7 +291,9 @@ Selector控件提供一个将所有选择项转化为相互连接的字符串函
 
 **注意由于渲染器的scope是独立的，所以需要使用appScope的方式来获取距离当前渲染器最近的控制器的作用域。**
 
-### [渲染器示例](/doc/client/controls/basicselector/render_demo.html) ###
+### 渲染器示例 ###
+
+<live_demo example="controls/basicselector/select_renderer" width="810" height="800"></live_demo>
 
 ## 数据源绑定 ##
 
@@ -304,8 +307,3 @@ Selector控件提供一个将所有选择项转化为相互连接的字符串函
 **注意 当使用JSON格式的数据源时，JSON的格式必须正确，否则无法正确返回数据源的内容.**
 
 
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>

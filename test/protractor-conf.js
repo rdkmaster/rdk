@@ -6,18 +6,22 @@ exports.config = {
         'e2e/testjs/*.js'
     ],
 
-    multiCapabilities: [{
-        browserName: 'firefox'
-    }, {
-        browserName: 'chrome'
-    }],
+
+    multiCapabilities: [
+        {
+            browserName: 'firefox'
+        }, 
+        {
+            browserName: 'chrome'
+        }
+    ],
 
     baseUrl: 'http://localhost:8080/',
 
     framework: 'jasmine',
 
     jasmineNodeOpts: {
-        defaultTimeoutInterval: 5000000
+        defaultTimeoutInterval: 50000000
     },
 
     ignoreSynchronization: true,
