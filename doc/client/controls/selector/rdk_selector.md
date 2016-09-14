@@ -114,7 +114,7 @@
 
 ## child_change ##
 
-此属性为通用属性，请参见[`childChange`](/doc/controls/common/child_change.md)中的说明
+此属性为通用属性，请参见[`childChange`](/doc/client/controls/common/child_change.md)中的说明
 
 ## 其他属性 ##
 `rdk_selector` 还拥有 `rdk_accordion` 的 `folded_icon`/`unfolded_icon`,`frozen`,`open` 等属性，也拥有 `rdk_basic_selector` 的 `searchable`,`multiple_select`等属性，具体参见 `rdk_accordion` 和 `rdk_basic_selector` 的控件说明文档。
