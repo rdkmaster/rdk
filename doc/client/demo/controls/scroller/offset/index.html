@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<style type="text/css">
+
+  .left_arrow  {
+   opacity: 0.9;
+   top:200px;
+  }
+  .right_arrow {
+   opacity: 0.9;
+   top:200px;
+  }
+
+</style>
+<body ng-controller='myCtrl'>
+	<rdk_scroller data="images" offset="20" style="width:600px;height:400px" >
+		<img ng-src="{{item.src}}"/>
+		<span> {{item.title}} </span>
+	</rdk_scroller>
+</body>
+
+</html>
