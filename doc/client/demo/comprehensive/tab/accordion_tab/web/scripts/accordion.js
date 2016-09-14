@@ -19,7 +19,11 @@ define('main', ['application', 'blockUI','rd.controls.Table', 'rd.containers.Tab
                 scope.changeTabsStatus =function(){
                     scope.btnStatus=!scope.btnStatus;
                     //折叠收缩content的显示，TODO:控制器中不应该进行DOM操作。。
-                    $(".tab_wrap").find(".content").slideToggle("normal");
+                    if(!scope.btnStatus){
+                        $(".tab_wrap").find(".content").addClass("content-hiddan");
+                    }else{
+                        $(".tab_wrap").find(".content").removeClass("content-hiddan");
+                    }
                 }
                 scope.accordionData = {};
                 scope.accordionData.header = ["一级原因", "原因名称1", "原因名称2", "原因名称3"];

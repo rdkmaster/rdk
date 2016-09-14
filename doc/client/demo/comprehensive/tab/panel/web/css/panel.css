@@ -40,10 +40,10 @@
     left: 44.2%;
 }
 .btn-icon-down{
-    background: url("../../btn-up.png") no-repeat;
+    background: url("../images/btn-up.png") no-repeat;
 }
 .btn-icon-up{
-    background: url("../../btn-down.png") no-repeat;
+    background: url("../images/btn-down.png") no-repeat;
 }
 /* panel animation*/
 @keyframes slideUp {

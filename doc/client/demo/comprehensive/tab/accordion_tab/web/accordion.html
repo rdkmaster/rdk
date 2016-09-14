@@ -18,7 +18,7 @@
     </script>
 </head>
 <body ng-controller='rdk_ctrl' class="rdk_main">
-<div class="tab_wrap">
+<div class="tab_wrap" ng-class="{'wrap-animation':!btnStatus}">
     <rdk_tab selected_tab="0" draggable="true" collapsible="false" class="rdk_tab">
         <div title="空口问题">
             <rdk_accordion caption="'区域指标'" open="true">

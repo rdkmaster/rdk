@@ -1,3 +1,24 @@
+/* animation start*/
+.rdk_tab{
+    min-height: 540px;
+}
+.tab_wrap{
+    position: absolute;
+    width: 650px;
+    bottom:0px;
+    transition: bottom 0.3s linear;
+}
+.wrap-animation{
+    bottom:-510px;
+}
+.content{
+    opacity: 1;
+    transition: opacity 0.3s linear;
+}
+.content-hiddan{
+    opacity: 0;
+}
+/* animation end*/
 .ui-widget-content{
     border: 0;
 }
@@ -14,9 +35,6 @@
 .ui-tabs .ui-tabs-nav li {
     margin: 1px 0.1em 0 0;
 }
-.tab_wrap{
-    position: relative;
-}
 /* tabs nav */
 .ui-tabs .ui-tabs-nav .ui-tabs-anchor,.tab_btn{
     background-color: #63B1EF;
@@ -30,19 +48,19 @@
     padding: 1rem 1rem;
     border: 0;
     position: absolute;
-    top: 3px;
+    top: 13px;
     left: 425px;
 }
 .tab_btn:focus {
     outline: none;
 }
 .tab_btn_up{
-    background-image: url("../../icon_up.png");
+    background-image: url("../images/icon_up.png");
     background-repeat: no-repeat;
     background-position: center;
 }
 .tab_btn_down{
-    background-image: url("../../icon_down.png");
+    background-image: url("../images/icon_down.png");
     background-repeat: no-repeat;
     background-position: center;
 }
