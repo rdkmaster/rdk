@@ -89,9 +89,6 @@
 #### display ####
 显示 默认值：inline-block
 
-#### border ####
-边框样式 默认值：1px solid #A5A6AA
-
 #### border-radius ####
 向元素添加圆角边框样式，默认值：4px
 
