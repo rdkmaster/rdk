@@ -21,10 +21,10 @@ function randomNum(min, max) {
 function matrix(sql, iterator) {
 	
 	if (sql == 'select cityid, cityname from dim_comm_city') {
-		var nj = helper.locale == 'zh_CN' ? '南京' : 'Nan Jing';
-		var yz = helper.locale == 'zh_CN' ? '扬州' : 'Yang Zhou';
-		var sz = helper.locale == 'zh_CN' ? '苏州' : 'Su Zhou';
-		var zj = helper.locale == 'zh_CN' ? '镇江' : 'Zhen Jiang';
+		var nj = rdk_runtime.locale() == 'zh_CN' ? '南京' : 'Nan Jing';
+		var yz = rdk_runtime.locale() == 'zh_CN' ? '扬州' : 'Yang Zhou';
+		var sz = rdk_runtime.locale() == 'zh_CN' ? '苏州' : 'Su Zhou';
+		var zj = rdk_runtime.locale() == 'zh_CN' ? '镇江' : 'Zhen Jiang';
 		return {
 			header: ['cityid', 'cityname'],
 			field: ['cityid', 'cityname'],
@@ -76,9 +76,9 @@ function matrix(sql, iterator) {
 
 function mapper() {
 	return {
-		1: helper.locale == 'zh_CN' ? '南京' : 'Nan Jing',
-		2: helper.locale == 'zh_CN' ? '扬州' : 'Yang Zhou',
-		3: helper.locale == 'zh_CN' ? '苏州' : 'Su Zhou',
-		4: helper.locale == 'zh_CN' ? '镇江' : 'Zhen Jiang',
+		1: rdk_runtime.locale() == 'zh_CN' ? '南京' : 'Nan Jing',
+		2: rdk_runtime.locale() == 'zh_CN' ? '扬州' : 'Yang Zhou',
+		3: rdk_runtime.locale() == 'zh_CN' ? '苏州' : 'Su Zhou',
+		4: rdk_runtime.locale() == 'zh_CN' ? '镇江' : 'Zhen Jiang',
 	}
 }
