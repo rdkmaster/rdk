@@ -229,7 +229,7 @@ RDK2.0表格支持服务端和客户端排序两种方式。
 
 详细示例如下：
 
-<live_demo example="controls/table/popupEditor" width="900"></live_demo>
+<live_demo example="controls/table/popupEditor" width="900" height="400"></live_demo>
 
 (2) 缺省 `editorRenderer` 时的具体格式如下：
 
