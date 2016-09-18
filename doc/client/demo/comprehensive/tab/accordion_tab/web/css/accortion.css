@@ -2,7 +2,7 @@
 .tab_wrap{
     position: absolute;
     width: 650px;
-    bottom:0;
+    bottom:0px;
     transition: bottom 0.3s linear;
 }
 .wrap-animation{
@@ -11,7 +11,7 @@
 .tab_wrap .rdk-tab-content{
     height: 540px;
 }
-.rdk-tab-content{
+.rdk-tab-content,.content{
     opacity: 1;
     overflow-y: auto;
     transition: opacity 0.3s linear;
@@ -23,7 +23,7 @@
 .ui-widget-content{
     border: 0;
 }
-.rdk-tab-content{
+.rdk-tab-content,.content{
     border: 1px solid #ddd;
     margin: 0 .2em;
 }
