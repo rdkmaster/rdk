@@ -37,3 +37,8 @@ a:hover { color: #f60; text-decoration:none; }
     text-align: center;
     z-index: 10001;
 }
+
+.rdk_loading img{
+    width:60px;
+    height: 60px;
+}
