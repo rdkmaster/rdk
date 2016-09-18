@@ -149,7 +149,7 @@ define(['rd.services.EventService', 'jquery','jquery-ui'], function() {
             jqDom.parent().css({ 
                         'position': 'fixed',
                         'width': jqDomWidth + (paddingLen + borderLen) * 2 + 'px', 
-                        'height': jqDomHeight + (paddingLen + borderLen) * 2 + 'px',
+                        // 'height': jqDomHeight + (paddingLen + borderLen) * 2 + 'px',
                         'z-index': zIndex, 
                         'top': topSize + 'px', 
                         'left': leftSize + 'px',
