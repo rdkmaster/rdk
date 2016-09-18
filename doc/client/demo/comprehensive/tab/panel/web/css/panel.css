@@ -5,23 +5,37 @@
     margin: 100px 200px;
 }
 .rdk-panel{
-    border: 0;
     opacity: 0;
+    padding: 8px;
+    border: 1px solid #eee;
+    box-shadow: 1px -1px 2px #eee;
+
 }
 .rdk-panel-module {
-    border-top: 0;
+    border: 0;
+    padding: 0;
 }
-.sticky-wrap {
-    padding: 0 10px;
+/* 滚动条*/
+.panel-content {
+     overflow-x: hidden;
 }
+/* title */
 .panel-title {
     border: 0;
+    /*background-color: #33A5DD;*/
+    background-color: #fff;
+    height: 32px;
+    /*background-color: #eee;*/
+    font-weight: normal;
 }
 .panel-caption{
-    line-height: 30px;
+    line-height: 28px;
 }
 .panel-caption i{
     font-style: normal;
+    font-family: 黑体;
+    color: #333;
+    margin-left: -22px;
 }
 .btn{
     position: absolute;
@@ -77,30 +91,31 @@
     transition: opacity 0.35s linear;
     opacity: 0;
 }
-.panel-title {
-    /*background-color: #33A5DD;*/
-    background-color: #eee;
-    font-weight: normal;
-}
 
 /* table */
 .rdk-panel .rdk-table-module .rdk-table thead>tr {
     color: #008fd4;
-    font-size: 14px;
-    /*background-color: #eeeeee;*/
+    font-size: 12px;
+    background-color: #eeeeee;
     border-bottom: 0;
     /*border-bottom: 1px solid #008FD4;*/
 }
+.rdk-table-module .rdk-table > thead > tr > th {
+    padding: 0 6px;
+}
 /* tr 隔行不同颜色*/
+.rdk-panel .rdk-table-module .rdk-table > tbody > tr:nth-child(odd){
+    background-color: #fff;
+}
 .rdk-panel .rdk-table-module .rdk-table > tbody > tr:nth-child(even){
     background-color: #f3f3f3;
 }
-.rdk-table-module .rdk-table > thead > tr > th {
+.rdk-table-module .rdk-table > thead > tr > th,.rdk-table-module .rdk-table > tbody > tr > td {
     text-align: left; 
 }
 /* td 第2,3,列居中对齐*/
 .text-align,.rdk-panel .rdk-table-module .rdk-table thead>tr>th:nth-of-type(2),.rdk-panel .rdk-table-module .rdk-table thead>tr>th:nth-of-type(3){
-    text-align: center!important;
+    text-align: center !important;
 }
 /*表格详细列*/
 .col-detail > div >div{
@@ -111,8 +126,16 @@
 }
 /*设置head tr 固定在表格头部时的偏移量*/
 .sticky-wrap .sticky-thead, .sticky-wrap .sticky-col, .sticky-wrap .sticky-intersect {
-    left: 10px;
+    left: 0;
 }
+/*表格选择行的背景色*/
 .rdk-table-module .rdk-table tbody tr.selected-row td {
     background-color: #e3eef2
+}
+/*表格字体颜色*/
+.rdk-table-module .rdk-table tr{
+    color: #434343;
+}
+.rdk-table-module .rdk-table > tbody > tr > td {
+    padding: 5px 6px;
 }

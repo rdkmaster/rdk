@@ -1,18 +1,19 @@
 /* animation start*/
-.rdk_tab{
-    min-height: 540px;
-}
 .tab_wrap{
     position: absolute;
     width: 650px;
-    bottom:0px;
+    bottom:0;
     transition: bottom 0.3s linear;
 }
 .wrap-animation{
-    bottom:-510px;
+    bottom:-540px;
 }
-.content{
+.tab_wrap .rdk-tab-content{
+    height: 540px;
+}
+.rdk-tab-content{
     opacity: 1;
+    overflow-y: auto;
     transition: opacity 0.3s linear;
 }
 .content-hiddan{
@@ -22,18 +23,22 @@
 .ui-widget-content{
     border: 0;
 }
-.content{
+.rdk-tab-content{
     border: 1px solid #ddd;
     margin: 0 .2em;
 }
 .ui-tabs .ui-tabs-panel {
-     padding: .1em .7em;
+     padding: 0 8px;
 }
 .rdk-tab-module .ui-widget-header{
     border-bottom: 0 solid #008FD4;
 }
 .ui-tabs .ui-tabs-nav li {
     margin: 1px 0.1em 0 0;
+}
+/*table 容器*/
+.sticky-wrap {
+    overflow: hidden;
 }
 /* tabs nav */
 .ui-tabs .ui-tabs-nav .ui-tabs-anchor,.tab_btn{
@@ -93,8 +98,9 @@
     background-color: #e2eef9;
     margin: 3px 0;
     border-radius: 0;
-    font-size: 13px;
+    font-size: 14px;
     color: #333;
+    padding: 10px 5px;
     font-weight: normal;
     border: 0;
 }
@@ -140,6 +146,20 @@
 }
 .rdk-table-module .rdk-table tr  {
     border-bottom: 0;
+}
+/*表格选择行的背景色*/
+.rdk-table-module .rdk-table tbody tr.selected-row td {
+    background-color: #e3eef2
+}
+.rdk-table-module .rdk-table > tbody > tr > td {
+    padding: 5px 6px;
+}
+.rdk-table-module .rdk-table > thead > tr > th {
+    padding: 5px 6px;
+}
+/*表格字体颜色*/
+.rdk-table-module .rdk-table tr{
+    color: #434343;
 }
 /* table2 不同也签下的多表格样式*/
 .table2 .rdk-table-module .rdk-table thead>tr {
