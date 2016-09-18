@@ -88,10 +88,20 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
 
 
                 function _resize(width, height, chart) {
+                    var w = parseInt(width);
+                    w = isNaN(w) ? 0 : w;
                     var h = parseInt(height);
                     h = isNaN(h) ? 0 : h;
+                    
+                    var graphDom = element[0].childNodes[1];
+                    graphDom.style.width = w + 'px';
+                    graphDom.style.height = h + 'px';
+
                     var labelDom = element[0].childNodes[3];
+                    labelDom.style.width = w + 'px';
+                    labelDom.style.height = h + 'px';
                     labelDom.style['line-height'] = h + 'px';
+                    
                     chart.resize();
                 }
 
