@@ -13,13 +13,7 @@ var fs = require("fs");
 module.exports = function(app) {
   app.get("/demos/data", _dataService);
   app.get("/demos/editor", _editorService);
-  app.post("/gitlab-hook/push", _pushService);
 };
-
-function _pushService(req, res) {
-	console.log(req.body);
-	res.json({result: 'ok'});
-}
 
 function _dataService(req, res) {
   _loadFiles(baseDir + req.query.example, function(htmlData, jsData, cssData) {
@@ -101,7 +95,7 @@ function _loadFiles(dir, callback) {
   });
 
   var cssData = null;
-  fs.readFile(dir + '/user_styles.css', function(error, fileData) {
+  fs.readFile(dir + '/style.css', function(error, fileData) {
     cssData = fileData ? fileData : '';
     _check();
   });
