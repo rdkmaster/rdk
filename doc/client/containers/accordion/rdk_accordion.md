@@ -14,6 +14,7 @@
 > 支持类型：字符串
 
 此属性设置accordion控件的标题,默认值为“标题”。**如果数值为汉字时需要使用单引号**，如：
+
       <rdk_accordion caption="theme"></rdk_accordion>
 	  <rdk_accordion caption="'城市'"></rdk_accordion>  
 
