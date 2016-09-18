@@ -13,16 +13,16 @@ define(['rd.core', 'css!rd.styles.ScoreIndicator',
                             <div ng-repeat = "item in config" style="display:flex;">\
                                 <div style="display:flex;">\
                                     <span style="color:#D5CCBE;" ng-show="{{$index == 0 ? true : false}}">100%</span>\
-                                    <hr class="hrLinePart5" ng-show="{{$index == 0 ? true : false}}"/>\
+                                    <hr class="hrLinePart hrLinePart1"  ng-show="{{$index == 0 ? true : false}}"/>\
                                 </div>\
                                 <div style="display:flex;align-items: center;margin-left: {{$index == 0 ? -26 : 60}}px;">\
                                     <img alt="img" src="{{item.emotion}}" ng-show="setMark(item)"/>\
-                                    <hr class={{"hrLinePart"+$index}} style="width:6px;" ng-show="setMark(item)"/>\
+                                    <hr class="hrLinePart" style="width:6px;border-color:{{item.color}}" ng-show="setMark(item)"/>\
                                     <div style="margin-left: {{item.mark ? 0 : 26}}px;background-color:{{item.color}};width:15px;height:{{setHeight(item.value)}}px;"></div>\
                                 </div>\
-                                <div style="display:flex;">\
+                                <div style="display:flex;position:absolute">\
                                     <p ng-show=false>{{initFaceSpanWidth()}}</p>\
-                                    <hr class={{"hrLinePart"+$index}} ng-style="getRealWidth($index)">\
+                                    <hr class="hrLinePart" ng-style="getRealWidth($index);" style="border-color:{{item.color}}">\
                                     <span class="faceSpan" style="color:{{item.color}};">{{item.label + item.value + "%"}}</span>\
                                 </div>\
                             </div>\
@@ -47,7 +47,7 @@ define(['rd.core', 'css!rd.styles.ScoreIndicator',
                 scope.setHeight = function(proValue) {
                     var parentHeight = height;
                     var itemHeight = parentHeight * proValue / 100;
-                    return itemHeight;
+                    return proValue==0 ?3 : itemHeight;
                 }
 
                 scope.setMark = function(item){
