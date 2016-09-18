@@ -9,7 +9,7 @@
 }
 /*一二级表头公共样式设置*/
 .ui-tabs .ui-tabs-nav li:hover a{
-    text-decoration: underline;
+    text-decoration: none;
     text-decoration-color: #2a6496;
     color:#2a6496;
 }
@@ -24,6 +24,9 @@
 }
 .rdk-tab-module .title li a.selected .title_score{
     color:#008FD4;
+}
+.ui-tabs .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor, .ui-tabs .ui-tabs-nav li.ui-state-disabled .ui-tabs-anchor, .ui-tabs .ui-tabs-nav li.ui-tabs-loading .ui-tabs-anchor{
+    cursor:pointer;
 }
 /*一二级标题自适应宽度设置*/
 .main_title01>div>.ui-widget-header li,.sub_title01 .ui-widget-header li{
