@@ -110,20 +110,20 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
                   doDispatch(ctx, url, req.app, req.param)
               }
             }
+        }
+      }~
+      path("rdk" / "service") {
+        get {
+          parameters('p.as[ServiceParamObj]) {
+            req => ctx =>
+              doDispatch(ctx, req.service :: Nil, req.app, req.param)
+          }
         } ~
-          path("rdk" / "service") {
-            get {
-              parameters('p.as[ServiceParamObj]) {
-                req => ctx =>
-                  doDispatch(ctx, req.service :: Nil, req.app, req.param)
-              }
-            } ~
-              (put | post | delete) {
-                entity(as[ServiceParam]) {
-                  req => ctx =>
-                    doDispatch(ctx, req.service :: Nil, req.app, req.param)
-                }
-              }
+          (put | post | delete) {
+            entity(as[ServiceParam]) {
+              req => ctx =>
+                doDispatch(ctx, req.service :: Nil, req.app, req.param)
+            }
           }
       }
 }
