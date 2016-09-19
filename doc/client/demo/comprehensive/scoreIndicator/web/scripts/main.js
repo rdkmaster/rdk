@@ -12,25 +12,25 @@ app.controller('myCtrl', ['$scope', '$timeout','DataSourceService', 'EventServic
 		scope.isMark = false;
 		scope.config = [{
 		    label: '优',
-		    color: '#55ca8c',
+		    color: '#98e2a6',
 		    emotion: '/doc/client/demo/controls/scoreindicator/faceImage/face1.png',
 		    value: data.data[0],
 		    mark: false
 		}, {
 		    label: '良',
-		    color: '#54acd5',
+		    color: '#9ad0e2',
 		    emotion: '/doc/client/demo/controls/scoreindicator/faceImage/face2.png',
 		    value: data.data[1],
 		    mark: true
 		}, {
 		    label: '中',
-		    color: '#f99660',
+		    color: '#f6c88a',
 		    emotion: '/doc/client/demo/controls/scoreindicator/faceImage/face3.png',
 		    value: data.data[2],
 		    mark: false
 		}, {
 		    label: '差',
-		    color: '#ec6d6d',
+		    color: '#ff8e74',
 		    emotion: '/doc/client/demo/controls/scoreindicator/faceImage/face4.png',
 		    value: data.data[3],
 		    mark: false

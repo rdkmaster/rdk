@@ -22,12 +22,14 @@ define([], function() {
 
 // attributes 是当前Graph所在的html节点的所有属性集。也是一种辅助数据。
 return function(data, context, GraphService, attributes) {
-attributes.$$element.on('click',function(){//饼图点击事件
-    $('.pie_container span.pie_underline').css('background','#509cdc');
-});
-var labelTop = {
+    attributes.$$element.on('click',function(){//饼图点击事件
+        $('.pie_container span.pie_underline').css('background','#509cdc');
+    });
+    var color=null;//不同区域得分颜色
+    color=data.data[0]>=95?'#98e2a6':(data.data[0]>=90&&data.data[0]<95)?'#9ad0e2':(data.data[0]>=80&&data.data[0]<90)?'#f7e685':(data.data[0]>=70&&data.data[0]<80)?'#f6c88a':data.data[0]<70?'#ff8e74':'#dedede';
+    var labelTop = {
         normal: {
-            color: '#7FDA91',
+            color: color,
             label: {
                 show: true,
                 position: 'top',
@@ -49,7 +51,6 @@ var labelTop = {
     //中间显示
     var labelFromatter = {
         normal: {
-            //color:'#000000',
             label: {
                 formatter: function(params) {
                     return 100 - params.value+'%'
@@ -109,7 +110,7 @@ return{
         type: 'pie',
         radius: ['31','34'],
         itemStyle: labelFromatter,
-        minAngle:10,
+        minAngle:0,
         data: [{
             name: '',
             value: data.data[0],
@@ -128,7 +129,7 @@ return{
         type: 'pie',
         hoverAnimation: false,
         radius: ['0', '31'],
-        minAngle: 10,
+        minAngle: 0,
         data: [{
             name: "",
             value: 100,
