@@ -1,6 +1,6 @@
 organization  := "com.zte.vmax"
 
-version       := "2.2-beta"
+version       := "2.2-rc.2"
 
 unmanagedBase := file("proc/bin/lib")
 
@@ -48,5 +48,3 @@ postProcess in webapp := { webappDir => removeAllSvn(webappDir) }
 
 // use jetty container
 jetty(port = 9099)
-
-
