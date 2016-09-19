@@ -71,3 +71,34 @@
     pointer-events:none;
     border-left:1px solid #ccc;
 }
+
+.datetimepicker th, .datetimepicker td, .datetimepicker table tr td span{
+    font-family: "Microsoft Yahei", Arial;
+    font-weight: normal;
+    font-size: 12px;
+    color: #666666;
+}
+
+.datetimepicker th, .datetimepicker .year, .datetimepicker .day{
+    font-weight: bold;
+}
+
+.datetimepicker .active{
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#008fd4),to(#008fd4)) !important;
+}
+
+.datetimepicker .day{
+    padding: 7px 7px;
+}
+
+.datetimepicker-dropdown-bottom-right:after{
+    top: 0 ;
+}
+
+[class*=" datetimepicker-dropdown"]:before {
+  content: none ;
+}
+
+.datetimepicker{
+    margin-top: 0;
+}
