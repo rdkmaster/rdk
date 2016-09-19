@@ -22,8 +22,20 @@
 .hrLinePart0,.hrLinePart1,.hrLinePart2,.hrLinePart3,.hrLinePart4,.hrLinePart5{
     border-top-width:1px;
 }
+.hrLinePart0{
+    border-top-color:#98e2a6;
+}
+.hrLinePart1{
+    border-top-color:#9ad0e2;
+}
+.hrLinePart2{
+    border-top-color:#f6c88a;
+}
+.hrLinePart3{
+    border-top-color:#ff8e74;
+}
 .hrLinePart5{
-  border-top-color:#ccc;  
+    border-top-color:#ccc;  
 }
 .score_indicator {
     height:120px;
