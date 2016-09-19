@@ -1029,22 +1029,26 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                 }
 
                 $scope.firstPage = function() {
+                    if($scope.currentPage == 0) return;
                     $scope.currentPage = 0;
                     $scope.setCurrentPageToTable();
                 }
                 $scope.prevPage = function() {
+                    if($scope.currentPage == 0) return;
                     if ($scope.currentPage > 0) {
                         $scope.currentPage--;
                     }
                     $scope.setCurrentPageToTable();
                 };
                 $scope.nextPage = function() {
+                    if($scope.currentPage==$scope.pageCount()) return;
                     if ($scope.currentPage < $scope.pageCount()) {
                         $scope.currentPage++;
                     }
                     $scope.setCurrentPageToTable();
                 };
                 $scope.lastPage = function() {
+                    if($scope.currentPage==$scope.pageCount()) return;
                     $scope.currentPage = $scope.pageCount();
                     $scope.setCurrentPageToTable();
                 }
