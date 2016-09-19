@@ -22,8 +22,12 @@
 </head>
 
 <body ng-controller='myCtrl' style="width:800px;margin:0 auto">
-    <button ng-click="setMarkPoint()" ds="markPoint" ds-url="/doc/client/demo/controls/map/visualMap/data/markPoint.json">给地图添加MarkPoint</button>
-    <rdk_map id="gis" ds="colorMap"  ds-url="/doc/client/demo/controls/map/visualMap/data/colorMap.json"  query_if="ready" map_define="/doc/client/demo/controls/map/visualMap/scripts/graph_define/map.js" map="'/doc/client/demo/controls/map/visualMap/data/jilin.json'"></rdk_map>
+    <button ng-click="setMarkPoint()" ds="markPoint" ds-url="data/markPoint.json">
+        给地图添加MarkPoint
+    </button>
+    <rdk_map ds="colorMap" ds-url="data/colorMap.json" query_if="ready"
+        map_define="scripts/graph_define/map.js" map="'data/jilin.json'">
+    </rdk_map>
 </body>
 
 </html>

@@ -13,7 +13,7 @@
 </head>
 
 <body ng-controller='rdk_ctrl'>
-    name: <select ds="ds_user" ds_url="/doc/client/demo/common/datasource/mockdata/user_list" ds_query_if="ready"
+    name: <select ds="ds_user" ds_url="../mockdata/user_list" ds_query_if="ready"
         ng-options="ds_user.name for ds_user in ds_user" ng-model="myUser">
       <option value="">-- choose a user --</option>
     </select>

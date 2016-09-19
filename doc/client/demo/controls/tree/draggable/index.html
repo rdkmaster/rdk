@@ -13,7 +13,9 @@
 </head>
 
 <body ng-controller='myCtrl' style="margin-top:20px" > 
-    <rdk_tree ds="ds_tree" ds_url="/doc/client/demo/controls/tree/mockdata/tree_data" node_field="module" label_field="label" ds_query_if="ready" draggable=true></rdk_tree>
+    <rdk_tree ds="ds_tree" ds_url="../mockdata/tree_data" ds_query_if="ready"
+    	node_field="module" label_field="label" draggable="draggable">
+    </rdk_tree>
     <button ng-click="toggleDraggable()">改变拖拽属性</button>
 </body>
 

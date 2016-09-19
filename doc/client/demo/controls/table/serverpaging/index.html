@@ -13,7 +13,11 @@
 </head>
 
 <body ng-controller='myCtrl' style="margin-top:20px">
-    <rdk_table ds="ds_table" ds-url="/doc/client/demo/controls/table/mockdata/table_paging" ds_query_if="ready" paging-type="server" ds_condition_processor="conditionProcessor" page-size="5"  default_condition_processor="tableProcessor"></rdk_table>
+    <rdk_table ds="ds_table" ds_url="../mockdata/table_paging" ds_query_if="ready"
+    	ds_condition_processor="conditionProcessor"
+    	default_condition_processor="tableProcessor"
+    	paging_type="server" page_size="5">
+    </rdk_table>
 </body>
 
 </html>

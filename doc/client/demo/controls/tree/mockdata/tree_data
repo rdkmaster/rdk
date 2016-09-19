@@ -11,9 +11,7 @@
             "module": [],
             "key": "lowspeed",
             "label": "低速率",
-            "url": "/doc/client/demo/controls/table/basic/index.html",
-            "target": "_top",
-            "icon": "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/3.png",
+            "icon": "../img/3.png",
             "font": {
                 "color": "red","font-weight":"bold"
             }
@@ -29,7 +27,7 @@
     "key": "e2e",
     "label": "端到端定界定位",
     "open": true,
-    "icon": "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/1_open.png"
+    "icon": "../img/1_open.png"
 }, {
     "module": [{
         "module": [{
@@ -57,5 +55,5 @@
     "key": "realtimeMonitor",
     "label": "实时监控",
     "open": true,
-    "icon": "/rdk/app/libs/ztree/css/zTreeStyle/img/diy/1_open.png"
+    "icon": "../img/1_open.png"
 }]

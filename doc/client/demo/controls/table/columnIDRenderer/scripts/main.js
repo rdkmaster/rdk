@@ -8,7 +8,7 @@ define('main', ['rd.controls.Table', 'rd.services.Alert'], function() {
             "columnDefs" :[
                 {
                     title : "编辑列",
-                    render : '<a ng-click="appScope.click(item)">点击</a>'
+                    render : '<a ng-click="appScope.click(item)" href="javascript:void(0)">点击</a>'
                 },{
                     title : "编号",
                     targets : 0,

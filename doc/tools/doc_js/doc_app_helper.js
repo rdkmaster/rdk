@@ -8,8 +8,8 @@ define(['rd.core'], function() {
 
     function _fixUrl(url) {
         if (url.search(/\$svr/) != -1) {
-            var svr = location.href.match(/\/doc\/client\/demo\/(.+)\/web\//)[1] + "/server";
-            url = url.replace(/\$svr/, '/doc/client/demo/' + svr);
+            var match = location.pathname.match(/^(\/.*?\/)web\//);
+            return !!match ? url.replace(/\$svr\//, match[1] + 'server/') : url;
         }
         return url;
     }
