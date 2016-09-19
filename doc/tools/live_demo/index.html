@@ -118,8 +118,7 @@ if(isNotEmpty(g_status.ident))
 </script>
 </head>
 <body class="DefaultTheme">
-	<div id="main_container">
-		<p style="text-align:right;font-size:10px;padding:5px;">提示：可以直接编辑代码，随即可以看到效果！也可以<a id="openDemo" href="#">打开此DEMO所在页面</a>！</p>
+	<div id="main_container" style="padding-top: 6px;">
 		<!-- <div class="header"></div> -->
 		<div class="explorer" style="display:none;"></div>
 		<div class="fold_control on" style="display:none;"></div>
@@ -128,8 +127,11 @@ if(isNotEmpty(g_status.ident))
 			<div class="editor_wrapper"></div>
 		</div>
 	</div>
+	<p style="position:fixed;left:15px;bottom:20px;z-index:1000;font-size:10px;text-align:right">
+		可直接编辑代码，随即可以看到效果！
+	</p>
 	<p style="position:fixed;right:15px;bottom:20px;z-index:1000;font-size:10px;text-align:right">
-		感谢 <a href="http://runjs.cn/" target="_blank">runjs.cn</a>
+		<a id="openDemo" href="#">打开此DEMO所在页面</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://runjs.cn/" target="_blank">感谢runjs.cn</a>
 	</p>
 </body>
 </html>
