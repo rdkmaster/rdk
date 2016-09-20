@@ -112,6 +112,9 @@ cd rdk
 cd rdk
 chmod 777 $rdk_resource/sbt/bin/sbt
 chmod 777 -R $rdk_resource/jdk
+##删除原有目录下的rdk*.jar
+rm -rf ../rdk/proc/bin/lib/rdk*.jar
+
 $rdk_resource/sbt/bin/sbt \
 -java-home $rdk_resource/jdk \
 -Dsbt.boot.directory=$rdk_resource/sbt-repo/boot/ \
