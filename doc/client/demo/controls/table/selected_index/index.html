@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>Table -> DataSource</title>
+    <title>Table -> selected_index</title>
 
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
@@ -13,8 +13,9 @@
 </head>
 
 <body ng-controller='myCtrl' style="margin-top:20px">
-    <rdk_table id="id_table" ds="ds_table" ds-url="/doc/client/demo/controls/table/mockdata/table_paging" ds_query_if="ready"
-		selected_index="2"></rdk_table>
+    <rdk_table ds="ds_table" ds_url="../mockdata/table_paging"
+    	ds_query_if="ready" selected_index="2">
+    </rdk_table>
 </body>
 
 </html>

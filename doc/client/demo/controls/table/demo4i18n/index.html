@@ -14,9 +14,9 @@
 	    require.config({
 	        paths: {
 	            //这里引用了rdk应用的公共助手文件，不要改动
-	            "application": '/rdk/app/modules/rdk_app_helpers',
+	            "application": "../../modules/rdk_app_helpers",
 	            //页面的国际化文件配置信息
-	            "i18n": '/doc/client/demo/controls/table/demo4i18n/scripts/i18n',
+	            "i18n": "../../../../doc/client/demo/controls/table/demo4i18n/scripts/i18n",
 	        }
 	    });
 	</script>
@@ -24,7 +24,9 @@
 </head>
 
 <body ng-controller='myCtrl' style="margin-top:20px">
-    <rdk_table ds="ds_table" ds-url="../mockdata/data4PageNumber" ds_query_if="ready" paging-type="server" page-size="2" page_number="6" search='true'></rdk_table>
+    <rdk_table ds="ds_table" ds_url="../mockdata/data4PageNumber" ds_query_if="ready"
+    	paging-type="server" page-size="2" page_number="6" search='true'>
+    </rdk_table>
 </body>
 
 </html>

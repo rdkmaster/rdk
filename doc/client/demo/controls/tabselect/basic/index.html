@@ -12,7 +12,10 @@
 </head>
 
 <body ng-controller="myCtrl">
-    <rdk_tab_select open='true' ds="tabselectData" ds_url="/doc/client/demo/controls/tabselect/data_source/tab_select_ds" ds_query_if="ready" selected_items="selItems" track_item_by="{{trackItemByVal}}" searchable='false' label_field='label' node_field='dim' data='tabselectData'></rdk_tab_select>
+    <rdk_tab_select ds="tabselectData" ds_url="../data_source/tab_select_ds" ds_query_if="ready"
+    	open='true' selected_items="selItems" track_item_by="{{trackItemByVal}}" searchable='false'
+    	label_field='label' node_field='dim' data='tabselectData'>
+    </rdk_tab_select>
 </body>
 
 </html>

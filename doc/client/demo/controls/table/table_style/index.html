@@ -9,14 +9,15 @@
     -->
     <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
     <script src="scripts/main.js"></script>
-    <link rel = "stylesheet" type="text/css" href="/doc/client/demo/controls/table/table_style/user_styles.css" /> 
+    <link rel = "stylesheet" type="text/css" href="style.css" /> 
     </script>
 </head>
 
 <body>
     <div>
-        <rdk_table ds="ds_table" ds-url="/doc/client/demo/controls/table/mockdata/table" ds_query_if="ready"
-			ng-init="initialValue()"></rdk_table>
+        <rdk_table ds="ds_table" ds_url="../mockdata/table"
+            ds_query_if="ready" ng-init="initialValue()">
+        </rdk_table>
     </div>
     <hr>
     <div>
