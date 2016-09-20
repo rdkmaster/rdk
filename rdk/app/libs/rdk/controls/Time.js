@@ -64,8 +64,11 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                     priority: 1000,
                     link: function(scope, elem, attrs) {
                         $timeout(function() {
-                            $(elem).selectpicker();
-                        });
+                            $(elem).selectpicker({
+                                style: 'btn',
+                                size: 5
+                            });
+                        }, 0);
                     }
                 };
             }])
@@ -162,7 +165,7 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                 ng-if="range" readonly datetimepicker option="endTimeOption">\
                                 <span ng-show="setting.selectGranularity == true" class="granularity" \
                                     ng-bind="selectedGranularity.label" ng-click="focusSelect()"></span>\
-                                <select class="selectpicker granularitySelect" ng-model="selectedGranularity" \
+                                <select selectpicker class="selectpicker" ng-model="selectedGranularity" \
                                     ng-options="granularity.label for granularity in granularityList" \
                                     ng-show="setting.selectGranularity == true">\
                                 </select>\
