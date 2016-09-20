@@ -636,9 +636,17 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             return scope.currentPage == 0;
                         }
 
+                        scope.afterStickyWrap = function(){
+                            if(scope.setting && scope.setting.scrollX){
+                                var ele = element[0].querySelector(".sticky-wrap");
+                                $(ele).addClass("sticky-wrap-overflow");//scrollX作用使滚动条产生在内部
+                            }
+                        }
+
                         var off = scope.$on('ngRepeatFinished', function() {
                             _reFreshTable();
                             $(element.find("table")).fixHeader();
+                            scope.afterStickyWrap();
 
                             scope.$watch("selectedIndex", function(newVal, oldVal) { //根据selectedIndex高亮显示
                                 if (newVal != undefined) {
