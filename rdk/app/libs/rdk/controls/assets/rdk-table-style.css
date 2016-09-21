@@ -143,11 +143,12 @@
 
 /* For headerFix */
 
-.sticky-wrap {
+.sticky-wrap-overflow{
     overflow-x: auto;
-    overflow-y: hidden;
+}
+
+.sticky-wrap {
     position: relative;
-    /*margin: 3em 0;*/
     width: 100%;
 }
 

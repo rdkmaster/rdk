@@ -226,7 +226,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                 }
 
                 function _initializeState(){
-                    $(transcludeDom).css({'width': 'inherit', 'height': 'inherit', 'overflow': 'hidden'});
+                    $(transcludeDom).css({'width': 'inherit', 'height': 'inherit', 'overflow-x': 'hidden'});
                     $timeout(function(){
                         _moveArrowPosition();
                         _initialStateHandler();//居中完了才能根据open改变尺寸
