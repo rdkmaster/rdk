@@ -1,9 +1,9 @@
 exports.config = {
     
-    allScriptsTimeout: 15000,
+    allScriptsTimeout: 11000,
 
     specs: [
-        'e2e/testjs/TimeCombined.js'
+        'e2e/testjs/*.js'
     ],
 
     multiCapabilities: [{
