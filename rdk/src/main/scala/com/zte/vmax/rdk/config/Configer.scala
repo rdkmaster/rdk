@@ -49,7 +49,7 @@ trait ConfigTrait extends Logger {
   * Created by 10054860 on 2016/7/9.
   */
 object Config extends ConfigTrait {
-  private val ICT_BASE: String = "../../../../../.."
+  private val ICT_BASE: String = "../../../../../../../.."
   private val `serviceaddress.properties`: String = ICT_BASE + "/utils/vmax-conf/serviceaddress.properties"
   private val `deploy-console.properties`: String = ICT_BASE + "/utils/console/works/console1/conf/deploy-console.properties"
   private val `deploy-usf.properties`: String = ICT_BASE + "/works/global/deploy/deploy-usf.properties"
