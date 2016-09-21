@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>RDK应用工程模板</title>
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk"
+        src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="combined.js"></script>
+
+    <!-- 应用正式运行的时候，请使用下面这个节点，RDK会使用编译后的代码，代码体积小，下载快 -->
+    <!--
+    <script data-main="main.min.js" src="/rdk/app/libs/requirejs/require.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    -->
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/test/module/testee_helper',
+            }
+        });
+    </script>
+    <style type="text/css">
+        .rdk-combo-select-module .combo-content-theme{
+            width: 400px;
+        }
+        .datetimepicker:nth-child(9)>.datetimepicker-minutes thead tr .switch,
+        .datetimepicker:nth-child(9)>.datetimepicker-hours thead tr .switch,
+        .datetimepicker:nth-child(9)>.datetimepicker-days thead tr .switch,
+        .datetimepicker:nth-child(9)>.datetimepicker-months thead tr .switch,
+        .datetimepicker:nth-child(9)>.datetimepicker-years thead tr .switch{
+            background-color: red;
+        }
+        .datetimepicker:nth-child(10)>.datetimepicker-minutes thead tr .switch,
+        .datetimepicker:nth-child(10)>.datetimepicker-hours thead tr .switch,
+        .datetimepicker:nth-child(10)>.datetimepicker-days thead tr .switch,
+        .datetimepicker:nth-child(10)>.datetimepicker-months thead tr .switch,
+        .datetimepicker:nth-child(10)>.datetimepicker-years thead tr .switch{
+            background-color: #000;
+        }
+        .datetimepicker:nth-child(11)>.datetimepicker-minutes thead tr .switch,
+        .datetimepicker:nth-child(11)>.datetimepicker-hours thead tr .switch,
+        .datetimepicker:nth-child(11)>.datetimepicker-days thead tr .switch,
+        .datetimepicker:nth-child(11)>.datetimepicker-months thead tr .switch,
+        .datetimepicker:nth-child(11)>.datetimepicker-years thead tr .switch{
+            background-color: purple;
+        }
+        .datetimepicker:nth-child(12)>.datetimepicker-minutes thead tr .switch,
+        .datetimepicker:nth-child(12)>.datetimepicker-hours thead tr .switch,
+        .datetimepicker:nth-child(12)>.datetimepicker-days thead tr .switch,
+        .datetimepicker:nth-child(12)>.datetimepicker-months thead tr .switch,
+        .datetimepicker:nth-child(12)>.datetimepicker-years thead tr .switch{
+            background-color: yellow;
+        }
+        .datetimepicker:nth-child(13)>.datetimepicker-minutes thead tr .switch,
+        .datetimepicker:nth-child(13)>.datetimepicker-hours thead tr .switch,
+        .datetimepicker:nth-child(13)>.datetimepicker-days thead tr .switch,
+        .datetimepicker:nth-child(13)>.datetimepicker-months thead tr .switch,
+        .datetimepicker:nth-child(13)>.datetimepicker-years thead tr .switch{
+            background-color: orange;
+        }
+        .datetimepicker:nth-child(14)>.datetimepicker-minutes thead tr .switch,
+        .datetimepicker:nth-child(14)>.datetimepicker-hours thead tr .switch,
+        .datetimepicker:nth-child(14)>.datetimepicker-days thead tr .switch,
+        .datetimepicker:nth-child(14)>.datetimepicker-months thead tr .switch,
+        .datetimepicker:nth-child(14)>.datetimepicker-years thead tr .switch{
+            background-color: green;
+        }
+        .datetimepicker:nth-child(15)>.datetimepicker-minutes thead tr .switch,
+        .datetimepicker:nth-child(15)>.datetimepicker-hours thead tr .switch,
+        .datetimepicker:nth-child(15)>.datetimepicker-days thead tr .switch,
+        .datetimepicker:nth-child(15)>.datetimepicker-months thead tr .switch,
+        .datetimepicker:nth-child(15)>.datetimepicker-years thead tr .switch{
+            background-color: blue;
+        }
+        .datetimepicker:nth-child(16)>.datetimepicker-minutes thead tr .switch,
+        .datetimepicker:nth-child(16)>.datetimepicker-hours thead tr .switch,
+        .datetimepicker:nth-child(16)>.datetimepicker-days thead tr .switch,
+        .datetimepicker:nth-child(16)>.datetimepicker-months thead tr .switch,
+        .datetimepicker:nth-child(16)>.datetimepicker-years thead tr .switch{
+            background-color: #333 ;
+        }
+        .datetimepicker:nth-child(17)>.datetimepicker-minutes thead tr .switch,
+        .datetimepicker:nth-child(17)>.datetimepicker-hours thead tr .switch,
+        .datetimepicker:nth-child(17)>.datetimepicker-days thead tr .switch,
+        .datetimepicker:nth-child(17)>.datetimepicker-months thead tr .switch,
+        .datetimepicker:nth-child(17)>.datetimepicker-years thead tr .switch{
+            background-color: #fff ;
+        }
+        .datetimepicker:nth-child(18)>.datetimepicker-minutes thead tr .switch,
+        .datetimepicker:nth-child(18)>.datetimepicker-hours thead tr .switch,
+        .datetimepicker:nth-child(18)>.datetimepicker-days thead tr .switch,
+        .datetimepicker:nth-child(18)>.datetimepicker-months thead tr .switch,
+        .datetimepicker:nth-child(18)>.datetimepicker-years thead tr .switch{
+            background-color: #787878 ;
+        }
+        .datetimepicker:nth-child(19)>.datetimepicker-minutes thead tr .switch,
+        .datetimepicker:nth-child(19)>.datetimepicker-hours thead tr .switch,
+        .datetimepicker:nth-child(19)>.datetimepicker-days thead tr .switch,
+        .datetimepicker:nth-child(19)>.datetimepicker-months thead tr .switch,
+        .datetimepicker:nth-child(19)>.datetimepicker-years thead tr .switch{
+            background-color: #bbb ;
+        }
+        .datetimepicker:nth-child(20)>.datetimepicker-minutes thead tr .switch,
+        .datetimepicker:nth-child(20)>.datetimepicker-hours thead tr .switch,
+        .datetimepicker:nth-child(20)>.datetimepicker-days thead tr .switch,
+        .datetimepicker:nth-child(20)>.datetimepicker-months thead tr .switch,
+        .datetimepicker:nth-child(20)>.datetimepicker-years thead tr .switch{
+            background-color: #aaa ;
+        }
+        .datetimepicker:nth-child(21)>.datetimepicker-minutes thead tr .switch,
+        .datetimepicker:nth-child(21)>.datetimepicker-hours thead tr .switch,
+        .datetimepicker:nth-child(21)>.datetimepicker-days thead tr .switch,
+        .datetimepicker:nth-child(21)>.datetimepicker-months thead tr .switch,
+        .datetimepicker:nth-child(21)>.datetimepicker-years thead tr .switch{
+            background-color: #ccc ;
+        }
+      
+       .demo5 .combo-content-transclude>div>p{
+        background-color: red;
+       }
+    </style>
+</head>
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    <div>Time</div>
+    <div style="margin:20px;" class="demo1">
+        <h6>双时间控件(限制时间间隔)</h6>
+        <rdk_tab>
+            <div title="Time">
+                <rdk_time range setting="TimeGap"></rdk_time>
+            </div>
+        </rdk_tab> 
+        <p>{{TimeGap.granularity=='week'?TimeGap.value[0].label:TimeGap.value[0]}}&nbsp{{TimeGap.granularity=='week'?TimeGap.value[1].label:TimeGap.value[1]}}</p>
+    </div>
+
+    <div style="margin:20px;" class="demo2">
+        <h6>双时间控件</h6> 
+        <rdk_accordion ds="ds_table" ds_url="$svr/salary1" ds_query_if="ready" caption="'表1'" style="width:500px;">
+            <rdk_time range setting="TimeGranularity"></rdk_time>
+        </rdk_accordion>
+        <p>{{TimeGranularity.granularity=='week'?TimeGranularity.value[0].label:TimeGranularity.value[0]}}&nbsp{{TimeGranularity.granularity=='week'?TimeGranularity.value[1].label:TimeGranularity.value[1]}}</p>
+    </div>
+
+    <div style="margin:20px;" class="demo3">
+        <div ng-repeat="item in items" class="demo-child{{$index}}">
+            <rdk_time label="item.label" ng-if="item.range == false" setting="item.setting"></rdk_time>
+            <rdk_time label="item.label" ng-if="item.range" range setting="item.setting"></rdk_time>
+            <p class="p{{$index}}" ng-if="item.range == false">{{item.setting.value}}</p>
+            <p class="p{{$index}}" ng-if="item.range">{{item.setting.granularity=='week'?item.setting.value[0].label:item.setting.value[0]}}&nbsp{{item.setting.granularity=='week'?item.setting.value[1].label:item.setting.value[1]}}</p>
+        </div>
+    </div>
+
+    <div class="demo4" style="margin:20px;">
+        <rdk_panel width="412px">
+            <rdk_time range setting="timePanel"></rdk_time>
+            <p>{{timePanel.granularity=='week'?timePanel.value[0].label:timePanel.value[0]}}&nbsp{{timePanel.granularity=='week'?timePanel.value[1].label:timePanel.value[1]}}</p>
+        </rdk_panel>
+    </div>
+    
+    <div class="demo5" style="margin:100px 0 0 20px;">
+        <rdk_combo_select open='false'>
+            <rdk_time range setting="timeCombo"></rdk_time>
+            <p>{{timeCombo.granularity=='week'?timeCombo.value[0].label:timeCombo.value[0]}}&nbsp{{timeCombo.granularity=='week'?timeCombo.value[1].label:timeCombo.value[1]}}</p>
+
+        </rdk_combo_select>
+    </div>
+       
+
+    <!-- <div class="demo6" style="margin:100px 0 0 20px;">
+        <rdk_scroller data='time' >
+            <div>
+                <rdk_time range setting="item.timeScroller"></rdk_time>
+            </div>
+        </rdk_scroller>
+    </div> -->
+
+    <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
+    <!--     这个节点可选，删除后，RDK会自动生成一个    -->
+    <!--           这个节点只支持基本HTML标签           -->
+    <div style="height:100px"></div>
+    <rdk_loading>
+        <img src="images/loding.gif" alt="loading..."/>
+    </rdk_loading>
+</body>
+
+</html>
