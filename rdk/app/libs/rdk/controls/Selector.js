@@ -102,22 +102,23 @@ define(['angular', 'jquery', 'underscore', 'rd.core','rd.controls.FoldSelector',
                 if(scope.id){
                     scope.idList = _generateIDList();
                     angular.forEach(scope.idList, function(idStr,index){
+                        //外面发到里面
                         EventService.register(scope.id, EventTypes.SELECT, function(event, data){
                             EventService.broadcast(idStr, EventTypes.SELECT, data);
                         });
-                        EventService.register(idStr, EventTypes.CHANGE, function(event, data){
-                            EventService.broadcast(scope.id, EventTypes.CHANGE, data);
-                        });
-
                         EventService.register(scope.id, EventTypes.OPEN, function(event, data){
                             EventService.broadcast(idStr, EventTypes.OPEN);
                         });
                         EventService.register(scope.id, EventTypes.CLOSE, function(event, data){
                             EventService.broadcast(idStr, EventTypes.CLOSE);
                         });
-                        // EventService.register(idStr, EventTypes.CHANGE, function(event, data){
-                        //     EventService.broadcast(scope.id, EventTypes.CHANGE, data);
-                        // });
+                        //里面发到外面
+                        EventService.register(idStr, EventTypes.CHANGE, function(event, data){
+                            var changeObj = {};
+                            changeObj.id = idStr;
+                            changeObj.data = data;
+                            EventService.broadcast(scope.id, EventTypes.CHANGE, changeObj);
+                        });
                     })
                 }
 

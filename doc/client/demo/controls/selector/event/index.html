@@ -12,7 +12,13 @@
 </head>
 
 <body ng-controller='myCtrl'>
-    <rdk_selector style="width: 50%" id="selectorID" open="true" data="allItems" selected_items="dimSelectedItems" groupby="groupByFun"></rdk_selector>
+    <rdk_selector id="selectorID" style="width: 50%" id="selectorID" open="true" data="allItems" selected_items="dimSelectedItems" groupby="groupByFun"></rdk_selector>
+
+	<div>
+	    <button ng-click="changeSelectedItems()">重置选中对象</button>
+	    <button style="margin: 10px" ng-click="close()">关闭所有</button>
+	    <button style="margin: 10px" ng-click="open()">打开所有</button>		
+	</div>
 </body>
 
 </html>

@@ -33,16 +33,21 @@ define('main', ['rd.controls.Selector'], function() {
             { id: 5, label: "河南省" }
         ]; //根据同一个groupBy
 
-        $timeout(function() {
-            EventService.broadcast("selectorID", EventTypes.SELECT, [{ id: 7, label: "湖南省" }, { id: 8, label: "新疆省" }, { id: 9, label: "四川省" }]);
-        }, 3000); //直接给需要被选中的数据集
-
-        $timeout(function() {
-            EventService.broadcast("selectorID", EventTypes.CLOSE);
-        }, 5000);
 
         EventService.register("selectorID", EventTypes.CHANGE, function(event, data) {
-            console.log(data);
+            console.log(data);//发生变化的那组
         });
+
+        scope.changeSelectedItems = function(){
+            EventService.broadcast("selectorID", EventTypes.SELECT, [{ id: 7, label: "湖南省" }, { id: 8, label: "新疆省" }, { id: 9, label: "四川省" }]);
+        }
+
+        scope.close = function(){
+            EventService.broadcast("selectorID", EventTypes.CLOSE);
+        }
+
+        scope.open = function(){
+            EventService.broadcast("selectorID", EventTypes.OPEN);
+        }
     }]);
 });

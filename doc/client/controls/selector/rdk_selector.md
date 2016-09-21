@@ -126,6 +126,9 @@
 # 事件 #
 事件是RDK实现交互的主要手段之一，强大且易用。[了解更多](/doc/client/common/event/EventService.md)。
 
+下面是事件的综合demo：
+<live_demo example="controls/selector/event"  width="405"></live_demo>
+
 ## OPEN ##
 >事件类型：EventTypes.OPEN
 同 `rdk_accordion` 的 `OPEN` 事件，监听到外层的 `OPEN` 事件，即展开所有折叠容器。 
@@ -140,5 +143,41 @@
 
 ## CHANGE ##
 >事件类型：EventTypes.CHANGE
-同 `rdk_basic_selector` 的 `CHANGE` 事件，监听捕获 `rdk_basic_selector` 控件内部修改后的最新的数据信息。关于监听事件请参见`事件机制`中的`监听`部分
+同 `rdk_basic_selector` 和 `rdk_accordion` 的 `CHANGE` 事件，监听捕获 `rdk_basic_selector` 控件内部修改后的最新的数据信息，或者是 `rdk_accordion` 当前或打开或关闭的状态。关于监听事件请参见`事件机制`中的`监听`部分。
+
+**注意**
+
+ - `OPEN/CLOSE/SELECT` 这三个事件是从外部发到控件内部，外部是事件的发出者。 `CHANGE` 事件是从控件内部发到外部，外部是事件的监听者。
+ - `CHANGE` 事件中监听到的数据是发生改变的对象。数据结构如下：
+ 
+`rdk_basic_selector` 发出的 `CHANGE`：
+
+			{
+			  "id": "__unique_id__3",
+			  "data": [
+			    {
+			      "id": 5,
+			      "label": "河南省",
+			      "$$hashKey": "object:32"
+			    },
+			    {
+			      "id": 9,
+			      "label": "四川省",
+			      "$$hashKey": "object:36"
+			    }
+			  ]
+			}
+
+
+
+`rdk_accordion` 发出的 `CHANGE`：
+
+			{
+			  "id": "__unique_id__3",
+			  "data": false
+			}
+	 
+
+
+
 
