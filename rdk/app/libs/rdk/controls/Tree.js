@@ -2,8 +2,8 @@
     var menuTreeApp = angular.module("rd.controls.Tree", [
         'rd.services.EventService'
     ]);
-    menuTreeApp.directive('rdkTree', ['EventService', 'Utils',
-        function(EventService, Utils) {
+    menuTreeApp.directive('rdkTree', ['EventService', 'EventTypes', 'Utils',
+        function(EventService, EventTypes, Utils) {
             return {
                 restrict: 'E',
                 scope: {
@@ -33,6 +33,7 @@
                             if (!scope.setting) {
                                 scope.setting = _defaultSetting(scope);
                             }
+
                             _updateTree(rebornID, scope.setting, scope.data);
 
                             scope.$watch('data', function(newVal, oldVal) {
@@ -82,7 +83,8 @@
                         onClick: _handler,
                         onDblClick: _handler,
                         beforeClick: _beforeClick,
-                        beforeDrag: _beforeDrag
+                        beforeDrag: _beforeDrag,
+                        onDrop: _afterDrag
                     },
                     edit: {
                         enable: scope.draggable || true
@@ -123,6 +125,13 @@
                     }
                     if (scope.rdkBeforeDrag) {
                         scope.rdkBeforeDrag({ name: 'before_drag', treeId: scope.id }, treeNode);
+                    }
+                }
+
+                function _afterDrag(event, treeId, treeNodes, targetNode, moveType, isCopy){
+                    var treeData = $.fn.zTree.getZTreeObj(treeId).getNodes();
+                    if(scope.id){
+                        EventService.broadcast(scope.id, EventTypes.CHANGE, treeData);
                     }
                 }
             }
