@@ -84,9 +84,9 @@ define(['angular', 'jquery', 'rd.core','rd.containers.Accordion','rd.controls.Ba
                         EventService.register(scope.id, EventTypes.CLOSE, function(event, data){
                             EventService.broadcast(scope.accordionID, EventTypes.CLOSE);
                         });
-                        // EventService.register(scope.accordionID, EventTypes.CHANGE, function(event, data){
-                        //     EventService.broadcast(scope.id, EventTypes.CHANGE, data);
-                        // });
+                        EventService.register(scope.accordionID, EventTypes.CHANGE, function(event, data){
+                            EventService.broadcast(scope.id, EventTypes.CHANGE, data);
+                        });
                     }
 
                     if(scope.change(scope)){

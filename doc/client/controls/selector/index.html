@@ -291,6 +291,7 @@ img {
 </style>
 </head>
 <body>
+<p><rdk_title>Selector</rdk_title></p>
 <h1>简介</h1>
 <p><code>rdk_selector</code> 内部按规则封装了多个 <code>rdk_fold_selector</code>， 拥有 <code>rdk_accordion</code> 和 <code>rdk_basic_selector</code> 的所有属性。</p>
 <p>这是一个简单的 <code>rdk_selector</code> 例子：
@@ -315,9 +316,9 @@ img {
 { id: 2, label: &quot;广东省&quot; },
 { id: 3, label: &quot;广西省&quot; },
 { id: 4, label: &quot;河北省&quot; }
+];
 </code></pre>
 
-<p>];</p>
 </li>
 </ul>
 <p>2、<code>data</code> 如果是已经分类的数据全集。要求以 <code>json</code> 对象的方式给出。无需 <code>groupby</code>进行分类。</p>
@@ -399,20 +400,21 @@ img {
 <blockquote>
 <p>支持类型：函数</p>
 </blockquote>
-<p>通过回调方式控件会返回相关异常信息，可以通过控件反馈的具体的错误码来自定义错误信息。控件默认的错误码及异常信息对照请参见<a href="/doc/controls/common/error_list.html"><code>异常列表</code></a>。代码如下：</p>
+<p>通过回调方式控件会返回相关异常信息，可以通过控件反馈的具体的错误码来自定义错误信息。代码如下：</p>
 <pre><code> &lt;rdk_selector error=&quot;raiseErrorAct&quot;&gt;&lt;/rdk_selector&gt;
 </code></pre>
 
 <p><live_demo example="controls/selector/error"  width="405"></live_demo></p>
-<p><strong>注意：异常列表中的错误码对整个RDK控件来说是全局唯一的</strong></p>
 <h2>child_change</h2>
-<p>此属性为通用属性，请参见<a href="/doc/controls/common/child_change.html"><code>childChange</code></a>中的说明</p>
+<p>此属性为通用属性，请参见<a href="/doc/client/controls/common/child_change.md"><code>childChange</code></a>中的说明</p>
 <h2>其他属性</h2>
 <p><code>rdk_selector</code> 还拥有 <code>rdk_accordion</code> 的 <code>folded_icon</code>/<code>unfolded_icon</code>,<code>frozen</code>,<code>open</code> 等属性，也拥有 <code>rdk_basic_selector</code> 的 <code>searchable</code>,<code>multiple_select</code>等属性，具体参见 <code>rdk_accordion</code> 和 <code>rdk_basic_selector</code> 的控件说明文档。</p>
 <p>下面是同时设置了多个属性的综合demo：
 <live_demo example="controls/selector/complex"  width="405"></live_demo></p>
 <h1>事件</h1>
-<p>事件是RDK实现交互的主要手段之一，强大且易用。<a href="/doc/common/event">了解更多</a>。</p>
+<p>事件是RDK实现交互的主要手段之一，强大且易用。<a href="/doc/client/common/event/EventService.md">了解更多</a>。</p>
+<p>下面是事件的综合demo：
+<live_demo example="controls/selector/event"  width="405"></live_demo></p>
 <h2>OPEN</h2>
 <blockquote>
 <p>事件类型：EventTypes.OPEN
@@ -431,13 +433,39 @@ img {
 <h2>CHANGE</h2>
 <blockquote>
 <p>事件类型：EventTypes.CHANGE
-同 <code>rdk_basic_selector</code> 的 <code>CHANGE</code> 事件，监听捕获 <code>rdk_basic_selector</code> 控件内部修改后的最新的数据信息。关于监听事件请参见<code>事件机制</code>中的<code>监听</code>部分</p>
+同 <code>rdk_basic_selector</code> 和 <code>rdk_accordion</code> 的 <code>CHANGE</code> 事件，监听捕获 <code>rdk_basic_selector</code> 控件内部修改后的最新的数据信息，或者是 <code>rdk_accordion</code> 当前或打开或关闭的状态。关于监听事件请参见<code>事件机制</code>中的<code>监听</code>部分。</p>
 </blockquote>
-<div>
-<script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-<script src="/doc/tools/doc_js/main.js"></script>
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+<p><strong>注意</strong></p>
+<ul>
+<li><code>OPEN/CLOSE/SELECT</code> 这三个事件是从外部发到控件内部，外部是事件的发出者。 <code>CHANGE</code> 事件是从控件内部发到外部，外部是事件的监听者。</li>
+<li><code>CHANGE</code> 事件中监听到的数据是发生改变的对象。数据结构如下：</li>
+</ul>
+<p><code>rdk_basic_selector</code> 发出的 <code>CHANGE</code>：</p>
+<pre><code>        {
+          &quot;id&quot;: &quot;__unique_id__3&quot;,
+          &quot;data&quot;: [
+            {
+              &quot;id&quot;: 5,
+              &quot;label&quot;: &quot;河南省&quot;,
+              &quot;$$hashKey&quot;: &quot;object:32&quot;
+            },
+            {
+              &quot;id&quot;: 9,
+              &quot;label&quot;: &quot;四川省&quot;,
+              &quot;$$hashKey&quot;: &quot;object:36&quot;
+            }
+          ]
+        }
+</code></pre>
+
+<p><code>rdk_accordion</code> 发出的 <code>CHANGE</code>：</p>
+<pre><code>        {
+          &quot;id&quot;: &quot;__unique_id__3&quot;,
+          &quot;data&quot;: false
+        }
+</code></pre>
+
+
 </body>
 </html>
 <!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
