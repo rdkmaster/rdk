@@ -50,7 +50,7 @@ class P2PMQActor extends Actor with MQCreator {
     * @param timeout 超时（毫秒）
     * @return
     */
-  def rpc(subject: String, data: MQ_Message, timeout: Int): Option[String] = {
+  def rpc(subject: String, data: MQ_Message, timeout: Int): String = {
     withMQ.map(mq => {
       Try {
         logger.debug(s"${self.path}-> Begin rpc call subject=${subject},data=${data},timeout=${timeout}")
@@ -64,7 +64,7 @@ class P2PMQActor extends Actor with MQCreator {
           logger.error(ex.getMessage)
           None
       }
-    }).flatten
+    }).flatten.getOrElse("")
 
   }
 
