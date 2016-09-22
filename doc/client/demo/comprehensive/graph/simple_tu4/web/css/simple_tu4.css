@@ -1,0 +1,10 @@
+div.content{
+	position:relative;
+}
+div.content>span{
+	position:absolute;
+	top:8%;
+	left:83%;
+	font-size:12px;
+	color:#666;
+}

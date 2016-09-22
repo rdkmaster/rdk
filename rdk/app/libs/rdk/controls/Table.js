@@ -60,7 +60,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         </a>\
                     </li>\
                     <li ng-show="getPageShow()">\
-                        <span class="regularRecords">{{currentPage + 1 }}/{{pageCount()+1}}</span>\
+                        <span class="regularRecords"><i class="regular_left">{{currentPage + 1 }}</i><i class="regular_right">/{{pageCount()+1}}</i></span>\
                     </li>\
                     <li ng-show="!getPageShow()" ng-repeat="n in range()" ng-click="setPage(n)">\
                         <a href="javascript:void(0)" ng-class="{true:\'regularRecords\', false:\'enabledRecords\'}[n == currentPage]">{{n+1}}</a>\
