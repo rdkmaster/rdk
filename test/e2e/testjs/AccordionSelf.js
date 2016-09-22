@@ -46,14 +46,7 @@ describe('Accordion Demo Self',function(){
         expect(caption.getAttribute('contenteditable')).toBe('false');
         var button=element.all(by.css(".demo1 .theme .theme-buttons a"));
         caption.click();//caption
-        caption.sendKeys(10).
-        then(function(){
-            //编辑成功
-            expect(caption.getText()).toBe('ch10ild');
-        },function(err){
-            //编辑失败，caption不变
-            expect(caption.getText()).toBe('child');
-        });
+        
         button.get(3).click();
         //可编辑
         expect(caption.getAttribute('contenteditable')).toBe('true');
@@ -78,21 +71,26 @@ describe('Accordion Demo Self',function(){
         //theme content 顺序
         var obj_div=element.all(by.css('.bottom .rdk-accordion-module>div'));
         expect(obj_div.get(1).getAttribute("class")).toBe('content');
+        expect(obj_div.get(1).getCssValue("display")).toBe("none");
         //文档流
         obj_div.get(0).click();
         expect(obj_div.get(1).getCssValue("position")).toBe("static");
+        expect(obj_div.get(1).getCssValue("display")).toBe("block");
     });
     it('accordion 伸展方向向上 文档流',function(){
         var obj_div=element.all(by.css('.top .rdk-accordion-module>div'));
         expect(obj_div.get(0).getAttribute('class')).toBe('content');
+        expect(obj_div.get(0).getCssValue("display")).toBe("none");
         //文档流
         obj_div.get(1).click();
         expect(obj_div.get(0).getCssValue('position')).toBe('static');
+        expect(obj_div.get(1).getCssValue("display")).toBe("block");
     });
     it('accordion 左展开 文档流',function(){
         //展开项还是在首位,且都是inline-block
         var obj_div=element.all(by.css('.left .rdk-accordion-module>div'));
         expect(obj_div.get(0).getAttribute('class')).toBe('content');
+        expect(obj_div.get(0).getCssValue('display')).toBe('none');
         obj_div.get(1).click();
         //展开后同行显示,所以display为inline-block
         expect(obj_div.get(0).getCssValue('display')).toBe('inline-block');
@@ -101,6 +99,7 @@ describe('Accordion Demo Self',function(){
     it('accordion 右展开 文档流',function(){
         var obj_div=element.all(by.css('.right .rdk-accordion-module>div'));
         expect(obj_div.get(1).getAttribute('class')).toBe('content');
+        expect(obj_div.get(1).getCssValue('display')).toBe('none');
         obj_div.get(0).click();
         expect(obj_div.get(0).getCssValue('display')).toBe('inline-block');
         expect(obj_div.get(1).getCssValue('display')).toBe('inline-block');
@@ -108,14 +107,18 @@ describe('Accordion Demo Self',function(){
     it('accordion 向下展开脱离文档流',function(){
         //验证position和top/bottom即可
         var obj_div=element.all(by.css('.demo3.bottom .rdk-accordion-module>div'));
+        expect(obj_div.get(1).getCssValue("display")).toBe("none");
         obj_div.get(0).click();
+        expect(obj_div.get(1).getCssValue("display")).toBe("block");
         //向下展开脱离文档流，top值等于外层高度或者bottom值等于自身高度 也是默认缺省值！
         expect(obj_div.get(1).getCssValue('bottom')).toBe('-62px');
         expect(obj_div.get(1).getCssValue('top')).toBe('35px');
     });
     it('accordion 向上展开 脱离文档流',function(){
         var obj_div=element.all(by.css('.demo3.top .rdk-accordion-module>div'));
+        expect(obj_div.get(1).getCssValue("display")).toBe("none");
         obj_div.get(0).click();
+        expect(obj_div.get(1).getCssValue("display")).toBe("block");
         //向上展开bottom值就是父层高度，top值是自身高度
         expect(obj_div.get(1).getCssValue('top')).toBe('-63px');//不知为何父级为何比上述多1px高度？理论上应该是-62px
         expect(obj_div.get(1).getCssValue('bottom')).toBe('36px');
@@ -126,6 +129,7 @@ describe('Accordion Demo Self',function(){
         var div=element.all(by.css('.demo3.left .rdk-accordion-module>div'))
         expect(accordion.get(0).getCssValue("float")).toBe('right');
         expect(div.get(0).getCssValue('display')).toBe("inline-block");
+        expect(div.get(1).getCssValue('display')).toBe("none");
         //点击展开
         div.get(0).click();
         expect(div.get(1).getCssValue("position")).toBe('absolute');
@@ -137,13 +141,14 @@ describe('Accordion Demo Self',function(){
         var div=element.all(by.css('.demo3.right .rdk-accordion-module>div'));
         expect(accordion.get(0).getCssValue("position")).toBe("relative");
         expect(div.get(0).getCssValue("display")).toBe("inline-block");
+        expect(div.get(1).getCssValue("display")).toBe("none");
         //点击展开
         div.get(0).click();
         expect(div.get(1).getCssValue("position")).toBe("absolute");
         expect(div.get(1).getCssValue("left")).toBe('22px');
     });
     it('accordion 左覆盖且图标位置随着变化',function(){
-        //accordion为float状态值right 图标块文档流,accordion整体展开后左移动,相对于原来状态位置原点不动
+        //accordion为float状态值right 图标块文档流,accordion整体展开后左移动,原来状态位置原点不动
         var accordion=element(by.css('.demo4.left .rdk-accordion-module'));
         var div=element.all(by.css('.demo4.left .rdk-accordion-module>div'));
         expect(accordion.getCssValue("float")).toBe("right");

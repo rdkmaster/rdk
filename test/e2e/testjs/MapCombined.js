@@ -48,4 +48,22 @@ describe("Map Combined demo",function(){
         expect(evt.get(0).getText()).toBe('click');
         expect(evt.get(1).getText()).toBe('连云港市');
     });
+    it('multiple-map test event',function(){
+        var evt=element.all(by.css(".text span"));
+        //展开combo
+        element(by.css('.multiple .rdk-combo-select-module .form-control')).click();
+        browser.sleep(1000);
+        browser.actions().mouseMove(element(by.css(".multiple canvas")),{x:227,y:57}).click().perform();
+        expect(evt.get(0).getText()).toBe('click');
+        expect(evt.get(1).getText()).toBe('连云港市');
+    });
+    it("multiple-map test 翻页",function(){
+        //轮播翻页
+        element(by.css(".multiple .combo-content-transclude .slider .arrows .right_arrow i")).click();
+        browser.sleep(1000);
+        browser.actions().mouseMove(element(by.css(".multiple canvas")),{x:220,y:66}).click().perform();
+        var evt=element.all(by.css(".text span"));
+        expect(evt.get(0).getText()).toBe('click');
+        expect(evt.get(1).getText()).toBe('崇明县');
+    });
 });

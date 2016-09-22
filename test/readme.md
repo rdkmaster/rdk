@@ -1,7 +1,7 @@
 ## 客户端测试启动
-1. 使用前确保已经安装npm
-1. windows下双击*e2ebuild.bat*运行
-2. linux下 双击*e2ebuild.sh*运行
+1. 使用前确保已经安装node、npm、java环境变量配置
+2. windows下双击*e2ebuild.bat*运行
+3. linux下 双击*e2ebuild.sh*运行
 
 ## 测试结果查看路径
 
@@ -59,6 +59,10 @@ test/report/e2e(默认，一般不作更改)
   
 其中 x,y 所取值是相对于你确定的控件或者图片，左上角为原点。
 更多操作方法访问protractor官网，博客频道 搜索protractor api。
+###FAQ:  
+Q:报错 "can not find chrome binary"  
+A:protractor是按照浏览器默认安装方式去寻找chrome.exe，出现该错误时候是因为在指定路径下找不到浏览器的执行文件，需要重安装浏览器即可。
+
 
 
 

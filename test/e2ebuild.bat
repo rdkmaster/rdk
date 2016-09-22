@@ -1,4 +1,4 @@
 @echo off
 cd /d %~dp0
-npm run protractor
+npm run all
 pause

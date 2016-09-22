@@ -1,1 +1,1 @@
-npm run protractor
+npm run all

@@ -69,13 +69,25 @@
         </div>
         <!-- table与scroller组合时，table显现不出来 noData-->
         <div class="demo4">
-            <rdk_scroller style="width:600px;height:500px;" data="scrollerData" scroll_policy="manual" loop="false" timeout="10000">
-                <rdk_table ds={{item.ds}} ds_url={{item.dsUrl}} ds_query_if="ready" id={{item.ds}} style="width:300px;height:300px"></rdk_table>
+            <rdk_scroller style="width:600px;height:500px;" data="scrollerData" scroll_policy="manual">
+                <rdk_table ds={{item.ds}} ds_url={{item.dsUrl}} ds_query_if="ready" id={{item.ds}} 
+                style="width:300px;height:300px"></rdk_table>
             </rdk_scroller>
         </div>
         <div class="demo5">
             <rdk_panel title="'panel table'" show_title="true" show_close="true" width="600px">
                 <rdk_table data="ds_table" id="panel_table" page_size="4"></rdk_table>
+            </rdk_panel>
+        </div>
+        <div style="clear:both"></div>
+        <div class="demo6">
+            <rdk_panel show_close="true" width="600px" height="500px" title="'multiple table'" show_title="true">
+                <rdk_combo_select open="true">
+                    <rdk_scroller scroll_policy="manual" data="multipleData">
+                        <rdk_table ds={{item.ds}} ds_url={{item.dsUrl}} ds_query_if="ready" id={{item.ds}}>
+                        </rdk_table>
+                    </rdk_scroller>
+                </rdk_combo_select>
             </rdk_panel>
         </div>
     </div>

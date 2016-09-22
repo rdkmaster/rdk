@@ -2,7 +2,7 @@
 describe('Map demo',function(){
     beforeEach(function(){
         browser.get("test/e2e/testee/map/web/self.html");
-        browser.sleep(3000);
+        browser.sleep(5000);
     });
     afterEach(function(){
     });
@@ -95,12 +95,9 @@ describe('Map demo',function(){
         browser.sleep(2000);
         browser.actions().mouseMove(element(by.css(".area-drill canvas")),{x:145,y:226}).click().perform();
         //此次点击后页面需要等待几秒dom加载完毕
-        setTimeout('expectVal()',5000);
-        function expectVal(){
-            area.getText().then(function(text){
-                expect(text).toBe("和田地区");
-            });
-        };
-        
+        browser.sleep(5000);
+        area.getText().then(function(text){
+            expect(text).toBe("和田地区");
+        });
     });
 });
