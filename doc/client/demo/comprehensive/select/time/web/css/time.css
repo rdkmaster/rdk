@@ -1,0 +1,62 @@
+ .combo_select{
+    padding:4px 5px 4px 40px;
+    height:40px;
+    background:#008fd4 url(../images/calendar.png) no-repeat 5px 5px;
+}
+.rdk-combo-select-module .combo-content{
+    background:#fff;
+}
+.fa-angle-down,.fa-angle-up{
+    font-size:25px;
+}
+.timeSpan{
+	line-height: 27px;
+    vertical-align: top;
+}
+.rdk-combo-select-module .combo-content-icon{
+    top:1px;
+}
+.rdk-time-module .time-content{
+	background:#fff;
+    min-width: 0px !important;
+}
+.rdk-time-module .time-content .startTime, .rdk-time-module .time-content .endTime{
+	width:120px;
+	height: 30px;
+    margin-bottom: 4px;
+}
+.form-control{
+	padding:6px 0px;
+}
+select{
+	margin-right:8px;
+	height: 30px;
+}
+.rdk-time-module .time-content{
+	padding-right:0px;
+	height: 32px;
+}
+.rdk-time-module select{
+	width:72px;
+}
+[class*=" datetimepicker-dropdown"]:after {
+    content: '';
+    display: inline-block;
+    border: 6px solid transparent;
+    position: absolute;
+}
+[class*=" datetimepicker-dropdown"]:before{
+	content: '';
+    display: inline-block;
+    border:none;
+    border-bottom-color: rgba(0,0,0,0.2);
+    position: absolute;
+}
+.datetimepicker table tr td.active:active, .datetimepicker table tr td.active:hover:active, .datetimepicker table tr td.active.disabled:active, .datetimepicker table tr td.active.disabled:hover:active, .datetimepicker table tr td.active.active, .datetimepicker table tr td.active:hover.active, .datetimepicker table tr td.active.disabled.active,
+ .datetimepicker table tr td.active.disabled:hover.active{
+ 	background:#3ab1ea;
+ }
+ .datetimepicker table tr td span.active:active, .datetimepicker table tr td span.active:hover:active, .datetimepicker table tr td span.active.disabled:active, .datetimepicker table tr td span.active.disabled:hover:active, .datetimepicker table tr td span.active.active, .datetimepicker table tr td span.active:hover.active, .datetimepicker table tr td span.active.disabled.active,
+  .datetimepicker table tr td span.active.disabled:hover.active{
+  	background:#3ab1ea;
+  }

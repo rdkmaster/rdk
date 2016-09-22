@@ -60,7 +60,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         </a>\
                     </li>\
                     <li ng-show="getPageShow()">\
-                        <span class="regularRecords">{{currentPage + 1 }}/{{pageCount()+1}}</span>\
+                    <span class="regularRecords"><i class="regular_left">{{currentPage + 1 }}</i><i class="regular_right">/{{pageCount()+1}}</i></span>\
                     </li>\
                     <li ng-show="!getPageShow()" ng-repeat="n in range()" ng-click="setPage(n)">\
                         <a href="javascript:void(0)" ng-class="{true:\'regularRecords\', false:\'enabledRecords\'}[n == currentPage]">{{n+1}}</a>\
@@ -636,17 +636,9 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             return scope.currentPage == 0;
                         }
 
-                        scope.afterStickyWrap = function(){
-                            if(scope.setting && scope.setting.scrollX){
-                                var ele = element[0].querySelector(".sticky-wrap");
-                                $(ele).addClass("sticky-wrap-overflow");//scrollX作用使滚动条产生在内部
-                            }
-                        }
-
                         var off = scope.$on('ngRepeatFinished', function() {
                             _reFreshTable();
                             $(element.find("table")).fixHeader();
-                            scope.afterStickyWrap();
 
                             scope.$watch("selectedIndex", function(newVal, oldVal) { //根据selectedIndex高亮显示
                                 if (newVal != undefined) {
@@ -1037,26 +1029,22 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                 }
 
                 $scope.firstPage = function() {
-                    if($scope.currentPage == 0) return;
                     $scope.currentPage = 0;
                     $scope.setCurrentPageToTable();
                 }
                 $scope.prevPage = function() {
-                    if($scope.currentPage == 0) return;
                     if ($scope.currentPage > 0) {
                         $scope.currentPage--;
                     }
                     $scope.setCurrentPageToTable();
                 };
                 $scope.nextPage = function() {
-                    if($scope.currentPage==$scope.pageCount()) return;
                     if ($scope.currentPage < $scope.pageCount()) {
                         $scope.currentPage++;
                     }
                     $scope.setCurrentPageToTable();
                 };
                 $scope.lastPage = function() {
-                    if($scope.currentPage==$scope.pageCount()) return;
                     $scope.currentPage = $scope.pageCount();
                     $scope.setCurrentPageToTable();
                 }
