@@ -39,7 +39,8 @@ EventService.register("accordion-jilin",'mouseout',function(event,data){
     scope.ename='mouseout';
     scope.name=data.name;
 });
-var ids=['accordion_0','accordion_1','tab-jilin','combo-shanghai','scroller_jilin','scroller_shanghai','panel_map'];
+var ids=['accordion_0','accordion_1','tab-jilin','combo-shanghai',
+'scroller_jilin','scroller_shanghai','panel_map','scroller_jiangsu','scroller_xinjiang'];
 for(var i=0;i<ids.length;i++){
     EventService.register(ids[i],'click',function(event,data){
         scope.ename='click';
@@ -53,6 +54,16 @@ scope.scrollerData=[
     },
     {
         id:'scroller_shanghai',
+        map:'../server/shanghai.json'
+    }
+];
+scope.provinceMap=[
+    {
+        id:'scroller_jiangsu',
+        map:'../server/jiangsu.json'
+    },
+    {
+        id:'scroller_xinjiang',
         map:'../server/shanghai.json'
     }
 ];

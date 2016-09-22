@@ -36,7 +36,8 @@ function showSelected(data){
   }
   return array;
 }
-var ids=['dsTable','wks_table_0','wks_table_1','tab_table_1','tab_table_2','tab_table_3','tab_table_4','panel_table'];
+var ids=['dsTable','wks_table_0','wks_table_1','tab_table_1','tab_table_2',
+  'tab_table_3','tab_table_4','panel_table','m-salary2','m-salary3'];
 for(var i=0;i<ids.length;i++){
   EventService.register(ids[i],'select',function(event,data){
     scope.selectedInfo=showSelected(data);
@@ -63,6 +64,16 @@ scope.scrollerData=[
   {
     ds:'salary2',
     dsUrl:'$svr/salary2'
+  }
+];
+scope.multipleData=[
+  {
+    ds:'m-salary2',
+    dsUrl:'$svr/salary2'
+  },
+  {
+    ds:'m-salary3',
+    dsUrl:'$svr/salary3'
   }
 ];
 /************************ 应用的代码逻辑结束 ************************/

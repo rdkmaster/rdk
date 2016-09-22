@@ -13,8 +13,12 @@
     "jasmine-reporters":"~1.0.0"
   },
   "scripts" : {
-    "protractor": "protractor protractor-conf.js",
+    "all": "protractor all-conf.js",
+    "table": "protractor table-conf.js",
+    "accordion":"protractor map-conf.js",
+    "basic":"protractor map-conf.js",
+    "graph":"protractor map-conf.js",
+    "map":"protractor map-conf.js",
     "protractor_debug" : "protractor debug protractor-conf.js"
   }
-
 }

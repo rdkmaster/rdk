@@ -80,7 +80,18 @@
             <rdk_map map="'../server/jiangsu.json'" map_define="map.js" id="panel_map" width="500"></rdk_map>
         </rdk_panel>
     </div>
-    
+    <!--panel需要增加自动清除浮动-->
+    <div style="clear:both"></div>
+    <!--新增综合嵌套demo-->
+    <div class="multiple map">
+        <rdk_panel show_close="true" title="'复杂组合'" show_title="true" width="500px" height="450px">
+            <rdk_combo_select style="margin:auto" open="true">
+                <rdk_scroller data="provinceMap" scroll_policy="manual">
+                    <rdk_map id={{item.id}} map="item.map" map_define="map.js" style="width:500px;height:450;">
+                    </rdk_map>
+            </rdk_combo_select>
+        </rdk_panel>
+    </div>
     <div class="text">
         <span>{{ename}}</span>
         <span>{{name}}</span>
@@ -88,7 +99,7 @@
     <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
     <!--     这个节点可选，删除后，RDK会自动生成一个    -->
     <!--           这个节点只支持基本HTML标签           -->
-    <div style="height:100px"></div>
+    <div style="height:100px;background-color:red;width:100px;clear:both"></div>
     <rdk_loading>
         <img src="images/loding.gif" alt="loading..."/>
     </rdk_loading>

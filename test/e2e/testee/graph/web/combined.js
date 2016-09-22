@@ -67,6 +67,27 @@ scope.scrollerData=[
     }
 ];
 //
+scope.multipleData=[
+    {
+        rowDescriptor: ['最高气温', '最低气温','平均气温'],
+        header: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+        data: [
+            [11, 13, 15, 18, 15, 12, 10],
+            [1, 4, 6, 4, 9, 6, 3],
+            [6,8.5,10.5,11,12,9,6.5]
+        ],
+        id:'multiple_graph0'
+    },
+    {
+        rowDescriptor: ['最高气温', '最低气温'],
+        header: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+        data: [
+            [12, 14, 16, 19, 16, 13, 11],
+            [1, 4, 6, 4, 9, 6, 3],
+        ],
+        id:'multiple_graph1'
+    }
+];
 scope.panelData={
     rowDescriptor: ['最高气温', '最低气温','平均气温'],
     header: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
@@ -76,7 +97,8 @@ scope.panelData={
         [6,8.5,10.5,11,12,9,6.5]
     ]
 };
-var ids=['accordion_0','accordion_1','combo_graph','tab1_graph','tab2_graph','panel_graph','scroller_graph0','scroller_graph1'];
+var ids=['accordion_0','accordion_1','combo_graph','tab1_graph','tab2_graph',
+    'panel_graph','scroller_graph0','scroller_graph1','multiple_graph0','multiple_graph1'];
 for(var i=0;i<ids.length;i++){
     EventService.register(ids[i],'click',function(event,data){
         console.log(data);
