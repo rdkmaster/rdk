@@ -19,7 +19,7 @@ import jdk.nashorn.api.scripting.ScriptObjectMirror
   * Created by 10054860 on 2016/7/11.
   */
 class Runtime(engine: ScriptEngine) extends Logger {
-  lazy val jsLogger = appLogger(application)
+  def jsLogger = appLogger(application)
 
   var serviceCaller: ScriptObjectMirror = null
   private var jsonParser: ScriptObjectMirror = null
