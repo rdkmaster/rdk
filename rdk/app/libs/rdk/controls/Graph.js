@@ -22,7 +22,7 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
                 replace: true,
                 template: '<div class="rdk-graph-module"> \
                             <div style="width:100%;height:100%" ng-hide="noData"></div> \
-                            <div class="no-data" ng-show="noData"></div> \
+                            <div class="no-data" ng-show="noData" ></div> \
                         </div>',
                 scope: {
                     id: '@',
@@ -50,20 +50,21 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
                 // width和height在没有给的情况下，可以从父级节点中获取
                 // 但是父级dom的尺寸变化了，怎么得知？
                 scope.realWidth = scope.width || element[0].offsetWidth || 400;
-                scope.realHeight = scope.height || element[0].offsetHeight || 300;
+                scope.realHeight = scope.height || element[0].offsetHeight||300;
 
 
                 window.onresize = function() {
-                    if (!scope.width) {
+                    if (!scope.width || !scope.height) {
                         _resize(0, 0, scope.chart);
-                        scope.realWidth = element[0].offsetWidth || 400;
-                        scope.realHeight = element[0].offsetHeight || 300;
+                        scope.realWidth = scope.width || element[0].offsetWidth || 400;
+                        scope.realHeight = scope.height || element[0].offsetHeight || 300;
                         _resize(scope.realWidth, scope.realHeight, scope.chart);
                     }
                 }
 
 
                 scope.noData = false;
+                
                 var mapData, mapType;
                 _initChart();
                 scope.$watch("data", function(newVal, oldVal) {
