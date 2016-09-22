@@ -1,42 +1,28 @@
-.distributionSub{
-    font-size:12px!important;
+.score_indicator {
+    height:120px;
+    padding:15px 10px;
 }
-.distributionSub>.ng-scope{
-    margin-bottom:1px;
+.distributionSub>div>div:last-child{
+    margin-left:-30px;
+}
+.distributionSub>div>div:first-child{
+    position:relative;
 }
 .distributionSub>.ng-scope>div:last-child{
-    height:1px;
-}
-.distributionSub>div.ng-scope>div:nth-child(2){
-    margin-left:55.5px!important;
-}
-.distributionSub>div.ng-scope:first-child>div:nth-child(2){
-    margin-left:-26px!important;
-}
-.distributionSub>div.ng-scope>div:nth-child(2)>div{
-    width:10px!important;
-}
-.distributionSub>.ng-scope>div:first-child span{
-    color:#ccc!important;
+    height:2px;
 }
 .hrLinePart0,.hrLinePart1,.hrLinePart2,.hrLinePart3,.hrLinePart4,.hrLinePart5{
     border-top-width:1px;
 }
-.hrLinePart0{
-    border-top-color:#98e2a6;
+.distributionSub>.ng-scope{
+    margin-bottom:1px;
 }
-.hrLinePart1{
-    border-top-color:#9ad0e2;
+.distributionSub{
+    font-size:12px!important;
 }
-.hrLinePart2{
-    border-top-color:#f6c88a;
+.distributionSub>div>div img{
+    position:absolute;
 }
-.hrLinePart3{
-    border-top-color:#ff8e74;
-}
-.hrLinePart5{
-    border-top-color:#ccc;  
-}
-.score_indicator {
-    height:120px;
+.distributionSub>div>div hr{
+    margin-left:20px;
 }

@@ -7,22 +7,40 @@ define(['rd.core', 'css!rd.styles.ScoreIndicator',
             return {
                 restrict: 'E',
                 replace: true,
+                // template: '<div class="distributionNew">\
+                //         <div style="display:flex;justify-content: space-between;">\
+                //         <div class="distributionSub">\
+                //             <div ng-repeat = "item in config" style="display:flex;">\
+                //                 <div style="display:flex;">\
+                //                     <span style="color:#D5CCBE;" ng-show="{{$index == 0 ? true : false}}">100%</span>\
+                //                     <hr class="hrLinePart hrLinePart1"  ng-show="{{$index == 0 ? true : false}}"/>\
+                //                 </div>\
+                //                 <div style="display:flex;align-items: center;margin-left: {{$index == 0 ? -26 : 60}}px;">\
+                //                     <img alt="img" src="{{item.emotion}}" ng-show="setMark(item)"/>\
+                //                     <hr class="hrLinePart" style="width:6px;border-color:{{item.color}}" ng-show="setMark(item)"/>\
+                //                     <div style="margin-left: {{item.mark ? 0 : 26}}px;background-color:{{item.color}};width:15px;height:{{setHeight(item.value)}}px;"></div>\
+                //                 </div>\
+                //                 <div style="display:flex;position:absolute">\
+                //                     <p ng-show=false>{{initFaceSpanWidth()}}</p>\
+                //                     <hr class="hrLinePart" ng-style="getRealWidth($index);" style="border-color:{{item.color}}">\
+                //                     <span class="faceSpan" style="color:{{item.color}};">{{item.label + item.value + "%"}}</span>\
+                //                 </div>\
+                //             </div>\
+                //         </div>\
+                //         </div>\
+                //        </div>',
                 template: '<div class="distributionNew">\
                         <div style="display:flex;justify-content: space-between;">\
                         <div class="distributionSub">\
                             <div ng-repeat = "item in config" style="display:flex;">\
+                                <div style="display:flex;align-items: center;margin-left:15px;position:relative">\
+                                    <img alt="img" src="{{item.emotion}}" ng-show="setMark(item)" ng-style="getPosition(item.value)"/>\
+                                    <hr class={{"hrLinePart"+$index}} style="width:6px;border-top-color:{{item.color}};" ng-show="setMark(item)"/>\
+                                    <div style="margin-left: {{item.mark ? 0 : 26}}px;background-color:{{item.color}};width:10px;height:{{setHeight(item.value)}}px;"></div>\
+                                </div>\
                                 <div style="display:flex;">\
-                                    <span style="color:#D5CCBE;" ng-show="{{$index == 0 ? true : false}}">100%</span>\
-                                    <hr class="hrLinePart hrLinePart1"  ng-show="{{$index == 0 ? true : false}}"/>\
-                                </div>\
-                                <div style="display:flex;align-items: center;margin-left: {{$index == 0 ? -26 : 60}}px;">\
-                                    <img alt="img" src="{{item.emotion}}" ng-show="setMark(item)"/>\
-                                    <hr class="hrLinePart" style="width:6px;border-color:{{item.color}}" ng-show="setMark(item)"/>\
-                                    <div style="margin-left: {{item.mark ? 0 : 26}}px;background-color:{{item.color}};width:15px;height:{{setHeight(item.value)}}px;"></div>\
-                                </div>\
-                                <div style="display:flex;position:absolute">\
                                     <p ng-show=false>{{initFaceSpanWidth()}}</p>\
-                                    <hr class="hrLinePart" ng-style="getRealWidth($index);" style="border-color:{{item.color}}">\
+                                    <hr class={{"hrLinePart"+$index}} ng-style="getRealWidth($index)" style="border-top-color:{{item.color}};">\
                                     <span class="faceSpan" style="color:{{item.color}};">{{item.label + item.value + "%"}}</span>\
                                 </div>\
                             </div>\
@@ -40,14 +58,14 @@ define(['rd.core', 'css!rd.styles.ScoreIndicator',
             };
 
             function _link(scope, iEle, iAttrs, ctrl, transclude) {
-                scope.initWidth = 10; //初始横线长度
+                scope.initWidth = 20; //初始横线长度
                 scope.widthArr = new Array();
                 var height = iEle[0].offsetHeight > 0 ? iEle[0].offsetHeight : 300;
 
                 scope.setHeight = function(proValue) {
                     var parentHeight = height;
                     var itemHeight = parentHeight * proValue / 100;
-                    return proValue==0 ?3 : itemHeight;
+                    return itemHeight;
                 }
 
                 scope.setMark = function(item){
@@ -74,11 +92,19 @@ define(['rd.core', 'css!rd.styles.ScoreIndicator',
                     var tmpWidthArr = scope.widthArr;
                     tmpWidthArr.splice(0, elemID + 1);
                     angular.forEach(tmpWidthArr, function(data) {
-                        tmpWidth = tmpWidth + data;
+                        tmpWidth = tmpWidth + data +5;
                     });
                     return {
                         "width": tmpWidth + "px"
                     };
+                }
+                
+                scope.getPosition=function(proValue){
+                    var parentHeight = height;
+                    var itemHeight = parentHeight * proValue / 100;
+                    return{
+                        "top":itemHeight/2-10 +"px"
+                    }
                 }
             }
 
