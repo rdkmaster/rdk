@@ -98,7 +98,6 @@ return {
             },
             axisTick:{//坐标轴刻度相关设置
             show:true,
-            color:'#ff7c27',
             length:3,//刻度长短设置
             lineStyle:{
                  color:'#54acd5',

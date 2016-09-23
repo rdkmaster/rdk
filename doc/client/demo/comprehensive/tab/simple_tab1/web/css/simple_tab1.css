@@ -124,5 +124,15 @@ i.regular_right{
 i.regular_left{
 	color:#333;
 }
+.rdk-table-module .pagination > li > span{
+    padding: 0 15px;
+}
+.rdk-table-module .pagination > li > a{
+    padding: 0 5px;
+    font-size:12px;
+}
+.rdk-table-module .disabledRecords{
+	font-size:12px;
+}
 
 
