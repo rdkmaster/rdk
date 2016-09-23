@@ -22,20 +22,19 @@ define([/*  'underscore'   */], function() {
 
 // attributes 是当前Graph所在的html节点的所有属性集。也是一种辅助数据。
 return function(data, context, GraphService, attributes) {
-    var colors = ['#01C5C3', '#ff7c27'];
 return {
-    color:colors,
     tooltip : {
         trigger: 'axis',
     },
     title:{
         text:'掉话排行',
         textAlign:'left',
+        top:20,
         textStyle:{
             fontSize:12,
             fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
             fontWeight: 'normal',
-            color: '#333' 
+            color: '#008fd4' 
         },
         left:70,
     },
@@ -49,10 +48,13 @@ return {
     legend: {
         data: data.rowDescriptor,
         top:20,
+        right:100,
         inactiveColor: "#bbb",
         textStyle:{
             color:'#333',
-            fontSize: 12,
+            fontSize:12,
+            fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
+            fontWeight: 'normal'
         },
         itemWidth:20,//设置icon长高
         itemHeight:10
@@ -93,7 +95,7 @@ return {
         {
              // name: '掉话次数',
              nameTextStyle:{
-                color:'#01C5C3',
+                color:'#54acd5',
                 fontSize:10,
                 fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
                 fontWeight: 'normal',
@@ -104,7 +106,7 @@ return {
 					fontSize:10,
 					fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
 					fontWeight: 'normal',
-					color: '#01C5C3',
+					color: '#54acd5',
                 },
                 formatter: function(params){
                     return  params.toFixed(1)
@@ -117,7 +119,7 @@ return {
              axisLine: {
                 show:true,
                 lineStyle: {
-                    color: '#01C5C3'
+                    color: '#54acd5'
                 }
             }
         },
@@ -132,19 +134,19 @@ return {
 					fontSize:10,
 					fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
 					fontWeight: 'normal',
-					color: '#ff7c27' 
+					color: '#f99660' 
 				},
                 formatter: function(params){
                         return  params.toFixed(1)
                     }             
 			},
             nameTextStyle:{
-               color:'#ff7c27',
+               color:'#f99660',
                fontStyle:'10px'
              },
             axisLine: {
                 lineStyle: {
-                    color: '#ff7c27',
+                    color: '#f99660',
                 }
             },  
         }
@@ -153,11 +155,12 @@ return {
         {
             name: data.rowDescriptor[0],animation:true,
             data: data.data[0],showAllSymbol :true,
+            legendHoverLink:false,
 			itemStyle : { 
                     normal: {
                         label : {show: false, position: 'top'},
-                        barBorderColor:'#01C5C3',
-                        color:'#01C5C3',
+                        barBorderColor:'#54acd5',
+                        color:'#54acd5',
                         barBorderRadius: 0
                     }
                 },
@@ -169,7 +172,7 @@ return {
             symbolSize:[5,5],
 			itemStyle : { 
                 normal: {
-                    color:'#ff7c27',
+                    color:'#f99660',
                 }
             },
             data: data.data[1],showAllSymbol :true,

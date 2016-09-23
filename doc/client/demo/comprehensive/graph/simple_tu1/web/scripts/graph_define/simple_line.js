@@ -37,6 +37,13 @@ return {
         itemWidth:25,//设置icon长高
         itemHeight:5,
         top:20,
+        inactiveColor:"#bbb",
+        textStyle:{
+            color:"#333",
+            fontSize:12,  
+            fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
+            fontWeight: 'normal'
+        },
         itemGap:10,
          selected: {
             "语音感知": true,
@@ -61,7 +68,13 @@ return {
         {
             type : 'category', boundaryGap : false,
 			axisLabel:{//标签设置
-                interval:4
+                interval:4,
+                textStyle:{
+                    color:"#666",
+                    fontSize:10,  
+                    fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
+                    fontWeight: 'normal'
+                }
             },
             axisLine: {//轴线设置
                     show : true,
@@ -89,6 +102,15 @@ return {
                     color:"#e5e5e5"
                 }
             },
+            axisLabel:{//标签设置
+                interval:4,
+                textStyle:{
+                    color:"#666",
+                    fontSize:10,  
+                    fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
+                    fontWeight: 'normal'
+                }
+            },
             // splitArea:{//网格颜色
             //     show:true,
             //     areaStyle:{
@@ -100,7 +122,7 @@ return {
                     lineStyle : {
                         color: '#ccc',
                         width : 1
-                 }
+                }
            }
         }
     ],
@@ -109,7 +131,7 @@ return {
             name: data.rowDescriptor[0],showAllSymbol:true,//是否显示所有的点
             animation:true,//出场动漫是否打开
             data: data.data[0],smooth:false,//是否平滑曲线连接
-            symbolSize:[4,4],//转折点处样式大小
+            symbolSize:[5,5],//转折点处样式大小
             hoverAnimation:false,
             type:'line'
         },
