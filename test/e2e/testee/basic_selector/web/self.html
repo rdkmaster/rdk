@@ -35,7 +35,8 @@
             selected_items="selectedItems" multiple_select="BasicSelect.isMultiple"
             least="BasicSelect.least" error="BasicSelect.ErrorMsg" child_change="ChildChange"
             label_field="BasicSelect.labelField" editable="BasicSelect.isEditable" 
-            restrict="validateByfun" max_length="{{BasicSelect.max_length}}" change="changehandle" id="selector">
+            restrict="validateByfun" max_length="{{BasicSelect.max_length}}" change="changehandle" 
+            id="selector" style="width:200px;">
          </rdk_basic_selector>
          <div style="position:absolute;top:10px;left:250px;" class="showArea">
             <span>selectText:</span><p>{{showText}}</p>
@@ -71,10 +72,10 @@
         <input type="text" ng-model="BasicSelect.max_length" placeholder="set max_length">
      </div>
      
-     <div style="position:relative" class="demo2">
+     <div style="position:relative;" class="demo2">
         <rdk_basic_selector ds="ds_city" ds_url="$svr/city" id="id_selector" 
             ds_data_processor="dataProcessor" ds_query_if="ready" data="ds_city"
-            multiple_select="false">
+            multiple_select="false" style="width:200px;">
         </rdk_basic_selector>
         <div class="test-ds" style="position:absolute;top:10px;left:250px;">
             <span>{{rs}}</span>

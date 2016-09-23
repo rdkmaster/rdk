@@ -22,7 +22,7 @@ describe("Map Combined demo",function(){
     });
     it("tab-map test event",function(){
         //切换 显示 map的
-        element.all(by.css(".tab .rdk-tab-module .tabs ul li")).get(1).click();
+        element.all(by.css(".tab .rdk-tab-module .tabs ul li a")).get(1).click();
         browser.actions().mouseMove(element(by.css(".tab canvas")),{x:203,y:96}).click().perform();
         var evt=element.all(by.css(".text span"));
         expect(evt.get(0).getText()).toBe("click");
@@ -58,6 +58,7 @@ describe("Map Combined demo",function(){
         expect(evt.get(1).getText()).toBe('连云港市');
     });
     it("multiple-map test 翻页",function(){
+        element(by.css('.multiple .rdk-combo-select-module .form-control')).click();
         //轮播翻页
         element(by.css(".multiple .combo-content-transclude .slider .arrows .right_arrow i")).click();
         browser.sleep(1000);
