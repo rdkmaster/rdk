@@ -80,7 +80,7 @@ return {
             name:"时延比例分布",
             nameGap:20,
             nameTextStyle:{
-                fontSize:12,
+                fontSize:12,  
                 fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
                 fontWeight: 'normal',
                 color: '#008fd4' 
