@@ -1,12 +1,11 @@
 'use strict';
-describe('Graph DoubleClick demo',function(){
+describe('Graph Self demo',function(){
     beforeEach(function(){
         browser.get('test/e2e/testee/graph/web/self.html');
         browser.sleep(3000);
     });
     afterEach(function(){
     });
-    //测试规则单击 双击 每个点都这样测试
     it('周一最高气温should be 11 by click',function(){
         var info=element(by.css(".fromClick"));
         browser.actions().mouseMove(element(by.css(".graph_1 canvas")),{x:78,y:130}).click().perform();

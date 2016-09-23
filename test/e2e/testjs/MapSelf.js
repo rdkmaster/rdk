@@ -51,8 +51,8 @@ describe('Map demo',function(){
         var city=element(by.css(".cityname"));
         var buttons=element.all(by.css(".jilin button"));
         buttons.get(0).click();
-        browser.actions().mouseMove(element(by.css(".jilin canvas")),{x:234,y:105}).click().perform();
         browser.sleep(2000);
+        browser.actions().mouseMove(element(by.css(".jilin canvas")),{x:234,y:105}).click().perform();
         city.getText().then(function(text){
             expect(text).toBe("盐城市");
         });
