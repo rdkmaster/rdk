@@ -1,6 +1,7 @@
  .combo_select{
     padding:4px 5px 4px 40px;
     height:40px;
+    overflow:hide;
     background:#008fd4 url(../images/calendar.png) no-repeat 5px 5px;
 }
 .rdk-combo-select-module .combo-content{
@@ -54,9 +55,74 @@ select{
 }
 .datetimepicker table tr td.active:active, .datetimepicker table tr td.active:hover:active, .datetimepicker table tr td.active.disabled:active, .datetimepicker table tr td.active.disabled:hover:active, .datetimepicker table tr td.active.active, .datetimepicker table tr td.active:hover.active, .datetimepicker table tr td.active.disabled.active,
  .datetimepicker table tr td.active.disabled:hover.active{
- 	background:#3ab1ea;
+ 	background:#3ab1ea !important;
  }
  .datetimepicker table tr td span.active:active, .datetimepicker table tr td span.active:hover:active, .datetimepicker table tr td span.active.disabled:active, .datetimepicker table tr td span.active.disabled:hover:active, .datetimepicker table tr td span.active.active, .datetimepicker table tr td span.active:hover.active, .datetimepicker table tr td span.active.disabled.active,
   .datetimepicker table tr td span.active.disabled:hover.active{
-  	background:#3ab1ea;
+  	background:#3ab1ea !important;
   }
+.btn{
+    background:#fff;
+    margin-bottom: 5px;
+    border-radius:0;
+    border-left:1px solid #999;
+    padding-right: 8px
+}
+
+.btn-group.open .dropdown-toggle{
+    box-shadow: none;
+}
+.bootstrap-select .btn:focus{
+    outline-offset: none !important; 
+    outline:none !important;
+}
+.bootstrap-select .btn:active{
+    outline:none !important;
+    box-shadow: none;.
+}
+.rdk-time-module .bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]) {
+    width: 80px;
+}
+.bootstrap-select.btn-group .btn .caret {
+    right: 8px;
+}
+.bootstrap-select.btn-group .btn .filter-option {
+    overflow:;
+}
+.rdk-time-module .btn{
+    line-height: 3px;
+}
+.bootstrap-select.btn-group .btn .filter-option {
+    overflow: inherit;
+    color: #666666;
+}
+.dropdown-menu>li>a {
+    color: #666666;
+    width: 80px;
+}
+.dropdown-menu>li>a:hover {
+    background: #80d7ff
+}
+.dropdown-menu>li>a:active {
+    outline:none;
+}
+
+.bootstrap-select.btn-group .dropdown-menu>li.selected{
+    background: #80d7ff ;
+}
+.dropdown-menu>li>a:focus{
+    background: #80d7ff;
+    outline: none;
+}
+.caret {
+    border:1px solid #008fd4;
+    width: 10px;
+    height:10px;
+    border-top:1px solid transparent;
+    border-left:1px solid transparent;
+    transform:rotate(45deg); 
+}
+.bootstrap-select.btn-group .btn .caret {
+    margin-top: -8px;
+}   
+

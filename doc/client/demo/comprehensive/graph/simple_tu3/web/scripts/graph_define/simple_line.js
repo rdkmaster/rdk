@@ -44,7 +44,6 @@ return {
             type : 'value',
             splitNumber:4,
             splitLine: {show:false},
-            boundaryGap :[0,0.01],
             position: 'bottom',
             max:"dataMax",
             axisLabel : {
@@ -59,16 +58,16 @@ return {
             axisTick:{//坐标轴刻度相关设置
                 show:true,
 				inside:true,
-                color:'#bbbbbb',
+                color:'#ddd',
                 length:3,//刻度长短设置
                 lineStyle:{
-                     color:'#bbbbbb',
+                     color:'#ddd',
                 }
             },  
             axisLine: {
                 show : true,
                 lineStyle : {
-                    color: '#bbbbbb',
+                    color: '#ddd',
                     width : 1
                 }
             }
@@ -77,6 +76,7 @@ return {
     ],
     yAxis : [
          {
+			
             splitLine: {show:false},
             data : data.header,
             boundaryGap :[0.01,0.01],
@@ -101,7 +101,7 @@ return {
             color:'#ff7c27',
             length:3,//刻度长短设置
             lineStyle:{
-                 color:'#FB7F2E',
+                 color:'#54acd5',
               }
            },               
         }
@@ -115,9 +115,9 @@ return {
             itemStyle : { 
                 normal: {
                     label : {show: false, position: 'top'},
-                    barBorderColor:'#FB7F2E',
-                    opacity:0.1,
-                    color:'#FB7F2E',
+                    barBorderColor:'#54acd5',
+                    opacity:0.2,
+                    color:'#54acd5',
                     barBorderRadius: 5
                 }
             },
@@ -131,9 +131,9 @@ return {
             barGap:'-100%',
             itemStyle : { 
                 normal: {
-                    label : {show: true, position: ['100%',-20]},
-                    barBorderColor:'#FB7F2E',
-                    color:'#FB7F2E',
+                    label : {show: true, position: ['92%',-20]},
+                    barBorderColor:'#54acd5',
+                    color:'#54acd5',
                     barBorderRadius: 5
                 }
             },
