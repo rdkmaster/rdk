@@ -45,7 +45,6 @@ return {
         {   
             type : 'value',
             splitLine: {show:false},
-            boundaryGap :[0,0.01],
             position: 'bottom',
             max:"dataMax",
             axisLabel : {
@@ -60,16 +59,16 @@ return {
             axisTick:{//坐标轴刻度相关设置
                 show:true,
 				//inside:true,//刻度朝向，里外
-                color:'#bbbbbb',
+                color:'#ddd',
                 length:3,//刻度长短设置
                 lineStyle:{
-                     color:'#bbbbbb',
+                     color:'#ddd',
                 }
             },  
             axisLine: {
                 show : true,
                 lineStyle : {
-                    color: '#bbbbbb',
+                    color: '#ddd',
                     width : 1
                 }
             }
@@ -101,16 +100,16 @@ return {
             axisLine: {
                 show : true,
                 lineStyle : {
-                    color: '#bbb',
+                    color: '#ddd',
                     width : 1
                 }
             },
             axisTick:{//坐标轴刻度相关设置
             show:true,
-             color:'#ff7c27',
+             color:'#ddd',
             length:3,//刻度长短设置
             lineStyle:{
-                 color:'#FB7F2E',
+                 color:'#54acd5',
                 }
             },               
         }
@@ -123,9 +122,9 @@ return {
             itemStyle : { 
                 normal: {
                     label : {show: false, position: 'top'},
-                    barBorderColor:'#FB7F2E',
-                    opacity:0.1,
-                    color:'#FB7F2E',
+                    barBorderColor:'#54acd5',
+                    opacity:0.2,
+                    color:'#54acd5',
                     barBorderRadius: 5
                 }
             },
@@ -158,9 +157,9 @@ return {
             animation:true,
             itemStyle : { 
                 normal: {
-                    label : {show: true, position: ['98%',-20]},
-                    barBorderColor:'#FB7F2E',
-                    color:'#FB7F2E',
+                    label : {show: true, position: ['92%',-20]},
+                    barBorderColor:'#54acd5',
+                    color:'#54acd5',
                     barBorderRadius: 5
                      
                 }
