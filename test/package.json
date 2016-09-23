@@ -2,11 +2,18 @@
   "version": "1.1.0",
   "private": true,
   "name": "rdk",
+  "dependencies": {
+    "hat": "0.0.3",
+    "lodash": "^4.0.0",
+    "mkdirp": "^0.5.0",
+    "string.prototype.startswith": "^0.2.0"
+  },
   "devDependencies": {
     "karma": "^0.12.16",
     "karma-chrome-launcher": "^0.1.4",
     "karma-jasmine": "^0.1.5",
-    "protractor": "~1.0.0",
+    "jasmine": "^2.4.1",
+    "protractor": "^3.1.1",
     "http-server": "^0.6.1",
     "tmp": "0.0.23",
     "shelljs": "^0.2.6",
@@ -15,9 +22,9 @@
   "scripts" : {
     "all": "protractor all-conf.js",
     "table": "protractor table-conf.js",
-    "accordion":"protractor map-conf.js",
-    "basic":"protractor map-conf.js",
-    "graph":"protractor map-conf.js",
+    "accordion":"protractor accordion-conf.js",
+    "basic":"protractor basic-conf.js",
+    "graph":"protractor graph-conf.js",
     "map":"protractor map-conf.js",
     "protractor_debug" : "protractor debug protractor-conf.js"
   }

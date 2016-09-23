@@ -16,8 +16,7 @@ exports.config = {
 
     baseUrl: 'http://localhost:8080/',
 
-    framework: 'jasmine',
-
+    framework: 'jasmine2',
     jasmineNodeOpts: {
         defaultTimeoutInterval: 50000000
     },
@@ -25,13 +24,9 @@ exports.config = {
     ignoreSynchronization: true,
 
     onPrepare: function() {
-        require('jasmine-reporters');
-         var capsPromise = browser.getCapabilities();
-                capsPromise.then(function(caps){
-                    var browserName = caps.caps_.browserName.toUpperCase();
-                    var browserVersion = caps.caps_.version;
-                    var prePendStr = browserName + "-" + browserVersion + "-";
-                    jasmine.getEnv().addReporter(new jasmine.JUnitXmlReporter("report/e2e", true, true,prePendStr));
-        });
+        var Jasmine2HtmlReporter = require('./index.js');
+         jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+            savePath: './report/e2e'
+        }));
     }
 };
