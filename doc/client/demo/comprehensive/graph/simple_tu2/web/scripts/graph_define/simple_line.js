@@ -155,6 +155,7 @@ return {
         {
             name: data.rowDescriptor[0],animation:true,
             data: data.data[0],showAllSymbol :true,
+            legendHoverLink:false,
 			itemStyle : { 
                     normal: {
                         label : {show: false, position: 'top'},
