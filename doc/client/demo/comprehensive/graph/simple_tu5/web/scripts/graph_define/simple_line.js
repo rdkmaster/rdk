@@ -49,20 +49,23 @@ return {
                lineStyle:{
                 color:"#eee"
                }
-           },
+            },
             data : data.header
         }
     ],
     yAxis : [
         {
-           type:'value',
-           max:3,
-           axisTick:{
+            type:'value',
+            max:3,
+            axisTick:{
             show:false,
-           },
-           axisLabel:{
-           formatter: '{value} %'
-           }
+            },
+            min:0,
+            axisLabel:{
+              formatter: function(params){
+                return  params.toFixed(1)=="0.0"?0+"%":params.toFixed(1)+"%"
+              }
+            }
         }
     ],
     series : [

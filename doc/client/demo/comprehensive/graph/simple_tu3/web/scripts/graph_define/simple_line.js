@@ -22,10 +22,8 @@ define([/*  'underscore'   */], function() {
 
 // attributes 是当前Graph所在的html节点的所有属性集。也是一种辅助数据。
 return function(data, context, GraphService, attributes) {
-var colors = [ '#ffeade','#ff7c27']
 var a='1';
 return {
-    color:colors,
     tooltip : {
         trigger: 'axis',
         axisPointer: {
