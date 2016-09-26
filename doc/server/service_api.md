@@ -496,7 +496,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  
    undefined
 
-### `rdk自动加载应用初始化脚本` ###
+### `rdk自动加载应用初始化脚本`{#init} ###
 
 rdk_server在服务启动时会自动加载应用的初始化脚本。
 应用需要在其**server**目录下放置名为**init.js**的文件即可，
