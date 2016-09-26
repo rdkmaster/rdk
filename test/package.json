@@ -28,6 +28,7 @@
     "map":"protractor map-conf.js",
     "combo":"protractor combo-conf.js",
     "time":"protractor time-conf.js",
+    "input":"protractor input-conf.js",
     "protractor_debug" : "protractor debug protractor-conf.js"
   }
 }
