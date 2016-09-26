@@ -69,7 +69,7 @@ function rmdir(dir) {
 }
 
 function Jasmine2HTMLReporter(options) {
-
+//options={savePath:"/report/e2e"}
     var self = this;
 
     self.started = false;
@@ -79,6 +79,7 @@ function Jasmine2HTMLReporter(options) {
     self.takeScreenshots = options.takeScreenshots === UNDEFINED ? true : options.takeScreenshots;
     self.savePath = options.savePath || '';
     self.takeScreenshotsOnlyOnFailures = options.takeScreenshotsOnlyOnFailures === UNDEFINED ? false : options.takeScreenshotsOnlyOnFailures;
+    //img的文件夹名字
     self.screenshotsFolder = (options.screenshotsFolder || 'screenshots').replace(/^\//, '') + '/';
     self.useDotNotation = options.useDotNotation === UNDEFINED ? true : options.useDotNotation;
     self.fixedScreenshotName = options.fixedScreenshotName === UNDEFINED ? false : options.fixedScreenshotName;
@@ -161,11 +162,9 @@ function Jasmine2HTMLReporter(options) {
             browser.takeScreenshot().then(function (png) {
                 browser.getCapabilities().then(function (capabilities) {
                     var screenshotPath;
-
-
                     //Folder structure and filename
-                    screenshotPath = path.join(self.savePath + self.screenshotsFolder, spec.screenshot);
-
+                    //最终路径
+                    screenshotPath = path.join(self.savePath +'/'+ self.screenshotsFolder, spec.screenshot);
                     mkdirp(path.dirname(screenshotPath), function (err) {
                         if (err) {
                             throw new Error('Could not create directory for ' + screenshotPath);

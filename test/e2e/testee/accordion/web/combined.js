@@ -36,7 +36,10 @@ scope.cityProcessor=function(data){
 scope.select2string=function(selected,context,index){
   return BasicSelector.selected2string(selected,"label",",");
 }
-
+EventService.register("city_selector",EventTypes.CHANGE,function(event,data){
+  scope.currentVal=data[0].label;
+  console.log(scope.currentVal);
+});
 scope.scrollerData=[
   {url:'./images/Chrysanthemum.jpg'},
   {url:'./images/Hydrangeas.jpg'},
