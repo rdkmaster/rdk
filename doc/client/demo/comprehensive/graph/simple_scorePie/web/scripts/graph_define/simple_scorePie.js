@@ -22,7 +22,8 @@ define([], function() {
 
 // attributes 是当前Graph所在的html节点的所有属性集。也是一种辅助数据。
 return function(data, context, GraphService, attributes) {
-    var color=null;//不同区域得分颜色
+    var inner_color,//内圆颜色
+        outer_color;//外环颜色
     inner_color=data.data[0]>=90?'rgb(85,202,140)':(data.data[0]>=80&&data.data[0]<90)?'rgb(84,172,213)':(data.data[0]>=70&&data.data[0]<80)?'rgb(249,150,96)':(data.data[0]<70)?'rgb(236,109,109)':'#dedede';
     outer_color=data.data[0]>=90?'rgba(85,202,140,.2)':(data.data[0]>=80&&data.data[0]<90)?'rgba(84,172,213,.2)':(data.data[0]>=70&&data.data[0]<80)?'rgba(249,150,96,.2)':(data.data[0]<70)?'rgba(236,109,109,.2)':'#dedede';
     var labelTop = {
