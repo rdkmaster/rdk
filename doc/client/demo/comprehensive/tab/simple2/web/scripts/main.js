@@ -23,11 +23,13 @@ define('main', ['rd.controls.Table','rd.containers.Panel'], function() {
                 }
             ]
         }
-        var width = parseFloat($('.hao').css('width'));
-        var height = parseFloat($('.hao').css('height'));//恨据外围 div的长宽给图标自动定位
+        var divWidth = parseFloat($('.hao').css('width'));
+        var divHeight = parseFloat($('.hao').css('height'));//恨据外围 div的长宽给图标定位在其右边中间
+        var spanHeight = parseFloat($('.images_right').css('width'))
+        var borderWidth = parseFloat($('.hao').css('borderWidth'))
         $('span.images_right').css({
-            'left':(width-1)+"px",
-            'top':(height/2-32)+"px"
+            'left':divWidth-borderWidth*2 + "px",
+            'top':(divHeight/2-spanHeight)+"px"
         });
         //左右拉的点击动漫效果
          $scope.images = function(){
