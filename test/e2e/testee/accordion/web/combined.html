@@ -37,7 +37,7 @@
 <body ng-controller='rdk_ctrl' class="rdk_main">
     <!-- combo_selecct -->
     <div class="accordion combo">
-        <rdk_accordion caption="'combo'" style="height:200px">
+        <rdk_accordion caption="'combo'" style="height:100px">
             <rdk_combo_select id="accordion_combo" ds="city" ds_url="$svr/city.js" ds_query_if="ready"
             ds_data_processor="cityProcessor" caption="'已选项'">
                 <rdk_basic_selector data="city" id="basic_id" child_change="select2string"></rdk_basic_selector>
@@ -71,7 +71,8 @@
                     <rdk_input placeholder="2"></rdk_input>
                 </div>
                 <div title="tab3">
-                    <rdk_basic_selector data="city" id="city_selector"></rdk_basic_selector>
+                    <rdk_basic_selector data="city" id="city_selector" multiple_select="false"></rdk_basic_selector>
+                    <input ng-model="currentVal"/>
                 </div>
             </rdk_tab>
         </rdk_accordion>

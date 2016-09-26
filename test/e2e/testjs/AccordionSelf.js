@@ -1,5 +1,5 @@
 'use strict';
-describe('Accordion Demo Self',function(){
+describe('Accordion Self Test',function(){
     beforeEach(function(){
         browser.get("test/e2e/testee/accordion/web/self.html");
         browser.sleep(3000);
