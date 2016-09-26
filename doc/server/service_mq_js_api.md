@@ -22,7 +22,7 @@ RDK的 `mq` 变量提供了一组处理消息的函数：
 
 说明：往消息队列中发出一个**点对点消息**，注意，点对点消息只用于一个主题监听者的情形，如果有多个监听者，则系统会随机挑选一个监听者来处理消息，其他的监听者均不会收到该消息。
 
-点对点消息比较可靠，并且节约系统资源，应该有限选择。
+点对点消息比较可靠，并且节约系统资源，应该优先选择。
 
 如果是一个主题多个监听者，请采用 [`mq.broadcast()`](#mq_bc) 来发。
 
@@ -87,36 +87,39 @@ RDK的 `mq` 变量提供了一组处理消息的函数：
 参数：
 
 - topic 字符串。消息主题。
-- callbackFunctionName 函数名。处理该消息的函数名称，**不允许使用匿名函数**，否则报错。
+- callbackFunctionName 字符串。处理该消息导出对象属性名。
 - jsfile 字符串，回调函数所在js文件名，注意该文件默认相对路径为你应用的server目录，若该js文件位于server的子目录下，则应将相对server的目录也带上，比如js文件位于app/example/server/sss/callback.js，则参数应取值为"sss/callback.js"。
  
 
 返回：调用该回调函数返回的值对应的json串。
 
-监听一个消息主题，可以监听点对点的消息，也可以监听广播消息。比如某应用接收到消息之后，`callbackFunctionName` 函数会被调用，该函数的定义如下：
-
-	function callbackFunctionName(message) {
-		//...
-	}
-
-`callback` 函数的函数名很重要，它是使用 [`mq.unsubscribe()`](#mq_unsub) 取消订阅主题的一个标志，不允许与本应用已经注册的回调函数名重复，也不允许为空（匿名函数）。
+`callbackFunctionName` 导出对象的属性名很重要，它是使用 [`mq.unsubscribe()`](#mq_unsub) 取消订阅主题的一个标志。
 
 示例：
-   比如在example服务文件my\_service.js中需要订阅主题为“rdk_Message”的消息，并在回调函数callback中打印监听到的消息。详细代码如下：
+   
+   比如example应用需要订阅主题为“rdk_Message”的消息，并在回调函数callback中打印监听到的消息。
+由于我们希望订阅的执行过程只执行一次，因此我们可以在example应用下的[init.js](#init)中编写订阅代码：
 
 	(function () {
-	    function _callback_(msg) {
+		function _init_() {
+			mq.subscribe("rdk_Message","callback","callback.js");
+		}
+		return {
+			init: _init_
+		}
+	})();
+   
+接下来就可以在该应用的server目录下新建一个callback.js文件，并编写回调函数代码：
+
+	(function () {
+	    function _callback(msg) {
 	        log("message recvived:"+msg.body)
 	    }
-	    function _get_(request, script){
-	        mq.subscribe("rdk_Message","callback","my_service.js");
-	    }
 	    return {
-	        callback: _callback_,
-	        get:_get_
+	        callback: _callback,
 	    }
     })();
-   
+
 ### `mq.unsubscribe()` {#mq_unsub}
 用来取消已经订阅的主题。
 定义：
@@ -126,34 +129,8 @@ RDK的 `mq` 变量提供了一组处理消息的函数：
 参数：
 
 - topic 字符串。消息主题。
-- callbackFunctionName 函数名。处理该消息的函数名称，**不允许使用匿名函数**，否则报错。
+- callbackFunctionName 字符串。处理该消息导出对象属性名。
 - jsfile 字符串，回调函数所在js文件名，注意该文件默认相对路径为你应用的server目录，若该js文件位于server的子目录下，则应将相对server的目录也带上，比如js文件位于app/example/server/sss/callback.js，则参数应取值为"sss/callback.js"。
 
 返回：undefined。
-
-### `mq.reply()` ###
-用来回复一个p2p类型的消息。
-
-定义：
-
-	function reply(dst, message);
-
-参数：
-
-- dst 字符串。应答的消息主题。
-- message 字符串。应答内容。
-
-返回：undefined。
-
-说明：可以在订阅回调函数中给消息发送者回应一个消息。
-
-示例：
-
-     mq.subscribe('my_subject', "myCallback","callbackfile.js")//先订阅
-
- 之后在myCallback回调函数中使用mq.reply即可给调用者回复消息。
-    
-     function myCallback(){
-		 	mq.reply("my_subject.req","response from rdk!");
-     }
 
