@@ -47,6 +47,7 @@ scope.addButton=function(){
         console.log(obj);
       }
     },{
+      icon:'images/refresh.png',
       label:'刷新',
       callback:function(obj){
         if(scope.isNewico){
@@ -59,11 +60,13 @@ scope.addButton=function(){
         scope.isNewico=!scope.isNewico;
       }
     },{
+      icon:'images/frozen.png',
       label:'冻结',
       callback:function(obj){
         scope.accordion.frozen=!scope.accordion.frozen;
       }
     },{
+      icon:'images/edit.png',
       label:'编辑',
       callback:function(obj){
         scope.accordion.editable=!scope.accordion.editable;
