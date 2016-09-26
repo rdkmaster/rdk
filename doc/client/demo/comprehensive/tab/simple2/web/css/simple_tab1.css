@@ -118,6 +118,7 @@ i.regular_right{
 i.regular_left{
 	color:#333;
 }
+/* 翻页样式 */
 .rdk-table-module .pagination > li > span{
     padding: 0 15px;
 }
@@ -128,5 +129,10 @@ i.regular_left{
 .rdk-table-module .disabledRecords{
 	font-size:12px;
 }
+.rdk-table-module .pagination > li > a:focus , .rdk-table-module .pagination > li > a:hover{
+    background: transparent;
+}
+
+
 
 
