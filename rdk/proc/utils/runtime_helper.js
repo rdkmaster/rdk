@@ -56,11 +56,7 @@ var mq={
     },
     unsubscribe: function (topic,callback_function_name, jsfile){
         return rdk_runtime.unSubscribe(topic,callback_function_name, jsfile);
-    },
-    reply: function (dst, message){
-        return rdk_runtime.reply(dst, message);
     }
-
 };
 
 var websock ={
