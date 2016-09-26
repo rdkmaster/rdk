@@ -4,14 +4,8 @@
 	font-size: 14px;
 	background:#eeeeee;
 }
-.content{
-	width:752px;
-	overflow: hidden;
-	margin:0 auto;
-	margin-top:50px;
-}
 .hao{
-	
+	/*box-sizing: content-box;*/
 	width:740px;
     margin-right:12px;
 	/*padding-right:12px;*/
