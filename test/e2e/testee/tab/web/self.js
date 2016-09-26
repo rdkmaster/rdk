@@ -29,11 +29,7 @@ app.controller('rdk_ctrl', ['$scope' ,'DataSourceService', 'blockUI','EventServi
 function(scope,DSService, blockUI,EventService,EventTypes) {
 application.initDataSourceService(DSService);
 /************************ 应用的代码逻辑开始 ************************/
-scope.age=11;
-scope.isReadOnly=true;
-scope.toggleReadonly=function(){
-  scope.isReadOnly=!scope.isReadOnly;
-}
+
 /************************ 应用的代码逻辑结束 ************************/
 }]);
 

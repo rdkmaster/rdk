@@ -35,12 +35,20 @@
 </style>
 <body ng-controller='rdk_ctrl' class="rdk_main">
     <div class="demo1 rdk-tab">
-        <rdk_tab>
+        <rdk_tab selected_tab="2">
             <div title="DIV1">DIV1</div>
             <div title="DIV2">DIV2</div>
             <div title="DIV3">DIV3</div>
         </rdk_tab>
     </div>
+    <div class="demo2 rdk-tab">
+        <rdk_tab toggle_condition="mouseover">
+            <div title="DIV1">DIV1</div>
+            <div title="DIV2">DIV2</div>
+            <div title="DIV3">DIV3</div> 
+        </rdk_tab>
+    </div>
+    <div class="heightStyle"></div>
     <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
     <!--     这个节点可选，删除后，RDK会自动生成一个    -->
     <!--           这个节点只支持基本HTML标签           -->
