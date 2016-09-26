@@ -45,7 +45,7 @@ return function(data, context, GraphService, attributes) {
             }
         },
         emphasis: {
-            color: '#7FDA91'
+            color: color
         }
     };
     //中间显示
