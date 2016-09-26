@@ -13,16 +13,7 @@ rdk以git开源的方式进行代码托管，首先应使用git bash工具把代
 	 
     git clone git@gitlab.zte.com.cn:10045812/rdk.git
 
-以上检出的是rdk前后端所有代码，接下来cd到rdk_server代码目录下
-
-    cd rdk/rdk
-
-下文所有的目录都以这个目录为例。
-
 此外，还需要下载sbt工具及依赖库，rdk同样在git lab上为大家准备了这些资源。假设要将sbt检出到以下目录,注意实际操作时请务必修改为你的实际目录，本文档后面涉及sbt路径设置的皆以此目录为例。
-
-    d:\sbt
-
 同样在git bash中先cd到以上目录，接下来使用以下命令检出：
   
     git clone git@gitlab.zte.com.cn:10045812/rdk-resource.git
@@ -33,13 +24,13 @@ rdk以git开源的方式进行代码托管，首先应使用git bash工具把代
 
 如果sbt命令可以执行，则要确认你当前环境上的sbt，是不是对应着下面这个：
 
-	d:\sbt\sbt\bin\
+	d:\rdkProject\sbt\bin\
 
 如果是，则跳过本小节。如果不是，则需要将环境上的sbt工具从系统环境变量中删除，再按照本小节余下过程设置。
 
 把下面这个目录添加到Path环境变量中去
 
-	d:\sbt\sbt\bin\
+	d:\rdkProject\sbt\bin\
 
 如果不知道怎么添加的话，请自行[百度](https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=0&rsv_idx=1&tn=baidu&wd=%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F&rsv_pq=fba32b1f000189c1&rsv_t=17cc7x9i2muEP6LU2zPYR3cF%2B04FWZNJ3geSW7MrqUEY3LgklGm0gBVIlM0&rsv_enter=1&rsv_sug3=24&rsv_sug1=10&rsv_sug7=100)。
 
@@ -47,13 +38,20 @@ rdk以git开源的方式进行代码托管，首先应使用git bash工具把代
 
 接下来还需要设置sbt本地依赖库的设置路径，使用文本编辑器打开
 
-    d:\sbt\sbt\conf\sbtconfig.txt
+    d:\rdkProject\sbt\conf\sbtconfig.txt
 
 修改该文件以下三行依赖路径，**实际操作时需要根据你本地sbt依赖库的位置进行设置**
 
-     -Dsbt.boot.directory=d:/sbt/sbt-repo/boot/
-     -Dsbt.ivy.home=d:/sbt/sbt-repo/ivy/
-     -Dsbt.global.base=d:/sbt/sbt-repo/
+     -Dsbt.boot.directory=d:/rdkProject/sbt-repo/boot/
+     -Dsbt.ivy.home=d:/rdkProject/sbt-repo/ivy/
+     -Dsbt.global.base=d:/rdkProject/sbt-repo/
+
+##设置jdk1.8 ##
+rdk_server需要jre1.8作为运行环境。windows用户打开cmd命令端口使用以下命令检测jdk版本
+
+     java -version
+
+若不是1.8版本，则需要[下载](https://www.baidu.com/link?url=VBPJzd2YmUpsuaRQpm5o3u_2I8exB6CjUbv6e5I-qDnquELOrLtCJhUDto4TfWomGHzqoIz9FpOsJKdfzrtZYb6IMaql7AjTYPJ1tjFHDlRp1DnCUVH8nCLg7zmqsg8i&wd=&eqid=d02be58100003af80000000657e91599)，并添加系统环境变量，方法和前面设置sbt环境变量的方法一致。
 
 ## 创建SBT工程 ##
 
@@ -88,10 +86,6 @@ rdk以git开源的方式进行代码托管，首先应使用git bash工具把代
 	d:\rdkProject\rdk\rdk
 
 打开之后，需要确认一下当前工程使用的jdk版本是否是1.8的，选择菜单 File-> Project Structure打开工程属性，在下图红框中要选择1.8，如果没有，则单击New新建一个1.8的jdk。
-
-若本地未安装jdk1.8，这里提供一个windows版本的JDK1.8路径,注意这个路径并不是git路径，需要使用SVN工具检出才行：
-
-	http://10.5.70.3/ZXVMAX/CODE/dev/ZXVMAX/vmax-app-comm/vmax-rdk/rdk_server/jdk1.8
 
 <img src="img/jdk.PNG"></img>
 
