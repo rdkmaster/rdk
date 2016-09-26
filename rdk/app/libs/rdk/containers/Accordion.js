@@ -47,7 +47,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                             <div class="theme-buttons" ng-show="showButtons">\
                                 <a href="javascript:void(0)" class="btn btn-link"\
                                     ng-repeat="button in buttons"\
-                                    ng-click="clickHandler(button.callback, button, id)"\
+                                    ng-click="clickHandler(button.callback, button, id, $event)"\
                                     ng-mouseover=getTooltips($event,button.tooltips,button.label)>\
                                     <img ng-src="{{button.icon}}">{{button.label}}\
                                 </a>\
@@ -514,7 +514,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     }
                 }              
 
-                function _clickHandler(callback, button, htmlID){
+                function _clickHandler(callback, button, htmlID, event){
                     callback(button, htmlID);
                     event.stopPropagation();                    
                 }  
