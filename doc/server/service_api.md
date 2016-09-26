@@ -23,7 +23,7 @@
 
 RDK提供了一组记录日志的函数，它们有共同的定义：
 	
-	function log(msg1, msg2, msg3, ...)；
+	function log(msg1, msg2, msg3, ...);
 
 参数：
 
@@ -31,34 +31,63 @@ RDK提供了一组记录日志的函数，它们有共同的定义：
 
 一共有这些（日志级别由低到高）：
 
-- `log()` / `debug()`：记录debug级别的日志
-- `info()`：记录info级别的日志
-- `warn()`：记录warn级别的日志
-- `error()`：记录error级别的日志
-- `fatal()`：记录fatal级别的日志
-- `crit()`：记录一些关键日志，级别最高
+- `log()` / `Log.debug()`：记录debug级别的日志
+- `Log.info()`：记录info级别的日志
+- `Log.warn()`：记录warn级别的日志
+- `Log.error()`：记录error级别的日志
+- `Log.fatal()`：记录fatal级别的日志
+- `Log.crit()`：记录一些关键日志，级别最高
 
-日志生成在app目录下的 server/logs/log.txt 文件内。
+   RDK日志分为总的日志和应用日志，默认生成总的日志，日志路径为proc/log目录下
+
+   **应用若要生成自己的日志文件需要配置proc/conf/log4j.propertites文件**。
+
+该文件中已经配置好了总的日志，控制台日志以及example应用日志，用户只需要参照example日志进行配置即可。
+
+简便可靠的做法是复制example配置部分，在此基础上进行修改。
+
+示例：应用‘用户查询’位置为app/sqm/query_server/userQuery
+
+要生成该应用的日志需要在log4j.propertites文件中添加配置：
+
+    log4j.logger.sqm/query_server/userQuery=DEBUG,sqm/query_server/userQuery
+    log4j.appender.sqm/query_server/userQuery=org.apache.log4j.RollingFileAppender
+    log4j.appender.sqm/query_server/userQuery.File=./proc/logs/userQuery_log.txt
+    log4j.appender.sqm/query_server/userQuery.Threshold=DEBUG
+    log4j.appender.sqm/query_server/userQuery.Append=true
+    log4j.appender.sqm/query_server/userQuery.MaxFileSize=10MB
+    log4j.appender.sqm/query_server/userQuery.MaxBackupIndex=10
+    log4j.appender.sqm/query_server/userQuery.layout=org.apache.log4j.PatternLayout
+    log4j.appender.sqm/query_server/userQuery.layout.ConversionPattern=%d %p [%c] - %m%n
+    log4j.additivity.sqm/query_server/userQuery=true
 
 
-### `kv() ` ###
+文件配置后无需重启rdk服务，30秒后自动生效。
+
+### `Mapper` ###
+
+实际开发中，常常需要定义一个可根据给定的属性来从一个映射中获取其对应的值的处理函数，Mapper变量提供了简便的处理方法。
+
+#### `Mapper.from_object()` ####
+
+该函数可以获取一个基于js对象完成映射获取的处理函数。
 
 定义：
 
-	function kv(map, defaultValue);
+	function from_object(jsObject, defaultValue);
 
 参数：
 
-- map 一个JS对象。必选。一般来说，是 `mapper()` 函数的返回值。
+- jsObject 一个JS对象。必选。
 - defaultValue 一个整数/字符串/布尔。可选，默认值是key本身，即默认返回key值。
 
-返回：可用于 `matrix()` 的列**转换函数**，这个转换函数的作用是返回某个值在入参 `map` 中的映射。
+返回：一个**转换函数**，这个转换函数的作用是返回某个值在入参 `jsObject` 中的映射。
 
-说明：常常用于对数据集中的某列做国际化，可以参考 `matrix()` 函数的例子。
+说明：常常用于对数据集中的某列做国际化。
 
 示例：某个表中有一个字段用于表示“是否”这样的状态，存在库中，1代表“是”，0代表“否”，可以使用下面的代码得到一个转换函数：
 
-	var tranformFunction = kv({1: "是", 0: "否"});
+	var tranformFunction = Mapper.from_object({1: "是", 0: "否"});
 
 	var val = tranformFunction(0); // "否"
 	var val = tranformFunction(1); // "是"
@@ -66,78 +95,59 @@ RDK提供了一组记录日志的函数，它们有共同的定义：
 
 如果期望在输入非1、0时得到“未知”，则可以使用下面代码
 
-	var tranformFunction = kv({1: "是", 0: "否"}， "未知");
+	var tranformFunction = Mapper.from_object({1: "是", 0: "否"}， "未知");
 	var val = tranformFunction(2); // "未知"
 
-
-### `mapper() ` ###
-
-定义：
-
-	function mapper(sql, key, value, keepResultSet);
-
-参数：
-
-- sql 一个SQL字符串或者结果集`java.sql.ResultSet`。必选。
-- key 一个整数/字符串。必选。结果集中的字段名，或者字段序号（从1开始）。
-- value 一个整数/字符串。必选。结果集中的字段名，或者字段序号（从1开始）。
-- keepResultSet 一个布尔值。可选，默认值是false。
-	- 为`false`（默认）： 在返回之前自动清理所占数据库连接和其他数据库资源。
-	- 为`true`：结果集在函数返回后依然可用，但是它所占的数据库连接等不会释放，必须手工调用 `clear()` 函数释放。**如果没有特别的需要，请不要设置为true！！**
-	- **<span style="color:red">设置为`true`又没有调用`clear()`函数清理，可能会导致RDK所有服务不可用！</span>**
-	- 仅在第一个参数是`java.sql.ResultSet`的时候，此参数才有效。
-
-返回：将结果集转为一个映射。
-
-说明：这在需要生成一个国际化键值对的时候非常有用，数据库中保存的大多是对象的id，返回给前端之前，需要将id转为对应的描述字符串，`mapper()` 可以生成一个键值对保存下来备用。
-
-		var sql = "select neid,name from dim_ne";
-		var map = mapper(sql, 'neid', 'name');
-		log(map);
-
-打印出来的是网元id和网元名称的映射：
-
-	{
-		"11":"S11_1",
-		"12":"S1MME_1",
-		"13":"S1U_1_DPI",
-		"21":"S11_1",
-		"22":"SMME_1",
-		"23":"S1U_1_DPI"
-	}
-
-也可以使用列的索引来指明key和value的字段，下面代码的效果和前面示例的效果一致：
-
-		var sql = "select neid,name from dim_ne";
-		var map = mapper(sql, 1, 2);
-		log(map);
-
-使用索引的作为key和value主要是用于sql不确定的场景。
-
-### `matrix() ` ###
+#### `Mapper.from_sql()` ####
 
 定义：
 
-	function matrix(sql, mapIterator, keepResultSet);
+	function from_sql(sql, keyName, valueName, defaultValue);
 
 参数：
 
-- sql 一个SQL字符串或者结果集`java.sql.ResultSet`。必选。
-- mapIterator 一个对象/函数。可选。这个参数用于 `matrix()` 函数转换过程中对指定列进行转换。
-- keepResultSet 一个布尔值。可选，默认值是false。
-	- 为`false`（默认）： 在返回之前自动清理所占数据库连接和其他数据库资源。
-	- 为`true`：结果集在函数返回后依然可用，但是它所占的数据库连接等不会释放，必须手工调用 `clear()` 函数释放。**如果没有特别的需要，请不要设置为true！！**
-	- **<span style="color:red">设置为`true`又没有调用`clear()`函数清理，可能会导致RDK所有服务不可用！</span>**
-	- 仅在第一个参数是`java.sql.ResultSet`的时候，此参数才有效。
+- sql 一个用来查询数据库的sql串。必选。
+- keyName 一个字符串，必选，对应构造映射键的列名。
+- valueName 一个字符串，必选，对应构造映射值的列名。
+- defaultValue 一个整数/字符串/布尔。可选，默认值是key本身，即默认返回key值。
 
-返回：将结果集转为一个RDK前后端通用数据结构，称之为数据矩阵（matrix）。
+返回：一个**转换函数**，这个转换函数的作用是返回某个值在根据前三个参数构造而成的jsObject中的映射。
 
-说明：这个函数是应用最常用的函数之一，`sql()` 返回的结果集是无法直接传给前端的，必须使用 `matrix() ` 转换之后才能传给前端。
+示例：假设需要查询数据库，根据dim_ne表的neid,name列生成一组映射，并根据此映射来构造一个转换函数以便给定一个neid值时方便的得到其对应的name值：
 
+	  var tranformFunction = Mapper.from_sql("select * from dim_ne;",'neid','name',"unknown");
+      tranformFunction("30");//表dim_ne中neid=30对应的name值
+      
+
+#### `Mapper.from_datatable()` ####
+
+定义：
+
+	function from_datatable(dataTable, keyName, valueName, defaultValue);
+
+参数：
+
+- dataTable 一个[DataTable](#dataTable)对象。必选。
+- keyName 一个字符串，必选，对应构造映射键的列名。
+- valueName 一个字符串，必选，对应构造映射值的列名。
+- defaultValue 一个整数/字符串/布尔。可选，默认值是key本身，即默认返回key值。
+
+返回：一个**转换函数**，这个转换函数的作用是返回某个值在根据前三个参数构造而成的jsObject中的映射。
+
+示例：假设需要查询数据库，根据dim_ne表的neid,name列生成一组映射，并根据此映射来构造一个转换函数以便给定一个neid值时方便的得到其对应的name值：
+
+      var dataTable=Data.fetch("select * from dim_ne;")
+	  var tranformFunction = Mapper.from_datatable(dataTable,'neid','name',"unknown");
+      tranformFunction("30");//表dim_ne中neid=30对应的name值
+
+
+### `DataTable对象` {#dataTable}
+
+DataTable构造函数生成一个矩阵对象，同时提供了在该对象上一系列方便的函数操作，同时这些操作本身仍返回该对象本身，因此可实现链式调用。
 
 #### 数据矩阵（matrix）的数据结构
 
-`matrix() ` 返回的数据矩阵的结构如下，这是数据矩阵最基本的结构：
+DataTable对象的数据矩阵的结构如下，这是数据矩阵最基本的结构：
 
 	{
 		header: ['header1', 'header2', 'header3'],
@@ -152,111 +162,46 @@ RDK提供了一组记录日志的函数，它们有共同的定义：
 
 header和field都是一维数组，data是一个二维数组。data的值对应着数据库表的数据，field是data中每一列对应的列头，header是field每个元素对应的国际化。
 
-#### `mapIterator` 的使用
+#### `DataTable.transform()` ####
 
-`mapIterator` 用于 `matrix()` 函数转换过程中对指定列进行转换，它是一个JSON对象，属性为需要转换的列的字段名，值为一个函数，结构如下：
+定义：
+  
+     function transform(transObjectConf)
 
-	{
-		fieldName: function(value, row, index) {...},
-		fieldName1: function(value, row, index) {...},
-		...
-		fieldName2: function(value, row, index) {...},
-	}
+参数：
 
-实际使用时，需要把fieldName换成实际的字段名。
+- transObjectConf：一个js对象，对象属性名为要转换的列名，属性值为对该列进行转换操作的函数，可支持对多列进行处理,只需要定义多个属性及其对应的映射即可。
 
-`mapIterator` 属性值是函数，它描述了需要对fieldName所在列要做的映射逻辑，实现逻辑是把传入的value做一些处理（映射、计算等），然后将处理后的新值返回出来。
+返回：
+   
+  转换过后的DataTable对象
 
-看一个实际例子：
+说明：
+  **操作会修改原始对象的值，建议先调用[clone()](#clone)方法**
 
-	var mapIt = {
-		neid: function(value, row, index) {
-			var newValue = ...;
-			return newValue;
-		},
-		kpi_succ_rate: function(value, row, index) {
-			var newValue = ...;
-			return newValue;
-		}
-	}
-
-它会对matrix中的neid和kpi_succ_rate这2列做映射。
-
-#### 使用 `mapIterator` 实现字段国际化
-
-继续前面例子，我们从数据库中查询来的neid是网元的id，我们希望将它转成网元的描述，这样就可以直接显示在界面上了。为了达到这个目的，必须先将网元id与描述的对应关系给查询出来，这个可以参考 `mapper()` 函数的例子，代码如下：
-
-		var neMap = mapper("select neid,name from dim_ne", 'neid', 'name');
-
-接下来实现转换函数：
-
-	var mapIt = {
-		neid: function(neid, row, index) {
-			var newValue = map[neid];
-			return newValue;
-		}
-	}
-
-非常简单，就是把neid到网元映射表中转成网元描述即可。实际上，RDK框架提供了一个更简单的方式，可以直接使用 `kv()` 函数：
-
-	var mapIt = {
-		neid: kv(neMap)
-	}
-
-`kv()` 函数会返回一个专门做国际化映射的迭代函数。
-
-
-#### 使用 `mapIterator` 实现字段复杂计算
-
-再举个需要进行运算的例子。
-
-kpi_succ_rate这一列是某个KPI的值，但是在数据库中并没有直接保存它的值，而是保存了计算它的值所需的计数器，这个时候，我们应该把相关的计数器都查询出来，并写一个这样的迭代函数来计算它的值：
-
-	var mapIt = {
-		//注意这里row参数的类型是 java.sql.ResultSet
-		kpi_succ_rate: function(value, row, index) {
-			var successCounter = row.getObject("succ_counter");
-			var allCounter = row.getObject("all_counter");
-			var newValue = allCounter == 0 ? 0 : successCounter/allCounter;
-			return newValue;
-		}
-	}
-
-#### `matrix()` 例子的完整代码
-
-到此这个服务就完成了，完整代码如下：
-
-	(function() {
+例子：
+~~~
+(function() {
 	
 	return function(request) {
-		//先把网元的映射管理准备好
-		var sql = "select neid,name from dim_ne";
-		var neMap = mapper(sql, 'neid', 'name');
-			
+	
 		var mapIter = {
-			//使用kv函数创建一个通用的国际化迭代函数
-			neid: kv(neMap),
+			//使用Mapper.from_sql函数创建一个通用的国际化迭代函数
+			neid: Mapper.from_sql("select neid,name from dim_ne",'neid', 'name'),
 
-			//根据算法算出 kpi_succ_rate 的值。
-			kpi_succ_rate: function(value, row, index) {
-				var successCounter = row.getObject("succ_counter");
-				var allCounter = row.getObject("all_counter");
-				var newValue = allCounter == 0 ? 0 : successCounter/allCounter;
-				return newValue;
+			//根据自定义算法算出 kpi_succ_rate 的值。
+			kpi_succ_rate: function(value) {
+				...
 			}
 		}
 		
 		//查询出基础数据集
 		var sql = 'select neid,"" as kpi_succ_rate,succ_counter,all_counter from aggr_xxxx where ...';
-		var result = matrix(sql, mapIter);
-
-		//列头部分需要应用自己给出
-		result.header = ['网元', '呼叫成功率', '成功次数', '呼叫总次数'];
-
-		return json(result);
+		var result = Data.fetch(sql).transform(mapIter);
+		return result;
 	}
-
-	})();
+})();
+~~~
 
 这个服务返回了类似下面这样的数据给前端：
 
@@ -271,100 +216,139 @@ kpi_succ_rate这一列是某个KPI的值，但是在数据库中并没有直接�
 			]
 	}
 
-### `sql() ` <span style="color:red">慎用</span>
+
+#### `DataTable.select()` ####
 
 定义：
-
-	function sql(sql);
+  
+      function select(colNameArray)
 
 参数：
 
-- sql 一个SQL字符串。必选。
+- colNameArray：一个js数组，即要选取的列的field名称。
 
-返回：sql执行结果集（`java.sql.ResultSet`）。
+返回：
+   
+  筛选列过后的DataTable对象
 
-说明：执行一个sql语句，并返回它的结果集。
+说明：
+  **操作会修改原始对象的值，建议先调用[clone()](#clone)方法**
 
-**<span style="color:red">结果集使用完之后，务必调用`clear()`函数清理，否则可能会导致RDK所有服务不可用！</span>**
+示例：
+  
+      var tabledata=Data.fetch("select neid,name from dim_ne",4000);
+      //假设返回的数据结构为 {
+      //                    header:['网元','名字'],
+      //                    field:['neid','name'],
+      //                    data:[['30','test1'],['20','test2']]
+      //                   }
+      
+       tabledata.select(['name']);
+      // 则返回的数据结构为 {
+      //                    header:['名字'],
+      //                    field:['name'],
+      //                    data:[['test1'],['test2']]
+      //                }
 
 
-结果集是一个java数据类型，读取起来不方便，一般配合 `mapper()` 和 `matrix()` 这两个函数一起使用。
-
-返回的结果集是一个java对象，不通过普通的js方式去访问，但是可以通过`java.sql.ResultSet`提供的方法去访问它，[详情参考这里](http://docs.oracle.com/javase/8/docs/api/java/sql/ResultSet.html)。下面给出一个常用的遍历结果集的代码片段：
-
-	(function() {
-	
-	    return function(request, script) {
-			//服务的第一行代码写在这里！
-
-			//查询 dim_ne 表
-			var rs = sql('select * from dim_ne;')
-
-			//取出元数据
-			var metaData = rs.getMetaData();
-			//当前的列数
-			var cc = metaData.getColumnCount();
-	
-			//这里的row依然是一个 ResultSet 对象
-			//注意这里each函数会在完毕之后自动关闭rs
-			each(rs, function (row, index) {
-				log('-----------', index, '-----------')
-				for(var i = 1; i <= cc; i++) {
-					var str = metaData.getColumnLabel(i) + '=' + rs.getObject(i);
-					log(str);
-				}
-			});
-
-			clear(rs);
-			return '';
-	    }
-	
-	})();
-
-该服务在日志中的打印如下：
-
-	----------- 0 -----------
-	neid=11
-	netype=216
-	typedesc=S11
-	ver=0
-	name=s11
-	----------- 1 -----------
-	neid=7
-	netype=11
-	typedesc=SGW
-	ver=0
-	name=sgw
-	----------- 2 -----------
-	neid=42
-	netype=42
-	typedesc=MME
-	ver=0
-	name=mme
-	...
-
-### `clear() ` ###
+#### `DataTable.clone()` ####   //有问题，需要深拷贝
 
 定义：
-
-	function clear(resultSet);
+  
+      function clone()
 
 参数：
 
-- resultSet 是 `sql()` 函数的返回值。必选。
+- 无
 
-返回：无。
+返回：
+   
+  一个新的DataTable对象
 
-说明：`sql()` 函数的返回值是一个Java对象，`java.sql.ResultSet` 类型。在有特殊需要的时候，可以自行操作结果集，但是请务必在完成之后调用本函数清理掉所占的资源，包括
 
-- 执行本次sql的**数据库连接**；
-- 结果集所占的内存；
+### `Data对象` ###
 
-**<span style="color:red">结果集使用完之后，务必调用`clear()`函数清理，否则可能会导致RDK所有服务不可用！</span>**
+改对象提供了一些和数据库操作有关的方法，比如增删改查功能。
 
-请注意在`sql()`函数和`clear()`函数之间的代码要做好异常保护，以确保`clear()`可以被成功调用。
+#### `Data.fetch()` ####
 
-RDK提供了众多的处理结果集的函数，包括 `matrix()` / `mapper()` / `earch()` 等，都会自动清理结果集，无需再次清理。
+定义：
+
+    function fetch(sql,maxLine);
+
+说明：执行数据库查询功能。
+
+参数：
+
+- sql: 一个SQL字符串，必选。
+
+- maxLine:查询数据返回的最大记录数，数值型，必选。
+
+返回：
+
+ [DataTable对象](#DataTable)
+
+
+
+#### `Data.fetch_first_cell()` ####
+
+定义：
+
+    function fetch_first_cell(sql);
+
+参数：
+
+- sql: 一个SQL字符串，必选。
+
+返回：
+ 
+  数据的第一行第一列，字符串类型
+
+
+#### `Data.batch_fetch()` ####
+
+定义：
+
+    function batch_fetch(sqlArray, maxLine,timeout)；
+
+说明：并发执行多个sql的查询并返回结果，超时后抛出超时异常。
+
+参数：
+
+- sqlArray: 一个SQL字符串数组，必选。
+
+- maxLine：返回的最大记录数，可选，默认为4000。
+
+- timeout ：批量查询超时时间，单位秒，必选。
+
+
+返回：
+ 
+  [DataTable对象](service_DataTable_api.html)数组
+
+示例：
+
+    Data.batch_fetch(['select * from dim_ne;','select * from dim_comm_city'],4000,10);
+
+
+#### `Data.executeUpdate()` ####
+
+定义：
+
+    function executeUpdate(sql)；
+
+说明：执行数据库增删改功能
+
+参数：
+
+ - sql:一个sql字符串或者一个sql字符串数组，必选。其中对sql数组的执行时并发的。
+
+
+返回：
+ 
+   参数为一个sql字符串时，函数返回该sql执行返回的受影响记录数对应的字符串；
+   参数为sql数组时，函数返回该sql数组分别执行返回的受影响记录数对应的字符串数组。
+ 
 
 ### `require() ` ###
 
@@ -395,110 +379,147 @@ RDK提供了众多的处理结果集的函数，包括 `matrix()` / `mapper()` /
 
 这个函数有个别名：`load()`。但请尽量使用 `require()` 这个名字来调用，万一以后把js引擎改为nodejs，则代码可以不修改。
 
-### `buffer()` ###
+### `Cache` ###
+
+该对象提供了一些缓存相关的方法。
+
+#### `Cache.put()` ####
 
 定义：
 
-	function buffer(name, dataDescriptor, subject);
+    function put(k, v)；
+
+说明：将数据保存至该应用缓存中。
 
 参数：
 
-- name 一个字符串。必选。缓冲数据的名称。
-- dataDescriptor 一个对象/函数。必选。需要缓冲的数据或者一个函数用于创建需要缓冲的数据。
-- subject 一个字符串。变化主题，暂时未用到。
+- k: 字符串，缓冲数据的名称。
 
-返回：`dataDescriptor` 是一个对象时，返回该对象。`dataDescriptor` 是一个函数时，返回该函数的返回值。
+- v: 任意对象，缓冲数据。
 
-说明：用于缓存一些数据，当这些数据已经存在，则从缓存中取出并返回，如果不存在，则调用 `dataDescriptor`，并将其返回值的数据放到缓存中，并返回这些数据。
 
-例子：
+返回：
+ 
+  同v,即应用的缓冲数据
 
-`matrix()` 函数中有一个完整的服务实现例子，该例子有个缺陷。网元id和网元名称的映射关系，在系统安装好了后，就几乎没有变化的可能，这些数据我们称为**静态数据**。静态数据我们只需要查询一次就够了，不需要每次都去数据库查询。VMax系统中有很多很多静态数据。该例子并没有考虑到这一点，每次前端的请求过来，都会去查询一次静态数据。
 
-我们来改进这个缺陷，下面是代码：
-
-	(function() {
-	
-	return function(request) {
-		//先把网元的映射管理准备好
-		var neMap = buffer('neMap', function () {
-		        var sql = "select neid,name from dim_ne;";
-		        return mapper(sql, 'neid', 'name');
-		    });
-	
-		/** 其他的代码不变 **/
-		...
-
-		return json(result);
-	}
-
-	})();
-
-RDK会尝试去读取名称为 neMap 的缓冲数据
-
-- 如果有，则直接返回；
-- 如果没有，则使用 `dataDescriptor` 来创建它，并加入缓冲区；
-
-这样，自始至终，静态数据只会被初始化一次。
-
-#### 线程安全性
-
-当 `dataDescriptor` 是一个函数时，这个函数的执行是线程安全的，即一旦某个 `name` 的 `dataDescriptor` 在运行过程中，其他所有在尝试读取 `name` 的缓冲数据的任何服务的所有请求，都会阻塞等待此函数的返回后再继续执行。
-
-当 `dataDescriptor` 是一个对象时，`buffer()` 只在缓冲区更新的过程是线程安全的，此对象的创建过程的线程安全性由应用自行保证，参考 `sync()` 函数。
-
-#### 缓冲区的更新
-
-RDK提供了 `getBuffer()` 和 `removeBuffer()` 这两个函数来处理缓冲区，都是线程安全的。
-
-- `getBuffer()` 和 `buffer()` 作用类似，它只读缓冲区，读取失败时不创建任何缓冲数据
-- `removeBuffer()` 用来删除一个缓冲数据。
-
-`removeBuffer()` 的定义是
-
-	function removeBuffer(name)
-
-### `sync()` ###
+#### `Cache.get()` ####
 
 定义：
 
-	function sync(job, lockName);
+    function get(k)；
+
+说明：从应用的缓存中取回数据
 
 参数：
 
-- job 一个函数。必选。同步作业函数。
-- lockName 一个字符串。可选，默认值是全局锁。RDK会使用lockName指明的锁来执行同步作业。
+ - k: 字符串，缓冲数据的名称。
 
-返回：`job` 的返回值。
 
-说明：当一些数据存在不同请求同时处理的时候，需要用到这个函数。尽量的减小锁的粒度以提升性能，尽量避免使用全局锁。
+返回：
+ 
+   应用的对应k名称的缓冲数据，没有的话返回null
 
-### `json()` ###
+
+
+#### `Cache.del()` ####
 
 定义：
 
-	function json(data, indent);
+    function del(k)；
+
+说明：删除应用缓存中的对应k的数据
 
 参数：
 
-- data 一个js对象。需要序列化的json对象。必选。
-- indent 一个字符串。格式化输出时的缩进量。可选，默认值是一些空格。
+ - k: 字符串，缓冲数据的名称。
 
-返回：一个json字符串
 
-说明：平时定位问题的时候，需要将对象打印出来，可以使用这个函数：
+返回：
+ 
+   undefined
 
-	var data = {key: "value", arr: [1, 2, 4]}
-	json(data);
+#### `Cache.global_put()` ####
 
-得到的结果是
+定义：
 
-	{
-	  "key": "value",
-	  "arr": [ 1, 2, 4 ]
-	}
+    function global_put(k,v)；
 
-### `loadClass()` ###
+说明：缓存rdk所有应用共享的数据
+
+参数：
+
+ - k: 字符串，缓冲数据的名称。
+
+ - v: 任意对象，缓冲数据。
+
+
+
+返回：
+ 
+   同v,即缓冲数据
+
+
+#### `Cache.global_get()` ####
+
+定义：
+
+    function global_get(k)；
+
+说明：返回rdk所有应用共享的缓存数据
+
+参数：
+
+ - k: 字符串，缓冲数据的名称。
+
+
+返回：
+ 
+   对应k名称的共享缓冲数据，没有的话返回null
+
+
+
+#### `Cache.global_del()` ####
+
+定义：
+
+    function del(k)；
+
+说明：删除rdk所有应用共享的名为k的缓存数据
+
+参数：
+
+ - k: 字符串，缓冲数据的名称。
+
+
+返回：
+ 
+   undefined
+
+### `rdk自动加载应用初始化脚本` ###
+
+rdk_server在服务启动时会自动加载应用的初始化脚本。
+应用需要在其**server**目录下放置名为**init.js**的文件即可，
+比如应用可以将其缓存数据的操作放置在这个文件中，这样可以避免应用因为缓存数据较大，执行比较耗时而导致rest请求超时。
+
+完整示例：
+应用example需要使用缓存功能，那么就可以在example/server目录下的init.js中编写以下代码：
+
+			(function () {
+			    function _init_() {
+			        Cache.put("ne_data",Mapper.fromData.fetch("select neid,name from dim_ne",4000))
+			    }
+			    return {
+			        init: _init_
+			    }
+			})();
+
+这样在example服务my-service.js中可以这样写来使用该缓存：
+
+           Cache.get("ne_data")(11) //Cache.get("ne_data")返回的是一个转换函数闭包，对其进行调用即可获取neid=11对应的name值
+
+
+### `JVM.load_class()` ###
 
 定义：
 
@@ -553,7 +574,6 @@ Java返回数据给JS，原则也是尽量只返回简单类型。当然也可�
 这块的建议是：需要JS调用的Java方法，参数尽量定义成Object的，在Java代码去检查参数类型，以确保最大的兼容性。
 
 ### `i18n()` ###
-
 定义：
 
 	function i18n(key, param1, param2, ...);
@@ -587,5 +607,3 @@ Java返回数据给JS，原则也是尽量只返回简单类型。当然也可�
 ## COMMON包相关 ##
 
 [单击这里](common.md)
-
-
