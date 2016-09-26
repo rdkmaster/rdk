@@ -134,10 +134,10 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 <live_demo example="containers/accordion/demo4coverable_bottom" width="800"  height="300"></live_demo>
 
 向右展开覆盖示例如下：
-<live_demo example="containers/accordion/demo4coverable_right" width="800"  height="300"></live_demo>
+<live_demo example="containers/accordion/demo4coverable_right" width="800"  height="400"></live_demo>
 
 向左展开覆盖示例如下：
-<live_demo example="containers/accordion/demo4coverable_left" width="800"  height="300"></live_demo>
+<live_demo example="containers/accordion/demo4coverable_left" width="800"  height="400"></live_demo>
 
 ## exchangable ##
 >支持类型：布尔型
@@ -159,10 +159,10 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 **注意** `coverable=true`且朝上下方向展开时，`exchangable`必须为`false`。
 
 向右展开覆盖，且图标位置交换，示例如下：
-<live_demo example="containers/accordion/demo4RightCoverable" width="800"  height="300"></live_demo>
+<live_demo example="containers/accordion/demo4RightCoverable" width="800"  height="400"></live_demo>
 
 向左展开覆盖，且图标位置交换，示例如下：
-<live_demo example="containers/accordion/demo4LeftCoverable" width="800"  height="300"></live_demo>
+<live_demo example="containers/accordion/demo4LeftCoverable" width="800"  height="400"></live_demo>
 
 ## min_width ##
 > 支持类型：数值型字符串
