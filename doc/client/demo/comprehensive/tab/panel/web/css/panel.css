@@ -134,7 +134,7 @@
 }
 /*表格hover背景色*/
 .rdk-table-module .rdk-table > tbody > tr:not(.selected-row):hover > td {
-     background-color: #e2eef9;
+     background-color: transparent;
 }
 .rdk-table-module .rdk-table tbody tr.selected-row:hover {
     /*background-color: #e3eef2*/

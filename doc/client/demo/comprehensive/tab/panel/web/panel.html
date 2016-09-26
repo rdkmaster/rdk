@@ -20,7 +20,7 @@
 <div class="panel-wrap" ng-class="{'wrap-animation':panelStatus}">
     <button ng-click="clkShowPanel()" class="btn-show btn-icon-down" ng-class="{'btn-icon-up':panelStatus}"></button>
     <rdk_panel title="'华城小区'" class="rdk-panel" ng-class="{'panel-up':panelStatus,'panel-down':!panelStatus}" show-title="true" height="280" width="610">
-        <rdk_table data="panelData" paging-visible="false" setting="settingPanel"></rdk_table>
+        <rdk_table ds="dsTable" ds-url="/doc/client/demo/comprehensive/tab/panel/web/data/data" ds_query_if="ready" paging-visible="false" setting="settingPanel"></rdk_table>
     </rdk_panel>
 </div>
 </body>
