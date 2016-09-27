@@ -42,7 +42,8 @@
         ITEM_MULTI: "item_multi", //selector 编码方式控制 multi属性
 
         DATA_CHANGE:"data_change",
-        DOUBLE_CLICK: "double_click"
+        DOUBLE_CLICK: "double_click",
+        PAGING_DATA_CHANGE:"paging_data_change"
     });
 
     event.service('EventService', ['$rootScope', '$timeout', '$rootScope', 'Utils', 'EventTypes',
