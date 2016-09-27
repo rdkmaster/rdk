@@ -36,9 +36,6 @@ define('main', ['rd.controls.Table', 'rd.services.Alert'], function() {
             for (key in $scope.checkable){
                 $scope.checkable[key] = $scope.selectAll;
             }
-            // for (var i = 0; i < $scope.checkable.length; i++) {
-            //     $scope.checkable[data[i].$index] = scope.selectAll;
-            // };
         }
 
     }]);
