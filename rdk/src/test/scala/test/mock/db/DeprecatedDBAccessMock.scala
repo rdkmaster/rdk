@@ -2,6 +2,7 @@ package test.mock.db
 
 import java.sql.ResultSet
 
+import com.zte.vmax.rdk.actor.Messages.DBSession
 import com.zte.vmax.rdk.proxy.DeprecatedDBAccessTrait
 
 /**
@@ -18,7 +19,7 @@ object DeprecatedDBAccessMock extends DeprecatedDBAccessTrait {
     def getMetaData = null
   }
 
-  override def sql(appName: String, sql: String): ResultSet = {
+  override def sql(session: DBSession, sql: String): ResultSet = {
     sql match {
       case "select * from dim_ne" => Dim_Ne
       case _ => null
@@ -26,7 +27,7 @@ object DeprecatedDBAccessMock extends DeprecatedDBAccessTrait {
 
   }
 
-  override def clear(appName: String, rs: ResultSet): Unit = {
+  override def clear(session: DBSession, rs: ResultSet): Unit = {
 
   }
 }

@@ -21,7 +21,7 @@ object Messages {
 
   case class HttpRequestContext(wrap: RequestContext) extends RDKContext
 
-  case class Session(appName: String)
+  case class DBSession(appName: String,opDataSource:Option[String])
 
   case class ServiceParam(service: String, param: JObject, app: String)
 

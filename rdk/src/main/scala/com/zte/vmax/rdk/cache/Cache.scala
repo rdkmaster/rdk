@@ -32,7 +32,7 @@ object CacheHelper {
 
   object globalCache extends AppCache(Misc.GlobalCache)
 
-  def getAppCache(appName: String): AppCache = {
+  def getAppCache(implicit appName: String): AppCache = {
 
     map.get(appName) match {
       case None =>

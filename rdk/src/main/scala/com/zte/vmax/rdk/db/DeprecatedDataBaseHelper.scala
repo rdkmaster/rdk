@@ -3,6 +3,7 @@ package com.zte.vmax.rdk.db
 import java.sql.{Connection, ResultSet, Statement}
 import java.util.concurrent.ConcurrentHashMap
 
+import com.zte.vmax.rdk.actor.Messages.DBSession
 import com.zte.vmax.rdk.proxy.{DeprecatedDBAccessTrait, ProxyManager}
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 
@@ -17,20 +18,16 @@ class DeprecatedDataBaseHelper extends DeprecatedDBAccessTrait with Logger {
 
   private val statements = new ConcurrentHashMap[ResultSet, DBContext]
 
-  private def getConnection(appName: String): Option[Connection] = {
-    val opConn = ProxyManager.dbAccess()
-    if (opConn.isEmpty) {
-      appLogger(appName).error("create RDKDataSource.getConnection() failed.")
-    }
-    opConn
+  private def getConnection(session: DBSession): Option[Connection] = {
+    ProxyManager.dbAccess(session)
   }
 
-  def sql(appName: String, sql: String): ResultSet = {
+  def sql(session: DBSession, sql: String): ResultSet = {
     var statement: Statement = null
-    val opConn = getConnection(appName)
+    val opConn = getConnection(session)
 
     if (opConn.isEmpty) {
-      appLogger(appName).error("create RDKDataSource.getConnection() failed, connection == null")
+      appLogger(session.appName).error("create RDKDataSource.getConnection() failed, connection == null")
       return null
     }
     val connection: Connection = opConn.get
@@ -61,12 +58,15 @@ class DeprecatedDataBaseHelper extends DeprecatedDBAccessTrait with Logger {
     return resultSet
   }
 
-  def clear(appName: String, rs: ResultSet) {
-    appLogger(appName).debug("clearing resultSet...statements.size=" + statements.size)
-    val ctx: DBContext = statements.remove(rs)
-    RdkUtil.safeClose(rs)
-    RdkUtil.safeClose(ctx.stm)
-    RdkUtil.safeClose(ctx.conn)
+  def clear(session: DBSession, rs: ResultSet) {
+    appLogger(session.appName).debug("clearing resultSet...statements.size=" + statements.size)
+    if (rs != null) {
+      val ctx: DBContext = statements.remove(rs)
+      RdkUtil.safeClose(rs)
+      RdkUtil.safeClose(ctx.stm)
+      RdkUtil.safeClose(ctx.conn)
+    }
+
   }
 
 

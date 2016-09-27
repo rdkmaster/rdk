@@ -48,7 +48,8 @@ object MqHelper extends Logger {
     val mqMsg = MQ_Message(MQ_Head(makeUniqueReplyTopic(app, replyTopic)), body)
     val future = RdkServer.mqRouter ? MQ_Rpc(topic, mqMsg, timeout * 1000)
     Await.result(future, myTimeout.duration) match {
-      case s: Option[String] => s.getOrElse("")
+      case s: Some[_] => s.get.toString
+      case None => ""
       case e: Throwable =>
         appLogger(app).error(e.getMessage)
         ""

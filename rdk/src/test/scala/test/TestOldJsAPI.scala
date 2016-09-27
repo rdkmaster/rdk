@@ -3,7 +3,7 @@ package test
 import java.io.File
 import java.sql.ResultSet
 
-import com.zte.vmax.rdk.actor.Messages.NoneContext
+import com.zte.vmax.rdk.actor.Messages.{DBSession, NoneContext}
 import com.zte.vmax.rdk.config.Config
 import com.zte.vmax.rdk.env._
 import com.zte.vmax.rdk.proxy.{DeprecatedDBAccessTrait, ProxyManager}
@@ -31,7 +31,7 @@ class TestOldJsAPI extends FunSpec with Matchers{
     }
   }
 
-  ProxyManager.deprecatedDbAccess = () => new DeprecatedDBAccessTrait{
+  ProxyManager.deprecatedDbAccess =  new DeprecatedDBAccessTrait{
     val TAB_AAA = new BaseResultSetMock {
       var i= 0
       def next() = {i=i+1;i<2}
@@ -51,9 +51,9 @@ class TestOldJsAPI extends FunSpec with Matchers{
       }
     }
 
-    override def sql(appName: String, sql: String): ResultSet = TAB_AAA
+    override def sql(session: DBSession, sql: String): ResultSet = TAB_AAA
 
-    override def clear(appName: String, rs: ResultSet): Unit = {
+    override def clear(session: DBSession, rs: ResultSet): Unit = {
 
     }
   }

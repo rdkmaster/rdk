@@ -3,7 +3,7 @@ package com.zte.vmax.rdk.env
 import javax.script._
 
 import com.google.gson.GsonBuilder
-import com.zte.vmax.rdk.actor.Messages.{WSBroadcast}
+import com.zte.vmax.rdk.actor.Messages.{DBSession, WSBroadcast}
 import com.zte.vmax.rdk.actor.WebSocketServer
 import com.zte.vmax.rdk.cache.CacheHelper
 import com.zte.vmax.rdk.config.Config
@@ -11,7 +11,7 @@ import com.zte.vmax.rdk.db.DataBaseHelper
 import com.zte.vmax.rdk.jsr._
 import com.zte.vmax.rdk.mq.MqHelper
 import com.zte.vmax.rdk.proxy.ProxyManager
-import com.zte.vmax.rdk.util.Logger
+import com.zte.vmax.rdk.util.{RdkUtil, Logger}
 import jdk.nashorn.api.scripting.ScriptObjectMirror
 
 
@@ -19,26 +19,37 @@ import jdk.nashorn.api.scripting.ScriptObjectMirror
   * Created by 10054860 on 2016/7/11.
   */
 class Runtime(engine: ScriptEngine) extends Logger {
-  def jsLogger = appLogger(application)
+  def jsLogger = appLogger
 
   var serviceCaller: ScriptObjectMirror = null
   private var jsonParser: ScriptObjectMirror = null
 
-  var application: String = ""
+  implicit var application: String = ""
   val locale: String = Config.get("ums.locale")
 
   val fileHelper = new FileHelper
 
   val restHelper = new RestHelper
   val jarHelper = new JarHelper
-  val dbHelper = ProxyManager.deprecatedDbAccess()
+  val dbHelper = ProxyManager.deprecatedDbAccess
+
+  //当前数据源
+  private var opCurDataSource: Option[String] = None
 
   def setAppName(appName: String): Unit = {
     application = appName
     fileHelper.setAppName(appName)
     restHelper.setAppName(appName)
     jarHelper.setAppName(appName)
+
   }
+  //重置当前数据源
+  def resetDataSource: Unit = {
+    opCurDataSource = None
+  }
+
+  //数据库访问会话
+  def useDbSession: DBSession = DBSession(application, opCurDataSource)
 
   def init: Unit = {
     try {
@@ -68,7 +79,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
     val begin = System.currentTimeMillis()
     val result = engine.eval("load('" + realScript + "')")
     val timeUsed = System.currentTimeMillis() - begin
-    appLogger(application).info(s"loading script:$script (${timeUsed}ms)")
+    appLogger.info(s"loading script:$script (${timeUsed}ms)")
     result
   }
 
@@ -90,7 +101,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
     catch {
       case e: Exception => {
         val error: String = "service error, message: " + e.getMessage + ", param=" + param + ", path=" + script
-        appLogger(application).error(error, e)
+        appLogger.error(error, e)
         return error
       }
     }
@@ -100,16 +111,16 @@ class Runtime(engine: ScriptEngine) extends Logger {
     * 缓冲数据功能实现区，线程安全在js中控制了，这里不需要控�?    */
 
   def buffer(key: String, data: AnyRef): AnyRef = {
-    CacheHelper.getAppCache(application).put(key, data)
+    CacheHelper.getAppCache.put(key, data)
   }
 
   //Perhaps null
   def buffer(key: String): AnyRef = {
-    CacheHelper.getAppCache(application).get(key, null)
+    CacheHelper.getAppCache.get(key, null)
   }
 
   def removeBuffer(key: String): Unit = {
-    CacheHelper.getAppCache(application).remove(key)
+    CacheHelper.getAppCache.remove(key)
   }
 
   def cachePut(key: String, data: AnyRef) = buffer(key, data)
@@ -133,34 +144,46 @@ class Runtime(engine: ScriptEngine) extends Logger {
     (new GsonBuilder()).disableHtmlEscaping().create().toJson(obj)
   }
 
+  def useDataSource(dataSourceName: String): Unit = {
+    if (RdkUtil.isBlank(dataSourceName)) {
+      appLogger.warn("useDataSource with empty ,use default one.")
+      opCurDataSource = None
+    } else {
+      appLogger.debug(s"useDataSource:$dataSourceName")
+      opCurDataSource = Some(dataSourceName)
+    }
+
+  }
+
   def fetch(sql: String, maxLine: Int): String = {
-    val data = DataBaseHelper.fetch(application, sql, maxLine)
+    val data = DataBaseHelper.fetch(useDbSession, sql, maxLine)
     objectToJson(data getOrElse "null") //转json？
   }
 
   def batchFetch(sqlArr: ScriptObjectMirror, maxLine: Int, timeout: Long): String = {
     val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
-    val data = DataBaseHelper.batchFetch(application, lst.toList, maxLine, timeout)
+    val data = DataBaseHelper.batchFetch(useDbSession, lst.toList, maxLine, timeout)
     val ret = data.map(it => if (it.nonEmpty) it.get else Nil)
     objectToJson(ret.toArray)
   }
 
   def fetch_first_cell(sql: String): String = {
-    val option = DataBaseHelper.fetch(application, sql, 1)
+    val option = DataBaseHelper.fetch(useDbSession, sql, 1)
     option.map(it => {
       if (it.data.length >= 1) Some(objectToJson(it.data(0)(0))) else None
     }).flatten getOrElse objectToJson("null")
 
   }
-  def executeUpdate(appName:String,sql:String)={
-    var affectNums:Option[Int]=DataBaseHelper.executeUpdate(appName,sql)
+
+  def executeUpdate(appName: String, sql: String): Int = {
+    val affectNums: Option[Int] = DataBaseHelper.executeUpdate(useDbSession, sql)
     affectNums.getOrElse(0)
   }
 
-  def batchExecuteUpdate(appName:String,sqlArr:ScriptObjectMirror):String={
+  def batchExecuteUpdate(appName: String, sqlArr: ScriptObjectMirror): String = {
     val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
-    val res = DataBaseHelper.batchExecuteUpdate(appName,lst.toList)
-    val ret:List[Int] = if (res.nonEmpty) res.get else Nil
+    val res = DataBaseHelper.batchExecuteUpdate(useDbSession, lst.toList)
+    val ret: List[Int] = if (res.nonEmpty) res.get else Nil
     objectToJson(ret.toArray)
   }
 
