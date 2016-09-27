@@ -112,7 +112,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                                         rowSpan[target + "real"] = previousRowSpan[target + "real"] - 1;
                                         rowSpan[target] = 0;
                                     } else {
-                                        length = generateRowSpan(name, j, i,target);
+                                        length = generateRowSpan(name, j, i, target);
                                         rowSpan[target] = length;
                                         rowSpan[target + "real"] = length;
                                     }
@@ -126,7 +126,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                                     if (groupTarget == columnDef.targets) {
                                         if (angular.isFunction(columnDef.group)) {
                                             var sourceRowSpan = generateSourceRowSpan(groupTarget);
-                                            var destRowSpan = columnDef.group.call(undefined, sourceRowSpan, columnDef.data, scope.$filtered,groupTarget);
+                                            var destRowSpan = columnDef.group.call(undefined, sourceRowSpan, columnDef.data, scope.$filtered, groupTarget);
                                             handleRealRowSpan(destRowSpan, groupTarget);
                                         }
                                     }
@@ -151,7 +151,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         };
                     }
 
-                    function generateRowSpan(name, index, rowIndex,target) {
+                    function generateRowSpan(name, index, rowIndex, target) {
                         var data = item[name];
                         //TODO 添加 Render 处理
                         var rowspan = 1;
@@ -335,7 +335,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                 return function link(scope, element, attrs, ctrl, transclude) {
 
                     scope.getRowSpan = function(itemRowSpan, item) {
-                        return  itemRowSpan && itemRowSpan[item["targets"]] ? itemRowSpan[item["targets"]] : 1;
+                        return itemRowSpan && itemRowSpan[item["targets"]] ? itemRowSpan[item["targets"]] : 1;
                     }
 
                     scope.getRowStyle = function(itemRowSpan, item) {
@@ -462,6 +462,16 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                                 ctrl.pageCtrl.setPageByTable(scope.currentPage);
                             }
                         }, true);
+
+
+                        scope.$watch("$filtered", function(newVal, oldVal) {
+                            if (newVal) {
+                                if (angular.isDefined(attrs.id)) {
+                                    EventService.broadcast(attrs.id, EventTypes.PAGING_DATA_CHANGE, newVal);
+                                }
+                            }
+                        }, true);
+
 
                         scope.$watch("setting.columnDefs", function(newVal, oldVal) {
                             if (newVal != oldVal) {
@@ -636,10 +646,10 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             return scope.currentPage == 0;
                         }
 
-                        scope.afterStickyWrap = function(){
-                            if(scope.setting && scope.setting.scrollX){
+                        scope.afterStickyWrap = function() {
+                            if (scope.setting && scope.setting.scrollX) {
                                 var ele = element[0].querySelector(".sticky-wrap");
-                                $(ele).addClass("sticky-wrap-overflow");//scrollX作用使滚动条产生在内部
+                                $(ele).addClass("sticky-wrap-overflow"); //scrollX作用使滚动条产生在内部
                             }
                         }
 
@@ -887,11 +897,11 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                                 }
                                 if (scope.columnDefs[i].data) {
                                     scope.groupFields.push(scope.columnDefs[i].data);
-                                }else{
+                                } else {
                                     scope.groupFields.push(undefined);
                                 }
                                 scope.groupTargets.push(scope.columnDefs[i].targets);
-                                
+
                             }
                         };
                     }
@@ -1037,26 +1047,26 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                 }
 
                 $scope.firstPage = function() {
-                    if($scope.currentPage == 0) return;
+                    if ($scope.currentPage == 0) return;
                     $scope.currentPage = 0;
                     $scope.setCurrentPageToTable();
                 }
                 $scope.prevPage = function() {
-                    if($scope.currentPage == 0) return;
+                    if ($scope.currentPage == 0) return;
                     if ($scope.currentPage > 0) {
                         $scope.currentPage--;
                     }
                     $scope.setCurrentPageToTable();
                 };
                 $scope.nextPage = function() {
-                    if($scope.currentPage==$scope.pageCount()) return;
+                    if ($scope.currentPage == $scope.pageCount()) return;
                     if ($scope.currentPage < $scope.pageCount()) {
                         $scope.currentPage++;
                     }
                     $scope.setCurrentPageToTable();
                 };
                 $scope.lastPage = function() {
-                    if($scope.currentPage==$scope.pageCount()) return;
+                    if ($scope.currentPage == $scope.pageCount()) return;
                     $scope.currentPage = $scope.pageCount();
                     $scope.setCurrentPageToTable();
                 }
