@@ -261,7 +261,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
       //                }
 
 
-#### `DataTable.clone()`  
+#### `DataTable.clone()`{#clone}  
 
 定义：
   

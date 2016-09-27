@@ -44,7 +44,7 @@ RDK的 `mq` 变量提供了一组处理消息的函数：
 - subject 字符串。发送消息主题。
 - replySubject 字符串。接收消息主题。
 - message 字符串。发送消息内容。
-- timeout 整型数字。等待超时时间,单位为秒。
+- timeout 整型数字。等待超时时间，单位为秒。
 
 返回：对端发来的字符串，异常时返回空字符串。
 
@@ -98,7 +98,7 @@ RDK的 `mq` 变量提供了一组处理消息的函数：
 示例：
    
    比如example应用需要订阅主题为“rdk_Message”的消息，并在回调函数callback中打印监听到的消息。
-由于我们希望订阅的执行过程只执行一次，因此我们可以在example应用下的[init.js](#init)中编写订阅代码：
+由于我们希望订阅的执行过程只执行一次，因此我们可以在example应用下的[init.js](service_api.md#init)中编写订阅代码：
 
 	(function () {
 		function _init_() {

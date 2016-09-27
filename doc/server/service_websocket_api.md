@@ -22,7 +22,7 @@ rdk可以向[`订阅`](#ws_subscribe)了某个主题的客户端推送该主题�
 
 比如example应用需要通过[mq订阅](service_mq_js_api.md#mq_sub)主题为“alarm”的告警消息，并在回调函数callback中将消息通过websocket推送至浏览器客户端。
 
-因此我们可以在example应用下的[init.js](#init)中编写订阅代码：
+因此我们可以在example应用下的[init.js](service_api.md#init)中编写订阅代码：
 
 	(function () {
 		function _init_() {
