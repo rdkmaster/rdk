@@ -291,9 +291,11 @@ img {
 </style>
 </head>
 <body>
+<p><rdk_title>Rest服务中的消息队列API</rdk_title></p>
 <p>RDK可以利用ActiveMQ与其他进程实现通信，可以给任意进程或者其他RDK应用发送任意消息，也可以监听其他进程或者其他RDK应用的消息。</p>
 <p>RDK的 <code>mq</code> 变量提供了一组处理消息的函数：</p>
-<h3 id="mq_p2p"><code>mq.p2p()</code></h3>
+<h3><code>mq.p2p()</code> {#mq_p2p}</h3>
+<p>可以利用该函数发送一个p2p消息。</p>
 <p>定义：</p>
 <pre><code>function p2p(subject, message);
 </code></pre>
@@ -303,115 +305,104 @@ img {
 <li>subject 字符串。消息主题。</li>
 <li>message 字符串。消息内容。</li>
 </ul>
-<p>返回：一个Sequence对象，一般无需关注它。</p>
+<p>返回：undefined。</p>
 <p>说明：往消息队列中发出一个<strong>点对点消息</strong>，注意，点对点消息只用于一个主题监听者的情形，如果有多个监听者，则系统会随机挑选一个监听者来处理消息，其他的监听者均不会收到该消息。</p>
-<p>点对点消息比较可靠，并且节约系统资源，应该有限选择。</p>
+<p>点对点消息比较可靠，并且节约系统资源，应该优先选择。</p>
 <p>如果是一个主题多个监听者，请采用 <a href="#mq_bc"><code>mq.broadcast()</code></a> 来发。</p>
 <p>下面是一个示例：</p>
 <pre><code>mq.p2p('my_subject', 'hello mq!')
 </code></pre>
 
 <p>只要有人监听了这个主题，那它就可以收到这个消息啦。</p>
-<p>有些时候，我们发出消息之后，期望得到对方的应答，则可以使用下面的代码</p>
-<pre><code>var reply = mq.p2p('my_subject.req', 'hello mq!').wait('my_subject.ack', 5000)
+<h3><code>mq.rpc()</code> {#mq_rpc}</h3>
+<p>可利用函数实现一个将异步的消息转为同步等待的场景。</p>
+<p>定义：</p>
+<pre><code>function rpc(subject, replySubject, message, timeout)
 </code></pre>
 
-<p>对端应答的数据会直接返回给reply变量，并且应用会一直等待到对方应答或者超时为止。超时以后，reply的值为null（而非undefined）。</p>
+<p>参数：</p>
+<ul>
+<li>subject 字符串。发送消息主题。</li>
+<li>replySubject 字符串。接收消息主题。</li>
+<li>message 字符串。发送消息内容。</li>
+<li>timeout 整型数字。等待超时时间，单位为秒。</li>
+</ul>
+<p>返回：对端发来的字符串，异常时返回空字符串。</p>
+<p>说明：</p>
+<p>有些时候，我们发出消息之后，期望得到对方的应答，则可以使用下面的代码</p>
+<pre><code>var reply = mq.rpc('my_subject.req','my_subject.ack', 'hello mq!',5)
+</code></pre>
+
+<p>对端应答的数据会直接返回给reply变量，并且应用会一直等待到对方应答或者超时为止。超时以后，reply的值为空字符串。</p>
 <p>注意到请求的主题是 <code>my_subject.req</code>，应答的主题是 <code>my_subject.ack</code>，这个方式是RDK推荐的，把请求和应答的主题分开，分别使用req和ack标识。</p>
-<h3 id="mq_bc"><code>mq.broadcast()</code></h3>
+<h3><code>mq.broadcast()</code> {#mq_bc}</h3>
+<p>可用来发布一个广播类型的消息。</p>
 <p>定义：</p>
-<pre><code>function broadcast(subject, message, persit);
+<pre><code>function broadcast(subject, message);
 </code></pre>
 
 <p>参数：</p>
 <ul>
 <li>subject 字符串。消息主题。</li>
 <li>message 字符串。消息内容。</li>
-<li>persit 布尔值。是否发送持久化消息，暂未启用。</li>
 </ul>
-<p>返回：一个Sequence对象，一般无需关注它。</p>
-<p>往消息队列中发出一个<strong>广播消息</strong>。与 <a href="#mq_p2p"><code>mq.p2p()</code></a> 功能非常类似，区别在于用此函数发出的主题可以被多个监听者同时处理。同样的，也支持等待应答：</p>
-<pre><code>var reply = mq.broadcast('my_subject.req', 'hello mq!').wait('my_subject.ack', 5000)
+<p>返回：undefined。</p>
+<p>往消息队列中发出一个<strong>广播消息</strong>。与 <a href="#mq_p2p"><code>mq.p2p()</code></a> 功能非常类似，区别在于用此函数发出的主题可以被多个监听者同时处理。</p>
+<pre><code>mq.broadcast('my_subject.req', 'hello mq!')
 </code></pre>
 
-<p>注意，只要众多的监听者中，谁发出的应答先被接收，则会得到该应答的值，其他的应答会被无视。</p>
-<h3 id="mq_sub"><code>mq.subscribe()</code></h3>
+<h3><code>mq.subscribe()</code> {#mq_sub}</h3>
+<p>用来订阅用户感兴趣的主题，一但监听到该主题的消息即可调用用户自定义函数进行处理。</p>
 <p>定义：</p>
-<pre><code>function subscribe(subject, callback, context);
+<pre><code>function subscribe(topic,callbackFunctionName, jsfile);
 </code></pre>
 
 <p>参数：</p>
 <ul>
-<li>subject 字符串。消息主题。</li>
-<li>callback 函数。处理该消息的函数，<strong>不允许使用匿名函数</strong>，否则报错。</li>
-<li>context 对象，可选。<code>callback</code> 执行的上下文对象。</li>
+<li>topic 字符串。消息主题。</li>
+<li>callbackFunctionName 字符串。处理该消息导出对象属性名。</li>
+<li>jsfile 字符串，回调函数所在js文件名，注意该文件默认相对路径为你应用的server目录，若该js文件位于server的子目录下，则应将相对server的目录也带上，比如js文件位于app/example/server/sss/callback.js，则参数应取值为&quot;sss/callback.js&quot;。</li>
 </ul>
-<p>返回：无。</p>
-<p>监听一个消息主题，可以监听点对点的消息，也可以监听广播消息。接收到消息之后，<code>callback</code> 函数会被调用，该函数的定义如下：</p>
-<pre><code>function (message) {
-    //...
-}
-</code></pre>
-
-<p>最常用的方式示例：</p>
-<pre><code>mq.subscribe('my_subject', function myCallback(message) {
-    log('message received:', message);
-});
-</code></pre>
-
-<p><code>context</code> 的使用示例：</p>
-<pre><code>mq.subscribe('my_subject', function myCallback(message) {
-    log('test context:', this.prop); //输出：test context: my context data
-}, {prop: 'my context data'});
-</code></pre>
-
-<p><code>callback</code> 函数的函数名很重要，它是使用 <a href="#mq_unsub"><code>mq.unsubscribe()</code></a> 取消订阅主题的一个标志，不允许与本应用已经注册的回调函数名重复，也不允许为空（匿名函数）。</p>
-<h4>在订阅回调函数中应答消息</h4>
-<p>我们可以在回调函数中立即给发送方发出应答消息</p>
+<p>返回：调用该回调函数返回的值对应的json串。</p>
+<p><code>callbackFunctionName</code> 导出对象的属性名很重要，它是使用 <a href="#mq_unsub"><code>mq.unsubscribe()</code></a> 取消订阅主题的一个标志。</p>
 <p>示例：</p>
-<pre><code>mq.subscribe('my_subject.req', function myCallback(message) {
-    log('message received:', message);
-    //立即给对方一个应答
-    message.reply('my_subject.ack', 'hi there, this is my reply!');
-});
+<p>比如example应用需要订阅主题为“rdk_Message”的消息，并在回调函数callback中打印监听到的消息。
+由于我们希望订阅的执行过程只执行一次，因此我们可以在example应用下的<a href="service_api.md#init">init.js</a>中编写订阅代码：</p>
+<pre><code>(function () {
+    function _init_() {
+        mq.subscribe(&quot;rdk_Message&quot;,&quot;callback&quot;,&quot;callback.js&quot;);
+    }
+    return {
+        init: _init_
+    }
+})();
 </code></pre>
 
-<h3 id="mq_unsub"><code>mq.unsubscribe()</code></h3>
-<p>定义：</p>
-<pre><code>function unsubscribe(subject, callback);
+<p>接下来就可以在该应用的server目录下新建一个callback.js文件，并编写回调函数代码：</p>
+<pre><code>(function () {
+    function _callback(msg) {
+        log(&quot;message recvived:&quot;+msg.body)
+    }
+    return {
+        callback: _callback,
+    }
+})();
 </code></pre>
 
-<p>参数：</p>
-<ul>
-<li>subject 字符串。消息主题。</li>
-<li>callback 函数名字符串，可选。函数名需要与通过 <a href="#mq_sub"><code>mq.subscribe()</code></a> 注册的函数名要一致。</li>
-</ul>
-<p>返回：无。</p>
-<p>如果不提供 <code>callback</code>，则会取消本应用所有该主题的订阅：</p>
-<pre><code>//取消本应用所有my_subject主题的订阅
-mq.unsubscribe('my_subject');
-</code></pre>
-
-<p>如果提供了 <code>callback</code>，则只取消该主题下该函数的订阅：</p>
-<pre><code>//仅取消my_subject这个主题下 my_callback函数的订阅
-mq.unsubscribe('my_subject'， 'my_callback');
-</code></pre>
-
-<h3><code>wait()</code></h3>
-<p>定义：</p>
-<pre><code>function wait(subject, timeout);
+<h3><code>mq.unsubscribe()</code> {#mq_unsub}</h3>
+<p>用来取消已经订阅的主题。
+定义：</p>
+<pre><code>function unsubscribe(topic,callbackFunctionName, jsfile);
 </code></pre>
 
 <p>参数：</p>
 <ul>
-<li>subject 字符串。应答的消息主题。</li>
-<li>timeout 数字，默认值60000。超时毫秒数。</li>
+<li>topic 字符串。消息主题。</li>
+<li>callbackFunctionName 字符串。处理该消息导出对象属性名。</li>
+<li>jsfile 字符串，回调函数所在js文件名，注意该文件默认相对路径为你应用的server目录，若该js文件位于server的子目录下，则应将相对server的目录也带上，比如js文件位于app/example/server/sss/callback.js，则参数应取值为&quot;sss/callback.js&quot;。</li>
 </ul>
-<p>返回：对方应答的数据，或者超时则得到null。</p>
-<p>阻塞等待应答，直到接收到应答消息或者超时，代码才会继续往下执行</p>
-<div title="Rest服务中的消息队列API" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+<p>返回：undefined。</p>
+
 </body>
 </html>
 <!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
