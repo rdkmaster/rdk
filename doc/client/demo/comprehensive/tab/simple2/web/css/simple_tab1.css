@@ -4,8 +4,14 @@
 	font-size: 14px;
 	background:#eeeeee;
 }
+.content{
+	width:752px;
+	overflow: hidden;
+	margin:0 auto;
+	margin-top:50px;
+}
 .hao{
-	/*box-sizing: content-box;*/
+	
 	width:740px;
     margin-right:12px;
 	/*padding-right:12px;*/
@@ -40,7 +46,7 @@
 .rdk-table-module .rdk-table > tbody > tr:nth-child(odd){
 	background:#ffffff;
 }
-/*设置td样式*/
+/*设置td样式 点击时样式*/
 .rdk-table-module .rdk-table tbody tr.selected-row td{
 	background:#e2eef9;
 	padding: 0 6px
@@ -79,6 +85,15 @@ span.images_left{
 .rdk-table-module .rdk-table tfoot tr, .rdk-table-module .rdk-table thead>tr{
 	border-bottom: 1px solid transparent;
 }
+/*去tr边框 */
+.rdk-table-module .rdk-table tr{
+	border-bottom: none
+}
+/*表格hover背景色*/
+.rdk-table-module .rdk-table > tbody > tr:not(.selected-row):hover > td {
+    background-color: transparent;
+}
+
 /*标题样式*/
 .rdk-panel-module{
 	border:none;
@@ -100,6 +115,7 @@ i{
 	line-height: 32px;
 	color: #333;
 }
+/* 翻页 */
 .rdk-table-module .enabledRecords{
 	color: #008FD4;
 }
@@ -118,7 +134,6 @@ i.regular_right{
 i.regular_left{
 	color:#333;
 }
-/* 翻页样式 */
 .rdk-table-module .pagination > li > span{
     padding: 0 15px;
 }
@@ -129,10 +144,6 @@ i.regular_left{
 .rdk-table-module .disabledRecords{
 	font-size:12px;
 }
-.rdk-table-module .pagination > li > a:focus , .rdk-table-module .pagination > li > a:hover{
-    background: transparent;
-}
-
 
 
 

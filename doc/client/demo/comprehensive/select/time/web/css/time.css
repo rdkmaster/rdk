@@ -100,18 +100,22 @@ select{
     color: #666666;
     width: 80px;
 }
+/* 悬浮状态样式 */
 .dropdown-menu>li>a:hover {
-    background: #80d7ff
+    background: #eee;
+    color: #666666;
 }
 .dropdown-menu>li>a:active {
     outline:none;
 }
 
 .bootstrap-select.btn-group .dropdown-menu>li.selected{
-    background: #80d7ff ;
+    background: #eee ;
 }
-.dropdown-menu>li>a:focus{
-    background: #80d7ff;
+/**** 激活状态样式 *****/
+.dropdown-menu>li>a:focus{ 
+    background: #3ab1ea;
+    color: #fff;
     outline: none;
 }
 .caret {
@@ -125,4 +129,12 @@ select{
 .bootstrap-select.btn-group .btn .caret {
     margin-top: -8px;
 }
-
+/* 日期个体显示大小*/
+.datetimepicker .day {
+    padding: 6px 6px;
+}
+/*日期月份个体显示大小 */
+.datetimepicker table tr td span {
+    height: 26px;
+    line-height: 26px;
+}
