@@ -9,7 +9,6 @@
     padding: 8px;
     border: 1px solid #eee;
     box-shadow: 1px -1px 2px #eee;
-
 }
 .rdk-panel-module {
     border: 0;
@@ -33,9 +32,8 @@
 }
 .panel-caption i{
     font-style: normal;
-    font-family: 黑体;
     color: #333;
-    margin-left: -22px;
+    margin-left: -14px;
 }
 .btn{
     position: absolute;
@@ -53,6 +51,7 @@
     top: -12px;
     left: 44.2%;
 }
+
 .btn-icon-down{
     background: url("../images/btn-up.png") no-repeat;
 }
@@ -143,6 +142,7 @@
 /*表格字体颜色*/
 .rdk-table-module .rdk-table tr{
     color: #434343;
+    border-bottom: none;
 }
 .rdk-table-module .rdk-table > tbody > tr > td {
     padding: 5px 6px;
