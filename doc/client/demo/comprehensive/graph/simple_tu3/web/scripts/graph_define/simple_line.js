@@ -116,6 +116,13 @@ return {
                     opacity:0.2,
                     color:'#54acd5',
                     barBorderRadius: 5
+                },
+                emphasis: {
+                    label : {show: false, position: 'top'},
+                    barBorderColor:'#54acd5',
+                    opacity:0.2,
+                    color:'#54acd5',
+                    barBorderRadius: 5
                 }
             },
             barWidth:10,
@@ -128,6 +135,12 @@ return {
             barGap:'-100%',
             itemStyle : { 
                 normal: {
+                    label : {show: true, position: ['92%',-20]},
+                    barBorderColor:'#54acd5',
+                    color:'#54acd5',
+                    barBorderRadius: 5
+                },
+                emphasis: {
                     label : {show: true, position: ['92%',-20]},
                     barBorderColor:'#54acd5',
                     color:'#54acd5',

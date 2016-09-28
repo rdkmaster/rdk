@@ -30,6 +30,8 @@ define('main', ['rd.controls.Time'], function() {
                 gap: "inyear"
             }]
         }
+        var b=$('option');
+        console.log(b);
         scope.gap1 = {
             value: "now - 2y", //支持y/m/w/d
             granularity: "date"

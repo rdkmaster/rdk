@@ -3,18 +3,7 @@ define('main', ['rd.controls.Table','rd.containers.Panel'], function() {
     var app = angular.module("rdk_app", ['rd.controls.Table','rd.core','rd.containers.Panel']);
     // 创建一个控制器
     app.controller('myCtrl', ['$scope', function($scope) {
-        
-        // $scope.conditionProcessor = function(condition){
-        //   var condition = {};
-        //   condition.aaa = "bbb";
-      
-        //   return condition;
-        // }
 
-        // $scope.tableProcessor = function(baseCondition,additionalCondition){
-        //     baseCondition.paging = additionalCondition.paging;
-        //     return baseCondition;
-        // }
          $scope.setting = {
             "columnDefs" :[
                 {
@@ -23,13 +12,11 @@ define('main', ['rd.controls.Table','rd.containers.Panel'], function() {
                 }
             ]
         }
-        var divWidth = parseFloat($('.hao').css('width'));
-        var divHeight = parseFloat($('.hao').css('height'));//恨据外围 div的长宽给图标定位在其右边中间
-        var spanHeight = parseFloat($('.images_right').css('width'))
-        var borderWidth = parseFloat($('.hao').css('borderWidth'))
+        var width = parseFloat($('.hao').css('width'));
+        var height = parseFloat($('.hao').css('height'));//恨据外围 div的长宽给图标自动定位
         $('span.images_right').css({
-            'left':divWidth-borderWidth*2 + "px",
-            'top':(divHeight/2-spanHeight)+"px"
+            'left':(width-1)+"px",
+            'top':(height/2-32)+"px"
         });
         //左右拉的点击动漫效果
          $scope.images = function(){

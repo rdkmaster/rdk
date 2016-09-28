@@ -35,7 +35,6 @@
     .demo2,.demo3,.demo4{
         width:500px;
         margin-bottom:50px;
-        margin:auto;
     }
     .demo3 .test{
         height:50px;
@@ -45,7 +44,7 @@
 <body ng-controller='rdk_ctrl' class="rdk_main">
     
     <div class="demo1">
-        <button class="addBtn" ng-click="addButton()">添加button渲染</button>
+        <button ng-click="addButton()">添加button渲染</button>
         <rdk_accordion caption="accordion.caption" open="isOpen" buttons="accordion.buttons"
         folded_icon="foldedIcon" unfolded_icon="unfoldedIcon" frozen="accordion.frozen" editable="accordion.editable">
             <div>{{child}}</div>

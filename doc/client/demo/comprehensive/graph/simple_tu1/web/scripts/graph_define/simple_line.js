@@ -59,8 +59,8 @@ return {
             }
     },
     grid:{
-        left:100,
-        right:100,
+        left:45,
+        right:45,
         top:60
     },
 	calculable : true,

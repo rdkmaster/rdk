@@ -187,7 +187,8 @@ object RdkUtil extends Logger {
   def initApplications: Unit = {
     val initScripts: List[String] = forEachDir(Paths.get("app"))
     initScripts.foreach(script => {
-      val request = ServiceRequest(ctx = NoneContext, script = script.substring(script.indexOf("app")).replaceAllLiterally("\\", "/"),
+      val scriptFixSepartor=script.replaceAllLiterally("\\", "/")
+      val request = ServiceRequest(ctx = NoneContext, scriptFixSepartor.substring(scriptFixSepartor.indexOf("/app/")+1),
         app = null, param = null, method = "init", timeStamp = System.currentTimeMillis())
       RdkServer.appRouter ! request
     })

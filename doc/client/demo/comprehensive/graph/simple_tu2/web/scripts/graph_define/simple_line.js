@@ -39,8 +39,8 @@ return {
         left:70,
     },
     grid:{
-        left:100,
-        right:100,
+        left:45,
+        right:45,
         top:60,
 		show:true,
         borderWidth:1
@@ -109,7 +109,7 @@ return {
 					color: '#54acd5',
                 },
                 formatter: function(params){
-                    return  params.toFixed(1)
+                    return  params.toFixed(1)==0 ? "" : params.toFixed(1)
 				}             
 			},
             max:"dataMax",
@@ -137,7 +137,7 @@ return {
 					color: '#f99660' 
 				},
                 formatter: function(params){
-                        return  params.toFixed(1)
+                        return  params.toFixed(1)==0 ? "" : params.toFixed(1)
                     }             
 			},
             nameTextStyle:{

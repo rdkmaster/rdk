@@ -24,8 +24,8 @@ define([], function() {
 return function(data, context, GraphService, attributes) {
     var inner_color,//内圆颜色
         outer_color;//外环颜色
-    inner_color=data.data[0]>=90?'rgb(85,202,140)':(data.data[0]>=80&&data.data[0]<90)?'rgb(84,172,213)':(data.data[0]>=70&&data.data[0]<80)?'rgb(249,150,96)':(data.data[0]<70)?'rgb(236,109,109)':'#dedede';
-    outer_color=data.data[0]>=90?'rgba(85,202,140,.2)':(data.data[0]>=80&&data.data[0]<90)?'rgba(84,172,213,.2)':(data.data[0]>=70&&data.data[0]<80)?'rgba(249,150,96,.2)':(data.data[0]<70)?'rgba(236,109,109,.2)':'#dedede';
+    inner_color=data.data[0]>=95?'rgb(152,226,166)':(data.data[0]>=90&&data.data[0]<95)?'rgb(154,208,226)':(data.data[0]>=80&&data.data[0]<90)?'rgb(247,230,133)':(data.data[0]>=70&&data.data[0]<80)?'rgb(246,200,138)':(data.data[0]<70)?'rgb(255,142,116)':'#dedede';
+    outer_color=data.data[0]>=95?'rgba(152,226,166,.2)':(data.data[0]>=90&&data.data[0]<95)?'rgba(154,208,226,.2)':(data.data[0]>=80&&data.data[0]<90)?'rgba(247,230,133,.2)':(data.data[0]>=70&&data.data[0]<80)?'rgba(246,200,138,.2)':(data.data[0]<70)?'rgba(255,142,116,.2)':'#dedede';
     var labelTop = {
         normal: {
             color: outer_color,
@@ -120,7 +120,7 @@ return{
             itemStyle: labelTop
         },
         {
-            name: '综合得分',
+            name: 'CEI得分',
             value: 0,
             itemStyle: labelBottom
         }]
