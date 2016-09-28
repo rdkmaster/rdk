@@ -322,10 +322,10 @@ img {
 
 <p>参数：</p>
 <ul>
-<li>subject 字符串。发送消息主题。</li>
-<li>replySubject 字符串。接收消息主题。</li>
-<li>message 字符串。发送消息内容。</li>
-<li>timeout 整型数字。等待超时时间，单位为秒。</li>
+<li>subject 必选，字符串。发送消息主题。</li>
+<li>replySubject 必选，字符串。接收消息主题。</li>
+<li>message 必选，字符串。发送消息内容。</li>
+<li>timeout 可选，整型数字。等待超时时间，单位为秒，默认为120秒。</li>
 </ul>
 <p>返回：对端发来的字符串，异常时返回空字符串。</p>
 <p>说明：</p>
