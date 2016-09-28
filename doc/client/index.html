@@ -297,9 +297,16 @@
             if (!document.body) {
                 return;
             }
-            document.getElementById('tree').style.height = (document.body.scrollHeight + 20) + "px";
-            document.getElementById('content').style.width = (document.body.scrollWidth - 270) + "px";
-            document.getElementById('content').style.height = (document.body.scrollHeight - 22) + "px";
+            if(navigator.userAgent.indexOf('Firefox') != -1){
+                document.getElementById('tree').style.height = (document.documentElement.scrollHeight + 20) + "px";
+                document.getElementById('content').style.width = (document.documentElement.scrollWidth - 270) + "px";
+                document.getElementById('content').style.height = (document.documentElement.scrollHeight - 22) + "px";  
+            }
+            else{
+                document.getElementById('tree').style.height = (document.body.scrollHeight + 20) + "px";
+                document.getElementById('content').style.width = (document.body.scrollWidth - 270) + "px";
+                document.getElementById('content').style.height = (document.body.scrollHeight - 22) + "px";
+            }
             clearInterval(interval);
         }
 
@@ -325,7 +332,6 @@ iframe {
 #tree{
     position:fixed;
     left:0px; 
-    overflow:auto;
     top:0px;
     padding-top: 40px;
 }
@@ -342,7 +348,7 @@ iframe {
 </style>
 
 <body ng-controller="rdk_ctrl" class="rdk_main">
-    <div style="position:fixed; left:0px; overflow:auto;top:0;" id="tree">
+    <div style="position:fixed; left:0px;top:0;" id="tree">
         <rdk_tree data="menuCfg" node_field="module" rdk_click="clickHandler">
         </rdk_tree>
     </div>

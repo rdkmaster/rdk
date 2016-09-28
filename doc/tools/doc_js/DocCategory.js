@@ -113,7 +113,7 @@ function createDirDiv() {
     dirDiv.style['padding'] = '10px 0px 10px 10px';
     dirDiv.style['box-shadow'] = 'rgba(51, 51, 102, 0.298039) -1px 4px 18px, rgba(51, 51, 102, 0.298039) 1px 1px 4px 2px inset';
     dirDiv.style['background-color'] = 'rgb(255, 255, 255)';
-    dirDiv.onmouseout = function(event) {
+    dirDiv.onmouseleave = function(event) {
         if (event.toElement) {
             var node = event.toElement.parentNode;
             while (node) {
