@@ -1,0 +1,136 @@
+/*reset*/
+ul, ol ,p{
+    margin: 0;
+    padding: 0;
+}
+a{
+    color: #333;
+    text-decoration: none;
+}
+/*rdk*/
+.rdk-area-contain{width: 520px;}
+/*rdk-area 头部触发地区选择输入框样式 --start*/
+.rdk-area-input-wrap {
+    width: 262px;
+    height: 32px;
+    color: #333;
+    position: relative;
+    cursor: pointer;
+}
+.rdk-area-input {
+    display: inline-block;
+    padding: 5px 22px 5px 8px;
+    width: 100%;
+    height: 30px;
+    font-size: 14px;
+    line-height: 1.5;
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    -webkit-transition: border .2s cubic-bezier(.645, .045, .355, 1), background .2s cubic-bezier(.645, .045, .355, 1), box-shadow .2s cubic-bezier(.645, .045, .355, 1);
+    transition: border .2s cubic-bezier(.645, .045, .355, 1), background .2s cubic-bezier(.645, .045, .355, 1), box-shadow .2s cubic-bezier(.645, .045, .355, 1);
+}
+.rdk-area-input:focus, .rdk-area-input:hover {
+    border-color: #57c5f7;
+}
+.rdk-area-input:focus {
+    outline: 0;
+    box-shadow: 0 0 0 2px rgba(45, 183, 245, .2);
+}
+/*input icon*/
+.rdk-area-input-wrap .rdk-area-icon {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    box-sizing: border-box;
+    background-color: transparent;
+    border-right: 1px solid #50B2E1;
+    border-top: 1px solid #50B2E1;
+    right: 10px;
+    vertical-align: middle;
+    z-index: 9;
+}
+.rdk-area-icon-down{
+    top: 9px;
+    -webkit-transform: rotate(135deg);
+}
+.rdk-area-icon-up{
+    top: 13px;
+    -webkit-transform: rotate(-45deg);
+}
+/*rdk-area 头部触发地区选择输入框样式 --end*/
+
+/*rdk-area 省市区页签导航 --start*/
+.nav-tabs{
+    border-bottom: 2px solid #008FD4;
+}
+.nav-tabs>li {
+    float: left;
+    margin-bottom: -2px;
+    color: #333;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
+    border: 1px solid #008FD4;
+    border-bottom: none;
+}
+.nav-tabs>li>a:hover {
+    border: 1px solid #008FD4;
+    border-bottom: none;
+    background-color: #fff;
+}
+.nav-tabs li a{
+    border-bottom: none;
+}
+/*rdk-area 省市区页签导航 --end*/
+
+/*rdk-area 省市区数据 --start*/
+.tab-content.tab-bordered {
+    border: 1px solid #008FD4;
+    border-top: none;
+    padding: 12px;
+    border-radius: 0 0 4px 4px;
+}
+.tab-panel{
+    padding-left: 20px;
+    padding-top: 5px;
+}
+.tab-panel ul li{
+    list-style: none;
+    display: inline-block;
+    min-width: 16%;
+    position: relative;
+    box-sizing: border-box;
+    line-height: 26px;
+}
+.tab-panel ul li a{
+    display: inline-block;
+    text-align: left;
+    cursor: pointer;
+    color: #333;
+    font-size: 12px;
+    text-decoration: none;
+    padding: 0 2px;
+    border-radius: 4px;
+}
+.tab-panel .test-all{
+    margin-right: -4px;
+}
+.tab-panel .test-all a{
+    font-weight: bold;
+    color: #008FD4;
+    font-size: 13px;
+}
+.tab-panel .test-all a:hover{
+    background-color: #eee;
+    color: #008FD4;
+}
+.tab-panel ul li a:hover{
+    background-color: #eee;
+    color: #333;
+}
+/*激活已选择地区项的样式*/
+.tab-content .tab-panel .selected{
+    background-color: #3abeea;
+    color: #fff ;
+}
