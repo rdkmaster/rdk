@@ -45,7 +45,11 @@ var mq={
     p2p: function (subject, message) {
         return rdk_runtime.p2p(subject, message);
     },
+    //默认120秒
     rpc: function (subject, replySubject, message, timeout) {
+        if(!_.isDefined(timeout)){
+            timeout=120
+        }
         return rdk_runtime.rpc(subject, replySubject, message, timeout);
     },
     broadcast: function (subject, message) {
