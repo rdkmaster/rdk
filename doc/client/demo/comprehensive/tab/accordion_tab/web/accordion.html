@@ -22,7 +22,7 @@
     <rdk_tab selected_tab="0" draggable="true" collapsible="false" class="rdk_tab">
         <div title="空口问题">
             <rdk_accordion caption="'区域指标'" open="true">
-                <rdk_table data="accordionData2" paging-visible="false"></rdk_table>
+                <rdk_table ds="dsTable3" ds-url="/doc/client/demo/comprehensive/tab/accordion_tab/web/data/tabelData2" ds_query_if="ready" paging-visible="false"></rdk_table>
             </rdk_accordion>
             <rdk_accordion caption="'弱覆盖问题'">
                 <div>除了可以填充RDK控件，还支持标准的标签</div>
@@ -51,8 +51,8 @@
                 <div>除了可以填充RDK控件，还支持标准的标签</div>
             </rdk_accordion>
             <rdk_accordion caption="'RRC建立失败原因'" open="true" class="table2">
-                <rdk_table data="accordionData" paging-visible="false"></rdk_table>
-                <rdk_table data="accordionData" paging-visible="false"></rdk_table>
+                <rdk_table ds="dsTable" ds-url="/doc/client/demo/comprehensive/tab/accordion_tab/web/data/tabelData1" ds_query_if="ready" paging-visible="false"></rdk_table>
+                <rdk_table data="dsTable" paging-visible="false"></rdk_table>
             </rdk_accordion>
             <rdk_accordion caption="'RAB建立失败原因'">
                 <div>除了可以填充RDK控件，还支持标准的标签</div>
