@@ -30,8 +30,8 @@ return {
             type : 'category',
             boundaryGap : false,
             alignWithLabel:true,
-            axisLabel:{
-                interval:9
+            axisLabel:{ // 类轴刻度间隔
+                interval:4
             },
             axisTick: {  //坐标轴刻度相关设置
               show:true,
@@ -63,7 +63,7 @@ return {
             min:0,
             axisLabel:{
               formatter: function(params){
-                return  params.toFixed(1)=="0.0"?0+"%":params.toFixed(1)+"%"
+                return  params.toFixed(1)=="0.0" ? "" : params.toFixed(1)+"%"
               }
             }
         }

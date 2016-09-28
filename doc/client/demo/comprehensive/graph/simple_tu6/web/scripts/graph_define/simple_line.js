@@ -22,7 +22,7 @@ define(['echarts'], function(echarts) {
 
 // attributes 是当前Graph所在的html节点的所有属性集。也是一种辅助数据。
 return function(data, context, GraphService, attributes) {
-
+    var clientWidth = attributes.$$element[0].clientWidth
 return {
      // legend: {
      //    data: ['bar', 'bar2', 'bar3', 'bar4','bar4','bar5','bar6'],
@@ -30,14 +30,29 @@ return {
      //    left: 10
      // },
     calculable : true,
+    grid:{
+        left:90,
+        right:60,
+        top:60,
+        // show:true,
+        // borderWidth:1
+        },
     xAxis : [
         {  
             type : 'value',
             splitNumber:4,
+            axisLine:{
+                show: false,
+            },
             splitLine:{//出网格线
-　　　　   show:false
-　　       }
-         
+　　　　            show:false
+　　        },
+            axisTick:{//坐标轴刻度相关设置
+                show: false,
+            },
+            axisLabel:{
+                show: false,
+            },
         }
     ],
     yAxis : [
@@ -49,17 +64,20 @@ return {
             type : 'category',
             scale:false,
             axisLabel:{
+                // show: false,
               textStyle :{
                   color:'#000'//刻度标签样式
               } 
            
             },
              axisLine:{
+                show: false,
                 lineStyle:{
                     color:'#ff7c27' //刻度样式
                 }
             } ,
             axisTick:{//坐标轴刻度相关设置
+                show: false,
                 length:5,//刻度长短设置
             },
             data :data.header
@@ -71,18 +89,16 @@ return {
             type:'bar',
             stack:"总量",
             animation:false,//关闭动漫
-             markLine:{
-               silent:true,  
-           },
             itemStyle: {
                 normal: {
-                    color:data.data[0][0]>95 ? "#98e2a6" : "red",
-                    label : {//图形数据显示位置
-                        show: true, position: ['101%', 0],
-                    }
-                }
+                    color:data.data[0][0]>95 ? "#98e2a6" : data.data[0][0]>90 ? "#9ad0e2" : data.data[0][0]>80 ? 
+                    "#f7e685" : data.data[0][0]>70 ? "#f6c88a" : "#ff8e74",
+                    barBorderRadius: 0
+                },
+                emphasis: {color: data.data[0][0]>95 ? "#98e2a6" : data.data[0][0]>90 ? "#9ad0e2" : data.data[0][0]>80 ? 
+                    "#f7e685" : data.data[0][0]>70 ? "#f6c88a" : "#ff8e74",}
             },
-             barWidth:'15px',
+             barWidth:'10px',
              data: data.data[0]
           
         },
@@ -92,13 +108,14 @@ return {
             stack:"总量",
             itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
                 normal: {
-                    color:"#f7e685",
-                    label : {//图形数据显示位置
-                        show: true, position: ['100%', 0],
-                    }
-                }
+                    color:data.data[1][1]>95 ? "#98e2a6" : data.data[1][1]>90 ? "#9ad0e2" : data.data[1][1]>80 ? 
+                    "#f7e685" : data.data[1][1]>70 ? "#f6c88a" : "#ff8e74",
+                    barBorderRadius: 0
+                },
+                emphasis: {color: data.data[1][1]>95 ? "#98e2a6" : data.data[1][1]>90 ? "#9ad0e2" : data.data[1][1]>80 ? 
+                    "#f7e685" : data.data[1][1]>70 ? "#f6c88a" : "#ff8e74",}
             },
-            barWidth:'15px',//条形宽度
+            barWidth:'10px',//条形宽度
             
             data:data.data[1]
         },
@@ -108,13 +125,14 @@ return {
             stack:"总量",
             itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
                 normal: {
-                    color:"",
-                    label : {//图形数据显示位置
-                        show: true, position: ['100%', 0],
-                    }
-                }
+                    color:data.data[2][2]>95 ? "#98e2a6" : data.data[2][2]>90 ? "#9ad0e2" : data.data[2][2]>80 ? 
+                    "#f7e685" : data.data[2][2]>70 ? "#f6c88a" : "#ff8e74",
+                    barBorderRadius: 0
+                },
+                emphasis: {color:data.data[2][2]>95 ? "#98e2a6" : data.data[2][2]>90 ? "#9ad0e2" : data.data[2][2]>80 ? 
+                    "#f7e685" : data.data[2][2]>70 ? "#f6c88a" : "#ff8e74",}
             },
-            barWidth:'15px',//条形宽度
+            barWidth:'10px',//条形宽度
              data:data.data[2]
         },
         {
@@ -123,13 +141,14 @@ return {
             stack:"总量",
             itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
                 normal: {
-                    color:"red",
-                    label : {//图形数据显示位置
-                        show: true, position: ['100%', 0],
-                    }
-                }
+                    color:data.data[3][3]>95 ? "#98e2a6" : data.data[3][3]>90 ? "#9ad0e2" : data.data[3][3]>80 ? 
+                    "#f7e685" : data.data[3][3]>70 ? "#f6c88a" : "#ff8e74",
+                    barBorderRadius: 0
+                },
+                emphasis: {color:data.data[3][3]>95 ? "#98e2a6" : data.data[3][3]>90 ? "#9ad0e2" : data.data[3][3]>80 ? 
+                    "#f7e685" : data.data[3][3]>70 ? "#f6c88a" : "#ff8e74",}
             },
-            barWidth:'15px',//条形宽度
+            barWidth:'10px',//条形宽度
             
              data:data.data[3]
         },
@@ -139,13 +158,14 @@ return {
             stack:"总量",
             itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
                 normal: {
-                    color:"#f6c88a",
-                    label : {//图形数据显示位置
-                        show: true, position: ['100%', 0],
-                    }
-                }
+                    color:data.data[4][4]>95 ? "#98e2a6" : data.data[4][4]>90 ? "#9ad0e2" : data.data[4][4]>80 ? 
+                    "#f7e685" : data.data[4][4]>70 ? "#f6c88a" : "#ff8e74",
+                    barBorderRadius: 0
+                },
+                emphasis: {color:data.data[4][4]>95 ? "#98e2a6" : data.data[4][4]>90 ? "#9ad0e2" : data.data[4][4]>80 ? 
+                    "#f7e685" : data.data[4][4]>70 ? "#f6c88a" : "#ff8e74",}
             },
-            barWidth:'15px',//条形宽度
+            barWidth:'10px',//条形宽度
             
              data:data.data[4]
         },
@@ -155,14 +175,42 @@ return {
             stack:"总量",
             itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
                 normal: {
-                   color:"#9ad0e2",
-                    label : {//图形数据显示位置
-                        show: true, position: ['100%', 0],
-                    }
-                }
+                   color:data.data[5][5]>95 ? "#98e2a6" : data.data[5][5]>90 ? "#9ad0e2" : data.data[5][5]>80 ? 
+                    "#f7e685" : data.data[5][5]>70 ? "#f6c88a" : "#ff8e74",
+                    barBorderRadius: 0
+                },
+                emphasis: {color: data.data[5][5]>95 ? "#98e2a6" : data.data[5][5]>90 ? "#9ad0e2" : data.data[5][5]>80 ? 
+                    "#f7e685" : data.data[5][5]>70 ? "#f6c88a" : "#ff8e74",}
             },
-            barWidth:'15px',//条形宽度
+            barWidth:'10px',//条形宽度
              data:data.data[5]
+        },
+        {
+            name:'bar6',
+            type:'bar',
+            stack:"总量",
+            label : {//图形数据显示位置
+                normal: {
+                    show: true, position: ["100%", -5],
+                    textStyle: {
+                        color: "#585858"
+                    },
+                    formatter: function(params){
+                        console.log(params)
+                        return  100 - params.value
+                    }
+                },
+            },
+            itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
+                normal: {
+                    color: "#dedede",
+                    // opacity: 0.1,
+                    barBorderRadius: 0
+                },
+                emphasis: {color: "#dedede",}
+            },
+            barWidth:'10px',//条形宽度
+            data:[100-data.data[0][0] , 100-data.data[1][1] , 100-data.data[2][2] , 100-data.data[3][3] , 100-data.data[4][4] , 100-data.data[5][5]]
         }
         
     ]

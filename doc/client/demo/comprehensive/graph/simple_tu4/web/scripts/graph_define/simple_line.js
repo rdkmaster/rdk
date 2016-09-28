@@ -126,6 +126,13 @@ return {
                     opacity:0.2,
                     color:'#54acd5',
                     barBorderRadius: 5
+                },
+                emphasis: {
+                    label : {show: false, position: 'top'},
+                    barBorderColor:'#54acd5',
+                    opacity:0.2,
+                    color:'#54acd5',
+                    barBorderRadius: 5
                 }
             },
        barWidth:10,
@@ -142,7 +149,14 @@ return {
                     barBorderRadius: 5,
                     textStyle: {
                         align : 'right'
-                    }
+                    },
+                emphasis: {
+                    label : {show: false, position: 'top'},
+                    barBorderColor:'#54acd5',
+                    opacity:0.2,
+                    color:'#54acd5',
+                    barBorderRadius: 5
+                }
                 },
                 
             },
@@ -162,7 +176,14 @@ return {
                     color:'#54acd5',
                     barBorderRadius: 5
                      
-                }
+                },
+                emphasis: {
+                    label : {show: true, position: ['92%',-20]},
+                    barBorderColor:'#54acd5',
+                    color:'#54acd5',
+                    barBorderRadius: 5
+                     
+                },
             },
             barWidth:10,
             data:data.data[2]
