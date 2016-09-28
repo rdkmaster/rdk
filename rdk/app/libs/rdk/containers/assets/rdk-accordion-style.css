@@ -43,3 +43,9 @@
     width: 100%;
     height: inherit;
 }
+
+.rdk-accordion-module .imgShape{
+    width: 20px;
+    height: 15px;
+    margin: auto;
+}
