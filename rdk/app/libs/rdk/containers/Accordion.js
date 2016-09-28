@@ -49,7 +49,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                                     ng-repeat="button in buttons"\
                                     ng-click="clickHandler(button.callback, button, id, $event)"\
                                     ng-mouseover=getTooltips($event,button.tooltips,button.label)>\
-                                    <img ng-src="{{button.icon}}">{{button.label}}\
+                                    <img class="imgShape" ng-src="{{button.icon}}">{{button.label}}\
                                 </a>\
                             </div>\
                         </div>\
@@ -226,12 +226,19 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                 }
 
                 function _initializeState(){
-                    $(transcludeDom).css({'width': 'inherit', 'height': 'inherit', 'overflow-x': 'hidden'});
+                    _initialCssHandler();
                     $timeout(function(){
                         _moveArrowPosition();
                         _initialStateHandler();//居中完了才能根据open改变尺寸
                         scope.firstTimeBln = false;
                     }, 0)                                   
+                }
+
+                function _initialCssHandler(){
+                    $(transcludeDom).css({'height': 'inherit', 'overflow-x': 'hidden'});//100%
+                    if((direction == PositionTypes.LEFT)||(direction == PositionTypes.RIGHT)){
+                        $(transcludeDom).css({'width': 'inherit'});
+                    }
                 }
 
                 function _moveArrowPosition(){
