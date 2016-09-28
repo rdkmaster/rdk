@@ -22,7 +22,7 @@ define(['echarts'], function(echarts) {
 
 // attributes 是当前Graph所在的html节点的所有属性集。也是一种辅助数据。
 return function(data, context, GraphService, attributes) {
-
+    var clientWidth = attributes.$$element[0].clientWidth
 return {
      // legend: {
      //    data: ['bar', 'bar2', 'bar3', 'bar4','bar4','bar5','bar6'],
@@ -53,7 +53,6 @@ return {
             axisLabel:{
                 show: false,
             },
-         
         }
     ],
     yAxis : [
@@ -94,11 +93,10 @@ return {
                 normal: {
                     color:data.data[0][0]>95 ? "#98e2a6" : data.data[0][0]>90 ? "#9ad0e2" : data.data[0][0]>80 ? 
                     "#f7e685" : data.data[0][0]>70 ? "#f6c88a" : "#ff8e74",
-                    label : {//图形数据显示位置
-                        show: true, position: ['100%', -5],
-                    },
                     barBorderRadius: 0
-                }
+                },
+                emphasis: {color: data.data[0][0]>95 ? "#98e2a6" : data.data[0][0]>90 ? "#9ad0e2" : data.data[0][0]>80 ? 
+                    "#f7e685" : data.data[0][0]>70 ? "#f6c88a" : "#ff8e74",}
             },
              barWidth:'10px',
              data: data.data[0]
@@ -112,11 +110,10 @@ return {
                 normal: {
                     color:data.data[1][1]>95 ? "#98e2a6" : data.data[1][1]>90 ? "#9ad0e2" : data.data[1][1]>80 ? 
                     "#f7e685" : data.data[1][1]>70 ? "#f6c88a" : "#ff8e74",
-                    label : {//图形数据显示位置
-                        show: true, position: ['100%', -5],
-                    },
                     barBorderRadius: 0
-                }
+                },
+                emphasis: {color: data.data[1][1]>95 ? "#98e2a6" : data.data[1][1]>90 ? "#9ad0e2" : data.data[1][1]>80 ? 
+                    "#f7e685" : data.data[1][1]>70 ? "#f6c88a" : "#ff8e74",}
             },
             barWidth:'10px',//条形宽度
             
@@ -130,11 +127,10 @@ return {
                 normal: {
                     color:data.data[2][2]>95 ? "#98e2a6" : data.data[2][2]>90 ? "#9ad0e2" : data.data[2][2]>80 ? 
                     "#f7e685" : data.data[2][2]>70 ? "#f6c88a" : "#ff8e74",
-                    label : {//图形数据显示位置
-                        show: true, position: ['100%', -5],
-                    },
                     barBorderRadius: 0
-                }
+                },
+                emphasis: {color:data.data[2][2]>95 ? "#98e2a6" : data.data[2][2]>90 ? "#9ad0e2" : data.data[2][2]>80 ? 
+                    "#f7e685" : data.data[2][2]>70 ? "#f6c88a" : "#ff8e74",}
             },
             barWidth:'10px',//条形宽度
              data:data.data[2]
@@ -147,11 +143,10 @@ return {
                 normal: {
                     color:data.data[3][3]>95 ? "#98e2a6" : data.data[3][3]>90 ? "#9ad0e2" : data.data[3][3]>80 ? 
                     "#f7e685" : data.data[3][3]>70 ? "#f6c88a" : "#ff8e74",
-                    label : {//图形数据显示位置
-                        show: true, position: ['100%', -5],
-                    },
                     barBorderRadius: 0
-                }
+                },
+                emphasis: {color:data.data[3][3]>95 ? "#98e2a6" : data.data[3][3]>90 ? "#9ad0e2" : data.data[3][3]>80 ? 
+                    "#f7e685" : data.data[3][3]>70 ? "#f6c88a" : "#ff8e74",}
             },
             barWidth:'10px',//条形宽度
             
@@ -165,11 +160,10 @@ return {
                 normal: {
                     color:data.data[4][4]>95 ? "#98e2a6" : data.data[4][4]>90 ? "#9ad0e2" : data.data[4][4]>80 ? 
                     "#f7e685" : data.data[4][4]>70 ? "#f6c88a" : "#ff8e74",
-                    label : {//图形数据显示位置
-                        show: true, position: ['100%', -5],
-                    },
                     barBorderRadius: 0
-                }
+                },
+                emphasis: {color:data.data[4][4]>95 ? "#98e2a6" : data.data[4][4]>90 ? "#9ad0e2" : data.data[4][4]>80 ? 
+                    "#f7e685" : data.data[4][4]>70 ? "#f6c88a" : "#ff8e74",}
             },
             barWidth:'10px',//条形宽度
             
@@ -183,11 +177,10 @@ return {
                 normal: {
                    color:data.data[5][5]>95 ? "#98e2a6" : data.data[5][5]>90 ? "#9ad0e2" : data.data[5][5]>80 ? 
                     "#f7e685" : data.data[5][5]>70 ? "#f6c88a" : "#ff8e74",
-                    label : {//图形数据显示位置
-                        show: true, position: ['100%', -5],
-                    },
                     barBorderRadius: 0
-                }
+                },
+                emphasis: {color: data.data[5][5]>95 ? "#98e2a6" : data.data[5][5]>90 ? "#9ad0e2" : data.data[5][5]>80 ? 
+                    "#f7e685" : data.data[5][5]>70 ? "#f6c88a" : "#ff8e74",}
             },
             barWidth:'10px',//条形宽度
              data:data.data[5]
@@ -196,17 +189,25 @@ return {
             name:'bar6',
             type:'bar',
             stack:"总量",
+            label : {//图形数据显示位置
+                normal: {
+                    show: true, position: ["100%", -5],
+                    textStyle: {
+                        color: "#585858"
+                    },
+                    formatter: function(params){
+                        console.log(params)
+                        return  100 - params.value
+                    }
+                },
+            },
             itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
                 normal: {
-                   color:"#dedede",
-                    label : {//图形数据显示位置
-                        show: true, position: ['100%', -5],
-                        formatter: function(params){
-                            console.log(params)
-                        }
-                    },
+                    color: "#dedede",
+                    // opacity: 0.1,
                     barBorderRadius: 0
-                }
+                },
+                emphasis: {color: "#dedede",}
             },
             barWidth:'10px',//条形宽度
             data:[100-data.data[0][0] , 100-data.data[1][1] , 100-data.data[2][2] , 100-data.data[3][3] , 100-data.data[4][4] , 100-data.data[5][5]]

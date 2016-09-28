@@ -39,8 +39,8 @@ return {
         left:70,
     },
     grid:{
-        left:100,
-        right:100,
+        left:45,
+        right:45,
         top:60,
 		show:true,
         borderWidth:1
