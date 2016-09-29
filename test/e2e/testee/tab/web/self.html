@@ -34,15 +34,29 @@
     }
 </style>
 <body ng-controller='rdk_ctrl' class="rdk_main">
-    <div class="demo1 rdk-tab">
+
+    <div class="rdk-tab demo1">
+        <h5>点击切换</h5>
         <rdk_tab selected_tab="2">
             <div title="DIV1">DIV1</div>
             <div title="DIV2">DIV2</div>
             <div title="DIV3">DIV3</div>
         </rdk_tab>
     </div>
-    <div class="demo2 rdk-tab">
+    <div class="rdk-tab demo2">
+        <h5>鼠标移动切换</h5>
         <rdk_tab toggle_condition="mouseover">
+            <div title="DIV1">DIV1</div>
+            <div title="DIV2">DIV2</div>
+            <div title="DIV3">DIV3</div> 
+        </rdk_tab>
+    </div>
+    <div class="rdk-tab demo3">
+        <h5>选项卡高度变化</h5> 
+        <button>Auto</button>
+        <button>Content</button>
+        <button>Fill</button>
+        <rdk_tab heightStyle="{{Height}}">
             <div title="DIV1">DIV1</div>
             <div title="DIV2">DIV2</div>
             <div title="DIV3">DIV3</div> 

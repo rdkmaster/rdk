@@ -29,7 +29,7 @@ app.controller('rdk_ctrl', ['$scope' ,'DataSourceService', 'blockUI','EventServi
 function(scope,DSService, blockUI,EventService,EventTypes) {
 application.initDataSourceService(DSService);
 /************************ 应用的代码逻辑开始 ************************/
-
+scope.Height='auto';
 /************************ 应用的代码逻辑结束 ************************/
 }]);
 

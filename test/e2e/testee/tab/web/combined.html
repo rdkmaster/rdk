@@ -29,54 +29,10 @@
     </script>
 </head>
 <style>
-    .accordion{
-        width:500px;
-        margin:50px;
-    }
+    
 </style>
 <body ng-controller='rdk_ctrl' class="rdk_main">
-    <!-- combo_selecct -->
-    <div class="accordion combo">
-        <rdk_accordion caption="'combo'" style="height:100px">
-            <rdk_combo_select id="accordion_combo" ds="city" ds_url="$svr/city.js" ds_query_if="ready"
-            ds_data_processor="cityProcessor" caption="'已选项'">
-                <rdk_basic_selector data="city" id="basic_id" child_change="select2string"></rdk_basic_selector>
-            </rdk_combo_select>
-        </rdk_accordion>
-    </div>
-    <!-- panel -->
-    <div class="accordion panel">
-        <rdk_accordion caption="'panel'">
-            <rdk_panel show_close="true" title="context" show_title="true">
-                    <p>这是一段文字</p>
-            </rdk_panel>
-        </rdk_accordion>
-    </div>
-    <!-- scroller -->
-    <div class="accordion scroller">
-        <rdk_accordion caption="'scroller'">
-            <rdk_scroller data="scrollerData" scroll_policy="manual" loop="false">
-                <img ng-src="{{item.url}}" style="width:100%;height:100%;"/>
-            </rdk_scroller>
-        </rdk_accordion>
-    </div>
-    <!-- tab -->
-    <div class="accordion tab">
-        <rdk_accordion caption="'Tabs'">
-            <rdk_tab collapsible="false">
-                <div title="tab1">
-                    tab1
-                </div>
-                <div class="tab2">
-                    <rdk_input placeholder="2"></rdk_input>
-                </div>
-                <div title="tab3">
-                    <rdk_basic_selector data="city" id="city_selector" multiple_select="false"></rdk_basic_selector>
-                    <input ng-model="currentVal"/>
-                </div>
-            </rdk_tab>
-        </rdk_accordion>
-    </div>
+    
     <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
     <!--     这个节点可选，删除后，RDK会自动生成一个    -->
     <!--           这个节点只支持基本HTML标签           -->

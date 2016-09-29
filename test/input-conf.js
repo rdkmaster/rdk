@@ -8,13 +8,13 @@ exports.config = {
     multiCapabilities: [
         {
             browserName: 'firefox'
-        }, 
+        },
         {
             browserName: 'chrome'
         }
     ],
 
-    baseUrl: 'http://localhost:8080/',
+    baseUrl: 'http://192.0.0.1:8080/',
 
     framework: 'jasmine2',
     jasmineNodeOpts: {
@@ -25,7 +25,7 @@ exports.config = {
 
     onPrepare: function() {
         var Jasmine2HtmlReporter = require('./index.js');
-         jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+        jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
             savePath: './report/e2e'
         }));
     }
