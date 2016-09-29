@@ -17,7 +17,6 @@ import test.mock.db.{BaseMetaData, BaseResultSetMock}
  * Created by 10184092 on 2016/8/19.
  */
 class TestOldJsAPI extends FunSpec with Matchers{
-  PropertyConfigurator.configureAndWatch("proc/conf/log4j.properties", 30000)
   Config.setConfig("proc/conf/")
 
   val _meta = new BaseMetaData {
