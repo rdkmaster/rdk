@@ -61,8 +61,8 @@ class TestOldJsAPI extends FunSpec with Matchers{
   describe("check pass Old API File function") {
     val runtime: Runtime = Runtime.newInstance
     it("loadProperty(file)=> test cases passed!") {
-      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_loadProperty") should be("conf1")
-      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_loadPropertyerror") should be("false")
+      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_loadProperty").fold(ex=>ex,v=> v should be("conf1"))
+      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_loadPropertyerror").fold(ex=>ex,v=> v should be("false"))
     }
 
     it("save(file, content, append, encoding)=>test cases passed!") {
@@ -70,11 +70,11 @@ class TestOldJsAPI extends FunSpec with Matchers{
       new File(ConstForTest.testRelayFilePath+"save.txt").exists() should be(true)
       new File(ConstForTest.testRelayFilePath+"save.txt").delete()
 
-      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_savepathnull") should be ("false")
+      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_savepathnull").fold(ex=>ex,v=> v should be("false"))
 
-      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_savecontentnull") should be ("false")
+      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_savecontentnull").fold(ex=>ex,v=> v should be("false"))
 
-      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_save_dirfalse") should be ("false")
+      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_save_dirfalse").fold(ex=>ex,v=> v should be("false"))
  }
 
 
@@ -111,64 +111,64 @@ class TestOldJsAPI extends FunSpec with Matchers{
   }
 
     it("kv()=>test cases passed!"){
-      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "kvTest") should be ("no")
-      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "kvTestdefaultvaluenull") should be ("2")
-      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "kvTestdefaultvalue") should be ("defaultvalue")
+      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "kvTest").fold(ex=>ex,v=> v should be("no"))
+      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "kvTestdefaultvaluenull").fold(ex=>ex,v=> v should be("2"))
+      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "kvTestdefaultvalue").fold(ex=>ex,v=> v should be("defaultvalue"))
     }
 
     it("require()=>test cases passed!"){
-      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "requireTest") should be ("load ok!")
+      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "requireTest").fold(ex=>ex,v=> v should be("load ok!"))
     }
 
     it("buffer()、getbuffer()、removebuffer()=>test cases passed!"){
-      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "bufferTest") should be ("f")
-      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "bufferTestfalse") should be ("null")
+      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "bufferTest").fold(ex=>ex,v=> v should be("f"))
+      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "bufferTestfalse").fold(ex=>ex,v=> v should be("null"))
     }
 
 
     it("json(data, indent)=>test cases passed!"){
-       RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "jsonTest") should be ("[\n  1,\n  2\n]")
+       RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "jsonTest").fold(ex=>ex,v=> v should be("[\n  1,\n  2\n]"))
     }
 
     it("JVM.load_class(className, jar)=>test cases passed!"){
-       RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "load_classTest") should be ("from test lib!")
+       RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "load_classTest").fold(ex=>ex,v=> v should be("from test lib!"))
 
-       RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "load_classTesterror") should be ("undefined")
+//       RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "load_classTesterror").fold(ex=>ex.toString.contains("+++")  should be (true),v=> v)
     }
 
     it("i18n(key)=>test cases passed!"){
-        RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "i18nTest") should be ("测试")
+        RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "i18nTest").fold(ex=>ex,v=> v should be("测试"))
 
-        RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "i18nArrayTest") should be ("[\"测试\",\"测试1\"]")
+        RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "i18nArrayTest").fold(ex=>ex,v=> v should be("[\"测试\",\"测试1\"]"))
 
-        RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "i18nparamlenthzero") should be ("undefined")
+        RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "i18nparamlenthzero").fold(ex=>ex,v=> v should be("undefined"))
 
-        RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "i18nkeynotstr") should be ("{\"a\":1}")
+        RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "i18nkeynotstr").fold(ex=>ex,v=> v should be("{\"a\":1}"))
     }
 
     it("sql(sql)=>test cases passed!") {
       val r = RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "sqlTest")
-      r should be("ok")
+      r.fold(ex=>ex,v=> v should be("ok"))
     }
 
     it("mapper(resultSet, key, value, keepResultSet)=>test cases passed!"){
       var runtime: Runtime = Runtime.newInstance
-      RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "mapperTest") should be ("{\"\\u0001\":\"\\u0002\"}")
+      RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "mapperTest").fold(ex=>ex,v=> v should be("{\"\\u0001\":\"\\u0002\"}"))
       runtime=Runtime.newInstance
-      RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "mapperTestkeynull") should be ("{}")
+      RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "mapperTestkeynull").fold(ex=>ex,v=> v should be("{}"))
       runtime=Runtime.newInstance
-      RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "mapperTestvaluenull") should be ("{}")
+      RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "mapperTestvaluenull").fold(ex=>ex,v=> v should be("{}"))
       runtime=Runtime.newInstance
-      RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "mapperTestResultSetnull") should be ("{}")
+      RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "mapperTestResultSetnull").fold(ex=>ex,v=> v should be("{}"))
     }
 
     it("matrix(resultSet, mapIterator, keepResultSet)=>test cases passed!"){
       var runtime: Runtime = Runtime.newInstance
-      RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "matrixTest") should be ("{\"header\":[\"网元id\",\"name\"],\"field\":[\"neid\",\"name\"],\"data\":[[\"\\u0002\",\"\\u0001\"]]}")
+      RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "matrixTest").fold(ex=>ex,v=> v should be("{\"header\":[\"网元id\",\"name\"],\"field\":[\"neid\",\"name\"],\"data\":[[\"\\u0002\",\"\\u0001\"]]}"))
       runtime = Runtime.newInstance
-      RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "matrixTestmapIterator") should be ("{\"header\":[\"网元id\",\"name\"],\"field\":[\"neid\",\"name\"],\"data\":[[\"\\u0002\",\"\\u0001ttt\"]]}")
+      RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "matrixTestmapIterator").fold(ex=>ex,v=> v should be("{\"header\":[\"网元id\",\"name\"],\"field\":[\"neid\",\"name\"],\"data\":[[\"\\u0002\",\"\\u0001ttt\"]]}"))
       runtime = Runtime.newInstance
-      RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "matrixTestError") should be ("{\"header\":[],\"field\":[],\"data\":[]}")
+      RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "matrixTestError").fold(ex=>ex,v=> v should be("{\"header\":[],\"field\":[],\"data\":[]}"))
     }
 
   }
