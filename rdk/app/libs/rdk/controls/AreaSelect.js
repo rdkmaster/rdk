@@ -7,15 +7,15 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
             template: '<div>\
                            <div ng-mouseleave="vm.close()">\
                                <div class="rdk-area-input-wrap" ng-mouseenter="vm.openForHover()" ng-click="vm.openForClk()">\
-                                   <input  type="text" class="rdk-area-input" ng-model="vm.resultData" tabindex="1" readonly="true"  placeholder=""/>\
+                                   <input  type="text" class="rdk-area-input" ng-model="vm.resultData" readonly="true"  placeholder=""/>\
                                    <i class="rdk-area-icon rdk-area-icon-down" ng-class="{\'rdk-area-icon-up\':vm.openArea}"></i>\
                                </div>\
                                <div id="content" tabindex="1" ng-blur="vm.contentBlur()">\
                                <div ng-show="vm.openArea" class="rdk-area-contain">\
                                    <ul class="nav nav-tabs">\
-                                       <li ng-class="{active: vm.activeTab == 1}"><a ng-click="vm.activeTab = 1">省</a></li>\
-                                       <li ng-show="!!vm.dsCitys.data.data.length" ng-class="{active: vm.activeTab == 2}"><a ng-click="vm.activeTab = 2">市</a></li>\
-                                       <li ng-show="!!vm.dsAreas.data.data.length" ng-class="{active: vm.activeTab == 3}"><a ng-click="vm.activeTab = 3">区</a></li>\
+                                       <li ng-class="{active: vm.activeTab == 1}"><a ng-click="vm.activeTab = 1">{{vm.userArr[0].name || "省"}}</a></li>\
+                                       <li ng-show="!!vm.dsCitys.data.data.length" ng-class="{active: vm.activeTab == 2}"><a ng-click="vm.activeTab = 2">{{vm.userArr[1].name || "市"}}</a></li>\
+                                       <li ng-show="!!vm.dsAreas.data.data.length" ng-class="{active: vm.activeTab == 3}"><a ng-click="vm.activeTab = 3">{{vm.userArr[2].name || "区"}}</a></li>\
                                    </ul>\
                                    <div class="tab-content tab-bordered">\
                                        <div class="tab-panel" ng-show="vm.activeTab == 1">\
