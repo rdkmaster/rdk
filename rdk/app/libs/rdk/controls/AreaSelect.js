@@ -1,56 +1,61 @@
-define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.styles.Bootstrap'], function () {
-    var areaApp = angular.module('rd.controls.AreaSelect', ['rd.services.DataSourceService']);
-    areaApp.directive('rdkAreaSelect', ['Utils', 'DataSourceService', function (Utils, DataSourceService) {
+define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.styles.Bootstrap', 'rd.services.EventService'], function () {
+    var areaApp = angular.module('rd.controls.AreaSelect', ['rd.services.DataSourceService', 'rd.services.EventService']);
+    areaApp.directive('rdkAreaSelect', ['DataSourceService','EventService', function (DataSourceService,EventService) {
         return {
             restrict: 'E',
             transclude: true,
-            template: '<div class="rdk-area-contain" ng-mouseleave="vm.close()">\
-                           <div class="rdk-area-input-wrap" ng-mouseenter="vm.openForHover()" ng-click="vm.openForClk()">\
-                               <input  type="text" class="rdk-area-input" ng-model="vm.resultData" tabindex="1" readonly="true"  placeholder=""/>\
-                               <i class="rdk-area-icon rdk-area-icon-down" ng-class="{\'rdk-area-icon-up\':vm.openArea}"></i>\
-                           </div>\
-                           <div  ng-show="vm.openArea">\
-                               <ul class="nav nav-tabs">\
-                                   <li ng-class="{active: vm.activeTab == 1}"><a ng-click="vm.activeTab = 1">省</a></li>\
-                                   <li ng-show="!!vm.dsCitys.data.data.length" ng-class="{active: vm.activeTab == 2}"><a ng-click="vm.activeTab = 2">市</a></li>\
-                                   <li ng-show="!!vm.dsAreas.data.data.length" ng-class="{active: vm.activeTab == 3}"><a ng-click="vm.activeTab = 3">区</a></li>\
-                               </ul>\
-                               <div class="tab-content tab-bordered">\
-                                   <div class="tab-panel" ng-show="vm.activeTab == 1">\
-                                       <ul>\
-                                           <li ng-repeat="province in vm.dsProvinces.data.data">\
-                                               <a ng-click="vm.clkProvinceNextLvOpen(province,0)" ng-class="{selected:vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
-                                           </li>\
-                                       </ul>\
-                                   </div>\
-                                   <div class="tab-panel" ng-show="vm.activeTab == 2">\
-                                       <ul>\
-                                           <li ng-click="vm.selectAllProOrCity(\'全省\')" class="test-all"><a>全省</a></li>\
-                                           <li ng-repeat="city in vm.dsCitys.data.data">\
-                                               <a ng-click="vm.clkCityNextLvOpen(city,1)" ng-class="{selected:vm.activeCurItemClass(city,1)}">{{city.name}}</a>\
-                                           </li>\
-                                       </ul>\
-                                   </div>\
-                                   <div class="tab-panel" ng-show="vm.activeTab == 3">\
-                                       <ul>\
-                                           <li ng-click="vm.selectAllProOrCity(\'全市\')" class="test-all"><a>全市</a></li>\
-                                           <li ng-repeat="area in vm.dsAreas.data.data">\
-                                               <a ng-click="vm.changeSelected(area,2)" ng-class="{selected:vm.activeCurItemClass(area,2)}">{{area.name}}</a>\
-                                           </li>\
-                                       </ul>\
+            template: '<div>\
+                           <div ng-mouseleave="vm.close()">\
+                               <div class="rdk-area-input-wrap" ng-mouseenter="vm.openForHover()" ng-click="vm.openForClk()">\
+                                   <input  type="text" class="rdk-area-input" ng-model="vm.resultData" tabindex="1" readonly="true"  placeholder=""/>\
+                                   <i class="rdk-area-icon rdk-area-icon-down" ng-class="{\'rdk-area-icon-up\':vm.openArea}"></i>\
+                               </div>\
+                               <div id="content" tabindex="1" ng-blur="vm.contentBlur()">\
+                               <div ng-show="vm.openArea" class="rdk-area-contain">\
+                                   <ul class="nav nav-tabs">\
+                                       <li ng-class="{active: vm.activeTab == 1}"><a ng-click="vm.activeTab = 1">省</a></li>\
+                                       <li ng-show="!!vm.dsCitys.data.data.length" ng-class="{active: vm.activeTab == 2}"><a ng-click="vm.activeTab = 2">市</a></li>\
+                                       <li ng-show="!!vm.dsAreas.data.data.length" ng-class="{active: vm.activeTab == 3}"><a ng-click="vm.activeTab = 3">区</a></li>\
+                                   </ul>\
+                                   <div class="tab-content tab-bordered">\
+                                       <div class="tab-panel" ng-show="vm.activeTab == 1">\
+                                           <ul>\
+                                               <li ng-repeat="province in vm.dsProvinces.data.data">\
+                                                   <a ng-click="vm.clkProvinceNextLvOpen(province,0)" ng-class="{selected:vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
+                                               </li>\
+                                           </ul>\
+                                       </div>\
+                                       <div class="tab-panel" ng-show="vm.activeTab == 2">\
+                                           <ul>\
+                                               <li ng-click="vm.selectAllProOrCity(\'全省\')" class="test-all"><a>全省</a></li>\
+                                               <li ng-repeat="city in vm.dsCitys.data.data">\
+                                                   <a ng-click="vm.clkCityNextLvOpen(city,1)" ng-class="{selected:vm.activeCurItemClass(city,1)}">{{city.name}}</a>\
+                                               </li>\
+                                           </ul>\
+                                       </div>\
+                                       <div class="tab-panel" ng-show="vm.activeTab == 3">\
+                                           <ul>\
+                                               <li ng-click="vm.selectAllProOrCity(\'全市\')" class="test-all"><a>全市</a></li>\
+                                               <li ng-repeat="area in vm.dsAreas.data.data">\
+                                                   <a ng-click="vm.changeSelected(area,2)" ng-class="{selected:vm.activeCurItemClass(area,2)}">{{area.name}}</a>\
+                                               </li>\
+                                           </ul>\
+                                       </div>\
                                    </div>\
                                </div>\
+                               </div>\
                            </div>\
-                        </div>',
+                       </div>',
             replace: true,
             scope: {
                 areaData:'=',
-                resultType:'@?'
+                resultType:'@?',
+                callback:'&?'
             },
             link:_link
         };
 
-        function _link(scope) {
+        function _link(scope,tElement,tAttrs) {
             //TODO:处理控件内部数据的国际化:省市区标签
             var vm = scope.vm = {
                 openArea:false, //控件是否显示打开
@@ -64,11 +69,20 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
             _init();
 
             vm.close = function(){
+                vm.clickedOutside=true;
                 if(_isSelect){ //在进行选择地区过程中锁住close事件
                     return;
                 }
                 vm.openArea=false;
             };
+
+            vm.contentBlur=function(){ //市区焦点时关闭地区选择框
+                if(vm.clickedOutside){
+                    vm.openArea=false;
+                    _isSelect = false;
+                }
+            };
+
             vm.openForClk=function(){ //鼠标点击输入框控制地区选择框的显示
                 if(_isSelect || !vm.openArea){
                     vm.openArea=!vm.openArea;
@@ -78,10 +92,12 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                     }
                 }
                 _isSelect=true;
+                vm.clickedOutside = false;
+                _resetTranscludeFocus();
             };
             vm.openForHover=function(){ //鼠标悬浮输入框打开地区选择框
                 vm.openArea=true;
-                //_isSelect = false;
+                vm.clickedOutside = false;
             };
             vm.changeSelected = function(item,index){ //选择地区项，结束当前地区选择
                 !!item?vm.userArr[index]=item:[];
@@ -144,11 +160,22 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                 if(scope.resultType=='string'){
                     scope.areaData=vm.resultData;
                 }else{
-                    scope.areaData=vm.userArr;
+                    var obj = {
+                        province:null,
+                        city:null,
+                        area:null
+                    };
+                    obj.province=vm.userArr[0];
+                    obj.city=vm.userArr[1];
+                    obj.area=vm.userArr[2];
+                    scope.areaData=obj;
+                    obj=null;
                 }
-                //tmpArr=copyArr(tmpArr,vm.userArr); //记录上次的选择的地区信息
-                //_deleteAllDs();
+                if(tAttrs.callback){  //如果有回调则执行
+                    EventService.broadcast(scope.$id, "areaCallBack");
+                }
             }
+
             //初始化
             function _init(){
                 //创建省数据源
@@ -167,13 +194,16 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                     id: 'dsAreas'+scope.$id,
                     url: serviceUrl
                 });
+                //注册回调事件
+                if(tAttrs.callback){
+                    EventService.register(scope.$id, "areaCallBack", scope.callback);
+                }
+                //初始化直接查询出所有省份
                 vm.dsProvinces.query();
             }
-            //释放数据源或绑定变量
-            function _deleteAllDs(){
-                vm.dsProvinces.delete();
-                vm.dsCitys.delete();
-                vm.dsAreas.delete();
+
+            function _resetTranscludeFocus(){ //转移焦点input-->div
+                vm.openArea&&angular.element("#content")[0].focus();
             }
         }
     }])

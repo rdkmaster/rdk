@@ -1,14 +1,8 @@
 /*reset*/
-ul, ol ,p{
-    margin: 0;
-    padding: 0;
-}
-a{
-    color: #333;
-    text-decoration: none;
-}
+ul, ol ,p{margin: 0; padding: 0;}
+div:focus{outline: none;}
 /*rdk*/
-.rdk-area-contain{width: 520px;}
+.rdk-area-contain{}
 /*rdk-area 头部触发地区选择输入框样式 --start*/
 .rdk-area-input-wrap {
     width: 262px;
@@ -62,37 +56,55 @@ a{
 /*rdk-area 头部触发地区选择输入框样式 --end*/
 
 /*rdk-area 省市区页签导航 --start*/
-.nav-tabs{
-    border-bottom: 2px solid #008FD4;
+.rdk-area-contain{
+    margin-top: -2px;
+    position: absolute;
+    width: 520px;
+    z-index: 99;
+    font-size: 12px;
 }
-.nav-tabs>li {
-    float: left;
-    margin-bottom: -2px;
-    color: #333;
-}
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
-    border: 1px solid #008FD4;
-    border-bottom: none;
-}
-.nav-tabs>li>a:hover {
-    border: 1px solid #008FD4;
-    border-bottom: none;
+.rdk-area-contain .nav-tabs{
+    border-bottom: 1px solid rgba(0,0,0,0.15);
     background-color: #fff;
 }
-.nav-tabs li a{
+.rdk-area-contain .nav-tabs>li {
+    float: left;
+    margin-bottom: -1px;
+    margin-right: 1px;
+    color: #333 ;
+}
+.rdk-area-contain .nav-tabs>li.active>a,.rdk-area-contain .nav-tabs>li.active>a:hover,.rdk-area-contain .nav-tabs>li.active>a:focus{
+    border: 1px solid rgba(0,0,0,0.15);
+    color: #333;
     border-bottom: none;
+}
+.rdk-area-contain .nav-tabs>li>a:hover {
+    border: 1px solid rgba(0,0,0,0.15);
+    border-bottom: none;
+    color: #333;
+    background-color: #fff;
+}
+.rdk-area-contain .nav-tabs li a{
+    height: 30px;
+    line-height: 8px;
+    border-bottom: none;
+    padding: 10px 16px;
+    color: #333;
+    text-decoration: none;
 }
 /*rdk-area 省市区页签导航 --end*/
 
 /*rdk-area 省市区数据 --start*/
 .tab-content.tab-bordered {
-    border: 1px solid #008FD4;
-    border-top: none;
-    padding: 12px;
+    padding: 10px 0 18px 6px;
     border-radius: 0 0 4px 4px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-top: none;
+    -webkit-box-shadow: 0 1px 6px rgba(0,0,0,0.175);
+    box-shadow: 0 1px 6px rgba(0,0,0,0.175);
 }
 .tab-panel{
-    padding-left: 20px;
+    padding-left: 8px;
     padding-top: 5px;
 }
 .tab-panel ul li{
@@ -107,10 +119,9 @@ a{
     display: inline-block;
     text-align: left;
     cursor: pointer;
-    color: #333;
-    font-size: 12px;
+    color: #666;
     text-decoration: none;
-    padding: 0 2px;
+    padding: 0 4px;
     border-radius: 4px;
 }
 .tab-panel .test-all{
@@ -127,10 +138,10 @@ a{
 }
 .tab-panel ul li a:hover{
     background-color: #eee;
-    color: #333;
+    color: #666;
 }
 /*激活已选择地区项的样式*/
 .tab-content .tab-panel .selected{
-    background-color: #3abeea;
+    background-color: #3ab1ea;
     color: #fff ;
 }
