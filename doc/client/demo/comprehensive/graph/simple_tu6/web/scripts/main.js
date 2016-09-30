@@ -9,15 +9,6 @@ application.initDataSourceService(DataSourceService);
      将应用的代码逻辑添加在这个匿名函数内部
 ******************************************************/
     //no code here
-    scope.Width = function(data) {
-    	setTimeout(function(){
-    		console.log(document.getElementsByTagName('canvas')[0].style.width);
-    		var a = document.getElementsByTagName('canvas')[0].style.width;
-    		data.canVas = a;
-    		console.log(data);
-    	},200)
-    	return data;
-    }
 }
 
 ]);
