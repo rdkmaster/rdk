@@ -2,7 +2,6 @@
 ul, ol ,p{margin: 0; padding: 0;}
 div:focus{outline: none;}
 /*rdk*/
-.rdk-area-contain{}
 /*rdk-area 头部触发地区选择输入框样式 --start*/
 .rdk-area-input-wrap {
     width: 262px;
@@ -32,7 +31,7 @@ div:focus{outline: none;}
     box-shadow: 0 0 0 2px rgba(45, 183, 245, .2);
 }
 /*input icon*/
-.rdk-area-input-wrap .rdk-area-icon {
+.rdk-area-icon{
     position: absolute;
     width: 8px;
     height: 8px;
@@ -57,11 +56,12 @@ div:focus{outline: none;}
 
 /*rdk-area 省市区页签导航 --start*/
 .rdk-area-contain{
-    margin-top: -2px;
+    margin-top: 0;
     position: absolute;
     width: 520px;
     z-index: 99;
     font-size: 12px;
+    background-color: #fff;
 }
 .rdk-area-contain .nav-tabs{
     border-bottom: 1px solid rgba(0,0,0,0.15);

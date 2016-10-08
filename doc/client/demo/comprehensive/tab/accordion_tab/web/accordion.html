@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
+    <title>RDK控件Demo : Tabs And Accordion</title>
+    <link rel="stylesheet" type="text/css" href="css/accortion.css">
+
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/accordion.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/rdk/app/modules/rdk_app_helpers',
+            }
+        });
+    </script>
+</head>
+<body ng-controller='rdk_ctrl' class="rdk_main">
+<div class="tab_wrap" ng-class="{'wrap-animation':!btnStatus}">
+    <rdk_tab selected_tab="0" draggable="true" collapsible="false" class="rdk_tab">
+        <div title="空口问题">
+            <rdk_accordion caption="'区域指标'" open="true">
+                <rdk_table ds="dsTable3" ds-url="/doc/client/demo/comprehensive/tab/accordion_tab/web/data/tabelData2" ds_query_if="ready" paging-visible="false"></rdk_table>
+            </rdk_accordion>
+            <rdk_accordion caption="'弱覆盖问题'">
+                <div>除了可以填充RDK控件，还支持标准的标签</div>
+            </rdk_accordion>
+            <rdk_accordion caption="'过覆盖问题'">
+                <div>除了可以填充RDK控件，还支持标准的标签</div>
+            </rdk_accordion>
+            <rdk_accordion caption="'重叠覆盖问题'">
+                <div>除了可以填充RDK控件，还支持标准的标签</div>
+            </rdk_accordion>
+            <rdk_accordion caption="'错配邻区'" frozen="true">
+                <div>除了可以填充RDK控件，还支持标准的标签</div>
+            </rdk_accordion>
+            <rdk_accordion caption="'漏配邻区'">
+                <div>除了可以填充RDK控件，还支持标准的标签</div>
+            </rdk_accordion>
+            <rdk_accordion caption="'PCI问题'">
+                <div>除了可以填充RDK控件，还支持标准的标签</div>
+            </rdk_accordion>
+            <rdk_accordion caption="'上行干扰'">
+                <div>除了可以填充RDK控件，还支持标准的标签</div>
+            </rdk_accordion>
+        </div>
+        <div title="接入问题">
+            <rdk_accordion caption="'接入问题'">
+                <div>除了可以填充RDK控件，还支持标准的标签</div>
+            </rdk_accordion>
+            <rdk_accordion caption="'RRC建立失败原因'" open="true" class="table2">
+                <rdk_table ds="dsTable" ds-url="/doc/client/demo/comprehensive/tab/accordion_tab/web/data/tabelData1" ds_query_if="ready" paging-visible="false"></rdk_table>
+                <rdk_table data="dsTable" paging-visible="false"></rdk_table>
+            </rdk_accordion>
+            <rdk_accordion caption="'RAB建立失败原因'">
+                <div>除了可以填充RDK控件，还支持标准的标签</div>
+            </rdk_accordion>
+            <rdk_accordion caption="'RRC建立失败TOP小区'" frozen="true">
+            </rdk_accordion>
+            <rdk_accordion caption="'RAB建立失败TOP小区'">
+                <div>除了可以填充RDK控件，还支持标准的标签</div>
+            </rdk_accordion>
+        </div>
+        <div title="掉线问题">
+            <rdk_accordion caption="'RAB建立失败TOP小区'">
+                <div>除了可以填充RDK控件，还支持标准的标签</div>
+            </rdk_accordion>
+            <rdk_accordion caption="'RAB建立失败TOP小区'">
+                <div>除了可以填充RDK控件，还支持标准的标签</div>
+            </rdk_accordion>
+        </div>
+        <div title="切换问题">
+            <p>RDK最突出的特点就是易用！</p>
+        </div>
+        <div title="重定向">
+            <p>RDK最突出的特点就是易用！</p>
+        </div>
+    </rdk_tab>
+    <button class="tab_btn" ng-click="changeTabsStatus()" ng-class="{true:'tab_btn_down',false:'tab_btn_up'}[btnStatus]"></button>
+</div>
+</body>
+</html>

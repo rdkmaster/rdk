@@ -5,19 +5,19 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
             restrict: 'E',
             transclude: true,
             template: '<div>\
-                           <div ng-mouseleave="vm.close()">\
-                               <div class="rdk-area-input-wrap" ng-mouseenter="vm.openForHover()" ng-click="vm.openForClk()">\
+                           <div ng-mouseleave="vm.close()" class="rdk-area-input-wrap">\
+                               <div ng-mouseenter="vm.openForHover()" ng-click="vm.openForClk()">\
                                    <input  type="text" class="rdk-area-input" ng-model="vm.resultData" readonly="true"  placeholder=""/>\
                                    <i class="rdk-area-icon rdk-area-icon-down" ng-class="{\'rdk-area-icon-up\':vm.openArea}"></i>\
                                </div>\
-                               <div id="content" tabindex="1" ng-blur="vm.contentBlur()">\
-                               <div ng-show="vm.openArea" class="rdk-area-contain">\
-                                   <ul class="nav nav-tabs">\
-                                       <li ng-class="{active: vm.activeTab == 1}"><a ng-click="vm.activeTab = 1">{{vm.userArr[0].name || "省"}}</a></li>\
-                                       <li ng-show="!!vm.dsCitys.data.data.length" ng-class="{active: vm.activeTab == 2}"><a ng-click="vm.activeTab = 2">{{vm.userArr[1].name || "市"}}</a></li>\
-                                       <li ng-show="!!vm.dsAreas.data.data.length" ng-class="{active: vm.activeTab == 3}"><a ng-click="vm.activeTab = 3">{{vm.userArr[2].name || "区"}}</a></li>\
-                                   </ul>\
-                                   <div class="tab-content tab-bordered">\
+                               <div tabindex="1" ng-blur="vm.contentBlur()">\
+                                   <div ng-show="vm.openArea" class="rdk-area-contain">\
+                                       <ul class="nav nav-tabs">\
+                                           <li ng-class="{active: vm.activeTab == 1}"><a ng-click="vm.activeTab = 1">{{vm.userArr[0].name || "省"}}</a></li>\
+                                           <li ng-show="!!vm.dsCitys.data.data.length" ng-class="{active: vm.activeTab == 2}"><a ng-click="vm.activeTab = 2">{{vm.userArr[1].name || "市"}}</a></li>\
+                                           <li ng-show="!!vm.dsAreas.data.data.length" ng-class="{active: vm.activeTab == 3}"><a ng-click="vm.activeTab = 3">{{vm.userArr[2].name || "区"}}</a></li>\
+                                       </ul>\
+                                       <div class="tab-content tab-bordered">\
                                        <div class="tab-panel" ng-show="vm.activeTab == 1">\
                                            <ul>\
                                                <li ng-repeat="province in vm.dsProvinces.data.data">\
@@ -41,8 +41,8 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                                                </li>\
                                            </ul>\
                                        </div>\
+                                       </div>\
                                    </div>\
-                               </div>\
                                </div>\
                            </div>\
                        </div>',
@@ -125,6 +125,10 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                     queryFlag:'city',
                     provinceId: province.ProID
                 };
+                if(vm.userArr[index] && vm.userArr[index]!=province)
+                {
+                    vm.userArr.splice(1,2); //删除市区
+                }
                 vm.userArr[index]=province;
                 !!vm.dsCitys && vm.dsCitys.query(cityCondition);
             };
@@ -136,6 +140,10 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                     queryFlag:'area',
                     cityId: city.CityID
                 };
+                if(vm.userArr[index] && vm.userArr[index]!=city)
+                {
+                    vm.userArr.splice(2,1); //删除区
+                }
                 vm.userArr[index]=city;
                 !!vm.dsAreas && vm.dsAreas.query(cityCondition);
             };
@@ -172,7 +180,7 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                     obj=null;
                 }
                 if(tAttrs.callback){  //如果有回调则执行
-                    EventService.broadcast(scope.$id, "areaCallBack");
+                    EventService.broadcast("CallBackId"+scope.$id, "areaCallBack");
                 }
             }
 
@@ -196,14 +204,13 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                 });
                 //注册回调事件
                 if(tAttrs.callback){
-                    EventService.register(scope.$id, "areaCallBack", scope.callback);
+                    EventService.register("CallBackId"+scope.$id, "areaCallBack", scope.callback);
                 }
                 //初始化直接查询出所有省份
                 vm.dsProvinces.query();
             }
-
             function _resetTranscludeFocus(){ //转移焦点input-->div
-                vm.openArea&&angular.element("#content")[0].focus();
+                vm.openArea&&tElement[0].childNodes[1].childNodes[1].nextElementSibling.focus();
             }
         }
     }])
