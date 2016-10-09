@@ -8,6 +8,7 @@ import java.util.UUID
 import java.util.regex.{Matcher, Pattern}
 
 import com.google.gson.{Gson, GsonBuilder}
+import com.typesafe.config.{Config=>TypeSafeConfig}
 import com.zte.vmax.activemq.rdk.RDKActiveMQ
 import com.zte.vmax.rdk.RdkServer
 import com.zte.vmax.rdk.actor.Messages.{MQ_Message, NoneContext, RDKContext, ServiceRequest}
@@ -29,8 +30,8 @@ import scala.util.Try
 object RdkUtil extends Logger {
 
 
-  private val usingStandardSQL: Boolean = Config.getBool("database.StandardSQL.on", false)
-  private val strictMode: Boolean = Config.getBool("database.StandardSQL.strict", false)
+  private lazy val usingStandardSQL: Boolean = Config.getBool("database.StandardSQL.on", false)
+  private lazy val strictMode: Boolean = Config.getBool("database.StandardSQL.strict", false)
 
   /**
     * 获取真实的app名称
@@ -105,6 +106,7 @@ object RdkUtil extends Logger {
     val realJs = if (script.toLowerCase.endsWith(".js")) script else script + ".js"
     val realApp = RdkUtil.getRealApp(realJs, app)
     runtime.setAppName(realApp)
+    runtime.resetDataSource
     appLogger(realApp).info(s"handling request($realApp), script=$realJs , method=$method param=$param")
     if (false == fileExist(FileHelper.fixPath(realJs, realApp))) {
       return Left(new IllegalRequestException(StatusCodes.NotFound, realJs))
@@ -261,4 +263,19 @@ object RdkUtil extends Logger {
   def fileExist(file: String): Boolean = {
     new File(file).exists()
   }
+
+  def withOption[A](op: => A): Option[A] = {
+    try {
+      Some(op)
+    } catch {
+      case e: Exception => None
+    }
+  }
+
+  def getConfigValue[A](prop: String)(implicit config: TypeSafeConfig): Option[A] =
+    withOption(config.getAnyRef(prop)) match {
+      case r:Some[A] =>r
+      case _ =>None
+    }
+
 }

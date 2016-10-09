@@ -321,12 +321,12 @@ function require(script) {
 
 function sql(sql) {
     log("exec sql: " + sql);
-    return rdk_runtime.dbHelper().sql(rdk_runtime.application(),sql);
+    return rdk_runtime.dbHelper().sql(rdk_runtime.useDbSession(),sql);
 }
 
 function clear(resultSet) {
     info("clearing the resultSet and every resource else.");
-    rdk_runtime.dbHelper().clear(rdk_runtime.application(),resultSet);
+    rdk_runtime.dbHelper().clear(rdk_runtime.useDbSession(),resultSet);
 }
 
 function mapper(resultSet, key, value, keepResultSet) {
@@ -397,8 +397,23 @@ var Mapper = {
     }
 }
 
-
 var Data = {
+    DataSourceSelector:"#_#DataSourceSelector#_#",
+
+    //设置数据源选择器
+    setDataSourceSelector:function(selector){
+        Cache.put(Data.DataSourceSelector,selector)
+    },
+    //启用数据源
+    useDataSource : function() {
+        var selector  = Cache.get(Data.DataSourceSelector);
+        if(selector != null){
+            rdk_runtime.useDataSource(selector(arguments))
+        }else {
+            rdk_runtime.useDataSource("")
+        }
+    },
+
     fetch: function (sql, maxLine) {
         if (!maxLine || !_.isNumber(maxLine)) {
             Log.error("maxLine is required and must be a number!");

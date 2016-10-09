@@ -3,7 +3,7 @@ package com.zte.vmax.rdk.config
 import java.io.File
 
 import com.typesafe.config.ConfigFactory
-import com.zte.vmax.rdk.util.Logger
+import com.zte.vmax.rdk.util.{RdkUtil, Logger}
 
 trait ConfigTrait extends Logger {
   var config: com.typesafe.config.Config = null
@@ -21,13 +21,16 @@ trait ConfigTrait extends Logger {
     */
   def setConfigFiles(files: String*): Unit = {
     logger.debug(s"config home: $configHome")
-    config = files.toList.map(load).reduce((a, b) => a.withFallback(b))
+    config = files.toList.map(load).reduce((a, b) => a.withFallback(b)).withFallback(VmaxConfiger.getConfig).resolve()
+    //注册默认的数据源(gbase)
+    val vmaxGbaseDataSource = s"""db.default.url="${VmaxConfiger.getGbaseUrl}" """
+    config = config.withFallback(ConfigFactory.parseString(vmaxGbaseDataSource)).resolve()
   }
 
   protected def load(file: String): com.typesafe.config.Config = {
     val resourceFile = file
     val configFile = new File(makePath(file))
-  //  log.debug(configFile.getAbsolutePath())
+    //  log.debug(configFile.getAbsolutePath())
     if (configFile.exists()) {
       logger.debug(s"loading file[ ${configFile.getPath} ] and resource[ $resourceFile ]")
       ConfigFactory.parseFile(configFile).withFallback(ConfigFactory.load(resourceFile))
@@ -49,49 +52,22 @@ trait ConfigTrait extends Logger {
   * Created by 10054860 on 2016/7/9.
   */
 object Config extends ConfigTrait {
-  private val ICT_BASE: String = "../../../../../../../.."
-  private val `serviceaddress.properties`: String = ICT_BASE + "/utils/vmax-conf/serviceaddress.properties"
-  private val `deploy-console.properties`: String = ICT_BASE + "/utils/console/works/console1/conf/deploy-console.properties"
-  private val `deploy-usf.properties`: String = ICT_BASE + "/works/global/deploy/deploy-usf.properties"
 
-  def setConfig(path:String) = {
+  def setConfig(path: String) = {
     configHome = path
     //前面文件中的配置项优先
     setConfigFiles(
-      `deploy-usf.properties`,
       "rdk.cfg",
-      `serviceaddress.properties`,
-      `deploy-console.properties`)
+      "datasource.cfg"
+    )
   }
-
-  def getStringOption(prop:String):Option[String] = withOption(config.getString(prop))
-
-  def getIntOption(prop:String):Option[Int] = withOption(config.getInt(prop))
-
-
-  private def withOption[A](op: => A): Option[A] = {
-    try {
-      Some(op)
-    } catch {
-      case e: Exception => None
-    }
-  }
-
 
   def get(key: String, defaultValue: String): String = {
-    getStringOption(key).getOrElse(defaultValue)
+    RdkUtil.getConfigValue[String](key)(config).getOrElse(defaultValue)
   }
 
   def getInt(key: String, defaultValue: Int): Int = {
-    val value: String = get(key)
-    try {
-      return value.toInt
-    }
-    catch {
-      case e: NumberFormatException => {
-        return defaultValue
-      }
-    }
+    RdkUtil.getConfigValue[Int](key)(config).getOrElse(defaultValue)
   }
 
   def getInt(key: String): Int = {
@@ -99,8 +75,7 @@ object Config extends ConfigTrait {
   }
 
   def getBool(key: String, defaultValue: Boolean): Boolean = {
-    val value: String = get(key, defaultValue + "")
-    return value.equalsIgnoreCase("true")
+    RdkUtil.getConfigValue[Boolean](key)(config).getOrElse(defaultValue)
   }
 
   def getBool(key: String): Boolean = {

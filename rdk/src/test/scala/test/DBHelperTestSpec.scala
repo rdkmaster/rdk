@@ -2,6 +2,7 @@ package test
 
 import java.sql.ResultSet
 
+import com.zte.vmax.rdk.actor.Messages.DBSession
 import com.zte.vmax.rdk.db.DataBaseHelper
 import com.zte.vmax.rdk.proxy.{DeprecatedDBAccessTrait, ProxyManager}
 import org.scalatest.{FunSpec, Matchers}
@@ -56,18 +57,18 @@ class DBHelperTestSpec extends FunSpec with Matchers {
       def getMetaData = _meta
     }
 
-    override def sql(appName: String, sql: String): ResultSet = TAB_AAA
+    override def sql(session: DBSession, sql: String): ResultSet = TAB_AAA
 
-    override def clear(appName: String, rs: ResultSet): Unit = {
+    override def clear(session: DBSession, rs: ResultSet): Unit = {
 
     }
   }
 
   describe("ProxyManager.dbAccess Testing") {
-    ProxyManager.dbAccess = () =>Some(_conn)
+    ProxyManager.dbAccess = _ =>Some(_conn)
 
     it("fetch() should return true") {
-      val data = DataBaseHelper.fetch("test", "select * from AAA", 1)
+      val data = DataBaseHelper.fetch(DBSession("test",None), "select * from AAA", 1)
       data should not be (None)
 
     }
@@ -76,31 +77,31 @@ class DBHelperTestSpec extends FunSpec with Matchers {
 //      data should not be (Nil)
 //    }
     it("executeUpdate() should return true") {
-      val data = DataBaseHelper.executeUpdate("test", "insert into AAA values(1)")
+      val data = DataBaseHelper.executeUpdate(DBSession("test",None), "insert into AAA values(1)")
       data should be(Some(1))
 
     }
 
     it("batchExecuteUpdate() should return true") {
-      val data = DataBaseHelper.batchExecuteUpdate("test", "insert into AAA values(1)" :: Nil)
+      val data = DataBaseHelper.batchExecuteUpdate(DBSession("test",None), "insert into AAA values(1)" :: Nil)
       data should be(Some(List(1)))
 
     }
   }
 
   describe("ProxyManager.deprecatedDbAccess Testing") {
-    ProxyManager.deprecatedDbAccess = () => deprecatedDbAccess
+    ProxyManager.deprecatedDbAccess = deprecatedDbAccess
 
     it("sql() should return true") {
-      val rs = ProxyManager.deprecatedDbAccess.apply().sql("test", "select * from AAA")
+      val rs = ProxyManager.deprecatedDbAccess.sql(DBSession("test",None), "select * from AAA")
       rs.next()
       rs.getString(1) should be("ok")
     }
 
     it("clear() should return true") {
-      val db = ProxyManager.deprecatedDbAccess.apply()
-      val rs = db.sql("test", "select * from AAA")
-      db.clear("test", rs)
+      val db = ProxyManager.deprecatedDbAccess
+      val rs = db.sql(DBSession("test",None), "select * from AAA")
+      db.clear(DBSession("test",None), rs)
     }
   }
 

@@ -14,6 +14,7 @@ import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
 import com.zte.vmax.rdk.actor.{WebSocketServer, AppRouter, MQRouter}
 import com.zte.vmax.rdk.config.Config
+import com.zte.vmax.rdk.db.DataSource
 import com.zte.vmax.rdk.service.RestHandler
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 
@@ -31,19 +32,25 @@ object Run extends App with SimpleRoutingApp with Logger {
   implicit val bindingTimeout: Timeout = 10.second
   implicit lazy val dispatcher = system.dispatcher
 
-  def start: Unit ={
+  def start: Unit = {
     //init log4j and watch it's change every 30seconds
     PropertyConfigurator.configureAndWatch("proc/conf/log4j.properties", 30000)
 
     //config setting
     Config.setConfig("proc/conf/")
 
+    //init datasource
+    if (false == DataSource.init(Config.config )) {
+      logger.error("Fail to init datasource config.")
+      return
+    }
+
     //bind http 端口
     val ip = Config.get("listen.ip")
     val port = Config.getInt("listen.port")
-    val wsPort = Config.getInt("listen.websocket.port",0)
-    if(wsPort != 0){
-      WebSocketServer.startWebSocket(ip,wsPort)
+    val wsPort = Config.getInt("listen.websocket.port", 0)
+    if (wsPort != 0) {
+      WebSocketServer.startWebSocket(ip, wsPort)
     }
     //初始化应用
     RdkUtil.initApplications
@@ -75,6 +82,6 @@ object RdkServer {
   val mqRouter: ActorRef = system.actorOf(Props[MQRouter], "mqRouter")
 
   //本RDK-server的唯一标识
-  val uuid:String = UUID.randomUUID().toString
+  val uuid: String = UUID.randomUUID().toString
 
 }
