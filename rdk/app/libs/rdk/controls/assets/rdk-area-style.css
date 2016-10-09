@@ -61,11 +61,9 @@ div:focus{outline: none;}
     width: 520px;
     z-index: 99;
     font-size: 12px;
-    background-color: #fff;
 }
 .rdk-area-contain .nav-tabs{
     border-bottom: 1px solid rgba(0,0,0,0.15);
-    background-color: #fff;
 }
 .rdk-area-contain .nav-tabs>li {
     float: left;
@@ -75,7 +73,7 @@ div:focus{outline: none;}
 }
 .rdk-area-contain .nav-tabs>li.active>a,.rdk-area-contain .nav-tabs>li.active>a:hover,.rdk-area-contain .nav-tabs>li.active>a:focus{
     border: 1px solid rgba(0,0,0,0.15);
-    color: #333;
+    color: #008fd4;
     border-bottom: none;
 }
 .rdk-area-contain .nav-tabs>li>a:hover {
@@ -87,15 +85,18 @@ div:focus{outline: none;}
 .rdk-area-contain .nav-tabs li a{
     height: 30px;
     line-height: 8px;
-    border-bottom: none;
     padding: 10px 16px;
     color: #333;
     text-decoration: none;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-bottom: none;
+    background-color: #fff;
 }
 /*rdk-area 省市区页签导航 --end*/
 
 /*rdk-area 省市区数据 --start*/
 .tab-content.tab-bordered {
+    background-color: #fff;
     padding: 10px 0 18px 6px;
     border-radius: 0 0 4px 4px;
     border: 1px solid rgba(0,0,0,0.15);

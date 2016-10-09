@@ -128,6 +128,7 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                 if(vm.userArr[index] && vm.userArr[index]!=province)
                 {
                     vm.userArr.splice(1,2); //删除市区
+                    !!vm.dsAreas.data?vm.dsAreas.data.data=[]:null;
                 }
                 vm.userArr[index]=province;
                 !!vm.dsCitys && vm.dsCitys.query(cityCondition);
