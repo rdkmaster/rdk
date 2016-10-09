@@ -311,24 +311,24 @@ img {
 <h2>设置SBT运行环境</h2>
 <p>打开一个windows的命令行终端，敲入一个sbt命令，如果报命令不存在，那请继续本小节的剩余部分。</p>
 <p>如果sbt命令可以执行，则要确认你当前环境上的sbt，是不是对应着下面这个：</p>
-<pre><code>d:\rdkProject\sbt\bin\
+<pre><code>d:\rdkProject\rdk-resource\sbt\bin\
 </code></pre>
 
 <p>如果是，则跳过本小节。如果不是，则需要将环境上的sbt工具从系统环境变量中删除，再按照本小节余下过程设置。</p>
 <p>把下面这个目录添加到Path环境变量中去</p>
-<pre><code>d:\rdkProject\sbt\bin\
+<pre><code>d:\rdkProject\rdk-resource\sbt\bin\
 </code></pre>
 
 <p>如果不知道怎么添加的话，请自行<a href="https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=0&amp;rsv_idx=1&amp;tn=baidu&amp;wd=%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F&amp;rsv_pq=fba32b1f000189c1&amp;rsv_t=17cc7x9i2muEP6LU2zPYR3cF%2B04FWZNJ3geSW7MrqUEY3LgklGm0gBVIlM0&amp;rsv_enter=1&amp;rsv_sug3=24&amp;rsv_sug1=10&amp;rsv_sug7=100">百度</a>。</p>
 <p>完成之后，<strong>一定一定</strong>再打开一个命令终端继续余下的过程。</p>
 <p>接下来还需要设置sbt本地依赖库的设置路径，使用文本编辑器打开</p>
-<pre><code>d:\rdkProject\sbt\conf\sbtconfig.txt
+<pre><code>d:\rdkProject\rdk-resource\sbt\conf\sbtconfig.txt
 </code></pre>
 
 <p>修改该文件以下三行依赖路径，<strong>实际操作时需要根据你本地sbt依赖库的位置进行设置</strong></p>
-<pre><code> -Dsbt.boot.directory=d:/rdkProject/sbt-repo/boot/
- -Dsbt.ivy.home=d:/rdkProject/sbt-repo/ivy/
- -Dsbt.global.base=d:/rdkProject/sbt-repo/
+<pre><code> -Dsbt.boot.directory=d:/rdkProject/rdk-resource/sbt-repo/boot/
+ -Dsbt.ivy.home=d:/rdkProject/rdk-resource/sbt-repo/ivy/
+ -Dsbt.global.base=d:/rdkProject/rdk-resource/sbt-repo/
 </code></pre>
 
 <h2>设置jdk1.8</h2>
