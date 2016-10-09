@@ -2,11 +2,12 @@
 .tab_wrap{
     position: absolute;
     width: 650px;
-    bottom:0px;
+    bottom:0;
+    min-height: 550px;
     transition: bottom 0.3s linear;
 }
 .wrap-animation{
-    bottom:-540px;
+    bottom:-500px;
 }
 .tab_wrap .rdk-tab-content{
     height: 540px;
