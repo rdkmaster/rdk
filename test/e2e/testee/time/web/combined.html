@@ -141,7 +141,11 @@
     <div style="margin:20px;" class="demo2">
         <h6>双时间控件</h6> 
         <rdk_accordion ds="ds_table" ds_url="$svr/salary1" ds_query_if="ready" caption="'表1'" style="width:500px;">
+        <div style="height: 100px">
             <rdk_time range setting="TimeGranularity"></rdk_time>
+
+        </div>
+            
         </rdk_accordion>
         <p>{{TimeGranularity.granularity=='week'?TimeGranularity.value[0].label:TimeGranularity.value[0]}}&nbsp{{TimeGranularity.granularity=='week'?TimeGranularity.value[1].label:TimeGranularity.value[1]}}</p>
     </div>

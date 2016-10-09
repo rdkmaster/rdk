@@ -35,7 +35,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     minWidth: '=?'
                 }, 
                 template: 
-                 '<div class="rdk-accordion-module" ng-click="stopPropagation()">\
+                 '<div class="rdk-accordion-module">\
                         <div class="theme" ng-click="toggle()"\
                              ng-class="{true:\'frozen-theme\', false:\'normal-theme\'}[frozen]">\
                             <i class="{{open?unfoldedIcon:foldedIcon}}"></i>\
@@ -139,7 +139,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.getTooltips = _getTooltips;
 
                     scope.keyPressHandler = _keyPressHandler;
-                    scope.stopPropagation = _stopPropagation;
                 }
 
                 function _protect4Renderer(){
@@ -495,10 +494,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     scope.foldedIcon = Utils.getValue(scope.foldedIcon, iAttrs.foldedIcon, foldedIconStr);
                     scope.unfoldedIcon = Utils.getValue(scope.unfoldedIcon, iAttrs.unfoldedIcon, unfoldedIconStr);
                 }         
-
-                function _stopPropagation(){
-                    event.stopPropagation();
-                }
 
                 function _keyPressHandler(){
                     if (event.keyCode == 13) {

@@ -17,7 +17,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                     
                     childChange: '&?'
                 },
-                template:'<div class="rdk-combo-select-module" ng-click="stopPropagation()">\
+                template:'<div class="rdk-combo-select-module">\
                         <div class="combo-content">\
                             <span class="combo-caption" ng-show="{{!!caption}}">{{caption}}</span>\
                             <input class="form-control combo-content-theme" title="{{inputStr}}" \
@@ -67,7 +67,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 scope.mouseEnterHandler = _mouseEnterHandler;
                 scope.mouseLeaveHandler = _mouseLeaveHandler;
                 scope.blur = _blur;
-                scope.stopPropagation = _stopPropagation;
 
                 if(scope.id) {
                     EventService.register(scope.id, EventTypes.CHANGE, function(event, data) {
@@ -81,10 +80,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                     if(scope.open){
                         $(iEle[0].childNodes[3]).focus();
                     }
-                }
-
-                function _stopPropagation(){
-                    event.stopPropagation();
                 }
                 
                 function _toggle(){
