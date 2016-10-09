@@ -36,7 +36,7 @@
 
 到此，你就可以开发RDK控件或者基于RDK开发应用了。
 
-如果你对RDK后端感兴趣，[参考这里](http://localhost:8080/doc/server/how_to_debug_service.html)。
+如果你对RDK后端感兴趣，[参考这里](/doc/#server/how_to_debug_service.md)。
 
 ### 配置ActiveMQ（可选）
 如果你的应用使用到了 `mq` 的相关功能，则必须在启动之前，配置好ActiveMQ的相关信息：
