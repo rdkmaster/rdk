@@ -716,6 +716,7 @@ lib.hello('rdk');
 <pre><code>       Cache.get(&quot;ne_data&quot;)(11) //Cache.get(&quot;ne_data&quot;)返回的是一个转换函数闭包，对其进行调用即可获取neid=11对应的name值
 </code></pre>
 
+<p><strong>注意，若init.js文件发生修改，请一定要重启rdk_server才会生效。</strong></p>
 <h3><code>JVM.load_class()</code></h3>
 <p>定义：</p>
 <pre><code>function loadClass(jarPath, className);

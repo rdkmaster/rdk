@@ -534,7 +534,7 @@ rdk_server在服务启动时会自动加载应用的初始化脚本。
 
            Cache.get("ne_data")(11) //Cache.get("ne_data")返回的是一个转换函数闭包，对其进行调用即可获取neid=11对应的name值
 
-
+**注意，若init.js文件发生修改，请一定要重启rdk_server才会生效。**
 ### `JVM.load_class()` ###
 
 定义：
