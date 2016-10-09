@@ -8,7 +8,7 @@ name          := "rdk-server"
 
 scalaVersion  := "2.10.5"
 
-scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
+scalacOptions := Seq("-feature","-unchecked", "-deprecation","-encoding", "utf8","-language:postfixOps","-language:implicitConversions")
 
 javacOptions  := Seq("-encoding", "utf8")
 
