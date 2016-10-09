@@ -12,13 +12,6 @@ scalacOptions := Seq("-feature","-unchecked", "-deprecation","-encoding", "utf8"
 
 javacOptions  := Seq("-encoding", "utf8")
 
-// no custom Java_HOME without forking
-fork := true
-
-// your JDK8 install
-javaHome := Some(file("../../rdk-resource/jdk/"))
-
-
 libraryDependencies ++= {
   val akkaV = "2.3.5"
   val sprayV = "1.3.2"
