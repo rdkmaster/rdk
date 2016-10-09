@@ -12,12 +12,12 @@ class WebSocketRequestParserTest extends FunSpec with Matchers {
 
   describe("WebSocket.RequestParser Methods Test") {
 
-    it("runtime"){
-      val runtime = com.zte.vmax.rdk.env.Runtime.newInstance
-      val r = RdkUtil.handleJsRequest(runtime,NoneContext,"app/example/server/my_service1.js",null,null,"get")
-      r should be ("ok")
-
-    }
+//    it("runtime"){
+//      val runtime = com.zte.vmax.rdk.env.Runtime.newInstance
+//      val r = RdkUtil.handleJsRequest(runtime,NoneContext,"app/example/server/my_service1.js",null,null,"get")
+//      r should be ("ok")
+//
+//    }
     //描述这个测试用例
     it("--WSCallJSMethod--") {
       //描述测试项
@@ -25,9 +25,9 @@ class WebSocketRequestParserTest extends FunSpec with Matchers {
       val json =
         """
           |{
-          |    "head": {
-          |        "tag": ["tag","flowId"]
-          |    },
+          |    "head": [
+          |        "wsheader"
+          |    ],
           |    "request": {
           |        "script": "app/example/server/my_service1.js",
           |        "param": "",
@@ -47,9 +47,9 @@ class WebSocketRequestParserTest extends FunSpec with Matchers {
       val json =
         """
           |{
-          |    "head": {
-          |        "tag": ["tag","flowId"]
-          |    },
+          |    "head": [
+          |        "wsheader"
+          |    ],
           |    "subscribe": {
           |        "topic": ["alarm"]
           |    }
@@ -66,9 +66,9 @@ class WebSocketRequestParserTest extends FunSpec with Matchers {
       val json =
         """
           |{
-          |    "head": {
-          |       "tag": ["tag","flowId"]
-          |    },
+          |    "head": [
+          |        "wsheader"
+          |    ],
           |    "unSubscribe": {
           |        "topic": ["alarm"]
           |    }
