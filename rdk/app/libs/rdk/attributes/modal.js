@@ -86,8 +86,8 @@ define(['rd.services.EventService', 'jquery','jquery-ui'], function() {
                         'padding': '10px', 
                         'margin': '0' });
 
-            var paddingLen = parseInt(jqDom.css('padding'), 10);
-            var borderLen = parseInt(jqDom.css('border'), 10);
+            var paddingLen = 10; //parseInt(jqDom.css('padding'), 10);
+            var borderLen = 1; //parseInt(jqDom.css('border'), 10);
 
             var docHeight = "";
             var docWidth = "";
