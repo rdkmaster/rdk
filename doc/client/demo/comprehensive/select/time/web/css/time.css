@@ -26,9 +26,6 @@
 	height: 30px;
     margin-bottom: 4px;
 }
-.form-control{
-	padding:6px 0px;
-}
 select{
 	margin-right:8px;
 	height: 30px;
@@ -80,30 +77,26 @@ select{
     outline:none !important;
     box-shadow: none;.
 }
+/** 粒度样式 **/
 .rdk-time-module .bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]) {
     width: 80px;
 }
 .bootstrap-select.btn-group .btn .caret {
     right: 8px;
 }
-.bootstrap-select.btn-group .btn .filter-option {
-    overflow:;
-}
 .rdk-time-module .btn{
     line-height: 3px;
 }
 .bootstrap-select.btn-group .btn .filter-option {
     overflow: inherit;
-    color: #666666;
 }
 .dropdown-menu>li>a {
-    color: #666666;
     width: 80px;
 }
 /* 悬浮状态样式 */
 .dropdown-menu>li>a:hover {
     background: #eee;
-    color: #666666;
+    color: #333;
 }
 .dropdown-menu>li>a:active {
     outline:none;
@@ -137,4 +130,18 @@ select{
 .datetimepicker table tr td span {
     height: 26px;
     line-height: 26px;
+}
+/*时间色值*/
+.form-control{
+    color:#333;
+    padding:6px 0px;
+}
+.datetimepicker th.switch {
+    color:#333;
+}
+input, button, select, textarea {
+    font-family:"微软雅黑";
+}
+.datetimepicker table tr td.disabled, .datetimepicker table tr td.disabled:hover {
+    color: #dedede;
 }

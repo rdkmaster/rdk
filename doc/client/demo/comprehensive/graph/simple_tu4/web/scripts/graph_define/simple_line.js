@@ -34,11 +34,12 @@ return {
         },
         x:1200,
         y: 20
-        }, 
-        grid:{
-            x:130,
-            y:60
-        },
+    }, 
+     grid:{
+        left:100,
+        right:100,
+        top:60,
+    },
     calculable:false,
     
     xAxis : [

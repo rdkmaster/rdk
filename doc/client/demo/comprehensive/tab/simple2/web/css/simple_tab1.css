@@ -134,6 +134,10 @@ i.regular_right{
 i.regular_left{
 	color:#333;
 }
+.pagination>li>a:hover, .pagination>li>span:hover, .pagination>li>a:focus,
+.pagination>li>span:focus {
+	background: none;
+}
 .rdk-table-module .pagination > li > span{
     padding: 0 15px;
 }
@@ -144,6 +148,17 @@ i.regular_left{
 .rdk-table-module .disabledRecords{
 	font-size:12px;
 }
+/** 下面翻页字体居中 **/
+.rdk-table-module .pagination > li > a, .rdk-table-module .pagination > li > span {
+    margin: 10px 0 0px;
+}
+.rdk-table-module .spanRecords {
+    margin: 10px 10px 1px 10px;
+}
+.rdk-table-module .pagination {
+	margin: 0;
+}
+
 
 
 

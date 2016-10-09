@@ -22,8 +22,18 @@ define(['echarts'], function(echarts) {
 
 // attributes 是当前Graph所在的html节点的所有属性集。也是一种辅助数据。
 return function(data, context, GraphService, attributes) {
-    var clientWidth = attributes.$$element[0].clientWidth
+    
 return {
+    title: {
+        text: '各市得分排名',
+        left: "center",
+        top: 20,
+        textStyle: {
+            color: '#434343',
+            fontSize: 12
+        }
+    },
+
      // legend: {
      //    data: ['bar', 'bar2', 'bar3', 'bar4','bar4','bar5','bar6'],
      //    align: 'left',
@@ -66,7 +76,7 @@ return {
             axisLabel:{
                 // show: false,
               textStyle :{
-                  color:'#000'//刻度标签样式
+                  color:'#434343'//刻度标签样式
               } 
            
             },
@@ -191,13 +201,13 @@ return {
             stack:"总量",
             label : {//图形数据显示位置
                 normal: {
-                    show: true, position: ["100%", -5],
+                    show: true, position:['100%' , -5] ,
                     textStyle: {
                         color: "#585858"
                     },
                     formatter: function(params){
                         console.log(params)
-                        return  100 - params.value
+                        return  "  "+(100 - params.value)
                     }
                 },
             },

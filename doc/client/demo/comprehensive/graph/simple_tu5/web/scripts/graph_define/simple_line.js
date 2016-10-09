@@ -43,6 +43,12 @@ return {
                }
 
             },
+            axisLine: {//轴线设置
+                show:true,
+                lineStyle: {
+                    color: '#cccccc',
+                }
+            },  
             splitLine:{//网格线相关设置
                show: true,
                interval:0,//类目轴为true且为这个为0时才会显示
@@ -60,6 +66,12 @@ return {
             axisTick:{
             show:false,
             },
+            axisLine: {//轴线设置
+                show:true,
+                lineStyle: {
+                    color: '#cccccc',
+                }
+            },  
             min:0,
             axisLabel:{
               formatter: function(params){

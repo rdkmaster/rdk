@@ -23,11 +23,10 @@
 <body ng-controller='myCtrl'>
     <div class="hao images_down">
         <span class='images_right' ng-click="images()" ></span>
-        <rdk_panel title="'全城通信'"  show_title="true" search='true'>
+        <rdk_panel title="'全城通信'"  show_title="true">
         </rdk_panel>
-        <rdk_table ds="ds_table" ds-url="/doc/client/demo/controls/table/mockdata/table_paging" ds_query_if="ready" paging-type="server" ds_condition_processor="conditionProcessor" page-size="5"  default_condition_processor="tableProcessor" setting="setting" >
+        <rdk_table ds="ds_table" ds-url="/doc/client/demo/controls/table/mockdata/table_paging" ds_query_if="ready" paging-type="server" page-size="5" setting="setting" >
         </rdk_table>
     </div>
 </body>
-
 </html>

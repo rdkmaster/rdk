@@ -36,8 +36,13 @@ return {
         }
     
     },
+    grid:{
+        left:100,
+        right:100,
+        top:60,
+        },
     calculable : true,
-   xAxis : [
+    xAxis : [
         {  
             type : 'value',
             splitNumber:4,
