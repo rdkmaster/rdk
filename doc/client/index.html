@@ -298,12 +298,12 @@
                 return;
             }
             if(navigator.userAgent.indexOf('Firefox') != -1){
-                document.getElementById('tree').style.height = (document.documentElement.scrollHeight + 20) + "px";
+                document.getElementById('tree').style.height = (document.documentElement.scrollHeight - 54) + "px";
                 document.getElementById('content').style.width = (document.documentElement.scrollWidth - 270) + "px";
                 document.getElementById('content').style.height = (document.documentElement.scrollHeight - 22) + "px";  
             }
             else{
-                document.getElementById('tree').style.height = (document.body.scrollHeight + 20) + "px";
+                document.getElementById('tree').style.height = (document.body.scrollHeight - 54) + "px";//701+40-8=733
                 document.getElementById('content').style.width = (document.body.scrollWidth - 270) + "px";
                 document.getElementById('content').style.height = (document.body.scrollHeight - 22) + "px";
             }
@@ -334,6 +334,8 @@ iframe {
     left:0px; 
     top:0px;
     padding-top: 40px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .location {
     font-size: 16px;
@@ -348,11 +350,13 @@ iframe {
 </style>
 
 <body ng-controller="rdk_ctrl" class="rdk_main">
-    <div style="position:fixed; left:0px;top:0;" id="tree">
+    <div id="tree">
         <rdk_tree data="menuCfg" node_field="module" rdk_click="clickHandler">
         </rdk_tree>
     </div>
+
     <a class="location" ng-href="{{location}}" target="_blank"><img src="../img/open.png"></img> 打开当前文档</a>
+
     <iframe id="content" name="content"></iframe>
 </body>
 
