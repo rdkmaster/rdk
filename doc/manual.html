@@ -291,6 +291,7 @@ img {
 </style>
 </head>
 <body>
+<p><rdk_title>RDK应用开发基础</rdk_title></p>
 <h2>应用包结构</h2>
 <p>下面是一个应用的目录结构，所有应用都采用下面的结构保存文件</p>
 <pre><code>my_app/                  --&gt; 应用根目录
@@ -309,25 +310,18 @@ img {
         make_app.sh
 </code></pre>
 
-<h2 id="make-dev-env">搭建基于windows的开发环境 <font color=red>推荐</font></h2>
+<h2>搭建基于windows的开发环境 <font color=red>推荐</font> {#make-dev-env}</h2>
 <p>按照本小节介绍的方法，可以打造一个基于windows平台的RDK的web和rest服务的开发&amp;调试环境！</p>
-<p>将下面的svn地址check out到你本地：</p>
-<pre><code>http://10.5.70.3/ZXVMAX/CODE/dev/ZXVMAX/vmax-app-comm/vmax-rdk/
-</code></pre>
-
-<p>假设你本地的目录是 <code>d:\vmax-rdk\rdk_server</code>，<strong>注意你本地的目录最里面的文件夹必须是 <code>rdk_server</code></strong>，否则会导致HTTP服务运行不正常。</p>
-<p>编辑 <code>d:\vmax-rdk\rdk_server\proc\conf\rdk.cfg</code>，修改数据ip即可：</p>
+<p>安装Git客户端及配置Git环境，<a href="http://wiki.zte.com.cn/pages/viewpage.action?pageId=20197085">参考这里</a>。假设你本地的目录是 <code>d:\rdkProject\</code>，运行你的<code>git-bash.exe</code>，<code>cd /d/rdkProject</code>，执行<code>git clone git@gitlab.zte.com.cn:10045812/rdk.git</code>，将rdk克隆到你本地。
+编辑 <code>d:\rdkProject\rdk\rdk\proc\conf\rdk.cfg</code>，修改数据ip即可：</p>
 <pre><code>#连接的数据库ip，原本有可能是注释掉的，要删掉开头的#字符，并修改为实际值
 database.gbase.hostList=10.43.149.74
 </code></pre>
 
-<p>确定当前电脑已经安装了nodejs，如果没有烦请<a href="http://10.9.233.35:8080/tools/node-v5.10.1-x86.msi">下载nodejs</a>并正确安装。最后，运行 <code>d:\vmax-rdk\start.exe</code> 就可以启动RDK的开发环境了。</p>
-<p>先无视控制台报的异常信息,打开浏览器，输入 <code>http://localhost:8080/rdk/service/app/example/server/my_service</code> 看到浏览器显示如下文本，表示一切正常：</p>
-<pre><code>{&quot;result&quot;:&quot;这是来自 app/example/server/my_service.js 服务的问候！&quot;}
-</code></pre>
-
-<p>打开浏览器，输入 <code>http://localhost:8080/rdk_server/app/example/web/index.html</code>，页面能打开表示一切正常。</p>
-<p>到此，你就把开发环境搭建完毕了。</p>
+<p>确定当前电脑已经安装了nodejs，如果没有烦请<a href="http://10.9.233.35:8080/tools/node-v5.10.1-x86.msi">下载nodejs</a>并正确安装。最后，运行 <code>d:\rdkProject\rdk\start.exe</code> 就可以启动RDK的开发环境了。</p>
+<p>先无视控制台报的异常信息,打开浏览器，输入 <code>http://localhost:8080/rdk/app/example/web/index.html</code>，页面能打开表示一切正常。</p>
+<p>到此，你就可以开发RDK控件或者基于RDK开发应用了。</p>
+<p>如果你对RDK后端感兴趣，<a href="/doc/#server/how_to_debug_service.md">参考这里</a>。</p>
 <h3>配置ActiveMQ（可选）</h3>
 <p>如果你的应用使用到了 <code>mq</code> 的相关功能，则必须在启动之前，配置好ActiveMQ的相关信息：</p>
 <pre><code># ActiveMQ的IP，一般是vmax系统的应用层IP
@@ -335,7 +329,7 @@ ActiveMQ.ip=localhost
 ActiveMQ.port = 61616
 </code></pre>
 
-<h3 id="lang">配置语言环境（可选）</h3>
+<h3>配置语言环境（可选）{#lang}</h3>
 <p>系统启动默认使用中文启动，如果你想修改为其他语言，则必须在启动RDK时，在参数中加入 <code>-Dlocale=en_US</code></p>
 <p><img src="server/img/locale_config.PNG" /></p>
 <h3>常见错误</h3>
@@ -346,8 +340,8 @@ ActiveMQ.port = 61616
 <h4>运行环境版本过低</h4>
 <p>如果启动的时候，报错：</p>
 <p><img src="server/img/jre_too_old_error.PNG" /></p>
-<p>说明你当前环境使用的Java运行环境版本过低，请使用至少Java1.8以上的版本。这里可以<a href="http://10.9.233.35:8080/tools/jre_win_1.8.zip">下载</a>到Win32的Java8运行环境。</p>
-<h4 id="can-not-open-example">example页面长时间都是空白</h4>
+<p>说明你当前环境使用的Java运行环境版本过低，请使用至少Java1.8以上的版本。这里可以下载到 <a href="http://10.9.233.35:8080/tools/jre1.8.0_32_101.zip">Win32</a> 或者 <a href="http://10.9.233.35:8080/tools/jre1.8.0_64_101.zip">Win64</a> 的Java8运行环境。</p>
+<h4>example页面长时间都是空白 {#can-not-open-example}</h4>
 <ol>
 <li>检查一下本地的目录的最里面的文件夹是不是 <code>rdk_server</code>，如果不是，请改过来。</li>
 </ol>
@@ -400,9 +394,9 @@ Error: listen EADDRINUSE 0.0.0.0:8080
 2. 这些配置项能工作的前提是你已经按照<a href="#make-dev-env">搭建基于windows的调试环境</a>小节的方法配置好本地Rest服务的运行环境了。否则请根据自身实际情况修改上述配置项。</p>
 </blockquote>
 <h2>开发第一个应用</h2>
-<p>新手宝典：<a href="/rdk_server/doc/best_practise/index.html">天龙八步</a>，把一个应用拆分出若干个步骤讲解开发过程，隆重推荐。</p>
+<p>新手宝典：<a href="/rdk_server/doc/best_practise/index.md">天龙八步</a>，把一个应用拆分出若干个步骤讲解开发过程，隆重推荐。</p>
 <h2>开发前端部分</h2>
-<p>这部分请参考<a href="/rdk_client/doc">rdk客户端部分的文档</a>。注意最好查看当前环境所使用的rdk客户端对应版本的文档。</p>
+<p>这部分请参考<a href="/doc/client/index.html">rdk客户端部分的文档</a>。注意最好查看当前环境所使用的rdk客户端对应版本的文档。</p>
 <h2>开发后端部分</h2>
 <h3>定义服务</h3>
 <p>后端采用js语言开发，下面是一个简单的后端服务例子的代码</p>
@@ -504,7 +498,7 @@ cd $basepath
 <h3>调试服务 进阶篇</h3>
 <p>本小节介绍如何<strong>在实现服务的js文件中设置断点debug</strong>！</p>
 <p>为了能够设置断点，我们需要在本地搭建一个后端服务的运行环境，听起来好像很复杂，实际上，的确有些麻烦。</p>
-<p><a href="how_to_debug_service.html">点击这里继续</a></p>
+<p><a href="how_to_debug_service.md">点击这里继续</a></p>
 <h3>Web页面中使用服务</h3>
 <p>下面看看如何调用这个服务。</p>
 <p>在前端定义一个数据源，将url指向这个服务：</p>
@@ -637,9 +631,7 @@ java.io.FileNotFoundException: ../../../../../../utils/vmax-conf/serviceaddress.
 ...
 </code></pre>
 
-<div title="RDK应用开发基础" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+
 </body>
 </html>
 <!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
