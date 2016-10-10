@@ -36,7 +36,7 @@ return {
             fontWeight: 'normal',
             color: '#008fd4' 
         },
-        left:70,
+        left:43,
     },
     grid:{
         left:45,
@@ -48,7 +48,7 @@ return {
     legend: {
         data: data.rowDescriptor,
         top:20,
-        right:100,
+        right:43,
         inactiveColor: "#bbb",
         textStyle:{
             color:'#333',
@@ -112,7 +112,7 @@ return {
                     return  params.toFixed(1)==0 ? "" : params.toFixed(1)
 				}             
 			},
-            max:"dataMax",
+            max:6,
             splitLine: {show:false},// 是否现示网格
             type : 'value',
             // splitNumber:4,
@@ -126,7 +126,7 @@ return {
         {   
             // name: '掉话率(%)',
             type : 'value',
-            max:"dataMax",
+            // max:1.2,
 			splitLine: {show:false},
             position:'right',
             axisLabel : {//标签名样式
@@ -175,6 +175,8 @@ return {
                     color:'#f99660',
                 }
             },
+            yAxisIndex: 1,
+            smooth: false,
             data: data.data[1],showAllSymbol :true,
             hoverAnimation:false,
             type:'line'
