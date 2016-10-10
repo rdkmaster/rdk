@@ -63,7 +63,10 @@ object Config extends ConfigTrait {
   }
 
   def get(key: String, defaultValue: String): String = {
-    RdkUtil.getConfigValue[String](key)(config).getOrElse(defaultValue)
+    RdkUtil.getConfigValue[AnyRef](key)(config) match {
+      case Some(x) => x.toString
+      case _ => defaultValue
+    }
   }
 
   def getInt(key: String, defaultValue: Int): Int = {
