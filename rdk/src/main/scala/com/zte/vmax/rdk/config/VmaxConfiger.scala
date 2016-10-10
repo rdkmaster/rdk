@@ -75,7 +75,7 @@ object VmaxConfiger extends Logger {
   def getConfig: TypeSafeConfig = {
     val gbHost = getKey(`serviceaddress.properties`, "vmaxcn.gbasehost")
     val localIp = getKey(`deploy-console.properties`, "console.main.ip")
-    val lang = getKey(`deploy-console.properties`, "ums.locale")
+    val lang = getKey(`deploy-usf.properties`, "ums.locale")
     val vmaxDbCfg =
       s"""
          |local.ip="${localIp}"
