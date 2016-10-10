@@ -85,7 +85,17 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                         if (scope.option == undefined) {
                             scope.option = {};
                         }
-                       
+
+                        scope.visible = false;
+
+                        $(element).click(function(){
+                            scope.visible = !scope.visible;
+                            scope.visible ? $(this).datetimepicker('show') : $(this).datetimepicker('hide');
+                        }); 
+
+                        $(element).blur(function(){
+                            scope.visible = false;
+                        });                        
 
                         $timeout(function() {
                             _init();
@@ -144,6 +154,7 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                 scope.$apply(function() {
                                     scope.option.realValue = TimeUtilService.dateFormate(new Date(ev.date.valueOf()), scope.option.realFormat);
                                     _weekHandle(scope.option.realValue);
+                                    scope.visible = false;
                                 });
                             });
                         }
