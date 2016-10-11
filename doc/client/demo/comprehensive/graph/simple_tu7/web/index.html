@@ -6,6 +6,7 @@
     <title>Graph -> Basic</title>
 
     <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
     -->
@@ -19,52 +20,6 @@
             }
         });
     </script>
-    <style type="text/css">
-        .title{
-           margin:20px 0 0 20px; 
-        }
-        ul,li{
-            list-style: none;
-            padding:0;
-            margin:0;
-        }
-        .select_container{
-            float:left; 
-            margin-top:15px;
-            margin-left:34px;
-        }
-        .select_container li{
-            padding-top:2px;
-        }
-        .select_container li span{
-            font-family: '微软雅黑';
-            color:#434343;
-            font-size: 14px;
-        }
-        #graph{
-            float:left;
-            width:200px;
-        }
-        .selector_symbol{
-            display:inline-block;
-            border:1px solid #ccc;
-            border-radius:2px;
-            box-sizing: border-box;
-            width:16px;
-            height:16px;
-            margin-right:16px;
-            vertical-align: middle;
-        }
-        .select_container li.selector .selector_symbol{
-            cursor:pointer;
-        }
-        .select_container li.selector .selector_symbol img{
-            display:block;
-        }
-        .select_container li.selector:not(:first-child) .selector_symbol img{
-            display:none;
-        }
-    </style>
 </head> 
 
 <body ng-controller='rdk_ctrl' class="rdk_main">
