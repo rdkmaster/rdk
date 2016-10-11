@@ -166,15 +166,8 @@ MAKR_RDK_RELEASE(){
   cd rdk_release
   #判断当前系统
   uname -a|grep Linux
-  if [ $? -ne 0 ] ;then
-  ##windows环境
-     echo "windows environment"
-     "C:\Program Files\7-Zip\7z.exe" a $filename-$RDK_VERSION.zip $filename
-  else
   ##linux环境
      zip -r $filename$RDK_VERSION.zip $filename
-  fi
-
  
 }
 
