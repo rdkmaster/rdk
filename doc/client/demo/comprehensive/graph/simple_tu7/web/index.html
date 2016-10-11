@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Graph -> Basic</title>
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/doc/tools/doc_js/doc_app_helper',
+            }
+        });
+    </script>
+    <style type="text/css">
+        .title{
+           margin:20px 0 0 20px; 
+        }
+        ul,li{
+            list-style: none;
+            padding:0;
+            margin:0;
+        }
+        .select_container{
+            float:left; 
+            margin-top:15px;
+            margin-left:34px;
+        }
+        .select_container li{
+            padding-top:2px;
+        }
+        .select_container li span{
+            font-family: '微软雅黑';
+            color:#434343;
+            font-size: 14px;
+        }
+        #graph{
+            float:left;
+            width:200px;
+        }
+        .selector_symbol{
+            display:inline-block;
+            border:1px solid #ccc;
+            border-radius:2px;
+            box-sizing: border-box;
+            width:16px;
+            height:16px;
+            margin-right:16px;
+            vertical-align: middle;
+        }
+        .select_container li.selector .selector_symbol{
+            cursor:pointer;
+        }
+        .select_container li.selector .selector_symbol img{
+            display:block;
+        }
+        .select_container li.selector:not(:first-child) .selector_symbol img{
+            display:none;
+        }
+    </style>
+</head> 
+
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    <p class="title">渠道平均办理时长</p>
+    <ul class="select_container">
+        <li class="selector" ng-repeat="item in titles"><i class="selector_symbol" ng-click="check_items($event)"><img src="image/shape-15.png" alt=""></i><span>{{item}}</span></li>
+    </ul>
+    <rdk_graph id="graph" ds="dsGraph" ds_url="$svr/data" ds_query_if="ready"
+        graph_define="scripts/graph_define/simple_line.js"></rdk_graph> 
+    
+</body>
+
+</html>
