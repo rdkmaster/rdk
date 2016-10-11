@@ -220,7 +220,6 @@ public class FileHelper extends AbstractAppLoggable {
             if (!(option instanceof Undefined)) {
                 logger.error("unsupported option type[" + option.getClass().getName() + "]! ignoring it!");
             }
-
             op.put("append",false);
         }
         return saveAsEXCEL(file, content, excludeIndexes, op);
@@ -241,7 +240,7 @@ public class FileHelper extends AbstractAppLoggable {
             return false;
         }
 
-        int sheetNums=((ScriptObjectMirror)content).size();
+        int toWritesheetNums=((ScriptObjectMirror)content).size();
 
         boolean append= (boolean)option.get("append");
 
@@ -249,16 +248,17 @@ public class FileHelper extends AbstractAppLoggable {
 
         Workbook wb=null;
 
-        Object[] sheetNames=((ScriptObjectMirror) content).keySet().toArray();
+        Object[] toWritesheetNames=((ScriptObjectMirror) content).keySet().toArray();
 
         if(!append) {   //复写
             try {
                 rwb = Workbook.createWorkbook(file);
             } catch (Exception e) {
                 logger.info("create workbook error:" + e);
+                return false;
             }
-            for (int i = 0; i < sheetNums; i++) {
-                String sheetname = sheetNames[i].toString();
+            for (int i = 0; i < toWritesheetNums; i++) {
+                String sheetname = toWritesheetNames[i].toString();
                 writeEXCEL(rwb, sheetname, i, ((ScriptObjectMirror) content).get(sheetname), ((ScriptObjectMirror) excludeIndexes).get(sheetname), option);
             }
 
@@ -267,23 +267,27 @@ public class FileHelper extends AbstractAppLoggable {
                 rwb.close();
             }catch (Exception e){
                 logger.error("write or close error:"+e);
+                return false;
             }
         }
         else {         //追加
             try{
                 wb=Workbook.getWorkbook(file);
-            }catch (Exception e){
-                logger.error("get workbook error:"+e);
-            }
-
-            try{
                 rwb=Workbook.createWorkbook(file, wb);
             }catch (Exception e){
-                logger.error("create workbook copy error:"+e);
+                logger.error("get workbook error,creating new workbook:"+e);
+                try{
+                    rwb=Workbook.createWorkbook(file);
+                }catch (Exception ex){
+                    logger.error("create workbook error:"+e);
+                    return false;
+                }
+
             }
-            for (int i = 0; i < sheetNums; i++) {
-                String sheetname = sheetNames[i].toString();
-                appendEXCEL(rwb,sheetname,((ScriptObjectMirror)content).get(sheetNames[i].toString()),((ScriptObjectMirror)excludeIndexes).get(sheetNames[i].toString()),option);
+
+            for (int i = 0; i < toWritesheetNums; i++) {
+                String sheetname = toWritesheetNames[i].toString();
+                appendEXCEL(rwb,sheetname,((ScriptObjectMirror)content).get(sheetname),((ScriptObjectMirror)excludeIndexes).get(sheetname),option);
             }
 
             try{
@@ -292,6 +296,7 @@ public class FileHelper extends AbstractAppLoggable {
                 wb.close();
             }catch (Exception e){
                 logger.error("write or close error:"+e);
+                return false;
             }
         }
         return true;
@@ -304,7 +309,6 @@ public class FileHelper extends AbstractAppLoggable {
         for(int i = 0; i < length; i++) {
             writeEXCELRow(sheet, i,som.getMember(Integer.toString(i)), excludeIndexes,option);
         }
-
         return true;
     }
 
@@ -327,6 +331,7 @@ public class FileHelper extends AbstractAppLoggable {
                     sheet.addCell(label);
                 }catch (Exception e){
                     logger.error("addcell error:"+e);
+                    return false;
                 }
 
             }
@@ -347,13 +352,14 @@ public class FileHelper extends AbstractAppLoggable {
                 ws = workbook.getSheet(sheetName);
             } catch (Exception e) {
                 logger.error("get sheet error:" + e);
+                return false;
             }
             int rows = ws.getRows();
             for (int i = 0; i < length; i++) {
                 writeEXCELRow(ws, i + rows, som.getMember(Integer.toString(i)), excludeIndexes, option);
             }
         }
-        else{              //追加但表不存在
+        else {              //追加但表不存在
             ws=workbook.createSheet(sheetName,sheetNames.length+1);
             for(int i = 0; i < length; i++) {
                 writeEXCELRow(ws, i,som.getMember(Integer.toString(i)), excludeIndexes,option);

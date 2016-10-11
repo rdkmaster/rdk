@@ -215,12 +215,17 @@ function _fixEXCELContent(ctent,exIndexes){
             ctent[sheet].data.unshift(ctent[sheet].header);
             excel.data[sheet]=ctent[sheet].data;
             excel.excludeIndexes[sheet]=[];
-            each(exIndexes[sheet], function (value) {
-                excel.excludeIndexes[sheet].push(_.isString(value) ? ctent[sheet].field.indexOf(value) : value);
-            });
+            if(_.isDefined(exIndexes)){
+                each(exIndexes[sheet], function (value) {
+                    excel.excludeIndexes[sheet].push(_.isString(value) ? ctent[sheet].field.indexOf(value) : value);
+                });
+            }
+
         }else{
             excel.data[sheet]=ctent[sheet];
-            excel.excludeIndexes[sheet]=exIndexes[sheet];
+            if(_.isDefined(exIndexes)) {
+                excel.excludeIndexes[sheet] = exIndexes[sheet];
+            }
         }
     }
     return excel;
