@@ -19,6 +19,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                     <table class="rdk-table">\
                         <thead ng-if="(!customHeader&&!noHeader)">\
                             <tr>\
+                                <th ng-if="addCheckBox"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck($event)"></th>\
                                 <th ng-repeat="columnDef in columnDefs" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)">\
                                     {{columnDef.title}}\
                                 </th>\
@@ -27,7 +28,8 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         <tbody>\
                             <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
                                 ng-class="{\'selected-row\':ifSelected(item)}" ng-dblclick="dbClickHandler(item,$index)">\
-                                <td  rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" style="width:{{columnDef.width}};cursor:move;{{getRowStyle(itemRowSpan,columnDef)}}">\
+                                <td ng-if="addCheckBox"><input name="singleCheckBox" type="checkbox" ng-click="singleCheck(item, $index, $event)"></td>\
+                                <td rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" style="width:{{columnDef.width}};cursor:move;{{getRowStyle(itemRowSpan,columnDef)}}">\
                                 </td>\
                             </tr>\
                              <tr ng-if="noData">\
@@ -303,6 +305,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                 searchPattern: '@?',
                 proxyDs: "@?",
                 pageNumber: "@?",
+                addCheckBox: "=?",
                 defaultConditionProcessor: "&?"
             },
             compile: function(tElement, tAttributes) {
@@ -349,7 +352,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                     _init();
 
                     transclude(scope, function(clone, innerScope) {
-                        scope.$owner = innerScope.$parent;
+                        scope.$owner = innerScope.$parent;//自定义表头,必须用属性rdk-table
                         for (var key in clone) {
                             if (clone.hasOwnProperty(key) && clone[key].tagName == "THEAD") {
                                 _addHeaderPattern(clone[key]);
@@ -406,6 +409,12 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
 
                         //ux分页样式
                         scope.pageNumber = parseInt(scope.pageNumber) || 0;
+
+                        scope.addCheckBox = Utils.isTrue(scope.addCheckBox, false);
+
+                        if(scope.addCheckBox){
+                            scope.checkedIdxArr = [];
+                        }
 
                         //默认国际化
                         if (typeof(attrs.lang) === 'undefined') { //今后会废弃lang属性
@@ -633,6 +642,29 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             }
                         };
 
+                        scope.singleCheck = function(item, index, event){
+                            _singleCheckHandler(event.currentTarget.checked);
+                            _refreshCheckedIdxArr();
+
+                            if (angular.isDefined(attrs.id)) {
+                                var data = {};
+                                data.data = _getCheckedItemArr();
+                                EventService.broadcast(attrs.id, EventTypes.CHECKED, data);
+                            }
+                        }
+
+                        scope.totalCheck = function(event){
+                            _totalCheckHandler(event.currentTarget.checked);
+                            _refreshCheckedIdxArr();
+
+                            if(!event.currentTarget.checked) return;
+                            if (angular.isDefined(attrs.id)) {
+                                var data = {};
+                                data.data = scope.destData;//扔所有
+                                EventService.broadcast(attrs.id, EventTypes.CHECKED, data);
+                            }
+                        }
+
                         scope.dbClickHandler = function(item, index) {
                             if (angular.isDefined(attrs.id)) {
                                 var data = {};
@@ -655,6 +687,8 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
 
                         var off = scope.$on('ngRepeatFinished', function() {
                             _reFreshTable();
+                            _refreshCheckedStatus();
+
                             $(element.find("table")).fixHeader();
                             scope.afterStickyWrap();
 
@@ -668,6 +702,55 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         });
                     };
                     //END INIT
+
+                    function _refreshCheckedIdxArr(){
+                        scope.checkedIdxArr = [];
+                        var arr = document.getElementsByName("singleCheckBox");  
+                        for(var i=0; i<arr.length; i++){
+                           if(arr[i].checked){
+                                scope.checkedIdxArr.push(i);
+                           }
+                        }                       
+                    }
+
+                    function _refreshCheckedStatus(){
+                        if(!scope.addCheckBox) return;
+                        var arr = document.getElementsByName("singleCheckBox");
+                        for(var k=0; k<arr.length; k++){
+                            arr[k].checked = false;
+                        }
+                        for(var i=0; i<scope.checkedIdxArr.length; i++){
+                            arr[scope.checkedIdxArr[i]].checked = true;
+                        }
+                    }
+
+                    function _singleCheckHandler(isChecked){
+                        var arr = document.getElementsByName("totalCheckBox");
+                        arr[0].checked = _isAllSelected();
+                    }
+
+                    function _totalCheckHandler(isChecked){
+                        var arr = document.getElementsByName("singleCheckBox");  
+                        for(var i=0; i<arr.length; i++){
+                           arr[i].checked = isChecked;
+                        }
+                    }
+
+                    function _getCheckedItemArr(items){
+                        var checkedItemArr = [];
+                        for(var i=0; i<scope.checkedIdxArr.length; i++){
+                            checkedItemArr.push(scope.destData[scope.checkedIdxArr[i]]);
+                        } 
+                        return checkedItemArr;                        
+                    }
+
+                    function _isAllSelected(){
+                        var arr = document.getElementsByName("singleCheckBox"); 
+                        for(var i=0; i<arr.length; i++){
+                           if(!arr[i].checked) return false;
+                        }
+                        return true;
+                   }
 
                     function _blurHandler(target) {
                         $(target).css('display', "none");
@@ -910,10 +993,17 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                     function _addSortArrow(iCol, table) {
                         var ascChar = "▲";
                         var descChar = "▼";
+                        
+                        var startCol = 0;
+                        if(scope.addCheckBox){
+                            ++iCol;
+                            startCol = 1;
+                        }
 
-                        for (var t = 0; t < table.tHead.rows[0].cells.length; t++) {
+                        for (var t = startCol; t < table.tHead.rows[0].cells.length; t++) {
                             var th = $(table.tHead.rows[0].cells[t]);
                             var thText = th.html().replace(ascChar, "").replace(descChar, "");
+
                             if (t != iCol) {
                                 th.html(thText);
                             }
