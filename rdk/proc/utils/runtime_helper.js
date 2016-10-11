@@ -206,6 +206,26 @@ function _fixContent(content, excludeIndexes) {
     return csv;
 }
 
+function _fixEXCELContent(ctent,exIndexes){
+    var excel={};
+    excel.data={};
+    excel.excludeIndexes={};
+    for(var sheet in ctent){
+        if(isMatrix(ctent[sheet])){
+            ctent[sheet].data.unshift(ctent[sheet].header);
+            excel.data[sheet]=ctent[sheet].data;
+            excel.excludeIndexes[sheet]=[];
+            each(exIndexes[sheet], function (value) {
+                excel.excludeIndexes[sheet].push(_.isString(value) ? ctent[sheet].field.indexOf(value) : value);
+            });
+        }else{
+            excel.data[sheet]=ctent[sheet];
+            excel.excludeIndexes[sheet]=exIndexes[sheet];
+        }
+    }
+    return excel;
+}
+
 var file = {
     loadProperty:function(file){
         if (!file) {
@@ -238,6 +258,21 @@ var file = {
         var b = rdk_runtime.fileHelper().saveAsCSV(file, csv.data, csv.excludeIndexes, option);
         //_fixContent中修改了content.data，这里还原
         csv.data.shift();
+        return b;
+    },
+    saveAsEXCEL:function(file,content,excludeIndexes,option){
+        file = file.toString();
+        log("saving to Excel:", file);
+
+        var excel = _fixEXCELContent(content, excludeIndexes);
+
+        var b = rdk_runtime.fileHelper().saveAsEXCEL(file, excel.data, excel.excludeIndexes,option);
+        //_fixExcelContent中修改了content，这里还原
+        for(var sheet in content) {
+            if (isMatrix(content[sheet])) {
+                content[sheet].data.shift(content[sheet].header);
+            }
+        }
         return b;
     },
     list: function(path, pattern) {

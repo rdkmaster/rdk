@@ -7,11 +7,16 @@ import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import jdk.nashorn.internal.runtime.Undefined;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Properties;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import jxl.Workbook;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.Label;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
 
 /**
  * Created by 10045812 on 16-5-6.
@@ -201,6 +206,159 @@ public class FileHelper extends AbstractAppLoggable {
             }
         }
         writer.writeNext(row.toArray(new String[row.size()]));
+
+        return true;
+    }
+
+    public boolean saveAsEXCEL(String file, Object content, Object excludeIndexes, Object option) {
+        HashMap<String, Object> op = new HashMap<>();
+        if (option instanceof ScriptObjectMirror) {
+            ScriptObjectMirror som = (ScriptObjectMirror) option;
+            boolean append=(Boolean)som.get("append");
+            op.put("append", append);
+        } else {
+            if (!(option instanceof Undefined)) {
+                logger.error("unsupported option type[" + option.getClass().getName() + "]! ignoring it!");
+            }
+
+            op.put("append",false);
+        }
+        return saveAsEXCEL(file, content, excludeIndexes, op);
+    }
+
+    public boolean saveAsEXCEL(String fileStr, Object content, Object excludeIndexes,HashMap<String, Object> option) {
+
+        fileStr = fixPath(fileStr, appName);
+
+        File file = new File(fileStr);
+
+        if (file.isDirectory()) {
+            logger.error("need a file, got a path: " + fileStr);
+            return false;
+        }
+
+        if (!ensureFileExists(file)) {
+            return false;
+        }
+
+        int sheetNums=((ScriptObjectMirror)content).size();
+
+        boolean append= (boolean)option.get("append");
+
+        WritableWorkbook rwb=null;
+
+        Workbook wb=null;
+
+        Object[] sheetNames=((ScriptObjectMirror) content).keySet().toArray();
+
+        if(!append) {   //复写
+            try {
+                rwb = Workbook.createWorkbook(file);
+            } catch (Exception e) {
+                logger.info("create workbook error:" + e);
+            }
+            for (int i = 0; i < sheetNums; i++) {
+                String sheetname = sheetNames[i].toString();
+                writeEXCEL(rwb, sheetname, i, ((ScriptObjectMirror) content).get(sheetname), ((ScriptObjectMirror) excludeIndexes).get(sheetname), option);
+            }
+
+            try{
+                rwb.write();
+                rwb.close();
+            }catch (Exception e){
+                logger.error("write or close error:"+e);
+            }
+        }
+        else {         //追加
+            try{
+                wb=Workbook.getWorkbook(file);
+            }catch (Exception e){
+                logger.error("get workbook error:"+e);
+            }
+
+            try{
+                rwb=Workbook.createWorkbook(file, wb);
+            }catch (Exception e){
+                logger.error("create workbook copy error:"+e);
+            }
+            for (int i = 0; i < sheetNums; i++) {
+                String sheetname = sheetNames[i].toString();
+                appendEXCEL(rwb,sheetname,((ScriptObjectMirror)content).get(sheetNames[i].toString()),((ScriptObjectMirror)excludeIndexes).get(sheetNames[i].toString()),option);
+            }
+
+            try{
+                rwb.write();
+                rwb.close();
+                wb.close();
+            }catch (Exception e){
+                logger.error("write or close error:"+e);
+            }
+        }
+        return true;
+    }
+
+    private boolean writeEXCEL(WritableWorkbook workbook,String sheetname,int sheetindex,Object content,Object excludeIndexes,HashMap<String, Object> option){
+        WritableSheet sheet = workbook.createSheet(sheetname, sheetindex);
+        ScriptObjectMirror som = (ScriptObjectMirror) content;
+        int length = toInt(som.getMember("length"), 0);
+        for(int i = 0; i < length; i++) {
+            writeEXCELRow(sheet, i,som.getMember(Integer.toString(i)), excludeIndexes,option);
+        }
+
+        return true;
+    }
+
+    private boolean writeEXCELRow(WritableSheet sheet,int rowIndex,Object rowContent,Object excludeIndexes,Object option){
+        if (!likeArray(rowContent)) {
+            return false;
+        }
+
+        ArrayList<Integer> ci = toIntList(excludeIndexes);
+
+        ScriptObjectMirror som = (ScriptObjectMirror) rowContent;
+        int length = toInt(som.getMember("length"), 0);
+        int j=0;
+        for (int i = 0; i < length; i++) {
+            String idx = Integer.toString(i);
+            if (som.hasMember(idx) && !ci.contains(i)) {
+                Object cellObj = som.getMember(idx);
+                Label label = new Label(j++,rowIndex,cellObj == null ? "" : cellObj.toString());
+                try{
+                    sheet.addCell(label);
+                }catch (Exception e){
+                    logger.error("addcell error:"+e);
+                }
+
+            }
+        }
+        return true;
+    }
+
+    private boolean appendEXCEL(WritableWorkbook workbook,String sheetName,Object content,Object excludeIndexes,HashMap<String, Object> option){
+        WritableSheet ws =null;
+
+        ScriptObjectMirror som = (ScriptObjectMirror) content;
+        int length = toInt(som.getMember("length"), 0);
+
+        String []sheetNames=workbook.getSheetNames();
+        List<String> existsheetNames= Arrays.asList(sheetNames);
+        if(existsheetNames.contains(sheetName)) {//追加表存在
+            try {
+                ws = workbook.getSheet(sheetName);
+            } catch (Exception e) {
+                logger.error("get sheet error:" + e);
+            }
+            int rows = ws.getRows();
+            for (int i = 0; i < length; i++) {
+                writeEXCELRow(ws, i + rows, som.getMember(Integer.toString(i)), excludeIndexes, option);
+            }
+        }
+        else{              //追加但表不存在
+            ws=workbook.createSheet(sheetName,sheetNames.length+1);
+            for(int i = 0; i < length; i++) {
+                writeEXCELRow(ws, i,som.getMember(Integer.toString(i)), excludeIndexes,option);
+            }
+        }
 
         return true;
     }
