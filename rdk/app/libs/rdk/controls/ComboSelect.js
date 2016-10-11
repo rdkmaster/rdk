@@ -11,26 +11,25 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 update: '&?',
                 scope: {
                     id: '@',
+                    openPolicy:'@?',
                     caption: '=?',
                     open: '=?',
                     frozen: '=?',
-                    
                     childChange: '&?'
                 },
-                template:'<div class="rdk-combo-select-module" ng-click="stopPropagation()">\
-                        <div class="combo-content">\
-                            <span class="combo-caption" ng-show="{{!!caption}}">{{caption}}</span>\
-                            <input class="form-control combo-content-theme" title="{{inputStr}}" \
-                                readonly="true" ng-model="inputStr" ng-click="toggle()" type="text"\
-                                ng-mouseenter="mouseEnterHandler()" ng-mouseleave="mouseLeaveHandler()"/>\
-                            <i class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
-                        </div>\
-                        <div class="combo-content-transclude" tabindex="1" ng-blur="blur()"\
-                             ng-mouseenter="mouseEnterHandler()" ng-mouseleave="mouseLeaveHandler()">\
-                            <div ng-transclude ng-show="open"></div>\
-                        </div>\
-                    </div>',
-
+                template:'<div class="rdk-combo-select-module" ng-mouseleave="closeShow()" ng-click="stopPropagation($event)">\
+                              <div class="combo-content" ng-mouseenter="openShow()">\
+                                  <span class="combo-caption" ng-show="!!caption">{{caption}}</span>\
+                                  <input class="form-control combo-content-theme" title="{{inputStr}}" \
+                                      readonly="true" ng-model="inputStr" ng-click="toggle()" type="text"\
+                                      ng-mouseenter="mouseEnterHandler()" ng-mouseleave="mouseLeaveHandler()"/>\
+                                  <i class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
+                              </div>\
+                              <div class="combo-content-transclude" tabindex="1" ng-blur="blur()"\
+                                  ng-mouseenter="mouseEnterHandler()" ng-mouseleave="mouseLeaveHandler()">\
+                                  <div ng-transclude ng-show="open"></div>\
+                              </div>\
+                          </div>',
                 controller: ['$scope', function(scope) {
                     Utils.onChildChange(scope, function(data, context) {
                         var userChangeHandler = scope.childChange(scope);
@@ -48,22 +47,37 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                         }
                         scope.inputStr = data;
                     });
+                    this.changeOpenStatus=function(){
+                        scope.open=!scope.open;
+                        scope.isSelect=false;
+                    };
+                    this.lockCloseShow=function(){
+                        scope.isSelect=true;
+                    };
+                    this.onChildChange=function(data){
+                        scope.inputStr = data;
+                    };
+                    this.setCaption=function(caption){
+                        scope.caption = caption;
+                    }
                 }],
+                controllerAs:'comboSelectCtrl',
                 compile: function(tEle, tAttrs) {
                         return {
                             post: _link
                         }
-                    },
-                transclude: true                    
-            }
+                }
+            };
 
             function _link(scope, iEle, iAttrs, ctrl, transclude) {
                 scope.open = Utils.isTrue(scope.open, false);
                 scope.frozen = Utils.isTrue(scope.frozen, false);
                 scope.unfoldedIcon = "fa fa-angle-up";
                 scope.foldedIcon = "fa fa-angle-down";
-
+                scope.openPolicy = scope.openPolicy || "click";
                 scope.toggle = _toggle;
+                scope.closeShow = _closeShow;
+                scope.openShow = _openShow;
                 scope.mouseEnterHandler = _mouseEnterHandler;
                 scope.mouseLeaveHandler = _mouseLeaveHandler;
                 scope.blur = _blur;
@@ -74,7 +88,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                         scope.inputStr = data;
                     });
                 }
-
                 _resetTranscludeFocus();
 
                 function _resetTranscludeFocus(){
@@ -83,19 +96,45 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                     }
                 }
 
-                function _stopPropagation(){
+                function _stopPropagation(evt){
+                    event = evt ? evt:window.event;
                     event.stopPropagation();
                 }
-                
+
+                var isSelect = false; //判断用户是否进行选择
                 function _toggle(){
                     if(scope.frozen) return;//冻结
-                    scope.open = !scope.open;
+                    if(scope.isSelect || !scope.open){
+                        scope.open=!scope.open;
+                        if(!scope.open){
+                            scope.isSelect = false;
+                            return;
+                        }
+                    }
+                    scope.isSelect=true;
                     _resetTranscludeFocus();
+                }
+
+                function _closeShow()
+                {
+                    if(scope.isSelect){ //在进行选择地区过程中锁住close事件
+                        return;
+                    }
+                    scope.open=false;
+                }
+                function _openShow()
+                {
+                    console.log("hover open!");
+                    if(scope.openPolicy!="hover"){
+                        return;
+                    }
+                    scope.open=true;
                 }
 
                 function _blur(){
                     if (scope.leaveFlag){//非外面input和transclude内容时响应
                         scope.open = false;
+                        scope.isSelect = false;
                     }                 
                 }
 

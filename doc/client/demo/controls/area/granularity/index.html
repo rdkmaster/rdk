@@ -20,10 +20,23 @@
 </head>
 
 <body ng-controller='myCtrl'>
+    <h5>请选择您所在的省市</h5>
+    <div class="area-wrap">
+        <rdk_combo_select open-policy="hover">
+            <rdk-area-select area-data="test1"  granularity="city" setting="setting"></rdk-area-select>
+        </rdk_combo_select>
+    </div>
+    <div ng-if="test1">
+        你选择的地区：{{test1.province.name}}  {{test1.city.name}}  {{test1.area.name}}
+    </div>
+    <h5>请选择您所在的省</h5>
     <div class="area-wrap">
         <rdk_combo_select>
-            <rdk-area-select area-data="resultObj" result-type="string" callback="callBackAlert()"></rdk-area-select>
+            <rdk-area-select area-data="test2"   granularity="province"></rdk-area-select>
         </rdk_combo_select>
+    </div>
+    <div ng-if="test2">
+        你选择的地区：{{test2.province.name}}  {{test2.city.name}}  {{test2.area.name}}
     </div>
 </body>
 

@@ -24,6 +24,13 @@
 
 `open` 设置成 `true` 时，表示当前下拉选择项为展开状态。
 
+## open_policy <binding></binding>##
+>支持类型：字符串
+
+`open_policy` 缺省时默认值为`click`，表示当前下拉选择项以点击方式打开。
+
+`open_policy` 设置成 `hover` 时，表示当前下拉选择项可支持鼠标滑入方式打开。
+
 ## frozen <binding></binding>##
 >支持类型：布尔型
 

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
+    <title>地区控件</title>
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/rdk/app/modules/rdk_app_helpers',
+            }
+        });
+    </script>
+    <style>
+        .area-wrap{
+            padding:5px 5px 5px 40px;
+            background:#008fd4 url(img/positioning.png) no-repeat 5px 5px;
+        }
+        .rdk-combo-select-module .combo-caption{
+            color: #666;
+        }
+        .area-wrap2 .rdk-combo-select-module .combo-content-theme {
+            min-width: 240px;
+        }
+        .area-wrap3 .rdk-combo-select-module .combo-content-theme {
+            width: 90px;
+            min-width: 0;
+        }
+    </style>
+</head>
+<body ng-controller='rdk_ctrl' class="rdk_main">
+<div style="margin: 10px auto;width: 80%;">
+    <h3>省</h3>
+    <div class="area-wrap area-wrap1">
+        <rdk_combo_select open-policy="hover">
+            <rdk-area-select area-data="resultData1"  granularity="province" setting="setting"></rdk-area-select>
+        </rdk_combo_select>
+    </div>
+    <h3>省-市-区</h3>
+    <div class="area-wrap area-wrap2">
+        <rdk_combo_select open-policy="hover">
+            <rdk-area-select area-data="resultData2" ></rdk-area-select>
+        </rdk_combo_select>
+    </div>
+    <h3>市</h3>
+    <div class="area-wrap area-wrap3">
+        <rdk_combo_select open-policy="hover">
+            <rdk-area-select area-data="resultData3"   granularity="city" setting="setting"></rdk-area-select>
+        </rdk_combo_select>
+    </div>
+</div>
+</body>
+</html>

@@ -1,6 +1,13 @@
 /*reset*/
 ul, ol ,p{margin: 0; padding: 0;}
 div:focus{outline: none;}
+.label{
+    position: absolute;
+    color: #b5b5b5;
+    left: 0;
+    top:0;
+    opacity: 0;
+}
 /*rdk*/
 /*rdk-area 头部触发地区选择输入框样式 --start*/
 .rdk-area-input-wrap {
@@ -9,6 +16,7 @@ div:focus{outline: none;}
     color: #333;
     position: relative;
     cursor: pointer;
+    font-family: "微软雅黑", Helvetica, Arial, sans-serif;
 }
 .rdk-area-input {
     display: inline-block;
@@ -58,9 +66,10 @@ div:focus{outline: none;}
 .rdk-area-contain{
     margin-top: 0;
     position: absolute;
-    width: 520px;
+
     z-index: 99;
     font-size: 12px;
+
 }
 .rdk-area-contain .nav-tabs{
     border-bottom: 1px solid rgba(0,0,0,0.15);
@@ -95,6 +104,10 @@ div:focus{outline: none;}
 /*rdk-area 省市区页签导航 --end*/
 
 /*rdk-area 省市区数据 --start*/
+.tab-content.tab-bordered ul{
+    width: 520px;
+}
+
 .tab-content.tab-bordered {
     background-color: #fff;
     padding: 10px 0 18px 6px;

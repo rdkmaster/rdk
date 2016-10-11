@@ -6,7 +6,8 @@
 .rdk-combo-select-module .combo-caption{
     display: inline-block;
     border-right: 1px #ABABAB solid;
-    padding-right: 10px;
+    padding: 0 10px 20px 10px;
+    height: 18px;
 }
 
 .rdk-combo-select-module .combo-content{
@@ -15,9 +16,13 @@
     flex-flow: row;
     align-items:center;
     outline: none;
-    border: solid 1px #ABABAB;
+    border: 1px solid #d9d9d9;
+    height: 30px;
+    font-family: "微软雅黑", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
     border-radius: 4px;
-    padding: 0 10px;
+    padding: 0;
     background-color: white;
 }
 
@@ -29,6 +34,8 @@
     height: 28px;
     box-shadow: none !important;
     border: none;
+    color: #333;
+    padding: 4px 22px 4px 8px;
     background-color: white !important;
 }
 
@@ -39,7 +46,9 @@
     pointer-events: none;
     color: #008FD4;
 }
-
+.fa-angle-down:before,.fa-angle-up:before {
+     font-size: 18px;
+}
 .rdk-combo-select-module .combo-content-transclude{
     min-width: 120px;
     outline: none;

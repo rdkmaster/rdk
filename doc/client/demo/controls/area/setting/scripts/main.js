@@ -5,6 +5,14 @@ define('main', ['application','rd.controls.AreaSelect', 'rd.controls.ComboSelect
     app.controller('myCtrl', ['$scope', 'DataSourceService', function (scope,DataSourceService) {
         /************************ panel demo test data start ************************/
         application.initDataSourceService(DataSourceService);
+        scope.setting={
+            defaultData:{
+                province:{name:"广东",code:"1"},
+                city:{name:"深圳",code:"2"},
+                area:{name:"南山区",code:"3"}
+            },
+            disabled:true
+        };
 
     }]);
 

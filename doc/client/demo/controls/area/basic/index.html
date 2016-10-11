@@ -20,7 +20,11 @@
 </head>
 
 <body ng-controller='myCtrl'>
-    <rdk-area-select area-data="test"></rdk-area-select>
+    <div class="area-wrap">
+        <rdk_combo_select>
+            <rdk-area-select area-data="test"></rdk-area-select>
+        </rdk_combo_select>
+    </div>
     <div ng-if="test">
         你选择的地区：{{test.province.name}} / {{test.city.name}} / {{test.area.name}}
     </div>
