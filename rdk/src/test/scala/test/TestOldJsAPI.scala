@@ -31,7 +31,7 @@ class TestOldJsAPI extends FunSpec with Matchers{
   }
 
   ProxyManager.deprecatedDbAccess =  new DeprecatedDBAccessTrait{
-    val TAB_AAA = new BaseResultSetMock {
+    def TAB_AAA = new BaseResultSetMock {
       var i= 0
       def next() = {i=i+1;i<2}
 

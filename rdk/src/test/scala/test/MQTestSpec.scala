@@ -44,7 +44,7 @@ class MQTestSpec() extends TestKit(ActorSystem("MQTestSpec")) with ImplicitSende
     "rpc call return Some(ok)" in {
       val mqMsg = MQ_Message(MQ_Head("reply_topic"), "body")
       p2p ! MQ_Rpc("rpc", mqMsg)
-      expectMsg(Some("ok"))
+      expectMsg("ok")
     }
     "reply call return ok " in {
 
