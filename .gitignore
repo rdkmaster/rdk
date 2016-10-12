@@ -18,5 +18,5 @@ test/npm-debug.log
 
 #忽略idea工程相关
 **/.idea
-rdk/.idea_modules/
+**/.idea_modules
 
