@@ -14,6 +14,9 @@ pwdPath=`pwd`
 
 ##分支名
 branch=$1
+if [ x"${branch}" = x ] ;then
+	branch="master"
+fi
 ##sbt编译路径名
 rdk_resource=$2
 ###默认在/home/rdk_git/目录下clone rdk版本
@@ -24,9 +27,10 @@ DEV_ENV_DIR=./rdk_release/rdk-develop-environment
 ##运行环境路径
 RUN_ENV_DIR=./rdk_release/rdk-runtime-environment
 ##RDK版本号
+
 #dos2unix ../rdk/build.sbt
 #RDK_VERSION=`cat ../rdk/build.sbt |grep version|awk -F '=' '{print $2}'| grep -o "[^ ]\+\( \+[^ ]\+\)*"|sed 's/\"//g'|dos2unix`
-RDK_VERSION=`cat ../rdk/build.sbt |grep version|awk -F '=' '{print $2}'| grep -o "[^ ]\+\( \+[^ ]\+\)*"|sed 's/\"//g'`
+RDK_VERSION=`cat ../rdk/build.sbt |grep ^version|awk -F '=' '{print $2}'| grep -o "[^ ]\+\( \+[^ ]\+\)*"|sed 's/\"//g'`
 
 
 USAGE() {
@@ -44,7 +48,10 @@ if [ x"${rdk_path}" = x ] ;then
 	rm -rf $rdk_path
 	mkdir -p $rdk_path
 	cd $rdk_path
-	git clone git@gitlab.zte.com.cn:10045812/rdk.git
+        rm -rf .git
+	git init
+	git remote add origin git@gitlab.zte.com.cn:10045812/rdk.git
+	git pull origin $branch
 	if [ $? -ne 0 ] ;then
 		echo "Remote GitLab not stable，plese try again!"
 		exit 122
@@ -53,20 +60,6 @@ fi
 if [ ! -d $rdk_path ] ;then
     echo "$rdk_path not exists,please make sure"
 	exit 127
-fi
-###切换到设置的分支上，默认为master
-cd $rdk_path
-if [ "${branch}" != "" ] ; then
-    git branch |grep ${branch}
-	if [ $? -eq 0 ] ;then
-	    git checkout master
-		git branch -D ${branch}
-    fi
-	git checkout -b ${branch} origin/${branch}
-	if [ $? -ne 0 ] ;then
-		echo " can not checkout ${branch},please make sure"
-		exit 126
-	fi
 fi
 
 ##clone rdk编译依赖
@@ -84,22 +77,17 @@ if [ ! -d $rdk_resource ] ;then
 	exit 125
 fi
 cd $rdk_resource
-git branch |grep master
-if [ $? -eq 0 ];then
-	git checkout *
-	git status|grep "Untracked"
-	if [ $? -eq 0 ] ;then
-	  echo "Buffer not clean,git add . ~~"
-	  exit 124
-	fi
-	git status|grep "Changes not staged"
-	if [ $? -eq 0 ] ;then
-	  echo "Buffer not clean,fix it"
-	  exit 121
-	fi   
+git checkout *
+git status|grep "Untracked"
+if [ $? -eq 0 ] ;then
+	echo "Buffer not clean,git add . ~~"
+	exit 124
 fi
-		
-
+git status|grep "Changes not staged"
+if [ $? -eq 0 ] ;then
+   echo "Buffer not clean,fix it"
+   exit 121
+fi   
 
 }
 
@@ -120,8 +108,14 @@ $rdk_resource/sbt/bin/sbt \
 -Dsbt.boot.directory=$rdk_resource/sbt-repo/boot/ \
 -Dsbt.ivy.home=$rdk_resource/sbt-repo/ivy/ \
 -Dsbt.global.base=$rdk_resource/sbt-repo/   package
-
+if [ $? -ne 0 ] ;then
+	echo "rdk-server build failed!!!"
+	exit 123
+fi
 cp target/scala-2.10/rdk*.jar  ../rdk/proc/bin/lib/ 
+rm -rf target
+rm -rf project/project
+rm -rf project/target
 	
 }
 
@@ -172,16 +166,10 @@ MAKR_RDK_RELEASE(){
   filename=$1
   cd rdk_release
   #判断当前系统
-  echo $JAVA_HOME|grep ":"
-  if [ $? -eq 0 ] ;then
-  ##windows环境
-     echo "windows environment"
-     "C:\Program Files\7-Zip\7z.exe" a $filename-$RDK_VERSION.zip $filename
-  else
+  #uname -a|grep Linux
   ##linux环境
-     zip -r $filename$RDK_VERSION.zip $filename
-  fi
-
+  echo "start to zip package"
+  zip -r $filename$RDK_VERSION.zip $filename
  
 }
 
