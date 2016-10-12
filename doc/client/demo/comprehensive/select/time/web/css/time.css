@@ -62,7 +62,8 @@ select{
     background:#fff;
     margin-bottom: 5px;
     border-radius:0;
-    border-left:1px solid #999;
+    height: 18px;
+    border-left:1px solid #666;
     padding-right: 8px
 }
 
@@ -89,6 +90,14 @@ select{
 }
 .bootstrap-select.btn-group .btn .filter-option {
     overflow: inherit;
+    left: 2px;
+    right: 25px;
+    height: 18px;
+    text-align: center;
+}
+.rdk-time-module .time-content .granularity {
+    height: 18px;
+    top: 6px;
 }
 .dropdown-menu>li>a {
     width: 80px;
@@ -143,5 +152,8 @@ input, button, select, textarea {
     font-family:"微软雅黑";
 }
 .datetimepicker table tr td.disabled, .datetimepicker table tr td.disabled:hover {
+    color: #dedede;
+}
+.datetimepicker table tr td.old {
     color: #dedede;
 }

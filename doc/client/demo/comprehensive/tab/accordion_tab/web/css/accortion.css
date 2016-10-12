@@ -151,11 +151,11 @@
 /*表格选择行的背景色*/
 .rdk-table-module .rdk-table tbody tr.selected-row td {
     /*background-color: #e3eef2*/
-    background-color: #e2eef9;
+    background-color: #cde4fa;
 }
 /*表格hover背景色*/
 .rdk-table-module .rdk-table > tbody > tr:not(.selected-row):hover > td {
-    background-color: transparent;
+    background-color: #e2eef9;
 }
 .rdk-table-module .rdk-table > tbody > tr > td {
     padding: 5px 6px;

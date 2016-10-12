@@ -12,12 +12,15 @@ define('main', ['rd.controls.Table','rd.containers.Panel'], function() {
                 }
             ]
         }
-        var width = parseFloat($('.hao').css('width'));
-        var height = parseFloat($('.hao').css('height'));//恨据外围 div的长宽给图标自动定位
-        $('span.images_right').css({
-            'left':(width-1)+"px",
-            'top':(height/2-32)+"px"
-        });
+        function  imagePosition(){
+            var width = parseFloat($('.hao').css('width'));
+            var height = parseFloat($('.hao').css('height'));//恨据外围 div的长宽给图标自动定位
+            $('span.images_right').css({
+                'left':(width-1)+"px",
+                'top':(height/2-32-100)+"px"
+            });
+        }
+        imagePosition();
         //左右拉的点击动漫效果
          $scope.images = function(){
             if($('.hao').hasClass('images_down')){
@@ -28,6 +31,14 @@ define('main', ['rd.controls.Table','rd.containers.Panel'], function() {
                 $('span.images_right').removeClass('images_left')
             }
         }
-       
+        $scope.currentPage = "1";
+        $scope.$watch('currentPage',  function(newValue, oldValue) {
+            if (newValue === oldValue) { return; } // AKA first run
+            console.log(1);
+            imagePosition();
+      });
+        $scope.nextPage = function(){
+            console.log(1)
+        }
     }]);
 });
