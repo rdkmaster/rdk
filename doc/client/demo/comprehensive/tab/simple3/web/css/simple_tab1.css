@@ -11,8 +11,8 @@
 	margin-top:50px;
 }
 .hao{
-	
 	width:740px;
+	height:235px;
     margin-right:12px;
 	/*padding-right:12px;*/
 	/*overflow:auto;*/
@@ -48,7 +48,7 @@
 }
 /*设置td样式 点击时样式*/
 .rdk-table-module .rdk-table tbody tr.selected-row td{
-	background:#e2eef9;
+	background:#cde4fa;
 	padding: 0 6px
 	/*line-height:30px;*/
 }
@@ -82,6 +82,10 @@ span.images_left{
 .rdk-table-module .rdk-table{
 	border:1px solid #eeeeee;
 }
+.rdk-table-module .rdk-table{
+	border-bottom:1px solid #eeeeee;
+	border-top: 1px solid #eeeeee;
+}
 .rdk-table-module .rdk-table tfoot tr, .rdk-table-module .rdk-table thead>tr{
 	border-bottom: 1px solid transparent;
 }
@@ -91,7 +95,7 @@ span.images_left{
 }
 /*表格hover背景色*/
 .rdk-table-module .rdk-table > tbody > tr:not(.selected-row):hover > td {
-    background-color: transparent;
+    background-color: #e2eef9;
 }
 
 /*标题样式*/
