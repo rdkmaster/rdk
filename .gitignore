@@ -16,3 +16,7 @@ start.cfg
 test/report
 test/npm-debug.log
 
+#忽略idea工程相关
+**/.idea
+**/.idea_modules
+
