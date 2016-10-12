@@ -11,9 +11,9 @@
 	margin-top:50px;
 }
 .hao{
-	
+	position: relative;
 	width:740px;
-	height: 235px;
+	height: 295px;
     margin-right:12px;
 	/*padding-right:12px;*/
 	/*overflow:auto;*/
@@ -118,6 +118,12 @@ i{
 	font-style: normal;
 	line-height: 32px;
 	color: #008FD4;
+}
+/* 翻页定位 */
+.rdk-table-module .pagingLine {
+	position: absolute;
+	width: 100%;
+	top: 255px;
 }
 /* 翻页 */
 .rdk-table-module .enabledRecords{
