@@ -36,7 +36,7 @@
         BEFORE_CLOSE :"before_close",
         SHOW:"show",
         CREATE: "create",
-        CHECKED: "checked",
+        CHECK: "check",
 
         TAB_SELECT: "tab_select",
         ITEM_SELECTED: "item_selected", //tab_select 从里向外抛，捕捉对象
