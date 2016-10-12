@@ -705,7 +705,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
 
                     function _refreshCheckedIdxArr(){
                         scope.checkedIdxArr = [];
-                        var arr = document.getElementsByName("singleCheckBox");  
+                        var arr = element.find('input[name="singleCheckBox"]');//document.getElementsByName("singleCheckBox");  
                         for(var i=0; i<arr.length; i++){
                            if(arr[i].checked){
                                 scope.checkedIdxArr.push(i);
@@ -715,7 +715,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
 
                     function _refreshCheckedStatus(){
                         if(!scope.addCheckBox) return;
-                        var arr = document.getElementsByName("singleCheckBox");
+                        var arr = element.find('input[name="singleCheckBox"]');//document.getElementsByName("singleCheckBox");
                         for(var k=0; k<arr.length; k++){
                             arr[k].checked = false;
                         }
@@ -725,12 +725,12 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                     }
 
                     function _singleCheckHandler(isChecked){
-                        var arr = document.getElementsByName("totalCheckBox");
+                        var arr = element.find('input[name="totalCheckBox"]');//document.getElementsByName("totalCheckBox");
                         arr[0].checked = _isAllSelected();
                     }
 
                     function _totalCheckHandler(isChecked){
-                        var arr = document.getElementsByName("singleCheckBox");  
+                        var arr = element.find('input[name="singleCheckBox"]');//document.getElementsByName("singleCheckBox");  
                         for(var i=0; i<arr.length; i++){
                            arr[i].checked = isChecked;
                         }
@@ -745,7 +745,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                     }
 
                     function _isAllSelected(){
-                        var arr = document.getElementsByName("singleCheckBox"); 
+                        var arr = element.find('input[name="singleCheckBox"]');//document.getElementsByName("singleCheckBox"); 
                         for(var i=0; i<arr.length; i++){
                            if(!arr[i].checked) return false;
                         }
