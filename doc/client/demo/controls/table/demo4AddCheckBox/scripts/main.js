@@ -19,7 +19,7 @@ define('main', ['rd.controls.Table', 'rd.services.Alert'], function() {
             }
         }
 
-        EventService.register('table', EventTypes.CHECKED, function(event, data){
+        EventService.register('table', EventTypes.CHECK, function(event, data){
             var selectedData = data.data;
         });
     }]);

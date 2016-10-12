@@ -649,7 +649,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             if (angular.isDefined(attrs.id)) {
                                 var data = {};
                                 data.data = _getCheckedItemArr();
-                                EventService.broadcast(attrs.id, EventTypes.CHECKED, data);
+                                EventService.broadcast(attrs.id, EventTypes.CHECK, data);
                             }
                         }
 
@@ -661,7 +661,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             if (angular.isDefined(attrs.id)) {
                                 var data = {};
                                 data.data = scope.destData;//扔所有
-                                EventService.broadcast(attrs.id, EventTypes.CHECKED, data);
+                                EventService.broadcast(attrs.id, EventTypes.CHECK, data);
                             }
                         }
 
