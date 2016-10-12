@@ -218,7 +218,7 @@ public class FileHelper extends AbstractAppLoggable {
             op.put("append", append);
         } else {
             if (!(option instanceof Undefined)) {
-                logger.error("unsupported option type[" + option.getClass().getName() + "]! ignoring it!");
+                logger.warn("unsupported option type[" + option.getClass().getName() + "]! ignoring it!");
             }
             op.put("append",false);
         }
@@ -254,7 +254,7 @@ public class FileHelper extends AbstractAppLoggable {
             try {
                 rwb = Workbook.createWorkbook(file);
             } catch (Exception e) {
-                logger.info("create workbook error:" + e);
+                logger.error("create workbook error:" + e);
                 return false;
             }
             for (int i = 0; i < toWritesheetNums; i++) {
@@ -275,7 +275,7 @@ public class FileHelper extends AbstractAppLoggable {
                 wb=Workbook.getWorkbook(file);
                 rwb=Workbook.createWorkbook(file, wb);
             }catch (Exception e){
-                logger.error("get workbook error,creating new workbook:"+e);
+                logger.warn("get workbook error,creating new workbook:"+e);
                 try{
                     rwb=Workbook.createWorkbook(file);
                 }catch (Exception ex){
