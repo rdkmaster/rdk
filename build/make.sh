@@ -165,9 +165,10 @@ MAKR_RDK_RELEASE(){
   filename=$1
   cd rdk_release
   #判断当前系统
-  uname -a|grep Linux
+  #uname -a|grep Linux
   ##linux环境
-     zip -r $filename$RDK_VERSION.zip $filename
+  echo "start to zip package"
+  zip -r $filename$RDK_VERSION.zip $filename
  
 }
 
