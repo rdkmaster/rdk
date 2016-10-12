@@ -27,6 +27,7 @@ DEV_ENV_DIR=./rdk_release/rdk-develop-environment
 ##运行环境路径
 RUN_ENV_DIR=./rdk_release/rdk-runtime-environment
 ##RDK版本号
+
 #dos2unix ../rdk/build.sbt
 #RDK_VERSION=`cat ../rdk/build.sbt |grep version|awk -F '=' '{print $2}'| grep -o "[^ ]\+\( \+[^ ]\+\)*"|sed 's/\"//g'|dos2unix`
 RDK_VERSION=`cat ../rdk/build.sbt |grep ^version|awk -F '=' '{print $2}'| grep -o "[^ ]\+\( \+[^ ]\+\)*"|sed 's/\"//g'`
