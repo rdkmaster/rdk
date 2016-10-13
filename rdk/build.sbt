@@ -1,6 +1,6 @@
 organization  := "com.zte.vmax"
 
-version       := "2.2-rc.2"
+version       := "2.2"
 
 unmanagedBase := file("proc/bin/lib")
 
