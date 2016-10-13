@@ -281,7 +281,7 @@ var file = {
         var b = rdk_runtime.fileHelper().saveAsEXCEL(file, excel.data, excel.excludeIndexes,option);
         //_fixExcelContent中修改了content，这里还原
         for(var sheet in content) {
-            if (isMatrix(content[sheet])) {
+            if (_.isDataTable(content[sheet])) {
                 content[sheet].data.shift(content[sheet].header);
             }
         }
