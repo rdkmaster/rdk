@@ -29,7 +29,16 @@ app.controller('rdk_ctrl', ['$scope', 'DataSourceService', 'blockUI','EventServi
 function(scope, DSService, blockUI,EventService,EventTypes,BasicSelector) {
 application.initDataSourceService(DSService);
 /************************ 应用的代码逻辑开始 ************************/
-
+scope.m=["11","22","33","44"];
+scope.cityDs=[
+  {id:0,label:'南京'},
+  {id:1,label:'深圳'},
+  {id:2,label:'上海'},
+  {id:3,label:'广州'}
+];
+scope.selected2string=function(selected,context,index){
+  return BasicSelector.selected2string(selected,'label',',');
+}
 /************************ 应用的代码逻辑结束 ************************/
 }]);
 

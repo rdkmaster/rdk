@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>Accordion 组合</title>
+    <title>Tab 组合</title>
 
     <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
 
@@ -29,10 +29,47 @@
     </script>
 </head>
 <style>
-    
+    .rdk-tab{
+        width:500px;
+    }
 </style>
 <body ng-controller='rdk_ctrl' class="rdk_main">
-    
+    <div class="rdk-tab scroller">
+        <rdk_tab>
+            <div title="scroller">
+                <rdk_scroller data="m" scroll_policy="manual">
+                    <span>{{item}}</span>
+                </rdk_scroller>
+            </div>
+        </rdk_tab>
+    </div>
+    <div class="rdk-tab accordion">
+        <rdk_tab>
+            <div title="accordion">
+                <rdk_accordion caption="accordion">
+                    <div>content</div>
+                </rdk_accordion>
+            </div>
+        </rdk_tab>
+    </div>
+    <div class="rdk-tab panel">
+        <rdk_tab collapsible="true">
+            <div title="panel">
+                <rdk_panel show_close="true" show_title="true" title="panel">
+                    <div>put what you want</div>
+                </rdk_panel>
+            </div>
+        </rdk_tab>
+    </div>
+    <div class="rdk-tab combo">
+        <rdk_tab>
+            <div title="combo">
+                <rdk_combo_select>
+                    <rdk_basic_selector data="cityDs" child_change="selected2string"></rdk_basic_selector>
+                </rdk_combo_select>
+            </div>
+        </rdk_tab>
+    </div>
     <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
     <!--     这个节点可选，删除后，RDK会自动生成一个    -->
     <!--           这个节点只支持基本HTML标签           -->

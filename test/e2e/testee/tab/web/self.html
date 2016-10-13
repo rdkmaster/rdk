@@ -34,10 +34,12 @@
     }
 </style>
 <body ng-controller='rdk_ctrl' class="rdk_main">
-
     <div class="rdk-tab demo1">
         <h5>点击切换</h5>
-        <rdk_tab selected_tab="2">
+        <button ng-click="select0index()">1</button>
+        <button ng-click="select1index()">2</button>
+        <button ng-click="select2index()">3</button>
+        <rdk_tab selected_tab="2" id="test-tab">
             <div title="DIV1">DIV1</div>
             <div title="DIV2">DIV2</div>
             <div title="DIV3">DIV3</div>
@@ -51,18 +53,62 @@
             <div title="DIV3">DIV3</div> 
         </rdk_tab>
     </div>
+    <h5>选项卡高度控制</h5>
     <div class="rdk-tab demo3">
-        <h5>选项卡高度变化</h5> 
-        <button>Auto</button>
-        <button>Content</button>
-        <button>Fill</button>
-        <rdk_tab heightStyle="{{Height}}">
-            <div title="DIV1">DIV1</div>
-            <div title="DIV2">DIV2</div>
-            <div title="DIV3">DIV3</div> 
+        <rdk_tab height_style="content" style="height:150px">
+            <div title="DIV1">
+                <div>DIV1</div>
+            </div>
+            <div title="DIV2">
+                <div>DIV2</div>
+                <div>DIV2</div>
+            </div>
+            <div title="DIV3">
+                <div>DIV3</div>
+                <div>DIV3</div>
+                <div>DIV3</div>
+            </div> 
         </rdk_tab>
     </div>
-    <div class="heightStyle"></div>
+    <div class="rdk-tab demo4">
+        <rdk_tab height_style="auto" style="height:150px">
+            <div title="DIV1">
+                <div>DIV1</div>
+            </div>
+            <div title="DIV2">
+                <div>DIV2</div>
+                <div>DIV2</div>
+            </div>
+            <div title="DIV3">
+                <div>DIV3</div>
+                <div>DIV3</div>
+                <div>DIV3</div>
+            </div> 
+        </rdk_tab>
+    </div>
+    <div class="rdk-tab demo5">
+        <rdk_tab height_style="fill" style="height:150px">
+            <div title="DIV1">
+                <div>DIV1</div>
+            </div>
+            <div title="DIV2">
+                <div>DIV2</div>
+                <div>DIV2</div>
+            </div>
+            <div title="DIV3">
+                <div>DIV3</div>
+                <div>DIV3</div>
+                <div>DIV3</div>
+            </div> 
+        </rdk_tab>
+    </div>
+    <div class="rdk-tab demo6">
+        <rdk_tab collapsible="true" draggable="false" show_items="visibleItem">
+            <div title="DIV1">DIV1</div>
+            <div title="DIV2">DIV2</div>
+            <div title="DIV3">DIV3</div>
+        </rdk_tab>
+    </div>
     <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
     <!--     这个节点可选，删除后，RDK会自动生成一个    -->
     <!--           这个节点只支持基本HTML标签           -->

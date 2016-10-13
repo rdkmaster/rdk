@@ -2,7 +2,7 @@ exports.config = {
     //出现过11秒页面载入没完成时候，改为15秒
     allScriptsTimeout: 15000,
 
-    specs:['e2e/testjs/*.js'],
+    specs:['e2e/testjs/Bullet*.js'],
 
 
     multiCapabilities: [
@@ -15,7 +15,6 @@ exports.config = {
     ],
 
     baseUrl: 'http://localhost:8080/',
-
     framework: 'jasmine2',
     jasmineNodeOpts: {
         defaultTimeoutInterval: 50000000
