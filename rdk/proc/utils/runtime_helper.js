@@ -211,7 +211,7 @@ function _fixEXCELContent(ctent,exIndexes){
     excel.data={};
     excel.excludeIndexes={};
     for(var sheet in ctent){
-        if(isMatrix(ctent[sheet])){
+        if(_.isDataTable(ctent[sheet])){
             ctent[sheet].data.unshift(ctent[sheet].header);
             excel.data[sheet]=ctent[sheet].data;
             excel.excludeIndexes[sheet]=[];
