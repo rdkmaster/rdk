@@ -81,5 +81,41 @@
 	log("file save success:", b);
 
 
+### `file.saveAsEXCEL()` ###
+
+该方法提供了一个可以同时写多张excel sheet页的简便方法。
+
+定义：
+
+	function saveAsEXCEL(file, content, excludeIndexes, option);
+
+参数：
+
+- file 字符串。必选，需要保存的文件路径，如果是目录则会报错。可使用[路径宏](relative_path_rule.md)简化路径。
+- content 对象。必选，对象属性名为要写入的sheet名，属性值为[`DataTable()`](service_api.md#dataTable)对象或者二维数组。
+- excludeIndexes 数组，可选，默认值是空数组。排除的列索引，如果content是 `DataTable()` 对象，则此数组的元素可以是字段名。
+- option 对象，可选。写excel文件的选项，目前只支持append属性
+	- append: 为 `false`（默认）则覆盖原文件（如果存在），为 `true` 则追加到文件的最后；
+
+返回：true/false对应写入成功/失败。
+
+示例：写excel文件，其中第一张sheet名为‘sheet1’,内容为一个DataTable矩阵对象，并隐藏‘a’列，第二张sheet名为‘sheet2’，内容为一个二维数组，并隐藏第0列。
+
+ 		
+		var filestr="data/mydata.xls";//必选
+
+        var content={				  //必选
+				'sheet1':new DataTable(['A','B'],['a','b'],[[1,2],[3,4]])
+						
+                'sheet2':
+                   		[['30','test1'],['20','test2']]
+					};
+         
+        var excludeindexes={'sheet1':['a'],'sheet2':[0]};//可选
+        
+        var option={'append':false};  //可选，不写为false；true为追加  false为复写
+
+        var b = file.saveAsEXCEL(filestr,content,excludeindexes,option);	
+
 
 

@@ -291,6 +291,7 @@ img {
 </style>
 </head>
 <body>
+<p><rdk_title>Rest服务中的文件操作API</rdk_title></p>
 <h3><code>file.loadProperty()</code></h3>
 <p>定义：</p>
 <pre><code>function loadProperty(file);
@@ -315,7 +316,7 @@ img {
 
 <p>参数：</p>
 <ul>
-<li>file 字符串。需要保存的文件路径，如果是目录则会报错。可使用<a href="relative_path_rule.html">路径宏</a>简化路径。</li>
+<li>file 字符串。需要保存的文件路径，如果是目录则会报错。可使用<a href="relative_path_rule.md">路径宏</a>简化路径。</li>
 <li>content 字符串。需要保存的内容。</li>
 <li>append 布尔，默认值是false。是否追加到已有文件的末尾。</li>
 <li>encoding 字符串，默认值是utf-8。写文件的编码，常用备选的是utf-8/gb2312/gbk。</li>
@@ -329,7 +330,7 @@ img {
 
 <p>参数：</p>
 <ul>
-<li>file 字符串。需要保存的文件路径，如果是目录则会报错。可使用<a href="relative_path_rule.html">路径宏</a>简化路径。</li>
+<li>file 字符串。需要保存的文件路径，如果是目录则会报错。可使用<a href="relative_path_rule.md">路径宏</a>简化路径。</li>
 <li>content 二维数组或者 <code>matrix()</code> 的返回值。需要保存的内容。</li>
 <li>excludeIndexes 数组，可选，默认值是false。排除的列索引，如果content是 <code>matrix()</code> 的返回值，则此数组的元素可以是字段名。</li>
 <li>
@@ -367,9 +368,43 @@ log(&quot;file save success:&quot;, b);
 log(&quot;file save success:&quot;, b);
 </code></pre>
 
-<div title="Rest服务中的文件操作API" id="__hidden__">
-<script src="/doc/tools/doc_js/misc.js"></script>
-</div>
+<h3><code>file.saveAsEXCEL()</code></h3>
+<p>该方法提供了一个可以同时写多张excel sheet页的简便方法。</p>
+<p>定义：</p>
+<pre><code>function saveAsEXCEL(file, content, excludeIndexes, option);
+</code></pre>
+
+<p>参数：</p>
+<ul>
+<li>file 字符串。必选，需要保存的文件路径，如果是目录则会报错。可使用<a href="relative_path_rule.md">路径宏</a>简化路径。</li>
+<li>content 对象。必选，对象属性名为要写入的sheet名，属性值为<a href="service_api.md#dataTable"><code>DataTable()</code></a>对象或者二维数组。</li>
+<li>excludeIndexes 数组，可选，默认值是空数组。排除的列索引，如果content是 <code>DataTable()</code> 对象，则此数组的元素可以是字段名。</li>
+<li>
+option 对象，可选。写excel文件的选项，目前只支持append属性
+<ul>
+<li>append: 为 <code>false</code>（默认）则覆盖原文件（如果存在），为 <code>true</code> 则追加到文件的最后；</li>
+</ul>
+</li>
+</ul>
+<p>返回：true/false对应写入成功/失败。</p>
+<p>示例：写excel文件，其中第一张sheet名为‘sheet1’,内容为一个DataTable矩阵对象，并隐藏‘a’列，第二张sheet名为‘sheet2’，内容为一个二维数组，并隐藏第0列。</p>
+<pre><code>    var filestr=&quot;data/mydata.xls&quot;;//必选
+
+    var content={                 //必选
+            'sheet1':new DataTable(['A','B'],['a','b'],[[1,2],[3,4]])
+
+            'sheet2':
+                    [['30','test1'],['20','test2']]
+                };
+
+    var excludeindexes={'sheet1':['a'],'sheet2':[0]};//可选
+
+    var option={'append':false};  //可选，不写为false；true为追加  false为复写
+
+    var b = file.saveAsEXCEL(filestr,content,excludeindexes,option);    
+</code></pre>
+
+
 </body>
 </html>
 <!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
