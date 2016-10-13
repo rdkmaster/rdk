@@ -1,0 +1,13 @@
+
+#div1{
+    /*display:inline-block;*/
+    width:50px;
+    margin-bottom:10px;
+    border:1px solid black;
+}
+#div2{
+    /*display:inline-block;*/
+    width:200px;
+    height:200px;
+    border:1px solid black;
+}

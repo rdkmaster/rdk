@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>基础类</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body ng-app="App" ng-controller="myCtr">
+	<script type="text/javascript" src="/test/doc/angular/angular.min.js"> </script>
+	<script src="js/index.js"></script>
+	<h3>元素定位</h3>
+    <br>
+    <button class="register" ng-click="register()">注册</button>
+    <button ng-click="login()">登陆</button>
+    <div class="section1" ng-show="isResister">
+        用户名 <input type="text" ng-model="username"><br>
+        密&nbsp;码 <input type="text" ng-model="password">
+        <br>
+        <button ng-click="confirm()" title="注册">注册</button>
+        <button ng-click="cancel()" title="取消">取消</button>
+    </div>
+    <div class="section1" ng-show="isLogin">
+        用户名 <input type="text" ng-model="username"><br>
+        密&nbsp;码 <input type="text" ng-model="password">
+        <br>
+        <button>登陆</button>
+    </div>
+    <div ng-show="result" class="hello">welcome to my page</div>
+</body>
+</html>

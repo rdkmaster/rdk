@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body ng-app="App" ng-controller="myCtr">
+	<script type="text/javascript" src="/test/doc/angular/angular.min.js"> </script>
+	<script src="js/index.js"></script>
+    <h3>rdk目前团队</h3>
+	<div class="rdk">
+        <span ng-repeat="member in rdkMembers">{{member}}</span>
+    </div>
+    <h3>rdk更早团队</h3>
+    <div class="lastRdk">
+        <span ng-repeat="member in lastRdkMembers">{{member}}</span>
+    </div>
+    <h3>iframe嵌套</h3>
+    <iframe id="iframe" ng-src="http://localhost:8080/test/doc/testDemo/demo1/index.html" frameborder="1"></iframe>
+</body>
+</html>
