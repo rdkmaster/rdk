@@ -29,24 +29,16 @@ app.controller('rdk_ctrl', ['$scope', 'DataSourceService', 'blockUI','EventServi
 function(scope, DSService, blockUI,EventService,EventTypes,BasicSelector) {
 application.initDataSourceService(DSService);
 /************************ 应用的代码逻辑开始 ************************/
-scope.cityProcessor=function(data){
-  console.log(data);
-  return data.data;
-}
-scope.select2string=function(selected,context,index){
-  return BasicSelector.selected2string(selected,"label",",");
-}
-EventService.register("city_selector",EventTypes.CHANGE,function(event,data){
-  scope.currentVal=data[0].label;
-  console.log(scope.currentVal);
-});
-scope.scrollerData=[
-  {url:'./images/Chrysanthemum.jpg'},
-  {url:'./images/Hydrangeas.jpg'},
-  {url:'./images/Jellyfish.jpg'},
-  {url:'./images/Koala.jpg'},
-  {url:'./images/Lighthouse.jpg'}
+scope.m=["11","22","33","44"];
+scope.cityDs=[
+  {id:0,label:'南京'},
+  {id:1,label:'深圳'},
+  {id:2,label:'上海'},
+  {id:3,label:'广州'}
 ];
+scope.selected2string=function(selected,context,index){
+  return BasicSelector.selected2string(selected,'label',',');
+}
 /************************ 应用的代码逻辑结束 ************************/
 }]);
 

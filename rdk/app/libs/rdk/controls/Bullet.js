@@ -1,7 +1,7 @@
 define(['angular', 'rd.services.Utils', 'rd.services.EventService', 'jquery', 'css!rd.styles.Bullet', 'bootstrap'], function() {
     var scoreApp = angular.module('rd.controls.Bullet', ['rd.services.Utils', 'rd.services.EventService']);
 
-    scoreApp.directive('rdkBullet', ['Utils', function(Utils) {
+    scoreApp.directive('rdkBullet', ['Utils','EventService', 'EventTypes',function(Utils,EventService,EventTypes) {
         return {
             restrict: 'E',
             replace: true,

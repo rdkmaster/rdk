@@ -21,6 +21,7 @@
   },
   "scripts" : {
     "all": "protractor all-conf.js",
+    "demo":"protractor demo-conf.js",
     "table": "protractor table-conf.js",
     "accordion":"protractor accordion-conf.js",
     "basic":"protractor basic-conf.js",
@@ -31,6 +32,7 @@
     "input":"protractor input-conf.js",
     "tab":"protractor tab-conf.js",
     "fold":"protractor fold-conf.js",
+    "bullet":"protractor bullet-conf.js",
     "protractor_debug" : "protractor debug protractor-conf.js"
   }
 }

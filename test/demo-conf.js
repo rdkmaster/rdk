@@ -2,13 +2,10 @@ exports.config = {
     //出现过11秒页面载入没完成时候，改为15秒
     allScriptsTimeout: 15000,
 
-    specs:['e2e/testjs/Basic*.js'],
+    specs:['doc/testjs/demo3.js'],
 
 
     multiCapabilities: [
-        {
-            browserName: 'firefox'
-        }, 
         {
             browserName: 'chrome'
         }
@@ -25,7 +22,7 @@ exports.config = {
     onPrepare: function() {
         var Jasmine2HtmlReporter = require('./index.js');
          jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
-            savePath: './report/e2e'
+            savePath: './report/doc'
         }));
     }
 };

@@ -1,13 +1,13 @@
 define('main', ['application', 'blockUI','rd.controls.BasicSelector','rd.controls.Selector',
   'rd.controls.FoldSelector','rd.containers.Accordion','rd.controls.Input','rd.controls.Table',
   'rd.controls.TabSelect','rd.controls.ComboSelect','rd.controls.TabSelector','rd.controls.Graph',
-  'rd.containers.Tab','rd.controls.Map'],
+  'rd.containers.Tab','rd.controls.Map','rd.controls.Bullet'],
 function(application) {
 // 创建一个RDK的应用
 var app = angular.module("rdk_app", ['rd.core', 'blockUI','rd.controls.BasicSelector','rd.controls.Selector',
   'rd.controls.FoldSelector','rd.containers.Accordion','rd.controls.Input','rd.controls.Table',
   'rd.controls.TabSelect','rd.controls.ComboSelect','rd.controls.TabSelector','rd.controls.Graph',
-  'rd.containers.Tab','rd.controls.Map']);
+  'rd.containers.Tab','rd.controls.Map','rd.controls.Bullet']);
 app.config(['blockUIConfig', function(blockUIConfig) {
     // blockUI默认只要有ajax请求在进行，就会自动启动，阻止页面响应鼠标事件
     // 使用下面代码可以阻止自动模式，启用手动模式
@@ -29,30 +29,16 @@ app.controller('rdk_ctrl', ['$scope' ,'DataSourceService', 'blockUI','EventServi
 function(scope,DSService, blockUI,EventService,EventTypes) {
 application.initDataSourceService(DSService);
 /************************ 应用的代码逻辑开始 ************************/
-EventService.register("test-tab",EventTypes.CHANGE,function(event,data){
-  console.log(data);
+scope.initSliders=[20,40,60,80];
+EventService.register('bullet_0',EventTypes.CHANGE,function(event,data){
+  scope.currentData=data;
 });
-scope.select0index=function(){
-  EventService.broadcast("test-tab",EventTypes.TAB_SELECT,1);
-}
-scope.select1index=function(){
-  EventService.broadcast("test-tab",EventTypes.TAB_SELECT,2);
-}
-scope.select2index=function(){
-  EventService.broadcast("test-tab",EventTypes.TAB_SELECT,3);
-}
-scope.Height='auto';
-//
-scope.height2auto=function(){
-  scope.Height='auto';
-};
-scope.height2content=function(){
-  scope.Height='content';
-};
-scope.height2fill=function(){
-  scope.Height='fill';
-};
-scope.visibleItem=[2];
+scope.sliderStyles=[
+  {color:'red',label:'警告',position:'down'},
+  {color:'green',label:'轻微',position:'up'},
+  {color:'blue',label:'严重',position:'down'},
+  {color:'gray',label:'致命',position:'up'},
+];
 /************************ 应用的代码逻辑结束 ************************/
 }]);
 

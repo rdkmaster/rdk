@@ -3,14 +3,14 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>Tab 组合</title>
+    <title>Tab拖拽</title>
 
     <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
 
     <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
     <script data-main="/rdk/app/libs/rdk/rdk"
         src="/rdk/app/libs/requirejs/require.js"></script>
-    <script src="combined.js"></script>
+    <script src="index.js"></script>
     
 
     <!-- 应用正式运行的时候，请使用下面这个节点，RDK会使用编译后的代码，代码体积小，下载快 -->
@@ -29,46 +29,21 @@
     </script>
 </head>
 <style>
-    .rdk-tab{
+    .rdk-tab,.rdk-bullet{
         width:500px;
     }
 </style>
 <body ng-controller='rdk_ctrl' class="rdk_main">
-    <div class="rdk-tab scroller">
-        <rdk_tab>
-            <div title="scroller">
-                <rdk_scroller data="m" scroll_policy="manual">
-                    <span>{{item}}</span>
-                </rdk_scroller>
-            </div>
+    <div class="rdk-tab demo1">
+        <rdk_tab collapsible="true" draggable="true" show_items="visibleItem">
+            <div title="DIV1">DIV1</div>
+            <div title="DIV2">DIV2</div>
+            <div title="DIV3">DIV3</div>
         </rdk_tab>
     </div>
-    <div class="rdk-tab accordion">
-        <rdk_tab>
-            <div title="accordion">
-                <rdk_accordion caption="accordion">
-                    <div>content</div>
-                </rdk_accordion>
-            </div>
-        </rdk_tab>
-    </div>
-    <div class="rdk-tab panel">
-        <rdk_tab collapsible="true">
-            <div title="panel">
-                <rdk_panel show_close="true" show_title="true" title="panel">
-                    <div>put what you want</div>
-                </rdk_panel>
-            </div>
-        </rdk_tab>
-    </div>
-    <div class="rdk-tab combo">
-        <rdk_tab>
-            <div title="combo">
-                <rdk_combo_select>
-                    <rdk_basic_selector data="cityDs" child_change="selected2string"></rdk_basic_selector>
-                </rdk_combo_select>
-            </div>
-        </rdk_tab>
+    <div class="rdk-bullet demo2">
+        <rdk_bullet id="bullet_0" sliders="initSliders" slider_styles="sliderStyles" title="告警门限设置" editable="true"></rdk_bullet>
+        <div class="currentData">{{currentData}}</div>
     </div>
     <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
     <!--     这个节点可选，删除后，RDK会自动生成一个    -->

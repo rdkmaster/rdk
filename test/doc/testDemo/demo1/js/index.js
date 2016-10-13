@@ -1,0 +1,25 @@
+angular.module('App',[]).controller('myCtr',function($scope){
+    scope=$scope;
+    //注册和登陆区分
+    scope.isResister=false;
+    scope.register=function(){
+        scope.isLogin=false;
+        scope.isResister=true;
+    }
+    scope.login=function(){
+        scope.isResister=false;
+        scope.isLogin=true;
+    }
+    scope.confirm=function(){
+       var a=confirm("确认使用该账号？");
+       if(a==true){
+           alert("注册成功");
+           scope.isResister=false;
+           scope.isLogin=false;
+           scope.result=true;;
+       }
+    }
+    scope.cancel=function(){
+        window.location.reload();
+    }
+})
