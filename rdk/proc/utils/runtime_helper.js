@@ -288,6 +288,18 @@ _.isDefined = function (value) {
     return !_.isUndefined(value);
 }
 
+_.isDataTable = function (data) {
+    if (!data) {
+        return false;
+    }
+
+    var hasHeader = data.hasOwnProperty('header');
+    var hasField = data.hasOwnProperty('field');
+    var hasData = data.hasOwnProperty('data');
+    return hasHeader && _.isArray(data.header) &&
+        hasField && _.isArray(data.field) &&
+        hasData && _.isArray(data.data);
+}
 ///////////////////////////////////////////////////////////////////////
 
 //扩展了underscore的each函数
@@ -608,6 +620,7 @@ function _bytes2string(bytes) {
 }
 
 function isMatrix(data) {
+    Log.warn("function deprecated,please use _.isDataTable!");
     if (!data) {
         return false;
     }
