@@ -35,12 +35,20 @@
             ], [1])
         },
 
+        file_saveAsEXCEL:function(request, script){
+            var filestr="./app/test/test.xls";//必选
+            var content={'sheet1':{'header':['A','B'],'field':['a','b'],'data':[[1,2],[3,4]]},'sheet2':new DataTable(['网元','名字'],['neid','name'],[['30','test1'],['20','test2']])};//必选，支持矩阵
+            return file.saveAsEXCEL(filestr,content);
+
+        },
+
         file_saveAsCSVopUndefined:function(request, script){
             return file.saveAsCSV(testServiceFilePath+"save.csv", [
                 [1, 2, 3],
                 [2, 4, 5]
             ], [1],{quoteChar:"*"})
         },
+
 
         file_list:function(request, script){
             return file.list(testServiceFilePath);

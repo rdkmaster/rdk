@@ -87,6 +87,13 @@ class TestOldJsAPI extends FunSpec with Matchers{
       new File(ConstForTest.testRelayFilePath+"save.csv").delete()
     }
 
+    it("saveAsEXCEL(file, content, excludeIndexes, option)=>option defined ok return true"){
+      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_saveAsEXCEL")
+      new File(ConstForTest.testRelayFilePath+"test.xls").exists() should be(true)
+      new File(ConstForTest.testRelayFilePath+"test.xls").delete()
+
+    }
+
 
 
     it("list()=>ok return file lists") {
@@ -169,6 +176,9 @@ class TestOldJsAPI extends FunSpec with Matchers{
       runtime = Runtime.newInstance
       RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "matrixTestError").fold(ex=>ex,v=> v should be("{\"header\":[],\"field\":[],\"data\":[]}"))
     }
+
+
+
 
   }
 }
