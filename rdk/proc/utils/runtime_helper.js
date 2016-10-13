@@ -415,10 +415,17 @@ var Data = {
     },
 
     fetch: function (sql, maxLine) {
-        if (!maxLine || !_.isNumber(maxLine)) {
-            Log.error("maxLine is required and must be a number!");
+        if (!maxLine || !_.isDefined(maxLine)){
+            Log.warn("param maxLine empty,set maxLine=4000");
+            maxLine=4000;
+        }
+
+        if (!_.isNumber(maxLine)) {
+            Log.error("maxLine must be a number!");
             return;
         }
+
+
         var dataObj = JSON.parse(rdk_runtime.fetch(sql, maxLine));
         return new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data);
     },
