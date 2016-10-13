@@ -210,7 +210,7 @@ public class FileHelper extends AbstractAppLoggable {
         return true;
     }
 
-    public boolean saveAsEXCEL(String file, Object content, Object excludeIndexes, Object option) {
+    public boolean saveAsEXCEL(String file, ScriptObjectMirror content, ScriptObjectMirror excludeIndexes, Object option) {
         HashMap<String, Object> op = new HashMap<>();
         if (option instanceof ScriptObjectMirror) {
             ScriptObjectMirror som = (ScriptObjectMirror) option;
@@ -225,7 +225,7 @@ public class FileHelper extends AbstractAppLoggable {
         return saveAsEXCEL(file, content, excludeIndexes, op);
     }
 
-    public boolean saveAsEXCEL(String fileStr, Object content, Object excludeIndexes,HashMap<String, Object> option) {
+    public boolean saveAsEXCEL(String fileStr, ScriptObjectMirror content, ScriptObjectMirror excludeIndexes,HashMap<String, Object> option) {
 
         fileStr = fixPath(fileStr, appName);
 
@@ -240,7 +240,7 @@ public class FileHelper extends AbstractAppLoggable {
             return false;
         }
 
-        int toWritesheetNums=((ScriptObjectMirror)content).size();
+        int toWritesheetNums=content.size();
 
         boolean append= (boolean)option.get("append");
 
@@ -248,9 +248,39 @@ public class FileHelper extends AbstractAppLoggable {
 
         Workbook wb=null;
 
-        Object[] toWritesheetNames=((ScriptObjectMirror) content).keySet().toArray();
+        Object[] toWritesheetNames= content.keySet().toArray();
 
-        if(!append) {   //复写
+        if(append) {   //追加
+            try{
+                wb=Workbook.getWorkbook(file);
+                rwb=Workbook.createWorkbook(file, wb);
+            }catch (Exception e){
+                logger.warn("can not find workbook:"+file+",will create new workbook:" + e);
+                try{
+                    rwb=Workbook.createWorkbook(file);
+                }catch (Exception ex){
+                    logger.error("create workbook error:"+e);
+                    return false;
+                }
+            }
+
+            for (int i = 0; i < toWritesheetNums; i++) {
+                String sheetname = toWritesheetNames[i].toString();
+                appendEXCEL(rwb, sheetname, (ScriptObjectMirror)content.get(sheetname),(ScriptObjectMirror)excludeIndexes.get(sheetname), option);
+            }
+
+            try{
+                rwb.write();
+                rwb.close();
+                if(wb!=null){
+                    wb.close();
+                }
+            }catch (Exception e){
+                logger.error("write or close error:"+e);
+                return false;
+            }
+        }
+        else {        //复写
             try {
                 rwb = Workbook.createWorkbook(file);
             } catch (Exception e) {
@@ -259,7 +289,7 @@ public class FileHelper extends AbstractAppLoggable {
             }
             for (int i = 0; i < toWritesheetNums; i++) {
                 String sheetname = toWritesheetNames[i].toString();
-                writeEXCEL(rwb, sheetname, i, ((ScriptObjectMirror) content).get(sheetname), ((ScriptObjectMirror) excludeIndexes).get(sheetname), option);
+                writeEXCEL(rwb, sheetname, i, (ScriptObjectMirror) content.get(sheetname), (ScriptObjectMirror) excludeIndexes.get(sheetname), option);
             }
 
             try{
@@ -270,80 +300,22 @@ public class FileHelper extends AbstractAppLoggable {
                 return false;
             }
         }
-        else {         //追加
-            try{
-                wb=Workbook.getWorkbook(file);
-                rwb=Workbook.createWorkbook(file, wb);
-            }catch (Exception e){
-                logger.warn("get workbook error,creating new workbook:"+e);
-                try{
-                    rwb=Workbook.createWorkbook(file);
-                }catch (Exception ex){
-                    logger.error("create workbook error:"+e);
-                    return false;
-                }
-
-            }
-
-            for (int i = 0; i < toWritesheetNums; i++) {
-                String sheetname = toWritesheetNames[i].toString();
-                appendEXCEL(rwb,sheetname,((ScriptObjectMirror)content).get(sheetname),((ScriptObjectMirror)excludeIndexes).get(sheetname),option);
-            }
-
-            try{
-                rwb.write();
-                rwb.close();
-                wb.close();
-            }catch (Exception e){
-                logger.error("write or close error:"+e);
-                return false;
-            }
-        }
+        logger.info("saving excel success!");
         return true;
     }
 
-    private boolean writeEXCEL(WritableWorkbook workbook,String sheetname,int sheetindex,Object content,Object excludeIndexes,HashMap<String, Object> option){
+    private boolean writeEXCEL(WritableWorkbook workbook,String sheetname,int sheetindex,ScriptObjectMirror content,ScriptObjectMirror excludeIndexes,HashMap<String, Object> option){
         WritableSheet sheet = workbook.createSheet(sheetname, sheetindex);
-        ScriptObjectMirror som = (ScriptObjectMirror) content;
-        int length = toInt(som.getMember("length"), 0);
+        int length = toInt(content.getMember("length"), 0);
         for(int i = 0; i < length; i++) {
-            writeEXCELRow(sheet, i,som.getMember(Integer.toString(i)), excludeIndexes,option);
+            writeEXCELRow(sheet, i,(ScriptObjectMirror)content.getMember(Integer.toString(i)), excludeIndexes,option);
         }
         return true;
     }
 
-    private boolean writeEXCELRow(WritableSheet sheet,int rowIndex,Object rowContent,Object excludeIndexes,Object option){
-        if (!likeArray(rowContent)) {
-            return false;
-        }
-
-        ArrayList<Integer> ci = toIntList(excludeIndexes);
-
-        ScriptObjectMirror som = (ScriptObjectMirror) rowContent;
-        int length = toInt(som.getMember("length"), 0);
-        int j=0;
-        for (int i = 0; i < length; i++) {
-            String idx = Integer.toString(i);
-            if (som.hasMember(idx) && !ci.contains(i)) {
-                Object cellObj = som.getMember(idx);
-                Label label = new Label(j++,rowIndex,cellObj == null ? "" : cellObj.toString());
-                try{
-                    sheet.addCell(label);
-                }catch (Exception e){
-                    logger.error("addcell error:"+e);
-                    return false;
-                }
-
-            }
-        }
-        return true;
-    }
-
-    private boolean appendEXCEL(WritableWorkbook workbook,String sheetName,Object content,Object excludeIndexes,HashMap<String, Object> option){
+    private boolean appendEXCEL(WritableWorkbook workbook,String sheetName,ScriptObjectMirror content,ScriptObjectMirror excludeIndexes,HashMap<String, Object> option){
         WritableSheet ws =null;
-
-        ScriptObjectMirror som = (ScriptObjectMirror) content;
-        int length = toInt(som.getMember("length"), 0);
+        int length = toInt(content.getMember("length"), 0);
 
         String []sheetNames=workbook.getSheetNames();
         List<String> existsheetNames= Arrays.asList(sheetNames);
@@ -356,16 +328,40 @@ public class FileHelper extends AbstractAppLoggable {
             }
             int rows = ws.getRows();
             for (int i = 0; i < length; i++) {
-                writeEXCELRow(ws, i + rows, som.getMember(Integer.toString(i)), excludeIndexes, option);
+                writeEXCELRow(ws, i + rows, (ScriptObjectMirror)content.getMember(Integer.toString(i)), excludeIndexes, option);
             }
         }
         else {              //追加但表不存在
             ws=workbook.createSheet(sheetName,sheetNames.length+1);
             for(int i = 0; i < length; i++) {
-                writeEXCELRow(ws, i,som.getMember(Integer.toString(i)), excludeIndexes,option);
+                writeEXCELRow(ws, i,(ScriptObjectMirror)content.getMember(Integer.toString(i)), excludeIndexes,option);
             }
         }
 
+        return true;
+    }
+
+    private boolean writeEXCELRow(WritableSheet sheet,int rowIndex,ScriptObjectMirror rowContent,ScriptObjectMirror excludeIndexes,Object option){
+        if (!likeArray(rowContent)) {
+            return false;
+        }
+        ArrayList<Integer> ci = toIntList(excludeIndexes);
+        int length = toInt(rowContent.getMember("length"), 0);
+        int j=0;
+        for (int i = 0; i < length; i++) {
+            String idx = Integer.toString(i);
+            if (rowContent.hasMember(idx) && !ci.contains(i)) {
+                Object cellObj = rowContent.getMember(idx);
+                Label label = new Label(j++,rowIndex,cellObj == null ? "" : cellObj.toString());
+                try{
+                    sheet.addCell(label);
+                }catch (Exception e){
+                    logger.error("addcell error:"+e);
+                    return false;
+                }
+
+            }
+        }
         return true;
     }
 

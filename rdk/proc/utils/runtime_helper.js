@@ -266,9 +266,16 @@ var file = {
         return b;
     },
     saveAsEXCEL:function(file,content,excludeIndexes,option){
+        if(!_.isDefined(file)){
+            Log.error("please input extract file!");
+            return;
+        }
         file = file.toString();
         log("saving to Excel:", file);
-
+        if(!_.isDefined(content)){
+            Log.error("please input extract content!");
+            return;
+        }
         var excel = _fixEXCELContent(content, excludeIndexes);
 
         var b = rdk_runtime.fileHelper().saveAsEXCEL(file, excel.data, excel.excludeIndexes,option);
