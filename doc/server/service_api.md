@@ -280,6 +280,48 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 该对象提供了一些和数据库操作有关的方法，比如增删改查功能。
 
+#### `Data.setDataSourceSelector()` ####
+
+该函数可用来设置你自定义的数据源选择器。
+
+定义：
+  
+    function setDataSourceSelector(selector)；
+
+参数：
+
+ - selector：一个自定义的函数闭包，该函数用来定义你选择数据源的业务逻辑。
+
+返回：
+ 
+ undefined
+
+示例：
+
+
+
+    function myselectDataSource(params){
+	        var database = params[0]
+	        switch (database){
+	            case "mysql":
+	                return "db.mysql_test"
+	            case "hbase":
+	                return "db.hbase"
+	            default:
+	                return "db.default"
+	
+	        }
+    }
+
+#### `Data.useDataSource()` ####
+
+该函数用来选择使用的数据源
+
+定义：
+
+    function useDataSource()：
+
+
 #### `Data.fetch()` ####
 
 该函数提供了简便的可查询数据库数据的方法。
