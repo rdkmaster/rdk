@@ -177,3 +177,7 @@
 .table2 .rdk-table-module .rdk-table > tbody > tr{
     border-bottom: 1px solid #dfdfdf;
 }
+/*icon ^ 大小*/
+.fa-angle-down:before,.fa-angle-up:before {
+    font-size: 18px;
+}
