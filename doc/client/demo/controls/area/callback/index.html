@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>BasicSelector -> Basic</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/rdk/app/modules/rdk_app_helpers',
+            }
+        });
+    </script>
+</head>
+
+<body ng-controller='myCtrl'>
+    <ds id="dsProv" url="app/libs/rdk/server/areaServiceProv"></ds>
+    <ds id="dsCity" url="app/libs/rdk/server/areaServiceCity"></ds>
+    <ds id="dsArea" url="app/libs/rdk/server/areaServiceArea"></ds>
+    <div class="area-wrap">
+        <rdk_combo_select>
+            <rdk-area-select ds_province="dsProv" ds_city="dsCity" ds_area="dsArea" area-data="resultObj" result-type="string" callback="callBackAlert()"></rdk-area-select>
+        </rdk_combo_select>
+    </div>
+
+</body>
+
+</html>

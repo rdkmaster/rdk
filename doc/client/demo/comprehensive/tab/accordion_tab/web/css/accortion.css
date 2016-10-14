@@ -51,7 +51,7 @@
 /* tabs nav->btn */
 .tab_btn{
     margin-top: 9px;
-    padding: 1rem 1rem;
+    padding: 12px 12px;
     border: 0;
     position: absolute;
     top: 13px;
@@ -96,7 +96,7 @@
 /*tab content*/
 /* content tr */
 .rdk-accordion-module .theme{
-    background-color: #e2eef9;
+    background-color: #beddfa;
     margin: 3px 0;
     border-radius: 0;
     font-size: 14px;
