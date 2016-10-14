@@ -22,7 +22,14 @@ define([/*  'underscore'   */], function() {
 
 // attributes 是当前Graph所在的html节点的所有属性集。也是一种辅助数据。
 return function(data, context, GraphService, attributes) {
-
+function getBrowserInfo(){//只做了谷歌和火狐的兼容性
+    var agent = navigator.userAgent.toLowerCase() ;
+    if(agent.indexOf("firefox") > 0){
+        return -10;
+    }else{
+        return -15;
+    }
+}
 return {
     title : {
         text:"",
@@ -106,11 +113,11 @@ return {
                 }
             },
             axisTick:{//坐标轴刻度相关设置
-            show:true,
-             color:'#ddd',
-            length:3,//刻度长短设置
-            lineStyle:{
-                 color:'#54acd5',
+                show:true,
+                color:'#ddd',
+                length:3,//刻度长短设置
+                lineStyle:{
+                     color:'#54acd5',
                 }
             },               
         }
@@ -170,16 +177,24 @@ return {
             stack: '总量',
             barGap:'-100%',
             animation:true,
+            label : {
+                normal: {
+                    show: true,
+                    position: ['92%',getBrowserInfo()],
+                    textStyle:{
+                        fontSize:12,
+                        color:"#54acd5"
+                    }
+                }
+            },
             itemStyle : { 
                 normal: {
-                    label : {show: true, position: ['92%',-20]},
                     barBorderColor:'#54acd5',
                     color:'#54acd5',
                     barBorderRadius: 5
                      
                 },
                 emphasis: {
-                    label : {show: true, position: ['92%',-20]},
                     barBorderColor:'#54acd5',
                     color:'#54acd5',
                     barBorderRadius: 5
