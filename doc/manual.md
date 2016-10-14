@@ -24,19 +24,17 @@
 
 按照本小节介绍的方法，可以打造一个基于windows平台的RDK的web和rest服务的开发&调试环境！
 
-安装Git客户端及配置Git环境，[参考这里](http://wiki.zte.com.cn/pages/viewpage.action?pageId=20197085)。假设你本地的目录是 `d:\rdkProject\`，运行你的`git-bash.exe`，`cd /d/rdkProject`，执行`git clone git@gitlab.zte.com.cn:10045812/rdk.git`，将rdk克隆到你本地。
-编辑 `d:\rdkProject\rdk\rdk\proc\conf\rdk.cfg`，修改数据ip即可：
+### 设置RDK开发环境
+打开[下载页面](http://10.9.233.35:8080/download)，下载一个与自己项目正在使用的RDK版本匹配的开发环境。将下载得到的压缩包解压缩到任意目录，假设为 `d:\rdk-develop-environment`。
 
-	#连接的数据库ip，原本有可能是注释掉的，要删掉开头的#字符，并修改为实际值
-	database.gbase.hostList=10.43.149.74
+### 下载app代码
+本小节假设app代码被存放在svn服务器上的这个url：`http://10.5.70.3/ZXVMAX/CODE/dev/ZXVMAX/vmax-app-comm/vmax-rdk/rdk_server/app`。
 
-确定当前电脑已经安装了nodejs，如果没有烦请[下载nodejs](http://10.9.233.35:8080/tools/node-v5.10.1-x86.msi)并正确安装。最后，运行 `d:\rdkProject\rdk\start.exe` 就可以启动RDK的开发环境了。
+在资源管理器中右击这个目录 `d:\rdk-develop-environment\rdk\app`，选择SVN菜单“check out”，在弹出的对话框中，将app所在的url填进去，单击ok就好了：
 
-先无视控制台报的异常信息,打开浏览器，输入 `http://localhost:8080/rdk/app/example/web/index.html`，页面能打开表示一切正常。
+![](img/svn-checkout.PNG)
 
-到此，你就可以开发RDK控件或者基于RDK开发应用了。
-
-如果你对RDK后端感兴趣，[参考这里](/doc/#server/how_to_debug_service.md)。
+SVN下载完成之后，就可以在 `d:\rdk-develop-environment\rdk\app` 目录下构建或者修改你的app代码了。
 
 ### 配置ActiveMQ（可选）
 如果你的应用使用到了 `mq` 的相关功能，则必须在启动之前，配置好ActiveMQ的相关信息：
