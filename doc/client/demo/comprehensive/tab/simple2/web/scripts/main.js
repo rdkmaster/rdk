@@ -31,14 +31,5 @@ define('main', ['rd.controls.Table','rd.containers.Panel'], function() {
                 $('span.images_right').removeClass('images_left')
             }
         }
-        $scope.currentPage = "1";
-        $scope.$watch('currentPage',  function(newValue, oldValue) {
-            if (newValue === oldValue) { return; } // AKA first run
-            console.log(1);
-            imagePosition();
-      });
-        $scope.nextPage = function(){
-            console.log(1)
-        }
     }]);
 });
