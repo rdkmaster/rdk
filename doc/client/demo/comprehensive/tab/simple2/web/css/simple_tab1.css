@@ -13,7 +13,7 @@
 .hao{
 	position: relative;
 	width:740px;
-	height: 295px;
+	height: 300px;
     margin-right:12px;
 	/*padding-right:12px;*/
 	/*overflow:auto;*/
@@ -32,7 +32,7 @@
 	text-align:left;
 	font-size: 12px;
 	padding:0px 6px;
-	line-height:30px;
+	height:30px;
 }
 .rdk-table-module .rdk-table > thead > tr>th:last-child{
 	text-align: center;
@@ -87,7 +87,7 @@ span.images_left{
 	border-top: 1px solid #eeeeee;
 }
 .rdk-table-module .rdk-table tfoot tr, .rdk-table-module .rdk-table thead>tr{
-	border-bottom: 1px solid transparent;
+	border-bottom:none;
 }
 /*去tr边框 */
 .rdk-table-module .rdk-table tr{
@@ -99,8 +99,14 @@ span.images_left{
 }
 
 /*标题样式*/
-.rdk-panel-module{
-	border:none;
+div.hao >span.title{
+	position:absolute;
+	border: none;
+	top:10px;
+	font-size: 14px;
+	font-style: normal;
+	line-height: 30px;
+	color: #008FD4;
 }
 .panel-title{
 	background-color: #ffffff; 
@@ -116,14 +122,12 @@ span.images_left{
 }
 i{
 	font-style: normal;
-	line-height: 32px;
-	color: #008FD4;
 }
 /* 翻页定位 */
 .rdk-table-module .pagingLine {
 	position: absolute;
 	width: 100%;
-	top: 255px;
+	top: 260px;
 }
 /* 翻页 */
 .rdk-table-module .enabledRecords{
@@ -168,6 +172,35 @@ i.regular_left{
 .rdk-table-module .pagination {
 	margin: 0;
 }
+/*输入框的样式*/
+.form-control {
+	border: 1px solid #008fd4;
+	height: 30px;
+}
+.rdk-table-module .search {
+	margin-bottom: 10px;
+    margin-top: 2px;
+}
+.glyphicon-search:before {
+	color:#008fd4;
+	line-height: 16px
+}
+.form-control:hover {
+    border-color: #008fd4;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+}
+.form-control:focus {
+    border-color: #008fd4;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+}
+thead.ng-scope>tr >th{
+	height: 30px;
+}
+
 
 
 

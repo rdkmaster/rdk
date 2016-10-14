@@ -4,6 +4,7 @@
 
 .rdk-table-module .searchWapper {
     position: relative;
+    height: 40px;
 }
 
 .rdk-table-module .search {
@@ -17,7 +18,7 @@
     position: absolute;
     right: 8px;
     top: 10px;
-    color: gray
+    color: gray;
 }
 
 .rdk-table-module .search_select{
