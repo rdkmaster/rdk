@@ -614,7 +614,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                                 } else { //不是先前列
                                     _loadSortDataFromServer(columnDef.data, 'asc');
                                 }
-                                EventService.register('innerSortTable', EventTypes.TABLE_READY, function() {
+                                EventService.register(attrs.id+'4innerSort', EventTypes.TABLE_READY, function() {
                                     _addSortArrow(iCol, table);
                                     table.sortCol = iCol;
                                     scope.sortClick = false;
@@ -699,7 +699,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             }, true);
 
                             if(scope.sortClick){
-                                EventService.broadcast('innerSortTable', EventTypes.TABLE_READY);
+                                EventService.broadcast(attrs.id+'4innerSort', EventTypes.TABLE_READY);
                             }
                         });
                     };
