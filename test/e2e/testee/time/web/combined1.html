@@ -10,14 +10,13 @@
     <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
     <script data-main="/rdk/app/libs/rdk/rdk"
         src="/rdk/app/libs/requirejs/require.js"></script>
-    <script src="self.js"></script>
+    <script src="combined.js"></script>
 
     <!-- 应用正式运行的时候，请使用下面这个节点，RDK会使用编译后的代码，代码体积小，下载快 -->
     <!--
     <script data-main="main.min.js" src="/rdk/app/libs/requirejs/require.js"></script>
     <link rel="stylesheet" type="text/css" href="main.min.css">
     -->
-    
     <script type="text/javascript">
         require.config({
             paths: {
@@ -27,47 +26,36 @@
         });
     </script>
     <style type="text/css">
-        .btn-group>div>ul>li:nth-child(1){
+        .rdk-combo-select-module .combo-content-theme{
+            width: 400px;
+        }
+        .datetimepicker:nth-child(5)>.datetimepicker-minutes thead tr .switch,
+        .datetimepicker:nth-child(5)>.datetimepicker-hours thead tr .switch,
+        .datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch,
+        .datetimepicker:nth-child(5)>.datetimepicker-months thead tr .switch,
+        .datetimepicker:nth-child(5)>.datetimepicker-years thead tr .switch{
             background-color: red;
         }
-        .datetimepicker:nth-child(5)>.datetimepicker-minutes thead tr .switch{
-            background-color: red;
+        .datetimepicker:nth-child(6)>.datetimepicker-minutes thead tr .switch,
+        .datetimepicker:nth-child(6)>.datetimepicker-hours thead tr .switch,
+        .datetimepicker:nth-child(6)>.datetimepicker-days thead tr .switch,
+        .datetimepicker:nth-child(6)>.datetimepicker-months thead tr .switch,
+        .datetimepicker:nth-child(6)>.datetimepicker-years thead tr .switch{
+            background-color: #000;
         }
-        .datetimepicker:nth-child(6)>.datetimepicker-minutes thead tr .switch{
+       .demo5 .combo-content-transclude>div>p,.demo2>div>.theme:first-child{
             background-color: red;
-        }
-        .datetimepicker:nth-child(6)>.datetimepicker-hours thead tr .switch{
-            background-color: red;
-        }
-        .datetimepicker:nth-child(5)>.datetimepicker-hours thead tr .switch{
-            background-color: red;
-        }
-        .datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch{
-            background-color: red;
-        }
-        .datetimepicker:nth-child(6)>.datetimepicker-days thead tr .switch{
-            background-color: red;
-        }
-        .datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch{
-            background-color: red;
-        }
-        .datetimepicker:nth-child(6)>.datetimepicker-days thead tr .switch{
-            background-color: red;
-        }
-        .datetimepicker:nth-child(5)>.datetimepicker-months thead tr .switch{
-            background-color: red;
-        }
-        .datetimepicker:nth-child(6)>.datetimepicker-months thead tr .switch{
-            background-color: red;
-        }
+       }
     </style>
 </head>
 <body ng-controller='rdk_ctrl' class="rdk_main">
     <div>Time</div>
-    <div style="margin:20px;" class="demo1">
-        <h6>单时间控件</h6>  
-        <rdk_time setting="macroValue" label="aa"></rdk_time>
-        <p class="macroValue">{{macroValue.value}}</p>
+    <div style="margin:20px;" class="demo2">
+        <h6>双时间控件</h6> 
+        <rdk_accordion ds="ds_table" ds_url="$svr/salary1" ds_query_if="ready" caption="'表1'" style="width:500px;">
+            <rdk_time range setting="TimeGranularity"></rdk_time>
+        </rdk_accordion>
+        <p>{{TimeGranularity.granularity=='week'?TimeGranularity.value[0].label:TimeGranularity.value[0]}}&nbsp{{TimeGranularity.granularity=='week'?TimeGranularity.value[1].label:TimeGranularity.value[1]}}</p>
     </div>
     <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
     <!--     这个节点可选，删除后，RDK会自动生成一个    -->
@@ -77,5 +65,4 @@
         <img src="images/loding.gif" alt="loading..."/>
     </rdk_loading>
 </body>
-
 </html>

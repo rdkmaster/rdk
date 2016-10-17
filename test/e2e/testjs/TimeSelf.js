@@ -1,14 +1,9 @@
 'use strict';
-describe('Table Demos',function(){
-    beforeEach(function(){
-        browser.get('test/e2e/testee/time/web/self.html');
-        browser.sleep(2000);
-    });
-    afterEach(function(){
-    });
+describe('time Demos',function(){
     // 选择时间点
     it('单时间控件点击选择时间点是否正确',function(){
         //直接输入点击显示结果
+        browser.get("test/e2e/testee/time/web/self.html");
         var input=element.all(by.css(".demo1 input")).get(0);
         var time=element(by.css(".demo1 p"));
         var date=element.all(by.css(".datetimepicker")).get(0); 
@@ -22,9 +17,10 @@ describe('Table Demos',function(){
 
     it('单时间控件限制时间点击选择时间点是否正确',function(){
         //直接输入点击显示结果
+        browser.get("test/e2e/testee/time/web/self1.html");
         var input=element.all(by.css(".demo2 input")).get(0);
         var time=element(by.css(".demo2 p"));
-        var days=element(by.css(".datetimepicker:nth-child(9)>.datetimepicker-days tbody tr:first-child td:nth-child(3)"));
+        var days=element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days tbody tr:first-child td:nth-child(3)"));
         input.click();
         days.click();
         time.getText().then(function(txt){
@@ -32,22 +28,62 @@ describe('Table Demos',function(){
         });
     });
 
+    it('单时间控件可选时间粒度点击选择时间点是否正确',function(){
+        //直接输入点击显示结果
+        browser.get("test/e2e/testee/time/web/self4.html");
+        var timeOne = element(by.css(".demo4 input:first-child"));
+        var select = element(by.css(".demo4 button"));
+        var option = element(by.css(".demo4 ul.dropdown-menu>li:nth-child(1)"));
+        select.click();
+        option.click();
+
+        var timeOneMinutes = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-minutes thead tr .switch"));
+        var timeOneHours = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-hours thead tr .switch"));
+        var timeOneDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch"));
+        var timeOneMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months thead tr .switch"));
+        var timeOneYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years thead tr .switch"));
+
+        var oneYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var oneMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var oneDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+        var ontHours = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-hours tbody tr:first-child td span:nth-child(1)"));
+        var ontMinutes = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-minutes tbody tr:first-child td span:nth-child(1)"));
+        timeOne.click();
+
+        timeOneMinutes.click();
+        timeOneHours.click();
+        timeOneDays.click();
+        timeOneMonths.click();
+        timeOneYears.click();
+
+        oneYears.click();
+        oneMonths.click();
+        oneDays.click();
+        ontHours.click();
+        ontMinutes.click();
+        var time=element(by.css(".demo4 p"));
+        time.getText().then(function(txt){
+            expect(txt).toBe("2010-01-02 00:00");
+        });
+    });
+
     it('双时间控件点击选择时间点是否正确',function(){
         //直接输入点击显示结果
+        browser.get("test/e2e/testee/time/web/self2.html");
         var time=element(by.css(".demo3 p"));
         var timeOne = element(by.css(".demo3 input:first-child"));
         var timeTwo = element(by.css(".demo3 input:nth-child(3)"));
-        var timeOneMinutes = element(by.css(".datetimepicker:nth-child(10)>.datetimepicker-minutes thead tr .switch"));
-        var timeOneHours = element(by.css(".datetimepicker:nth-child(10)>.datetimepicker-hours thead tr .switch"));
-        var timeOneDays = element(by.css(".datetimepicker:nth-child(10)>.datetimepicker-days thead tr .switch"));
-        var timeOneMonths = element(by.css(".datetimepicker:nth-child(10)>.datetimepicker-months thead tr .switch"));
-        var timeOneYears = element(by.css(".datetimepicker:nth-child(10)>.datetimepicker-years thead tr .switch"));
+        var timeOneMinutes = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-minutes thead tr .switch"));
+        var timeOneHours = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-hours thead tr .switch"));
+        var timeOneDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch"));
+        var timeOneMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months thead tr .switch"));
+        var timeOneYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years thead tr .switch"));
 
-        var ontYears = element(by.css(".datetimepicker:nth-child(10)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
-        var ontMonths = element(by.css(".datetimepicker:nth-child(10)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
-        var ontDays = element(by.css(".datetimepicker:nth-child(10)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
-        var ontHours = element(by.css(".datetimepicker:nth-child(10)>.datetimepicker-hours tbody tr:first-child td span:nth-child(1)"));
-        var ontMinutes = element(by.css(".datetimepicker:nth-child(10)>.datetimepicker-minutes tbody tr:first-child td span:nth-child(1)"));
+        var ontYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var ontMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var ontDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+        var ontHours = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-hours tbody tr:first-child td span:nth-child(1)"));
+        var ontMinutes = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-minutes tbody tr:first-child td span:nth-child(1)"));
 
         timeOne.click();
         timeOneMinutes.click();
@@ -62,17 +98,17 @@ describe('Table Demos',function(){
         ontHours.click();
         ontMinutes.click();
 
-        var timeTwoMinutes = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-minutes thead tr .switch"));
-        var timeTwoHours = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-hours thead tr .switch"));
-        var timeTwoDays = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-days thead tr .switch"));
-        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-months thead tr .switch"));
-        var timeTwoYears = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-years thead tr .switch"));
+        var timeTwoMinutes = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-minutes thead tr .switch"));
+        var timeTwoHours = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-hours thead tr .switch"));
+        var timeTwoDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days thead tr .switch"));
+        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months thead tr .switch"));
+        var timeTwoYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years thead tr .switch"));
 
-        var twoYears = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
-        var twoMonths = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
-        var twoDays = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
-        var twoHours = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-hours tbody tr:first-child td span:nth-child(1)"));
-        var twoMinutes = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-minutes tbody tr:first-child td span:nth-child(1)"));
+        var twoYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var twoMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var twoDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+        var twoHours = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-hours tbody tr:first-child td span:nth-child(1)"));
+        var twoMinutes = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-minutes tbody tr:first-child td span:nth-child(1)"));
    
         timeTwo.click();
         timeTwoMinutes.click();
@@ -95,23 +131,24 @@ describe('Table Demos',function(){
 
     it('双时间插件选择粒度后点击选择时间点是否正确',function(){
         //直接输入点击显示结果
-        var select = element(by.css(".demo3 select"));
-        var option = element(by.css(".demo3 option:nth-child(2)"));
+        browser.get("test/e2e/testee/time/web/self2.html");
+        var select = element(by.css(".demo3 .btn-group"));
+        var option = element(by.css(".demo3 .btn-group>div>ul>li:nth-child(2)"));
         select.click();
         option.click();
         
         var time = element(by.css(".demo3 p"));
         var timeOne = element(by.css(".demo3 input:first-child"));
         var timeTwo = element(by.css(".demo3 input:nth-child(3)"));
-        var timeOneHours = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-hours thead tr .switch"));
-        var timeOneDays = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-days thead tr .switch"));
-        var timeOneMonths = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-months thead tr .switch"));
-        var timeOneYears = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-years thead tr .switch"));
+        var timeOneHours = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-hours thead tr .switch"));
+        var timeOneDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days thead tr .switch"));
+        var timeOneMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months thead tr .switch"));
+        var timeOneYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years thead tr .switch"));
 
-        var oneYears = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
-        var oneMonths = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
-        var oneDays = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
-        var oneHours = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-hours tbody tr:first-child td span:nth-child(1)"));
+        var oneYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var oneMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var oneDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+        var oneHours = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-hours tbody tr:first-child td span:nth-child(1)"));
 
         timeOne.click();
 
@@ -124,15 +161,15 @@ describe('Table Demos',function(){
         oneMonths.click();
         oneDays.click();
         oneHours.click();
-        var timeTwoHours = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-hours thead tr .switch"));
-        var timeTwoDays = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-days thead tr .switch"));
-        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-months thead tr .switch"));
-        var timeTwoYears = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-years thead tr .switch"));
+        var timeTwoHours = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-hours thead tr .switch"));
+        var timeTwoDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch"));
+        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months thead tr .switch"));
+        var timeTwoYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years thead tr .switch"));
 
-        var twoYears = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
-        var twoMonths = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
-        var twoDays = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
-        var twoHours = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-hours tbody tr:first-child td span:nth-child(1)"));
+        var twoYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var twoMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var twoDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+        var twoHours = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-hours tbody tr:first-child td span:nth-child(1)"));
 
         timeTwo.click();
         timeTwoHours.click();
@@ -150,32 +187,32 @@ describe('Table Demos',function(){
         });
     });
 
-
     it('双时间插件选择粒度后点击选择时间点是否正确',function(){
         //直接输入点击显示结果
-        var select = element(by.css(".demo3 select"));
-        var selectDays = element(by.css(".demo3 option:nth-child(3)"));
+        browser.get("test/e2e/testee/time/web/self2.html");
+        var select = element(by.css(".demo3 .btn-group"));
+        var selectDays = element(by.css(".demo3 .btn-group>div>ul>li:nth-child(3)"));
         
         var time = element(by.css(".demo3 p"));
         var timeOne = element(by.css(".demo3 input:first-child"));
         var timeTwo = element(by.css(".demo3 input:nth-child(3)"));
 
-        var timeOneDays = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-days thead tr .switch"));
-        var timeOneMonths = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-months thead tr .switch"));
-        var timeOneYears = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-years thead tr .switch"));
+        var timeOneDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch"));
+        var timeOneMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months thead tr .switch"));
+        var timeOneYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years thead tr .switch"));
 
-        var ontYears = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
-        var ontMonths = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
-        var ontDays = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+        var ontYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var ontMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var ontDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
 
 
-        var timeTwoDays = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-days thead tr .switch"));
-        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-months thead tr .switch"));
-        var timeTwoYears = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-years thead tr .switch"));
+        var timeTwoDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days thead tr .switch"));
+        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months thead tr .switch"));
+        var timeTwoYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years thead tr .switch"));
 
-        var twoYears = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
-        var twoMonths = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
-        var twoDays = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+        var twoYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var twoMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var twoDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
    
         select.click();
         selectDays.click();
@@ -205,23 +242,25 @@ describe('Table Demos',function(){
             expect(txt).toBe("2010-01-01 2010-01-01");
         });
     });
+
     it('双时间插件选择粒度后点击选择时间点是否正确',function(){
         //直接输入点击显示结果
-        var select = element(by.css(".demo3 select"));
-        var option = element(by.css(".demo3 option:nth-child(4)"));
+        browser.get("test/e2e/testee/time/web/self2.html");
+        var select = element(by.css(".demo3 .btn-group"));
+        var option = element(by.css(".demo3 .btn-group>div>ul>li:nth-child(4)"));
         select.click();
         option.click();
         
         var time = element(by.css(".demo3 p"));
         var timeOne = element(by.css(".demo3 input:first-child"));
         var timeTwo = element(by.css(".demo3 input:nth-child(3)"));
-        var timeOneDays = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-days thead tr .switch"));
-        var timeOneMonths = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-months thead tr .switch"));
-        var timeOneYears = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-years thead tr .switch"));
+        var timeOneDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch"));
+        var timeOneMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months thead tr .switch"));
+        var timeOneYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years thead tr .switch"));
 
-        var oneYears = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
-        var oneMonths = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
-        var oneDays = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+        var oneYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var oneMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var oneDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
 
         timeOne.click();
 
@@ -232,13 +271,13 @@ describe('Table Demos',function(){
         oneYears.click();
         oneMonths.click();
         oneDays.click();
-        var timeTwoDays = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-days thead tr .switch"));
-        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-months thead tr .switch"));
-        var timeTwoYears = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-years thead tr .switch"));
+        var timeTwoDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days thead tr .switch"));
+        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months thead tr .switch"));
+        var timeTwoYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years thead tr .switch"));
 
-        var twoYears = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
-        var twoMonths = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
-        var twoDays = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+        var twoYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var twoMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var twoDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
 
         timeTwo.click();
         timeTwoDays.click();
@@ -256,19 +295,20 @@ describe('Table Demos',function(){
     
     it('双时间插件选择粒度后点击选择时间点是否正确',function(){
         //直接输入点击显示结果
-        var select = element(by.css(".demo3 select"));
-        var option = element(by.css(".demo3 option:nth-child(5)"));
+        browser.get("test/e2e/testee/time/web/self2.html");
+        var select = element(by.css(".demo3 .btn-group"));
+        var option = element(by.css(".demo3 .btn-group>div>ul>li:nth-child(5)"));
         select.click();
         option.click();
         
         var time = element(by.css(".demo3 p"));
         var timeOne = element(by.css(".demo3 input:first-child"));
         var timeTwo = element(by.css(".demo3 input:nth-child(3)"));
-        var timeOneMonths = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-months thead tr .switch"));
-        var timeOneYears = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-years thead tr .switch"));
+        var timeOneMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months thead tr .switch"));
+        var timeOneYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years thead tr .switch"));
 
-        var oneYears = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
-        var oneMonths = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var oneYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var oneMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
 
         timeOne.click();
 
@@ -277,11 +317,11 @@ describe('Table Demos',function(){
 
         oneYears.click();
         oneMonths.click();
-        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-months thead tr .switch"));
-        var timeTwoYears = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-years thead tr .switch"));
+        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months thead tr .switch"));
+        var timeTwoYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years thead tr .switch"));
 
-        var twoYears = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
-        var twoMonths = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var twoYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var twoMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
 
         timeTwo.click();
         timeTwoMonths.click();
@@ -297,15 +337,16 @@ describe('Table Demos',function(){
     
     it('点击选择时间点是否正确',function(){
         //直接输入点击显示结果
+        browser.get("test/e2e/testee/time/web/self3.html");
         var time = element(by.css(".demo4 p"));
         var timeOne = element(by.css(".demo4 input:first-child"));
-        var timeOneDays = element(by.css(".datetimepicker:nth-child(11)>.datetimepicker-days thead tr .switch"));
-        var timeOneMonths = element(by.css(".datetimepicker:nth-child(11)>.datetimepicker-months thead tr .switch"));
-        var timeOneYears = element(by.css(".datetimepicker:nth-child(11)>.datetimepicker-years thead tr .switch"));
+        var timeOneDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch"));
+        var timeOneMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months thead tr .switch"));
+        var timeOneYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years thead tr .switch"));
 
-        var ontYears = element(by.css(".datetimepicker:nth-child(11)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
-        var ontMonths = element(by.css(".datetimepicker:nth-child(11)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
-        var ontDays = element(by.css(".datetimepicker:nth-child(11)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+        var ontYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var ontMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var ontDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
    
         timeOne.click();
         timeOneDays.click();
@@ -324,29 +365,30 @@ describe('Table Demos',function(){
 
     it('点击选择时间点是否正确',function(){
         //直接输入点击显示结果
-        var select = element(by.css(".demo4 select"));
-        var selectMinutes = element(by.css(".demo4 option:first-child"));
+        browser.get("test/e2e/testee/time/web/self3.html");
+        var select = element(by.css(".demo4 .btn-group"));
+        var option = element(by.css(".demo4 .btn-group>div>ul>li:first-child"));
         
         var time = element(by.css(".demo4 p"));
         var timeOne = element(by.css(".demo4 input:first-child"));
         var timeTwo = element(by.css(".demo4 input:nth-child(3)"));
-        var timeOneDays = element(by.css(".datetimepicker:nth-child(11)>.datetimepicker-days thead tr .switch"));
-        var timeOneMonths = element(by.css(".datetimepicker:nth-child(11)>.datetimepicker-months thead tr .switch"));
-        var timeOneYears = element(by.css(".datetimepicker:nth-child(11)>.datetimepicker-years thead tr .switch"));
+        var timeOneDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch"));
+        var timeOneMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months thead tr .switch"));
+        var timeOneYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years thead tr .switch"));
 
-        var ontYears = element(by.css(".datetimepicker:nth-child(11)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
-        var ontMonths = element(by.css(".datetimepicker:nth-child(11)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
-        var ontDays = element(by.css(".datetimepicker:nth-child(11)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+        var ontYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var ontMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var ontDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
 
 
-        var timeTwoDays = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-days thead tr .switch"));
-        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-months thead tr .switch"));
-        var timeTwoYears = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-years thead tr .switch"));
+        var timeTwoDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days thead tr .switch"));
+        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months thead tr .switch"));
+        var timeTwoYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years thead tr .switch"));
 
-        var twoYears = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var twoYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
    
         select.click();
-        selectMinutes.click();
+        option.click();
 
         timeOne.click();
         timeOneDays.click();
@@ -371,22 +413,23 @@ describe('Table Demos',function(){
 
     it('点击选择时间点是否正确',function(){
         //直接输入点击显示结果
-        var select = element(by.css(".demo4 select"));
-        var selectMinutes = element(by.css(".demo4 option:nth-child(2)"));
+        browser.get("test/e2e/testee/time/web/self3.html");
+        var select = element(by.css(".demo4 .btn-group"));
+        var option = element(by.css(".demo4 .btn-group>div>ul>li:nth-child(2)"));
         
         var time = element(by.css(".demo4 p"));
         var timeOne = element(by.css(".demo4 input:first-child"));
         var timeTwo = element(by.css(".demo4 input:nth-child(3)"));
-        var timeOneDays = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-days thead tr .switch"));
-        var timeOneMonths = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-months thead tr .switch"));
-        var timeOneYears = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-years thead tr .switch"));
+        var timeOneDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch"));
+        var timeOneMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months thead tr .switch"));
+        var timeOneYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years thead tr .switch"));
 
-        var ontYears = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
-        var ontMonths = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
-        var ontDays = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+        var ontYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var ontMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var ontDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
 
         select.click();
-        selectMinutes.click();
+        option.click();
 
         timeOne.click();
         timeOneDays.click();
@@ -397,13 +440,12 @@ describe('Table Demos',function(){
         ontMonths.click();
         ontDays.click();
 
-        var timeTwoDays = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-days thead tr .switch"));
-        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-months thead tr .switch"));
-        var timeTwoYears = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-years thead tr .switch"));
+        var timeTwoDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days thead tr .switch"));
+        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months thead tr .switch"));
+        var timeTwoYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years thead tr .switch"));
 
-        var twoYears = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var twoYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
    
-
         timeTwo.click();
         timeTwoDays.click();
         timeTwoMonths.click();
@@ -418,27 +460,28 @@ describe('Table Demos',function(){
 
     it('点击选择时间点是否正确',function(){
         //直接输入点击显示结果
-        var select = element(by.css(".demo4 select"));
-        var selectMinutes = element(by.css(".demo4 option:nth-child(3)"));
+        browser.get("test/e2e/testee/time/web/self3.html");
+        var select = element(by.css(".demo4 .btn-group"));
+        var option = element(by.css(".demo4 .btn-group>div>ul>li:nth-child(3)"));
         
         var time = element(by.css(".demo4 p"));
         select.click();
-        selectMinutes.click();
+        option.click();
 
         var timeOne = element(by.css(".demo4 input:first-child"));
         var timeTwo = element(by.css(".demo4 input:nth-child(3)"));
 
-        var timeOneMonths = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-months thead tr .switch"));
-        var timeOneYears = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-years thead tr .switch"));
+        var timeOneMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months thead tr .switch"));
+        var timeOneYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years thead tr .switch"));
 
-        var ontYears = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
-        var ontMonths = element(by.css(".datetimepicker:nth-child(12)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var ontYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var ontMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
 
 
-        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-months thead tr .switch"));
-        var timeTwoYears = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-years thead tr .switch"));
+        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months thead tr .switch"));
+        var timeTwoYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years thead tr .switch"));
 
-        var twoYears = element(by.css(".datetimepicker:nth-child(13)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var twoYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
    
         timeOne.click();
         timeOneMonths.click();

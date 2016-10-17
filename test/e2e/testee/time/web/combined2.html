@@ -42,7 +42,29 @@
         .datetimepicker:nth-child(6)>.datetimepicker-months thead tr .switch,
         .datetimepicker:nth-child(6)>.datetimepicker-years thead tr .switch{
             background-color: #000;
-        }      
+        }
+        .datetimepicker:nth-child(7)>.datetimepicker-minutes thead tr .switch,
+        .datetimepicker:nth-child(7)>.datetimepicker-hours thead tr .switch,
+        .datetimepicker:nth-child(7)>.datetimepicker-days thead tr .switch,
+        .datetimepicker:nth-child(7)>.datetimepicker-months thead tr .switch,
+        .datetimepicker:nth-child(7)>.datetimepicker-years thead tr .switch{
+            background-color: red;
+        }
+        .datetimepicker:nth-child(8)>.datetimepicker-minutes thead tr .switch,
+        .datetimepicker:nth-child(8)>.datetimepicker-hours thead tr .switch,
+        .datetimepicker:nth-child(8)>.datetimepicker-days thead tr .switch,
+        .datetimepicker:nth-child(8)>.datetimepicker-months thead tr .switch,
+        .datetimepicker:nth-child(8)>.datetimepicker-years thead tr .switch{
+            background-color: #000;
+        }
+        .datetimepicker:nth-child(9)>.datetimepicker-minutes thead tr .switch,
+        .datetimepicker:nth-child(9)>.datetimepicker-hours thead tr .switch,
+        .datetimepicker:nth-child(9)>.datetimepicker-days thead tr .switch,
+        .datetimepicker:nth-child(9)>.datetimepicker-months thead tr .switch,
+        .datetimepicker:nth-child(9)>.datetimepicker-years thead tr .switch{
+            background-color: #000;
+        }
+      
        .demo5 .combo-content-transclude>div>p{
         background-color: red;
        }
@@ -50,14 +72,13 @@
 </head>
 <body ng-controller='rdk_ctrl' class="rdk_main">
     <div>Time</div>
-    <div style="margin:20px;" class="demo1">
-        <h6>双时间控件(限制时间间隔)</h6>
-        <rdk_tab>
-            <div title="Time">
-                <rdk_time range setting="TimeGap"></rdk_time>
-            </div>
-        </rdk_tab> 
-        <p>{{TimeGap.granularity=='week'?TimeGap.value[0].label:TimeGap.value[0]}}&nbsp{{TimeGap.granularity=='week'?TimeGap.value[1].label:TimeGap.value[1]}}</p>
+    <div style="margin:20px;" class="demo3">
+        <div ng-repeat="item in items" class="demo-child{{$index}}">
+            <rdk_time label="item.label" ng-if="item.range == false" setting="item.setting"></rdk_time>
+            <rdk_time label="item.label" ng-if="item.range" range setting="item.setting"></rdk_time>
+            <p class="p{{$index}}" ng-if="item.range == false">{{item.setting.value}}</p>
+            <p class="p{{$index}}" ng-if="item.range">{{item.setting.granularity=='week'?item.setting.value[0].label:item.setting.value[0]}}&nbsp{{item.setting.granularity=='week'?item.setting.value[1].label:item.setting.value[1]}}</p>
+        </div>
     </div>
     <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
     <!--     这个节点可选，删除后，RDK会自动生成一个    -->

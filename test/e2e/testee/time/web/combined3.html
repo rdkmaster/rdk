@@ -50,14 +50,11 @@
 </head>
 <body ng-controller='rdk_ctrl' class="rdk_main">
     <div>Time</div>
-    <div style="margin:20px;" class="demo1">
-        <h6>双时间控件(限制时间间隔)</h6>
-        <rdk_tab>
-            <div title="Time">
-                <rdk_time range setting="TimeGap"></rdk_time>
-            </div>
-        </rdk_tab> 
-        <p>{{TimeGap.granularity=='week'?TimeGap.value[0].label:TimeGap.value[0]}}&nbsp{{TimeGap.granularity=='week'?TimeGap.value[1].label:TimeGap.value[1]}}</p>
+    <div class="demo4" style="margin:20px;">
+        <rdk_panel width="500px" height="200px">
+            <rdk_time range setting="timePanel"></rdk_time>
+            <p>{{timePanel.granularity=='week'?timePanel.value[0].label:timePanel.value[0]}}&nbsp{{timePanel.granularity=='week'?timePanel.value[1].label:timePanel.value[1]}}</p>
+        </rdk_panel>
     </div>
     <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
     <!--     这个节点可选，删除后，RDK会自动生成一个    -->
