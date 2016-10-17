@@ -718,16 +718,23 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                                 }
                             }, true);
 
-                            if(scope.sortClick){
-                                EventService.broadcast(scope.innerID, EventTypes.TABLE_READY);
-                            }
-
-                            if(scope.turnCheckPage){
-                                scope.refreshCheckBox();
-                            }
+                            _turnPageCheckBoxResponse();//翻页，有checkbox，刷新数据后的响应
+                            _serverSortResponse();//后端排序，刷新后的响应
                         });
                     };
                     //END INIT
+
+                    function _turnPageCheckBoxResponse(){
+                        if(scope.turnCheckPage){
+                            scope.refreshCheckBox();
+                        }
+                    }
+
+                    function _serverSortResponse(){
+                        if(scope.sortClick){
+                            EventService.broadcast(scope.innerID, EventTypes.TABLE_READY);
+                        }
+                    }
 
                     function _totalBroadcast(isChecked){
                         if (angular.isDefined(attrs.id)) {
