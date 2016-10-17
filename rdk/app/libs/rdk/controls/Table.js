@@ -245,6 +245,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                     if (scope.pagingType == "server") {
                         _loadDataFromServer();
                     }
+                    scope.addCheckBox ? scope.turnCheckPage = true : scope.turnCheckPage = false;//换页时是否有checkbox
                 };
 
                 this.getTablePageNumber = function() {
@@ -649,7 +650,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         };
 
                         scope.singleCheck = function(item, index, event){
-                            _singleCheckHandler(event.currentTarget.checked);
+                            _singleCheckHandler();
                             _refreshCheckedIdxArr();
 
                             if (angular.isDefined(attrs.id)) {
@@ -685,6 +686,23 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             }
                         }
 
+                        scope.getCurrentPageDataArr = function(){
+                            if(scope.pagingType == "server"){
+                                return scope.destData;
+                            }
+                            var currentPage = parseInt(scope.currentPage, 10);
+                            var pageSize = parseInt(scope.pageSize, 10);
+                            var start = currentPage * pageSize; 
+                            return scope.destData.slice(start, start+pageSize); //子数组                           
+                        }
+
+                        scope.refreshCheckBox = function(){
+                            if(!scope.addCheckBox) return;
+                            _totalCheckHandler(false);
+                            _resetTotalCheck(false);
+                            _totalBroadcast(false);
+                        }
+
                         var off = scope.$on('ngRepeatFinished', function() {
                             _reFreshTable();
                             _refreshCheckedStatus();
@@ -703,6 +721,10 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             if(scope.sortClick){
                                 EventService.broadcast(scope.innerID, EventTypes.TABLE_READY);
                             }
+
+                            if(scope.turnCheckPage){
+                                scope.refreshCheckBox();
+                            }
                         });
                     };
                     //END INIT
@@ -710,7 +732,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                     function _totalBroadcast(isChecked){
                         if (angular.isDefined(attrs.id)) {
                             var data = {};
-                            data.data = isChecked ? scope.destData : [];
+                            data.data = isChecked ? _getCheckedItemArr() : [];
                             EventService.broadcast(attrs.id, EventTypes.CHECK, data);
                         }
                     }
@@ -736,9 +758,14 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         }
                     }
 
-                    function _singleCheckHandler(isChecked){
+                    function _singleCheckHandler(){
+                        var isChecked = _isAllSelected();
+                        _resetTotalCheck(isChecked);
+                    }
+
+                    function _resetTotalCheck(isChecked){
                         var arr = element.find('input[name="totalCheckBox"]');//document.getElementsByName("totalCheckBox");
-                        arr[0].checked = _isAllSelected();
+                        arr[0].checked = isChecked;
                     }
 
                     function _totalCheckHandler(isChecked){
@@ -750,8 +777,9 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
 
                     function _getCheckedItemArr(items){
                         var checkedItemArr = [];
+                        var currentDataArr = scope.getCurrentPageDataArr();
                         for(var i=0; i<scope.checkedIdxArr.length; i++){
-                            checkedItemArr.push(scope.destData[scope.checkedIdxArr[i]]);
+                            checkedItemArr.push(currentDataArr[scope.checkedIdxArr[i]]);
                         } 
                         return checkedItemArr;                        
                     }
