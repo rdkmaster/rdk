@@ -5,6 +5,7 @@
     border: 1px solid #A5A6AA;
     border-radius: 4px;
     width: 200px;
+	hight:100%;
     float:left;
 
 }
@@ -25,12 +26,11 @@
 .panel-title{
     background-color: #E3E3E3;
     border: 1px solid #CDCDCD;
-    width: 100%;
-    height:30px;
-   
+    width: 100%; 
 }
 
 .panel-content{
+	overflow-y:auto;
     width: 100%;
 }
 
