@@ -1,0 +1,17 @@
+.buttonClass {
+  box-sizing: border-box;
+  height:30px;
+  border:none;
+  background: #3ab1ea;
+  border-radius: 4px;
+  font-size:14px;
+  color:#ffffff;
+  line-height: 30px;
+  padding:0px 16px;
+  font-family: 'Microsoft YaHei';
+  cursor:pointer;
+  outline:none;
+}
+.buttonClass:hover {
+  background:#007bb6;
+}
