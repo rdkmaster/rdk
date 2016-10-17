@@ -98,10 +98,21 @@ function() {
                        $(elem).css('width',$(el[0]).attr("width"));
 
                     }
+					else{
+						if (el[0].style.width){
+							$(elem).css('width',el[0].style.width);
+						}
+					}
                     if ($(el[0]).attr("height")){
                        $(elem).css('height',$(el[0]).attr("height"));
                        // $((elem).lastElementChild).css('max-height',$(el[0]).attr("height"));
                     }
+					else {
+						if (el[0].style.height){
+								$(elem).css('height',el[0].style.height);
+						}
+						
+					}
                     
                }
        
