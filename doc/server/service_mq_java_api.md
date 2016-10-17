@@ -6,17 +6,16 @@ RDK的消息对列功能可以完美的支持java程序
 
 ### 依赖下载 ###
 
-- 下载与本服务器RDK版本**匹配**的 [activemq-vmax.jar](/rdk_server/lib/activemq-vmax.jar) 包
+- 下载与本服务器RDK版本**匹配**的 [activemq-vmax.jar](/rdk/proc/bin/lib/activemq-vmax.jar) 包
 - 下载**最新版本**的 [activemq-vmax.jar](http://10.5.70.3/ZXVMAX/CODE/dev/ZXVMAX/vmax-app-cn/CODE/ZTECOMMON/ServerCode/activemq/client/java/activemq-vmax/lib/activemq-vmax.jar) 包(SVN)
 
 其他第三方包下载，所有包都需要，和 activemq-vmax.jar 一起使用。
 
-- [activemq-broker-5.13.1.jar](/rdk_server/lib/activemq-broker-5.13.1.jar)
-- [activemq-client-5.13.1.jar](/rdk_server/lib/activemq-client-5.13.1.jar)
-- [geronimo-j2ee-management_1.1_spec-1.0.1.jar](/rdk_server/lib/geronimo-j2ee-management_1.1_spec-1.0.1.jar)
-- [geronimo-jms_1.1_spec-1.1.1.jar](/rdk_server/lib/geronimo-jms_1.1_spec-1.1.1.jar)
-- [hawtbuf-1.11.jar](/rdk_server/lib/hawtbuf-1.11.jar)
-- [slf4j-api-1.7.13.jar](/rdk_server/lib/slf4j-api-1.7.13.jar)
+- [activemq-broker-5.13.1.jar](/rdk/proc/bin/lib/activemq-broker-5.13.1.jar)
+- [activemq-client-5.13.1.jar](/rdk/proc/bin/lib/activemq-client-5.13.1.jar)
+- [geronimo-j2ee-management_1.1_spec-1.0.1.jar](/rdk/proc/bin/lib/geronimo-j2ee-management_1.1_spec-1.0.1.jar)
+- [geronimo-jms_1.1_spec-1.1.1.jar](/rdk/proc/bin/lib/geronimo-jms_1.1_spec-1.1.1.jar)
+- [slf4j-api-1.7.13.jar](/rdk/proc/bin/lib/slf4j-api-1.7.13.jar)
 
 
 
@@ -95,7 +94,7 @@ RDK推荐一个消息事务使用一个特定字符串主题，比如 mysubject�
 		}
 	}
 
-如果收到的消息类型是 `VersionMismatchMessage`，说明你的进程使用的activemq-vmax.jar版本与**本服务器的RDK服务进程**所使用的版本不匹配，请[单击这里](/rdk_server/lib/activemq-vmax.jar)下载一个匹配的jar包，注意此链接下载到的不一定是最新的activemq-vmax.jar。
+如果收到的消息类型是 `VersionMismatchMessage`，说明你的进程使用的activemq-vmax.jar版本与**本服务器的RDK服务进程**所使用的版本不匹配，请[单击这里](/rdk/proc/bin/lib/activemq-vmax.jar)下载一个匹配的jar包，注意此链接下载到的不一定是最新的activemq-vmax.jar。
 
 [单击这里](http://10.5.70.3/ZXVMAX/CODE/dev/ZXVMAX/vmax-app-cn/CODE/ZTECOMMON/ServerCode/activemq/client/java/activemq-vmax/lib/activemq-vmax.jar)可以下载到最新版本的activemq-vmax.jar。
 

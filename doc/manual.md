@@ -25,7 +25,7 @@
 按照本小节介绍的方法，可以打造一个基于windows平台的RDK的web和rest服务的开发&调试环境！
 
 安装Git客户端及配置Git环境，[参考这里](http://wiki.zte.com.cn/pages/viewpage.action?pageId=20197085)。假设你本地的目录是 `d:\rdkProject\`，运行你的`git-bash.exe`，`cd /d/rdkProject`，执行`git clone git@gitlab.zte.com.cn:10045812/rdk.git`，将rdk克隆到你本地。
-编辑 `d:\rdkProject\rdk\rdk\proc\conf\rdk.cfg`，修改数据ip即可：
+编辑 `d:\rdkProject\rdk\rdk\proc\conf\rdk.cfg`，修改数据ip即可：how
 
 	#连接的数据库ip，原本有可能是注释掉的，要删掉开头的#字符，并修改为实际值
 	database.gbase.hostList=10.43.149.74
@@ -129,7 +129,7 @@
 
 ## 开发第一个应用
 
-新手宝典：[天龙八步](/rdk_server/doc/best_practise/index.md)，把一个应用拆分出若干个步骤讲解开发过程，隆重推荐。
+新手宝典：[天龙八步](/doc/best_practise/index.md)，把一个应用拆分出若干个步骤讲解开发过程，隆重推荐。
 
 ## 开发前端部分
 
@@ -155,51 +155,7 @@
 
 
 ### 给应用添加菜单
-RDK应用的菜单配置信息在应用包内的 `web/menu/` 目录下，该目录下有两个文件，一般只需要修改 `menu_cfg.ini` 这个文件，它的内容如下：
-
-	#归属的二级菜单
-	menuKey='com_zte_com_SQM_Special'
-	
-	#三级菜单
-	zhMenu3='呼叫分析'
-	enMenu3='Call Analysis'
-
-一共3个配置项：
-
-- menuKey: 归属的二级菜单key，如果需要新建归属的二级菜单项，请阅读本小节的后续部分；
-- zhMenu3: 配置本应用的菜单信息，就是需要显示在ICT菜单中的菜单项，对应中文描述；
-- enMenu3: 同 `zhMenu3`，对应英文描述；
-
-保存后，随应用的其他文件一起提交到svn即可，新的版本制作出来之后，会自动将菜单挂上。
-
-如果需要测试一下是否有效，可以将 `web/menu/` 目录传到服务器上相应应用文件夹下，然后在shell终端中执行该文件夹下的 `merge_menu.sh` 脚本即可。脚本执行完毕之后，刷新一下浏览器就可以看到效果啦。
-
-**如何添加二级菜单**
-
-下载[`merge_lv2_menu.sh`脚本](/rdk_server/app/sqm/special_service/merge_lv2_menu.sh)，放在app目录下的任意子目录中，不要修改脚本文件名！
-
-RDK推荐将应用按照菜单挂载的层次存放应用目录，因此**最好放在应用归属的二级菜单目录下**。比如“专题分析”这个二级菜单，出现在“业务质量”这个一级菜单下，因此将创建“专题分析”的脚本放在 `app/sqm/special_service` 目录下就非常合适。
-
-编辑这个 `merge_lv2_menu.sh` 脚本：
-
-	#!/bin/sh
-	
-	#二级菜单
-	zhMenu2='专题分析'
-	enMenu2='Special Analysis'
-	menuKey='com_zte_com_SQM_Special'
-	
-	basepath=$(cd `dirname $0`; pwd)
-	cd $basepath
-	。。。。
-
-修改 `zhMenu2`, `enMenu2`, `menuKey` 这3个属性：
-
-- `zhMenu2` 和 `enMenu2` 是二级菜单的国际化
-- `menuKey` 是二级菜单的key，可以随便起，不能和已有的菜单的key重复。
-
-修改完提交svn即可。可以将这个脚本传到服务器上执行一下，看看是否生效。
-
+RDK应用的菜单添加包括License鉴权，烦请参考svn文档：`http://10.5.0.128/BIGDATA_FIVE_DEPARTMENT/DOC/trunk/开发规范/ICT应用菜单挂载开发规范-V1.0.docx`。
 
 ### 调用服务
 
@@ -259,7 +215,7 @@ RDK提供了一组记录日志的函数，它们有共同的定义：
 
 为了能够设置断点，我们需要在本地搭建一个后端服务的运行环境，听起来好像很复杂，实际上，的确有些麻烦。
 
-[点击这里继续](how_to_debug_service.md)
+[点击这里继续](/doc/#server/how_to_debug_service.md)
 
 
 ### Web页面中使用服务

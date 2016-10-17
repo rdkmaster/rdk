@@ -180,7 +180,7 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 
 ## child_change ##
 
-此属性为通用属性，请参见[`childChange`](/doc/controls/common/child_change.md)中的说明
+此属性为通用属性，请参见[`childChange`](/doc/client/controls/common/child_change.md)中的说明
 
 #方法 #
 暂无
