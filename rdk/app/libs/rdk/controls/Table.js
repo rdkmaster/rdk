@@ -412,6 +412,8 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
 
                         scope.addCheckBox = Utils.isTrue(scope.addCheckBox, false);
 
+                        scope.innerID = Utils.createUniqueId('table_inner_');
+
                         if(scope.addCheckBox){
                             scope.checkedIdxArr = [];
                         }
@@ -614,7 +616,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                                 } else { //不是先前列
                                     _loadSortDataFromServer(columnDef.data, 'asc');
                                 }
-                                EventService.register(attrs.id+'4innerSort', EventTypes.TABLE_READY, function() {
+                                EventService.register(scope.innerID, EventTypes.TABLE_READY, function() {
                                     _addSortArrow(iCol, table);
                                     table.sortCol = iCol;
                                     scope.sortClick = false;
@@ -699,7 +701,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             }, true);
 
                             if(scope.sortClick){
-                                EventService.broadcast(attrs.id+'4innerSort', EventTypes.TABLE_READY);
+                                EventService.broadcast(scope.innerID, EventTypes.TABLE_READY);
                             }
                         });
                     };
