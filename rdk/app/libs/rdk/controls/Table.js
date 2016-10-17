@@ -266,8 +266,8 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                     attachCondition.paging.pageSize = scope.pageSize;
                     if (scope.fieldStr && scope.directionStr) {
                         attachCondition.orderBy = {};
-                        attachCondition.orderBy.field = fieldStr;
-                        attachCondition.orderBy.direction = directionStr;
+                        attachCondition.orderBy.field = scope.fieldStr;
+                        attachCondition.orderBy.direction = scope.directionStr;
                     }
                     if ((!!scope.globalSearch) && (scope.search) && (scope.pagingType == "server")) { //服务端过滤时
                         attachCondition.search = {};
@@ -412,9 +412,13 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
 
                         scope.addCheckBox = Utils.isTrue(scope.addCheckBox, false);
 
+                        scope.innerID = Utils.createUniqueId('table_inner_');
+
                         if(scope.addCheckBox){
                             scope.checkedIdxArr = [];
                         }
+
+                        scope.sortClick = false;
 
                         //默认国际化
                         if (typeof(attrs.lang) === 'undefined') { //今后会废弃lang属性
@@ -605,15 +609,17 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             var table = $(element.find("table")).get(0);
 
                             if (scope.pagingType == "server") {
+                                scope.sortClick = true;
                                 if (table.sortCol == iCol) {
                                     table.direction.reverse();
                                     _loadSortDataFromServer(columnDef.data, table.direction[0]);
                                 } else { //不是先前列
                                     _loadSortDataFromServer(columnDef.data, 'asc');
                                 }
-                                EventService.register(attrs.ds, EventTypes.TABLE_READY, function() {
+                                EventService.register(scope.innerID, EventTypes.TABLE_READY, function() {
                                     _addSortArrow(iCol, table);
                                     table.sortCol = iCol;
+                                    scope.sortClick = false;
                                 })
                             } else {
                                 if (table.sortCol == iCol) {
@@ -656,13 +662,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         scope.totalCheck = function(event){
                             _totalCheckHandler(event.currentTarget.checked);
                             _refreshCheckedIdxArr();
-
-                            if(!event.currentTarget.checked) return;
-                            if (angular.isDefined(attrs.id)) {
-                                var data = {};
-                                data.data = scope.destData;//扔所有
-                                EventService.broadcast(attrs.id, EventTypes.CHECK, data);
-                            }
+                            _totalBroadcast(event.currentTarget.checked);
                         }
 
                         scope.dbClickHandler = function(item, index) {
@@ -699,9 +699,21 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                                     }
                                 }
                             }, true);
+
+                            if(scope.sortClick){
+                                EventService.broadcast(scope.innerID, EventTypes.TABLE_READY);
+                            }
                         });
                     };
                     //END INIT
+
+                    function _totalBroadcast(isChecked){
+                        if (angular.isDefined(attrs.id)) {
+                            var data = {};
+                            data.data = isChecked ? scope.destData : [];
+                            EventService.broadcast(attrs.id, EventTypes.CHECK, data);
+                        }
+                    }
 
                     function _refreshCheckedIdxArr(){
                         scope.checkedIdxArr = [];
