@@ -3,7 +3,7 @@
 - 内网2 <http://10.9.233.35:8080> 
 
 ## 第一步
-[《天龙八步》](http://10.9.233.35:8080/doc/best_practise/index.html)，这是RDK的Hello World。
+[《天龙八步》](http://10.9.233.35:8080/doc/#best_practise/index.md)，这是RDK的Hello World。
 
 ## BUG!!!
 > 你提的每个bug都是在帮助rdk改进！
