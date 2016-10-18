@@ -1,12 +1,8 @@
 'use strict';
 describe('Map demo',function(){
-    beforeEach(function(){
+    it('module click test should show module name 白城市',function(){
         browser.get("test/e2e/testee/map/web/self.html");
         browser.sleep(5000);
-    });
-    afterEach(function(){
-    });
-    it('module click test should show module name 白城市',function(){
         browser.actions().mouseMove(element(by.css(".jilin canvas")),{x:80,y:80}).click().perform();
         browser.sleep(2000);
         var city=element(by.css(".cityname"));
@@ -14,14 +10,7 @@ describe('Map demo',function(){
             expect(text).toBe("白城市");
         });
     });
-    it('module click test should show module name 松原市',function(){
-        browser.actions().mouseMove(element(by.css(".jilin canvas")),{x:120,y:100}).click().perform();
-        browser.sleep(2000);
-        var city=element(by.css(".cityname"));
-        city.getText().then(function(text){
-            expect(text).toBe("松原市");
-        });
-    });
+    
     it('module click test should show module name 长春市',function(){
         browser.actions().mouseMove(element(by.css(".jilin canvas")),{x:160,y:120}).click().perform();
         browser.sleep(2000);
@@ -44,6 +33,14 @@ describe('Map demo',function(){
         var city=element(by.css(".cityname"));
         city.getText().then(function(text){
             expect(text).toBe("通化市");
+        });
+    });
+    it('module click test should show module name 松原市',function(){
+        browser.actions().mouseMove(element(by.css(".jilin canvas")),{x:120,y:100}).click().perform();
+        browser.sleep(2000);
+        var city=element(by.css(".cityname"));
+        city.getText().then(function(text){
+            expect(text).toBe("松原市");
         });
     });
     //切换江苏省，验证是否支持双向绑定情况

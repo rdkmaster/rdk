@@ -10,14 +10,14 @@ describe('input test',function(){
         });
     });
     it('placeholder提示信息',function(){
-        browser.get("test/e2e/testee/input/web/self.html");
+        // browser.get("test/e2e/testee/input/web/self.html");
         var rdk_input=element(by.css(".demo2 input.form-control"));
         expect(rdk_input.getAttribute("placeholder")).toBe("please enter an number!");
         rdk_input.sendKeys(110);
         expect(rdk_input.getAttribute("value")).toBe("110");
     });
     it('readOnly 切换',function(){
-        browser.get("test/e2e/testee/input/web/self.html");
+        // browser.get("test/e2e/testee/input/web/self.html");
         var rdk_input=element(by.css(".demo3 input.form-control"));
         expect(rdk_input.getAttribute("readonly")).toBe("true");//初始值
         element(by.css(".demo3 button")).click();//切换

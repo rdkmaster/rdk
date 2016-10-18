@@ -44,7 +44,7 @@
 <body ng-controller='rdk_ctrl' class="rdk_main">
     
     <div class="demo1">
-        <button ng-click="addButton()">添加button渲染</button>
+        <button ng-click="addButton()" class="addBtn">添加button渲染</button>
         <rdk_accordion caption="accordion.caption" open="isOpen" buttons="accordion.buttons"
         folded_icon="foldedIcon" unfolded_icon="unfoldedIcon" frozen="accordion.frozen" editable="accordion.editable">
             <div>{{child}}</div>

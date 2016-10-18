@@ -1,12 +1,17 @@
 'use strict';
 describe("test basic_selector combined",function(){
-	beforeEach(function(){
-		browser.get("test/e2e/testee/basic_selector/web/combined.html");
-		browser.sleep(3000);
-	});
-	afterEach(function(){
-	});
+	// beforeEach(function(){
+	// 	browser.get("test/e2e/testee/basic_selector/web/combined.html");
+	// 	browser.sleep(3000);
+	// });
+	// afterEach(function(){
+	// });
 	it('combo basic test change value',function(){
+		browser.get('test/e2e/testee/basic_selector/web/combined.html')
+        .then(function(){
+            browser.waitForAngular();
+            browser.sleep(2000);
+        });
 		var title=element(by.css(".combo .form-control"));//获得combo下input框，也是点击和显示选中值的element
 		var citys=['南京','苏州','南通','泰州','上海','广州'];
 		title.click();
@@ -20,6 +25,7 @@ describe("test basic_selector combined",function(){
 			//遍历每个点击后的验证
 			expect(title.getAttribute("title")).toBe(citys[index]);
 		});
+		title.click();
 	});
 	it('accordion basic test change value',function(){
 		//accordion 展开

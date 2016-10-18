@@ -54,9 +54,14 @@ application.initDataSourceService(DSService);
             return BasicSelector.selected2string(selected, 'label', '...');
         }
         scope.frBln = true;
-
+        scope.forzen=function(forzen){
+            scope.frBln=!forzen;
+        }
         //open
         scope.open = true;
+        scope.switch=function(open){
+            scope.open=!open;
+        }
         //title
         scope.title1 = "标题";
         scope.titleChange = function(){
@@ -65,15 +70,7 @@ application.initDataSourceService(DSService);
 
 
 /************************ 应用的代码逻辑结束 ************************/
-}]).filter('myFilter',function(){
-  return function(input){
-    if(input==""){
-      return 0;
-    }else{
-      return Number(input);
-    }
-  }
-});
+}]);
 
 /********************************************************************
           应用如果将代码写在此处，可能会导致双向绑定失效

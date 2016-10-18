@@ -1,12 +1,14 @@
 describe('BasicSelector Demos', function() {
-
-    beforeEach(function() {
-        browser.get('test/e2e/testee/basic_selector/web/self.html');
-        browser.sleep(2000);
-    });
-    afterEach(function(){
-    });
+    // beforeEach(function() {
+    //     browser.get('test/e2e/testee/basic_selector/web/self.html');
+    //     browser.sleep(2000);
+    // });
     it('basic attribute', function() {
+        browser.get('test/e2e/testee/basic_selector/web/self.html')
+        .then(function(){
+            browser.waitForAngular();
+            browser.sleep(2000);
+        });
         var list = element.all(by.css('.demo1 .selector>li'));
         expect(list.count()).toBe(6);
         expect(list.get(0).getText()).toBe("南京");
@@ -29,27 +31,27 @@ describe('BasicSelector Demos', function() {
         // var obj=element(by.css('.demo1 .selector div i'));
         expect(list.count()).toBe(6);//添加前6个备选项
         element(by.css('.demo1 .selector div i')).click();
-        browser.sleep(1000);
+        browser.sleep(2000);
         element(by.css('.demo1 .selector div input')).sendKeys("天津",protractor.Key.ENTER);
         expect(list.count()).toBe(7);//添加后 7个备选项
     });
     it('test 正则属性 错误输入',function(){
         var list=element.all(by.css('.demo1 .selector>li'));
-        expect(list.count()).toBe(6);
+        expect(list.count()).toBe(7);
         element(by.css(".getReg")).sendKeys("^[1-9]{1,3}$",protractor.Key.ENTER);//设置正则规则
         element(by.css(".option .restrict")).click();//开启正则
         element(by.css('.demo1 .selector div i')).click();//点击添加按钮
         element(by.css('.demo1 .selector div input')).sendKeys("a",protractor.Key.ENTER);//输入内容
-        expect(list.count()).toBe(6);
+        expect(list.count()).toBe(7);
     });
     it('test 正则属性 正确输入',function(){
         var list=element.all(by.css('.demo1 .selector>li'));
-        expect(list.count()).toBe(6);
+        expect(list.count()).toBe(7);
         element(by.css(".getReg")).sendKeys("^[1-9]{1,3}$",protractor.Key.ENTER);//设置正则规则
         element(by.css(".option .restrict")).click();//开启正则
         element(by.css('.demo1 .selector div i')).click();//点击添加按钮
         element(by.css('.demo1 .selector div input')).sendKeys("233",protractor.Key.ENTER);//输入内容
-        expect(list.count()).toBe(7);
+        expect(list.count()).toBe(8);
     });
     it('test search',function(){
 		var searchInput=element.all(by.css('.demo1 .search input'));
@@ -60,6 +62,11 @@ describe('BasicSelector Demos', function() {
 		expect(list.count()).toBe(2);//根据关键字 搜索2项结果 
     });
     it('test select event',function(){
+        browser.get('test/e2e/testee/basic_selector/web/self.html')
+        .then(function(){
+            browser.waitForAngular();
+            browser.sleep(2000);
+        });
         var list=element.all(by.css(".demo1 .selector>li"));
         expect(list.count()).toBe(6);
         list.each(function(item,index){
@@ -69,9 +76,10 @@ describe('BasicSelector Demos', function() {
     it('test multiple',function(){
         var sellist=element.all(by.css('.demo1 .selector .selected-item'));
         var list= element.all(by.css('.demo1 .selector>li'));
-        expect(sellist.count()).toBe(2);
+        expect(sellist.count()).toBe(4);
         element(by.css(".option .multiple")).click();//单选
         expect(sellist.count()).toBe(1);
+        sellist.click();//均未选择的状态
         list.each(function(item,index){
 			item.click();
 			//每次点击都会验证选中项数量(label 在base中已经验证)
@@ -94,13 +102,6 @@ describe('BasicSelector Demos', function() {
 		var sect=element(by.css(".demo1 .selector .ng-hide"));
 		expect(sect.getCssValue("display")).toBe("none");
 	});
-	// it('show text',function(){
-	// 	var list=element.all(by.css(".demo1 .selector .selected-item"));
- //        expect(list.count()).toBe(2);
-	// 	var span=element.all(by.css(".demo1 .showArea p")).get(0);
-	// 	element(by.css(".option .showSelect")).click();
- //        expect(span.getText()).toBe("苏州,南通");
-	// });
     it("test demo2",function(){
         var list=element.all(by.css(".demo2 .selector>li"));
         expect(list.count()).toBe(6);

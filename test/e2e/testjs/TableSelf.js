@@ -1,13 +1,13 @@
 'use strict';
-describe('Table Demos',function(){
-    beforeEach(function(){
-        browser.get('test/e2e/testee/table/web/self.html');
-        browser.sleep(3000);
-    });
-    afterEach(function(){
-    });
+describe('Table Self Test',function(){
+    
     // 搜索框输入
     it('只显示一条结果HZ',function(){
+        browser.get('test/e2e/testee/table/web/self.html')
+        .then(function(){
+            browser.waitForAngular();
+            browser.sleep(3000);
+        });
         //直接输入搜索显示结果
         var lines=element.all(by.css(".demo1 .sticky-wrap .sticky-enabled tbody tr"));
         var showPage=element(by.css(".demo1 .pagingLine>ul li .regularRecords"));
@@ -15,6 +15,8 @@ describe('Table Demos',function(){
 	    element(by.css(".demo1 .searchWapper input")).sendKeys("HZ",protractor.Key.ENTER);
         expect(lines.count()).toBe(1);
         expect(showPage.getText()).toBe("1/1");
+        //搜索去掉
+        element(by.css(".demo1 .searchWapper input")).clear();
     });
     it('先翻页，再输入hz结果还是显示一条在当前页HZ',function(){
         //先翻页在搜索结果显示
@@ -29,6 +31,8 @@ describe('Table Demos',function(){
         paging.get(0).getText().then(function(text){
             expect(text).toBe("共 1 条记录");
         });
+        //搜索去掉
+        element(by.css(".demo1 .searchWapper input")).clear();
     });
     //验证列标题和顺序
     it('表格标题顺序与data一致',function(){
@@ -55,6 +59,7 @@ describe('Table Demos',function(){
     it('改变第一列宽度',function(){
         //setting的双向绑定支持测试
         element(by.css(".section_3 .changeWidth")).click();
+        //待补充前后宽度对比
     });
     it('改变绑定的data 验证data数量 should be 2',function(){
         var lines=element.all(by.css(".demo1 .sticky-wrap .sticky-enabled tbody tr"));
@@ -64,6 +69,8 @@ describe('Table Demos',function(){
     });
     //翻页和分页信息检查
     it('翻页点击与分页动态一致2/3 3/3 2/3',function(){
+        //data恢复
+        element(by.css(".section_3 .changeData")).click();
         var showPage=element(by.css(".demo1 .pagingLine>ul li .regularRecords"));
         var nextPage=element.all(by.css(".demo1 .pagingLine>ul li a"));
         expect(showPage.getText()).toBe("1/3");
@@ -104,17 +111,21 @@ describe('Table Demos',function(){
         var inputs=element.all(by.css(".section_3 input"));
         inputs.get(1).sendKeys("10",protractor.Key.ENTER);
         expect(lines.count()).toBe(10);
+        //恢复改动
+        inputs.get(1).clear();
     });
     it('指定被选中第三行',function(){
         var inputs=element.all(by.css(".section_3 input"));
         inputs.get(0).sendKeys("2",protractor.Key.ENTER);
+        //恢复
+        inputs.get(0).clear();
     });
-    it('设置允许输入数字的正则，输入字母后无效，恢复初始状态',function(){
+    it('设置允许输入数字的正则，输入字母后无效',function(){
         var inputs=element.all(by.css(".section_3 input"));
         var lines=element.all(by.css(".demo1 .sticky-wrap .sticky-enabled tbody tr"));
         inputs.get(2).sendKeys("^[1-9]{1,}$",protractor.Key.ENTER);
         element(by.css(".demo1 .searchWapper input")).sendKeys("N",protractor.Key.ENTER);
-        expect(lines.count()).toBe(4);
+        expect(lines.count()).toBe(0);
     });
     it("验证点击每行的姓名信息依次为aaa,bbb,ccc,ddd ...",function(){
         var lines=element.all(by.css(".demo2 .sticky-wrap .sticky-enabled tbody tr"));
@@ -140,17 +151,23 @@ describe('Table Demos',function(){
         browser.sleep(2000);
         var nextPage=element.all(by.css(".demo4 .pagingLine>ul li a"));
         nextPage.get(2).click();
+        browser.sleep(2000);
         expect(lines.count()).toBe(7);
         expect(showPage.getText()).toBe("2/7");
         nextPage.get(2).click();
+        browser.sleep(2000);
         expect(showPage.getText()).toBe("3/7");
         nextPage.get(2).click();
+        browser.sleep(2000);
         expect(showPage.getText()).toBe("4/7");
         nextPage.get(2).click();
+        browser.sleep(2000);
         expect(showPage.getText()).toBe("5/7");
         nextPage.get(2).click();
+        browser.sleep(2000);
         expect(showPage.getText()).toBe("6/7");
         nextPage.get(2).click();
+        browser.sleep(2000);
         expect(showPage.getText()).toBe("7/7");
         expect(lines.count()).toBe(3);
     });

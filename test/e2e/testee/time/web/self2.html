@@ -27,47 +27,44 @@
         });
     </script>
     <style type="text/css">
-        .btn-group>div>ul>li:nth-child(1){
-            background-color: red;
-        }
-        .datetimepicker:nth-child(5)>.datetimepicker-minutes thead tr .switch{
-            background-color: red;
-        }
-        .datetimepicker:nth-child(6)>.datetimepicker-minutes thead tr .switch{
-            background-color: red;
-        }
-        .datetimepicker:nth-child(6)>.datetimepicker-hours thead tr .switch{
-            background-color: red;
-        }
-        .datetimepicker:nth-child(5)>.datetimepicker-hours thead tr .switch{
-            background-color: red;
-        }
-        .datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch{
-            background-color: red;
-        }
-        .datetimepicker:nth-child(6)>.datetimepicker-days thead tr .switch{
-            background-color: red;
-        }
-        .datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch{
-            background-color: red;
-        }
-        .datetimepicker:nth-child(6)>.datetimepicker-days thead tr .switch{
-            background-color: red;
-        }
-        .datetimepicker:nth-child(5)>.datetimepicker-months thead tr .switch{
-            background-color: red;
-        }
-        .datetimepicker:nth-child(6)>.datetimepicker-months thead tr .switch{
-            background-color: red;
-        }
+    .datetimepicker:nth-child(5)>.datetimepicker-minutes thead tr .switch{
+        background-color: red;
+    }
+    .datetimepicker:nth-child(6)>.datetimepicker-minutes thead tr .switch{
+        background-color: red;
+    }
+    .datetimepicker:nth-child(6)>.datetimepicker-hours thead tr .switch{
+        background-color: red;
+    }
+    .datetimepicker:nth-child(5)>.datetimepicker-hours thead tr .switch{
+        background-color: red;
+    }
+    .datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch{
+        background-color: red;
+    }
+    .datetimepicker:nth-child(6)>.datetimepicker-days thead tr .switch{
+        background-color: red;
+    }
+    .datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch{
+        background-color: red;
+    }
+    .datetimepicker:nth-child(6)>.datetimepicker-days thead tr .switch{
+        background-color: red;
+    }
+    .datetimepicker:nth-child(5)>.datetimepicker-months thead tr .switch{
+        background-color: red;
+    }
+    .datetimepicker:nth-child(6)>.datetimepicker-months thead tr .switch{
+        background-color: red;
+    }
     </style>
 </head>
 <body ng-controller='rdk_ctrl' class="rdk_main">
     <div>Time</div>
-    <div style="margin:20px;" class="demo1">
-        <h6>单时间控件</h6>  
-        <rdk_time setting="macroValue" label="aa"></rdk_time>
-        <p class="macroValue">{{macroValue.value}}</p>
+    <div style="margin:20px;" class="demo3">
+        <h6>双时间控件分钟</h6> 
+        <rdk_time range setting="TimeGranularity"></rdk_time>
+        <p>{{TimeGranularity.granularity=='week'?TimeGranularity.value[0].label:TimeGranularity.value[0]}}&nbsp{{TimeGranularity.granularity=='week'?TimeGranularity.value[1].label:TimeGranularity.value[1]}}</p>
     </div>
     <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
     <!--     这个节点可选，删除后，RDK会自动生成一个    -->

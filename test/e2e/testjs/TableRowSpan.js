@@ -1,11 +1,12 @@
 'use strict';
 describe('Table Row Span Tests', function() {
-    beforeEach(function() {
-        browser.get('test/e2e/testee/table/web/rowspan.html');
-        browser.sleep(3000);
-    });
-
+    
     it('rowSpan 计算正确', function() {
+        browser.get('test/e2e/testee/table/web/rowspan.html')
+        .then(function(){
+            browser.waitForAngular();
+            browser.sleep(3000);
+        });
         var firstTdsRowSpan = ['3', '1', '1', '2', '1'];
         var firstTdsDisplay = ['', 'none', 'none', '', 'none'];
         element.all(by.css(".rdk-table tr td:first-child")).each(function(item, index) {
