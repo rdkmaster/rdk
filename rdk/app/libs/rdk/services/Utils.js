@@ -217,6 +217,18 @@
             }
         }
 
+        this.publish = function(scope) {
+            if (angular.isUndefined(scope.id)) {
+                return;
+            }
+            
+            if (angular.isDefined(rdk[scope.id]) && rdk[scope.id] !== scope) {
+                console.warn('conflict dom node id: ' + scope.id);
+            } else {
+                rdk[scope.id] = scope;
+            }
+        }
+
         this.shallowCopy = function(src, dest) {
             if (!dest) {
                 dest = {};

@@ -62,6 +62,9 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
                     }
                 }
 
+                //将内部scope暴露给app
+                Utils.publish(scope);
+
 
                 scope.noData = false;
                 

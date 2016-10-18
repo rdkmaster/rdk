@@ -1,7 +1,7 @@
 require.config({
     //下载依赖超时时间，0为不超时
     waitSeconds: 30,
-    paths: rdk.mergePaths({
+    paths: rdk.$mergePaths({
         "angular": "../angular/angular",
         "angualr-translate": "../angular/angular-translate.min",
         "angular-translate-static": "../angular/angular-translate-loader-static-files.min",
