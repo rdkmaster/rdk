@@ -1,12 +1,10 @@
 'use strict';
 describe("Map Combined demo",function(){
-    beforeEach(function(){
-        browser.get("test/e2e/testee/map/web/combined.html");
-        browser.sleep(3000);
-    });
-    afterEach(function(){
-    });
     it("accordion-map test event",function(){
+        browser.get("test/e2e/testee/map/web/combined.html")
+        .then(function(){
+            browser.waitForAngular();
+        });
         //初始图标箭头向下 class name =fa-angle-down
         var icoUp=element.all(by.css(".accordion .theme .fa-angle-up"));
         expect(icoUp.count()).toBe(0);
@@ -58,6 +56,10 @@ describe("Map Combined demo",function(){
         expect(evt.get(1).getText()).toBe('连云港市');
     });
     it("multiple-map test 翻页",function(){
+         browser.get("test/e2e/testee/map/web/combined.html")
+        .then(function(){
+            browser.waitForAngular();
+        });
         element(by.css('.multiple .rdk-combo-select-module .form-control')).click();
         //轮播翻页
         element(by.css(".multiple .combo-content-transclude .slider .arrows .right_arrow i")).click();

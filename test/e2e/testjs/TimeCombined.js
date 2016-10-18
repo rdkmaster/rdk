@@ -1,5 +1,5 @@
 'use strict';
-describe('time Demos',function(){
+describe('time Combined Demos',function(){
     it('双时间控件和tab控件结合点击选择时间点(天)是否正确',function(){
         //直接输入点击显示结果
         browser.get('test/e2e/testee/time/web/combined.html');

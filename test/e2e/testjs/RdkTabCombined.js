@@ -1,10 +1,12 @@
 'use strict';
 describe('Tab Combined Test',function(){
-    beforeEach(function(){
-        browser.get('test/e2e/testee/tab/web/combined.html');
-        browser.sleep();
-    });
+    
     it('与scroller的测试',function(){
+        browser.get('test/e2e/testee/tab/web/combined.html')
+        .then(function(){
+            browser.waitForAngular();
+            browser.sleep(2000);
+        });
         var context=element(by.css(".scroller .slide .context span"));
         //scroller内部显示的文字内容
         expect(context.getText()).toBe('11');

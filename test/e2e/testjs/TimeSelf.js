@@ -1,5 +1,5 @@
 'use strict';
-describe('time Demos',function(){
+describe('time Self Demos',function(){
     // 选择时间点
     it('单时间控件点击选择时间点是否正确',function(){
         //直接输入点击显示结果

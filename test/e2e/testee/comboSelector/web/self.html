@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>RDK应用工程模板</title>
+    <title>Combo 自测</title>
 
     <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
 
@@ -44,7 +44,7 @@
             </rdk_basic_selector>
         </rdk_combo_select>
         <div class="dis-inbl">
-            <button class="thanBut" ng-click="frBln=!frBln">点击冻结和解冻</button>
+            <button class="thanBut" ng-click="forzen(frBln)">点击冻结和解冻</button>
             frozen:<span>{{frBln}}</span>
         </div>
         <div class="dis-inbl">
@@ -53,7 +53,7 @@
         </div>
         
         <div class="dis-inbl">
-            <button class="switchBut" ng-click="open=!open">点击开关</button>
+            <button class="switchBut" ng-click="switch(open)">点击开关</button>
             <span>{{open}}</span>
         </div>
         <p class="dis-inbl">{{province}}</p>

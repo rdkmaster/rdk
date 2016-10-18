@@ -1,31 +1,46 @@
 'use strict';
 describe('Accordion Self Test',function(){
-    beforeEach(function(){
-        browser.get("test/e2e/testee/accordion/web/self.html");
-        browser.sleep(3000);
-    });
-    afterEach(function(){});
+    // beforeEach(function(){
+    //     browser.get("test/e2e/testee/accordion/web/self.html");
+    //     browser.sleep(3000);
+    // });
     it('自定义button属性集合',function(){
+        browser.get("test/e2e/testee/accordion/web/self.html")
+        .then(function(){
+            browser.waitForAngular();
+        });
+        // browser.sleep(3000);
         //借助页面定义的button 按钮实现添加该集合数据
         element(by.css(".demo1 .addBtn")).click();
         var button=element.all(by.css(".demo1 .theme .theme-buttons a"));
         expect(button.count()).toBe(4);
         //四个按钮标签分别是 删除 刷新 冻结 编辑
         var labels=['删除','刷新','冻结','编辑'];
+        
         for(var i=0;i<4;i++){
             button.get(i).click();//click 或者hover 都会让dom中a标签生成title属性，值为按钮名称
             expect(button.get(i).getAttribute("title")).toBe(labels[i]);
         }
+        button.get(1).click();
+        button.get(2).click();//冻结恢复
+        button.get(3).click();//编辑恢复
+        element(by.css(".demo1 .addBtn")).click();//添加按钮恢复
         //以上通过说明button属性支持双向绑定
     });
     it('accordion展开测试',function(){
         //展开属性为open值变化，引起图标箭头方向变化
+        var accordion=element(by.css(".demo1 .rdk-accordion-module div.content"));
+        expect(accordion.getCssValue("display")).toBe("none");//展开部分处于隐藏状态
         //默认图标方向向下
         var ico=element(by.css(".demo1 .theme i"));
-        expect(ico.getAttribute("class")).toBe("fa fa-angle-double-down");
+        expect(ico.getAttribute("class")).toBe("fa fa-angle-double-down");//向下双箭头
         //click 
-        element(by.css(".demo1 .theme")).click();
-        expect(ico.getAttribute("class")).toBe("fa fa-angle-double-up");
+        element(by.css(".demo1 .theme")).click()
+        .then(function(){
+            expect(ico.getAttribute("class")).toBe("fa fa-angle-double-up");//向上双箭头
+            expect(accordion.getCssValue("display")).toBe("block");//正常文档流
+        });
+        element(by.css(".demo1 .theme")).click();//展开恢复
     });
     it('accordion 折叠图标控制',function(){
         element(by.css(".demo1 .addBtn")).click();
@@ -35,6 +50,8 @@ describe('Accordion Self Test',function(){
         //切换箭头图标
         button.get(1).click();
         expect(ico.getAttribute("class")).toBe("fa fa-arrow-circle-down");
+        button.get(1).click();//图标恢复
+        element(by.css(".demo1 .addBtn")).click();//添加按钮恢复
     });
     it('accordion caption编辑控制',function(){
         element(by.css(".demo1 .addBtn")).click();
@@ -45,26 +62,24 @@ describe('Accordion Self Test',function(){
         //变量editable值
         expect(caption.getAttribute('contenteditable')).toBe('false');
         var button=element.all(by.css(".demo1 .theme .theme-buttons a"));
-        caption.click();//caption
-        
         button.get(3).click();
         //可编辑
         expect(caption.getAttribute('contenteditable')).toBe('true');
-        caption.click();
-        //点击点自动获取中间的位置
-        caption.sendKeys(12);
-        //若报错或者是ch1120ild，则编辑功能控制有问题
-        expect(caption.getText()).toBe('ch12ild');
+        caption.clear().sendKeys(12);
+        expect(caption.getText()).toBe('12');
+        element(by.css(".demo1 .addBtn")).click();//添加按钮恢复
     });
     it('accordion  冻结展开属性',function(){
+        //确认当前冻结属性
+        expect(element(by.css(".demo1 .rdk-accordion-module .theme")).getAttribute("class"));
         var ico=element(by.css(".demo1 .theme i"));
         //初始值状态
         expect(ico.getAttribute("class")).toBe("fa fa-angle-double-down");
-        element(by.css(".demo1 .addBtn")).click();
+        element(by.css(".demo1 .addBtn")).click();//添加按钮
         var button=element.all(by.css(".demo1 .theme .theme-buttons a"));
-        button.get(2).click();
+        button.get(2).click();//冻结
         element(by.css(".demo1 .theme span")).click();
-        //图标应该没变
+        //图标没变
         expect(ico.getAttribute("class")).toBe("fa fa-angle-double-down");
     });
     it('accordion伸展方向向下 文档流',function(){
@@ -110,17 +125,19 @@ describe('Accordion Self Test',function(){
         expect(obj_div.get(1).getCssValue("display")).toBe("none");
         obj_div.get(0).click();
         expect(obj_div.get(1).getCssValue("display")).toBe("block");
-        //向下展开脱离文档流，top值等于外层高度或者bottom值等于自身高度 也是默认缺省值！
-        expect(obj_div.get(1).getCssValue('bottom')).toBe('-62px');
-        expect(obj_div.get(1).getCssValue('top')).toBe('35px');
+        //顶层accodion为relative,展开内容为positive,top bottom自动
+        expect(obj_div.get(1).getCssValue('position')).toBe('absolute')
+        expect(obj_div.get(1).getCssValue('bottom')).toBe('auto');
+        expect(obj_div.get(1).getCssValue('top')).toBe('auto');
     });
     it('accordion 向上展开 脱离文档流',function(){
         var obj_div=element.all(by.css('.demo3.top .rdk-accordion-module>div'));
         expect(obj_div.get(1).getCssValue("display")).toBe("none");
         obj_div.get(0).click();
         expect(obj_div.get(1).getCssValue("display")).toBe("block");
-        //向上展开bottom值就是父层高度，top值是自身高度
-        expect(obj_div.get(1).getCssValue('top')).toBe('-63px');//不知为何父级为何比上述多1px高度？理论上应该是-62px
+        //向上展开bottom值就是父层高度 绝对定位
+        expect(obj_div.get(1).getCssValue("position")).toBe("absolute");
+        expect(obj_div.get(1).getCssValue('top')).toBe('auto');
         expect(obj_div.get(1).getCssValue('bottom')).toBe('36px');
     });
     it('accordion 左展开 脱离文档流',function(){
@@ -151,8 +168,8 @@ describe('Accordion Self Test',function(){
         //accordion为float状态值right 图标块文档流,accordion整体展开后左移动,原来状态位置原点不动
         var accordion=element(by.css('.demo4.left .rdk-accordion-module'));
         var div=element.all(by.css('.demo4.left .rdk-accordion-module>div'));
-        expect(accordion.getCssValue("float")).toBe("right");
-        expect(accordion.getCssValue("right")).toBe('0px');
+        expect(accordion.getCssValue("float")).toBe("right");//决定覆盖方向
+        expect(accordion.getCssValue("right")).toBe('auto');
         accordion.click();
         expect(accordion.getCssValue("left")).toBe("-39px");
         expect(div.get(1).getCssValue("left")).toBe("22px");
@@ -161,9 +178,9 @@ describe('Accordion Self Test',function(){
         //accordion float为 left 图标块文档流，点击后accordion整体右移展开内容向左
         var accordion=element(by.css('.demo4.right .rdk-accordion-module'));
         var div=element.all(by.css('.demo4.right .rdk-accordion-module>div'));
-        expect(accordion.getCssValue("float")).toBe("left");
+        expect(accordion.getCssValue("float")).toBe("left");//决定覆盖方向
         accordion.click();
-        expect(accordion.getCssValue("right")).toBe("-39px");
+        expect(accordion.getCssValue("right")).toBe("auto");
         expect(div.get(1).getCssValue("right")).toBe("22px");
     });
 });

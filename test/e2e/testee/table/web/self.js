@@ -45,11 +45,28 @@ application.initDataSourceService(DSService);
     ],
 };
 //改变data 验证双向绑定的支持性
-scope.changData=function(){
-  scope.TableData.data=[
-    ['2016-08-26','南京','98%','90%','10%'],
-    ['2016-08-27','北京','95%','92%','5']
-  ];
+scope.change=true;
+scope.changData=function(change){
+  if(change){
+    scope.TableData.data=[
+      ['2016-08-26','南京','98%','90%','10%'],
+      ['2016-08-27','北京','95%','92%','5']
+    ];
+    scope.change=false;
+  }else{
+    scope.TableData.data=[
+      [12,"NJ",2,2,2],
+      [32,"BJ",42,52,62],
+      [4,"SZ",6,7,8,9],
+      [1,"SH",4,6,7,8],
+      [12,"HZ",5,67,89],
+      [32,"YZ",45,6,7],
+      [1,"SZ",4,6,7,8],
+      [12,4,5,67,89],
+      [1,2,4,6,7,8],
+      [12,4,5,67,89]
+    ];
+  }
 }
 scope.server={
   ds:"dsTable",

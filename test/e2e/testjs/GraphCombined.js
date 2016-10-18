@@ -1,12 +1,12 @@
 'use strict';
 describe('Graph combined',function(){
-	beforeEach(function(){
-		browser.get("test/e2e/testee/graph/web/combined.html");
-		browser.sleep(3000);
-	});
-	afterEach(function(){
-	});
+	
 	it('accordion-graph',function(){
+		browser.get("test/e2e/testee/graph/web/combined.html")
+		.then(function(){
+			browser.waitForAngular();
+			browser.sleep(3000);
+		});
 		//打开面板操作
 		element.all(by.css(".accordion .theme")).get(0).click();
 		//周一最高气温11°
@@ -26,6 +26,7 @@ describe('Graph combined',function(){
 		expect(info.get(0).getText()).toBe('周二');
 		expect(info.get(1).getText()).toBe('最低气温');
 		expect(info.get(2).getText()).toBe('4');
+		element(by.css(".combo .form-control")).click();//关闭
 	});
 	it('tab-graph tab1',function(){
 		//周三 平均气温 10.5
@@ -44,6 +45,11 @@ describe('Graph combined',function(){
 		expect(info.get(2).getText()).toBe('18');
 	});
 	it('scroller-graph未翻页',function(){
+		browser.get("test/e2e/testee/graph/web/combined.html")
+		.then(function(){
+			browser.waitForAngular();
+			browser.sleep(3000);
+		});
 		//周五 最高气温 15°
 		browser.actions().mouseMove(element(by.css(".scroller canvas")),{x:490,y:90}).click().perform();
 		browser.sleep(1000);
@@ -64,19 +70,27 @@ describe('Graph combined',function(){
 		expect(info.get(2).getText()).toBe('16');
 	});
 	it('multiple-graph',function(){
+		browser.get("test/e2e/testee/graph/web/combined.html");
+		browser.sleep(3000);
 		//combo展开
-		element(by.css(".multiple .form-control")).click();
+		var ele=element(by.css(".multiple .form-control"));
+		ele.click();
 		browser.actions().mouseMove(element(by.css(".multiple canvas")),{x:370,y:150}).click().perform();
+		browser.sleep(2000);
 		var info=element.all(by.css(".infos span"));
+		//存在兼容性问题页面有时候graph很小，此时点击的坐标就不对了
 		expect(info.get(0).getText()).toBe('周五');
 		expect(info.get(1).getText()).toBe('最低气温');
 		expect(info.get(2).getText()).toBe('9');
 	});
 	it('multiple-graph 轮播翻页',function(){
+		// browser.get("test/e2e/testee/graph/web/combined.html");
+		// browser.sleep(3000);
 		//combo 展开
-		element(by.css(".multiple .form-control")).click();
+		// element(by.css(".multiple .form-control")).click();
 		//轮播右翻
 		element(by.css(".multiple .arrows .right_arrow i")).click();
+		browser.sleep(2000);
 		browser.actions().mouseMove(element(by.css(".multiple canvas")),{x:447,y:128}).click().perform();
 		var info=element.all(by.css(".infos span"));
 		expect(info.get(0).getText()).toBe('周六');

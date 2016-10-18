@@ -2,7 +2,7 @@ exports.config = {
     //出现过11秒页面载入没完成时候，改为15秒
     allScriptsTimeout: 15000,
 
-    specs:['doc/testjs/demo3.js'],
+    specs:['doc/testjs/demo4.js'],
 
 
     multiCapabilities: [

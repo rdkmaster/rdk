@@ -40,39 +40,43 @@ scope.accordion={
 scope.isOpen=scope.accordion.isOpen;
 scope.child=111;
 scope.addButton=function(){
-  scope.accordion.buttons=[{
-      icon:'images/delete.png',
-      label:'删除',
-      callback:function(obj){
-        console.log(obj);
-      }
-    },{
-      icon:'images/refresh.png',
-      label:'刷新',
-      callback:function(obj){
-        if(scope.isNewico){
-            scope.foldedIcon = "fa fa-arrow-circle-down";
-            scope.unfoldedIcon = "fa fa-arrow-circle-up";
-        }else {
-            scope.foldedIcon = "fa fa-angle-double-down";
-            scope.unfoldedIcon = "fa fa-angle-double-up";
+  if(scope.accordion.buttons.length==0){
+      scope.accordion.buttons=[{
+        icon:'images/delete.png',
+        label:'删除',
+        callback:function(obj){
+          console.log(obj);
         }
-        scope.isNewico=!scope.isNewico;
+      },{
+        icon:'images/refresh.png',
+        label:'刷新',
+        callback:function(obj){
+          if(scope.isNewico){
+              scope.foldedIcon = "fa fa-arrow-circle-down";
+              scope.unfoldedIcon = "fa fa-arrow-circle-up";
+          }else {
+              scope.foldedIcon = "fa fa-angle-double-down";
+              scope.unfoldedIcon = "fa fa-angle-double-up";
+          }
+          scope.isNewico=!scope.isNewico;
+        }
+      },{
+        icon:'images/frozen.png',
+        label:'冻结',
+        callback:function(obj){
+          scope.accordion.frozen=!scope.accordion.frozen;
+        }
+      },{
+        icon:'images/edit.png',
+        label:'编辑',
+        callback:function(obj){
+          scope.accordion.editable=!scope.accordion.editable;
+        }
       }
-    },{
-      icon:'images/frozen.png',
-      label:'冻结',
-      callback:function(obj){
-        scope.accordion.frozen=!scope.accordion.frozen;
-      }
-    },{
-      icon:'images/edit.png',
-      label:'编辑',
-      callback:function(obj){
-        scope.accordion.editable=!scope.accordion.editable;
-      }
-    }
-  ];
+    ];
+  }else{
+    scope.accordion.buttons=[];
+  }
 }
 //
 scope.isNewico=true;
