@@ -286,13 +286,17 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
 
                             if(scope.range){
                                 if(scope.setting.selectGranularity === true){
-                                    iElement[0].getElementsByTagName("div")[0].style.minWidth = "380px";
+                                    if(scope.setting.granularityItems[0].value == 'quarter'||scope.setting.granularityItems[0].value == 'hour'){
+                                        iElement[0].getElementsByTagName("div")[0].style.minWidth = "423px";
+                                    }else{
+                                        iElement[0].getElementsByTagName("div")[0].style.minWidth = "420px";
+                                    }
                                 }else{
                                     iElement[0].getElementsByTagName("div")[0].style.minWidth = "300px";
                                 }
                             }else{
                                 if(scope.setting.selectGranularity === true){
-                                    iElement[0].getElementsByTagName("div")[0].style.minWidth = "225px";
+                                    iElement[0].getElementsByTagName("div")[0].style.minWidth = "267px";
                                 }else{
                                     iElement[0].getElementsByTagName("div")[0].style.minWidth = "140px";
                                 }

@@ -43,21 +43,21 @@
         .datetimepicker:nth-child(6)>.datetimepicker-years thead tr .switch{
             background-color: #000;
         }      
-       .demo5 .combo-content-transclude>div>p{
-        background-color: red;
-       }
+        .demo5 .combo-content-transclude>div>p{
+            background-color: red;
+        }
+        /*.rdk-combo-select-module{
+            width:600px;
+        }*/
     </style>
 </head>
 <body ng-controller='rdk_ctrl' class="rdk_main">
     <div>Time</div>
-    <div style="margin:20px;" class="demo1">
-        <h6>双时间控件(限制时间间隔)</h6>
-        <rdk_tab>
-            <div title="Time">
-                <rdk_time range setting="TimeGap"></rdk_time>
-            </div>
-        </rdk_tab> 
-        <p>{{TimeGap.granularity=='week'?TimeGap.value[0].label:TimeGap.value[0]}}&nbsp{{TimeGap.granularity=='week'?TimeGap.value[1].label:TimeGap.value[1]}}</p>
+    <div class="demo5">
+        <rdk_combo_select open='false'>
+            <rdk_time range setting="timeCombo"></rdk_time>
+            <p>{{timeCombo.granularity=='week'?timeCombo.value[0].label:timeCombo.value[0]}}&nbsp{{timeCombo.granularity=='week'?timeCombo.value[1].label:timeCombo.value[1]}}</p>
+        </rdk_combo_select>
     </div>
     <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
     <!--     这个节点可选，删除后，RDK会自动生成一个    -->

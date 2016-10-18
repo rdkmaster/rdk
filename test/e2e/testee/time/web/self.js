@@ -34,7 +34,8 @@ scope.macroValue = {
 scope.TimeBucket = {
     value: "2015-01-01",
     startDate: "2015-01-01",
-    endDate: "2015-01-09"
+    endDate: "2015-01-09",
+
 }
 
 scope.TimeGranularity={
@@ -83,7 +84,28 @@ scope.TimeGap={
     }]
 }
 
-
+scope.weekStart = {
+    value: "2015-01-01",
+    selectGranularity: true,
+    granularity: "hour",
+    weekStart :1, // 0（星期日）到6（星期六）
+    granularityItems: [{
+        label: "15分钟",
+        value: "quarter"
+    }, {
+        label: "小时",
+        value: "hour"
+    }, {
+        label: "天",
+        value: "date"
+    }, {
+        label: "周",
+        value: "week"
+    },{
+        label: "月",
+        value: "month"
+    }]
+}
 
 /************************ 应用的代码逻辑结束 ************************/
 }]).filter('myFilter',function(){
