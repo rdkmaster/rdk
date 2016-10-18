@@ -137,9 +137,8 @@ rdk = (function() {
     }
 
     return {
-        version: "v1.1.0",
-        start: _start,
-        mergePaths: _mergePaths,
+        $start: _start,
+        $mergePaths: _mergePaths,
     }
 })();
-rdk.start();
+rdk.$start();
