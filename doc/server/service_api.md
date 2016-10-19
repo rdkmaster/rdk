@@ -409,7 +409,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 第四步，使用[Data.useDataSource()](#useDataSource)选择当前使用的数据源。
      
    		Data.useDataSource("mysql");					
-        log(Data.fetch("SELECT * FROM dim_ne",5000));  //查询mysql数据库
+        log(Data.fetch("SELECT * FROM dim_ne",5000)); //查询mysql数据库
         Data.useDataSource("hbase");                   
         log(Data.fetch("SELECT * FROM dim_ne",5000)); //查询hbase数据库
 
