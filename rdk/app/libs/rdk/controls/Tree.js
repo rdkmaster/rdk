@@ -85,7 +85,7 @@
                         beforeClick: _beforeClick,
                         beforeDrag: _beforeDrag,
                         onDrop: _afterDrag,
-                        onRename: _zTreeOnRename,
+                        onRename: _onRename,
                         onRemove: _onRemove,
                         beforeCollapse: _beforeCollapse,
                         beforeExpand: _beforeExpand
@@ -151,13 +151,13 @@
                     }
                 }
 
-                function _zTreeOnRename(treeId, treeNode, newName, isCancel){
+                function _onRename(treeId, treeNode, newName, isCancel){
                     if (!!scope.id) {
                         if (newName.length == 0) {  
                             alert("节点名称不能为空.");  
                             return false;  
                         }
-                        EventService.broadcast(scope.id, "zTreeOnRename", treeNode); 
+                        EventService.broadcast(scope.id, "onRename", treeNode); 
                         return true;  
                     }
                 }

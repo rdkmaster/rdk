@@ -107,6 +107,29 @@
 示例如下：
 <live_demo example="controls/tree/event_doubleclick" width="900"></live_demo>
 
+##BeforeCollapse##
+
+鼠标左键关闭选中树的某个节点。
+示例如下：
+<live_demo example="controls/tree/event_beforeCollapse" width="900"></live_demo>
+
+##BeforeExpand##
+
+鼠标左键打开选中树的某个节点。
+示例如下：
+<live_demo example="controls/tree/event_beforeExpand" width="900"></live_demo>
+
+##Rename##
+
+修改选中树的某个节点。
+示例如下：
+<live_demo example="controls/tree/event_rename" width="900"></live_demo>
+
+##Remove##
+
+删除选中树的某个节点。
+示例如下：
+<live_demo example="controls/tree/event_remove" width="900"></live_demo>
 #样式#
 暂无
 

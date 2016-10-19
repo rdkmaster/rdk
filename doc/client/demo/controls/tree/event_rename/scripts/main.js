@@ -4,8 +4,8 @@ define('main', ['rd.controls.Tree'], function() {
     // 创建一个控制器
     app.controller('myCtrl', ['$scope', 'EventService', 'EventTypes', function($scope, EventService, EventTypes) {
 
-        EventService.register('testZtree', "zTreeOnRename", function(event, data){
-            alert("zTreeOnRename")
+        EventService.register('testZtree', "onRename", function(event, data){
+            alert("onRename")
         });
 
     }]);
