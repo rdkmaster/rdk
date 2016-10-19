@@ -68,6 +68,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
             function _link(scope, element, attrs) {
                 scope.draggable = Utils.isTrue(attrs.draggable, true);
                 scope.showCloseButton = Utils.isTrue(attrs.draggable, false);
+                scope.appScope = Utils.findAppScope(scope);
 
                 var dom = element[0].querySelector(".tabs");
                 scope.tabs = [];
@@ -90,8 +91,9 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                         var tabid = Utils.createUniqueId('tab_item_');
                         contentDom.setAttribute('id', tabid);
                         var titleDomStr = contentDom.getAttribute('title');
-                        scope.contentDomStr = $(contentDom)[0].outerHTML;
                         _prepareTabs(contentDom, titleDomStr, tabid); 
+                        scope.contentDomStr = $(contentDom)[0].outerHTML;
+                        scope.tabid = tabid;
                     })
                 }
 
@@ -127,8 +129,9 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 function _appendTab(){
                     if(scope.contentDomStr == undefined) return;
                     var tabs = $(dom).tabs();
-                    tabs.append(scope.contentDomStr);
+                    $(tabs[0].querySelector(".content")).append(scope.contentDomStr);
                     tabs.tabs("refresh");
+                    $compile($("#"+scope.tabid))(scope);
                 }
 
                 function _getTabIndex(tabId) {

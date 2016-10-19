@@ -26,6 +26,14 @@ define('main', ['angular', 'jquery', 'rd.containers.Tab', 'rd.controls.BasicSele
                 var str = Utils.getDomStr("./scripts/template/tab.html");
                 EventService.broadcast('tabID', EventTypes.ADD, str);
             }
+
+            scope.changeHandler = function(){
+                var res = '';
+                angular.forEach(scope.selectedItems, function(item, key) {
+                    res += item.label + ' ';
+                });
+                alert('选中了 "' + res + '"');                
+            }
         }
     ]);
 });
