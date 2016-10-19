@@ -1,72 +1,51 @@
+
 ## 新增功能
-
-1. 与Ux团队一起梳理的所有控件，包括：
-	1. 修改时间控件样式，新增周粒度功能
-	2. 修改Combo控件样式
-	3. 新增得分分布控件
-	4. 修改Graph控件，支持自适应父容器，支持主题样式
-	5. 修改表格控件，支持全新的分页栏，并且多分页栏切换
-	6. 修改Accordion控件，支持更多的方向，大大扩展使用场景
-	7. 新增Scroller控件，可支持轮播和时间轮转切换功能
-	8. 修改Tab控件，支持标题渲染器
-	9. 新增单值指标控件，主要与Tab的标题渲染器结合使用
-	10. 新增echart地图控件，支持地图热切换
-
-2. 部分综合demo 
-
-3. RDK后端重构成果，
-	1. 支持更好的性能
-	2. 支持更大的请求并发量
-	3. 支持数据库写操作，支持数据库事务
-	4. 支持websocket主动上报
-
-4. 控件自动化测试用例，包括
-	1. 表格控件
-	2. 图形控件
-	3. 地图控件
-	4. 时间控件
-	5. accordion_tab 的综合demo
-	6. 新增 scoreIndicator 的综合demo
-
-5. 其他
-	1. example 自动读取版本号
-	2. #221 前端开发手册--scroller文档中，样式修改--offset 下的示例展示不出来，点击“查看&编辑源码”该界面也是空白
-	3. #194 [accordion] 标题背景#E2EEF9 置灰时#E4E4E4 ，内容为空时，背景置灰禁止点击。
-
-6. 合入全新的文档浏览系统，仅波及文档阅读功能
+- 多数据库支持功能
+- 表格直接添加支持checkbox列
+- 多个综合demo
+- Accordion/Tab/Bullet 自动化测试用例
+- 前端自动化测试结果报告汇总
+- 后端新API的文档
+- 前端自动化测试耗时过长优化
+- 支持控件直接方法调用
 
 ## 修改功能
-- 优化部分文档及demo 
+- 去除rpc编译告警
+- 迁移mq.reply方法到mq消息对象中去
+- mq.rpc 最后一个参数可选 默认值为120秒，修改对应代码和文档
+- 完善部分文档说明
+- 修改Data.fetch方法 maxLine参数为可选，默认值为4000
+- 时间控件宽度微调
+
 	
 ## 修复故障
 
-- #223 [accordion] 只有箭头时才需要位移居中，有标题时保持原来设计 bug 前端 
-- #216 前端开发手册，控件selector文档中“属性--data"下界面显示异常 bug 文档 
-- #214 前端开发手册time控件文档中，value中支持的追溯方式和“查看&编辑源码”中的注释显示不同,易造成误解 bug demo 文档 
-- #213 前端开发手册中，tabselect,foldselector,selector 这几个控件中的“查看&编辑源码”下空白，示例未展示出来 bug 文档 
-- #212 ComboSelect 有 Caption 时 样式有问题，修改#148引入的问题 bug 前端 
-- #209 前端开发手册文档中table控件下，“表体数据属性”中 text-align 和 padding 定位异常 bug 文档 
-- #208 前端开发手册文档中，table控件下background clolor 定位异常 bug 文档 
-- #207 scroller的自动化测试必须设置手动轮播 bug 前端 
-- #202 前端开发手册文档中“对话框&模态框”下“设置对话框状态”中“非模态框”的例子的参数显示有误 bug 文档 
-- #201 前端开发手册文档中“其他”目录下“事件”链接，报“找不到文档” bug 文档 
-- #196 [tab] 第一个div使用title绑定，第二个使用title_renderer出现如图bug bug 前端 
-- #194 [accordion] 标题背景#E2EEF9 置灰时#E4E4E4 ，内容为空时，背景置灰禁止点击。 bug 前端 
-- #190 accordion应用场景较复杂时，没渲染完成取到的高度是零，导致打开异常。 bug 前端 
-- #188 “修正路径”中"i18n": '/rdk/app/my_first_app/web/scripts/i18n'修改前和修改后路径相同 bug 文档 
-- #187 下载java8链接无法响应 bug 文档 
-- #186 /doc/client文档页面打开后无法立即适应界面 bug 文档 
-- #181 accordion的 demo4ExpandDirection_left demo缩小的时候没有动画 bug 前端 
-- #180 accordion的 demo4RightCoverable demo展开一个会影响另一个 bug 文档 
-- #178 Table进入单元格编辑状态时，应该将文本框重置为当前单元格的值，而不是上次编辑的后的结果 bug 前端 
-- #177 table自定义表头悬浮的时候异常 bug 前端 
-- #176 Tree控件会自动下载globalStyle.css，这些样式会对全局样式造成影响，应该去掉 bug 前端 
-- #169 RDK后端监听端口改为5813未生效 bug 后端 
-- #166 时间控件，当宽度过小的时候，下拉箭头移到下一行了 bug 前端 
-- #163 应用界面选择天粒度，然后开始和结束时间都选择2016-09-01，返回结果无法成功连接成正确的表名 bug 前端 
-- #162 table当ds模板存在$时，defaultConditionProcessor函数返回的baseCondition不对 bug 前端 
-- #161 Map和Graph控件需要监听父级容器的尺寸变化并修改自身的尺寸 bug 前端 
-- #238 selectpick使用bootstrap的selectpick的样式联动会出现问题
-- #242 修改make.sh编译后端生成jar前先删除lib目录下rdk-server*.jar
-- #211 table编辑功能集成combo debug
-- #244 Graph 默认样式有问题，重庆三重点现场复现
+- 修复加载deploy-usf.properties,serviceaddress.properties, `deploy-console.properties的相对路径错误
+- #100 tree控件放开拖动属性后，可以对树节点进行删除和重命名操作，但此操作对对应的数据源无效。
+- #33 Selector的Accordion打开和关闭未发事件
+- #246 Graph无法正确读出父节点的高度
+- #247 map控件，显示加上 `style="height:300px"` 也不能改变高度，挤成一团
+- 修复应用日志有时候打印标签出错的问题
+- #248 Accordion的expand_direction的demo，最大宽度设置小于800px，否则文档上效果太差
+- #254 [兼容性] Accordion 自测child中"删除","刷新"和"编辑"可以展开child下的示例
+- #253 [兼容性] “Accordion 自测” 中添加button渲染后除“删除”前的小图标展示了，其他几个文字前的小图标均未展示
+- 修复首页manual、service_api文档链接 
+- #252 “Accordion 自测” 中点击‘添加button渲染’后，下方bottom的高度会受影响
+- #258 [兼容性] firefox打开"前端开发文档"无法适应界面
+- 修复init脚本路径查找错误问题
+- 增加init.js变更需重启rdk_server文档说明。
+- #265 [兼容性] time控件文档中的示例所有时间均不能点击
+- #257 [兼容性] firefox打开的time组合和time自测界面，所有日期均不可选择，
+- #269 [兼容性] 对话框&模态框文档中的部分示例展示异常
+- #278 TabSelect 文档实例无法显示
+- #256 [兼容性] firefox打开的"comboSelector组合"中my firest Panel 中的下拉框点击后无小滚动条
+- 修复 locale属性读取文件名 修复 应用配置数据源为默认gbase
+- #271 [兼容性] panel 文档中事件下的示例异常
+- #279 文档菜单显示不全 http://localhost:8080/doc/client/index.html 显示不全，缺少滚动条
+- 修复值为布尔型时强转String类型编译出错
+- CI相关脚本
+- 修复测试用例
+- #287 后端排序应用过程中暴露的问题，复选框全部不勾选时需抛清空数据
+- #297 rdk中Table 控件里的search过滤功能不能用
+- #300 add_check_box 翻页复选数据问题
+- #304 rdk_panel组件内容超出指定高度不出现滚动条
