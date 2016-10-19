@@ -84,7 +84,11 @@
                         onDblClick: _handler,
                         beforeClick: _beforeClick,
                         beforeDrag: _beforeDrag,
-                        onDrop: _afterDrag
+                        onDrop: _afterDrag,
+                        onRename: _zTreeOnRename,
+                        onRemove: _onRemove,
+                        beforeCollapse: _beforeCollapse,
+                        beforeExpand: _beforeExpand
                     },
                     edit: {
                         enable: scope.draggable || true
@@ -134,6 +138,36 @@
                         EventService.broadcast(scope.id, EventTypes.CHANGE, treeData);
                     }
                 }
+
+                function _beforeExpand(treeId, treeNode){
+                    if (!!scope.id) {
+                        EventService.broadcast(scope.id, "beforeExpand", treeNode);
+                    }
+                }
+
+                function _beforeCollapse(treeId, treeNode){
+                    if (!!scope.id) {
+                        EventService.broadcast(scope.id, "beforeCollapse", treeNode);
+                    }
+                }
+
+                function _zTreeOnRename(treeId, treeNode, newName, isCancel){
+                    if (!!scope.id) {
+                        if (newName.length == 0) {  
+                            alert("节点名称不能为空.");  
+                            return false;  
+                        }
+                        EventService.broadcast(scope.id, "zTreeOnRename", treeNode); 
+                        return true;  
+                    }
+                }
+
+                function _onRemove(treeId, treeNode) { 
+                    if (!!scope.id) {
+                        EventService.broadcast(scope.id, "onRemove", treeNode); 
+                        return confirm("确认删除 节点 -- " + treeNode.label + " 吗？");  
+                    }
+                }  
             }
 
             function _updateTree(rebornID, setting, treeData) {
