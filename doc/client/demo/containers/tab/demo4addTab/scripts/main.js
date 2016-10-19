@@ -23,8 +23,7 @@ define('main', ['angular', 'jquery', 'rd.containers.Tab', 'rd.controls.BasicSele
             scope.rdkSelector = "Selector控件";
 
             scope.clickHandler = function(){
-                var str = Utils.getDomStr("./scripts/template/tab.html");
-                EventService.broadcast('tabID', EventTypes.ADD, str);
+                rdk.tabID.addTab("./scripts/template/tab.html");
             }
 
             scope.changeHandler = function(){

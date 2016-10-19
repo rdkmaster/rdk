@@ -69,6 +69,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 scope.draggable = Utils.isTrue(attrs.draggable, true);
                 scope.showCloseButton = Utils.isTrue(attrs.draggable, false);
                 scope.appScope = Utils.findAppScope(scope);
+                Utils.publish(scope);
 
                 var dom = element[0].querySelector(".tabs");
                 scope.tabs = [];
@@ -85,21 +86,20 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
 
                 }, 0);
 
-                if(scope.id){
-                    EventService.register(scope.id, EventTypes.ADD, function(event, data){
-                        var contentDom = $(data).get(0);
-                        var tabid = Utils.createUniqueId('tab_item_');
-                        contentDom.setAttribute('id', tabid);
-                        var titleDomStr = contentDom.getAttribute('title');
-                        _prepareTabs(contentDom, titleDomStr, tabid); 
-                        scope.contentDomStr = $(contentDom)[0].outerHTML;
-                        scope.tabid = tabid;
-                    })
-                }
-
                 var off = scope.$on('ngRepeatFinished', function(){
                     _appendTab();
-                });             
+                });  
+
+                scope.addTab  = function(requestUrl){
+                    var domFractionStr = Utils.getDomFraction(requestUrl);
+                    var contentDom = $(domFractionStr).get(0);
+                    var tabid = Utils.createUniqueId('tab_item_');
+                    contentDom.setAttribute('id', tabid);
+                    var titleDomStr = contentDom.getAttribute('title');
+                    _prepareTabs(contentDom, titleDomStr, tabid); 
+                    scope.contentDomStr = $(contentDom)[0].outerHTML;
+                    scope.tabid = tabid;
+                }           
 
                 scope.picShow = function(index) {
                     return scope.currentSelectedIndex == index;
@@ -132,6 +132,9 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     $(tabs[0].querySelector(".content")).append(scope.contentDomStr);
                     tabs.tabs("refresh");
                     $compile($("#"+scope.tabid))(scope);
+                    if(scope.id){
+                        EventService.broadcast(scope.id, EventTypes.ADD);
+                    }
                 }
 
                 function _getTabIndex(tabId) {
