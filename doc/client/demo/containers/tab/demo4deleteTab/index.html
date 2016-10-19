@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Tab -> Basic</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='myCtrl'>
+    <rdk_tab id='tabID' show_close_button='true'>
+        <div title="RDK">
+            <p>RDK最突出的特点就是易用！</p>
+        </div>
+        <div title="{{rdkSelector}}">
+            <rdk_basic_selector selected_items="selectedItems" data="cityItems"></rdk_basic_selector>
+        </div>
+        <div title="Rdk_tab">
+            <rdk_tab>
+                <div title="RDK">
+                    <p>Rapid developing is a brilliant project</p>
+                </div>
+                <div title="rdkSelector">
+                    <p>rdk-Basic-Selector是RDK中出现频率最高的控件之一！</p>
+                </div>
+            </rdk_tab>
+        </div>
+    </rdk_tab>
+</body>
+
+</html>

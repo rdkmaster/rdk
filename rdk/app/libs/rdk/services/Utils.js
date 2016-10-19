@@ -1,4 +1,4 @@
-﻿define(['angular'], function() {
+﻿define(['angular', 'jquery'], function() {
     var utilsModule = angular.module("rd.services.Utils", []);
     utilsModule.service('Utils', ['RDKConst', function(RDKConst) {
         // (function() {
@@ -317,7 +317,18 @@
             return lang;
         }
 
-
+        this.getDomStr = function(requestUrl){
+            var domStr = '';
+            $.ajax({
+                type: "GET",
+                async: false, 
+                url: requestUrl,  
+                success: function(msg){
+                    domStr = msg;
+                }
+            }); 
+            return domStr;
+        }
 
     }]);
 

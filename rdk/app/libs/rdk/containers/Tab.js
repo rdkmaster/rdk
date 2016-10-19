@@ -16,8 +16,19 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 }
             }
         }
-    }]).directive('rdkTab', ['EventService', 'EventTypes', 'Utils', '$timeout',
-        function(EventService, EventTypes, Utils, $timeout) {
+    }]).directive('onFinishRender', function($timeout) {
+            return {
+                restrict: 'A',
+                link: function(scope, element, attr) {
+                    if (scope.$last === true) {
+                        $timeout(function() {
+                            scope.$emit('ngRepeatFinished');
+                        }, 0);
+                    }
+                }
+            }
+        }).directive('rdkTab', ['EventService', 'EventTypes', 'Utils', '$timeout','$compile',
+        function(EventService, EventTypes, Utils, $timeout, $compile) {
             return {
                 restrict: 'E',
                 transclude: true,
@@ -25,20 +36,22 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     id: '@?',
                     selectedTab: '=?',
                     heightStyle: '@',
-                    showItems: '='
+                    showItems: '=',
+                    showCloseButton: '@'
                 },
                 replace: true,
                 template: function(tElement, tAttrs) {
                     return '<div class="rdk-tab-module">\
                                 <div class="tabs">\
                                     <ul class="title">\
-                                        <li style="display:{{getIndex($index)==-1?\'none\':\'inline\'}}" ng-repeat="tab in tabs">\
+                                        <li style="display:{{getIndex($index)==-1?\'none\':\'inline\'}}" ng-repeat="tab in tabs"  on-finish-render>\
                                             <a href="#{{tab.tabid}}" ng-click="tabClick($event)" ng-class="{\'selected\':currentSelectedIndex == $index}" rdk-tabtitle-parser>\
                                               {{tab.title}}\
                                             </a>\
                                             <span class="bottom_line" style="display: block;" ng-show="picShow($index)">\
                                                 <em></em>\
                                             </span>\
+                                            <span class="ui-icon ui-icon-close" role="presentation" ng-show="{{showCloseButton}}">Remove Tab</span>\
                                         </li>\
                                      </ul>\
                                     <div ng-transclude class="content"> </div>\
@@ -54,10 +67,10 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
 
             function _link(scope, element, attrs) {
                 scope.draggable = Utils.isTrue(attrs.draggable, true);
+                scope.showCloseButton = Utils.isTrue(attrs.draggable, false);
+
                 var dom = element[0].querySelector(".tabs");
-
                 scope.tabs = [];
-
                 scope.currentSelectedIndex = 0;
 
                 $timeout(function() {
@@ -65,19 +78,26 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     for (var i = 0; i < tabs.length; i++) {
                         var tabid = Utils.createUniqueId('tab_item_');
                         tabs[i].setAttribute('id', tabid);
-                        var title = tabs[i].getAttribute('title')
-                        var compileTitle = undefined, renderTitle=undefined;
-                        if (title) {
-                            compileTitle = Utils.compile(scope.$parent, title);
-                        } else {
-                            renderTitle = tabs[i].querySelector("title_renderer");
-                        }
-                        scope.tabs.push({ title: compileTitle, tabid: tabid, title_renderer: renderTitle });
+                        var title = tabs[i].getAttribute('title');
+                        _prepareTabs(tabs[i], title, tabid);
                     };
 
                 }, 0);
 
+                if(scope.id){
+                    EventService.register(scope.id, EventTypes.ADD, function(event, data){
+                        var contentDom = $(data).get(0);
+                        var tabid = Utils.createUniqueId('tab_item_');
+                        contentDom.setAttribute('id', tabid);
+                        var titleDomStr = contentDom.getAttribute('title');
+                        scope.contentDomStr = $(contentDom)[0].outerHTML;
+                        _prepareTabs(contentDom, titleDomStr, tabid); 
+                    })
+                }
 
+                var off = scope.$on('ngRepeatFinished', function(){
+                    _appendTab();
+                });             
 
                 scope.picShow = function(index) {
                     return scope.currentSelectedIndex == index;
@@ -91,6 +111,24 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     if (scope.id) {
                         EventService.broadcast(scope.id, EventTypes.CHANGE, scope.currentSelectedIndex);
                     }
+                }
+
+                function _prepareTabs(dom, title, tabid){
+                    var compileTitle = undefined, renderTitle = undefined;
+                    if(title){
+                        compileTitle = Utils.compile(scope.$parent, title);
+                    }
+                    else{
+                        renderTitle = dom.querySelector("title_renderer");
+                    }
+                    scope.tabs.push({title: compileTitle, tabid: tabid, title_renderer: renderTitle });
+                }
+
+                function _appendTab(){
+                    if(scope.contentDomStr == undefined) return;
+                    var tabs = $(dom).tabs();
+                    tabs.append(scope.contentDomStr);
+                    tabs.tabs("refresh");
                 }
 
                 function _getTabIndex(tabId) {
@@ -130,6 +168,13 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                         return;
                     }
                     var tabs = $(dom).tabs();
+
+                    tabs.delegate("span.ui-icon-close", "click", function () {
+                        var panelId = $(this).closest("li").remove().attr("aria-controls");
+                        $("#" + panelId).remove();
+                        tabs.tabs("refresh");
+                    });
+
                     tabs.find(".ui-tabs-nav").sortable({
                         axis: "x",
                         stop: function() {
