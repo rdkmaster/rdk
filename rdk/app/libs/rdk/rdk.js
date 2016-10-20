@@ -22,7 +22,7 @@ rdk = (function() {
         angular.module("rdk_app").config(['$provide', function($provide) {
             $provide.decorator('$controller', ['$delegate', function($delegate) {
                 return function(constructor, locals, later, indent) {
-                    if (typeof constructor === 'string') {
+                    if (typeof constructor === 'string' && locals.$scope) {
                         locals.$scope._rdk_controllerName = constructor;
                     }
                     return $delegate(constructor, locals, later, indent);
