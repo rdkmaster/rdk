@@ -23,9 +23,9 @@ object Messages {
 
   case class DBSession(appName: String,opDataSource:Option[String])
 
-  case class ServiceParam(service: String, param: JObject, app: String)
+  case class ServiceParam(service: String = null, param: JObject, app: String)
 
-  case class ServiceParamObj(service: String, param: AnyRef, app: String)
+  case class ServiceParamObj(service: String = null, param: AnyRef, app: String)
 
   case class ServiceRequest(ctx: RDKContext, script: String,
                             app: String, param: AnyRef, method: String, timeStamp: Long)

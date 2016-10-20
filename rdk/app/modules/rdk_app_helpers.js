@@ -5,8 +5,7 @@ define(['rd.core'], function() {
         if (!_isRdkService(url)) {
             return config;
         }
-        var key = config.method == 'get' ? 'params' : 'data';
-        var param = config[key];
+
         var href = location.href;
         try {
             var app = href.match(/\/app\/(.*)\/web\//)[1];
@@ -14,12 +13,14 @@ define(['rd.core'], function() {
             app = url.match(/\.js$/i) ? url : url + '.js';
         }
         config.url = '/rdk/service/' + url;
-        config[key] = {
-            p: {
-                param: param,
+
+        var key = config.method == 'get' ? 'params' : 'data';
+        var param = {
+                param: config[key],
                 app: app,
             }
-        };
+        config[key] = config.method == 'get' ? { p: param } : param;
+        
         return config;
     }
 
