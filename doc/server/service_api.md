@@ -1,4 +1,4 @@
-﻿<rdk_title>后端服务API</rdk_title>
+<rdk_title>后端服务API</rdk_title>
 
 
 ## 集合/数组/对象的常用功能集 ##
@@ -320,23 +320,23 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
     
       db{
            mysql{
-		    #驱动(必选)
-		   driver=com.mysql.jdbc.Driver
-		   #jdbc url(必选)
-		   url="jdbc:mysql://10.43.149.231:3306/dap_model?user=root&password=U_tywg_2013&useUnicode=true&characterEncoding=UTF8"
-		   #引用连接池(必选)
-		   poolRef=pool.default  //对应以下连接配置，连接池按default配置项进行配置
-		 }
+			    #驱动(必选)
+			   driver=com.mysql.jdbc.Driver
+			   #jdbc url(必选)
+			   url="jdbc:mysql://10.43.149.231:3306/dap_model?user=root&password=U_tywg_2013&useUnicode=true&characterEncoding=UTF8"
+			   #引用连接池(必选)
+			   poolRef=pool.default  //对应以下连接配置，连接池按default配置项进行配置
+		   }
 		 
 		   hbase{
-		    #驱动(必选)
-		   driver=***   
-		   #jdbc url(必选)
-		   url="jdbc:***" 
-		   #引用连接池(必选)，连接池定义见上节pool
-		   poolRef=pool.hbasePool
-		 }
-		}
+			    #驱动(必选)
+			   driver=***   
+			   #jdbc url(必选)
+			   url="jdbc:***" 
+			   #引用连接池(必选)，连接池定义见上节pool
+			   poolRef=pool.hbasePool
+		  }
+	    }
 
    	连接池配置：
 
@@ -406,14 +406,16 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 		    }
 		})();
 
-第四步，使用[Data.useDataSource()](#useDataSource)选择当前使用的数据源。
+第四步，重启rdk_server，**注意：增加新的数据库驱动及对应配置，以及init.js内容发生变更，需要重启rdk\_server才能生效**
+
+第五步，使用[Data.useDataSource()](#useDataSource)选择当前使用的数据源。
      
    		Data.useDataSource("mysql");					
         log(Data.fetch("SELECT * FROM dim_ne",5000)); //查询mysql数据库
         Data.useDataSource("hbase");                   
         log(Data.fetch("SELECT * FROM dim_ne",5000)); //查询hbase数据库
 
-**注意：增加新的数据库驱动及对应配置，需要重启rdk_server才能生效**
+
    		
 #### `Data.fetch()` ####
 
