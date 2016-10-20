@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>Tree -> Rename</title>
+    <title>Tree -> Remove</title>
 
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
@@ -13,7 +13,7 @@
 </head>
 
 <body ng-controller='myCtrl' style="margin-top:20px" > 
-    <rdk_tree id="testZtree" ds="ds_tree" ds_url="/doc/client/demo/controls/tree/mockdata/tree_data" node_field="module" label_field="label" ds_query_if="ready" draggable=true></rdk_tree>
+    <rdk_tree id="testZtree" ds="ds_tree" ds_url="/doc/client/demo/controls/tree/mockdata/tree_data" node_field="module" label_field="label" ds_query_if="ready" draggable=true remove='reFun'></rdk_tree>
 </body>
 
 </html>

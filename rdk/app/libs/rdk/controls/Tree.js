@@ -13,7 +13,11 @@
                     setting: '=?',
                     draggable: '=?',
                     checkable: '=?',
-                    data: '='
+                    data: '=',
+                    remove: '&?',
+                    rename: '&?',
+                    collapse: '&?',
+                    expand: '&?'
                 },
                 replace: true,
                 template: '<div><ul id="__unique_id__" class="ztree"></ul></div>',
@@ -85,8 +89,8 @@
                         beforeClick: _beforeClick,
                         beforeDrag: _beforeDrag,
                         onDrop: _afterDrag,
-                        onRename: _onRename,
-                        onRemove: _onRemove,
+                        beforeRename: _beforeRename,
+                        beforeRemove: _beforeRemove,
                         beforeCollapse: _beforeCollapse,
                         beforeExpand: _beforeExpand
                     },
@@ -143,29 +147,47 @@
                     if (!!scope.id) {
                         EventService.broadcast(scope.id, "beforeExpand", treeNode);
                     }
+                    var fn = scope.expand(scope);
+                    if(!!fn){
+                        return fn(treeId, treeNode);
+                    }else{
+                        return true;
+                    }
                 }
 
                 function _beforeCollapse(treeId, treeNode){
                     if (!!scope.id) {
                         EventService.broadcast(scope.id, "beforeCollapse", treeNode);
                     }
-                }
-
-                function _onRename(treeId, treeNode, newName, isCancel){
-                    if (!!scope.id) {
-                        if (newName.length == 0) {  
-                            alert("节点名称不能为空.");  
-                            return false;  
-                        }
-                        EventService.broadcast(scope.id, "onRename", treeNode); 
-                        return true;  
+                    var fn = scope.collapse(scope);
+                    if(!!fn){
+                        return fn(treeId, treeNode);
+                    }else{
+                        return true;
                     }
                 }
 
-                function _onRemove(treeId, treeNode) { 
+                function _beforeRename(treeId, treeNode, newName, isCancel){
+                    if (!!scope.id) {
+                        EventService.broadcast(scope.id, "onRename", treeNode); 
+                    }
+                    var fn = scope.rename(scope);
+                    if(!!fn){
+                        return fn(treeId, treeNode, newName, isCancel);
+                    }else{
+                        return true;
+                    }
+                }
+
+                function _beforeRemove(treeId, treeNode) { 
                     if (!!scope.id) {
                         EventService.broadcast(scope.id, "onRemove", treeNode); 
-                        return confirm("确认删除 节点 -- " + treeNode.label + " 吗？");  
+                    }
+                    var fn = scope.remove(scope);
+                    if(!!fn){
+                        return fn(treeId, treeNode);
+                    }else{
+                        return true;
                     }
                 }  
             }

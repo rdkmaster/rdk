@@ -123,13 +123,13 @@
 
 修改选中树的某个节点。
 示例如下：
-<live_demo example="controls/tree/event_rename" width="900"></live_demo>
+<live_demo example="controls/tree/event_beforeRename" width="900"></live_demo>
 
 ##Remove##
 
 删除选中树的某个节点。
 示例如下：
-<live_demo example="controls/tree/event_remove" width="900"></live_demo>
+<live_demo example="controls/tree/event_beforeRemove" width="900"></live_demo>
 #样式#
 暂无
 

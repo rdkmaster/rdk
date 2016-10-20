@@ -4,9 +4,9 @@ define('main', ['rd.controls.Tree'], function() {
     // 创建一个控制器
     app.controller('myCtrl', ['$scope', 'EventService', 'EventTypes', function($scope, EventService, EventTypes) {
 
-        EventService.register('testZtree', "beforeExpand", function(event, data){
-            alert("beforeExpand")
-        });
+        $scope.exFun=function(treeId, treeNode){
+        	return confirm("确认打开 节点 -- " + treeNode.label + " 吗？");
+        }
 
     }]);
 });
