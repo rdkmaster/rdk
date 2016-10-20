@@ -99,8 +99,8 @@ function() {
                     if(scope.labelPosition=='top'||scope.labelPosition=='bottom') {
                         (iEle.find("div")[1]).style.margin ="0 auto";
                     }else if(scope.labelPosition=='left'||scope.labelPosition=='right') {
-                        (iEle.find("div")[1]).style.float ="left";
-                        (iEle.find("div")[0]).style.float ="left";
+                        iEle.children("div")[1].style.float ="left";
+                        iEle.children("div")[0].style.float ="left";
                     };
                     
                     function _changeCssTop(newVal) {
