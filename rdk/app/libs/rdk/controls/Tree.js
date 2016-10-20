@@ -14,6 +14,8 @@
                     draggable: '=?',
                     checkable: '=?',
                     data: '=',
+                    click: '&?',
+                    dblclick: '&?',
                     remove: '&?',
                     rename: '&?',
                     collapse: '&?',
@@ -104,15 +106,28 @@
                 return setObj;
 
                 function _handler(event, treeId, treeNode) {
-                    if (!!scope.id) {
-                        EventService.broadcast(scope.id, event.type, treeNode);
-                    }
                     event.treeId = scope.id;
                     event.name = event.type;
-                    if (scope.rdkClick && event.type == 'click') {
-                        scope.rdkClick(event, treeNode);
-                    } else if (scope.rdkDoubleClick && event.type == 'dblclick') {
-                        scope.rdkDoubleClick(event, treeNode);
+                    if (event.type == 'click') {
+                        if (!!scope.id) {
+                            EventService.broadcast(scope.id, EventTypes.CLICK, treeNode);
+                        }
+                        var fn = scope.click(scope);
+                        if(!!fn){
+                            return fn(event, treeId, treeNode);
+                        }else{
+                            return true;
+                        } 
+                    } else if (event.type == 'dblclick') {
+                        if (!!scope.id) {
+                            EventService.broadcast(scope.id, EventTypes.DOUBLE_CLICK, treeNode);
+                        }
+                        var fn = scope.dblclick(scope);
+                        if(!!fn){
+                            return fn(event, treeId, treeNode);
+                        }else{
+                            return true;
+                        }
                     }
                 }
 
@@ -145,7 +160,7 @@
 
                 function before_expand(treeId, treeNode){
                     if (!!scope.id) {
-                        EventService.broadcast(scope.id, "before_expand", treeNode);
+                        EventService.broadcast(scope.id, EventTypes.BEFORE_EXPAND, treeNode);
                     }
                     var fn = scope.expand(scope);
                     if(!!fn){
@@ -157,7 +172,7 @@
 
                 function before_collapse(treeId, treeNode){
                     if (!!scope.id) {
-                        EventService.broadcast(scope.id, "before_collapse", treeNode);
+                        EventService.broadcast(scope.id, EventTypes.BEFORE_COLLAPSE, treeNode);
                     }
                     var fn = scope.collapse(scope);
                     if(!!fn){
@@ -169,7 +184,7 @@
 
                 function before_rename(treeId, treeNode, newName, isCancel){
                     if (!!scope.id) {
-                        EventService.broadcast(scope.id, "before_rename", treeNode); 
+                        EventService.broadcast(scope.id, EventTypes.BEFORE_RENAME, treeNode); 
                     }
                     var fn = scope.rename(scope);
                     if(!!fn){
@@ -181,7 +196,7 @@
 
                 function before_remove(treeId, treeNode) { 
                     if (!!scope.id) {
-                        EventService.broadcast(scope.id, "before_remove", treeNode); 
+                        EventService.broadcast(scope.id, EventTypes.BEFORE_REMOVE, treeNode); 
                     }
                     var fn = scope.remove(scope);
                     if(!!fn){

@@ -95,39 +95,38 @@
 
 #事件#
 
-##Click##
+##CLICK##
 
-鼠标左键单击选中树的某个节点。
-示例如下：
+事件类型：EventTypes.CLICK，监 onclick 事件，即双击被选中树的某个节点，也可以在rdk_tree标签里，直接定义click函数。
 <live_demo example="controls/tree/event_click" width="900"></live_demo>
 
-##DoubleClick##
+##DOUBLE_CLICK##
 
-鼠标左键双击选中树的某个节点。
+事件类型：EventTypes.DOUBLE_CLICK，监听 onDblClick 事件，即单击被选中树的某个节点，也可以在rdk_tree标签里，直接定义dblclick函数。
 示例如下：
 <live_demo example="controls/tree/event_doubleclick" width="900"></live_demo>
 
-##BeforeCollapse##
+##BEFORE_COLLAPSE##
 
-事件类型：before_collapse，监听到外层的 before_collapse 事件，即关闭被选中树的某个节点，也可以在rdk_tree标签里，直接定义collapse函数。
+事件类型：EventTypes.BEFORE_COLLAPSE，监听到外层的 before_collapse 事件，即关闭被选中树的某个节点，也可以在rdk_tree标签里，直接定义collapse函数。
 示例如下：
 <live_demo example="controls/tree/event_beforeCollapse" width="900"></live_demo>
 
-##BeforeExpand##
+##BEFORE_EXPAND##
 
-事件类型：before_expand，监听到外层的 before_expand 事件，即打开被选中树的某个节点，也可以在rdk_tree标签里，直接定义expand函数。
+事件类型：EventTypes.BEFORE_EXPAND，监听到外层的 before_expand 事件，即打开被选中树的某个节点，也可以在rdk_tree标签里，直接定义expand函数。
 示例如下：
 <live_demo example="controls/tree/event_beforeExpand" width="900"></live_demo>
 
-##BeforeRename##
+##BEFORE_RENAME##
 
-事件类型：before_rename，监听到外层的 before_rename 事件，即修改被选中树的某个节点，也可以在rdk_tree标签里，直接定义rename函数。
+事件类型：EventTypes.BEFORE_RENAME，监听到外层的 before_rename 事件，即修改被选中树的某个节点，也可以在rdk_tree标签里，直接定义rename函数。
 示例如下：
 <live_demo example="controls/tree/event_beforeRename" width="900"></live_demo>
 
-##BeforeRemove##
+##BEFORE_REMOVE##
 
-事件类型：before_remove，监听到外层的 before_remove 事件，即删除被选中树的某个节点，也可以在rdk_tree标签里，直接定义remove函数。
+事件类型：EventTypes.BEFORE_REMOVE，监听到外层的 before_remove 事件，即删除被选中树的某个节点，也可以在rdk_tree标签里，直接定义remove函数。
 示例如下：
 <live_demo example="controls/tree/event_beforeRemove" width="900"></live_demo>
 #样式#

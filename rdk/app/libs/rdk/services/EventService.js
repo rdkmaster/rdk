@@ -44,7 +44,13 @@
 
         DATA_CHANGE:"data_change",
         DOUBLE_CLICK: "double_click",
-        PAGING_DATA_CHANGE:"paging_data_change"
+        PAGING_DATA_CHANGE:"paging_data_change",
+
+        BEFORE_EXPAND:"before_expand",
+        BEFORE_COLLAPSE:"before_collapse",
+        BEFORE_RENAME:"before_rename",
+        BEFORE_REMOVE:"before_remove",
+        CLICK:"click",
     });
 
     event.service('EventService', ['$rootScope', '$timeout', '$rootScope', 'Utils', 'EventTypes',

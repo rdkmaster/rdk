@@ -8,8 +8,8 @@ define('main', ['rd.controls.Tree'], function() {
         	return confirm("确认打开 节点 -- " + treeNode.label + " 吗？");
         }
         // 也可以直接监听
-        EventService.register('testZtree', "before_expand", function(event, data){
-            console.log(data);
-        });
+        // EventService.register('testZtree', EventTypes.BEFORE_EXPAND, function(event, data){
+        //     console.log(data);
+        // });
     }]);
 });
