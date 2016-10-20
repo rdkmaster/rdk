@@ -89,7 +89,7 @@ function findAndFixHeaders(container) {
         }
 
         if (!tag.id) {
-            tag.id = tag.innerText;
+            tag.id = encodeURIComponent(tag.innerText);
         }
 
         nodes.push({id: tag.id, text: tag.innerHTML, level: tag.localName.substring(1)});
