@@ -36,8 +36,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     id: '@?',
                     selectedTab: '=?',
                     heightStyle: '@',
-                    showItems: '=',
-                    showCloseButton: '@'
+                    showItems: '='
                 },
                 replace: true,
                 template: function(tElement, tAttrs) {
@@ -51,7 +50,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                                             <span class="bottom_line" style="display: block;" ng-show="picShow($index)">\
                                                 <em></em>\
                                             </span>\
-                                            <span class="ui-icon ui-icon-close" role="presentation" ng-show="{{showCloseButton}}">Remove Tab</span>\
+                                            <span class="ui-icon ui-icon-close" role="presentation" ng-show="{{tab.closable}}" ng-click="clickHandler($index, $event)"></span>\
                                         </li>\
                                      </ul>\
                                     <div ng-transclude class="content"> </div>\
@@ -67,7 +66,6 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
 
             function _link(scope, element, attrs) {
                 scope.draggable = Utils.isTrue(attrs.draggable, true);
-                scope.showCloseButton = Utils.isTrue(attrs.draggable, false);
                 scope.appScope = Utils.findAppScope(scope);
                 Utils.publish(scope);
 
@@ -81,7 +79,8 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                         var tabid = Utils.createUniqueId('tab_item_');
                         tabs[i].setAttribute('id', tabid);
                         var title = tabs[i].getAttribute('title');
-                        _prepareTabs(tabs[i], title, tabid);
+                        var closable = Utils.isTrue(tabs[i].getAttribute('show_close_button'), false);
+                        _prepareTabs(tabs[i], title, tabid, closable);
                     };
 
                 }, 0);
@@ -90,16 +89,26 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     _appendTab();
                 });  
 
-                scope.addTab  = function(requestUrl){
-                    var domFractionStr = Utils.getDomFraction(requestUrl);
+                scope.addTab  = function(source, curTitle){
+                    var reg = /^\s*<div\s+.*<\/div>\s*$/im;
+                    var domFractionStr;
+                    reg.test(source) ? (domFractionStr = source) : (domFractionStr = Utils.getDomFraction(source));
+
                     var contentDom = $(domFractionStr).get(0);
                     var tabid = Utils.createUniqueId('tab_item_');
                     contentDom.setAttribute('id', tabid);
+
                     var titleDomStr = contentDom.getAttribute('title');
-                    _prepareTabs(contentDom, titleDomStr, tabid); 
+                    if(curTitle != undefined){
+                        titleDomStr = curTitle;
+                    }
+
+                    var closable = Utils.isTrue(contentDom.getAttribute('show_close_button'), false);
+                    _prepareTabs(contentDom, titleDomStr, tabid, closable); 
+
                     scope.contentDomStr = $(contentDom)[0].outerHTML;
                     scope.tabid = tabid;
-                }           
+                }        
 
                 scope.picShow = function(index) {
                     return scope.currentSelectedIndex == index;
@@ -115,7 +124,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     }
                 }
 
-                function _prepareTabs(dom, title, tabid){
+                function _prepareTabs(dom, title, tabid, closable){
                     var compileTitle = undefined, renderTitle = undefined;
                     if(title){
                         compileTitle = Utils.compile(scope.$parent, title);
@@ -123,7 +132,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     else{
                         renderTitle = dom.querySelector("title_renderer");
                     }
-                    scope.tabs.push({title: compileTitle, tabid: tabid, title_renderer: renderTitle });
+                    scope.tabs.push({title: compileTitle, tabid: tabid, title_renderer: renderTitle, closable: closable});
                 }
 
                 function _appendTab(){
@@ -132,6 +141,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     $(tabs[0].querySelector(".content")).append(scope.contentDomStr);
                     tabs.tabs("refresh");
                     $compile($("#"+scope.tabid))(scope);
+                    scope.contentDomStr = undefined;//一次新增后重置
                     if(scope.id){
                         EventService.broadcast(scope.id, EventTypes.ADD);
                     }
@@ -168,6 +178,29 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     return scope.showItems.indexOf(idx); //定义了数组，部分显示
                 }
 
+                scope.clickHandler = function(index, event){
+                    if(scope.id){
+                        var data = {};
+                        data.tabIndex = index;
+                        data.tabData = scope.tabs[index];
+                        EventService.broadcast(scope.id, EventTypes.CLOSE, data);
+                    }
+                }
+
+                scope.destroyTab = function(index){
+                    var panelId = scope.tabs[index].tabid;
+                    scope.tabs.splice(index, 1);
+                    $("#" + panelId).remove();
+                    var tabs = $(dom).tabs();
+                    tabs.tabs("refresh");
+                }
+
+                scope.closeTab = function(index){
+                    var closeLi = $("ul").find("li").eq(index);
+                    $(closeLi).css({'display': 'none'});
+                    var panelId = scope.tabs[index].tabid;
+                    $("#" + panelId).css({'display': 'none'});
+                }
 
                 function _updateDraggable() {
                     if (!scope.draggable) {
@@ -175,15 +208,9 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     }
                     var tabs = $(dom).tabs();
 
-                    tabs.delegate("span.ui-icon-close", "click", function () {
-                        var panelId = $(this).closest("li").remove().attr("aria-controls");
-                        $("#" + panelId).remove();
-                        tabs.tabs("refresh");
-                    });
-
                     tabs.find(".ui-tabs-nav").sortable({
                         axis: "x",
-                        stop: function() {
+                        stop: function($event) {
                             tabs.tabs("refresh");
                         }
                     })

@@ -12,14 +12,14 @@
 </head>
 
 <body ng-controller='myCtrl'>
-    <rdk_tab id='tabID' show_close_button='true'>
-        <div title="RDK">
+    <rdk_tab id='tabID'>
+        <div title="RDK" show_close_button='true'>
             <p>RDK最突出的特点就是易用！</p>
         </div>
-        <div title="{{rdkSelector}}">
+        <div title="{{rdkSelector}}" show_close_button='true'>
             <rdk_basic_selector selected_items="selectedItems" data="cityItems"></rdk_basic_selector>
         </div>
-        <div title="Rdk_tab">
+        <div title="Rdk_tab" show_close_button='true'>
             <rdk_tab>
                 <div title="RDK">
                     <p>Rapid developing is a brilliant project</p>

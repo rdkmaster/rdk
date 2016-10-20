@@ -21,6 +21,11 @@ define('main', ['angular', 'jquery', 'rd.containers.Tab', 'rd.controls.BasicSele
             }];
 
             scope.rdkSelector = "Selector控件";
+
+            EventService.register('tabID', EventTypes.CLOSE, function(event, data){
+                // rdk.tabID.destroyTab(data.tabIndex);
+                rdk.tabID.closeTab(data.tabIndex);
+            });
         }
     ]);
 });

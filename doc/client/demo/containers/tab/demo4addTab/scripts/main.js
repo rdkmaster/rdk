@@ -23,7 +23,8 @@ define('main', ['angular', 'jquery', 'rd.containers.Tab', 'rd.controls.BasicSele
             scope.rdkSelector = "Selector控件";
 
             scope.clickHandler = function(){
-                rdk.tabID.addTab("./scripts/template/tab.html");
+                rdk.tabID.addTab("./scripts/template/tab.html", '新增覆盖标题');
+                // rdk.tabID.addTab("<div title='new tab'><span>新增模板内容</span></div>", '新增覆盖标题');
             }
 
             scope.changeHandler = function(){
@@ -33,6 +34,11 @@ define('main', ['angular', 'jquery', 'rd.containers.Tab', 'rd.controls.BasicSele
                 });
                 alert('选中了 "' + res + '"');                
             }
+
+            EventService.register('tabID', EventTypes.CLOSE, function(event, data){
+                // rdk.tabID.destroyTab(data.tabIndex);
+                rdk.tabID.closeTab(data.tabIndex);
+            });
         }
     ]);
 });
