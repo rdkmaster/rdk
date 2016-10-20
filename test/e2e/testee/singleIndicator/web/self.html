@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>SingleIndicator 自测</title>
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk"
+        src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="self.js"></script>
+    
+
+    <!-- 应用正式运行的时候，请使用下面这个节点，RDK会使用编译后的代码，代码体积小，下载快 -->
+    <!--
+    <script data-main="main.min.js" src="/rdk_server/app/libs/requirejs/require.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    -->
+    
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/test/module/testee_helper',
+            }
+        });
+    </script>
+</head>
+<style>
+    .single-indicator{
+        width:500px;
+        display:inline-block;
+    }
+</style>
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    <div class="single-indicator value">
+        <!--默认缺省value 为0-->
+        <rdk_single_indicator value="testValue"></rdk_single_indicator>
+    </div>
+    <div class="single-indicator formatter">
+        <!--自定义符号-->
+        <rdk_single_indicator value="20" formatter="$"></rdk_single_indicator>
+    </div>
+    <div class="single-indicator-label">
+        <!--Apple-->
+        <rdk_single_indicator value="0" label="label"></rdk_single_indicator>
+    </div>
+        <!--direction-->
+    <div class="single-indicator position-top">
+        <rdk_single_indicator value="0" label_position="top"></rdk_single_indicator>
+    </div>
+    <div class="single-indicator position-left">
+        <rdk_single_indicator value="0" label_position="left"></rdk_single_indicator>
+    </div>
+    <div class="single-indicator position-down">
+        <rdk_single_indicator value="0" label_position="down"></rdk_single_indicator>
+    </div>
+    <div class="single-indicator position-right">
+        <rdk_single_indicator value="0" label_position="right"></rdk_single_indicator>
+    </div>
+        <!--icon-->
+    <div class="single-indicator wifi-2x">
+        <rdk_single_indicator value="0" icon="fa fa-wifi fa-2x"></rdk_single_indicator>
+    </div>
+    <div class="single-indicator wifi-3x">
+        <rdk_single_indicator value="0" icon="fa fa-wifi fa-3x"></rdk_single_indicator>
+    </div>
+    <div class="single-indicator mobile-2x">
+        <rdk_single_indicator value="0" icon="fa fa-mobile fa-2x"></rdk_single_indicator>
+    </div> 
+    <!--小箭头指向-->
+    <div class="single-indicator point-to">
+        <rdk_single_indicator value="0" point_to="pointTo"></rdk_single_indicator>
+        <button ng-click="pointToLeft()">left</button>
+        <button ng-click="pointToTop()">top</button>
+        <button ng-click="pointToRight()">right</button>
+        <button ng-click="pointToBottom()">down</button>
+    </div>
+    <rdk_loading>
+        <img src="images/loding.gif" alt="loading..."/>
+    </rdk_loading>
+</body>
+
+</html>

@@ -33,6 +33,7 @@
     "tab":"protractor tab-conf.js",
     "fold":"protractor fold-conf.js",
     "bullet":"protractor bullet-conf.js",
+    "singleIndicator":"protractor singleIndicator-conf.js",
     "protractor_debug" : "protractor debug protractor-conf.js"
   }
 }
