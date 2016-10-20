@@ -18,5 +18,9 @@ define('main', ['rd.controls.Table'], function() {
         EventService.register('table', EventTypes.CHECK, function(event, data){
             var selectedData = data.data;
         }); 
+
+        $scope.clickHandler = function(){
+           rdk.tableID.pageSize = 10;
+        }
     }]);
 });

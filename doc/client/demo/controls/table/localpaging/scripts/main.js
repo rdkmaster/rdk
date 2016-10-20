@@ -5,6 +5,10 @@ define('main', ['rd.controls.Table'], function() {
     app.controller('myCtrl', ['$scope', 'EventService', 'EventTypes', function($scope, EventService, EventTypes) {
         EventService.register('table', EventTypes.CHECK, function(event, data){
             var selectedData = data.data;
-        });        
+        });      
+
+        $scope.clickHandler = function(){
+           rdk.tableID.pageSize = 3;
+        } 
     }]);
 });
