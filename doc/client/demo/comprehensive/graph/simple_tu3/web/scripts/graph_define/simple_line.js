@@ -30,6 +30,10 @@ return function(data, context, GraphService, attributes) {
             return -15;
         }
     }
+    function getGridRight(){
+        var gridRight = ""+data.data[0][0]
+        return gridRight.length*8
+    }
     var a='1';
 return {
     tooltip : {
@@ -46,7 +50,7 @@ return {
     },
     grid:{
         left:100,
-        right:100,
+        right:getGridRight(),
         top:60,
         },
     calculable : true,
@@ -148,7 +152,7 @@ return {
             label : {
                 normal: {
                     show: true,
-                    position: ['92%',getBrowserInfo()],
+                    position: ['100%',getBrowserInfo()],
                     textStyle:{
                         fontSize:12,
                         color:"#54acd5"

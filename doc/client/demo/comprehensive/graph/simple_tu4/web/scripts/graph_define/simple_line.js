@@ -30,6 +30,10 @@ function getBrowserInfo(){//只做了谷歌和火狐的兼容性
         return -15;
     }
 }
+function getGridRight(){
+    var gridRight = ""+data.data[0][0]
+    return gridRight.length*8
+}
 return {
     title : {
         text:"",
@@ -44,7 +48,7 @@ return {
     }, 
      grid:{
         left:100,
-        right:100,
+        right:getGridRight(),
         top:60,
     },
     calculable:false,
@@ -180,7 +184,7 @@ return {
             label : {
                 normal: {
                     show: true,
-                    position: ['92%',getBrowserInfo()],
+                    position: ['100%',getBrowserInfo()],
                     textStyle:{
                         fontSize:12,
                         color:"#54acd5"
