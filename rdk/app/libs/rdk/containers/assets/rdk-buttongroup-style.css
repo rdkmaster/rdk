@@ -1,0 +1,14 @@
+
+.rdk-buttongroup-module  button:first-child{
+	border-radius: 4px 0 0 4px;;
+}
+.rdk-buttongroup-module button:last-child{
+	border-radius: 0 4px 4px 0;
+}
+.rdk-buttongroup-module button{
+	border: 1px solid transparent;
+	background-color:#eaeaea;
+	float:left
+}
+
+
