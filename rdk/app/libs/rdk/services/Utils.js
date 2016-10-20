@@ -332,7 +332,7 @@
             return lang;
         }
 
-        this.getDomFraction = function(requestUrl){
+        this.getHtmlFraction = function(requestUrl){
             var domStr = '';
             $.ajax({
                 type: "GET",

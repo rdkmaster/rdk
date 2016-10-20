@@ -39,6 +39,10 @@ define('main', ['angular', 'jquery', 'rd.containers.Tab', 'rd.controls.BasicSele
                 // rdk.tabID.destroyTab(data.tabIndex);
                 rdk.tabID.closeTab(data.tabIndex);
             });
+
+            scope.closeHandler = function(event, data){
+                var closeTabIndex = data.tabIndex;
+            }
         }
     ]);
 });

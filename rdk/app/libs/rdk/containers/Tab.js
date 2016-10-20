@@ -36,7 +36,8 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     id: '@?',
                     selectedTab: '=?',
                     heightStyle: '@',
-                    showItems: '='
+                    showItems: '=',
+                    close: '&?'
                 },
                 replace: true,
                 template: function(tElement, tAttrs) {
@@ -44,13 +45,13 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                                 <div class="tabs">\
                                     <ul class="title">\
                                         <li style="display:{{getIndex($index)==-1?\'none\':\'inline\'}}" ng-repeat="tab in tabs"  on-finish-render>\
-                                            <a href="#{{tab.tabid}}" ng-click="tabClick($event)" ng-class="{\'selected\':currentSelectedIndex == $index}" rdk-tabtitle-parser>\
+                                            <a href="#{{tab.tabid}}" ng-click="tabClick($event)" ng-mouseover="tabMouseOver($event)" ng-class="{\'selected\':currentSelectedIndex == $index}" rdk-tabtitle-parser>\
                                               {{tab.title}}\
                                             </a>\
                                             <span class="bottom_line" style="display: block;" ng-show="picShow($index)">\
                                                 <em></em>\
                                             </span>\
-                                            <span class="ui-icon ui-icon-close" role="presentation" ng-show="{{tab.closable}}" ng-click="clickHandler($index, $event)"></span>\
+                                            <span style="float:left" class="ui-icon ui-icon-close" role="presentation" ng-show="{{tab.closable}}" ng-click="clickHandler($index, $event)"></span>\
                                         </li>\
                                      </ul>\
                                     <div ng-transclude class="content"> </div>\
@@ -67,6 +68,8 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
             function _link(scope, element, attrs) {
                 scope.draggable = Utils.isTrue(attrs.draggable, true);
                 scope.appScope = Utils.findAppScope(scope);
+                scope.toggleCondition = (attrs.toggleCondition ? attrs.toggleCondition : 'click').toLowerCase();
+
                 Utils.publish(scope);
 
                 var dom = element[0].querySelector(".tabs");
@@ -92,7 +95,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 scope.addTab  = function(source, curTitle){
                     var reg = /^\s*<div\s+.*<\/div>\s*$/im;
                     var domFractionStr;
-                    reg.test(source) ? (domFractionStr = source) : (domFractionStr = Utils.getDomFraction(source));
+                    reg.test(source) ? (domFractionStr = source) : (domFractionStr = Utils.getHtmlFraction(source));
 
                     var contentDom = $(domFractionStr).get(0);
                     var tabid = Utils.createUniqueId('tab_item_');
@@ -115,6 +118,16 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 }
 
                 scope.tabClick = function(event) {
+                    if(scope.toggleCondition!='click') return;
+                    _tabSwitchHandler(event);
+                }
+
+                scope.tabMouseOver = function(event){
+                    if(scope.toggleCondition!='mouseover') return;
+                    _tabSwitchHandler(event);
+                }
+
+                function _tabSwitchHandler(event){
                     event.preventDefault();
                     event.stopPropagation();
                     var tabId = event.currentTarget.hash;
@@ -160,13 +173,14 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     return tabIndex;
                 }
 
-                EventService.register(attrs.id, EventTypes.TAB_SELECT,
-                    function(event, data) {
+                if(scope.id){
+                    EventService.register(scope.id, EventTypes.TAB_SELECT, function(event, data){
                         scope.currentSelectedIndex = data - 1;
                         $(dom).tabs({
                             active: scope.currentSelectedIndex
                         });
                     });
+                }
 
                 _callLater(function() {
                     _updateDraggable();
@@ -179,11 +193,14 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 }
 
                 scope.clickHandler = function(index, event){
+                    var data = {};
+                    data.tabIndex = index;
+                    data.tabData = scope.tabs[index];
                     if(scope.id){
-                        var data = {};
-                        data.tabIndex = index;
-                        data.tabData = scope.tabs[index];
                         EventService.broadcast(scope.id, EventTypes.CLOSE, data);
+                    }
+                    if(scope.close(scope)){
+                        scope.close(scope)(event, data);
                     }
                 }
 
@@ -193,6 +210,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     $("#" + panelId).remove();
                     var tabs = $(dom).tabs();
                     tabs.tabs("refresh");
+                    _activeTab(index);
                 }
 
                 scope.closeTab = function(index){
@@ -200,6 +218,17 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     $(closeLi).css({'display': 'none'});
                     var panelId = scope.tabs[index].tabid;
                     $("#" + panelId).css({'display': 'none'});
+                    _activeTab(index);
+                }
+
+                function _activeTab(index){
+                    if(scope.currentSelectedIndex == index){
+                        var activeIndex;
+                        (scope.currentSelectedIndex>=1) ? (activeIndex=index-1) : (activeIndex=index+1);
+                        $(dom).tabs({
+                            active: activeIndex
+                        }); 
+                    }
                 }
 
                 function _updateDraggable() {
@@ -218,7 +247,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
 
                 function _addFeature() {
                     $(dom).tabs({
-                        event: attrs.toggleCondition ? scope.toggleCondition : "click",
+                        event: attrs.toggleCondition ? attrs.toggleCondition : 'click',//内容连带
                         collapsible: attrs.collapsible && attrs.collapsible == 'true' ? true : false,
                         heightStyle: attrs.heightStyle ? scope.heightStyle : "content"
                     });
