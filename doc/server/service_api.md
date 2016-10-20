@@ -280,6 +280,143 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 该对象提供了一些和数据库操作有关的方法，比如增删改查功能。
 
+#### `Data.setDataSourceSelector()`{#setDataSourceSelector} ####
+
+多数据源场景，可使用该函数可用来设置你自定义的数据源选择器,默认使用gbase数据库作为rdk查询对象。
+
+定义：
+  
+    function setDataSourceSelector(selector);
+
+参数：
+
+ - selector：一个自定义的函数闭包，该函数用来定义你选择数据源的业务逻辑。
+
+返回：
+ 
+ undefined
+
+
+
+#### `Data.useDataSource()`{#useDataSource} ####
+
+多数据源场景，该函数用来选择使用的数据源
+
+定义：
+
+    function useDataSource();
+
+参数：无
+
+返回：undefined
+
+
+### `rdk多数据源使用示例`###
+第一步，在**proc\bin\lib**目录下放置应用所需数据库jdbc驱动包，rdk默认已经提供gbase和mysql的驱动包。
+
+第二步，配置应用需要的数据源信息，包括数据库连接信息以及对应的连接池信息，配置文件位于 **proc/conf/datasource.cfg**，以下示例配置了mysql和hbase的数据库以及各自连接池信息
+
+  	数据库连接配置：
+    
+      db{
+           mysql{
+			    #驱动(必选)
+			   driver=com.mysql.jdbc.Driver
+			   #jdbc url(必选)
+			   url="jdbc:mysql://10.43.149.231:3306/dap_model?user=root&password=U_tywg_2013&useUnicode=true&characterEncoding=UTF8"
+			   #引用连接池(必选)
+			   poolRef=pool.default  //对应以下连接配置，连接池按default配置项进行配置
+		   }
+		 
+		   hbase{
+			    #驱动(必选)
+			   driver=***   
+			   #jdbc url(必选)
+			   url="jdbc:***" 
+			   #引用连接池(必选)，连接池定义见上节pool
+			   poolRef=pool.hbasePool
+		  }
+	    }
+
+   	连接池配置：
+
+		pool{
+		    #默认连接池配置(保留)
+		    default{
+		        #获取连接最大等待时长（ms）
+		        maxWait=6000
+		        #设置数据库初始化时，创建的连接个数
+		        initialSize=10
+		        #最大活跃连接数
+		        maxTotal=128
+		        #设置最小空闲连接数
+		        minIdle=10
+		        #设置最大空闲连接数
+		        maxIdle=50
+		        #设置空闲连接多长时间后释放(单位ms)
+		        minEvictableIdleTimeMillis=15000
+		        #自动回收泄露连接时长(单位s)
+		        removeAbandonedTimeout=300
+		        #设置在获取连接的时候检查有效性, 默认true
+		        testOnBorrow=true
+		    }
+		    hbasePool{
+		        #获取连接最大等待时长（ms）
+		        maxWait=6000
+		        #设置数据库初始化时，创建的连接个数
+		        initialSize=1
+		        #最大活跃连接数
+		        maxTotal=20
+		        #设置最小空闲连接数
+		        minIdle=1
+		        #设置最大空闲连接数
+		        maxIdle=5
+		        #设置空闲连接多长时间后释放(单位ms)
+		        minEvictableIdleTimeMillis=15000
+		        #自动回收泄露连接时长(单位s)
+		        removeAbandonedTimeout=300
+		        #设置在获取连接的时候检查有效性, 默认true
+		        testOnBorrow=true
+		    }
+		
+		}
+
+第三步，在应用[init.js](#init)文件调用[Data.setDataSourceSelector](#setDataSourceSelector)方法设置数据源选择器。以下示例描述的是，当使用[Data.useDataSource()](#useDataSource)选择“mysql”时则返回db.mysql即第二步中配置的mysql数据库，选择“hbase”时则
+返回db.hbase即第二步中配置的hbase数据库，其他情况则选择rdk的默认使用数据库gbase
+
+		(function () {
+		    function selectDataSource(params){
+		        var database = params[0]   //注意，param为函数argument数组
+		        switch (database){
+		            case "mysql":
+		                return "db.mysql"
+		            case "hbase":
+		                return "db.hbase"
+		            default:
+		                return "db.default"
+		        }
+		    }
+		
+		    function _init_() {
+		        Data.setDataSourceSelector(selectDataSource);
+					....
+		    }
+		    return {
+		        init: _init_
+		    }
+		})();
+
+第四步，重启rdk_server，**注意：增加新的数据库驱动及对应配置，以及init.js内容发生变更，需要重启rdk\_server才能生效**
+
+第五步，使用[Data.useDataSource()](#useDataSource)选择当前使用的数据源。
+     
+   		Data.useDataSource("mysql");					
+        log(Data.fetch("SELECT * FROM dim_ne",5000)); //查询mysql数据库
+        Data.useDataSource("hbase");                   
+        log(Data.fetch("SELECT * FROM dim_ne",5000)); //查询hbase数据库
+
+
+   		
 #### `Data.fetch()` ####
 
 该函数提供了简便的可查询数据库数据的方法。
@@ -523,7 +660,11 @@ rdk_server在服务启动时会自动加载应用的初始化脚本。
 
 			(function () {
 			    function _init_() {
-			        Cache.put("ne_data",Mapper.from_sql("select neid,name from dim_ne",'neid','name',4000))
+					try{
+						Cache.put("ne_data",Mapper.from_sql("select neid,name from dim_ne",'neid','name',4000))
+					}catch(error){
+						log("cache ne_data error"+error)
+					}
 			    }
 			    return {
 			        init: _init_
