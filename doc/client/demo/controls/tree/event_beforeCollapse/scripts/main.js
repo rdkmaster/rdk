@@ -7,6 +7,10 @@ define('main', ['rd.controls.Tree'], function() {
         $scope.conFun=function(treeId, treeNode){
         	return confirm("确认关闭 节点 -- " + treeNode.label + " 吗？");
         }
+        //也可以直接监听
+        // EventService.register('testZtree', "before_collapse", function(event, data){
+        //     console.log(data);
+        // });
 
     }]);
 });

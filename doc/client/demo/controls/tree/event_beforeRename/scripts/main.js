@@ -11,6 +11,10 @@ define('main', ['rd.controls.Tree'], function() {
             }
             return true;
         }
+        //也可以直接监听
+        // EventService.register('testZtree', "before_rename", function(event, data){
+        //     console.log(data);
+        // });
 
     }]);
 });

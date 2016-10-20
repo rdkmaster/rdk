@@ -109,25 +109,25 @@
 
 ##BeforeCollapse##
 
-鼠标左键关闭选中树的某个节点。
+事件类型：before_collapse，监听到外层的 before_collapse 事件，即关闭被选中树的某个节点，也可以在rdk_tree标签里，直接定义collapse函数。
 示例如下：
 <live_demo example="controls/tree/event_beforeCollapse" width="900"></live_demo>
 
 ##BeforeExpand##
 
-鼠标左键打开选中树的某个节点。
+事件类型：before_expand，监听到外层的 before_expand 事件，即打开被选中树的某个节点，也可以在rdk_tree标签里，直接定义expand函数。
 示例如下：
 <live_demo example="controls/tree/event_beforeExpand" width="900"></live_demo>
 
-##Rename##
+##BeforeRename##
 
-修改选中树的某个节点。
+事件类型：before_rename，监听到外层的 before_rename 事件，即修改被选中树的某个节点，也可以在rdk_tree标签里，直接定义rename函数。
 示例如下：
 <live_demo example="controls/tree/event_beforeRename" width="900"></live_demo>
 
-##Remove##
+##BeforeRemove##
 
-删除选中树的某个节点。
+事件类型：before_remove，监听到外层的 before_remove 事件，即删除被选中树的某个节点，也可以在rdk_tree标签里，直接定义remove函数。
 示例如下：
 <live_demo example="controls/tree/event_beforeRemove" width="900"></live_demo>
 #样式#

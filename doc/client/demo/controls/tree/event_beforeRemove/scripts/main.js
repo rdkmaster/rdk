@@ -7,6 +7,10 @@ define('main', ['rd.controls.Tree'], function() {
         $scope.reFun=function(treeId, treeNode){
         	return confirm("确认删除 节点 -- " + treeNode.label + " 吗？");
         }
+        //也可以直接监听
+        EventService.register('testZtree', "before_remove", function(event, data){
+            console.log(data);
+        });
 
     }]);
 });

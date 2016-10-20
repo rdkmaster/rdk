@@ -89,10 +89,10 @@
                         beforeClick: _beforeClick,
                         beforeDrag: _beforeDrag,
                         onDrop: _afterDrag,
-                        beforeRename: _beforeRename,
-                        beforeRemove: _beforeRemove,
-                        beforeCollapse: _beforeCollapse,
-                        beforeExpand: _beforeExpand
+                        beforeRename: before_rename,
+                        beforeRemove: before_remove,
+                        beforeCollapse: before_collapse,
+                        beforeExpand: before_expand
                     },
                     edit: {
                         enable: scope.draggable || true
@@ -143,9 +143,9 @@
                     }
                 }
 
-                function _beforeExpand(treeId, treeNode){
+                function before_expand(treeId, treeNode){
                     if (!!scope.id) {
-                        EventService.broadcast(scope.id, "beforeExpand", treeNode);
+                        EventService.broadcast(scope.id, "before_expand", treeNode);
                     }
                     var fn = scope.expand(scope);
                     if(!!fn){
@@ -155,9 +155,9 @@
                     }
                 }
 
-                function _beforeCollapse(treeId, treeNode){
+                function before_collapse(treeId, treeNode){
                     if (!!scope.id) {
-                        EventService.broadcast(scope.id, "beforeCollapse", treeNode);
+                        EventService.broadcast(scope.id, "before_collapse", treeNode);
                     }
                     var fn = scope.collapse(scope);
                     if(!!fn){
@@ -167,9 +167,9 @@
                     }
                 }
 
-                function _beforeRename(treeId, treeNode, newName, isCancel){
+                function before_rename(treeId, treeNode, newName, isCancel){
                     if (!!scope.id) {
-                        EventService.broadcast(scope.id, "onRename", treeNode); 
+                        EventService.broadcast(scope.id, "before_rename", treeNode); 
                     }
                     var fn = scope.rename(scope);
                     if(!!fn){
@@ -179,9 +179,9 @@
                     }
                 }
 
-                function _beforeRemove(treeId, treeNode) { 
+                function before_remove(treeId, treeNode) { 
                     if (!!scope.id) {
-                        EventService.broadcast(scope.id, "onRemove", treeNode); 
+                        EventService.broadcast(scope.id, "before_remove", treeNode); 
                     }
                     var fn = scope.remove(scope);
                     if(!!fn){
