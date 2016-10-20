@@ -30,11 +30,11 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
       result
     }
   }
-
-  implicit def str2ServiceCallParam(json: JObject): ServiceParam = {
-    RdkUtil.json2Object[ServiceParam](json.toString).getOrElse(null)
-
-  }
+//
+//  implicit def str2ServiceCallParam1(json: JObject): ServiceParam = {
+//    RdkUtil.json2Object[ServiceParam](json.toString).getOrElse(null)
+//
+//  }
 
   private lazy val breaker = new CircuitBreaker(system.scheduler,
     maxFailures = ServiceConfig.maxFailures,
