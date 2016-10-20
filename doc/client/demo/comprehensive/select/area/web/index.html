@@ -11,6 +11,7 @@
             paths: {
                 //这里引用了rdk应用的公共助手文件，不要改动
                 "application": '/rdk/app/modules/rdk_app_helpers',
+                //"application": '/doc/tools/doc_js/doc_app_helper',
             }
         });
     </script>
@@ -29,6 +30,9 @@
             min-width: 240px;
         }
         .area-wrap3 .rdk-combo-select-module .combo-content-theme {
+            min-width: 120px;
+        }
+        .area-wrap4 .rdk-combo-select-module .combo-content-theme {
             width: 90px;
             min-width: 0;
         }
@@ -37,33 +41,29 @@
 <body ng-controller='rdk_ctrl' class="rdk_main">
 <div style="margin: 10px auto;width: 80%;">
     <ds id="dsProv1" url="app/libs/rdk/server/areaServiceProv"></ds>
-    <ds id="dsCity1" url="app/libs/rdk/server/areaServiceCity"></ds>
-    <ds id="dsArea1" url="app/libs/rdk/server/areaServiceArea"></ds>
     <ds id="dsProv2" url="app/libs/rdk/server/areaServiceProv"></ds>
     <ds id="dsCity2" url="app/libs/rdk/server/areaServiceCity"></ds>
     <ds id="dsArea2" url="app/libs/rdk/server/areaServiceArea"></ds>
     <ds id="dsProv3" url="app/libs/rdk/server/areaServiceProv"></ds>
     <ds id="dsCity3" url="app/libs/rdk/server/areaServiceCity"></ds>
-    <ds id="dsArea3" url="app/libs/rdk/server/areaServiceArea"></ds>
     <h3>省</h3>
     <div class="area-wrap area-wrap1">
         <rdk_combo_select open-policy="hover">
-            <rdk-area-select ds_province="dsProv1" ds_city="dsCity1" ds_area="dsArea1" area-data="resultData1"  granularity="province" setting="setting"></rdk-area-select>
+            <rdk-area-select ds_province="dsProv1"  area-data="resultData1"  granularity="province" show-all="false"></rdk-area-select>
         </rdk_combo_select>
     </div>
     <h3>省-市-区</h3>
     <div class="area-wrap area-wrap2">
         <rdk_combo_select open-policy="hover">
-            <rdk-area-select ds_province="dsProv2" is-all="false" ds_city="dsCity2" ds_area="dsArea2" area-data="resultData2" setting="setting"></rdk-area-select>
+            <rdk-area-select ds_province="dsProv2"  ds_city="dsCity2" ds_area="dsArea2" area-data="resultData2" ></rdk-area-select>
         </rdk_combo_select>
     </div>
-    <h3>市</h3>
+    <h3>省-市</h3>
     <div class="area-wrap area-wrap3">
         <rdk_combo_select open-policy="hover">
-            <rdk-area-select ds_province="dsProv3" ds_city="dsCity3" ds_area="dsArea3" area-data="resultData3"   granularity="city" setting="setting"></rdk-area-select>
+            <rdk-area-select ds_province="dsProv3" ds_city="dsCity3"  change-handler="alert(d)" area-data="resultData3"   granularity="city" setting="setting"  show-all="false" ></rdk-area-select>
         </rdk_combo_select>
     </div>
-
 </div>
 </body>
 </html>

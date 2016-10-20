@@ -17,17 +17,19 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                     frozen: '=?',
                     childChange: '&?'
                 },
-                template:'<div class="rdk-combo-select-module" ng-mouseleave="closeShow()">\
-                              <div class="combo-content" ng-mouseenter="openShow()">\
-                                  <span class="combo-caption" ng-show="!!caption">{{caption}}</span>\
-                                  <input class="form-control combo-content-theme" title="{{inputStr}}" \
-                                  readonly="true" ng-model="inputStr" ng-click="toggle()" type="text"\
-                                  ng-mouseenter="mouseEnterHandler()" ng-mouseleave="mouseLeaveHandler()"/>\
-                                  <i class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
-                              </div>\
-                              <div class="combo-content-transclude" tabindex="1" ng-blur="blur()"\
-                                  ng-mouseenter="mouseEnterHandler()" ng-mouseleave="mouseLeaveHandler()">\
-                                  <div ng-transclude ng-show="open"></div>\
+                template:'<div>\
+                              <div class="rdk-combo-select-module" ng-mouseleave="closeShow()">\
+                                  <div class="combo-content" ng-mouseenter="openShow()">\
+                                      <span class="combo-caption" ng-show="!!caption">{{caption}}</span>\
+                                      <input class="form-control combo-content-theme" title="{{inputStr}}" \
+                                      readonly="true" ng-model="inputStr" ng-click="toggle()" type="text"\
+                                      ng-mouseenter="mouseEnterHandler()" ng-mouseleave="mouseLeaveHandler()"/>\
+                                      <i class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
+                                  </div>\
+                                  <div class="combo-content-transclude" tabindex="1" ng-blur="blur()"\
+                                      ng-mouseenter="mouseEnterHandler()" ng-mouseleave="mouseLeaveHandler()">\
+                                      <div ng-transclude ng-show="open"></div>\
+                                  </div>\
                               </div>\
                           </div>',
 
@@ -93,7 +95,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
 
                 function _resetTranscludeFocus(){
                     if(scope.open){
-                        $(iEle[0].childNodes[3]).focus();
+                        $(iEle[0].childNodes[1].childNodes[3]).focus();
                     }
                 }
 
@@ -119,7 +121,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 }
                 function _openShow()
                 {
-                    console.log("hover open show!");
                     if(scope.openPolicy!="hover"){
                         return;
                     }

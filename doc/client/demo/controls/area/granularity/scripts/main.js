@@ -11,7 +11,7 @@ define('main', ['application','rd.controls.AreaSelect', 'rd.controls.ComboSelect
                 city:{name:"深圳",code:"2"},
                 area:{name:"南山区",code:"3"}
             },
-            isAll:false
+            showAll:false
         };
 
     }]);

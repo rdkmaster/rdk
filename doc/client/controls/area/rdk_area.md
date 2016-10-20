@@ -34,11 +34,11 @@
 
 ## area-data <binding></binding> ##
 
-> 返回数据类型：object或string
+> 返回数据类型：object
 
-`area-data` 此属性设置一个绑定在scope上的对象用于接收地区选择控件返回的结果。默认为object
+`area-data` 此属性设置一个绑定在scope上的对象用于接收地区选择控件返回的结果和设置默认地区
 
-返回的object格式如下（具体字段属性名以数据库中对应的地区表为准）：
+格式如下（具体字段属性名以数据库中对应的地区表为准）：
 
        scope.areaData = {
         	"province" :{proId:1,name:"广东省",……},
@@ -46,14 +46,8 @@
         	"area" :{areaId:3,name:"南山区"……}
         }
 
-
-
-## result-type ##
-> 支持类型：字符串
-
-`result-type` 用于设置地区选择控件返回的结果类型。
-
- 如设置:result-type="string" 则area-data属性返回的结果数据为字符串类型（"XXX省/XXX市/XXX区"）
+设置默认地区详细示例如下：
+<live_demo example="controls/area/default" width="600"></live_demo>
 
 ## granularity ##
 > 支持类型：字符串
@@ -63,45 +57,25 @@
 详细示例如下：
 <live_demo example="controls/area/granularity" width="600"></live_demo>
 
-## setting ##
-> 支持类型：json对象
+## province-label ##
 
-`result-type` 用于设置地区选择控件返回的结果类型。
+配置第一级选择项页签名称,缺省时默认值为"省"。
 
-页面中使用方法：
+## city-label ##
 
-		<rdk-area-select area-data="test" granularity="city" setting="setting"></rdk-area-select>
+配置第二级选择项页签名称,缺省时默认值为"市"。
 
-控制器中使用方法：
+## area-label ##
 
-        $scope.setting={
-            label:['省'，'市'，'区'],
-            defaultData:{
-                "province" :{name:"四川",code:510000,……},
-                "city" :{name:"成都",code:510100,……},
-                "area" :{name:"金牛区",code:510106,……}
-            },
-            disabled:true,
-            isAll:true
-        };
+配置第三级选择项页签名称,缺省时默认值为"区"。
 
-具体说明：
+## freezeProvince ##
 
-### label ###
+在地区粒度属性granularity配置为city时，可用于冻结默认省不可更改。
 
-配置一个数组用于设置页签显示名称,缺省时默认值为['省'，'市'，'区']。
+## showAll ##
 
-### defaultData ###
-
-用于设置默认地区。
-
-### disabled ###
-
-在地区粒度属性granularity配置为city时，可用于锁定默认省不可更改。
-
-### isAll ###
-
-默认在选择项里显示：全省，全市（特殊标签项）缺省时默认值为true
+默认在选择项里显示：全省，全市（特殊标签项）缺省时默认值为true,显示全省，全市选择项
 
 
 详细示例如下：
@@ -109,11 +83,11 @@
 
 # 事件 #
 
-## callback ##
+## change-handler ##
 
-`callback` 用于执行地区选择后的回调函数。
+`change-handler` 用于执行地区选择后的回调函数。
 
-这是一个设置回调函数的 `rdk-area-select` 例子：
+详细示例如下：
 <live_demo example="controls/area/callback" width="600"></live_demo>
 
 
