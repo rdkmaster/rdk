@@ -13,7 +13,13 @@
                     setting: '=?',
                     draggable: '=?',
                     checkable: '=?',
-                    data: '='
+                    data: '=',
+                    click: '&?',
+                    doubleClick: '&?',
+                    remove: '&?',
+                    rename: '&?',
+                    collapse: '&?',
+                    expand: '&?'
                 },
                 replace: true,
                 template: '<div><ul id="__unique_id__" class="ztree"></ul></div>',
@@ -84,7 +90,11 @@
                         onDblClick: _handler,
                         beforeClick: _beforeClick,
                         beforeDrag: _beforeDrag,
-                        onDrop: _afterDrag
+                        onDrop: _afterDrag,
+                        beforeRename: before_rename,
+                        beforeRemove: before_remove,
+                        beforeCollapse: before_collapse,
+                        beforeExpand: before_expand
                     },
                     edit: {
                         enable: scope.draggable || true
@@ -96,15 +106,28 @@
                 return setObj;
 
                 function _handler(event, treeId, treeNode) {
-                    if (!!scope.id) {
-                        EventService.broadcast(scope.id, event.type, treeNode);
-                    }
                     event.treeId = scope.id;
                     event.name = event.type;
-                    if (scope.rdkClick && event.type == 'click') {
-                        scope.rdkClick(event, treeNode);
-                    } else if (scope.rdkDoubleClick && event.type == 'dblclick') {
-                        scope.rdkDoubleClick(event, treeNode);
+                    if (event.type == 'click') {
+                        if (!!scope.id) {
+                            EventService.broadcast(scope.id, EventTypes.CLICK, treeNode);
+                        }
+                        var fn = scope.click(scope);
+                        if(!!fn){
+                            return fn(event, treeId, treeNode);
+                        }else{
+                            return true;
+                        } 
+                    } else if (event.type == 'dblclick') {
+                        if (!!scope.id) {
+                            EventService.broadcast(scope.id, EventTypes.DOUBLE_CLICK, treeNode);
+                        }
+                        var fn = scope.doubleClick(scope);
+                        if(!!fn){
+                            return fn(event, treeId, treeNode);
+                        }else{
+                            return true;
+                        }
                     }
                 }
 
@@ -134,6 +157,54 @@
                         EventService.broadcast(scope.id, EventTypes.CHANGE, treeData);
                     }
                 }
+
+                function before_expand(treeId, treeNode){
+                    if (!!scope.id) {
+                        EventService.broadcast(scope.id, EventTypes.BEFORE_EXPAND, treeNode);
+                    }
+                    var fn = scope.expand(scope);
+                    if(!!fn){
+                        return fn(treeId, treeNode);
+                    }else{
+                        return true;
+                    }
+                }
+
+                function before_collapse(treeId, treeNode){
+                    if (!!scope.id) {
+                        EventService.broadcast(scope.id, EventTypes.BEFORE_COLLAPSE, treeNode);
+                    }
+                    var fn = scope.collapse(scope);
+                    if(!!fn){
+                        return fn(treeId, treeNode);
+                    }else{
+                        return true;
+                    }
+                }
+
+                function before_rename(treeId, treeNode, newName, isCancel){
+                    if (!!scope.id) {
+                        EventService.broadcast(scope.id, EventTypes.BEFORE_RENAME, treeNode); 
+                    }
+                    var fn = scope.rename(scope);
+                    if(!!fn){
+                        return fn(treeId, treeNode, newName, isCancel);
+                    }else{
+                        return true;
+                    }
+                }
+
+                function before_remove(treeId, treeNode) { 
+                    if (!!scope.id) {
+                        EventService.broadcast(scope.id, EventTypes.BEFORE_REMOVE, treeNode); 
+                    }
+                    var fn = scope.remove(scope);
+                    if(!!fn){
+                        return fn(treeId, treeNode);
+                    }else{
+                        return true;
+                    }
+                }  
             }
 
             function _updateTree(rebornID, setting, treeData) {
