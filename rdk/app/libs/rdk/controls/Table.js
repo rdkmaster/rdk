@@ -296,6 +296,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                 }
             }],
             scope: {
+                id: '@',
                 setting: '=?',
                 data: '=?',
                 selectedIndex: '=?',
@@ -379,6 +380,8 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                                 scope.baseCondition = data.condition;
                             });
                         };
+
+                        Utils.publish(scope);
 
                         //分页栏是否展现
                         scope.pageVisible = Utils.isTrue(scope.pagingVisible, true);
@@ -475,6 +478,10 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             if (ctrl.pageCtrl) {
                                 ctrl.pageCtrl.setPageByTable(scope.currentPage);
                             }
+                        }, true);
+
+                        scope.$watch("pageSize", function(){
+                            ctrl.setCurrentPage(scope.currentPage);
                         }, true);
 
 
