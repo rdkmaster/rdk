@@ -15,7 +15,7 @@
                     checkable: '=?',
                     data: '=',
                     click: '&?',
-                    dblclick: '&?',
+                    doubleClick: '&?',
                     remove: '&?',
                     rename: '&?',
                     collapse: '&?',
@@ -122,7 +122,7 @@
                         if (!!scope.id) {
                             EventService.broadcast(scope.id, EventTypes.DOUBLE_CLICK, treeNode);
                         }
-                        var fn = scope.dblclick(scope);
+                        var fn = scope.doubleClick(scope);
                         if(!!fn){
                             return fn(event, treeId, treeNode);
                         }else{
