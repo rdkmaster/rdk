@@ -25,8 +25,6 @@ object Messages {
 
   case class ServiceParam(service: String=null, param: AnyRef, app: String)
 
-  case class ServiceParamObj(service: String=null, param: AnyRef, app: String)
-
   case class ServiceRequest(ctx: RDKContext, script: String,
                             app: String, param: AnyRef, method: String, timeStamp: Long)
 

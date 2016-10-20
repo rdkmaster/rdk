@@ -6,7 +6,8 @@ import akka.util.Timeout
 import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 import org.apache.log4j.{Level, LogManager}
-import org.json4s.{JObject, DefaultFormats, Formats}
+import org.json4s.{DefaultFormats, Formats}
+import spray.http.HttpCharsets
 import spray.httpx.Json4sSupport
 import spray.routing.{Directives, RequestContext}
 
@@ -21,20 +22,9 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
   implicit val dispatcher = system.dispatcher
 
 
-  implicit def str2ServiceCallParam(json: String): ServiceParamObj = {
-    val result = RdkUtil.json2Object[ServiceParamObj](json).getOrElse(null)
-    if (result == null) {
-      val t = RdkUtil.json2Object[ServiceParam](json).getOrElse(null)
-      ServiceParamObj(t.service,t.param,t.app)
-    } else {
-      result
-    }
+  implicit def str2ServiceCallParam(json: String): ServiceParam = {
+     RdkUtil.json2Object[ServiceParam](json).getOrElse(null)
   }
-//
-//  implicit def str2ServiceCallParam1(json: JObject): ServiceParam = {
-//    RdkUtil.json2Object[ServiceParam](json.toString).getOrElse(null)
-//
-//  }
 
   private lazy val breaker = new CircuitBreaker(system.scheduler,
     maxFailures = ServiceConfig.maxFailures,
@@ -96,7 +86,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
       path("rdk" / "service" / Segments) {
         url => {
           get {
-            parameters('p.as[ServiceParamObj]) {
+            parameters('p.as[ServiceParam]) {
               req => ctx =>
                 doDispatch(ctx, url, req.app, req.param)
             }
@@ -105,25 +95,25 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
               doDispatch(ctx, url, null, null)
             } ~
             (put | post | delete) {
-              entity(as[ServiceParam]) {
-                req => ctx =>
-                  doDispatch(ctx, url, req.app, req.param)
-              }
+              ctx =>
+                val json = ctx.request.entity.asString(HttpCharsets.`UTF-8`)
+                val req = str2ServiceCallParam(json)
+                doDispatch(ctx, url, req.app, req.param)
             }
         }
       }~
       path("rdk" / "service") {
         get {
-          parameters('p.as[ServiceParamObj]) {
+          parameters('p.as[ServiceParam]) {
             req => ctx =>
               doDispatch(ctx, req.service :: Nil, req.app, req.param)
           }
         } ~
           (put | post | delete) {
-            entity(as[ServiceParam]) {
-              req => ctx =>
-                doDispatch(ctx, req.service :: Nil, req.app, req.param)
-            }
+            ctx =>
+              val json = ctx.request.entity.asString(HttpCharsets.`UTF-8`)
+              val req = str2ServiceCallParam(json)
+              doDispatch(ctx, req.service :: Nil, req.app, req.param)
           }
       }
 }
