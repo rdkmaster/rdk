@@ -102,7 +102,7 @@
 
 ##DOUBLE_CLICK##
 
-事件类型：EventTypes.DOUBLE_CLICK，监听 onDblClick 事件，即单击被选中树的某个节点，也可以在rdk_tree标签里，直接定义dblclick函数。
+事件类型：EventTypes.DOUBLE_CLICK，监听 onDblClick 事件，即单击被选中树的某个节点，也可以在rdk_tree标签里，直接定义double_click函数。
 示例如下：
 <live_demo example="controls/tree/event_doubleclick" width="900"></live_demo>
 
