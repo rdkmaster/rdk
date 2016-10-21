@@ -11,6 +11,7 @@ define(['rd.core'], function() {
             config[key] = {
                 p: {
                     param: {
+                        //绝对路径的话，需要根据rdk进程运行路径做调整
                         script: url[0] == '/' ? '..' + url : url,
                         param: param
                     },
