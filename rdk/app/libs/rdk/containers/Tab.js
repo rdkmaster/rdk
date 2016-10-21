@@ -51,7 +51,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                                             <span class="bottom_line" style="display: block;" ng-show="picShow($index)">\
                                                 <em></em>\
                                             </span>\
-                                            <span style="float:left" class="ui-icon ui-icon-close" role="presentation" ng-show="{{tab.closable}}" ng-click="clickHandler($index, $event)"></span>\
+                                            <span style="float:left" class="ui-icon ui-icon-close" role="presentation" ng-show="{{tab.closable}}" ng-click="$clickHandler($index, $event)"></span>\
                                         </li>\
                                      </ul>\
                                     <div ng-transclude class="content"> </div>\
@@ -206,7 +206,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     return scope.showItems.indexOf(idx); //定义了数组，部分显示
                 }
 
-                scope.clickHandler = function(index, event){
+                scope.$clickHandler = function(index, event){
                     var data = {};
                     data.tabIndex = index;
                     data.tabData = scope.tabs[index];
