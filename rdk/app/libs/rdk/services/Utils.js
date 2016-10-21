@@ -147,6 +147,9 @@
             if (defaultValue == undefined) {
                 defaultValue = false;
             }
+            if (value == null){
+                return defaultValue;
+            }
             return angular.isDefined(value) ? (((value == 'false') || (value === false)) ? false : true) : defaultValue;
         }
 
@@ -329,7 +332,7 @@
             return lang;
         }
 
-        this.getDomStr = function(requestUrl){
+        this.getHtmlFraction = function(requestUrl){
             var domStr = '';
             $.ajax({
                 type: "GET",

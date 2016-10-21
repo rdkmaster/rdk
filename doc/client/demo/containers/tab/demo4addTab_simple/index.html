@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>Tab -> demo4add</title>
+    <title>Tab -> demo4add_simple</title>
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
     -->
@@ -12,14 +12,11 @@
 </head>
 
 <body ng-controller='myCtrl'>
-    <rdk_tab id='tabID'>
+    <rdk_tab id='tabID' close="closeHandler">
         <div title="RDK">
             <p>RDK最突出的特点就是易用！</p>
         </div>
-        <div title="{{rdkSelector}}">
-            <rdk_basic_selector selected_items="selectedItems" data="cityItems"></rdk_basic_selector>
-        </div>
-        <div title="Rdk_tab">
+        <div title="Rdk_tab" show_close_button='true'>
             <rdk_tab>
                 <div title="RDK">
                     <p>Rapid developing is a brilliant project</p>
