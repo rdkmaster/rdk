@@ -2,12 +2,13 @@ define('main', ['application','rd.controls.AreaSelect', 'rd.controls.ComboSelect
 // 创建一个RDK的应用
     var app = angular.module("rdk_app", ['rd.controls.AreaSelect', 'rd.controls.ComboSelect']);
 // 创建一个控制器
-    app.controller('myCtrl', ['$scope', 'DataSourceService', function (scope,DataSourceService) {
+    app.controller('myCtrl', ['$scope', 'DataSourceService', 'EventService', 'EventTypes', function (scope,DataSourceService,EventService,EventTypes) {
         /************************ panel demo test data start ************************/
         application.initDataSourceService(DataSourceService);
         scope.callBackAlert = function(){
-            alert(scope.resultObj);
-        }
+            alert("你选择的省是："+scope.resultObj.province.name);
+        };
+
     }]);
 
 });

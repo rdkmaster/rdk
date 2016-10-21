@@ -83,9 +83,11 @@
 
 # 事件 #
 
-## change-handler ##
+如果设置了id，即可广播/监听以下事件。
 
-`change-handler` 用于执行地区选择后的回调函数。
+## change ##
+
+`change` 用于执行地区选择后的回调函数。
 
 详细示例如下：
 <live_demo example="controls/area/callback" width="600"></live_demo>

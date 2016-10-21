@@ -13,16 +13,16 @@
         require.config({
             paths: {
                 //这里引用了rdk应用的公共助手文件，不要改动
-                "application": '/rdk/app/modules/rdk_app_helpers',
+                "application": '/doc/tools/doc_js/doc_app_helper'
             }
         });
     </script>
 </head>
 
 <body ng-controller='myCtrl'>
-    <ds id="dsProv" url="app/libs/rdk/server/areaServiceProv"></ds>
-    <ds id="dsCity" url="app/libs/rdk/server/areaServiceCity"></ds>
-    <ds id="dsArea" url="app/libs/rdk/server/areaServiceArea"></ds>
+    <ds id="dsProv" url="../doc/client/demo/common/datasource/server/areaServiceProv.js"></ds>
+    <ds id="dsCity" url="../doc/client/demo/common/datasource/server/areaServiceCity.js"></ds>
+    <ds id="dsArea" url="../doc/client/demo/common/datasource/server/areaServiceArea.js"></ds>
     <div class="area-wrap">
         <rdk_combo_select>
             <rdk-area-select ds_province="dsProv" ds_city="dsCity" ds_area="dsArea" area-data="test"></rdk-area-select>

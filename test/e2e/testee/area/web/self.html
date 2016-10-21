@@ -65,9 +65,9 @@
         <rdk-area-select ds_province="dsProv3" ds_city="dsCity3"  area-data="defaultData"   granularity="city"></rdk-area-select>
     </div>
 
-    <h3>属性测试：change-handler 回调函数是否执行: <span>{{flagChangeHandler || 0}}</span></h3>
+    <h3>属性测试：change 回调函数是否执行: <span>{{flagChangeHandler || 0}}</span></h3>
     <div class="test-change area-wrap">
-        <rdk-area-select ds_province="dsProv4" ds_city="dsCity4"  area-data="resultData3"   granularity="city" freeze-province="false" change-handler="changeHandler()"></rdk-area-select>
+        <rdk-area-select ds_province="dsProv4" ds_city="dsCity4"  area-data="resultData3"   granularity="city" freeze-province="false" change="changeHandler()"></rdk-area-select>
     </div>
 </div>
 

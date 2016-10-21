@@ -20,11 +20,11 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
         $templateCache.put("city.html",
             '<div class="rdk-area-contain">\
                 <ul class="nav nav-tabs">\
-                    <li ng-if="!freeze" ng-class="{active: vm.activeTab == 1}"><a ng-click="vm.activeTab = 1">{{vm.userArr[0].name || provinceLabel || "省"}}</a></li>\
+                    <li ng-if="!freezeProvince" ng-class="{active: vm.activeTab == 1}"><a ng-click="vm.activeTab = 1">{{vm.userArr[0].name || provinceLabel || "省"}}</a></li>\
                     <li ng-show="!!vm.dsCitys.data.data.length" ng-class="{active: vm.activeTab == 2}"><a ng-click="vm.activeTab = 2">{{vm.userArr[1].name || cityLabel || "市"}}</a></li>\
                 </ul>\
                 <div class="tab-content tab-bordered">\
-                    <div class="tab-panel" ng-show="vm.activeTab == 1" ng-if="!freeze">\
+                    <div class="tab-panel" ng-show="vm.activeTab == 1" ng-if="!freezeProvince">\
                         <ul>\
                             <li ng-repeat="province in vm.dsProvinces.data.data">\
                                 <a ng-click="vm.clkProvinceNextLvOpen(province,0)" ng-class="{selected:vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
@@ -33,7 +33,7 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                     </div>\
                     <div class="tab-panel" ng-show="vm.activeTab == 2">\
                         <ul>\
-                            <li ng-if="showAllLabel" ng-click="vm.selectAllProOrCity(\'全省\',\'lockCity\')" class="test-all"><a>全省</a></li>\
+                            <li ng-if="showAll" ng-click="vm.selectAllProOrCity(\'全省\',\'lockCity\')" class="test-all"><a>全省</a></li>\
                             <li ng-repeat="city in vm.dsCitys.data.data">\
                                 <a ng-click="vm.changeSelected(city,1)" ng-class="{selected:vm.activeCurItemClass(city,1)}">{{city.name}}</a>\
                             </li>\
@@ -59,7 +59,7 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                     </div>\
                     <div class="tab-panel" ng-show="vm.activeTab == 2">\
                         <ul>\
-                            <li ng-if="showAllLabel" ng-click="vm.selectAllProOrCity(\'全省\')" class="test-all"><a>全省</a></li>\
+                            <li ng-if="showAll" ng-click="vm.selectAllProOrCity(\'全省\')" class="test-all"><a>全省</a></li>\
                             <li ng-repeat="city in vm.dsCitys.data.data">\
                                 <a ng-click="vm.clkCityNextLvOpen(city,1)" ng-class="{selected:vm.activeCurItemClass(city,1)}">{{city.name}}</a>\
                             </li>\
@@ -67,7 +67,7 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                     </div>\
                     <div class="tab-panel" ng-show="vm.activeTab == 3">\
                         <ul>\
-                            <li ng-if="showAllLabel" ng-click="vm.selectAllProOrCity(\'全市\')" class="test-all"><a>全市</a></li>\
+                            <li ng-if="showAll" ng-click="vm.selectAllProOrCity(\'全市\')" class="test-all"><a>全市</a></li>\
                             <li ng-repeat="area in vm.dsAreas.data.data">\
                                 <a ng-click="vm.changeSelected(area,2)" ng-class="{selected:vm.activeCurItemClass(area,2)}">{{area.name}}</a>\
                             </li>\
@@ -93,13 +93,14 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
             },
             replace: true,
             scope: {
+                id: '@?',
                 areaData:'=?',
-                changeHandler:'&?',
+                change:'&?',
                 provinceLabel:'@?',
                 cityLabel:'@?',
                 areaLabel:'@?',
-                freezeProvince:"@?",
-                showAll:"@?"
+                freezeProvince:"=?",
+                showAll:"=?"
             },
             require:'^?rdkComboSelect',
             link:_link
@@ -116,8 +117,8 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
             var _hasDefaultReady = false; //读取默认地区数据是否完成
             var allProvinceTip=''; //提示"全省"
             //默认在选择项里显示：全省，全市标签
-            scope.showAllLabel =  scope.showAll && scope.showAll==="false" ? false: true;
-            scope.freeze = scope.freezeProvince && scope.freezeProvince==="false" ? false: true;
+            scope.showAll=  Utils.isTrue(scope.showAll, true);
+            scope.freezeProvince = Utils.isTrue(scope.freezeProvince, true);
 
             _init();
 
@@ -129,7 +130,7 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
             vm.selectAllProOrCity = function(allName,lock){ //选择全省或全市，结束当前地区选择
                 if(allName=="全省"){
                     vm.userArr.splice(1,2); //删除市区
-                    if(lock=="lockCity" && scope.freeze){
+                    if(lock=="lockCity" && scope.freezeProvince){
                         vm.activeTab=2;
                         allProvinceTip=allName;
                     }else{
@@ -190,7 +191,7 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                 if(!!tAttrs.dsProvince){
                     vm.dsProvinces = DataSourceService.get(tAttrs.dsProvince);
                     if (!vm.dsProvinces) {
-                        throw 'rdk-area-select require ds undefined!';
+                        throw 'rdk-area-select require ds_province attribute!';
                     }
                     EventService.register(vm.dsProvinces.id, EventTypes.RESULT, _provincesResultHandler);
                     vm.dsProvinces.query();
@@ -198,20 +199,21 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                 if(!!tAttrs.dsCity){
                     vm.dsCitys = DataSourceService.get(tAttrs.dsCity);
                     if (!vm.dsCitys) {
-                        throw 'rdk-area-select require ds undefined!';
+                        throw 'rdk-area-select require ds_city attribute!';
                     }
                     EventService.register(vm.dsCitys.id, EventTypes.RESULT, _citysResultHandler);
                 }
                 if(!!tAttrs.dsArea){
                     vm.dsAreas = DataSourceService.get(tAttrs.dsArea);
                     if (!vm.dsAreas) {
-                        throw 'rdk-area-select require ds undefined!';
+                        throw 'rdk-area-select require ds_area attribute!';
                     }
                     EventService.register(vm.dsAreas.id, EventTypes.RESULT, _areasResultHandler);
                 }
                 //注册回调事件
-                if(!!tAttrs.changeHandler){
-                    EventService.register("changeHandler"+scope.$id, EventTypes.CHANGE, scope.changeHandler);
+                if(!!tAttrs.change&& !EventService.hasEvent(scope.id, EventTypes.CHANGE))
+                {
+                    EventService.register(scope.id, EventTypes.CHANGE, scope.change);
                 }
             }
 
@@ -225,9 +227,9 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                         vm.activeTab=1;
                     }else if(tAttrs.granularity=="city")
                     {
-                        if(scope.freeze)
+                        if(scope.freezeProvince)
                         {
-                            defaultProvince.freeze=scope.freeze;
+                            defaultProvince.freezeProvince=scope.freezeProvince;
                         }
                         _queryCityByProvince(defaultProvince);
                         vm.activeTab=2;
@@ -244,7 +246,7 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                 }
                 vm.resultData="";
                 angular.forEach(vm.userArr,function(item){
-                    if(!item.freeze){
+                    if(!item.freezeProvince){
                         vm.resultData +=item.name+' | ';
                     }else{
                         !!comboSelectCtrl && comboSelectCtrl.setCaption(item.name);
@@ -263,8 +265,17 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                 returnObj.area=vm.userArr[2];
                 appScope[tAttrs.areaData]=returnObj;
                 _hasDefaultReady=true;
-                if(tAttrs.changeHandler){  //如果有回调则执行 changeHandler
-                    EventService.broadcast("changeHandler"+scope.$id, EventTypes.CHANGE,returnObj);
+                if (scope.id) {
+                    //当app给了id属性，表示其可能关注这个事件，需要发出来
+                    EventService.broadcast(scope.id, EventTypes.CHANGE, returnObj);
+                }
+                if (scope.change) {  //如果有回调则执行
+                    var fn = scope.change;
+                    try {
+                        fn({dispatcher: scope.id, type: EventTypes.CHANGE}, returnObj);
+                    } catch(e) {
+                        console.warn('call change error: ' + e);
+                    }
                 }
                 returnObj=null;
             }
