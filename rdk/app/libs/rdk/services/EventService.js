@@ -52,6 +52,7 @@
         BEFORE_RENAME:"before_rename",
         BEFORE_REMOVE:"before_remove",
         CLICK:"click",
+        BEFORE_EDITNAME:"before_editName"
     });
 
     event.service('EventService', ['$rootScope', '$timeout', '$rootScope', 'Utils', 'EventTypes',

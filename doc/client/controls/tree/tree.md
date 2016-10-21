@@ -129,6 +129,12 @@
 事件类型：EventTypes.BEFORE_REMOVE，监听到外层的 before_remove 事件，即删除被选中树的某个节点，也可以在rdk_tree标签里，直接定义remove函数。
 示例如下：
 <live_demo example="controls/tree/event_beforeRemove" width="900"></live_demo>
+
+##BEFORE_EDITNAME##
+
+事件类型：EventTypes.BEFORE_EDITNAME，监听 before_editName 事件，即是否编辑被选中树的某个节点，也可以在rdk_tree标签里，直接定义editname函数。
+示例如下：
+<live_demo example="controls/tree/event_beforeEditName" width="900"></live_demo>
 #样式#
 暂无
 
