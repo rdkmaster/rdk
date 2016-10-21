@@ -114,7 +114,7 @@
                         }
                         var fn = scope.click(scope);
                         if(!!fn){
-                            return fn(event, treeId, treeNode);
+                            return fn(event, treeNode);
                         }else{
                             return true;
                         } 
@@ -124,7 +124,7 @@
                         }
                         var fn = scope.doubleClick(scope);
                         if(!!fn){
-                            return fn(event, treeId, treeNode);
+                            return fn(event, treeNode);
                         }else{
                             return true;
                         }
@@ -164,7 +164,7 @@
                     }
                     var fn = scope.expand(scope);
                     if(!!fn){
-                        return fn(treeId, treeNode);
+                        return fn(event, treeNode);
                     }else{
                         return true;
                     }
@@ -176,7 +176,7 @@
                     }
                     var fn = scope.collapse(scope);
                     if(!!fn){
-                        return fn(treeId, treeNode);
+                        return fn(event, treeNode);
                     }else{
                         return true;
                     }
@@ -188,7 +188,7 @@
                     }
                     var fn = scope.rename(scope);
                     if(!!fn){
-                        return fn(treeId, treeNode, newName, isCancel);
+                        return fn(event, treeNode);
                     }else{
                         return true;
                     }
@@ -200,7 +200,7 @@
                     }
                     var fn = scope.remove(scope);
                     if(!!fn){
-                        return fn(treeId, treeNode);
+                        return fn(event, treeNode);
                     }else{
                         return true;
                     }
