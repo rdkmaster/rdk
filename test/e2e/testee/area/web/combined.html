@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>AreaSelect 组合2</title>
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk"
+            src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="combined.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/test/module/testee_helper',
+            }
+        });
+    </script>
+</head>
+<style>
+    .area-wrap{
+        padding:5px 5px 5px 40px;
+        background:#008fd4 url(images/positioning.png) no-repeat 5px 5px;
+    }
+    .scene1,.scene2,.scene3,.scene4{
+        width:600px;
+    }
+    .rdk-combo-select-module .combo-caption{
+        color: #666;
+    }
+</style>
+<body ng-controller='rdk_ctrl' class="rdk_main">
+<ds id="dsProv1" url="$svr/areaServiceProv"></ds>
+<ds id="dsProv2" url="$svr/areaServiceProv"></ds>
+<ds id="dsCity2" url="$svr/areaServiceCity"></ds>
+<ds id="dsArea2" url="$svr/areaServiceArea"></ds>
+<ds id="dsProv3" url="$svr/areaServiceProv"></ds>
+<ds id="dsCity3" url="$svr/areaServiceCity"></ds>
+<ds id="dsProv4" url="$svr/areaServiceProv"></ds>
+<ds id="dsCity4" url="$svr/areaServiceCity"></ds>
+<h3>应用场景一：只选择省</h3>
+<div class="scene1 area-wrap">
+    <rdk_combo_select>
+        <rdk-area-select ds_province="dsProv1"  area-data="resultData1"  granularity="province"></rdk-area-select>
+    </rdk_combo_select>
+</div>
+<h3>应用场景二：选择省市区</h3>
+<div class="scene2 area-wrap">
+    <rdk_combo_select>
+        <rdk-area-select ds_province="dsProv2"  ds_city="dsCity2" ds_area="dsArea2" area-data="resultData2"></rdk-area-select>
+    </rdk_combo_select>
+</div>
+
+<h3>应用场景三：选择省-市</h3>
+<div class="scene3 area-wrap">
+    <rdk_combo_select>
+        <rdk-area-select ds_province="dsProv3" ds_city="dsCity3"  area-data="resultData3"   granularity="city" freeze-province="false"></rdk-area-select>
+    </rdk_combo_select>
+</div>
+
+<h3>应用场景四：(冻结省的选择)只选择市:</h3>
+<div class="scene4 area-wrap">
+    <rdk_combo_select>
+        <rdk-area-select ds_province="dsProv4" ds_city="dsCity4"  area-data="defaultData"   granularity="city"></rdk-area-select>
+    </rdk_combo_select>
+</div>
+
+<!--<div class="demo5 area-wrap">-->
+    <!--<h4>应用场景五：选择省市区：配置默认地区数据</h4>-->
+    <!--<rdk_combo_select open-policy="hover">-->
+        <!--<rdk-area-select ds_province="dsProv2"  ds_city="dsCity2" ds_area="dsArea2"  area-data="defaultData"></rdk-area-select>-->
+    <!--</rdk_combo_select>-->
+<!--</div>-->
+<!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
+<!--     这个节点可选，删除后，RDK会自动生成一个    -->
+<!--           这个节点只支持基本HTML标签           -->
+
+<rdk_loading>
+    <img src="images/loding.gif" alt="loading..."/>
+</rdk_loading>
+</body>
+
+</html>

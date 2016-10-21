@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>BasicSelector -> Basic</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/doc/tools/doc_js/doc_app_helper'
+            }
+        });
+    </script>
+</head>
+
+<body ng-controller='myCtrl'>
+<ds id="dsProv1" url="../doc/client/demo/common/datasource/server/areaServiceProv.js"></ds>
+<ds id="dsProv2" url="../doc/client/demo/common/datasource/server/areaServiceProv.js"></ds>
+<ds id="dsCity2" url="../doc/client/demo/common/datasource/server/areaServiceCity.js"></ds>
+<ds id="dsProv3" url="../doc/client/demo/common/datasource/server/areaServiceProv.js"></ds>
+<ds id="dsCity3" url="../doc/client/demo/common/datasource/server/areaServiceCity.js"></ds>
+<ds id="dsArea3" url="../doc/client/demo/common/datasource/server/areaServiceArea.js"></ds>
+    <h5>选择省</h5>
+    <div class="area-wrap">
+        <rdk_combo_select>
+            <rdk-area-select ds_province="dsProv1"  area-data="test1"   granularity="province"></rdk-area-select>
+        </rdk_combo_select>
+    </div>
+    <div ng-if="test2">
+        你选择的地区：{{test1.province.name}}  {{test1.city.name}}  {{test1.area.name}}
+    </div>
+
+    <h5>选择省市</h5>
+    <div class="area-wrap">
+        <rdk_combo_select open-policy="hover">
+            <rdk-area-select ds_province="dsProv2" ds_city="dsCity2"  area-data="test2"  granularity="city" freeze-province="false"></rdk-area-select>
+        </rdk_combo_select>
+    </div>
+    <div ng-if="test1">
+        你选择的地区：{{test2.province.name}}  {{test2.city.name}}  {{test2.area.name}}
+    </div>
+
+    <h5>选择省市区</h5>
+    <div class="area-wrap">
+        <rdk_combo_select open-policy="hover">
+            <rdk-area-select ds_province="dsProv3" ds_city="dsCity3" ds_area="dsArea3" area-data="test3"></rdk-area-select>
+        </rdk_combo_select>
+    </div>
+    <div ng-if="test1">
+        你选择的地区：{{test3.province.name}}  {{test3.city.name}}  {{test3.area.name}}
+    </div>
+</body>
+
+</html>

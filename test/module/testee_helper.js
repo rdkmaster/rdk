@@ -14,9 +14,9 @@ define(['rd.core'], function() {
         config[key] = {
             p: {
                 param: {
-					script: url,
-					param: param
-				},
+                    script: url,
+                    param: param
+                },
                 app: 'common',
             }
         };

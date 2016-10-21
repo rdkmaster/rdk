@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>AreaSelect 组合2</title>
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk"
+            src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="self.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/test/module/testee_helper',
+            }
+        });
+    </script>
+</head>
+<style>
+    .left{
+        float: left;
+        padding: 10px 50px;
+    }
+    .right{
+        float: right;
+        padding: 10px 0;
+    }
+    .area-wrap{
+        position: relative;
+        height: 300px;
+    }
+    .scene1,.scene2,.scene3,.scene4{
+        width:600px;
+    }
+    .rdk-combo-select-module .combo-caption{
+        color: #666;
+    }
+</style>
+<body ng-controller='rdk_ctrl' class="rdk_main">
+<ds id="dsProv1" url="$svr/areaServiceProv"></ds>
+<ds id="dsCity1" url="$svr/areaServiceCity"></ds>
+<ds id="dsArea1" url="$svr/areaServiceArea"></ds>
+<ds id="dsProv2" url="$svr/areaServiceProv"></ds>
+<ds id="dsCity2" url="$svr/areaServiceCity"></ds>
+<ds id="dsArea2" url="$svr/areaServiceArea"></ds>
+<ds id="dsProv3" url="$svr/areaServiceProv"></ds>
+<ds id="dsCity3" url="$svr/areaServiceCity"></ds>
+<ds id="dsProv4" url="$svr/areaServiceProv"></ds>
+<ds id="dsCity4" url="$svr/areaServiceCity"></ds>
+
+<div class="left">
+    <h3>属性测试：show-all</h3>
+    <div class="test-show-all area-wrap">
+        <rdk-area-select ds_province="dsProv1"  ds_city="dsCity1" ds_area="dsArea1" show-all="false" area-data="resultData1"></rdk-area-select>
+    </div>
+    <h3>属性测试：province-label,city-label,area-label 页签标签名称</h3>
+    <div class="test-label area-wrap">
+        <rdk-area-select province-label="选择省" city-label="选择市" area-label="选择区" ds_province="dsProv2"  ds_city="dsCity2" ds_area="dsArea2" area-data="resultData2"></rdk-area-select>
+    </div>
+</div>
+<div class="right">
+    <h3>属性测试：freezeProvince</h3>
+    <div class="test-freezeProv area-wrap">
+        <rdk-area-select ds_province="dsProv3" ds_city="dsCity3"  area-data="defaultData"   granularity="city"></rdk-area-select>
+    </div>
+
+    <h3>属性测试：change 回调函数是否执行: <span>{{flagChangeHandler || 0}}</span></h3>
+    <div class="test-change area-wrap">
+        <rdk-area-select ds_province="dsProv4" ds_city="dsCity4"  area-data="resultData3"   granularity="city" freeze-province="false" change="changeHandler()"></rdk-area-select>
+    </div>
+</div>
+
+<rdk_loading>
+    <img src="images/loding.gif" alt="loading..."/>
+</rdk_loading>
+</body>
+
+</html>
