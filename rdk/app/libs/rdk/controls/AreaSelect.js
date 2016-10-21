@@ -210,11 +210,6 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                     }
                     EventService.register(vm.dsAreas.id, EventTypes.RESULT, _areasResultHandler);
                 }
-                //注册回调事件
-                if(!!tAttrs.change&& !EventService.hasEvent(scope.id, EventTypes.CHANGE))
-                {
-                    EventService.register(scope.id, EventTypes.CHANGE, scope.change);
-                }
             }
 
             function _initDefaultAreaData(){  //初始化地区默认数据
