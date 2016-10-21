@@ -10,7 +10,8 @@ define(['angular', 'rd.core','css!rd.styles.FontAwesome','css!rd.styles.Bootstra
                                 <div class="buttons">\
                                     <div ng-transclude class="content"> </div>\
                                 </div>\
-                        </div>';
+                                <div style="clear:both"></div>\
+                            </div>';
                 },
             compile: function(tEle, tAttrs) {
                 return {
@@ -19,6 +20,7 @@ define(['angular', 'rd.core','css!rd.styles.FontAwesome','css!rd.styles.Bootstra
             }    
         }
         function _link(scope, element, attrs) {
+
 
             }
 
