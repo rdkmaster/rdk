@@ -140,22 +140,37 @@ tab的`div`模板带有该属性时，该`div`对应的tab页面会出现关闭�
 
 ## addTab ##
 
-`rdk.id.addTab(source, title)`中第二个参数可缺省，以下是各参数的释义：
+使用方法：`rdk.id.addTab(source, tabController, initData)`，以下是各参数的释义：
 
 - `rdk.id`中的`id`对应的就是页面里`rdk_tab`控件的`id`值。
 - `source`提供新增tab页的具体信息。支持`url`和`html`代码片段两种方式。
-- `title`可缺省。缺省时直接取`source`参数中的`title`信息，如果有值可以覆盖。
+- `tabController`用户自定义的`controller`，创建的`scope`是`appScope`的子集。
+- `initData`用户自定义的模板变量，是`tabController`上的变量。
+
+**注意** 参数`tabController`和`initData`可缺省。
+
+- 两个参数都不缺省时，模板中的数据优先从`initData`中读取，`tabController`次之，都没读取到，则从`appScope`上读取。
+- 同时缺省`tabController`和`initData`时，模板中的数据绑定直接从最外层的`appScope`读取。
+- 只缺省`initData`时，模板中的数据绑定优先从`tabController`上取，取不到再从父层`appScope`上读取。
 
 `addTab`用于动态新增Tab页。使用方法如下：
 
-		rdk.tabID.addTab("./scripts/template/tab.html", '新增覆盖标题');
+		rdk.tabID.addTab('./scripts/template/tab.html', 'tabController', initData);
 或者
 		
-		rdk.tabID.addTab("<div title='new tab'><span>新增模板内容</span></div>", '新增覆盖标题');
+		rdk.tabID.addTab(
+			"<div title='new tab'><span>新增模板内容</span></div>", 
+			'tabController', 
+			initData);
 
-demo举例如下：
+`addTab`简单实例如下：
 
-<live_demo example="containers/tab/demo4addtab" width="800"></live_demo>
+<live_demo example="containers/tab/demo4addTab_simple" width="800"></live_demo>
+
+`addTab`较复杂实例如下：
+
+<live_demo example="containers/tab/demo4addTab_complex" width="800"></live_demo>
+
 
 ## destroyTab ##
 当监听到`CLOSE`事件后，用户可以选择销毁对应的tab页面。
