@@ -4,8 +4,8 @@ define('main', ['rd.controls.Tree'], function() {
     // 创建一个控制器
     app.controller('myCtrl', ['$scope', 'EventService', 'EventTypes', function($scope, EventService, EventTypes) {
 
-        $scope.reFun=function(treeId, treeNode, newName, isCancel){
-        	if (newName.length == 0) {  
+        $scope.reFun=function(event, treeNode){
+        	if (treeNode.label.length == 0) {  
                 alert("节点名称不能为空.");  
                 return false;  
             }

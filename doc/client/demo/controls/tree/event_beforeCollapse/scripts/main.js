@@ -4,7 +4,7 @@ define('main', ['rd.controls.Tree'], function() {
     // 创建一个控制器
     app.controller('myCtrl', ['$scope', 'EventService', 'EventTypes', function($scope, EventService, EventTypes) {
 
-        $scope.conFun=function(treeId, treeNode){
+        $scope.conFun=function(event, treeNode){
         	return confirm("确认关闭 节点 -- " + treeNode.label + " 吗？");
         }
         //也可以直接监听
