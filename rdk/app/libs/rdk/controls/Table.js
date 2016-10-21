@@ -6,7 +6,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
         $templateCache.put("/src/templates/common.html",
             '<div class="rdk-table-module" ng-click="stopPropagation()">\
                 <div ng-if="search && (noData!=undefined)" class="searchWapper">\
-                    <input type="text" class="form-control search" placeholder="Search"\
+                    <input type="text" class="form-control search" placeholder="{{placeholder}}"\
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
                     <i class="glyphicon glyphicon-search search_icon"></i>\
                     <select ng-show="(pagingType==\'server\' && $parent.globalSearch)?true:false" ng-model="val" ng-change="selectChangeHandler(val)"\
@@ -304,6 +304,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                 pagingType: "@?",
                 pagingVisible: "@?",
                 lang: "@?",
+                placeholder: "@?",
                 searchPattern: '@?',
                 proxyDs: "@?",
                 pageNumber: "@?",

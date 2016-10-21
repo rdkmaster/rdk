@@ -11,12 +11,10 @@
 	margin-top:50px;
 }
 .hao{
+	position: relative;
 	width:740px;
-	height:235px;
+	height: 300px;
     margin-right:12px;
-	/*padding-right:12px;*/
-	/*overflow:auto;*/
-	/*border:1px solid red;*/
 	top:200px;
 	position:absolute;
 	padding:8px;
@@ -31,14 +29,13 @@
 	text-align:left;
 	font-size: 12px;
 	padding:0px 6px;
-	line-height:30px;
+	height:30px;
 }
 .rdk-table-module .rdk-table > thead > tr>th:last-child{
 	text-align: center;
 }
 .rdk-table-module .rdk-table > tbody > tr>td:not(:last-child){
 	text-align:left;
-	/*padding:10px 20px;*/
 }
 .rdk-table-module .rdk-table > tr{
 	height:30px;
@@ -48,14 +45,16 @@
 }
 /*设置td样式 点击时样式*/
 .rdk-table-module .rdk-table tbody tr.selected-row td{
-	background:#cde4fa;
+	background: #cde4fa;
 	padding: 0 6px
 	/*line-height:30px;*/
 }
 .rdk-table-module .rdk-table tbody > tr >td{
 	padding:0px 6px;
 	line-height: 30px;
+	cursor: pointer;
 }
+
 /*图标设置*/
 span.images_right{
 	display:inline-block;
@@ -64,8 +63,6 @@ span.images_right{
 	position:absolute;
 	background:url(../images/left.png) no-repeat;
 	margin-top:100px;
-	/*left:100%;*/
-	/*top:100;*/
 }
 /*进去时换的图标*/
 span.images_left{
@@ -80,14 +77,11 @@ span.images_left{
     transition: all 0.25s linear
 }
 .rdk-table-module .rdk-table{
-	border:1px solid #eeeeee;
-}
-.rdk-table-module .rdk-table{
 	border-bottom:1px solid #eeeeee;
 	border-top: 1px solid #eeeeee;
 }
 .rdk-table-module .rdk-table tfoot tr, .rdk-table-module .rdk-table thead>tr{
-	border-bottom: 1px solid transparent;
+	border-bottom:none;
 }
 /*去tr边框 */
 .rdk-table-module .rdk-table tr{
@@ -99,8 +93,14 @@ span.images_left{
 }
 
 /*标题样式*/
-.rdk-panel-module{
-	border:none;
+div.hao >span.title{
+	position:absolute;
+	border: none;
+	top:10px;
+	font-size: 14px;
+	font-style: normal;
+	line-height: 30px;
+	color: #008FD4;
 }
 .panel-title{
 	background-color: #ffffff; 
@@ -116,8 +116,50 @@ span.images_left{
 }
 i{
 	font-style: normal;
-	line-height: 32px;
-	color: #333;
+}
+/* 翻页定位 */
+.rdk-table-module .pagingLine {
+	position: absolute;
+	width: 100%;
+	top: 260px;
+}
+/** 下面翻页字体居中 **/
+.rdk-table-module .pagination > li > a, .rdk-table-module .pagination > li > span {
+    margin: 10px 0 0px;
+}
+.rdk-table-module .spanRecords {
+    margin: 10px 10px 1px 10px;
+}
+.rdk-table-module .pagination {
+	margin: 0;
+}
+/*输入框的样式*/
+.form-control {
+	border: 1px solid #008fd4;
+	height: 30px;
+}
+.rdk-table-module .search {
+	margin-bottom: 10px;
+    margin-top: 2px;
+}
+.glyphicon-search:before {
+	color:#008fd4;
+	line-height: 16px
+}
+.form-control:hover {
+    border-color: #008fd4;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+}
+.form-control:focus {
+    border-color: #008fd4;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+}
+thead.ng-scope>tr >th{
+	height: 30px;
 }
 /* 翻页 */
 .rdk-table-module .enabledRecords{
@@ -156,16 +198,11 @@ i.regular_left{
 .rdk-table-module .disabledRecords{
 	font-size:12px;
 }
-/** 下面翻页字体居中 **/
-.rdk-table-module .pagination > li > a, .rdk-table-module .pagination > li > span {
-    margin: 10px 0 0px;
-}
-.rdk-table-module .spanRecords {
-    margin: 10px 10px 1px 10px;
-}
-.rdk-table-module .pagination {
-	margin: 0;
-}
+
+
+
+
+
 
 
 
