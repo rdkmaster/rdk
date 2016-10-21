@@ -19,7 +19,8 @@
                     remove: '&?',
                     rename: '&?',
                     collapse: '&?',
-                    expand: '&?'
+                    expand: '&?',
+                    editname: '&?'
                 },
                 replace: true,
                 template: '<div><ul id="__unique_id__" class="ztree"></ul></div>',
@@ -94,7 +95,8 @@
                         beforeRename: before_rename,
                         beforeRemove: before_remove,
                         beforeCollapse: before_collapse,
-                        beforeExpand: before_expand
+                        beforeExpand: before_expand,
+                        beforeEditName: before_editName
                     },
                     edit: {
                         enable: scope.draggable || true
@@ -199,6 +201,18 @@
                         EventService.broadcast(scope.id, EventTypes.BEFORE_REMOVE, treeNode); 
                     }
                     var fn = scope.remove(scope);
+                    if(!!fn){
+                        return fn(event, treeNode);
+                    }else{
+                        return true;
+                    }
+                }  
+
+                function before_editName(treeId, treeNode) { 
+                    if (!!scope.id) {
+                        EventService.broadcast(scope.id, EventTypes.BEFORE_EDITNAME, treeNode); 
+                    }
+                    var fn = scope.editname(scope);
                     if(!!fn){
                         return fn(event, treeNode);
                     }else{
