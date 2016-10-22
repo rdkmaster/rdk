@@ -9,7 +9,7 @@ app.controller('myCtrl', ['$scope',  function(scope) {
 var userInfo = "用户接口";
     scope.clickHandler = function() {
     	alert(userInfo)
-    };
+    }
 }
 ]);
 });

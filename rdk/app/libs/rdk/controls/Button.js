@@ -7,12 +7,15 @@ define(['rd.core', 'css!rd.styles.Button'
                 restrict: 'E',
                 replace: true,
                 transclude: true,
-                template:'<div><div ng-click="setSelected()" class="rdk-button-comment">\
-                                <button class="rdk-button-btn " ng-click="click()"  ng-disabled="{{!enabled}}" \
-                                title="{{tooltip}}" ng-class="{rdk_button_selected:(toggle?selected:false)}">\
-                                    <img src="{{icon}}" ng-click="$stopPro($event)">{{label}}\
-                                </button>\
-                        </div></div>',
+                template:'<div class="rdk-button-wrap">\
+                                <div  class="rdk-button-comment" ng-click="setSelected()">\
+                                    <button class="rdk-button-btn " ng-click="click()" ng-mouseover="$mouseOver()" ng-mouseout="$mouseOut()"\
+                                    title="{{tooltip}}" ng-class="{rdk_button_selected:toggle?selected:false,\
+                                        rdk_button_enabled:!enabled,rdk_button_over: mouse}" ng-disabled="!enabled">\
+                                        <img src="{{icon}}" ng-click="$stopPro($event)">{{label}}\
+                                    </button>\
+                                </div>\
+                           </div>',
                 scope:{
                     click: '&?',
                     icon:'@?',
@@ -28,7 +31,7 @@ define(['rd.core', 'css!rd.styles.Button'
                 link: function(scope,ele, attr) {
                     scope.label = Utils.getValue(scope.label, attr.label, '');
                     scope.icon = Utils.getValue(scope.icon, attr.icon, false);
-                    scope.enabled = Utils.getValue(scope.enabled, attr.enabled ,false);
+                    scope.enabled = Utils.getValue(scope.enabled, attr.enabled ,true);
                     scope.setSelected=function(){
                         if(scope.toggle==true){
                             scope.selected=!scope.selected
@@ -39,15 +42,17 @@ define(['rd.core', 'css!rd.styles.Button'
                          $event.stopPropagation();
                         }
                     }
-                    if(!scope.enabled){
-                      $(".rdk-button-btn").css({
-                            "background":"#ddd",
-                                "color" :"#f3f3f3"
-                        })
+                    /* hover函数*/
+                    scope.mouse=false;
+                    scope.$mouseOver=function(){
+                        scope.mouse=true
                     }
+                    scope.$mouseOut=function(){
+                        scope.mouse=false
+                    }
+                    /* 禁用时样式 */
                     var btn = ele[0].children[0].children[0];
                     var img = ele[0].children[0].children[0].children[0];
-                    console.log(scope.tooltip)
                     var btnHeight = parseFloat($(btn).attr('height'));
                     var imgWidth=parseFloat($(img).css('width'));
                     var imgHeight=parseFloat($(img).css('height'));

@@ -1,3 +1,12 @@
+.rdk-button-wrap {
+    display:inline-block;
+}
+.rdk-button-comment{
+	overflow: hidden;
+}
+.rdk-button-comment>button{
+	float:left;
+}
 .rdk-button-btn {
 	box-sizing: content-box;
 	border:none;
@@ -13,12 +22,8 @@
 	cursor:pointer;
 	outline:none;
 }
-.rdk-button-btn:hover{
+.rdk_button_over{
 	background:#007bb6;
-}
-.rdk-button-comment {
-    display: inline-block;
-    border:none;
 }
 .rdk_button_selected {
   	background:#008fd4;
@@ -31,4 +36,8 @@
     width: 18px;
     height: 18px;
  	
+}
+.rdk_button_enabled{
+	background:#ddd;
+	color :#f3f3f3;
 }
