@@ -6,7 +6,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
         $templateCache.put("/src/templates/common.html",
             '<div class="rdk-table-module" ng-click="stopPropagation()">\
                 <div ng-if="search && (noData!=undefined)" class="searchWapper">\
-                    <input type="text" class="form-control search" placeholder="{{placeholder}}"\
+                    <input type="text" class="form-control search" placeholder="{{searchprompt}}"\
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
                     <i class="glyphicon glyphicon-search search_icon"></i>\
                     <select ng-show="(pagingType==\'server\' && $parent.globalSearch)?true:false" ng-model="val" ng-change="selectChangeHandler(val)"\
@@ -304,7 +304,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                 pagingType: "@?",
                 pagingVisible: "@?",
                 lang: "@?",
-                placeholder: "@?",
+                searchprompt: "@?",
                 searchPattern: '@?',
                 proxyDs: "@?",
                 pageNumber: "@?",
@@ -351,7 +351,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         }
                         return result;
                     }
-
+                    scope.searchprompt= Utils.getValue(scope.searchprompt, attrs.searchprompt, 'go');
                     _init();
 
                     transclude(scope, function(clone, innerScope) {
