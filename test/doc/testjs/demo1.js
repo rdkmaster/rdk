@@ -36,7 +36,7 @@ describe('基础Api',function(){
 
         //对确认框进行处理回应
         browser.sleep(3000);
-        //针对新版本的浏览器chrome firefox不支持 50.x版本可以
+        //针对新版本的浏览器chrome firefox不支持; 50.x chrome版本可以  40.0x的firefox支持完好
         browser.switchTo().alert().then(function(alert){
             alert.accept();
             // accpet.dismiss();
