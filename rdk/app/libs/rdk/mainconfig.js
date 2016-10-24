@@ -81,7 +81,7 @@ require.config({
         "rd.styles.FontAwesome": "../font-awesome-4.3.0/css/font-awesome",
         "rd.styles.Bootstrap": "../bootstrap/css/bootstrap.min",
         "rd.styles.Panel": "../rdk/containers/assets/rdk-panel-style",
-        "rd.styles.ButtonGroup": "../rdk/containers/assets/rdk-buttongroup-style",
+        "rd.styles.ButtonGroup": "../rdk/containers/assets/rdk-buttongroup-separator-style",
         "rd.styles.Tab": "../rdk/containers/assets/rdk-tab-style",
         "rd.styles.Scroller": "../rdk/controls/assets/rdk-scroller-style",
         "rd.styles.SingleIndicator": "../rdk/controls/assets/rdk-singleindicator-style",
