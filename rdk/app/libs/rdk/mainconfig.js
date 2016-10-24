@@ -35,6 +35,7 @@ require.config({
         "rd.containers.Accordion": "../rdk/containers/Accordion",
         "rd.containers.Accordions": "../rdk/containers/Accordions",
         "rd.containers.GraphGroup": "../rdk/containers/GraphGroup",
+        "rd.containers.ButtonGroup": "../rdk/containers/ButtonGroup",
         "rd.containers.Tab": "../rdk/containers/Tab",
         "rd.containers.Panel": "../rdk/containers/Panel",
         "rd.controls.Bullet": "../rdk/controls/Bullet",
@@ -56,7 +57,8 @@ require.config({
         "rd.controls.Alert": "../rdk/controls/Alert",
         "rd.controls.Tree": "../rdk/controls/Tree",
         "rd.controls.SingleIndicator": "../rdk/controls/SingleIndicator",
-        "rd.controls.ScoreIndicator": "../rdk/controls/ScoreIndicator", 
+        "rd.controls.ScoreIndicator": "../rdk/controls/ScoreIndicator",  
+        
         "rd.services.DataSourceService": "../rdk/services/DataSourceService",
         "rd.services.EventService": "../rdk/services/EventService",
         "rd.services.I18nService": "../rdk/services/I18nService",
@@ -79,6 +81,7 @@ require.config({
         "rd.styles.FontAwesome": "../font-awesome-4.3.0/css/font-awesome",
         "rd.styles.Bootstrap": "../bootstrap/css/bootstrap.min",
         "rd.styles.Panel": "../rdk/containers/assets/rdk-panel-style",
+        "rd.styles.ButtonGroup": "../rdk/containers/assets/rdk-buttongroup-style",
         "rd.styles.Tab": "../rdk/containers/assets/rdk-tab-style",
         "rd.styles.Scroller": "../rdk/controls/assets/rdk-scroller-style",
         "rd.styles.SingleIndicator": "../rdk/controls/assets/rdk-singleindicator-style",
@@ -108,7 +111,7 @@ require.config({
             deps : ['angular','css!../angular/angular-block-ui','jquery'],
             exports: "blockUI"
         },
-		"jquery-gesture":{
+        "jquery-gesture":{
             deps : ['jquery'],
             exports: "jquery-gesture"
         },
