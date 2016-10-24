@@ -10,6 +10,7 @@
                     id: '@',
                     nodeField: '@?',
                     labelField: '@?',
+                    unselectOnBlur: '@?',
                     setting: '=?',
                     draggable: '=?',
                     checkable: '=?',
@@ -30,6 +31,7 @@
                         post: function(scope, iElement, iAttrs, controller) {
                             scope.checkable = Utils.isTrue(iAttrs.checkable);
                             scope.draggable = Utils.isTrue(iAttrs.draggable);
+                            scope.unselectOnBlur = Utils.isTrue(iAttrs.unselectOnBlur);
 
                             scope.rdkClick = Utils.findFunction(scope, iAttrs.rdkClick);
                             scope.rdkDoubleClick = Utils.findFunction(scope, iAttrs.rdkDoubleClick);
@@ -70,6 +72,16 @@
                                 }
                                 scope.setting.check.enable = scope.checkable;
                             });
+
+                            if(!!scope.unselectOnBlur){
+                                $(document).on("click", "*", function(){
+                                   var treeObj = $.fn.zTree.getZTreeObj(rebornID);
+                                    treeObj.cancelSelectedNode();
+                                });
+
+                                $("#" + rebornID).click(function(){return false})
+                            }
+                            
                         }
                     }
                 }
@@ -218,7 +230,9 @@
                     }else{
                         return true;
                     }
-                }  
+                } 
+
+                
             }
 
             function _updateTree(rebornID, setting, treeData) {
