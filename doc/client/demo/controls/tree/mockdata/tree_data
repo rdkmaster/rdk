@@ -11,7 +11,7 @@
             "module": [],
             "key": "lowspeed",
             "label": "低速率",
-            "icon": "../img/3.png",
+            "icon": "/doc/client/demo/controls/tree/img/3.png",
             "font": {
                 "color": "red","font-weight":"bold"
             }
@@ -27,7 +27,7 @@
     "key": "e2e",
     "label": "端到端定界定位",
     "open": true,
-    "icon": "../img/1_open.png"
+    "icon": "/doc/client/demo/controls/tree/img/1_open.png"
 }, {
     "module": [{
         "module": [{
@@ -55,5 +55,5 @@
     "key": "realtimeMonitor",
     "label": "实时监控",
     "open": true,
-    "icon": "../img/1_open.png"
+    "icon": "/doc/client/demo/controls/tree/img/1_open.png"
 }]
