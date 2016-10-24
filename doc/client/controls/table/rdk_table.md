@@ -379,7 +379,6 @@ cells 为 改变的行列信息的数组信息
 ## searchPrompt <binding></binding>##
 支持类型：字符串
 
-<!-- <live_demo example="controls/table/search_prompt="900"></live_demo> -->
 <live_demo example="controls/table/searchPrompt" width="900"></live_demo>
 
 ## searchable ##
