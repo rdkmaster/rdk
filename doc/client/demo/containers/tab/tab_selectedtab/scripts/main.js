@@ -21,6 +21,12 @@ define('main', ['angular', 'rd.containers.Tab', 'rd.controls.BasicSelector'], fu
             }];
 
             scope.rdkSelector = "Selector控件";
+
+            scope.selectedIndex = 2;
+
+            scope.clickHandler = function(){
+                scope.selectedIndex = 1;
+            }
         }
     ]);
 });
