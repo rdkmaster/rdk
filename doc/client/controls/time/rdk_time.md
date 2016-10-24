@@ -79,6 +79,10 @@
 
 <live_demo example="controls/time/macroValue" width="900"></live_demo>
 
+还可以用于通过js改变value的值，达到控制查询时间的目的！
+
+<live_demo example="controls/time/updateValue" width="900"></live_demo>
+
 ### granularity ###
 	
 时间粒度。也表示`value`的精确度。取值范围是 `date/week/month/hour/quarter` 五个值。如果设置成`hour`，则`value`精确到小时。

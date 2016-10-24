@@ -191,6 +191,12 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                     return function link(scope, iElement, iAttrs) {
                         _init();
 
+                        scope.$watch('setting.value', function(newVal, oldVal) {
+                            if(!!newVal&&newVal!==oldVal){
+                                _init();
+                            }
+                        })
+
                         function _init() {
                             scope.range = Utils.isTrue(iAttrs.range);
                             scope.label = Utils.getValue(scope.label, iAttrs.label, "时间");
