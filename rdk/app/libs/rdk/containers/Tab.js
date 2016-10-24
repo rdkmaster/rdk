@@ -68,6 +68,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
             function _link(scope, element, attrs) {
                 scope.draggable = Utils.isTrue(attrs.draggable, true);
                 scope.toggleCondition = (attrs.toggleCondition ? attrs.toggleCondition : 'click').toLowerCase();
+                scope.selectedTab = Utils.getValue(scope.selectedTab, attrs.selectedTab, 0); 
                 scope.appScope = Utils.findAppScope(scope);
                 scope.compileScope = scope.appScope;                
                 Utils.publish(scope);
@@ -90,6 +91,13 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
 
                 var off = scope.$on('ngRepeatFinished', function(){
                     _appendTab();
+                    _updateDraggable();
+                    _addFeature();
+
+                    scope.$watch("selectedTab", function(newVal, oldVal) {
+                        _activeTabByIndex(newVal);
+                    }, true);
+                    
                 });  
 
                 scope.addTab = function(source, tabController, initData){//变量controlscope私有化
@@ -189,17 +197,9 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
 
                 if(scope.id){
                     EventService.register(scope.id, EventTypes.TAB_SELECT, function(event, data){
-                        scope.currentSelectedIndex = data - 1;
-                        $(dom).tabs({
-                            active: scope.currentSelectedIndex
-                        });
+                        _activeTabByIndex(data);
                     });
                 }
-
-                _callLater(function() {
-                    _updateDraggable();
-                    _addFeature();
-                });
 
                 scope.getIndex = function(idx) {
                     if (!scope.showItems) return 0; //没定义，默认全部显示
@@ -233,6 +233,13 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     var panelId = scope.tabs[index].tabid;
                     $("#" + panelId).css({'display': 'none'});
                     _activeTab(index);
+                }
+
+                function _activeTabByIndex(index){
+                    scope.currentSelectedIndex = index;
+                    $(dom).tabs({
+                        active: scope.currentSelectedIndex
+                    });
                 }
 
                 function _activeTab(index){

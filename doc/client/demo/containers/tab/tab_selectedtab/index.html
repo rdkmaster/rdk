@@ -12,7 +12,7 @@
 </head>
 
 <body ng-controller='myCtrl'>
-    <rdk_tab selected_tab="2">
+    <rdk_tab selected_tab="selectedIndex">
         <div title="RDK">
             <p>RDK最突出的特点就是易用！</p>
         </div>
@@ -30,6 +30,7 @@
             </rdk_tab>
         </div>
     </rdk_tab>
+    <button ng-click='clickHandler()'>改变selected_tab的值</button>
 </body>
 
 </html>
