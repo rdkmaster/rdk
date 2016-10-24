@@ -6,7 +6,7 @@ define(['angular', 'rd.core','css!rd.styles.FontAwesome','css!rd.styles.Bootstra
             replace: true,
             transclude: true,
             template: function(tElement, tAttrs) {
-                return '<div class="rdk-separator-module">\
+                return '<div class="rdk-buttongroup-separator">\
                         </div>';
             },
         }
