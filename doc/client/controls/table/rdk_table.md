@@ -368,12 +368,19 @@ cells 为 改变的行列信息的数组信息
 <live_demo example="controls/table/search" width="900"></live_demo>
 
 ### 后端过滤 ###
+
 		<rdk_table data="data" search='true' paging-type="server"></rdk_table>
 
 后端过滤时，如果搜索框内有输入内容，就会出现搜索字段的下拉框，方便用户指定关键字的检索字段。
 
 `search`后端过滤示例：
 <live_demo example="controls/table/server_search" width="900"></live_demo>
+
+## searchPrompt <binding></binding>##
+支持类型：字符串
+
+<!-- <live_demo example="controls/table/search_prompt="900"></live_demo> -->
+<live_demo example="controls/table/searchPrompt" width="900"></live_demo>
 
 ## searchable ##
 >支持类型：布尔型
