@@ -35,6 +35,7 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
                     eventHandler: '&?'
                 },
                 controller: ['$scope', function(scope) {
+                    //将内部控制器暴露给app
                     Utils.publishController(scope.id, this);
                 }],
                 compile: _compile
@@ -64,10 +65,6 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
                         _resize(scope.realWidth, scope.realHeight, scope.chart);
                     }
                 }
-
-                //将内部scope暴露给app
-                Utils.publish(scope);
-
 
                 scope.noData = false;
                 
