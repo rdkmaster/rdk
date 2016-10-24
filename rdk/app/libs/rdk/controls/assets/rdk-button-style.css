@@ -4,6 +4,10 @@
 .rdk-button-comment{
 	overflow: hidden;
 }
+.rdk-button-comment .rdk-button-btn >i{
+	display:inline-block;
+	padding-right:4px;
+}
 .rdk-button-comment>button{
 	float:left;
 }
@@ -16,7 +20,6 @@
 	font-size:14px;
 	color:#ffffff;
 	position: relative;
-	line-height: 30px;
 	padding:0px 16px;
 	font-family: 'Microsoft YaHei';
 	cursor:pointer;
@@ -29,11 +32,9 @@
   	background:#008fd4;
 }
 .rdk-button-btn>img{
-    vertical-align: middle;
-    position:absolute;
-    left:16px;
-    top:6px; 
+    vertical-align: sub;
     width: 18px;
+    padding-right:4px;
     height: 18px;
  	
 }

@@ -22,7 +22,7 @@ label 用于按钮文字说明 ，支持双绑。默认值""。
 ## icon <binding></binding>  ##
 > 支持类型：字符串
 
-icon 按钮图标,放在文字说明的前面,支持双绑，值为图标路径时显示图标，其值为false时不显示，默认值为false。
+icon 按钮图标,放在文字说明的前面,支持双绑，值为图标路径时显示图标，其值为false时不显示，默认值为false。icon同时也支持符号。
 
 <live_demo example="controls/button/icon" width="900"></live_demo>
 

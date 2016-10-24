@@ -1,4 +1,4 @@
-define(['rd.core', 'css!rd.styles.Button'
+define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
 ], function() {
     var btnSearchApp = angular.module('rd.controls.Button', ['rd.core']);
     btnSearchApp.directive('rdkButton', ['EventService', 'Utils', 'EventTypes', '$compile',
@@ -12,7 +12,7 @@ define(['rd.core', 'css!rd.styles.Button'
                                     <button class="rdk-button-btn " ng-click="click()" ng-mouseover="$mouseOver()" ng-mouseout="$mouseOut()"\
                                     title="{{tooltip}}" ng-class="{rdk_button_selected:toggle?selected:false,\
                                         rdk_button_enabled:!enabled,rdk_button_over: mouse}" ng-disabled="!enabled">\
-                                        <img src="{{icon}}" ng-click="$stopPro($event)">{{label}}\
+                                        <img src="{{icon}}" ng-click="$stopPro($event)" ng-show="iconShow" ><i class="{{icon}}" ng-show="!iconShow"></i>{{label}}\
                                     </button>\
                                 </div>\
                            </div>',
@@ -42,6 +42,11 @@ define(['rd.core', 'css!rd.styles.Button'
                          $event.stopPropagation();
                         }
                     }
+                    scope.iconShow=false;
+                   var classFlag=/\/+/;
+                   if(classFlag.test(scope.icon)){
+                    scope.iconShow=true
+                   }
                     /* hover函数*/
                     scope.mouse=false;
                     scope.$mouseOver=function(){
@@ -58,17 +63,7 @@ define(['rd.core', 'css!rd.styles.Button'
                     var imgHeight=parseFloat($(img).css('height'));
                     if(scope.icon=="false"){
                         $(img).css('display','none');
-                    }else if(!scope.icon){
-                        $(img).css('display','none');
-                    }else{
-                        $(btn).css('paddingLeft',(imgWidth+20)+'px');
-                        $(img).css({
-                        'left': '16px',
-                        'top' : (btnHeight-imgHeight)/2 +"px",
-                        })
                     }
-                    
-
                 }
             };
         }
