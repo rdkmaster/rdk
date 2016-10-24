@@ -1,7 +1,5 @@
     define(['angular', 'rd.services.EventService','ztree'], function() {
-    var menuTreeApp = angular.module("rd.controls.Tree", [
-        'rd.services.EventService'
-    ]);
+    var menuTreeApp = angular.module("rd.controls.Tree", ['rd.core']);
     menuTreeApp.directive('rdkTree', ['EventService', 'EventTypes', 'Utils',
         function(EventService, EventTypes, Utils) {
             return {

@@ -1,5 +1,5 @@
 define(['angular', 'jquery', 'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
-    var inputApp = angular.module("rd.controls.Input", []);
+    var inputApp = angular.module("rd.controls.Input", ['rd.core']);
     inputApp.directive('rdkInput', function() {
         return {
             restrict: 'EA',

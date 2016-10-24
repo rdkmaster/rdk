@@ -1,5 +1,5 @@
 define(['angular'], function() {
-    var dsModule = angular.module('rd.controls.Alert', []);
+    var dsModule = angular.module('rd.controls.Alert', ['rd.core']);
     dsModule.controller('rdkAlert', ['$scope', function($scope) {
             $scope.alertFunc = function(fn) {
                 (fn)();

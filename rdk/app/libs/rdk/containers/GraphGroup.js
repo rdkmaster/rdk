@@ -1,5 +1,5 @@
 define(['angular', 'rd.services.NodeService'], function() {
-    var graphGroupModule = angular.module('rd.containers.GraphGroup', ['rd.services.NodeService']);
+    var graphGroupModule = angular.module('rd.containers.GraphGroup', ['rd.core']);
     graphGroupModule.directive('rdkGraphGroup', ['NodeService', function(NodeService) {
         return {
             restrict: 'E',
