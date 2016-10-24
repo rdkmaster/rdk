@@ -12,6 +12,14 @@
 	
 }
 
+.rdk-separator-module {
+	border-left: 1px solid #7291b1;
+	position:relative;
+	height: 28px;
+	display:inline-block;
+	vertical-align: bottom;
+
+}
 
 .rdk-buttongroup-module button:active {
 	background:#67b9e0; 

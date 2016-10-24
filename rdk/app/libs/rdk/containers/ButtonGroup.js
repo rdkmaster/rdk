@@ -1,4 +1,4 @@
-define(['angular', 'rd.core','css!rd.styles.FontAwesome','css!rd.styles.Bootstrap','css!rd.styles.ButtonGroup','css!rd.styles.Separator'], function() {
+define(['angular', 'rd.core','css!rd.styles.FontAwesome','css!rd.styles.Bootstrap','css!rd.styles.ButtonGroup'], function() {
     var ButtonGroupModule = angular.module('rd.containers.ButtonGroup', ['rd.core']);
      ButtonGroupModule.directive('rdkSeparator', ['$compile', 'Utils', function($compile, Utils) {
         return {
