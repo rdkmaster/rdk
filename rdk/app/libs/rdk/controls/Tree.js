@@ -58,14 +58,14 @@
                             }, true);
 
                             scope.$watch('draggable', function(newVal, oldVal) {
-                                if (!scope.setting) {
+                                if (!scope.setting || !scope.setting.edit) {
                                     return;
                                 }
                                 scope.setting.edit.enable = scope.draggable;
                             });
 
                             scope.$watch('checkable', function(newVal, oldVal) {
-                                if (!scope.setting) {
+                                if (!scope.setting || !scope.setting.check) {
                                     return;
                                 }
                                 scope.setting.check.enable = scope.checkable;
