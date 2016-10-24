@@ -1,5 +1,5 @@
 define(['rd.services.Utils', 'rd.services.EventService'], function() {
-    angular.module('rd.containers.Accordions', ['rd.services.Utils', 'rd.services.EventService'])
+    angular.module('rd.containers.Accordions', ['rd.core'])
         .controller('accordionsCtrls', ['$scope', 'Utils', 'EventService', 'EventTypes', function(scope, Utils, EventService, EventTypes) {
             this.activeOnlyOneExpend = function(elemCount) {
                 for (var i = 0; i < elemCount; i++) {

@@ -1,6 +1,6 @@
 define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.DataSourceService', "css!rd.styles.Table", 'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
 
-    var tableModule = angular.module('rd.controls.Table', ['rd.services.DataSourceService']);
+    var tableModule = angular.module('rd.controls.Table', ['rd.core']);
 
     tableModule.run(["$templateCache", function($templateCache) {
         $templateCache.put("/src/templates/common.html",

@@ -1,5 +1,5 @@
 define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.styles.Bootstrap', 'rd.services.EventService'], function () {
-    var areaModule = angular.module('rd.controls.AreaSelect', ['rd.services.DataSourceService', 'rd.services.EventService']);
+    var areaModule = angular.module('rd.controls.AreaSelect', ['rd.core']);
     areaModule.run(["$templateCache", function($templateCache) {
         $templateCache.put("province.html",
             '<div class="rdk-area-contain">\

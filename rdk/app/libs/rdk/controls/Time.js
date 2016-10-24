@@ -2,7 +2,7 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
         'bootstrap-select', 'bootstrap-datepicker-i18', 'angular'
     ],
     function() {
-        var timeApp = angular.module('rd.controls.Time', ['rd.services.Utils']);
+        var timeApp = angular.module('rd.controls.Time', ['rd.core']);
 
         timeApp.service('TimeUtilService', [function() {
             return {
