@@ -34,6 +34,9 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
                     graphContext: '=?',
                     eventHandler: '&?'
                 },
+                controller: ['$scope', function(scope) {
+                    Utils.publishController(scope.id, this);
+                }],
                 compile: _compile
             };
 
@@ -113,6 +116,10 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
                     var dom = element[0].childNodes[1];
                     var myChart = echarts.init(dom);
                     scope.chart = myChart;
+                    if (scope.id) {
+                        //将chart暴露给app
+                        rdk[scope.id].chart = myChart;
+                    }
 
                     _resize(scope.realWidth, scope.realHeight, scope.chart);
 
