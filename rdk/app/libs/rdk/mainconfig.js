@@ -58,7 +58,7 @@ require.config({
         "rd.controls.BtnSearch":"../rdk/controls/BtnSearch",
         "rd.controls.SingleIndicator": "../rdk/controls/SingleIndicator",
         "rd.controls.ScoreIndicator": "../rdk/controls/ScoreIndicator",  
-		"rd.controls.Separator": "../rdk/controls/Separator",  
+		
         "rd.services.DataSourceService": "../rdk/services/DataSourceService",
         "rd.services.EventService": "../rdk/services/EventService",
         "rd.services.I18nService": "../rdk/services/I18nService",

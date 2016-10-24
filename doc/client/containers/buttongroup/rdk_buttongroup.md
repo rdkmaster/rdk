@@ -9,4 +9,20 @@
 
 ---
 
+# 分组 #
+`rdk_buttongroup`支持对控件进行分组，通过分隔符`rdk_separator`指令实现，如：
+
+	<rdk_button_group style="margin-right:20px">
+			<button><i class="fa fa-cc-mastercard"></i></button>
+			<button><i class="fa fa-area-chart"></i></button>
+			<rdk_separator> </rdk_separator>
+			<button><i class="fa fa-plug"></i></button>
+	</rdk_button_group>
+
+完整示例如下：
+<live_demo example="containers/buttongroup/setgroups" width="405"></live_demo>
+
+
+
+
 

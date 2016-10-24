@@ -1,6 +1,18 @@
-define(['angular', 'rd.core','css!rd.styles.FontAwesome','css!rd.styles.Bootstrap','css!rd.styles.ButtonGroup'], function() {
+define(['angular', 'rd.core','css!rd.styles.FontAwesome','css!rd.styles.Bootstrap','css!rd.styles.ButtonGroup','css!rd.styles.Separator'], function() {
     var ButtonGroupModule = angular.module('rd.containers.ButtonGroup', ['rd.core']);
-    ButtonGroupModule.directive('rdkButtonGroup', ['$compile', 'Utils', function($compile, Utils) {
+     ButtonGroupModule.directive('rdkSeparator', ['$compile', 'Utils', function($compile, Utils) {
+        return {
+            restrict: 'E',
+            replace: true,
+            transclude: true,
+            template: function(tElement, tAttrs) {
+                return '<div class="rdk-separator-module">\
+                        </div>';
+            },
+        }
+
+
+    }]).directive('rdkButtonGroup', ['$compile', 'Utils', function($compile, Utils) {
         return {
             restrict: 'E',
             replace: true,
