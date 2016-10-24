@@ -93,6 +93,16 @@
 示例如下：
 <live_demo example="controls/tree/draggable" width="900"></live_demo>
 
+##unselect_on_blur##
+> 支持类型：Boolen值
+
+此属性配置,选择某个节点后鼠标点击树控件外侧时 选择失效恢复最初没有选择状态，默认值为false。
+
+    <rdk_tree unselect_on_blur='true'></rdk_tree>
+示例如下：
+<live_demo example="controls/tree/unselect_on_blur" width="900"></live_demo>
+
+
 #事件#
 
 ##CLICK##
