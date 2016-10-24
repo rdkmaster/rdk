@@ -1,11 +1,6 @@
 'use strict';
 describe("test basic_selector combined",function(){
-	// beforeEach(function(){
-	// 	browser.get("test/e2e/testee/basic_selector/web/combined.html");
-	// 	browser.sleep(3000);
-	// });
-	// afterEach(function(){
-	// });
+	
 	it('combo basic test change value',function(){
 		browser.get('test/e2e/testee/basic_selector/web/combined.html')
         .then(function(){
@@ -35,6 +30,7 @@ describe("test basic_selector combined",function(){
 		expect(lis.count()).toBe(3);
 		lis.each(function(item,index){
 			item.click();
+			browser.sleep(300);
 			expect(element(by.css(".accordion .cityname")).getText()).toBe(names[index]);
 		});
 	});
@@ -42,6 +38,7 @@ describe("test basic_selector combined",function(){
 		var lis=element.all(by.css(".tab .rdk-selector-module .selector li"));
 		lis.each(function(item,index){
 			item.click();
+			browser.sleep(300);
 		});
 		expect(element.all(by.css(".tab .rdk-selector-module .selector .selected-item")).count()).toBe(6);
 	});

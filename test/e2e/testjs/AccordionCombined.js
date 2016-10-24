@@ -1,9 +1,6 @@
 'use strict';
 describe('Accordion Combined Test',function(){
-    // beforeEach(function(){
-    //     browser.get("test/e2e/testee/accordion/web/combined.html");
-    //     browser.sleep(2000);
-    // });
+    
     it('展开accordion并且能够点击combo下面的basic_select控件',function(){
         browser.get("test/e2e/testee/accordion/web/combined.html");
         browser.sleep(2000);

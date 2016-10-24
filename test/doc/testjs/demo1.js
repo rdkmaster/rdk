@@ -10,7 +10,7 @@ describe('基础Api',function(){
         button.get(0).click();
         //输入注册信息
         var input=element.all(by.css(".section1 input"));
-
+        //三种方式输入
         input.get(0).sendKeys("何建洋");
         input.get(1).sendKeys("123456");
 
@@ -36,9 +36,10 @@ describe('基础Api',function(){
 
         //对确认框进行处理回应
         browser.sleep(3000);
-        //针对新版本的浏览器chrome firefox不支持 50.x版本可以
+        //针对新版本的浏览器chrome firefox不支持; 50.x chrome版本可以  40.0x的firefox支持完好
         browser.switchTo().alert().then(function(alert){
             alert.accept();
+            // accpet.dismiss();
         });
         browser.sleep(2000);
         browser.switchTo().alert().accept();
