@@ -232,6 +232,18 @@
             }
         }
 
+        this.publishController = function(id, controller) {
+            if (!id) {
+                return;
+            }
+            
+            if (angular.isDefined(rdk[id]) && rdk[id] !== controller) {
+                console.warn('conflict dom node id: ' + id);
+            } else {
+                rdk[id] = controller;
+            }
+        }
+
         this.shallowCopy = function(src, dest) {
             if (!dest) {
                 dest = {};
