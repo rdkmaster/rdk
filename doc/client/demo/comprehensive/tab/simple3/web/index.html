@@ -22,10 +22,9 @@
 
 <body ng-controller='myCtrl'>
     <div class="hao images_down">
+        <span class="title">全城通信</span>
         <span class='images_right' ng-click="images()" ></span>
-        <rdk_panel title="'全城通信'"  show_title="true">
-        </rdk_panel>
-        <rdk_table ds="ds_table" ds-url="/doc/client/demo/controls/table/mockdata/table_paging" ds_query_if="ready" page-size="3" setting="setting" page_number ="4">
+        <rdk_table ds="ds_table" ds-url="/doc/client/demo/controls/table/mockdata/table_paging" ds_query_if="ready" page-size="6" setting="setting" page_number ="4" search="true" searchprompt="搜索一下">
         </rdk_table>
     </div>
 </body>

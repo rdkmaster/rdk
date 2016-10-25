@@ -6,7 +6,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
         $templateCache.put("/src/templates/common.html",
             '<div class="rdk-table-module" ng-click="stopPropagation()">\
                 <div ng-if="search && (noData!=undefined)" class="searchWapper">\
-                    <input type="text" class="form-control search" placeholder="Search"\
+                    <input type="text" class="form-control search" placeholder="{{searchPrompt}}"\
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
                     <i class="glyphicon glyphicon-search search_icon"></i>\
                     <select ng-show="(pagingType==\'server\' && $parent.globalSearch)?true:false" ng-model="val" ng-change="selectChangeHandler(val)"\
@@ -304,6 +304,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                 pagingType: "@?",
                 pagingVisible: "@?",
                 lang: "@?",
+                searchPrompt: "@?",
                 searchPattern: '@?',
                 proxyDs: "@?",
                 pageNumber: "@?",
@@ -324,9 +325,7 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                 if ((tAttributes.search == "true") ? true : ((tAttributes.searchable == "true") ? true : false)) {
                     rowFilter += "| filter:globalSearch";
                 };
-
                 var pagingFilter = "";
-
                 pagingFilter += " | offset: currentPage:pageSize |limitTo: pageSize";
 
                 if (tAttributes.pagingType !== "server") {
@@ -350,9 +349,8 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         }
                         return result;
                     }
-
                     _init();
-
+                    scope.searchPrompt="Search";
                     transclude(scope, function(clone, innerScope) {
                         scope.$owner = innerScope.$parent;//自定义表头,必须用属性rdk-table
                         for (var key in clone) {
