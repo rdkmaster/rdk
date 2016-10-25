@@ -1,5 +1,5 @@
-define(['angular','jquery','jquery-nicescroll', 'rd.services.DataSourceService', 'rd.services.EventService'], function() {
-    angular.module('rd.controls.Scroll', ['rd.services.DataSourceService', 'rd.services.EventService'])
+define(['angular','jquery','jquery-nicescroll'], function() {
+    angular.module('rd.controls.Scroll', [])
     .provider('$scroll', function(){
         var $$options = {
             cursorcolor: "#008fd4",//改变滚动条颜色，使用16进制颜色值
@@ -23,7 +23,7 @@ define(['angular','jquery','jquery-nicescroll', 'rd.services.DataSourceService',
             };
         }
     })
-    .directive('rdkScroll', ['DataSourceService','EventService', 'Utils','EventTypes','$scroll', function (DataSourceService,EventService,Utils,EventTypes,$scroll) {
+    .directive('rdkScroll', ['$scroll', function ($scroll) {
         return {
             restrict: 'A',
             link: _link
