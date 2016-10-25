@@ -2,12 +2,12 @@ define(['angular','jquery','jquery-nicescroll', 'rd.services.DataSourceService',
     angular.module('rd.controls.Scroll', ['rd.services.DataSourceService', 'rd.services.EventService'])
     .provider('$scrollService', function(){
         var $$options = {
-            cursorcolor: "#008fd4",//#CC0071 光标颜色
-            cursoropacitymax: 0.2, //改变不透明度非常光标处于活动状态（scrollabar“可见”状态），范围从1到0
-            cursorwidth: "4px", //像素光标的宽度
-            cursorborder: "0", // 	游标边框css定义
-            cursorborderradius: "2px",//以像素为光标边界半径
-            autohidemode: false //是否隐藏滚动条
+            cursorcolor: "#008fd4",//改变滚动条颜色，使用16进制颜色值
+            cursoropacitymax: 0.2, //当滚动条是隐藏状态时改变透明度, 值范围 1 到 0
+            cursorwidth: "4px", //滚动条的宽度，单位：便素
+            cursorborder: "0", // 	CSS方式定义滚动条边框
+            cursorborderradius: "2px",//滚动条圆角（像素）
+            autohidemode: false //隐藏滚动条的方式
         };
         //调用provider为整个项目配置滚动条风格
         this.setOptions = function(options) {
@@ -34,7 +34,7 @@ define(['angular','jquery','jquery-nicescroll', 'rd.services.DataSourceService',
             var defaultOptions = $scrollService.getOptions();//获取统一风格的配置对象
             var niceOptions = angular.extend(defaultOptions, scrollOptions);
             var niceScroll = $(iElement).niceScroll(niceOptions);
-            scope.$on('$destroy', function () {
+            scope.$on('$destroy', function () { // 注册'$destroy'事件来删除任何易于内存泄漏的代码。
                 if (angular.isDefined(niceScroll)) {
                     niceScroll.remove()
                 }
