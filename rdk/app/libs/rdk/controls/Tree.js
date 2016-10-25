@@ -80,11 +80,11 @@
                                     if(nodes.length>0){
                                         treeObj.cancelSelectedNode();
                                         if(!!scope.id){
-                                            EventService.broadcast(scope.id, EventTypes.UNSELECT, scope.data);
+                                            EventService.broadcast(scope.id, EventTypes.UNSELECT, nodes);
                                         }
                                         var fn = scope.unselect(scope);
                                         if(!!fn){
-                                            return fn(event, true);
+                                            return fn(event, nodes);
                                         }else{
                                             return true;
                                         } 
