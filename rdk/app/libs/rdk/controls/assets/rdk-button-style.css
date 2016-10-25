@@ -6,7 +6,6 @@
 }
 .rdk-button-comment .rdk-button-btn >i{
 	display:inline-block;
-	padding-right:4px;
 }
 .rdk-button-comment>button{
 	float:left;
@@ -19,7 +18,8 @@
 	border-radius: 4px;
 	font-size:14px;
 	color:#ffffff;
-	position: relative;
+	text-align: center;
+	/*position: relative;*/
 	padding:0px 16px;
 	font-family: 'Microsoft YaHei';
 	cursor:pointer;
@@ -34,11 +34,13 @@
 .rdk-button-btn>img{
     vertical-align: sub;
     width: 18px;
-    padding-right:4px;
     height: 18px;
  	
 }
 .rdk_button_enabled{
 	background:#ddd;
 	color :#f3f3f3;
+}
+.rdk_padding_right{
+	padding-right:4px;
 }
