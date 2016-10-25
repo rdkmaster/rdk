@@ -33,8 +33,7 @@ define(['rd.core'], function() {
     }
 
     function _isRdkService(url) {
-        url = url.trim();
-        return url.substring(0, 4) == 'app/';
+        return url.match(/^\s*app\//) || url.match(/^\s*\/rdk\/service\/app\//);
     }
 
     function _fixUrl(url) {
@@ -42,6 +41,7 @@ define(['rd.core'], function() {
             var svr = location.href.match(/\/(rdk_server|rdk)\/(.*)\/web\//)[2] + "/server";
             url = url.replace(/\$svr/, svr);
         }
+        url = url.replace(/^\s*\/rdk\/service\//, '');
         return url;
     }
 
