@@ -177,8 +177,20 @@ class TestOldJsAPI extends FunSpec with Matchers{
       RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "matrixTestError").fold(ex=>ex,v=> v should be("{\"header\":[],\"field\":[],\"data\":[]}"))
     }
 
+    //===========new  api=============//
 
+    it("DataTable=>test cases passed!"){
+      var runtime: Runtime = Runtime.newInstance
+      RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "DataTable_transfer").fold(ex=>ex,v=> v should be("{\"header\":[\"网元\",\"名字\"],\"field\":[\"neid\",\"name\"],\"data\":[[\"30test\",\"test1ffff\"],[\"20test\",\"test2ffff\"]]}"))
+      runtime = Runtime.newInstance
+      RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "DataTable_select").fold(ex=>ex,v=> v should be("{\"header\":[\"名字\"],\"field\":[\"name\"],\"data\":[[\"test1\"],[\"test2\"]]}"))
+    }
 
-
+    it("Mapper=>test cases passed!"){
+      var runtime: Runtime = Runtime.newInstance
+      RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "Mapper_from_object").fold(ex=>ex,v=> v should be("否"))
+      runtime = Runtime.newInstance
+      RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "Mapper_from_datatable").fold(ex=>ex,v=> v should be("test1"))
+    }
   }
 }

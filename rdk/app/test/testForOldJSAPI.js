@@ -156,6 +156,32 @@
         },
         matrixTestError:function(request, script){
             return matrix();
+        },
+
+
+        //=====================new api test=============================//
+        DataTable_transfer:function(request, script){
+            var tabledata=new DataTable(['网元','名字'],['neid','name'],[['30','test1'],['20','test2']]);
+
+            tabledata.transform({'neid':function(value,row,field){return value+'test'},'name':function(value){return value+'ffff'}});
+
+            return tabledata
+        },
+
+        DataTable_select:function(request, script){
+            var tabledata=new DataTable(['网元','名字'],['neid','name'],[['30','test1'],['20','test2']]);
+            return tabledata.select(['neidd','name']);
+        },
+
+        Mapper_from_object:function(request, script){
+            var tranformFunction = Mapper.from_object({1: "是", 0: "否"});
+             return tranformFunction(0); // "否"
+        },
+
+        Mapper_from_datatable:function(request, script){
+            var tabledata={field:['neid','name'],data:[['30','test1']]}
+            var tranformFunction = Mapper.from_datatable(tabledata,'neid','name',"unknown");
+            return tranformFunction("30");
         }
     }
 })()
