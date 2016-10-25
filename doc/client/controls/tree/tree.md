@@ -160,5 +160,8 @@
 #样式#
 暂无
 
+#更多事件请参考#
+ztree  API
+[http://http://www.treejs.cn/v3/api.php](http://http://www.treejs.cn/v3/api.php)
 
 
