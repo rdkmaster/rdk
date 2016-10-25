@@ -19,7 +19,8 @@
                     rename: '&?',
                     collapse: '&?',
                     expand: '&?',
-                    editname: '&?'
+                    editname: '&?',
+                    unselect: '&?'
                 },
                 replace: true,
                 template: '<div><ul id="__unique_id__" class="ztree"></ul></div>',
@@ -71,10 +72,23 @@
                                 scope.setting.check.enable = scope.checkable;
                             });
 
+                        
                             if(!!scope.unselectOnBlur){
                                 $(document).on("click", "*", function(){
-                                   var treeObj = $.fn.zTree.getZTreeObj(rebornID);
-                                    treeObj.cancelSelectedNode();
+                                    var treeObj = $.fn.zTree.getZTreeObj(rebornID);
+                                    var nodes = treeObj.getSelectedNodes();
+                                    if(nodes.length>0){
+                                        treeObj.cancelSelectedNode();
+                                        if(!!scope.id){
+                                            EventService.broadcast(scope.id, EventTypes.UNSELECT, nodes);
+                                        }
+                                        var fn = scope.unselect(scope);
+                                        if(!!fn){
+                                            return fn(event, nodes);
+                                        }else{
+                                            return true;
+                                        } 
+                                    }
                                 });
 
                                 $("#" + rebornID).click(function(){return false})

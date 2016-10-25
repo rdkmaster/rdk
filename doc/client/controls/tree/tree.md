@@ -102,6 +102,11 @@
 示例如下：
 <live_demo example="controls/tree/unselect_on_blur" width="900"></live_demo>
 
+还可以通过阻止事件冒泡选择不让它取消选择
+
+示例如下：
+<live_demo example="controls/tree/unselect" width="900"></live_demo>
+
 
 #事件#
 
@@ -145,8 +150,18 @@
 事件类型：EventTypes.BEFORE_EDITNAME，监听 before_editName 事件，即是否编辑被选中树的某个节点，也可以在rdk_tree标签里，直接定义editname函数。
 示例如下：
 <live_demo example="controls/tree/event_beforeEditName" width="900"></live_demo>
+
+##UNSELECT##
+
+事件类型：EventTypes.UNSELECT，监听 UNSELECT_ON_BLUR 事件，即点击tree以外的地方可以得到此事件，用来清空之前选择节点的缓存数据。
+示例如下：
+<live_demo example="controls/tree/event_unselect" width="900"></live_demo>
+
 #样式#
 暂无
 
+#更多事件请参考#
+ztree  API
+[http://http://www.treejs.cn/v3/api.php](http://http://www.treejs.cn/v3/api.php)
 
 
