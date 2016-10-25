@@ -1,6 +1,7 @@
 .panel-wrap{
     position: absolute;
     top: 300px;
+    background-color: #fff;
     transition: top 0.35s linear;
     margin: 100px 200px;
 }
@@ -15,9 +16,8 @@
     padding: 0;
 }
 /* 滚动条*/
-.panel-content {
-     overflow-x: hidden;
-}
+.panel-content { overflow:hidden}
+.content{height:248px;padding-right:4px;overflow:hidden;}
 /* title */
 .panel-title {
     border: 0;

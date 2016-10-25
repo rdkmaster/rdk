@@ -29,6 +29,7 @@ require.config({
         "jquery-freezeheader":"../jquery-freezeheader/jquery.freezeheader",
         "jquery-gesture":"../jquery-ext/jquery.gesture",
         "throttle-debounce" : '../jquery-headfix/jquery.ba-throttle-debounce.min',
+        "jquery-nicescroll" : '../jquery-nicescroll/jquery.nicescroll.min',
 
         "rd.attributes.ds": "../rdk/attributes/ds",
         "rd.attributes.modal": "../rdk/attributes/modal",
@@ -53,6 +54,7 @@ require.config({
         "rd.controls.TabSelector": "../rdk/controls/TabSelector",
         "rd.controls.Time": "../rdk/controls/Time",
         "rd.controls.Scroller": "../rdk/controls/Scroller",
+        "rd.controls.Scroll": "../rdk/controls/Scroll",
         "rd.controls.ProgressBar": "../rdk/controls/ProgressBar",
         "rd.controls.Alert": "../rdk/controls/Alert",
         "rd.controls.Tree": "../rdk/controls/Tree",
