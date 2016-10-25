@@ -34,10 +34,9 @@
 
 <body ng-controller='rdk_ctrl' class="rdk_main">
     <h1>这是RDK示例应用</h1>
-    <p ds="version" ds_url="$svr/getversion" ds_query_if="ready" ng-bind="version"></p>
-	
-	<p>强烈推荐所有新增的应用都基于这个应用的代码开始。</p><br>
-
+    <p ng-bind="version" ds="version" ds_url="$svr/version"
+        ds_query_if="ready" ds_init_data="{{i18n.wait}}"></p>
+    
     <h2 ng-bind="i18n.welcome"></h2>
 
     <p ng-bind="i18n.lang.st(i18n.$locale)"></p>
@@ -49,6 +48,9 @@
      -->
     <p ds_url="$svr/my_service" ds_query_if="ready" ds_init_data="{{i18n.wait}}"
         ds="msgFromSvr" ng-bind="msgFromSvr"></p>
+
+    <p style="width:440px; font-size:16px">当一个app的逻辑非常复杂，
+    需要多人一起协作开发的时候，可以使用<a href="../../complex_example/web/index.html">这个例子</a>的方法来拆分代码</p>
 
 
 
