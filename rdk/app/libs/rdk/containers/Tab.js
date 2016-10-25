@@ -197,7 +197,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
 
                 if(scope.id){
                     EventService.register(scope.id, EventTypes.TAB_SELECT, function(event, data){
-                        _activeTabByIndex(data);
+                        scope.selectedTab = data;
                     });
                 }
 
