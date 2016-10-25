@@ -34,7 +34,9 @@ rdk = (function() {
         angular.bootstrap(document, ["rdk_app"]);
     }
 
-    function _onError() {}
+    function _onError(error) {
+        console.error('ERROR: load main.js error, detail: ' + error);
+    }
 
     function _setupLoading() {
         if (!document.body) {
