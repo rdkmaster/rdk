@@ -76,16 +76,19 @@
                             if(!!scope.unselectOnBlur){
                                 $(document).on("click", "*", function(){
                                     var treeObj = $.fn.zTree.getZTreeObj(rebornID);
-                                    treeObj.cancelSelectedNode();
-                                    if(!!scope.id){
-                                        EventService.broadcast(scope.id, EventTypes.UNSELECT, scope.data);
+                                    var nodes = treeObj.getSelectedNodes();
+                                    if(nodes.length>0){
+                                        treeObj.cancelSelectedNode();
+                                        if(!!scope.id){
+                                            EventService.broadcast(scope.id, EventTypes.UNSELECT, scope.data);
+                                        }
+                                        var fn = scope.unselect(scope);
+                                        if(!!fn){
+                                            return fn(event, true);
+                                        }else{
+                                            return true;
+                                        } 
                                     }
-                                    var fn = scope.unselect(scope);
-                                    if(!!fn){
-                                        return fn(event, true);
-                                    }else{
-                                        return true;
-                                    } 
                                 });
 
                                 $("#" + rebornID).click(function(){return false})
