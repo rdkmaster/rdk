@@ -1,6 +1,6 @@
 define(['angular','jquery','jquery-nicescroll', 'rd.services.DataSourceService', 'rd.services.EventService'], function() {
     angular.module('rd.controls.Scroll', ['rd.services.DataSourceService', 'rd.services.EventService'])
-    .provider('$scrollService', function(){
+    .provider('$scroll', function(){
         var $$options = {
             cursorcolor: "#008fd4",//改变滚动条颜色，使用16进制颜色值
             cursoropacitymax: 0.2, //当滚动条是隐藏状态时改变透明度, 值范围 1 到 0
@@ -23,7 +23,7 @@ define(['angular','jquery','jquery-nicescroll', 'rd.services.DataSourceService',
             };
         }
     })
-    .directive('rdkScroll', ['DataSourceService','EventService', 'Utils','EventTypes','$scrollService', function (DataSourceService,EventService,Utils,EventTypes,$scrollService) {
+    .directive('rdkScroll', ['DataSourceService','EventService', 'Utils','EventTypes','$scroll', function (DataSourceService,EventService,Utils,EventTypes,$scroll) {
         return {
             restrict: 'A',
             link: _link
@@ -31,7 +31,7 @@ define(['angular','jquery','jquery-nicescroll', 'rd.services.DataSourceService',
         function _link(scope, iElement, iAttrs)
         {
             var scrollOptions = scope.$eval(iAttrs.scrollOption);//scroll特性配置对象
-            var defaultOptions = $scrollService.getOptions();//获取统一风格的配置对象
+            var defaultOptions = $scroll.getOptions();//获取统一风格的配置对象
             var niceOptions = angular.extend(defaultOptions, scrollOptions);
             var niceScroll = $(iElement).niceScroll(niceOptions);
             scope.$on('$destroy', function () { // 注册'$destroy'事件来删除任何易于内存泄漏的代码。

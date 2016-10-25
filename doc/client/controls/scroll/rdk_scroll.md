@@ -1,43 +1,56 @@
 <rdk_title>scroll 滚动条</rdk_title>
 
 # 简介 #
-`rdk_scroll` 属性可以给元素增加滚动条效果。
+由于不同浏览器对滚动条的样式解析存在差异，为统一样式风格,增加整体美观程度,
+在需要出现滚动条的元素上增加rdk_scroll属性就可以实现滚动条效果。
 
 
 # 属性 #
+## rdk_scroll ##
+> 支持类型：字符串
+
+`rdk_scroll` 给元素增加滚动条效果,为了防止浏览器出现默认滚动条需要设置overflow为hidden,不可将滚动条父元素overflow设为scroll；
+
+
+这是一个简单的 `rdk_scroll` 例子：
+
+<live_demo example="controls/scroll/basic" width="900"></live_demo>
 
 ## scroll-option ##
 > 支持类型：对象字符串
 
-`scroll-option` 是用户自定义滚动条的配置对象：
+`scroll-option` 是用户自定义滚动条的配置对象，配置参数详情可查看下方option配置参数表
 
-	<div rdk_scroll scroll-option="{}"></div>
+	<div rdk_scroll scroll-option="{cursorcolor: '#000',cursoropacitymax: 1,cursorwidth: '10px',cursorborderradius: '6px'}"></div>
 
 这是一个简单的 `rdk_scroll` 例子：
 
-<live_demo example="controls/scroller/basic" width="900"></live_demo>
+<live_demo example="controls/scroll/option" width="900"></live_demo>
 
 ---
 
 ## scrollProvider ##
 > 滚动条配置服务对象
 
-`scrollProvider` 服务可以让项目在配置模块中注入此服务，对滚动条进行配置，定制项目统一风格的滚动条效果。默认配置如下：
+`scrollProvider` 服务可以让项目在配置模块中注入此服务，对滚动条进行配置，定制项目统一风格的滚动条默认效果。默认配置如下：
 
-        var $$options = {
-            cursorcolor: "#008fd4",//改变滚动条颜色，使用16进制颜色值
-            cursoropacitymax: 0.2, //当滚动条是隐藏状态时改变透明度, 值范围 1 到 0
-            cursorwidth: "4px", //滚动条的宽度，单位：便素
-            cursorborder: "0", // 	CSS方式定义滚动条边框
-            cursorborderradius: "2px",//滚动条圆角
-            autohidemode: false //隐藏滚动条的方式
-        };
+    var $$options = {
+        cursorcolor: "#008fd4",//改变滚动条颜色，使用16进制颜色值
+        cursoropacitymax: 0.2, //当滚动条是隐藏状态时改变透明度, 值范围 1 到 0
+        cursorwidth: "4px", //滚动条的宽度，单位：便素
+        cursorborder: "0", // 	CSS方式定义滚动条边框
+        cursorborderradius: "2px",//滚动条圆角
+        autohidemode: false //隐藏滚动条的方式
+    };
 
-<live_demo example="controls/scroller/page_num" width="900"></live_demo>
+这是一个简单的 `scrollProvider` 配置默认滚动条风格例子：
+
+<live_demo example="controls/scroll/setting" width="900"></live_demo>
 
 ---
 
 option配置参数表
+
     var option={
         cursorcolor: "#424242", // 改变滚动条颜色，使用16进制颜色值
         cursoropacitymin: 0, // 当滚动条是隐藏状态时改变透明度, 值范围 1 到 0
