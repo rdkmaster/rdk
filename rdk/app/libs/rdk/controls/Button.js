@@ -42,7 +42,7 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                         }
                     }
                     scope.iconShow=false;
-                    var classFlag=/\/+/;
+                    var classFlag=/\w+\.\w+/;
                     if(classFlag.test(scope.icon)){
                     scope.iconShow=true
                     }
@@ -55,18 +55,14 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                         scope.mouse=false
                     }
                     /* 禁用时样式 */
-                    console.log(scope.label)
                     var btn = ele[0].children[0].children[0];
                     var img = ele[0].children[0].children[0].children[0];
                     scope.paddingHide=true;
-                    // console.log(!!scope.label)
                     if(!!scope.icon&&scope.icon!="false"&&!!scope.label){
                         scope.paddingHide=true
                     }else{
                         scope.paddingHide=false
                     }
-
-                    console.log(!!scope.icon,!!scope.label)
                 }
             };
         }
