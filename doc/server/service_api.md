@@ -197,8 +197,8 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 				//使用Mapper.from_sql函数创建一个通用的国际化迭代函数
 				neid: Mapper.from_sql("select neid,name from dim_ne",'neid', 'name'),
 	
-				//根据自定义算法算出 kpi_succ_rate 的值。
-				kpi_succ_rate: function(value) {
+				//根据自定义算法算出 kpi_succ_rate 的值。可根据第二个参数row获取辅助行数据数组，根据第三个参数field获取辅助字段数组。
+				kpi_succ_rate: function(value,row,field) {
 					...
 				}
 			}

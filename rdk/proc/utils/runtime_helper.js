@@ -540,7 +540,7 @@ function DataTable(header, field, data) {
             }
             for (var row = 0; row < this.data.length; row++) {
                 try {
-                    this.data[row][fieldIndex] = func(this.data[row][fieldIndex]);
+                    this.data[row][fieldIndex] = func(this.data[row][fieldIndex],this.data[row],this.field);
                 } catch (error) {
                     Log.warn("function call error");
                 }
