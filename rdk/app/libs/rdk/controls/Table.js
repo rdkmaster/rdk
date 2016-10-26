@@ -10,7 +10,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
                     <i class="glyphicon glyphicon-search search_icon"></i>\
                     <select ng-show="(pagingType==\'server\' && $parent.globalSearch)?true:false" ng-model="val" ng-change="selectChangeHandler(val)"\
-                            ng-options="columnDef.data as columnDef.name for columnDef in columnDefs"\
+                            ng-options="columnDef.data as columnDef.name for columnDef in columnDefs | realoption"\
                             class="form-control search_select">\
                         <option value="">{{i18n.searchAll}}</option>\
                     </select>\
@@ -91,6 +91,17 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 var offset = start * pageSize;
                 return input.slice(offset, offset + pageSize);
             };
+        })
+        .filter('realoption',function(){
+            return function(inputArray){
+                var array = [];
+                for(var i=0;i<inputArray.length;i++){
+                    if(inputArray[i].data != undefined){
+                        array.push(inputArray[i]);
+                    }
+                }
+                return array;
+            }
         })
         .directive('rdkRowParser', function($compile, $parse) {
             return {
