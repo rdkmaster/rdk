@@ -1,4 +1,4 @@
-define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.DataSourceService', "css!rd.styles.Table", 'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
+define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', 'rd.services.DataSourceService', "css!rd.styles.Table", 'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
 
     var tableModule = angular.module('rd.controls.Table', ['rd.core']);
 
@@ -239,13 +239,15 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
             templateUrl: '/src/templates/common.html',
             transclude: true,
             controller: ['$scope', function(scope) {
+
+                Utils.publishController(scope.id, this);
+
                 this.setCurrentPage = function(_currentPage) {
                     scope.currentPage = _currentPage;
                     scope.proxyDs = Utils.compile(scope.$parent, scope.proxyDs);
                     if (scope.pagingType == "server") {
                         _loadDataFromServer();
                     }
-                    scope.addCheckBox ? scope.turnCheckPage = true : scope.turnCheckPage = false;//换页时是否有checkbox
                 };
 
                 this.getTablePageNumber = function() {
@@ -254,6 +256,22 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
 
                 this.getTableAppScope = function() {
                     return scope.appScope;
+                }
+
+                this.setChecked = function(items){
+                    if(!scope.addCheckBox) return;
+                    _refreshCheckedRows(items);
+                    scope.refreshCurrentPage();
+                }
+
+                function _refreshCheckedRows(items){
+                    scope.checkedRows = [];
+                    angular.forEach(items, function(item){
+                        var index = _.findIndex(scope.destData, item);
+                        if(index!=-1){
+                            scope.checkedRows.push(scope.destData[index].$index);
+                        }
+                    })
                 }
 
                 function _loadDataFromServer() {
@@ -416,10 +434,6 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
 
                         scope.innerID = Utils.createUniqueId('table_inner_');
 
-                        if(scope.addCheckBox){
-                            scope.checkedIdxArr = [];
-                        }
-
                         scope.sortClick = false;
 
                         //默认国际化
@@ -433,11 +447,18 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         /*table国际化*/
                         initializeTableI18n();
                         refreshTableI18n();
+                        initializeCheck();
 
                         if (angular.isDefined(attrs.id)) {
                             EventService.register(attrs.id, EventTypes.HIGHLIGHT, function(event, data) {
                                 _highLightItem(data);
                             });
+                        }
+
+                        function initializeCheck(){
+                            if(!scope.addCheckBox) return;
+                            scope.checkedIdxArr = [];
+                            scope.checkedRows = [];
                         }
 
                         function initializeTableI18n() {
@@ -655,20 +676,15 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         };
 
                         scope.singleCheck = function(item, index, event){
-                            _singleCheckHandler();
-                            _refreshCheckedIdxArr();
-
-                            if (angular.isDefined(attrs.id)) {
-                                var data = {};
-                                data.data = _getCheckedItemArr();
-                                EventService.broadcast(attrs.id, EventTypes.CHECK, data);
-                            }
+                            _singleCheckHandler();//改变状态
+                            _refreshCheckedData();
+                            _totalBroadcast();
                         }
 
                         scope.totalCheck = function(event){
-                            _totalCheckHandler(event.currentTarget.checked);
-                            _refreshCheckedIdxArr();
-                            _totalBroadcast(event.currentTarget.checked);
+                            _totalCheckHandler(event.currentTarget.checked);//改变状态
+                            _refreshCheckedData();
+                            _totalBroadcast();
                         }
 
                         scope.dbClickHandler = function(item, index) {
@@ -701,16 +717,15 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                             return scope.destData.slice(start, start+pageSize); //子数组                           
                         }
 
-                        scope.refreshCheckBox = function(){
+                        scope.refreshCurrentPage = function(){
                             if(!scope.addCheckBox) return;
-                            _totalCheckHandler(false);
-                            _resetTotalCheck(false);
-                            _totalBroadcast(false);
+                            _refreshCheckedIdxArr();//取当前页选中idx
+                            _initialCheckBoxStatus();
+                            _refreshCheckBoxStatus();
                         }
 
                         var off = scope.$on('ngRepeatFinished', function() {
                             _reFreshTable();
-                            _refreshCheckedStatus();
 
                             $(element.find("table")).fixHeader();
                             scope.afterStickyWrap();
@@ -723,16 +738,43 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                                 }
                             }, true);
 
-                            _turnPageCheckBoxResponse();//翻页，有checkbox，刷新数据后的响应
+                            _updateCheckBoxStatus();
                             _serverSortResponse();//后端排序，刷新后的响应
                         });
                     };
                     //END INIT
 
-                    function _turnPageCheckBoxResponse(){
-                        if(scope.turnCheckPage){
-                            scope.refreshCheckBox();
-                        }
+                    function _initialCheckBoxStatus(){
+                        _totalCheckHandler(false);
+                        _resetTotalCheck(false);
+                    }
+
+                    function _refreshCheckedIdxArr(){
+                        scope.checkedIdxArr = [];
+                        var currentRows = _getCurrentRows();
+                        angular.forEach(scope.checkedRows, function(item){
+                            var idx = _.indexOf(currentRows, item);
+                            if(idx != -1){
+                                scope.checkedIdxArr.push(idx);
+                            }
+                        })
+                    }
+
+                    function _refreshCheckBoxStatus(){
+                        _changeSingleStatus();
+                        _singleCheckHandler();                        
+                    }
+
+                    function _changeSingleStatus(){
+                        var arr = element.find('input[name="singleCheckBox"]');
+                        for(var i=0; i<scope.checkedIdxArr.length; i++){
+                            arr[scope.checkedIdxArr[i]].checked = true;
+                        }                    
+                    }
+
+                    function _updateCheckBoxStatus(){
+                        if(!scope.addCheckBox) return;
+                        scope.refreshCurrentPage();
                     }
 
                     function _serverSortResponse(){
@@ -741,33 +783,53 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         }
                     }
 
-                    function _totalBroadcast(isChecked){
+                    function _totalBroadcast(){
                         if (angular.isDefined(attrs.id)) {
                             var data = {};
-                            data.data = isChecked ? _getCheckedItemArr() : [];
+                            data.data = _getSelectedItems();
                             EventService.broadcast(attrs.id, EventTypes.CHECK, data);
                         }
                     }
 
-                    function _refreshCheckedIdxArr(){
-                        scope.checkedIdxArr = [];
+                    function _getSelectedItems(){
+                        var arr = [];
+                        angular.forEach(scope.checkedRows, function(rowIdx){
+                            arr.push(scope.destData[rowIdx]);
+                        })
+                        return arr;
+                    }
+
+                    function _refreshCheckedData(){
+                        var currentRows = _getCurrentRows();
                         var arr = element.find('input[name="singleCheckBox"]');//document.getElementsByName("singleCheckBox");  
                         for(var i=0; i<arr.length; i++){
                            if(arr[i].checked){
-                                scope.checkedIdxArr.push(i);
+                                var idx = _.indexOf(scope.checkedRows, currentRows[i]);
+                                if(idx == -1){
+                                    scope.checkedRows.push(currentRows[i]);
+                                }
+                           }
+                           else{
+                                var idx = _.indexOf(scope.checkedRows, currentRows[i]);
+                                if(idx != -1){
+                                    scope.checkedRows.splice(idx, 1);
+                                }
                            }
                         }                       
                     }
 
-                    function _refreshCheckedStatus(){
-                        if(!scope.addCheckBox) return;
-                        var arr = element.find('input[name="singleCheckBox"]');//document.getElementsByName("singleCheckBox");
-                        for(var k=0; k<arr.length; k++){
-                            arr[k].checked = false;
-                        }
-                        for(var i=0; i<scope.checkedIdxArr.length; i++){
-                            arr[scope.checkedIdxArr[i]].checked = true;
-                        }
+                    function _getCurrentRows(){
+                        var currentDataArr = scope.getCurrentPageDataArr();
+                        var currentRows = _getCurrentPageRows(currentDataArr);
+                        return currentRows;
+                    }
+
+                    function _getCurrentPageRows(rowDataArr){
+                        var arr = [];
+                        angular.forEach(rowDataArr, function(rowData){
+                            arr.push(rowData.$index);
+                        })
+                        return arr;
                     }
 
                     function _singleCheckHandler(){
@@ -785,15 +847,6 @@ define(['angular', 'jquery', 'jquery-headfix', 'jquery-gesture', 'rd.services.Da
                         for(var i=0; i<arr.length; i++){
                            arr[i].checked = isChecked;
                         }
-                    }
-
-                    function _getCheckedItemArr(items){
-                        var checkedItemArr = [];
-                        var currentDataArr = scope.getCurrentPageDataArr();
-                        for(var i=0; i<scope.checkedIdxArr.length; i++){
-                            checkedItemArr.push(currentDataArr[scope.checkedIdxArr[i]]);
-                        } 
-                        return checkedItemArr;                        
                     }
 
                     function _isAllSelected(){
