@@ -93,21 +93,35 @@ tab的`div`模板带有该属性时，该`div`对应的tab页面会出现关闭�
 
 注意：demo请参照`addTab`。
 
-## close ##
-单击关闭按钮后，如果定义了`close`函数，就会调用应用自定义的`close`方法。该属性绕开了事件机制。
+## close/change/add ##
+
+- 单击关闭按钮后，如果定义了`close`函数，就会调用应用自定义的`close`方法。该属性可绕开事件机制。
+- 动态新增`tab`页后，如果定义了`add`函数，就会调用应用自定义的`add`方法。该属性可绕开事件机制。
+- 切换`tab`页后，如果定义了`change`函数，就会调用应用自定义的`change`方法。该属性可绕开事件机制。
+
 使用方法如下：
 
-		    <rdk_tab id='tabID' close="closeHandler">
-		        <div title="RDK">
-		            <p>RDK最突出的特点就是易用！</p>
-		        </div>
-		    </rdk_tab>
 
-            scope.closeHandler = function(event, data){
-                var closeTabIndex = data.tabIndex;
-            }
+	 		<rdk_tab id='tabID' close="closeHandler" add="addHandler"  change="changeHandler"></rdk_tab>
+	
+	        scope.closeHandler = function(event, data){
+	            var closeTabIndex = data.tabIndex;
+	            rdk.tabID.destroyTab(closeTabIndex);
+	            // rdk.tabID.closeTab(closeTabIndex);
+	        }
+	
+	        scope.changeHandler = function(event, data){
+	            var currentSelectedIndex = data;
+	            alert('切换到第' + (currentSelectedIndex+1) + '个tab页');
+	        } 
+	
+	        scope.addHandler = function(event, data){
+	            alert('成功新增tab页');
+	        } 
 
-注意：demo请参照`addTab`。
+实例如下：
+<live_demo example="containers/tab/demo4eventHandler" width="800"></live_demo>
+
 
 # 事件 #
 
