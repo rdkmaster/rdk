@@ -14,7 +14,7 @@
 	box-sizing: content-box;
 	border:none;
 	height: 30px;
-	background: #3ab1ea;
+	background-color: rgba(58, 177, 234, 1);
 	border-radius: 4px;
 	font-size:14px;
 	color:#ffffff;
@@ -25,22 +25,21 @@
 	cursor:pointer;
 	outline:none;
 }
-.rdk_button_over{
+.rdk-button-over{
 	background:#007bb6;
 }
-.rdk_button_selected {
+.rdk-button-selected {
   	background:#008fd4;
 }
 .rdk-button-btn>img{
     vertical-align: sub;
     width: 18px;
     height: 18px;
- 	
 }
-.rdk_button_enabled{
+.rdk-button-enabled{
 	background:#ddd;
 	color :#f3f3f3;
 }
-.rdk_padding_right{
+.rdk-padding-right{
 	padding-right:4px;
 }

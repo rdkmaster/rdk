@@ -10,9 +10,10 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                 template:'<div class="rdk-button-wrap">\
                                 <div  class="rdk-button-comment" ng-click="setSelected()">\
                                     <button class="rdk-button-btn {{Fang}}" ng-mouseover="$mouseOver()" ng-mouseout="$mouseOut()"\
-                                    title="{{tooltip}}" ng-class="{rdk_button_selected:toggle?selected:false,\
-                                        rdk_button_enabled:!enabled,rdk_button_over: mouse}" ng-disabled="!enabled">\
-                                        <img src="{{icon}}" ng-click="$stopPro($event)" ng-if="iconShow" ng-class="{rdk_padding_right:paddingHide}"><i ng-click="$stopPro($event)" ng-class="{rdk_padding_right:paddingHide}" class="{{icon}}" ng-if="!iconShow"></i>{{label}}\
+                                    title="{{tooltip}}" ng-class="{\'rdk-button-selected\':toggle?selected:false,\
+                                        \'rdk-button-enabled\':!enabled,\'rdk-button-over\': mouse}" ng-disabled="!enabled">\
+                                        <img src="{{icon}}" ng-click="$stopPro($event)" ng-if="iconShow" ng-class="{\'rdk-padding-right\':paddingHide}">\
+                                        <i ng-click="$stopPro($event)" ng-class="{\'rdk-padding-right\':paddingHide}" class="{{icon}}" ng-if="!iconShow"></i>{{label}}\
                                     </button>\
                                 </div>\
                            </div>',
@@ -55,14 +56,7 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                         scope.mouse=false
                     }
                     /* 禁用时样式 */
-                    var btn = ele[0].children[0].children[0];
-                    var img = ele[0].children[0].children[0].children[0];
-                    scope.paddingHide=true;
-                    if(!!scope.icon&&scope.icon!="false"&&!!scope.label){
-                        scope.paddingHide=true
-                    }else{
-                        scope.paddingHide=false
-                    }
+                    scope.paddingHide = !!scope.icon&&scope.icon!="false"&&!!scope.label
                 }
             };
         }
