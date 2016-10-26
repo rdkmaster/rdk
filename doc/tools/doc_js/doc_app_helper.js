@@ -43,7 +43,14 @@ define(['rd.core'], function() {
     function _fixUrl(url) {
         if (url.search(/\$svr/) != -1) {
             var match = location.pathname.match(/^(\/.*?\/)web\//);
-            return !!match ? url.replace(/\$svr\//, match[1] + 'server/') : url;
+            if (match) {
+                return url.replace(/\$svr\//, match[1] + 'server/');
+            }
+            match = location.search.match(/^\?(.*?\/)web\s*$/);
+            if (match) {
+                return url.replace(/\$svr\//, '/doc/client/demo/' + match[1] + 'server/');
+            }
+            return url;
         }
         return url;
     }
