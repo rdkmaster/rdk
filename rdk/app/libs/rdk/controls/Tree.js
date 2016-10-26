@@ -20,7 +20,8 @@
                     collapse: '&?',
                     expand: '&?',
                     editname: '&?',
-                    unselect: '&?'
+                    unselect: '&?',
+                    check: '&?'
                 },
                 controller: ['$scope', function(scope) {
                     //把控制器暴露给app
@@ -134,7 +135,8 @@
                         beforeRemove: before_remove,
                         beforeCollapse: before_collapse,
                         beforeExpand: before_expand,
-                        beforeEditName: before_editName
+                        beforeEditName: before_editName,
+                        onCheck: on_check 
                     },
                     edit: {
                         enable: scope.draggable || true
@@ -251,6 +253,18 @@
                         EventService.broadcast(scope.id, EventTypes.BEFORE_EDITNAME, treeNode); 
                     }
                     var fn = scope.editname(scope);
+                    if(!!fn){
+                        return fn(event, treeNode);
+                    }else{
+                        return true;
+                    }
+                } 
+
+                function on_check(event, treeId, treeNode) { 
+                    if (!!scope.id) {
+                        EventService.broadcast(scope.id, EventTypes.CHECK, treeNode); 
+                    }
+                    var fn = scope.check(scope);
                     if(!!fn){
                         return fn(event, treeNode);
                     }else{
