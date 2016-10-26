@@ -260,16 +260,16 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                 this.setChecked = function(items){
                     if(!scope.addCheckBox) return;
-                    _refreshSelectedRows(items);
+                    _refreshCheckedRows(items);
                     scope.refreshCurrentPage();
                 }
 
-                function _refreshSelectedRows(items){
-                    scope.selectedRows = [];
+                function _refreshCheckedRows(items){
+                    scope.checkedRows = [];
                     angular.forEach(items, function(item){
                         var index = _.findIndex(scope.destData, item);
                         if(index!=-1){
-                            scope.selectedRows.push(scope.destData[index].$index);
+                            scope.checkedRows.push(scope.destData[index].$index);
                         }
                     })
                 }
@@ -460,7 +460,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         function initializeCheck(){
                             if(!scope.addCheckBox) return;
                             scope.checkedIdxArr = [];
-                            scope.selectedRows = [];
+                            scope.checkedRows = [];
                         }
 
                         function initializeTableI18n() {
@@ -754,20 +754,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     function _refreshCheckedIdxArr(){
                         scope.checkedIdxArr = [];
                         var currentRows = _getCurrentRows();
-                        angular.forEach(scope.selectedRows, function(item){
+                        angular.forEach(scope.checkedRows, function(item){
                             var idx = _.indexOf(currentRows, item);
                             if(idx != -1){
                                 scope.checkedIdxArr.push(idx);
                             }
                         })
-                    }
-
-                    function _getDataArr(arr){
-                        angular.forEach(arr, function(obj){
-                            delete obj.$index;
-                            delete obj.$$hashKey;
-                        })
-                        return arr;
                     }
 
                     function _refreshCheckBoxStatus(){
@@ -803,7 +795,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                     function _getSelectedItems(){
                         var arr = [];
-                        angular.forEach(scope.selectedRows, function(rowIdx){
+                        angular.forEach(scope.checkedRows, function(rowIdx){
                             arr.push(scope.destData[rowIdx]);
                         })
                         return arr;
@@ -814,15 +806,15 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         var arr = element.find('input[name="singleCheckBox"]');//document.getElementsByName("singleCheckBox");  
                         for(var i=0; i<arr.length; i++){
                            if(arr[i].checked){
-                                var idx = _.indexOf(scope.selectedRows, currentRows[i]);
+                                var idx = _.indexOf(scope.checkedRows, currentRows[i]);
                                 if(idx == -1){
-                                    scope.selectedRows.push(currentRows[i]);
+                                    scope.checkedRows.push(currentRows[i]);
                                 }
                            }
                            else{
-                                var idx = _.indexOf(scope.selectedRows, currentRows[i]);
+                                var idx = _.indexOf(scope.checkedRows, currentRows[i]);
                                 if(idx != -1){
-                                    scope.selectedRows.splice(idx, 1);
+                                    scope.checkedRows.splice(idx, 1);
                                 }
                            }
                         }                       
