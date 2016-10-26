@@ -8,7 +8,7 @@ define('main', ['angular', 'jquery', 'rd.containers.Tab', 'rd.controls.BasicSele
     myApp.controller('myCtrl', ['$scope', 'EventService', 'EventTypes', 'Utils', '$compile', function(scope, EventService, EventTypes, Utils, $compile) {
 
         /*单独模板相关变量另外给*/
-        var initData = {title: 'my title', showCloseButton: false, awesomeData: [{label: "江苏省"}, {label: "浙江省"}]};
+        var initData = {title: 'my title', showCloseButton: true, awesomeData: [{label: "江苏省"}, {label: "浙江省"}]};
         scope.clickHandler = function(){
             rdk.tabID.addTab('./scripts/template/tab.html', 'tabController', initData);
         }
