@@ -161,6 +161,10 @@
 暂无
 
 #更多事件请参考#
+##通过如下方式我们可以得到zTreeObj，可以直接调用zTree方法##
+
+<live_demo example="controls/tree/tree_method" width="900"></live_demo>
+
 ztree  API
 [http://http://www.treejs.cn/v3/api.php](http://http://www.treejs.cn/v3/api.php)
 

@@ -22,6 +22,10 @@
                     editname: '&?',
                     unselect: '&?'
                 },
+                controller: ['$scope', function(scope) {
+                    //把控制器暴露给app
+                    Utils.publishController(scope.id, this);
+                }],
                 replace: true,
                 template: '<div><ul id="__unique_id__" class="ztree"></ul></div>',
                 compile: function(element, attrs) {
@@ -36,26 +40,38 @@
                             scope.rdkDoubleClick = Utils.findFunction(scope, iAttrs.rdkDoubleClick);
                             scope.rdkBeforeClick = Utils.findFunction(scope, iAttrs.rdkBeforeClick);
                             scope.rdkBeforeDrag = Utils.findFunction(scope, iAttrs.rdkBeforeDrag);
-
-                            var rebornID = Utils.rebornUniqueId(iElement);
+                            
                             if (!scope.setting) {
                                 scope.setting = _defaultSetting(scope);
                             }
 
-                            _updateTree(rebornID, scope.setting, scope.data);
+                            var rebornID = Utils.rebornUniqueId(iElement);
+                            _updateTree(rebornID, scope);
 
                             scope.$watch('data', function(newVal, oldVal) {
                                 if (newVal == oldVal) {
                                     return;
                                 }
-                                _updateTree(rebornID, scope.setting, scope.data);
+                                _updateTree(rebornID, scope);
                             }, true);
 
                             scope.$watch('setting', function(newVal, oldVal) {
+                                if(!newVal.check){
+                                    newVal.check = _defaultSetting(scope).check;
+                                }
+                                if(!newVal.callback){
+                                    newVal.callback = _defaultSetting(scope).callback;
+                                }
+                                if(!newVal.view){
+                                    newVal.view = _defaultSetting(scope).view;
+                                }
+                                if(!newVal.edit){
+                                    newVal.edit = _defaultSetting(scope).edit;
+                                }
                                 if (newVal == oldVal) {
                                     return;
                                 }
-                                _updateTree(rebornID, scope.setting, scope.data);
+                                _updateTree(rebornID, scope);
                             }, true);
 
                             scope.$watch('draggable', function(newVal, oldVal) {
@@ -74,11 +90,10 @@
 
                         
                             if(!!scope.unselectOnBlur){
-                                $(document).on("click", "*", function(){
-                                    var treeObj = $.fn.zTree.getZTreeObj(rebornID);
-                                    var nodes = treeObj.getSelectedNodes();
+                                $(document).on("click", "*", function() {
+                                    var nodes = scope.tree.getSelectedNodes();
                                     if(nodes.length>0){
-                                        treeObj.cancelSelectedNode();
+                                        scope.tree.cancelSelectedNode();
                                         if(!!scope.id){
                                             EventService.broadcast(scope.id, EventTypes.UNSELECT, nodes);
                                         }
@@ -93,7 +108,6 @@
 
                                 $("#" + rebornID).click(function(){return false})
                             }
-                            
                         }
                     }
                 }
@@ -243,15 +257,22 @@
                         return true;
                     }
                 } 
-
-                
             }
 
-            function _updateTree(rebornID, setting, treeData) {
+            function _updateTree(rebornID, scope) {
+                var setting = scope.setting;
+                var treeData = scope.data;
                 if (!setting || !treeData) {
                     return;
                 }
                 $.fn.zTree.init($("#" + rebornID), setting, treeData);
+                if (!scope.tree) {
+                    scope.tree = $.fn.zTree.getZTreeObj(rebornID);
+                    if (scope.id) {
+                        //把ztree的方法暴露出去
+                        rdk[scope.id].tree = scope.tree;
+                    }
+                }
             }
         }
     ]);
