@@ -116,6 +116,19 @@
 示例如下：
 <live_demo example="controls/tree/checkable" width="900"></live_demo>
 
+##setting##
+> 支持类型：对象
+
+此属性配置,可以实现懒加载。
+html代码如下：
+
+    <rdk_tree setting="setting"></rdk_tree>
+
+setting里可以设置async属性根据需求设置数据地址等一些列参数，详细可见如下示例：
+
+	
+<live_demo example="comprehensive/tree/lazy_load/web" width="900"></live_demo>
+
 #事件#
 
 ##CLICK##
