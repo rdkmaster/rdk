@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Graph -> Basic</title>
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/doc/tools/doc_js/doc_app_helper',
+            }
+        });
+    </script>
+</head>
+
+<body ng-controller='myCtrl' class="rdk_main">
+    <rdk_graph ds="dsGraph" ds_url="$svr/data.js" ds_query_if="ready"
+        graph_define="scripts/graph_define/simple_line.js" >
+    </rdk_graph>
+
+    <rdk_graph data="dsGraph"
+        graph_define="scripts/graph_define/simple_pie.js">
+    </rdk_graph>
+
+
+
+</body>
+
+</html>
