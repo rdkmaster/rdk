@@ -19,17 +19,16 @@
 	font-size:14px;
 	color:#ffffff;
 	text-align: center;
-	/*position: relative;*/
 	padding:0px 16px;
 	font-family: 'Microsoft YaHei';
 	cursor:pointer;
 	outline:none;
 }
-.rdk-button-over{
-	background:#007bb6;
-}
 .rdk-button-selected {
   	background:#008fd4;
+}
+.rdk-button-over{
+	background:#007bb6;
 }
 .rdk-button-btn>img{
     vertical-align: sub;
