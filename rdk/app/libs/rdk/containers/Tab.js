@@ -37,7 +37,9 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     selectedTab: '=?',
                     heightStyle: '@',
                     showItems: '=',
-                    close: '&?'
+                    close: '&?',
+                    change: '&?',
+                    add: '&?'
                 },
                 replace: true,
                 template: function(tElement, tAttrs) {
@@ -152,6 +154,9 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     if (scope.id) {
                         EventService.broadcast(scope.id, EventTypes.CHANGE, scope.currentSelectedIndex);
                     }
+                    if(scope.change(scope)){
+                        scope.change(scope)(event, scope.currentSelectedIndex);
+                    }
                 }
 
                 function _prepareTabs(dom, title, tabid, closable){
@@ -179,6 +184,9 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     scope.contentDomStr = undefined;//一次新增后重置
                     if(scope.id){
                         EventService.broadcast(scope.id, EventTypes.ADD);
+                    }
+                    if(scope.add(scope)){
+                        scope.add(scope)();
                     }
                 }
 
