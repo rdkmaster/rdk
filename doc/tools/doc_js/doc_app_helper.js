@@ -1,5 +1,4 @@
 define(['rd.core'], function() {
-
     function commonAjaxConfigProcessor(config) {
         var url = _fixUrl(config.url).trim();
 
@@ -42,6 +41,12 @@ define(['rd.core'], function() {
 
     function _fixUrl(url) {
         if (url.search(/\$svr/) != -1) {
+            if (window.$svr) {
+                if (window.$svr[window.$svr.length-1] != '/') {
+                    window.$svr += '/';
+                }
+                return url.replace(/\$svr\//, window.$svr);
+            }
             var match = location.pathname.match(/^(\/.*?\/)web\//);
             if (match) {
                 return url.replace(/\$svr\//, match[1] + 'server/');
@@ -50,7 +55,6 @@ define(['rd.core'], function() {
             if (match) {
                 return url.replace(/\$svr\//, '/doc/client/demo/' + match[1] + 'server/');
             }
-            return url;
         }
         return url;
     }

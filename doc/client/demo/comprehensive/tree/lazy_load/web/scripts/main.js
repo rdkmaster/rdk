@@ -1,3 +1,5 @@
+window.$svr = '/doc/client/demo/comprehensive/tree/lazy_load/server';
+
 define('main', ['application', 'rd.controls.Tree'], function(application) {
 
 // 创建一个RDK的应用
