@@ -123,7 +123,8 @@
 html代码如下：
 
     <rdk_tree setting="setting"></rdk_tree>
-setting里可以设置async属性详细可见如下示例：
+
+setting里可以设置async属性根据需求设置数据地址等一些列参数，详细可见如下示例：
 
 	
 <live_demo example="comprehensive/tree/lazy_load/web" width="900"></live_demo>
