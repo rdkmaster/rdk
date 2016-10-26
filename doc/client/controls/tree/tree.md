@@ -107,6 +107,14 @@
 示例如下：
 <live_demo example="controls/tree/unselect" width="900"></live_demo>
 
+##checkable##
+> 支持类型：Boolen值
+
+此属性配置,可以在节点前面生成勾选框。一级可以进行勾选操作！
+
+    <rdk_tree checkable='true'></rdk_tree>
+示例如下：
+<live_demo example="controls/tree/checkable" width="900"></live_demo>
 
 #事件#
 
