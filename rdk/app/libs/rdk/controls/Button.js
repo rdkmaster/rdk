@@ -9,9 +9,10 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                 transclude: true,
                 template:'<div class="rdk-button-wrap">\
                                 <div  class="rdk-button-comment" ng-click="setSelected()">\
+                                    <div class="rdk-shade {{type}}"></div>\
                                     <button class="rdk-button-btn  {{tpye}}" ng-mouseover="$mouseOver()" ng-mouseout="$mouseOut()"\
                                     title="{{tooltip}}" ng-class="{\'rdk-button-selected\':toggle?selected:false,\
-                                        \'rdk-button-enabled\':!enabled,\'rdk-button-over\': mouse}" ng-disabled="!enabled">\
+                                        \'rdk-button-enabled\':!enabled,\'rdk-shade-opacity\': mouse}" ng-disabled="!enabled">\
                                         <img src="{{icon}}" ng-click="$stopPro($event)" ng-if="iconShow" ng-class="{\'rdk-padding-right\':paddingHide}">\
                                         <i ng-click="$stopPro($event)" ng-class="{\'rdk-padding-right\':paddingHide}" class="{{icon}}" ng-if="!iconShow"></i>{{label}}\
                                     </button>\
