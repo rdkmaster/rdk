@@ -64,6 +64,7 @@ rdk = (function() {
         bodyHTML = document.body.innerHTML;
         document.body.innerHTML = loading;
         _removeClass(document.body, 'rdk-loading');
+        _removeClass(document.body, 'rdk_main');
     }
 
     function _removeClass(element, className) {
