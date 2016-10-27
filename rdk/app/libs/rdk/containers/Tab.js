@@ -47,7 +47,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                                 <div class="tabs">\
                                     <ul class="title">\
                                         <li style="display:{{getIndex($index)==-1?\'none\':\'inline\'}}" ng-repeat="tab in tabs"  on-finish-render>\
-                                            <a href="#{{tab.tabid}}" ng-click="tabClick($event)" ng-mouseover="tabMouseOver($event)" ng-class="{\'selected\':currentSelectedIndex == $index}" rdk-tabtitle-parser>\
+                                            <a href="#{{tab.tabid}}" ng-click="tabClick($event, $index)" ng-mouseover="tabMouseOver($event)" ng-class="{\'selected\':currentSelectedIndex == $index}" rdk-tabtitle-parser>\
                                               {{tab.title}}\
                                             </a>\
                                             <span style="position: absolute; right: 0" class="ui-icon ui-icon-close" role="presentation" ng-show="{{tab.closable}}" ng-click="$clickHandler($index, $event)"></span>\
@@ -111,9 +111,10 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     return scope.currentSelectedIndex == index;
                 }
 
-                scope.tabClick = function(event) {
+                scope.tabClick = function(event, index) {
                     if(scope.toggleCondition!='click') return;
                     _tabSwitchHandler(event);
+                    scope.selectedTab = index;
                 }
 
                 scope.tabMouseOver = function(event){
