@@ -32,7 +32,7 @@
     </script>
 </head>
 
-<!-- rdk-loading 样式只需要在根节点添加一次就好 -->
+<!-- rdk-loading 样式只能在body节点添加一次，其他节点不要添加 -->
 <body ng-controller='rdk_ctrl' class="rdk-loading">
     <h1>这是RDK示例应用</h1>
     <p ng-bind="version" ds="version" ds_url="$svr/version"

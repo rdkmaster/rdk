@@ -31,6 +31,7 @@
     </script>
 </head>
 
+<!-- rdk-loading 样式只能在body节点添加一次，其他节点不要添加 -->
 <body ng-controller='rdk_ctrl' class="rdk-loading">
     <h1>这是一个复杂的应用示例</h1>
     <p ng-bind="version" ds="version" ds_url="/rdk/service/app/example/server/version"
