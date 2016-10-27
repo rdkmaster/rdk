@@ -1,9 +1,14 @@
 
+/* 这个样式废弃，暂时保留，后续再删除 */
 .rdk_main {
 	display: none;
 }
 
-.rdk_loading {
+.rdk-loading {
+	display: none;
+}
+
+.rdk-loader {
 	position: absolute;
     top: 35%;
     left: 0;
