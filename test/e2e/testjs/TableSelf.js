@@ -171,5 +171,28 @@ describe('Table Self Test',function(){
         expect(showPage.getText()).toBe("7/7");
         expect(lines.count()).toBe(3);
     });
+    it("验证选中checkbox后数据返回是否正确",function(){
+        var checkBox=element(by.css(".demo5 tbody tr:first-child td:first-child input"));
+        checkBox.click();
+        var data=element(by.css(".demo5 .check_data"));
+        expect(data.getText()).toBe('[{"cityname":"南京","$index":0}]');
+    });
+    it("验证选中多个checkbox后数据返回是否正确",function(){
+        var checkBox=element(by.css(".demo5 tbody tr:first-child td:first-child input"));
+        var checkBox2=element(by.css(".demo5 tbody tr:nth-child(2) td:first-child input"));
+        checkBox.click();
+        checkBox.click();
+        checkBox2.click();
+        var data=element(by.css(".demo5 .check_data"));
+        expect(data.getText()).toBe('[{"cityname":"南京","$index":0},{"cityname":"苏州","$index":1}]');
+    });
+    it("验证选中多个checkbox后数据返回是否正确",function(){
+        var checkBox=element(by.css(".demo5 tbody tr:first-child td:first-child input"));
+        var checkBox2=element(by.css(".demo5 tbody tr:nth-child(2) td:first-child input"));
+        checkBox.click();
+        checkBox2.click();
+        var data=element(by.css(".demo5 .check_data"));
+        expect(data.getText()).toBe('[]');
+    });
     
 });
