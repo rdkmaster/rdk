@@ -3,8 +3,8 @@
 }
 
 .rdk-tab-module .title{
-    display: flex;
-    display: -webkit-flex;
+/*    display: flex;
+    display: -webkit-flex;*/
 }
 
 .rdk-tab-module .title li a.selected {
