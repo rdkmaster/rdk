@@ -1,3 +1,4 @@
+//如果这个用例需要在md文档中运行，那就必须加上，否则不需要加。
 window.$svr = '/doc/client/demo/comprehensive/tree/lazy_load/server';
 
 define('main', ['application', 'rd.controls.Tree'], function(application) {
