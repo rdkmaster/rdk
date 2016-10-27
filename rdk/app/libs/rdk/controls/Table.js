@@ -8,7 +8,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 <div ng-if="search && (noData!=undefined)" class="searchWapper">\
                     <input type="text" class="form-control search" placeholder="{{searchPrompt}}"\
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
-                    <i class="glyphicon glyphicon-search search_icon" ng-click="serverSearchHandler()"></i>\
+                    <i class="glyphicon glyphicon-search search_icon" ng-click="serverSearchHandler()" style="cursor:{{pagingType==\'server\' ? \'pointer\' : \'default\'}}"></i>\
                     <select ng-show="(pagingType==\'server\' && $parent.globalSearch)?true:false" ng-model="val" ng-change="selectChangeHandler(val)"\
                             ng-options="columnDef.data as columnDef.name for columnDef in columnDefs | realoption"\
                             class="form-control search_select">\
