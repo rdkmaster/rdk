@@ -12,7 +12,7 @@ scalacOptions := Seq("-feature","-unchecked", "-deprecation","-encoding", "utf8"
 
 javacOptions  := Seq("-encoding", "utf8")
 
-//javaHome := Some(file("../../rdk-resource/jdk1.8"))  
+//javaHome := Some(file("../../rdk-resource/jdk-win32"))  
 
 //fork := true
 
