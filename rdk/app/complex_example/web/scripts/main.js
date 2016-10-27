@@ -20,7 +20,8 @@ app.config(['blockUIConfig', function(blockUIConfig) {
 // 创建控制器
 // 从ng-controller属性添加的层次关系上看，rdk_ctrl是app的根控制器，ctrl1和ctrl2是2个兄弟控制器，
 // 并且这2个控制器有共同的父级rdk_ctrl。这样的关系造成了ctrl1和ctrl2可以直接访问父级rdk_ctrl中
-// 的任何属性和方法。
+// 的任何属性和方法，这个过程和OOP中的类继承关系非常类似，自控制器可以直接访问父控制器中的方法
+// 和属性，也可以在子控制器中添加同名属性或者方法名来覆盖父控制器中的属性和方法。
 app.controller('rdk_ctrl', mainController);
 app.controller('ctrl1', controller1);
 app.controller('ctrl2', controller2);
