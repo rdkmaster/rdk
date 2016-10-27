@@ -1,7 +1,7 @@
 'use strict';
 describe('Table Self Test',function(){
     
-    搜索框输入
+    // 搜索框输入
     it('只显示一条结果HZ',function(){
         browser.get('test/e2e/testee/table/web/self.html')
         .then(function(){
