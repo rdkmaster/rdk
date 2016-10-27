@@ -54,16 +54,16 @@ rdk = (function() {
         var loading;
         var oLoading = _findLoadingTag();
         if (oLoading) {
-            oLoading.className = oLoading.className + " rdk_loading";
+            oLoading.className = oLoading.className + " rdk-loader";
             loading = oLoading.outerHTML;
             oLoading.parentNode.removeChild(oLoading);
         } else {
-            loading = '<div class="rdk_loading"><p>loading...<p/></div>';
+            loading = '<div class="rdk-loader"><p>loading...<p/></div>';
         }
 
         bodyHTML = document.body.innerHTML;
         document.body.innerHTML = loading;
-        _removeClass(document.body, 'rdk_main');
+        _removeClass(document.body, 'rdk-loading');
     }
 
     function _removeClass(element, className) {
