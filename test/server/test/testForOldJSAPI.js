@@ -1,5 +1,5 @@
 (function(){
-    var testServiceFilePath="./app/test/"
+    var testServiceFilePath="../test/server/test/"
     return {
 
         file_loadProperty:function(request, script){
@@ -36,7 +36,7 @@
         },
 
         file_saveAsEXCEL:function(request, script){
-            var filestr="./app/test/test.xls";//必选
+            var filestr=testServiceFilePath+"test.xls";//必选
             var content={'sheet1':{'header':['A','B'],'field':['a','b'],'data':[[1,2],[3,4]]},'sheet2':new DataTable(['网元','名字'],['neid','name'],[['30','test1'],['20','test2']])};//必选，支持矩阵
             return file.saveAsEXCEL(filestr,content);
 
@@ -105,13 +105,13 @@
         },
 
         load_classTest:function(request, script){
-            var testclass=JVM.load_class("$base/lib", "com.zte.lw.test.Loadclass")
+            var testclass=JVM.load_class(testServiceFilePath+"lib", "com.zte.lw.test.Loadclass")
             var myInst = testclass.newInstance()
             return myInst.loadtest()
         },
 
         load_classTesterror:function(request, script){
-            return JVM.load_class("$base/lib", "com.zte.lw.test.Load")
+            return JVM.load_class(testServiceFilePath+"lib", "com.zte.lw.test.Load")
         },
 
 

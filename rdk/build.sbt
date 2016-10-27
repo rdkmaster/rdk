@@ -12,6 +12,10 @@ scalacOptions := Seq("-feature","-unchecked", "-deprecation","-encoding", "utf8"
 
 javacOptions  := Seq("-encoding", "utf8")
 
+//javaHome := Some(file("../../rdk-resource/jdk-win32"))  
+
+//fork := true
+
 libraryDependencies ++= {
   val akkaV = "2.3.5"
   val sprayV = "1.3.2"

@@ -467,7 +467,12 @@ public class FileHelper extends AbstractAppLoggable {
 
         Matcher svrMatcher = svrPattern.matcher(path);
         if (svrMatcher.find()) {
-            return svrMatcher.replaceFirst("app/" + appName + "/server");
+            if(appName.startsWith("../")){
+                return appName;
+            }else{
+                return svrMatcher.replaceFirst("app/" + appName + "/server");
+            }
+
         }
 
         Matcher baseMatcher = basePattern.matcher(path);
