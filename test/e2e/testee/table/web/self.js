@@ -171,6 +171,11 @@ scope.search=function(){
 	ds.query(condition);
 };
 
+//demo5 add_check_box
+
+EventService.register('add_check', EventTypes.CHECK, function(event, data){
+            scope.checkData = data.data;
+});
 /************************ 应用的代码逻辑结束 ************************/
 }]).filter('myFilter',function(){
   return function(input){

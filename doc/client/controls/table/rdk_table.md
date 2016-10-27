@@ -325,6 +325,19 @@ cells 为 改变的行列信息的数组信息
 详细示例如下：
 <live_demo example="controls/table/columnCheckBoxRenderer" width="900"></live_demo>
 
+
+## add_check_box ##
+>支持类型：布尔型
+
+此属性支持自定义复选框的功能，通过此属性可以定义列表每列前添加一个复选框，点击可以得到选中的列信息。代码如下：
+
+    <rdk_table add_check_box='true'></rdk_table>
+
+
+
+详细示例如下：
+<live_demo example="controls/table/demo4AddCheckBox" width="900"></live_demo>
+
 ## 自动添加行编号 ##
 可以通过列渲染的方式实现行号自动自动添加功能。
 
