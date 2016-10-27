@@ -8,7 +8,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 <div ng-if="search && (noData!=undefined)" class="searchWapper">\
                     <input type="text" class="form-control search" placeholder="{{searchPrompt}}"\
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
-                    <i class="glyphicon glyphicon-search search_icon"></i>\
+                    <i class="glyphicon glyphicon-search search_icon" ng-click="serverSearchHandler()" style="cursor:{{pagingType==\'server\' ? \'pointer\' : \'default\'}}"></i>\
                     <select ng-show="(pagingType==\'server\' && $parent.globalSearch)?true:false" ng-model="val" ng-change="selectChangeHandler(val)"\
                             ng-options="columnDef.data as columnDef.name for columnDef in columnDefs | realoption"\
                             class="form-control search_select">\
@@ -557,13 +557,18 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 scope.globalSearch = scope.globalSearch.substring(0, scope.globalSearch.length - 1);
                             }
 
-                            if ((event.keyCode == 13) && (scope.pagingType == "server")) {
-                                scope.currentPage = 0;
-                                if (!scope.searchFields) { //没交互时给默认值
-                                    scope.searchFields = _getValue(scope.columnDefs);
-                                }
-                                ctrl.setCurrentPage(scope.currentPage);
+                            if(event.keyCode == 13){
+                                scope.serverSearchHandler();
                             }
+                        }
+
+                        scope.serverSearchHandler = function(){
+                            if(scope.pagingType != 'server') return;
+                            scope.currentPage = 0;
+                            if (!scope.searchFields) { //没交互时给默认值
+                                scope.searchFields = _getValue(scope.columnDefs);
+                            }
+                            ctrl.setCurrentPage(scope.currentPage);
                         }
 
                         scope.cursorHandler = function(event, sortable) {
