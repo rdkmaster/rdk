@@ -33,13 +33,13 @@ EventService.register("test-tab",EventTypes.CHANGE,function(event,data){
   console.log(data);
 });
 scope.select0index=function(){
-  EventService.broadcast("test-tab",EventTypes.TAB_SELECT,1);
+  EventService.broadcast("test-tab",EventTypes.TAB_SELECT,0);
 }
 scope.select1index=function(){
-  EventService.broadcast("test-tab",EventTypes.TAB_SELECT,2);
+  EventService.broadcast("test-tab",EventTypes.TAB_SELECT,1);
 }
 scope.select2index=function(){
-  EventService.broadcast("test-tab",EventTypes.TAB_SELECT,3);
+  EventService.broadcast("test-tab",EventTypes.TAB_SELECT,2);
 }
 
 var initData = {title: '新增DIV', showCloseButton: false, awesomeData: [{label: "江苏省"}, {label: "浙江省"}]};

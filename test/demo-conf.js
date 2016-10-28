@@ -1,12 +1,12 @@
 exports.config = {
     allScriptsTimeout: 15000,
 
-    specs:['doc/testjs/demo1.js'],
+    specs:['doc/testjs/demo4.js'],
 
 
     multiCapabilities: [
         {
-            browserName: 'chrome'
+            browserName: 'firefox'
         }
     ],
 
@@ -19,6 +19,7 @@ exports.config = {
     ignoreSynchronization: true,
 
     onPrepare: function() {
+        browser.driver.manage().window().maximize();
         var Jasmine2HtmlReporter = require('./index.js');
          jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
             savePath: './report/doc',

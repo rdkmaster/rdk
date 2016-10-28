@@ -4,9 +4,24 @@
 	<meta charset="utf-8">
 	<title>上传与下载(导出)文件</title>
 </head>
+<style>
+	.box{
+		display:inline-block;
+		margin:15px;
+		width:20px;
+		height:20px;
+		background-color:red;
+	}
+	.box:hover{
+		width:100px;
+	}
+</style>
 <body ng-app="App" ng-controller="myCtr">
 	<script type="text/javascript" src="/test/doc/angular/angular.min.js"> </script>
 	<script src="js/index.js"></script>
     <input type="file">
+	<div class="hover-event">
+		<span class="box"></span>
+	</div>
 </body>
 </html>

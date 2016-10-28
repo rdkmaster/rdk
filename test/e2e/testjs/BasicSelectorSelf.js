@@ -1,8 +1,6 @@
-describe('BasicSelector Demos', function() {
-    // beforeEach(function() {
-    //     browser.get('test/e2e/testee/basic_selector/web/self.html');
-    //     browser.sleep(2000);
-    // });
+'use strict';
+describe('BasicSelector Test Self', function() {
+    
     it('basic attribute', function() {
         browser.get('test/e2e/testee/basic_selector/web/self.html')
         .then(function(){

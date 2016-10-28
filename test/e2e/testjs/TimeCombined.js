@@ -154,7 +154,7 @@ describe('time Combined Demos',function(){
     it('双时间控件和accordion控件结合点击选择(15分钟)时间点是否正确',function(){
         //直接输入点击显示结果
         browser.get('test/e2e/testee/time/web/combined1.html');
-        browser.sleep(2000);
+        browser.sleep(3000);
         var accordion = element(by.css(".demo2>div>.theme:first-child"));
         accordion.click();
         var time=element(by.css(".demo2 p"));

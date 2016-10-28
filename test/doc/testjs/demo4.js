@@ -14,4 +14,16 @@ describe('文件功能模拟',function(){
         fileElem.sendKeys(absolutePath);
         browser.driver.sleep(2000);
     });
+    it('前端 hover 响应',function(){
+        //鼠标移动到span上面，宽度增加到100px
+        var locator=element(by.css(".hover-event .box"));
+        // browser.actions().mouseMove(locator).perform();
+        // browser.sleep(500);
+        // expect(locator.getCssValue("width")).toBe("100px");
+
+        browser.actions().mouseMove(locator).perform()
+        .then(function(){
+           expect(locator.getCssValue("width")).toBe("100px"); 
+        });
+    });
 });

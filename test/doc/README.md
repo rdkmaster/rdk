@@ -32,7 +32,16 @@ Webdriver (api)，webdriver其实是selenium 2.0和原webdriver的结合，他�
 1.浏览器操作  
 browser.get(url);  
 browser.sleep();  
-browser.waitForAngular();  
+browser.waitForAngular();   
+browser.driver.manage().window().maximize();  
+//前端样式兼容区分  
+browser.getCapabilities().then(function(caps){  
+var browserName=caps.get('browserName');  
+if(browserName==='chrome'){  
+}  
+if(browserName==='firefox'){  
+}
+})  
 2.获取元素  
 element(by.css(‘.some-class’))；  
 element.all(by.css(‘.some-class’)).get(index);  
@@ -70,7 +79,7 @@ expect(locator.getCssValue()).toBe()
 元素不可点击  
 优化：检查选择器配合场景是否正确是否唯一，此类问题多数是选择器不够精确导致  
 3.angular is undefined  
-Angular没有加载到页面；  
+Angular没有加载到页面,需要自己手动打开页面控制台是否有什么加载阻塞了页面运行，尤其是firefox浏览器；  
 优化:增加等待sleep();browser.waitForAngular()  
 4.其他  
 看报错信息配合运行时候仔细观察
@@ -92,7 +101,13 @@ consolidate：与上面相反
 takeScreenshots：是否截图  
 takeScreenshotsOnlyOnFailures：是否仅在失败时截图  
 filePrefix：文件名打头字符串
-
+##FAQ持续更新
+TypeError:Path must be a string.received undefined.  
+该问题是在xp系统下读取不到环境变量LOCALAPPDATA的值，解决方法就是添加一个环境变量
+参考：LOCALAPPDATA= C:\Documents and Settings\Administrator\Application Data  
+注意：  
+1.这个值根据个人电脑而有所不同  
+2.添加后cmd需要重新打开才能获取
 
 
 
