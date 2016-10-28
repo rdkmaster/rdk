@@ -1,9 +1,13 @@
 'use strict';
 describe('基础Api',function(){
+    
     it('注册场景涉及的简单操作',function(){
         browser.get('test/doc/testDemo/demo1/index.html')
         .then(function(){
             browser.waitForAngular();
+        });
+        browser.getCapabilities().then(function (capabilities) {
+            console.log(capabilities.get('browserName'));
         });
         //选择注册按钮
         var button=element.all(by.css("button"));

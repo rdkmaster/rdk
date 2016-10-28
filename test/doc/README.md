@@ -33,7 +33,15 @@ Webdriver (api)，webdriver其实是selenium 2.0和原webdriver的结合，他�
 browser.get(url);  
 browser.sleep();  
 browser.waitForAngular();   
-browser.driver.manage().window().maximize();
+browser.driver.manage().window().maximize();  
+//前端样式兼容区分  
+browser.getCapabilities().then(function(caps){  
+var browserName=caps.get('browserName');  
+if(browserName==='chrome'){  
+}  
+if(browserName==='firefox'){  
+}
+})  
 2.获取元素  
 element(by.css(‘.some-class’))；  
 element.all(by.css(‘.some-class’)).get(index);  
