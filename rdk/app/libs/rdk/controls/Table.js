@@ -782,7 +782,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     }
 
                     function _changeSingleStatus(){
-                        var arr = element.find('input[name="singleCheckBox"]');
+                        var arr = element.find('.sticky-enabled').find('input[name="singleCheckBox"]');
                         for(var i=0; i<scope.checkedIdxArr.length; i++){
                             arr[scope.checkedIdxArr[i]].checked = true;
                         }                    
@@ -817,7 +817,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                     function _refreshCheckedData(){
                         var currentRows = _getCurrentRows();
-                        var arr = element.find('input[name="singleCheckBox"]');//document.getElementsByName("singleCheckBox");  
+                        var arr = element.find('.sticky-enabled').find('input[name="singleCheckBox"]');  
                         for(var i=0; i<arr.length; i++){
                            if(arr[i].checked){
                                 var idx = _.indexOf(scope.checkedRows, currentRows[i]);
@@ -854,19 +854,19 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     }
 
                     function _resetTotalCheck(isChecked){
-                        var arr = element.find('input[name="totalCheckBox"]');//document.getElementsByName("totalCheckBox");
+                        var arr = element.find('.sticky-enabled').find('input[name="totalCheckBox"]');
                         arr[0].checked = isChecked;
                     }
 
                     function _totalCheckHandler(isChecked){
-                        var arr = element.find('input[name="singleCheckBox"]');//document.getElementsByName("singleCheckBox");  
+                        var arr = element.find('.sticky-enabled').find('input[name="singleCheckBox"]');  
                         for(var i=0; i<arr.length; i++){
                            arr[i].checked = isChecked;
                         }
                     }
 
                     function _isAllSelected(){
-                        var arr = element.find('input[name="singleCheckBox"]');//document.getElementsByName("singleCheckBox"); 
+                        var arr = element.find('.sticky-enabled').find('input[name="singleCheckBox"]'); 
                         for(var i=0; i<arr.length; i++){
                            if(!arr[i].checked) return false;
                         }
