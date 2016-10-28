@@ -38,6 +38,9 @@ define('main', ['rd.controls.Tree'], function() {
         $scope.clickFun=function(event,data){
             //这就是zTreeObj
             console.log(rdk.mytree)
+            //这是调用的zTree的方法，可以得到所有的勾选的节点的信息。
+            var nodes = rdk.mytree.tree.getCheckedNodes(true);
+            console.log(nodes)
         }
     }]);
 });
