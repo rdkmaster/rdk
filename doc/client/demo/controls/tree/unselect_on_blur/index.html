@@ -13,7 +13,8 @@
 </head>
 
 <body ng-controller='myCtrl' style="margin-top:20px" > 
-    <rdk_tree id="testZtree" ds="ds_tree" ds_url="/doc/client/demo/controls/tree/mockdata/tree_data" node_field="module" label_field="label" ds_query_if="ready" draggable=true unselect_on_blur='true'></rdk_tree>
+    <rdk_tree id="testZtree" ds="ds_tree" ds_url="/doc/client/demo/controls/tree/mockdata/tree_data" node_field="module" label_field="label" ds_query_if="ready" draggable=true style='height:1000px;width:500px;border:1px solid red;display:inline-block;' click="clickFun"></rdk_tree>
+    <div style="display:inline-block;">点击边框外侧，选中的树节点不会取消选中</div>
 </body>
 
 </html>

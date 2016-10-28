@@ -87,28 +87,7 @@
                                     return;
                                 }
                                 scope.setting.check.enable = scope.checkable;
-                            });
-
-                        
-                            if(!!scope.unselectOnBlur){
-                                $(document).on("click", "*", function() {
-                                    var nodes = scope.tree.getSelectedNodes();
-                                    if(nodes.length>0){
-                                        scope.tree.cancelSelectedNode();
-                                        if(!!scope.id){
-                                            EventService.broadcast(scope.id, EventTypes.UNSELECT, nodes);
-                                        }
-                                        var fn = scope.unselect(scope);
-                                        if(!!fn){
-                                            return fn(event, nodes);
-                                        }else{
-                                            return true;
-                                        } 
-                                    }
-                                });
-
-                                $("#" + rebornID).click(function(){return false})
-                            }
+                            });                           
                         }
                     }
                 }

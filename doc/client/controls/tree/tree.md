@@ -93,19 +93,8 @@
 示例如下：
 <live_demo example="controls/tree/draggable" width="900"></live_demo>
 
-##unselect_on_blur##
-> 支持类型：Boolen值
 
-此属性配置,选择某个节点后鼠标点击树控件外侧时 选择失效恢复最初没有选择状态，默认值为false。
 
-    <rdk_tree unselect_on_blur='true'></rdk_tree>
-示例如下：
-<live_demo example="controls/tree/unselect_on_blur" width="900"></live_demo>
-
-还可以通过阻止事件冒泡选择不让它取消选择
-
-示例如下：
-<live_demo example="controls/tree/unselect" width="900"></live_demo>
 
 ##checkable##
 > 支持类型：Boolen值
@@ -190,6 +179,14 @@ setting里可以设置async属性根据需求设置数据地址等一些列参�
 ##通过如下方式我们可以得到zTreeObj，可以直接调用zTree方法##
 
 <live_demo example="controls/tree/tree_method" width="900"></live_demo>
+
+###利用zTree方法的综合案例：
+
+此案例,选择某个节点后鼠标点击树控件外侧时 选择失效恢复最初没有选择状态。
+
+示例如下：
+<live_demo example="controls/tree/unselect_on_blur" width="900"></live_demo>
+
 
 ztree  API
 [http://http://www.treejs.cn/v3/api.php](http://http://www.treejs.cn/v3/api.php)
