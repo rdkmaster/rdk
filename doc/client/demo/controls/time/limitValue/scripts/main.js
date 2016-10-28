@@ -4,9 +4,9 @@ define('main', ['rd.controls.Time'], function() {
     // 创建一个控制器
     app.controller('myCtrl', ['$scope', function(scope) {
         scope.limitValue = {
-            value: "2015-01-01",
-            startDate: "2015-01-01",
-            endDate: "2015-01-09"
+            value: "now-3d",
+            startDate: "now-10d",
+            endDate: "now-1d"
         }
     }]);
 });
