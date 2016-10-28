@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>btn -> search</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <!-- <link rel="stylesheet" type="text/css" href="css/btn.css"> -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head> 
+
+<body ng-controller = "myCtrl">
+    
+    <rdk_button click="clickHandler()" label="我来也"  
+    enabled="true"  tooltip="此曲只应天上有" selected = "true" toggle="true" icon="fa fa-angle-double-down"></rdk_button><!--
+
+    --><rdk_button   icon="false"  label="我来也"
+    enabled="true"   selected = "false"  toggle="false" type='danger'></rdk_button>
+
+    <rdk_button  label="我来也"  icon="image/output.png"selected = "true"  toggle="true"></rdk_button>
+
+    <rdk_button  label="我"  click="clickHandler()"  
+    enabled="false"  toggle="false"></rdk_button>
+
+    <rdk_button    icon="image/output.png"  type="guidance"
+    enabled="true"   selected = "false"  toggle="true"></rdk_button>
+
+    <rdk_button  label="我来也"  icon="fa fa-angle-double-down" 
+    enabled="false"   selected = "true"  toggle="false"></rdk_button>
+</body>
+</html>

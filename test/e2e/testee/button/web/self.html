@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>btn -> search</title>
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <!-- <link rel="stylesheet" type="text/css" href="css/btn.css"> -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="self.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/test/module/testee_helper',
+            }
+        });
+    </script>
+</head> 
+
+<body ng-controller = "myCtrl">
+    <div  class="demo1  rdk-button">
+        <rdk_button label="我来也" ></rdk_button>
+    </div>
+
+    <div class="demo2 rdk-button">
+        <h3>测试按钮回调事件: <span>{{callBakFlag}}</span></h3>
+        <rdk_button  click="clickHandler()"  label="我来也">
+        </rdk_button>
+    </div>
+
+    <div  class="demo3 rdk-button">
+        <h3>测试按钮selected和toggle功能</h3>
+        <button class="btn" ng-click="clickTog()">点击</button>
+        <rdk_button  label="我来也"  icon="image/output.png" selected = "true"  toggle="tog"></rdk_button>
+    </div>
+
+    <div class="demo4 rdk-button">
+        <button class="btn" ng-click="clickTog()">点击</button>
+        <rdk_button  label="我"  enabled="tog" click="clickHandler()"></rdk_button>
+    </div>
+    <div class="demo5 rdk-button">
+        <button class="btn1" ng-click="clickTog1()">点击</button>
+        <button class="btn2" ng-click="clickTog2()">点击</button>
+        <button class="btn3" ng-click="clickTog3()">点击</button>
+        <rdk_button  label="这可以点吗"  type="{{typeValue}}"></rdk_button>
+    </div>
+</body>
+</html>
