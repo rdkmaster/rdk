@@ -1,13 +1,14 @@
 'use strict';
 describe('Table Self Test',function(){
-    
-    // 搜索框输入
-    it('只显示一条结果HZ',function(){
+    it('open the page should be tested',function(){
+        //make sure the page open
         browser.get('test/e2e/testee/table/web/self.html')
         .then(function(){
-            browser.waitForAngular();
             browser.sleep(3000);
         });
+    });
+    // 搜索框输入
+    it('只显示一条结果HZ',function(){
         //直接输入搜索显示结果
         var lines=element.all(by.css(".demo1 .sticky-wrap .sticky-enabled tbody tr"));
         var showPage=element(by.css(".demo1 .pagingLine>ul li .regularRecords"));

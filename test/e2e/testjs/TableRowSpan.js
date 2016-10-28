@@ -10,7 +10,7 @@ describe('Table Row Span Tests', function() {
         var firstTdsRowSpan = ['3', '1', '1', '2', '1'];
         var firstTdsDisplay = ['', 'none', 'none', '', 'none'];
         element.all(by.css(".rdk-table tr td:first-child")).each(function(item, index) {
-            console.log(item);
+            // console.log(item);
             expect(item.getAttribute("rowspan")).toBe(firstTdsRowSpan[index]);
             if (firstTdsDisplay[index] != "") {
                 expect(item.getCssValue("display")).toBe(firstTdsDisplay[index]);

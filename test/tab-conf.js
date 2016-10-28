@@ -2,7 +2,7 @@ exports.config = {
     //出现过11秒页面载入没完成时候，改为15秒
     allScriptsTimeout: 15000,
 
-    specs:['e2e/testjs/RdkTabSelf.js'],
+    specs:['e2e/testjs/RdkTab*.js'],
 
 
     multiCapabilities: [
@@ -24,6 +24,7 @@ exports.config = {
     ignoreSynchronization: true,
 
     onPrepare: function() {
+        browser.driver.manage().window().maximize();
         var Jasmine2HtmlReporter = require('./index.js');
          jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
             savePath: './report/e2e'

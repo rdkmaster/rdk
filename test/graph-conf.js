@@ -24,6 +24,7 @@ exports.config = {
     ignoreSynchronization: true,
 
     onPrepare: function() {
+        browser.driver.manage().window().maximize();
         var Jasmine2HtmlReporter = require('./index.js');
          jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
             savePath: './report/e2e'

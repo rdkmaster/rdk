@@ -8,8 +8,10 @@ describe('Accordion Combined Test',function(){
         var combo_input=element(by.css(".combo .rdk-accordion-module .rdk-combo-select-module .form-control"));
         combo_input.click();
         var options=element.all(by.css(".combo .rdk-accordion-module .rdk-combo-select-module .rdk-selector-module .selector li"));
-        options.get(0).click();
-        expect(combo_input.getAttribute("title")).toBe("南京");
+        options.get(0).click()
+        .then(function(){
+            expect(combo_input.getAttribute("title")).toBe("南京");
+        });
     });
     it('展开accordion能够展现panel 并且获取内容',function(){
         element(by.css(".panel .rdk-accordion-module .theme")).click();

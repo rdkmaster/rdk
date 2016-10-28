@@ -18,8 +18,10 @@ describe("Combo Test Self",function(){
         p.getText().then(function(txt){
             //验证comboselect的 input框双绑的title属性值是否等于p标签的内容
             expect(comboSelector1.getAttribute("title")).toBe(txt);
-        });    
-        thanBut.click();//恢复冻结   
+        });   
+        //恢复冻结   
+        thanBut.click();
+         
     });
     it('测试标题',function(){
         //添加标题属性并赋值(江苏)
@@ -51,6 +53,7 @@ describe("Combo Test Self",function(){
         var p = element(by.css(".demo2 p"));
         comboSelector1.click();
         comboSelector1.click();
+        comboSelector1.click();//open=true bug解决删掉这行
         li.click();
         p.getText().then(function(txt){
             expect(comboSelector1.getAttribute("title")).toBe(txt);
@@ -89,5 +92,4 @@ describe("Combo Test Self",function(){
             expect(comboSelector1.getAttribute("title")).toBe(txt);
         });       
     });
-    
 });

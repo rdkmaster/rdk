@@ -14,7 +14,7 @@ describe("test area_selector combined",function(){
 			input.click().then(function(){
 				var itemText = item.getText();
 				item.click().then(function(){
-					//遍历点击每个省后验证结果
+					// 遍历点击每个省后验证结果
 					expect(input.getAttribute("title")).toBe(itemText);
 				});
 			});
@@ -136,7 +136,7 @@ describe("test area_selector combined",function(){
 		});
 	});
 
-	//验证选择全市时的结果是否正确
+	// 验证选择全市时的结果是否正确
 	it('area-select test scene 6 : Select special labels for the city',function(){
 		browser.get("test/e2e/testee/area/web/combined.html")
 		.then(function(){

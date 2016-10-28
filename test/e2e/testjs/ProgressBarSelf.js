@@ -50,11 +50,11 @@ describe('ProgressBar Self Test',function(){
      });
      it('start',function(){
          //会产生一个宽度不断增加的div id=ngProgress
-         var btn=element.all(by.css(".start button"));
-         btn.get(0).click();
+         var btn=element(by.css(".start button"));
+         btn.click();
      });
      it('stop',function(){
-         var btn=element.all(by.css(".stop button"));
-         btn.get(1).click();
+         var btn=element(by.css(".stop button"));
+         btn.click();
      });
 });

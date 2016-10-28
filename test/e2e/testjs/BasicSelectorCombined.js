@@ -1,6 +1,8 @@
 'use strict';
 describe("test basic_selector combined",function(){
-	
+	beforeEach(function(){
+		browser.sleep(500);
+	});
 	it('combo basic test change value',function(){
 		browser.get('test/e2e/testee/basic_selector/web/combined.html')
         .then(function(){
@@ -16,7 +18,7 @@ describe("test basic_selector combined",function(){
 		expect(lis.count()).toBe(6);
 		lis.each(function(item,index){
 			item.click();
-			browser.sleep(1000);
+			browser.sleep(300);
 			//遍历每个点击后的验证
 			expect(title.getAttribute("title")).toBe(citys[index]);
 		});
@@ -35,12 +37,16 @@ describe("test basic_selector combined",function(){
 		});
 	});
 	it('tabs basic test change value',function(){
-		var lis=element.all(by.css(".tab .rdk-selector-module .selector li"));
+		var tab=element(by.css(".tab .tabs ul li a[href='#tab_item_1']"));
+		tab.click();
+		browser.sleep(500);
+		var lis=element.all(by.css("div[title='basic'] .rdk-selector-module .selector li"));
+		expect(lis.count()).toBe(6);
 		lis.each(function(item,index){
 			item.click();
 			browser.sleep(300);
 		});
-		expect(element.all(by.css(".tab .rdk-selector-module .selector .selected-item")).count()).toBe(6);
+		expect(element.all(by.css("div[title='basic'] .rdk-selector-module .selector .selected-item")).count()).toBe(6);
 	});
 	//测试scroller配合basic能否正常显示和切换
 	it('scroller basic test toggle',function(){
