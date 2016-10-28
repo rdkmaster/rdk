@@ -41,6 +41,26 @@ scope.select1index=function(){
 scope.select2index=function(){
   EventService.broadcast("test-tab",EventTypes.TAB_SELECT,3);
 }
+
+var initData = {title: '新增DIV', showCloseButton: false, awesomeData: [{label: "江苏省"}, {label: "浙江省"}]};
+scope.addTabHandler = function(){
+  rdk.tabID4add.addTab('./tab.html', 'tabController', initData);
+}
+
+scope.destroyHandler = function(event, data){
+    var result = confirm('确定destroy?');
+    if(result){
+      rdk.tabID4destroy.destroyTab(data.tabIndex);
+    }
+}
+
+scope.closeHandler = function(event, data){
+    var result = confirm('确定close?');
+    if(result){
+      rdk.tabID4close.closeTab(data.tabIndex);
+    }
+}
+
 scope.Height='auto';
 //
 scope.height2auto=function(){
@@ -53,8 +73,14 @@ scope.height2fill=function(){
   scope.Height='fill';
 };
 scope.visibleItem=[2];
+
+scope.allItems = [{label: "江苏省"}, {label: "浙江省"}, {label: "河南省"}, {label: "湖北省"}];
 /************************ 应用的代码逻辑结束 ************************/
 }]);
+
+app.controller('tabController', ['$scope', function(scope) {
+
+}])
 
 /********************************************************************
           应用如果将代码写在此处，可能会导致双向绑定失效

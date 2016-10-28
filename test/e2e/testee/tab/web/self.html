@@ -31,6 +31,7 @@
 <style>
     .rdk-tab{
         width:500px;
+        margin: 10px
     }
 </style>
 <body ng-controller='rdk_ctrl' class="rdk_main">
@@ -109,6 +110,44 @@
             <div title="DIV3">DIV3</div>
         </rdk_tab>
     </div>
+
+    
+    <div class="rdk-tab demo6">
+        <rdk_tab collapsible="true" draggable="false" show_items="visibleItem">
+            <div title="DIV1">DIV1</div>
+            <div title="DIV2">DIV2</div>
+            <div title="DIV3">DIV3</div>
+        </rdk_tab>
+    </div>
+
+    <div class="rdk-tab demo7">
+        <strong> 动态新增Tab页示例</strong>
+        <rdk_tab id='tabID4add'>
+            <div title="DIV1">DIV1</div>
+            <div title="DIV2">DIV2</div>
+            <div title="DIV3">DIV3</div>    
+        </rdk_tab>
+        <button id='btn4add' ng-click='addTabHandler()'>动态新增tab</button>        
+    </div>
+
+    <div class="rdk-tab demo8">
+        <strong> destroy Tab页示例</strong>
+        <rdk_tab id='tabID4destroy' close='destroyHandler'>
+            <div title="DIV1">DIV1</div>
+            <div title="DIV2">DIV2</div>
+            <div title="DIV3" show_close_button='true'>DIV3</div>    
+        </rdk_tab>     
+    </div>
+
+    <div class="rdk-tab demo9">
+        <strong> close Tab页示例</strong>
+        <rdk_tab id='tabID4close' close='closeHandler'>
+            <div title="DIV1">DIV1</div>
+            <div title="DIV2">DIV2</div>
+            <div title="DIV3" show_close_button='true'>DIV3</div>    
+        </rdk_tab>     
+    </div>
+
     <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
     <!--     这个节点可选，删除后，RDK会自动生成一个    -->
     <!--           这个节点只支持基本HTML标签           -->

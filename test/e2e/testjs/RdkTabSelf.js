@@ -88,4 +88,30 @@ describe('Tab Self test',function(){
         // //原本展开的div display属性为none(不存在dom中)
         expect(element(by.css(".demo6 .rdk-tab-module .content div[title='DIV3']")).getCssValue("display")).toBe("none");
     });
+
+    it('动态新增TAB页',function(){
+        var item = element.all(by.id("btn4add"));
+        item.get(0).click();
+        browser.sleep(500);
+        expect(element.all(by.css(".demo7 .rdk-tab-module ul li")).get(3).getText()).toBe("新增DIV");
+    });
+
+    it('destroy Tab页',function(){
+        var item = element.all(by.css(".demo8 .rdk-tab-module .ui-icon-close"));
+        item.get(2).click();
+        browser.sleep(500);
+        browser.switchTo().alert().accept();
+        browser.sleep(500);
+        expect(element.all(by.css(".demo8 .rdk-tab-module ul li")).count()).toBe(2);
+    });
+
+    it('close Tab页',function(){
+        var item = element.all(by.css(".demo9 .rdk-tab-module .ui-icon-close"));
+        item.get(2).click();
+        browser.sleep(500);
+        browser.switchTo().alert().accept();
+        browser.sleep(500);
+        expect(element.all(by.css(".demo9 .rdk-tab-module ul li")).count()).toBe(3);
+        expect(element.all(by.css(".demo9 .rdk-tab-module ul li")).get(2).getCssValue("display")).toBe("none");
+    });
 });
