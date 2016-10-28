@@ -5,8 +5,5 @@ define('main', ['rd.controls.Tree'], function() {
     app.controller('myCtrl', ['$scope', 'EventService', 'EventTypes', function($scope, EventService, EventTypes) {
     	
 
-       $scope.reFun=function(event, treeNode){
-            return false;
-        }
     }]);
 });
