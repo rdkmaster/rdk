@@ -81,11 +81,10 @@
 ##draggable##
 > 支持类型：Boolen值
 
-此属性配置树形节点是否可以拖拽，默认值为false。
+此属性配置树形节点是否可以编辑，默认值为false。
 
 当`draggable`属性为true时，可以对节点进行如下操作：
 
-- 拖拽节点
 - 修改选中节点的名称
 - 删除选中的节点（此删除并不会真正的删除数据源的对应节点）
 
@@ -94,8 +93,16 @@
 
 <live_demo example="controls/tree/draggable" width="900"></live_demo>
 
-如果您不想要拖拽功能，只想要编辑和删除，可以和before_drag函数结合使用达到效果，示例如下：
-<live_demo example="controls/tree/draggable_no_drag" width="900"></live_demo>
+
+##freeze##
+> 支持类型：Boolen值
+
+此属性配置树形节点是否可以拖拽，必须配合draggable属性一起使用，当属性为true时可以拖拽，
+
+	<rdk_tree draggable=true freeze=true></rdk_tree>
+
+示例如下：
+<live_demo example="controls/tree/freeze" width="900"></live_demo>
 
 ##unselect_on_blur##
 > 支持类型：Boolen值
