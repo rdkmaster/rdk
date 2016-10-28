@@ -237,7 +237,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 }
 
                 scope.closeTab = function(index){
-                    var closeLi = $("ul").find("li").eq(index);
+                    var closeLi = element.find("ul").eq(0).find("li").eq(index);
                     $(closeLi).css({'display': 'none'});
                     var panelId = scope.tabs[index].tabid;
                     $("#" + panelId).css({'display': 'none'});
