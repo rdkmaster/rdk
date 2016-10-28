@@ -22,7 +22,7 @@
                     editname: '&?',
                     unselect: '&?',
                     check: '&?',
-                    beforedrag: '&?'
+                    freeze: '@?'
                 },
                 controller: ['$scope', function(scope) {
                     //把控制器暴露给app
@@ -34,6 +34,7 @@
                     Utils.bindDataSource(attrs, 'data');
                     return {
                         post: function(scope, iElement, iAttrs, controller) {
+                            scope.freeze = Utils.isTrue(iAttrs.freeze);
                             scope.checkable = Utils.isTrue(iAttrs.checkable);
                             scope.draggable = Utils.isTrue(iAttrs.draggable);
                             scope.unselectOnBlur = Utils.isTrue(iAttrs.unselectOnBlur);                            
@@ -166,16 +167,9 @@
                 }
 
                 function before_drag(treeId, treeNode) {
-                    if (!!scope.id) {
-                        EventService.broadcast(scope.id, EventTypes.BEFORE_DRAG, treeNode);
-                    }
-                    var fn = scope.beforedrag(scope);
-                    if(!!fn){
-                        return fn(event, treeNode);
-                    }else{
-                        return true;
-                    }
+                    return eval(scope.freeze)
                 }
+
                 function before_expand(treeId, treeNode){
                     if (!!scope.id) {
                         EventService.broadcast(scope.id, EventTypes.BEFORE_EXPAND, treeNode);
