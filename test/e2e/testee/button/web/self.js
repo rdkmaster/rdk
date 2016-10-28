@@ -7,14 +7,24 @@ app.controller('myCtrl', ['$scope',  function(scope) {
      将应用的代码逻辑添加在这个匿名函数内部
 ******************************************************/
 
-scope.callBakFlag=0;
+	scope.callBakFlag=0;
     scope.clickHandler = function() {
     	scope.callBakFlag=1;
     };
-scope.tog=true;
+	scope.tog=true;
 	scope.clickTog= function(){
 		scope.tog=false;
 		scope.callBakFlag=0;
+	}
+	scope.typeValue=null;
+	scope.clickTog1= function(){
+		scope.typeValue="normol";
+	}
+	scope.clickTog2= function(){
+		scope.typeValue="danger";
+	}
+	scope.clickTog3= function(){
+		scope.typeValue="guidance";
 	}
 }
 ]);

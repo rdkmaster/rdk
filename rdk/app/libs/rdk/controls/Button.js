@@ -9,8 +9,8 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                 transclude: true,
                 template:'<div class="rdk-button-wrap">\
                                 <div  class="rdk-button-comment" ng-click="setSelected()">\
-                                    <div class="rdk-shade {{type}}"></div>\
-                                    <button class="rdk-button-btn  {{tpye}}" ng-mouseover="$mouseOver()" ng-mouseout="$mouseOut()"\
+                                    <div class="rdk-button-shade rdk-button-{{type}}"></div>\
+                                    <button class="rdk-button-btn" ng-mouseover="$mouseOver()" ng-mouseout="$mouseOut()"\
                                     title="{{tooltip}}" ng-class="{\'rdk-button-selected\':toggle?selected:false,\
                                         \'rdk-button-enabled\':!enabled,\'rdk-shade-opacity\': mouse}" ng-disabled="!enabled">\
                                         <img src="{{icon}}" ng-click="$stopPro($event)" ng-if="iconShow" ng-class="{\'rdk-padding-right\':paddingHide}">\
@@ -35,8 +35,11 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                     scope.setSelected=function(){
                         if(scope.toggle==true){
                             scope.selected=!scope.selected
-                       }
-                       scope.click();
+                        }
+                        var fn = scope.click(scope);
+                        if (!!fn) {
+                            fn();
+                        }
                     }
                     scope.$stopPro=function($event){
                         if(!scope.enabled){
