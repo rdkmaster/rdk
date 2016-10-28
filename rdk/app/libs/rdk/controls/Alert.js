@@ -18,7 +18,7 @@ define(['angular'], function() {
                 },
                 replace: true,
                 controller: 'rdkAlert',
-                template: '<div class="alertFrame" style="height: 173px;width: 340px;margin: 20px 0 0 20px;border: 1px solid grey;border-radius: 5px;z-index:-1000">' +
+                template: '<div class="alertFrame" style="height: 173px;width: 508px;margin: 20px 0 0 20px;border: 1px solid grey;border-radius: 5px;z-index:-1000">' +
                     '<div style="background-color: #ACC5E0;height: 20px;">' +
                     '<span style="position: absolute;vertical-align: middle;margin-left: 5px;">Save</span>' +
                     '<button id="alertFrame" style="float:right;margin: 0px;border:0px;height: 19px;width: 50px;" ng-click="closeFrame()">×</button>' +

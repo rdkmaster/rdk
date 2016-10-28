@@ -27,22 +27,10 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
                     '<div class="titleLine">'+
                         title +
                     '</div>'+
-                    '<table cellspacing="0" border="0">'+
-                        '<tbody>'+
-                            '<tr>'+
-                                '<td class="tableImg">'+
-                                    '<img style="border:none;" src='+
-                                        imgSrc +
-                                    ' width="64" height="64">'+
-                                '</td>'+
-                                '<td>'+
-                                    '<div class="tableMsg">'+
-                                        message +
-                                    '</div>'+
-                                '</td>'+
-                            '</tr>'+
-                        '</tbody>'+
-                    '</table>'+
+                    '<div class="tableImg">' +
+                        '<img src=' + imgSrc + '>'+
+                    '</div>'+
+                    '<p class="tableMsg">'+ message +'</p>'+
                     '<div class="btnLine">'+
                         btnTmpl+
                     '</div>'+
@@ -172,6 +160,10 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
         this.setLang = function(lang){
             _lang = lang.toLowerCase();
         }
+         var   uiDialog=document.getElementsByClassName('div.ui-Dialog')[0];
+    console.log(uiDialog)
     }]);
+    var   uiDialog=document.getElementsByClassName('div.ui-Dialog')[0];
+    console.log(uiDialog)
 
 });
