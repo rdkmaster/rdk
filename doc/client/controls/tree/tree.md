@@ -91,9 +91,10 @@
 
     <rdk_tree draggable=true></rdk_tree>
 示例如下：
+
 <live_demo example="controls/tree/draggable" width="900"></live_demo>
 
-如果您不想要拖拽功能，只想要修改和删除，可以结合before_drag这个函数，在函数里返回false；示例如下：
+如果您不想要拖拽功能，只想要编辑和删除，可以和before_drag函数结合使用达到效果，示例如下：
 <live_demo example="controls/tree/draggable_no_drag" width="900"></live_demo>
 
 ##unselect_on_blur##
@@ -149,11 +150,13 @@ setting里可以设置async属性根据需求设置数据地址等一些列参�
 
 事件类型：EventTypes.BEFORE_COLLAPSE，监听到外层的 before_collapse 事件，即关闭被选中树的某个节点，也可以在rdk_tree标签里，直接定义collapse函数。
 示例如下：
+
 <live_demo example="controls/tree/event_beforeCollapse" width="900"></live_demo>
 
 ##BEFORE_DRAG##
 
-事件类型：EventTypes.BEFORE_DRAG，监听到外层的 before_drag 事件，即拖拽被选中树的某个节点之前发生的事件，也可以在rdk_tree标签里，直接定义beforedrag函数。
+事件类型：EventTypes.BEFORE_DRAG，监听到外层的 before_drag 事件，即拖拽树的某节点之前发生的事件，也可以在 rdk_tree 标签里直接定义beforedrag函数。
+
 示例如下：
 <live_demo example="controls/tree/event_beforeDrag" width="900"></live_demo>
 
