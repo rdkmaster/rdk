@@ -10,7 +10,7 @@
                     labelField: '@?',
                     unselectOnBlur: '@?',
                     setting: '=?',
-                    draggable: '=?',
+                    editgable: '=?',
                     checkable: '=?',
                     data: '=',
                     click: '&?',
@@ -22,7 +22,7 @@
                     editname: '&?',
                     unselect: '&?',
                     check: '&?',
-                    freeze: '@?'
+                    draggable: '@?'
                 },
                 controller: ['$scope', function(scope) {
                     //把控制器暴露给app
@@ -34,9 +34,9 @@
                     Utils.bindDataSource(attrs, 'data');
                     return {
                         post: function(scope, iElement, iAttrs, controller) {
-                            scope.freeze = Utils.isTrue(iAttrs.freeze);
-                            scope.checkable = Utils.isTrue(iAttrs.checkable);
                             scope.draggable = Utils.isTrue(iAttrs.draggable);
+                            scope.checkable = Utils.isTrue(iAttrs.checkable);
+                            scope.editgable = Utils.isTrue(iAttrs.editgable);
                             scope.unselectOnBlur = Utils.isTrue(iAttrs.unselectOnBlur);                            
                             if (!scope.setting) {
                                 scope.setting = _defaultSetting(scope);
@@ -71,11 +71,11 @@
                                 _updateTree(rebornID, scope);
                             }, true);
 
-                            scope.$watch('draggable', function(newVal, oldVal) {
+                            scope.$watch('editgable', function(newVal, oldVal) {
                                 if (!scope.setting || !scope.setting.edit) {
                                     return;
                                 }
-                                scope.setting.edit.enable = scope.draggable;
+                                scope.setting.edit.enable = scope.editgable;
                             });
 
                             scope.$watch('checkable', function(newVal, oldVal) {
@@ -133,7 +133,7 @@
                         onCheck: on_check 
                     },
                     edit: {
-                        enable: scope.draggable || true
+                        enable: scope.editgable || true
                     },
                     view: {
                         fontCss: null
@@ -167,7 +167,7 @@
                 }
 
                 function before_drag(treeId, treeNode) {
-                    return eval(scope.freeze)
+                    return eval(scope.draggable)
                 }
 
                 function before_expand(treeId, treeNode){
