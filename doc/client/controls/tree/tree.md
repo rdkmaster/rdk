@@ -78,20 +78,20 @@
 示例如下：
 <live_demo example="controls/tree/datasource" width="900"></live_demo>
 
-##editgable##
+##editable##
 > 支持类型：Boolen值
 
 此属性配置树形节点是否可以编辑，默认值为false。
 
-当`editgable`属性为true时，可以对节点进行如下操作：
+当`editable`属性为true时，可以对节点进行如下操作：
 
 - 修改选中节点的名称
 - 删除选中的节点（此删除并不会真正的删除数据源的对应节点）
 
-    <rdk_tree editgable=true></rdk_tree>
+    <rdk_tree editable=true></rdk_tree>
 示例如下：
 
-<live_demo example="controls/tree/editgable" width="900"></live_demo>
+<live_demo example="controls/tree/editable" width="900"></live_demo>
 
 
 ##draggable##
@@ -99,7 +99,7 @@
 
 此属性配置树形节点是否可以拖拽，必须配合draggable属性一起使用，当属性为true时可以拖拽，
 
-	<rdk_tree editgable=true draggable=true></rdk_tree>
+	<rdk_tree editable=true draggable=true></rdk_tree>
 
 示例如下：
 <live_demo example="controls/tree/draggable" width="900"></live_demo>
@@ -127,6 +127,17 @@ setting里可以设置async属性根据需求设置数据地址等一些列参�
 	
 <live_demo example="comprehensive/tree/lazy_load/web" width="900"></live_demo>
 
+##click##
+此属性配置，可以可以直接为rdk_tree，添加click事件函数
+html代码如下：
+
+    <rdk_tree click="clickFun"></rdk_tree>
+
+##DOUBLE_CLICK##
+此属性配置，可以可以直接为rdk_tree，添加onDblClick事件函数
+html代码如下：
+
+    <rdk_tree click="clickFun"></rdk_tree>
 #事件#
 
 ##CLICK##
