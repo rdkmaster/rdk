@@ -78,45 +78,32 @@
 示例如下：
 <live_demo example="controls/tree/datasource" width="900"></live_demo>
 
-##draggable##
+##editgable##
 > 支持类型：Boolen值
 
 此属性配置树形节点是否可以编辑，默认值为false。
 
-当`draggable`属性为true时，可以对节点进行如下操作：
+当`editgable`属性为true时，可以对节点进行如下操作：
 
 - 修改选中节点的名称
 - 删除选中的节点（此删除并不会真正的删除数据源的对应节点）
 
-    <rdk_tree draggable=true></rdk_tree>
+    <rdk_tree editgable=true></rdk_tree>
 示例如下：
 
-<live_demo example="controls/tree/draggable" width="900"></live_demo>
+<live_demo example="controls/tree/editgable" width="900"></live_demo>
 
 
-##freeze##
+##draggable##
 > 支持类型：Boolen值
 
 此属性配置树形节点是否可以拖拽，必须配合draggable属性一起使用，当属性为true时可以拖拽，
 
-	<rdk_tree draggable=true freeze=true></rdk_tree>
+	<rdk_tree editgable=true draggable=true></rdk_tree>
 
 示例如下：
-<live_demo example="controls/tree/freeze" width="900"></live_demo>
+<live_demo example="controls/tree/draggable" width="900"></live_demo>
 
-##unselect_on_blur##
-> 支持类型：Boolen值
-
-此属性配置,选择某个节点后鼠标点击树控件外侧时 选择失效恢复最初没有选择状态，默认值为false。
-
-    <rdk_tree unselect_on_blur='true'></rdk_tree>
-示例如下：
-<live_demo example="controls/tree/unselect_on_blur" width="900"></live_demo>
-
-还可以通过阻止事件冒泡选择不让它取消选择
-
-示例如下：
-<live_demo example="controls/tree/unselect" width="900"></live_demo>
 
 ##checkable##
 > 支持类型：Boolen值
@@ -159,13 +146,6 @@ setting里可以设置async属性根据需求设置数据地址等一些列参�
 示例如下：
 
 <live_demo example="controls/tree/event_beforeCollapse" width="900"></live_demo>
-
-##BEFORE_DRAG##
-
-事件类型：EventTypes.BEFORE_DRAG，监听到外层的 before_drag 事件，即拖拽树的某节点之前发生的事件，也可以在 rdk_tree 标签里直接定义beforedrag函数。
-
-示例如下：
-<live_demo example="controls/tree/event_beforeDrag" width="900"></live_demo>
 
 ##BEFORE_EXPAND##
 
