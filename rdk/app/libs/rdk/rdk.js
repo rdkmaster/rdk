@@ -139,9 +139,26 @@ rdk = (function() {
         return paths;
     }
 
+    function _injectDependency() {
+        try {
+            var app = angular.module("rdk_app");
+        } catch(e) {
+            app = angular.module("rdk_app", []);
+            console.log('IMPORTANT: rdk_app created!');
+        }
+        rdk.$app = app;
+        angular.forEach(arguments, function(dep) {
+            dep = dep.trim();
+            if (app.requires.indexOf(dep) == -1) {
+                app.requires.push(dep);
+            }
+        });
+    }
+
     return {
         $start: _start,
         $mergePaths: _mergePaths,
+        $injectDependency: _injectDependency
     }
 })();
 rdk.$start();

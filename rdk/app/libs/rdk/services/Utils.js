@@ -1,14 +1,6 @@
 ﻿define(['angular', 'jquery'], function() {
     var utilsModule = angular.module("rd.services.Utils", []);
     utilsModule.service('Utils', ['RDKConst', function(RDKConst) {
-        // (function() {
-        //     setTimeout(function() {
-        //         try {
-        //             $('.selectpicker').selectpicker();
-        //         } catch (e) {}
-        //     }, 3000);
-        // })();
-
         var _this = this;
 
         var _ready = false;
