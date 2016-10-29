@@ -10,7 +10,7 @@
                     labelField: '@?',
                     unselectOnBlur: '@?',
                     setting: '=?',
-                    editgable: '=?',
+                    editable: '=?',
                     checkable: '=?',
                     data: '=',
                     click: '&?',
@@ -36,7 +36,7 @@
                         post: function(scope, iElement, iAttrs, controller) {
                             scope.draggable = Utils.isTrue(iAttrs.draggable);
                             scope.checkable = Utils.isTrue(iAttrs.checkable);
-                            scope.editgable = Utils.isTrue(iAttrs.editgable);
+                            scope.editable = Utils.isTrue(iAttrs.editable);
                             scope.unselectOnBlur = Utils.isTrue(iAttrs.unselectOnBlur);                            
                             if (!scope.setting) {
                                 scope.setting = _defaultSetting(scope);
@@ -71,11 +71,11 @@
                                 _updateTree(rebornID, scope);
                             }, true);
 
-                            scope.$watch('editgable', function(newVal, oldVal) {
+                            scope.$watch('editable', function(newVal, oldVal) {
                                 if (!scope.setting || !scope.setting.edit) {
                                     return;
                                 }
-                                scope.setting.edit.enable = scope.editgable;
+                                scope.setting.edit.enable = scope.editable;
                             });
 
                             scope.$watch('checkable', function(newVal, oldVal) {
@@ -133,7 +133,7 @@
                         onCheck: on_check 
                     },
                     edit: {
-                        enable: scope.editgable || true
+                        enable: scope.editable || true
                     },
                     view: {
                         fontCss: null
