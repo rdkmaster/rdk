@@ -161,12 +161,6 @@ setting里可以设置async属性根据需求设置数据地址等一些列参�
 示例如下：
 <live_demo example="controls/tree/event_beforeEditName" width="900"></live_demo>
 
-##UNSELECT##
-
-事件类型：EventTypes.UNSELECT，监听 UNSELECT_ON_BLUR 事件，即点击tree以外的地方可以得到此事件，用来清空之前选择节点的缓存数据。
-示例如下：
-<live_demo example="controls/tree/event_unselect" width="900"></live_demo>
-
 ##CHECK##
 
 事件类型：EventTypes.CHECK，监听 ON_CHECK 事件，即设置可勾选属性后，勾选tree节点后，可以得到勾选的节点。
