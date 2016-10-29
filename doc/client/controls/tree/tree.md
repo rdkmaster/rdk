@@ -128,16 +128,53 @@ setting里可以设置async属性根据需求设置数据地址等一些列参�
 <live_demo example="comprehensive/tree/lazy_load/web" width="900"></live_demo>
 
 ##click##
-此属性配置，可以可以直接为rdk_tree，添加click事件函数
+此属性配置，可以直接为rdk_tree，添加click事件函数
 html代码如下：
 
     <rdk_tree click="clickFun"></rdk_tree>
 
-##DOUBLE_CLICK##
-此属性配置，可以可以直接为rdk_tree，添加onDblClick事件函数
+##double_click##
+此属性配置，可以直接为rdk_tree，添加onDblClick事件函数
 html代码如下：
 
-    <rdk_tree click="clickFun"></rdk_tree>
+    <rdk_tree double_click="doubleclickFun"></rdk_tree>
+
+##collapse##
+此属性配置，可以直接为rdk_tree，添加before_collapse事件函数
+html代码如下：
+
+    <rdk_tree collapse="collapseFun"></rdk_tree>
+
+##expand##
+此属性配置，可以直接为rdk_tree，添加before_expand事件函数
+html代码如下：
+
+    <rdk_tree expand="expandFun"></rdk_tree>
+
+##rename##
+此属性配置，可以直接为rdk_tree，添加before_rename事件函数
+html代码如下：
+
+    <rdk_tree rename="renameFun"></rdk_tree>
+
+##remove##
+此属性配置，可以直接为rdk_tree，添加before_remove事件函数
+html代码如下：
+
+    <rdk_tree remove="removeFun"></rdk_tree>
+
+##editname##
+此属性配置，可以直接为rdk_tree，添加before_editname事件函数
+html代码如下：
+
+    <rdk_tree editname="editnameFun"></rdk_tree>
+
+##check##
+此属性配置，可以直接为rdk_tree，添加check事件函数
+html代码如下：
+
+    <rdk_tree check="checkFun"></rdk_tree>
+
 #事件#
 
 ##CLICK##
