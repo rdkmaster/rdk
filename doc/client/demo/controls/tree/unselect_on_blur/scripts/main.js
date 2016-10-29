@@ -7,7 +7,7 @@ app.controller('myCtrl', ['$scope', 'EventService', 'EventTypes', 'DataSourceSer
 	        $('#testZtree').on("click", function() {
 	            var nodes = rdk.testZtree.tree.getSelectedNodes();
 	            if(nodes.length>0){
-	        		EventService.broadcast('#testZtree', EventTypes.UNSELECT, nodes);
+                    $scope.unselectFun(event, nodes)
 	                rdk.testZtree.tree.cancelSelectedNode();
 	            }
 	        });
@@ -15,8 +15,9 @@ app.controller('myCtrl', ['$scope', 'EventService', 'EventTypes', 'DataSourceSer
     	$scope.clickFun=function(event, data){
     		event.stopPropagation();
     	}
-    	EventService.register("#testZtree",EventTypes.UNSELECT,function(event,data){
-    		alert(data[0].label)
-    	} )
+        $scope.unselectFun=function(event, data){
+            console.log(data[0].label);
+        }
+    	
     }]);
 });
