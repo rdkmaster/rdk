@@ -58,6 +58,7 @@
 .rdk-button-enabled{
 	background:#ddd;
 	color :#f3f3f3;
+	cursor:default;
 }
 .rdk-padding-right{
 	padding-right:4px;
