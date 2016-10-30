@@ -73,7 +73,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 scope.selectedTab = Utils.getValue(scope.selectedTab, attrs.selectedTab, 0); 
                 scope.appScope = Utils.findAppScope(scope);
                 scope.compileScope = scope.appScope;                
-                Utils.publish(scope);
+                Utils.publishScope(scope);
 
                 var dom = element[0].querySelector(".tabs");
                 scope.tabs = [];

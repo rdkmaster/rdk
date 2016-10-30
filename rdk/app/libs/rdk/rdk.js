@@ -107,9 +107,10 @@ rdk = (function() {
             console.log('starting rdk app from "' + appScript + '" ...');
         }
 
-
         require(["./mainconfig"], function() {
             require(["jquery", "angular"] , function() {
+                console.log('IMPORTANT: rdk_app created!');
+                rdk.$app = angular.module("rdk_app", []);
                 require(["main"], _onSuccess, _onError);
             })
         });
@@ -140,13 +141,7 @@ rdk = (function() {
     }
 
     function _injectDependency() {
-        try {
-            var app = angular.module("rdk_app");
-        } catch(e) {
-            app = angular.module("rdk_app", []);
-            console.log('IMPORTANT: rdk_app created!');
-        }
-        rdk.$app = app;
+        var app = angular.module("rdk_app");
         angular.forEach(arguments, function(dep) {
             dep = dep.trim();
             if (app.requires.indexOf(dep) == -1) {

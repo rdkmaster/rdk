@@ -251,7 +251,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
             transclude: true,
             controller: ['$scope', function(scope) {
 
-                Utils.publishController(scope.id, this);
+                Utils.publish(scope.id, this);
 
                 this.setCurrentPage = function(_currentPage) {
                     scope.currentPage = _currentPage;
@@ -408,7 +408,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             });
                         };
 
-                        Utils.publish(scope);
+                        Utils.publishScope(scope);
 
                         //分页栏是否展现
                         scope.pageVisible = Utils.isTrue(scope.pagingVisible, true);

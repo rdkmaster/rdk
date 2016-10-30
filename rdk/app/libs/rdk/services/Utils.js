@@ -212,7 +212,7 @@
             }
         }
 
-        this.publish = function(scope) {
+        this.publishScope = function(scope) {
             if (angular.isUndefined(scope.id)) {
                 return;
             }
@@ -224,15 +224,20 @@
             }
         }
 
-        this.publishController = function(id, controller) {
+        this.publish = function(id, controller) {
             if (!id) {
                 return;
             }
             
-            if (angular.isDefined(rdk[id]) && rdk[id] !== controller) {
-                console.warn('conflict dom node id: ' + id);
+            if (angular.isString(id)) {
+                if (angular.isDefined(rdk[id]) && rdk[id] !== controller) {
+                    console.warn('conflict dom node id: ' + id);
+                } else {
+                    rdk[id] = controller;
+                }
             } else {
-                rdk[id] = controller;
+                //2者合并
+                this.shallowCopy(controller, id)
             }
         }
 

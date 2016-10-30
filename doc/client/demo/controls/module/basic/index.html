@@ -9,18 +9,14 @@
     -->
     <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
     <script src="scripts/main.js"></script>
-    <script type="text/javascript">
-        require.config({
-            paths: {
-                "sample_module": '/doc/client/demo/controls/module/basic/template/sample_module',
-            }
-        });
-    </script>
 </head>
 
 <body ng-controller='rdk_ctrl'>
-    <rdk_module url="template/sample_module.html"></rdk_module>
-    <rdk_module url="template/sample_module.html"></rdk_module>
+    <button ng-click="click()">click</button>
+    <button ng-click="click1()">click1</button>
+    <rdk_module id="{{myid}}" url="template/sample_module.html" init_data="{data: 'test111'}"></rdk_module>
+    <rdk_module id="mymod" url="template/sample_module.html" controller="my_ctrl" load_timeout=5000 init_data="{data: 'test222'}"></rdk_module>
+    <rdk_module url="template/sample_module1.html"></rdk_module>
 </body>
 
 </html>
