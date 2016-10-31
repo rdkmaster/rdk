@@ -18,19 +18,25 @@ define('main', ['rd.controls.Module', 'sample_module'], function() {
     // 创建主控制器，主控制器所有所有子控制器的共同祖先。
     // 子控制器可以直接访问这个控制器中的方法和属性
     rdk.$app.controller('rdk_ctrl', ['$scope', function(scope) {
-        // 注意到module2在定义的时候，没有给initData属性，因此module2在访问data属性的时候，
-        // 实际上是使用了这里的data属性。这是因为这个data属性被定义在所有module的父控制器中。
-        // 相反的，module1由于通过initData自定义了一个data属性，RDK会优先读取自子控制器中的
-        // data属性的值。
-        // 这个过程和OOP的继承非常类似。
-        scope.data = 'defined in the root controller';
+        //按需加载
+        scope.load = function() {
+            //mymodule是rdk_module节点的id属性值。
+            //传递给loadModule函数的第一个参数是该模块的initData，
+            //这个对象中的所有属性都会被拷贝到新模块的控制器作用域中
+            //如果新模块未定义任何控制器，则initData将被无视。
+            rdk.mymodule.loadModule({myData: 'load module manually'});
+        }
 
-        scope.hello = function() {
-            //访问SampleModule中的数据
-            console.log(rdk.module1.someData);
+        scope.destory = function() {
+            rdk.mymodule.destroyModule();
+        }
 
-            //调用SampleModule中的方法
-            rdk.module1.hello('module1');
+        scope.moduleReady = function() {
+            alert('The module is ready!');
+        }
+
+        scope.moduleDestory = function() {
+            alert('The module is destoryed!');
         }
     }]);
 });

@@ -1,4 +1,17 @@
-<div controller="SampleModule">
-    <p id="hello@{{$moduleId}}">hello {{data}}</p>
-    <rdk_time id="time"></rdk_time>
+   
+<div controller="SampleModuleController" style="border:1px solid red">
+    <!--
+      模板中使用的所有变量的上下文scope取决于 controller 属性
+      如果指定了controller属性的值，则采用该值对应的控制器的scope来解释模板中的变量
+      注意 rdk_module 所在节点以及模板的根节点都可以有controller属性，RDK优先读取
+      rdk_module 所在节点的controller属性，再读取模板的根节点的controller属性。
+
+      如果未设置任何controller属性，则取离rdk_module节点最近的一个有效控制器作为当前
+      模板的控制器，并无视当前rdk_module节点上已经定义的initData的值。
+
+      模板的第一个非空白字符，必须是 <div>，模板的注释必须写在div的内部
+    -->
+    <h1>这里是 {{$moduleId}}</h1>
+    <p>data = {{data}}</p>
+    <rdk_time></rdk_time>
 </div>

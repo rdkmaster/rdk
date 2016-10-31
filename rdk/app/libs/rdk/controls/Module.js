@@ -1,7 +1,7 @@
 define(['rd.core'], function() {
     var tabApp = angular.module("rd.controls.Module", ['rd.core']);
-    tabApp.directive('rdkModule', ['EventService', 'EventTypes', 'Utils', '$compile', '$controller', '$http',
-        function(EventService, EventTypes, Utils, $compile, $controller, $http) {
+    tabApp.directive('rdkModule', ['EventService', 'EventTypes', 'Utils', '$compile', '$controller', '$http', '$timeout',
+        function(EventService, EventTypes, Utils, $compile, $controller, $http, $timeout) {
             return {
                 restrict: 'E',
                 scope: {
@@ -10,12 +10,28 @@ define(['rd.core'], function() {
                     controller: '@?',
                     loadOnReady: '@?',
                     initData: '=?',
-                    loadTimeout: '@?'
+                    loadTimeout: '@?',
+
+                    loading: '&?',
+                    ready: '&?',
+                    destory: '&?',
                 },
                 replace: true,
                 template: '<div></div>',
                 controller: ['$scope', function(scope) {
                     Utils.publish(scope.id, this);
+
+                    this.loadModule = function(initData, url, controller, timeout) {
+                        url = url ? url : scope.url;
+                        controller = controller ? controller : scope.controller;
+                        initData = initData ? initData : scope.initData;
+                        timeout = timeout ? initData : scope.timeout;
+                        scope.load(url, controller, initData, timeout);
+                    }
+
+                    this.destroyModule = function() {
+                        scope.destroy();
+                    }
                 }],
                 link: function(scope, element, attrs) {
                     scope.url = Utils.getValue(scope.url, attrs.url, '');
@@ -25,6 +41,7 @@ define(['rd.core'], function() {
                     
                     scope.loadContext = undefined;
                     scope.load = _load;
+                    scope.destroy = _destroy;
 
                     if (scope.loadOnReady) {
                         _load(scope.url, scope.controller, scope.initData, scope.loadTimeout);
@@ -32,7 +49,7 @@ define(['rd.core'], function() {
 
                     function _load(url, controller, initData, timeout) {
                         if (scope.loadContext !== undefined) {
-                            console.warn('module has been loaded or being loading!');
+                            console.warn('module has been loaded or been loading!');
                             return;
                         }
 
@@ -41,6 +58,8 @@ define(['rd.core'], function() {
                             return;
                         }
 
+                        EventService.raiseControlEvent(scope, EventTypes.LOADING, scope.id);
+
                         $http.get(url, {timeout: timeout}).success(_compileModule).error(_loadError);
                         scope.loadContext = {controller: controller, initData: initData};
                     }
@@ -48,7 +67,7 @@ define(['rd.core'], function() {
                     function _compileModule(htmlSource) {
                         var html = $(htmlSource);
                         if (!html[0]) {
-                            console.error('invalid module template, url=' + url);
+                            console.error('invalid module template content, url=' + url);
                             return;
                         }
                         var loadContext = scope.loadContext;
@@ -76,17 +95,31 @@ define(['rd.core'], function() {
                         } else {
                             if (initData) {
                                 //采用了全局控制器，定义了的initData会被忽略，给个提示
-                                console.warn('ignoring initData because this module has no controller.')
+                                console.warn('ignoring initData because this module has no controller.');
                             }
                             moduleScope = appScope;
                         }
 
                         $compile($('#' + id))(moduleScope);
+
                         moduleScope.$emit(EventTypes.READY);
+                        $timeout(function() {
+                            EventService.raiseControlEvent(scope, EventTypes.READY, scope.id);
+                        }, 0);
                     }
 
                     function _loadError(data, status, headers, config) {
-                        console.error('load module error(status=' + status + '), url=' + config.url);
+                        console.error('load module error(status: ' + status + '), url=' + config.url);
+                    }
+
+                    function _destroy() {
+                        if (scope.loadContext === undefined) {
+                            return;
+                        }
+                        //destory a module
+                        element.empty();
+                        scope.loadContext = undefined;
+                        EventService.raiseControlEvent(scope, EventTypes.DESTORY, scope.id);
                     }
                 }
             }
