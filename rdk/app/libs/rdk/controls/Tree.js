@@ -10,7 +10,7 @@
                     labelField: '@?',
                     unselectOnBlur: '@?',
                     setting: '=?',
-                    draggable: '=?',
+                    editable: '=?',
                     checkable: '=?',
                     data: '=',
                     click: '&?',
@@ -21,7 +21,8 @@
                     expand: '&?',
                     editname: '&?',
                     unselect: '&?',
-                    check: '&?'
+                    check: '&?',
+                    draggable: '@?'
                 },
                 controller: ['$scope', function(scope) {
                     //把控制器暴露给app
@@ -33,15 +34,10 @@
                     Utils.bindDataSource(attrs, 'data');
                     return {
                         post: function(scope, iElement, iAttrs, controller) {
-                            scope.checkable = Utils.isTrue(iAttrs.checkable);
                             scope.draggable = Utils.isTrue(iAttrs.draggable);
-                            scope.unselectOnBlur = Utils.isTrue(iAttrs.unselectOnBlur);
-
-                            scope.rdkClick = Utils.findFunction(scope, iAttrs.rdkClick);
-                            scope.rdkDoubleClick = Utils.findFunction(scope, iAttrs.rdkDoubleClick);
-                            scope.rdkBeforeClick = Utils.findFunction(scope, iAttrs.rdkBeforeClick);
-                            scope.rdkBeforeDrag = Utils.findFunction(scope, iAttrs.rdkBeforeDrag);
-                            
+                            scope.checkable = Utils.isTrue(iAttrs.checkable);
+                            scope.editable = Utils.isTrue(iAttrs.editable);
+                            scope.unselectOnBlur = Utils.isTrue(iAttrs.unselectOnBlur);                            
                             if (!scope.setting) {
                                 scope.setting = _defaultSetting(scope);
                             }
@@ -75,11 +71,11 @@
                                 _updateTree(rebornID, scope);
                             }, true);
 
-                            scope.$watch('draggable', function(newVal, oldVal) {
+                            scope.$watch('editable', function(newVal, oldVal) {
                                 if (!scope.setting || !scope.setting.edit) {
                                     return;
                                 }
-                                scope.setting.edit.enable = scope.draggable;
+                                scope.setting.edit.enable = scope.editable;
                             });
 
                             scope.$watch('checkable', function(newVal, oldVal) {
@@ -127,10 +123,8 @@
                     },
                     callback: {
                         onClick: _handler,
-                        onDblClick: _handler,
-                        beforeClick: _beforeClick,
-                        beforeDrag: _beforeDrag,
-                        onDrop: _afterDrag,
+                        onDblClick: on_dblclick,
+                        beforeDrag: before_drag,
                         beforeRename: before_rename,
                         beforeRemove: before_remove,
                         beforeCollapse: before_collapse,
@@ -139,7 +133,7 @@
                         onCheck: on_check 
                     },
                     edit: {
-                        enable: scope.draggable || true
+                        enable: scope.editable || true
                     },
                     view: {
                         fontCss: null
@@ -148,56 +142,32 @@
                 return setObj;
 
                 function _handler(event, treeId, treeNode) {
-                    event.treeId = scope.id;
-                    event.name = event.type;
-                    if (event.type == 'click') {
-                        if (!!scope.id) {
-                            EventService.broadcast(scope.id, EventTypes.CLICK, treeNode);
-                        }
-                        var fn = scope.click(scope);
-                        if(!!fn){
-                            return fn(event, treeNode);
-                        }else{
-                            return true;
-                        } 
-                    } else if (event.type == 'dblclick') {
-                        if (!!scope.id) {
-                            EventService.broadcast(scope.id, EventTypes.DOUBLE_CLICK, treeNode);
-                        }
-                        var fn = scope.doubleClick(scope);
-                        if(!!fn){
-                            return fn(event, treeNode);
-                        }else{
-                            return true;
-                        }
-                    }
-                }
-
-                function _beforeClick(treeId, treeNode, clickFlag) {
-                    treeNode.clickFlag = clickFlag;
+                    event.stopPropagation();
                     if (!!scope.id) {
-                        EventService.broadcast(scope.id, 'before_click', treeNode);
+                        EventService.broadcast(scope.id, EventTypes.CLICK, treeNode);
                     }
-                    if (scope.rdkBeforeClick) {
-                        scope.rdkBeforeClick({ name: 'before_click', treeId: scope.id }, treeNode);
-                    }
+                    var fn = scope.click(scope);
+                    if(!!fn){
+                        return fn(event, treeNode);
+                    }else{
+                        return true;
+                    } 
                 }
 
-                function _beforeDrag(treeId, treeNode, clickFlag) {
-                    treeNode.clickFlag = clickFlag;
+                function on_dblclick(event, treeId, treeNode) {
                     if (!!scope.id) {
-                        EventService.broadcast(scope.id, 'before_drag', treeNode);
+                        EventService.broadcast(scope.id, EventTypes.DOUBLE_CLICK, treeNode);
                     }
-                    if (scope.rdkBeforeDrag) {
-                        scope.rdkBeforeDrag({ name: 'before_drag', treeId: scope.id }, treeNode);
-                    }
+                    var fn = scope.doubleClick(scope);
+                    if(!!fn){
+                        return fn(event, treeNode);
+                    }else{
+                        return true;
+                    } 
                 }
 
-                function _afterDrag(event, treeId, treeNodes, targetNode, moveType, isCopy){
-                    var treeData = $.fn.zTree.getZTreeObj(treeId).getNodes();
-                    if(scope.id){
-                        EventService.broadcast(scope.id, EventTypes.CHANGE, treeData);
-                    }
+                function before_drag(treeId, treeNode) {
+                    return eval(scope.draggable)
                 }
 
                 function before_expand(treeId, treeNode){
