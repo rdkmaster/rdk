@@ -5,18 +5,12 @@
 
 .svrMsgBox{
 	width: 400px; 
-	overflow: visible; 
+	overflow: visible;
 	z-index: 1001; 
 }
-
-.wrapBox{
-	border: 1px solid #37B6D1;
-	background-color: #fff; 
-	font-size: 12px;
-	border-radius: 5px;
-
+#__svrMsgBox__1{
+	padding:0 !important ;
 }
-
 .titleLine{
 	line-height: 34px;
 	padding: 0px 5px;
@@ -33,14 +27,14 @@
 
 .btnLine{
 	text-align: center;
-	padding: 0px 0px 20px;
 }
 
 .svrMsgBtn{
 	border: 1px solid #E3E3E3;
-	background-color: #E3E3E3;
+	background-color: #e78f4e;
 	width: 80px;
 	height: 30px;
+	outline: none;
 	border-radius: 5px;
 	margin: 0 13px 20px 13px;
 }
@@ -54,4 +48,10 @@
 }
 .ui-dialog {
 	width:508px !important;
+}
+.svrMsgBtn:focus{
+	border:1px solid #fff;
+}
+.ui-dialog .ui-dialog-content{
+	padding:0;
 }
