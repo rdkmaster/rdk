@@ -113,7 +113,6 @@ object RdkUtil extends Logger {
     }
 
     try {
-      val begin = System.currentTimeMillis()
       val service = runtime.require(realJs).asInstanceOf[ScriptObjectMirror]
       val callable: AnyRef = service.getMember(method)
       if (isDefined(callable) && callable.isInstanceOf[ScriptObjectMirror]) {
