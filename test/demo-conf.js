@@ -1,8 +1,13 @@
+var common=require("./e2ecommon/common.js");
+var getBrowserName=common.getBrowserName;
+var addReport=common.addReport;
+var funs=[getBrowserName,addReport];
+var sum=funs.length;
+var orderize=common.orderize;
 exports.config = {
     allScriptsTimeout: 15000,
 
     specs:['doc/testjs/demo4.js'],
-
 
     multiCapabilities: [
         {
@@ -20,10 +25,6 @@ exports.config = {
 
     onPrepare: function() {
         browser.driver.manage().window().maximize();
-        var Jasmine2HtmlReporter = require('./index.js');
-         jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
-            savePath: './report/doc',
-            takeScreenshotsOnlyOnFailures:'./report/doc'
-        }));
+        orderize(funs,0,sum);
     }
 };
