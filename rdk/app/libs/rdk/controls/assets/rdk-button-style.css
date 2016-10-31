@@ -49,11 +49,11 @@
 .rdk-button-guidance {
 	background: #85c56c;
 }
-.rdk-button-selected{
-	background:rgba(0,0,0,0.15);
-}
 .rdk-shade-opacity {
   	background:rgba(0,0,0,0.08);
+}
+.rdk-button-selected{
+	background:rgba(0,0,0,0.15);
 }
 .rdk-button-enabled{
 	background:#ddd;
