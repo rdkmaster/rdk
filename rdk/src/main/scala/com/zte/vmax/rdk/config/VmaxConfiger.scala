@@ -12,7 +12,7 @@ import com.zte.vmax.rdk.util.Logger
   */
 object VmaxConfiger extends Logger {
 
-  private val ICT_BASE: String = "../../../../../../../.."
+  private val ICT_BASE: String = "../../../../../.."
   private val `serviceaddress.properties`: String = ICT_BASE + "/utils/vmax-conf/serviceaddress.properties"
   private val `deploy-console.properties`: String = ICT_BASE + "/utils/console/works/console1/conf/deploy-console.properties"
   private val `deploy-usf.properties`: String = ICT_BASE + "/works/global/deploy/deploy-usf.properties"
