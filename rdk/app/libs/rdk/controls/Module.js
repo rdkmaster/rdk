@@ -118,6 +118,9 @@ define(['rd.core'], function() {
                         }
                         //destory a module
                         element.empty();
+                        // if (scope.id) {
+                        //     delete rdk[scope.id];
+                        // }
                         scope.loadContext = undefined;
                         EventService.raiseControlEvent(scope, EventTypes.DESTORY, scope.id);
                     }

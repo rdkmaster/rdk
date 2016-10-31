@@ -2,11 +2,27 @@
 <div controller="SampleModuleController" style="border:1px solid red">
     <p>这是模块的初始化数据：{{myData}}</p>
     <p>这是模块控制预定义的数据：{{someData}}</p>
-    <p style="margin-top:30px">下面一个更复杂的模块加载示例</p>
-    <p>可以在运行期再决定要加载哪个url，给新模块绑定哪个控制器，给新模块哪些初始化数据等</p>
 
-    <button ng-click="load()">load</button>
+    <p style="margin-top:30px">
+        <a href="#" ng-click="showComplexDemo = true;">演示一个更复杂的模块加载示例</a>
+    </p>
+    <div ng-show="showComplexDemo" ng-init="showComplexDemo = false">
+        <p>可以在运行期再决定要加载哪个url，要绑定哪个控制器，要哪些初始化数据。</p>
 
-    <!-- 定义一个空的rdk_module节点，它的所有参数都暂时未知 -->
-    <rdk_module id="newModule" load_on_ready="false"></rdk_module>
+        <span>模块URL：</span>
+        <select ng-model="moduleUrl">
+            <option>template/new-module1.html</option>
+            <option>template/new-module2.html</option>
+        </select>
+        <span>模块控制器</span>
+        <select ng-model="moduleCtrl">
+            <option>NewModuleController1</option>
+            <option>NewModuleController2</option>
+        </select>
+        <input type="text" ng-model="initData">
+        <button ng-click="load()">load</button>
+
+        <!-- 定义一个空的rdk_module节点，它的所有参数都暂时未知 -->
+        <rdk_module id="newModule" load_on_ready="false"></rdk_module>
+    </div>
 </div>

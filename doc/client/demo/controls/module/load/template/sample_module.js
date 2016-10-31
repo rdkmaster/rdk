@@ -14,8 +14,15 @@ define(['new-module1', 'new-module2'], function() {
         //只有定义在this上的属性才能发布给外部。
         scope.someData = 'some data defined in the SampleModule controller...';
 
+        //界面是的控件的初始化数据
+        scope.moduleUrl = 'template/new-module1.html';
+        scope.moduleCtrl = 'NewModuleController2';
+        scope.initData = 'init data.......';
+
         scope.load = function() {
-            rdk.newModule.load({myData: 'init data....'}, 'template/new-module1.html', 'NewModuleController1');
+            //先销毁才能再加载
+            rdk.newModule.destroyModule();
+            rdk.newModule.loadModule({myData: scope.initData}, scope.moduleUrl, scope.moduleCtrl);
         }
     }]);
 });
