@@ -115,6 +115,9 @@ define(['angular', 'jquery', 'underscore', 'rd.core','rd.controls.FoldSelector',
                         });
                         //里面发到外面
                         EventService.register(idStr, EventTypes.CHANGE, function(event, data){
+                            if(angular.isArray(data)){
+                               _refreshSelectedItems(data); 
+                            }
                             var changeObj = {};
                             changeObj.id = idStr;
                             changeObj.data = data;
