@@ -85,7 +85,8 @@ Angular没有加载到页面,需要自己手动打开页面控制台是否有什
 看报错信息配合运行时候仔细观察
 网络搜索答案：[http://stackoverflow.com/](http://stackoverflow.com/)  
 ##六.配置文件注解  
-![](imgs/2016-10-21_094148.png)  
+![](imgs/2016-10-21_094148.png)   
+配置官方示例：[https://www.npmjs.com/package/protractor-jasmine2-html-reporter](https://www.npmjs.com/package/protractor-jasmine2-html-reporter)  
 allScriptsTimeout:页面打开的超时限制  
 specs:单元素的数组，支持通配写法，规定要测试的用例路径以及哪些用例  
 multiCapabilities:数组对象，规定测试环境依赖的浏览器类型  

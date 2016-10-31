@@ -1,3 +1,9 @@
+var common=require("./e2ecommon/common.js");
+var getBrowserName=common.getBrowserName;
+var addReport=common.addReport;
+var funs=[getBrowserName,addReport];
+var sum=funs.length;
+var orderize=common.orderize;
 exports.config = {
     //出现过11秒页面载入没完成时候，改为15秒
     allScriptsTimeout: 15000,
@@ -25,9 +31,6 @@ exports.config = {
 
     onPrepare: function() {
         browser.driver.manage().window().maximize();
-        var Jasmine2HtmlReporter = require('./index.js');
-         jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
-            savePath: './report/e2e'
-        }));
+        orderize(funs,0,sum);
     }
 };
