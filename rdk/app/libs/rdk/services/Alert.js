@@ -22,16 +22,16 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
         }
 
         function _getTemplate(title, imgSrc, message, btnTmpl){
-            return '<div id='+ _svrMsgBoxId +' class="svrMsgBox" rdk_modal="hide">'+
-                '<div class="wrapBox">'+
-                    '<div class="titleLine">'+
+            return '<div id='+ _svrMsgBoxId +' class="rdk-alert-svrMsgBox" rdk_modal="hide">'+
+                '<div class="rdk-alert-wrapBox">'+
+                    '<div class="rdk-alert-titleLine">'+
                         title +
                     '</div>'+
-                    '<div class="tableImg">' +
+                    '<div class="rdk-alert-tableImg">' +
                         '<img src=' + imgSrc + '>'+
                     '</div>'+
-                    '<p class="tableMsg">'+ message +'</p>'+
-                    '<div class="btnLine">'+
+                    '<p class="rdk-alert-tableMsg">'+ message +'</p>'+
+                    '<div class="rdk-alert-btnLine">'+
                         btnTmpl+
                     '</div>'+
                 '</div>'+
@@ -41,16 +41,16 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
         function _getBtnsTemplate(btnVal){
             var myBtns = '';
             if(btnVal & ButtonTypes.YES){
-                myBtns += '<input class="svrMsgBtn" type="button" value=' + _i18n.yes + ' ng-click="svrClickHandler('+ ButtonTypes.YES +')">';
+                myBtns += '<input class="rdk-alert-svrMsgBtn" type="button" value=' + _i18n.yes + ' ng-click="svrClickHandler('+ ButtonTypes.YES +')">';
             }
             if(btnVal & ButtonTypes.NO){
-                myBtns += '<input class="svrMsgBtn" type="button" value=' + _i18n.no + '  ng-click="svrClickHandler('+ ButtonTypes.NO +')">';
+                myBtns += '<input class="rdk-alert-svrMsgBtn" type="button" value=' + _i18n.no + '  ng-click="svrClickHandler('+ ButtonTypes.NO +')">';
             }
             if(btnVal & ButtonTypes.CANCEL){
-                myBtns += '<input class="svrMsgBtn" type="button" value=' + _i18n.cancel + ' ng-click="svrClickHandler('+ ButtonTypes.CANCEL +')"">';
+                myBtns += '<input class="rdk-alert-svrMsgBtn" type="button" value=' + _i18n.cancel + ' ng-click="svrClickHandler('+ ButtonTypes.CANCEL +')"">';
             }
             if(btnVal & ButtonTypes.OK){
-                myBtns += '<input class="svrMsgBtn" type="button" value=' + _i18n.ok + ' ng-click="svrClickHandler('+ ButtonTypes.OK +')">';
+                myBtns += '<input class="rdk-alert-svrMsgBtn" type="button" value=' + _i18n.ok + ' ng-click="svrClickHandler('+ ButtonTypes.OK +')">';
             }
             return myBtns;
         }
