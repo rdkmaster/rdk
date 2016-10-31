@@ -104,7 +104,6 @@
 示例如下：
 <live_demo example="controls/tree/draggable" width="900"></live_demo>
 
-
 ##checkable##
 > 支持类型：Boolen值
 
@@ -219,12 +218,6 @@ html代码如下：
 示例如下：
 <live_demo example="controls/tree/event_beforeEditName" width="900"></live_demo>
 
-##UNSELECT##
-
-事件类型：EventTypes.UNSELECT，监听 UNSELECT_ON_BLUR 事件，即点击tree以外的地方可以得到此事件，用来清空之前选择节点的缓存数据。
-示例如下：
-<live_demo example="controls/tree/event_unselect" width="900"></live_demo>
-
 ##CHECK##
 
 事件类型：EventTypes.CHECK，监听 ON_CHECK 事件，即设置可勾选属性后，勾选tree节点后，可以得到勾选的节点。
@@ -237,6 +230,14 @@ html代码如下：
 ##通过如下方式我们可以得到zTreeObj，可以直接调用zTree方法##
 
 <live_demo example="controls/tree/tree_method" width="900"></live_demo>
+
+###利用zTree方法的综合案例：
+
+此案例,选择某个节点后鼠标点击树控件外侧时 选择失效恢复最初没有选择状态。
+
+示例如下：
+<live_demo example="controls/tree/unselect_on_blur" width="900"></live_demo>
+
 
 ztree  API
 [http://http://www.treejs.cn/v3/api.php](http://http://www.treejs.cn/v3/api.php)
