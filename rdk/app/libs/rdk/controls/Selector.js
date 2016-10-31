@@ -91,6 +91,7 @@ define(['angular', 'jquery', 'underscore', 'rd.core','rd.controls.FoldSelector',
 
                 if(scope.change(scope)){
                     scope.foldSelectorChange = function(event, data){
+                        _refreshSelectedItems(data);
                         scope.change(scope)(event, data);
                     }
                 }
@@ -120,6 +121,25 @@ define(['angular', 'jquery', 'underscore', 'rd.core','rd.controls.FoldSelector',
                             EventService.broadcast(scope.id, EventTypes.CHANGE, changeObj);
                         });
                     })
+                }
+
+                function _refreshSelectedItems(data){
+                    var lastSelObj = data[data.length-1];
+                    var key = _selectedKey(lastSelObj);
+                    scope.selectedItems[key] = data;
+                }
+
+                function _selectedKey(selObj){
+                    delete selObj.$$hashKey;
+                    var keys = _.keys(scope.data);
+                    for(var i=0; i<keys.length; i++){
+                        var arr = scope.data[keys[i]];
+                        var idx = _.findIndex(arr, selObj);
+                        if(idx != -1){
+                            return keys[i];
+                        }
+                    }
+                    return keys[0];
                 }
 
                 function _generateIDList(){
