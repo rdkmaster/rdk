@@ -1,4 +1,4 @@
-<rdk_title>Tree</rdk_title>
+﻿<rdk_title>Tree</rdk_title>
 
 
 # 简介 #
@@ -78,34 +78,32 @@
 示例如下：
 <live_demo example="controls/tree/datasource" width="900"></live_demo>
 
-##draggable##
+##editable##
 > 支持类型：Boolen值
 
-此属性配置树形节点是否可以拖拽，默认值为false。
+此属性配置树形节点是否可以编辑，默认值为false。
 
-当`draggable`属性为true时，可以对节点进行如下操作：
+当`editable`属性为true时，可以对节点进行如下操作：
 
-- 拖拽节点
 - 修改选中节点的名称
 - 删除选中的节点（此删除并不会真正的删除数据源的对应节点）
 
-    <rdk_tree draggable=true></rdk_tree>
+    <rdk_tree editable=true></rdk_tree>
+示例如下：
+
+<live_demo example="controls/tree/editable" width="900"></live_demo>
+
+
+##draggable##
+> 支持类型：Boolen值
+
+此属性配置树形节点是否可以拖拽，必须配合draggable属性一起使用，当属性为true时可以拖拽，
+
+	<rdk_tree editable=true draggable=true></rdk_tree>
+
 示例如下：
 <live_demo example="controls/tree/draggable" width="900"></live_demo>
 
-##unselect_on_blur##
-> 支持类型：Boolen值
-
-此属性配置,选择某个节点后鼠标点击树控件外侧时 选择失效恢复最初没有选择状态，默认值为false。
-
-    <rdk_tree unselect_on_blur='true'></rdk_tree>
-示例如下：
-<live_demo example="controls/tree/unselect_on_blur" width="900"></live_demo>
-
-还可以通过阻止事件冒泡选择不让它取消选择
-
-示例如下：
-<live_demo example="controls/tree/unselect" width="900"></live_demo>
 
 ##checkable##
 > 支持类型：Boolen值
@@ -129,6 +127,54 @@ setting里可以设置async属性根据需求设置数据地址等一些列参�
 	
 <live_demo example="comprehensive/tree/lazy_load/web" width="900"></live_demo>
 
+##click##
+此属性配置，可以直接为rdk_tree，添加click事件函数
+html代码如下：
+
+    <rdk_tree click="clickFun"></rdk_tree>
+
+##double_click##
+此属性配置，可以直接为rdk_tree，添加onDblClick事件函数
+html代码如下：
+
+    <rdk_tree double_click="doubleclickFun"></rdk_tree>
+
+##collapse##
+此属性配置，可以直接为rdk_tree，添加before_collapse事件函数
+html代码如下：
+
+    <rdk_tree collapse="collapseFun"></rdk_tree>
+
+##expand##
+此属性配置，可以直接为rdk_tree，添加before_expand事件函数
+html代码如下：
+
+    <rdk_tree expand="expandFun"></rdk_tree>
+
+##rename##
+此属性配置，可以直接为rdk_tree，添加before_rename事件函数
+html代码如下：
+
+    <rdk_tree rename="renameFun"></rdk_tree>
+
+##remove##
+此属性配置，可以直接为rdk_tree，添加before_remove事件函数
+html代码如下：
+
+    <rdk_tree remove="removeFun"></rdk_tree>
+
+##editname##
+此属性配置，可以直接为rdk_tree，添加before_editname事件函数
+html代码如下：
+
+    <rdk_tree editname="editnameFun"></rdk_tree>
+
+##check##
+此属性配置，可以直接为rdk_tree，添加check事件函数
+html代码如下：
+
+    <rdk_tree check="checkFun"></rdk_tree>
+
 #事件#
 
 ##CLICK##
@@ -146,6 +192,7 @@ setting里可以设置async属性根据需求设置数据地址等一些列参�
 
 事件类型：EventTypes.BEFORE_COLLAPSE，监听到外层的 before_collapse 事件，即关闭被选中树的某个节点，也可以在rdk_tree标签里，直接定义collapse函数。
 示例如下：
+
 <live_demo example="controls/tree/event_beforeCollapse" width="900"></live_demo>
 
 ##BEFORE_EXPAND##
