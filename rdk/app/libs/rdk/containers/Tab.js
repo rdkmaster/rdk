@@ -42,6 +42,25 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     add: '&?'
                 },
                 replace: true,
+                controller: ['$scope', function(scope){
+                    Utils.publishController(scope.id, this);
+
+                    this.addTab = function(source, tabController, initData){
+                        scope.addTab(source, tabController, initData);
+                    }
+
+                    this.destroyTab = function(index){
+                        scope.destroyTab(index);
+                    }
+
+                    this.closeTab = function(index){
+                        scope.closeTab(index);
+                    }
+
+                    this.getTabs = function(){
+                        return scope.tabs;
+                    }
+                }],
                 template: function(tElement, tAttrs) {
                     return '<div class="rdk-tab-module">\
                                 <div class="tabs">\
@@ -73,7 +92,6 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 scope.selectedTab = Utils.getValue(scope.selectedTab, attrs.selectedTab, 0); 
                 scope.appScope = Utils.findAppScope(scope);
                 scope.compileScope = scope.appScope;                
-                Utils.publish(scope);
 
                 var dom = element[0].querySelector(".tabs");
                 scope.tabs = [];
