@@ -28,14 +28,24 @@
 	line-height: 26px;
 	text-align:left;
 }
-
+.rdk-alert-yes {
+	background: #85c56c;
+}
+.rdk-alert-no {
+	background: #5395d8;
+}
+.rdk-alert-cancel {
+	background: #85c56c;
+}
+.rdk-alert-ok {
+	background: #5395d8;
+}
 .rdk-alert-btnLine{
 	text-align: center;
 }
 
 .rdk-alert-svrMsgBtn{
 	border: 1px solid #E3E3E3;
-	background-color: #5395d8;
 	width: 80px;
 	height: 30px;
 	outline: none;
@@ -53,6 +63,6 @@
 .rdk-alert-ui-dialog {
 	width:508px !important;
 }
-..rdk-alert-svrMsgBtn:focus{
+.rdk-alert-svrMsgBtn:focus{
 	border:1px solid #fff;
 }
