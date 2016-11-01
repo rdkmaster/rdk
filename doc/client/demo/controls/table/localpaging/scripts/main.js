@@ -8,7 +8,7 @@ define('main', ['rd.controls.Table'], function() {
         });      
 
         $scope.clickHandler = function(){
-           rdk.tableID.pageSize = 3;
+           rdk.tableID.setPageSize(3);
         } 
     }]);
 });
