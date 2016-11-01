@@ -265,6 +265,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     return scope.pageNumber;
                 }
 
+                this.setPageSize = function(_pageSize){
+                    scope.pageSize = _pageSize;
+                }
+
                 this.getTableAppScope = function() {
                     return scope.appScope;
                 }
@@ -407,8 +411,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 scope.baseCondition = data.condition;
                             });
                         };
-
-                        Utils.publish(scope);
 
                         //分页栏是否展现
                         scope.pageVisible = Utils.isTrue(scope.pagingVisible, true);
