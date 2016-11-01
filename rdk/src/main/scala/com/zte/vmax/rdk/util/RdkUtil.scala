@@ -77,7 +77,7 @@ object RdkUtil extends Logger {
     val ip: String = Config.get("ActiveMQ.ip", "localhost")
     val port: String = Config.get("ActiveMQ.port", "61616")
 
-    logger.error(s"creating ActiveMQ...$ip:$port")
+    logger.info(s"creating ActiveMQ...$ip:$port")
 
     Try {
       val mq = new RDKActiveMQ(ip, port)
