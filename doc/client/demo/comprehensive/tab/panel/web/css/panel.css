@@ -16,8 +16,8 @@
     padding: 0;
 }
 /* 滚动条*/
-.panel-content { overflow:hidden}
-.content{height:248px;padding-right:4px;overflow:hidden;}
+.panel-content {overflow:hidden}
+.content{height:248px;padding-right:4px;}
 /* title */
 .panel-title {
     border: 0;
