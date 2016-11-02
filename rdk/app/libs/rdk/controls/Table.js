@@ -266,6 +266,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 }
 
                 this.setPageSize = function(_pageSize){
+                    if(scope.pageSize == _pageSize) return;
                     scope.pageSize = _pageSize;
                     this.setCurrentPage(scope.currentPage);
                 }
