@@ -512,8 +512,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             }
                         }, true);
 
-                        scope.$watch("pageSize", function(){
-                            ctrl.setCurrentPage(scope.currentPage);
+                        scope.$watch("pageSize", function(newVal, oldVal){
+                            if(newVal != oldVal){
+                                ctrl.setCurrentPage(scope.currentPage);
+                            }
                         }, true);
 
 
