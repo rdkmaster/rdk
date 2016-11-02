@@ -37,6 +37,7 @@
     "singleIndicator":"protractor singleIndicator-conf.js",
     "progressBar":"protractor progressBar-conf.js",
     "button":"protractor button-conf.js",
+    "alert":"protractor alert-conf.js",
     "protractor_debug" : "protractor debug protractor-conf.js"
   }
 }

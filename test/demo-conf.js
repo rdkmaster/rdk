@@ -1,9 +1,3 @@
-var common=require("./e2ecommon/common.js");
-var getBrowserName=common.getBrowserName;
-var addReport=common.addReport;
-var funs=[getBrowserName,addReport];
-var sum=funs.length;
-var orderize=common.orderize;
 exports.config = {
     allScriptsTimeout: 15000,
 
@@ -22,9 +16,17 @@ exports.config = {
     },
 
     ignoreSynchronization: true,
-
+    
     onPrepare: function() {
         browser.driver.manage().window().maximize();
-        orderize(funs,0,sum);
+        var Jasmine2HtmlReporter = require('./index.js');
+        return browser.getProcessedConfig().then(function(config){
+            var browserName=config.capabilities.browserName;
+            var htmlSetting=new Jasmine2HtmlReporter({
+                savePath:'./report/doc/'+browserName
+            });
+            jasmine.getEnv().addReporter(htmlSetting);
+        })
     }
 };
+
