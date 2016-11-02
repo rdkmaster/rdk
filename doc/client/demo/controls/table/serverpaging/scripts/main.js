@@ -20,7 +20,7 @@ define('main', ['rd.controls.Table'], function() {
         }); 
 
         $scope.clickHandler = function(){
-           rdk.tableID.pageSize = 10;
+           rdk.tableID.setPageSize(10);
         }
     }]);
 });
