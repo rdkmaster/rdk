@@ -267,6 +267,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                 this.setPageSize = function(_pageSize){
                     scope.pageSize = _pageSize;
+                    this.setCurrentPage(scope.currentPage);
                 }
 
                 this.getTableAppScope = function() {
@@ -511,13 +512,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 ctrl.pageCtrl.setPageByTable(scope.currentPage);
                             }
                         }, true);
-
-                        scope.$watch("pageSize", function(newVal, oldVal){
-                            if(newVal != oldVal){
-                                ctrl.setCurrentPage(scope.currentPage);
-                            }
-                        }, true);
-
 
                         scope.$watch("$filtered", function(newVal, oldVal) {
                             if (newVal) {
