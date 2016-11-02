@@ -28,9 +28,9 @@ define(['rd.modules.i18n'],
                     wait: '正在查询，请稍候...',
                     lang: '当前的语言环境是 {0}',
 
-                    alert_yes: '是',
-                    alert_no: '否',
-                    alert_ok: '确定',
+                    alert_yes: '点下赞成',
+                    alert_no: '点下反对',
+                    alert_ok: '点下就确定',
                 }
             }
 

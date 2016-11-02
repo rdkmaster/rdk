@@ -88,9 +88,6 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
                 _callback(val);
             }
         }
-        function _openClick(){
-            _clickHandler(val)
-        }
         function _popupWindow(modal, template){
             if(alertService.scope == undefined){
                 console.error('请在调用弹出提示框前，调用Alert.scope=scope完成scope的初始化！');
@@ -101,7 +98,6 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
 
                 var appScope = Utils.findAppScope(alertService.scope);
                 appScope.svrClickHandler = _clickHandler;
-                appScope.openClick = _openClick;
                 $compile($('#'+_svrMsgBoxId))(alertService.scope);
 
                 var pos = {
@@ -116,7 +112,7 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
         function _initializeTemplate(title, imgSource, message, button, modal,close){
             var myTitle = title?title:'&nbsp';
             var myMessage = message?message:'&nbsp';
-            var myClose = close==false ? close: 'true';
+            var myClose = Utils.isTrue(close, true);
             var myBtnTmpl = _getBtnsTemplate(button);
             var template = _getTemplate(myTitle, imgSource, myMessage, myBtnTmpl,myClose);
             _popupWindow(modal,template);

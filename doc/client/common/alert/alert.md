@@ -40,6 +40,23 @@ Alert 服务用于弹出提示信息的对话框，可能包含消息、标题�
 
 `button`设置成 `空字符串` 或者`null` 时，调用`confirm`方法时默认有`是/否/取消`三个按钮，调用另外三个方法时默认只有`确定`按钮。
 
+四种按钮中的文字内容是可以改动的,方法如下：
+在打开在main.js同目录下的国际化文件i18n.js,这个文件还要引入进index.html页面里，怎么引入可以查看国际化文件怎么引入，打开找到如下代码
+
+"zh_CN": {
+                    welcome: '你的 RDK 应用可以正常工作了！',
+                    wait: '正在查询，请稍候...',
+                    lang: '当前的语言环境是 {0}',
+
+                    alert_yes: '是',
+                    alert_no: '否',
+                    alert_ok: '确定',
+                    alert_cancel: '取消',
+                }                
+ 找到对应的按钮如 ButtonTypes.YES对应alert_yes,改变其文字就可以改变对应按钮的文字内容,如alert_yes的值改为'点下赞成'，那么ButtonTypes.YES按钮的文字内容也变成了'点下赞成'，详细示例:
+
+ <live_demo example="common/alert/demoi18n" width="900" height="400"></live_demo>
+
 **<font color=red>注意</font>**
 默认语言环境是`zh-CN`，按钮是中文状态，对应`是/否/确定/取消`。用户可以通过`setLang()`方法改写成英文状态。
 
@@ -69,13 +86,28 @@ Alert 服务用于弹出提示信息的对话框，可能包含消息、标题�
 ### modal ###
 > 布尔型
 
-取值只可能是 `true` 或者 `false` 两种。代表模态和非模态。作为最后一个形参，`modal` 可以缺省，缺省时默认为`true`。
+取值只可能是 `true` 或者 `false` 两种。代表模态和非模态。当最后一个参数缺省时，`modal` 才可以缺省，缺省时默认为`true`。
 
 - `modal` 设置成 `true` 时，代表弹出框为模态窗口。
 - `modal` 设置成 `false` 时，代表弹出框为非模态窗口。
 
 `modal`设置成 `空字符串` 或者`null`时，默认弹出框是模态窗口。
 
+### close ###
+> 布尔型
+
+取值只可能是 `true` 或者 `false` 两种。代表出现一个有叉叉图标的闭关按钮 和 隐藏关闭按钮 。作为最后一个形参，`false` 可以缺省，缺省时默认为`true`。
+
+- `close` 设置成 `true` 时，代表弹出框有关闭按钮 。
+- `close` 设置成 `false` 时，代表弹出框没有闭按钮 。
+
+`close`设置成 `空字符串` ，默认弹出框是有关闭按钮。
+
+当`close` 设置成'true' 时，详细示例：
+<live_demo example="common/alert/close1" width="900" height="400"></live_demo>
+
+当`close` 设置成'false' 时，详细示例：
+<live_demo example="common/alert/close2" width="900" height="400"></live_demo>
 
 # 对话框示例 #
 
