@@ -4,7 +4,9 @@
 `rdk_module` 主要使用在如下两个场景：
 
 1. 多人协同开发。复杂app往往需要多人一起协同开发，可以将app拆开为若干个`rdk_module`，然后分给不同的队员开发，最后组装成一个app。
-2. 雷同功能的复用。可以将一些常用的功能适当包装成一个 `rdk_module`，并在多个app中复用。比如多数app都有查询条件栏，一般是一个时间框+一个地市选择框，将这个常用的条件栏包装成一个`rdk_module`，就可以直接用到多个app上，而无需每个页面都去开发相同的条件查询栏。再如多数展示数据的app都采用左边饼图为概要信息，右侧表格/柱状图为详情，并实现左右两边联动，这样的功能也可以包装为`rdk_module`在多页面中复用。
+2. 雷同功能的复用。可以将一些常用的功能适当包装成一个 `rdk_module`，并在多个app中复用。比如：
+	- 多数app都有查询条件栏，一般是一个时间框+一个地市选择框，将这个常用的条件栏包装成一个`rdk_module`，就可以直接用到多个app上，而无需每个页面都去开发相同的条件查询栏。
+	- 多数展示数据的app都采用左边饼图为概要信息，右侧表格/柱状图为详情，并实现左右两边联动，这样的功能也可以包装为`rdk_module`在多页面中复用。
 
 基本用法如下
 
@@ -17,13 +19,9 @@
 
 模块对应的模板的url，一个模板实际上就是一个html片段，模板的第一个非空白字符，必须是 `<div>`，模板的注释必须写在div的内部。下面是一个简单的html模板：
 
-	<div controller="SampleModuleController">
-	    <h1>这里是 {{$moduleId}}</h1>
-	    <p>data = {{data}}</p>
-	    <rdk_time></rdk_time>
-	</div>
+![](template.png)
 
-模板中使用的所有变量的上下文scope取决于 controller 属性
+模板中使用的所有变量的上下文scope取决于 controller 属性的值。
 
 
 ## `controller`  ##
@@ -33,6 +31,10 @@
 
 - 如果设置了 controller 的值，则采用该值对应的控制器的scope来解释模板中的变量。
 - 如果未设置任何 controller 属性，则取离 `rdk_module` 节点最近的一个有效控制器的scope来解释模板中的变量，并无视当前`rdk_module`节点上已经定义的initData的值。
+
+控制器非常有用，它可以给模板创建一个隔离的作用域。我们可以把与模板相关的业务逻辑都编写在这个隔离的作用域中，这样可以实现高度内聚的模块，这样我们可以更好的维护代码。
+
+模板中的变量优先从本控制器的作用域中获取，如果在本作用域中找不到该变量，则会采用从上级作用域中的同名变量。
 
 `rdk_module` 所在节点以及模板的根节点都可以有controller属性，RDK优先读取 `rdk_module` 所在节点的controller属性，再读取模板的根节点的controller属性。
 
@@ -79,7 +81,7 @@
 
 <live_demo example="controls/module/simple_load" width="900"></live_demo>
 
-给`rdk_module`节点定义一个id属性，然后用这个代码就可以调用模块的方法了：
+给`rdk_module`节点定义一个id属性，值为`mymodule`，然后用这个代码就可以调用模块的方法了：
 
 	var initData = {};
 	rdk.mymodule.loadModule(initData);
@@ -101,4 +103,35 @@
 利用这个方法可以销毁一个模块。当一个模块完成了它的作用之后，可以调用这个方法将其销毁，回收其所占用的资源。
 
 下面是一个基本用法的demo
+<live_demo example="controls/module/simple_load" width="900"></live_demo>
+
+## `child`属性 ##
+
+可以这样类比：controller属性的值是控制器的名字，相当于一个类，RDK在编译这个模块的模板的时候，会将这个类实例化出一个对象出来，并将这个对象用`child`属性来引用，因此`child`属性本质上是本模块的控制器的一个实例。
+
+因此，通过`child`属性我们可以访问到本模块控制器上的所有方法和属性。
+
+给`rdk_module`节点定义一个id属性，值为`mymodule`，然后用这个代码就可以调用`child`属性了：
+
+	var initData = {};
+	rdk.mymodule.child;
+
+请参考下面这个demo的main.js中`scope.hello`函数的代码
+<live_demo example="controls/module/simple_load" width="900"></live_demo>
+
+
+# 事件 #
+
+## EventTypes.LOADING ##
+
+当模块开始加载时发出此事件。
+
+## EventTypes.READY ##
+
+当模块一切准备就绪时发出此事件。
+<live_demo example="controls/module/simple_load" width="900"></live_demo>
+
+## EventTypes.DESTROY ##
+
+当模块被销毁之后发出此事件。
 <live_demo example="controls/module/simple_load" width="900"></live_demo>

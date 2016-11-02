@@ -1,0 +1,12 @@
+
+
+.condition-bar{
+    padding:4px 5px 4px 4px;
+    height:40px;
+    overflow:hide;
+    background:#008fd4;
+}
+
+.icon-calendar {
+    background: #008fd4 url(../images/calendar.png) no-repeat 5px 5px;
+}
