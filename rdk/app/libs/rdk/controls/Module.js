@@ -14,7 +14,7 @@ define(['rd.core'], function() {
 
                     loading: '&?',
                     ready: '&?',
-                    destory: '&?',
+                    destroy: '&?',
                 },
                 replace: true,
                 template: '<div></div>',
@@ -26,12 +26,33 @@ define(['rd.core'], function() {
                         controller = controller ? controller : scope.controller;
                         initData = initData ? initData : scope.initData;
                         timeout = timeout ? initData : scope.timeout;
-                        scope.load(url, controller, initData, timeout);
+                        scope.loadModule(url, controller, initData, timeout);
                     }
 
                     this.destroyModule = function() {
-                        scope.destroy();
+                        scope.destroyModule();
                     }
+
+                    this.child = null;
+
+                    //延迟更新一些属性
+                    var thisController = this;
+                    scope.$on('update_controller', function(event, data) {
+                        if (event.targetScope !== scope) {
+                            return;
+                        }
+                        thisController[data.key] = data.value;
+                    });
+
+                    //当前模块已经被销毁了
+                    scope.$on('$destroy', function() {
+                        //清理掉自己寄存在上下文中的数据
+                        if (rdk[scope.id]) {
+                            delete rdk[scope.id];
+                        }
+                        //自己被销毁了，尝试销毁自己的子级
+                        scope.destroyModule();
+                    });
                 }],
                 link: function(scope, element, attrs) {
                     scope.url = Utils.getValue(scope.url, attrs.url, '');
@@ -40,8 +61,11 @@ define(['rd.core'], function() {
                     scope.loadTimeout = Utils.getValue(scope.loadTimeout, attrs.loadTimeout, 10000);
                     
                     scope.loadContext = undefined;
-                    scope.load = _load;
-                    scope.destroy = _destroy;
+                    scope.loadModule = _load;
+                    scope.destroyModule = _destroy;
+
+                    var moduleScope;
+                    var appScope = Utils.findAppScope(scope);
 
                     if (scope.loadOnReady) {
                         _load(scope.url, scope.controller, scope.initData, scope.loadTimeout);
@@ -77,21 +101,21 @@ define(['rd.core'], function() {
                         html.attr('id', id);
                         element.append(html);
 
-                        var moduleScope;
-                        var appScope = Utils.findAppScope(scope);
                         var ctrl = loadContext.controller;
                         var initData = loadContext.initData;
                         ctrl = ctrl ? ctrl : html.attr('controller');
                         if(ctrl) {
                             moduleScope = appScope.$new();
                             //实例化一个控制器
-                            $controller(ctrl, {$scope: moduleScope});
                             if (angular.isObject(initData)) {
                                 Utils.shallowCopy(initData, moduleScope);
                             } else {
                                 moduleScope.initData = initData;
                             }
                             moduleScope.$moduleId = scope.id ? scope.id : id;
+
+                            var moduleController =  $controller(ctrl, {$scope: moduleScope});
+                            scope.$broadcast('update_controller', {key: 'child', value: moduleController});
                         } else {
                             if (initData) {
                                 //采用了全局控制器，定义了的initData会被忽略，给个提示
@@ -102,7 +126,6 @@ define(['rd.core'], function() {
 
                         $compile($('#' + id))(moduleScope);
 
-                        moduleScope.$emit(EventTypes.READY);
                         $timeout(function() {
                             EventService.raiseControlEvent(scope, EventTypes.READY, scope.id);
                         }, 0);
@@ -116,13 +139,18 @@ define(['rd.core'], function() {
                         if (scope.loadContext === undefined) {
                             return;
                         }
-                        //destory a module
-                        element.empty();
-                        // if (scope.id) {
-                        //     delete rdk[scope.id];
-                        // }
                         scope.loadContext = undefined;
-                        EventService.raiseControlEvent(scope, EventTypes.DESTORY, scope.id);
+
+                        //destroy a module
+                        element.empty();
+
+                        if (moduleScope !== appScope) {
+                            //只有新建的scope才要destroy
+                            moduleScope.$destroy();
+                        }
+                        moduleScope = undefined;
+
+                        EventService.raiseControlEvent(scope, EventTypes.DESTROY, scope.id);
                     }
                 }
             }

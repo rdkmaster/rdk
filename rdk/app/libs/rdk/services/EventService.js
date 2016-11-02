@@ -38,7 +38,7 @@
         CREATE: "create",
         CHECK: "check",
         ADD: "add",
-        DESTORY: 'destory',
+        DESTROY: 'destroy',
 
         TAB_SELECT: "tab_select",
         ITEM_SELECTED: "item_selected", //tab_select 从里向外抛，捕捉对象

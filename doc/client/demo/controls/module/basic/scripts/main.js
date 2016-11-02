@@ -26,11 +26,13 @@ define('main', ['rd.controls.Module', 'sample_module'], function() {
         scope.data = 'defined in the root controller';
 
         scope.hello = function() {
-            //访问SampleModule中的数据
-            console.log(rdk.module1.someData);
+            //访问SampleModule中的数据。
+            //每个模块都有一个child属性，值是当前模块所绑定的控制器一个实例。
+            //如果当前模块未绑定控制器，则child属性的值为null
+            console.log(rdk.module1.child.someData);
 
             //调用SampleModule中的方法
-            rdk.module1.hello('module1');
+            rdk.module1.child.hello('module1');
         }
     }]);
 });

@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>BasicSelector -> Basic</title>
+    <title>Module -> module id</title>
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
     -->
@@ -12,13 +12,11 @@
 </head>
 
 <body ng-controller='rdk_ctrl'>
-    <button ng-click="load()">load</button>
-    <button ng-click="destory()">destory</button>
-    <!-- 
-        load_on_ready默认值是true，模块会自动加载，如果需要自行控制模块加载时机，请将其设置为false
-    -->
-    <rdk_module id="mymodule" url="template/sample_module.html" load_on_ready="false"
-        ready="moduleReady" destory="moduleDestory"></rdk_module>
+	<p>
+		如果一个module在同一页面上会被多次使用，那在模板中使用dom的id属性要很小心
+		因为一个module多次使用后，dom树上就会有多个相同id的dom节点，因此在模块的html模板的id，必须使用 id@{{$moduleId}}
+	</p>
+    <rdk_module id="rdkModule" url="/doc/client/demo/controls/module/module_id/template/sample_module.html"></rdk_module>
 </body>
 
 </html>

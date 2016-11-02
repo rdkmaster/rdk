@@ -1,0 +1,11 @@
+   
+<div controller="SampleModuleController" style="border:1px solid red; margin:6px; padding:6px">
+	<h3>当前模块的id是 {{$moduleId}}</h3>
+	
+    <button ng-click="load()">load</button>
+    <button ng-click="destroy()">destroy</button>
+    <!-- 
+        load_on_ready默认值是true，模块会自动加载，如果需要自行控制模块加载时机，请将其设置为false
+    -->
+    <rdk_module id="mymodule@{{$moduleId}}" url="/doc/client/demo/controls/module/module_id/template/sample_module.html" load_on_ready="false"></rdk_module>
+</div>

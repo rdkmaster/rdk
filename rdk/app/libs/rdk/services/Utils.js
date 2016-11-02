@@ -228,16 +228,11 @@
             if (!id) {
                 return;
             }
-            
-            if (angular.isString(id)) {
-                if (angular.isDefined(rdk[id]) && rdk[id] !== controller) {
-                    console.warn('conflict dom node id: ' + id);
-                } else {
-                    rdk[id] = controller;
-                }
+
+            if (angular.isDefined(rdk[id]) && rdk[id] !== controller) {
+                console.warn('conflict dom node id: ' + id);
             } else {
-                //2者合并
-                this.shallowCopy(controller, id)
+                rdk[id] = controller;
             }
         }
 
