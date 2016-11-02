@@ -9,10 +9,10 @@ Alert 服务用于弹出提示信息的对话框，可能包含消息、标题�
 
 提示信息对话框目前支持四种表现形式：
 
-- 信息确认对话框，调用时直接使用 `Alert.confirm(message, title, button, callback, modal)`
-- 错误提示对话框，调用时直接使用 `Alert.error(message, title, button, callback, modal)` 
-- 普通信息提示对话框，调用时直接使用 `Alert.info(message, title, button, callback, modal)`
-- 警告提示对话框，调用时直接使用 `Alert.warn(message, title, button, callback, modal)`
+- 信息确认对话框，调用时直接使用 `Alert.confirm(message, title, button, callback, modal, close)`
+- 错误提示对话框，调用时直接使用 `Alert.error(message, title, button, callback, modal, close)` 
+- 普通信息提示对话框，调用时直接使用 `Alert.info(message, title, button, callback, modal, close)`
+- 警告提示对话框，调用时直接使用 `Alert.warn(message, title, button, callback, modal, close)`
 
 ## 参数 ##
 
