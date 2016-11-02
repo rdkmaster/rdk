@@ -697,6 +697,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         }
 
                         scope.totalCheck = function(event){
+                            _resetFixHeadTotalCheck(event.currentTarget.checked);
                             _totalCheckHandler(event.currentTarget.checked);//改变状态
                             _refreshCheckedData();
                             _totalBroadcast();
@@ -762,6 +763,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     function _initialCheckBoxStatus(){
                         _totalCheckHandler(false);
                         _resetTotalCheck(false);
+                        _resetFixHeadTotalCheck(false);
                     }
 
                     function _refreshCheckedIdxArr(){
@@ -850,10 +852,16 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     function _singleCheckHandler(){
                         var isChecked = _isAllSelected();
                         _resetTotalCheck(isChecked);
+                        _resetFixHeadTotalCheck(isChecked);
                     }
 
                     function _resetTotalCheck(isChecked){
                         var arr = element.find('.sticky-enabled').find('input[name="totalCheckBox"]');
+                        arr[0].checked = isChecked;
+                    }
+
+                    function _resetFixHeadTotalCheck(isChecked){
+                        var arr = element.find('.sticky-thead').find('input[name="totalCheckBox"]');
                         arr[0].checked = isChecked;
                     }
 
