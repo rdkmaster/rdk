@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>rdk-scroll</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/doc/tools/doc_js/doc_app_helper'
+            }
+        });
+    </script>
+    <style>
+        .content2{
+            height: 400px;
+            width: 600px;
+            margin: 0 auto;
+            border: 1px solid #eee;
+            overflow: scroll;
+        }
+        .ps-theme-myStyle > .ps-scrollbar-y-rail > .ps-scrollbar-y{
+            background-color: #ed7448;
+            opacity: 0.7;
+        }
+        .ps-theme-myStyle > .ps-scrollbar-y-rail > .ps-scrollbar-y{
+            background-color: #ed7448;
+            opacity: 1;
+            border-radius: 6px;
+        }
+        .ps-theme-myStyle:hover > .ps-scrollbar-y-rail:hover > .ps-scrollbar-y{
+            background-color: #ed7448;
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body ng-controller='myCtrl' >
+    <div class="content2" rdk_scroll scroll_option="{wheelSpeed:0.3,theme:'myStyle'}">
+        <h2>test</h2>
+        <h2>test</h2>
+    	<rdk_basic_selector rdk_scroll selected_items="selectedItems" data="allItems" style="height:200px;width:500px"></rdk_basic_selector>
+        <h2>test</h2>
+        <h2>test</h2>
+        <h2>test</h2>
+        <h2>test</h2>
+        <h2>test</h2>
+    </div>
+</body>
+</html>

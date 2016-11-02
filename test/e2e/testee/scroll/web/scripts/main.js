@@ -5,10 +5,6 @@ define('main', ['application','rd.attributes.Scroll','rd.controls.Table', 'rd.co
         app.controller('rdk_ctrl', ['$scope', 'DataSourceService',function(scope, DSService) {
                 application.initDataSourceService(DSService);
                 /************************ panel demo test data start ************************/
-                scope.panelStatus=true;
-                scope.clkShowPanel=function(){
-                    scope.panelStatus=!scope.panelStatus;
-                }
                 scope.settingPanel = { //表格设置列宽度和样式类
                     "columnDefs" :[
                         {

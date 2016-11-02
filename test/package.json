@@ -34,6 +34,7 @@
     "fold":"protractor fold-conf.js",
     "bullet":"protractor bullet-conf.js",
     "area":"protractor area-conf.js",
+    "scroll":"protractor scroll-conf.js",
     "singleIndicator":"protractor singleIndicator-conf.js",
     "progressBar":"protractor progressBar-conf.js",
     "protractor_debug" : "protractor debug protractor-conf.js"

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
+    <title>RDK控件rdk_table和rdk-scroll组合测试</title>
+    <link rel="stylesheet" type="text/css" href="css/panel.css">
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/test/module/testee_helper',
+            }
+        });
+    </script>
+</head>
+<body ng-controller='rdk_ctrl' class="rdk_main">
+<div class="panel-wrap">
+    <rdk_panel title="'华城小区'" class="rdk-panel"  show-title="true" height="280" width="610">
+        <rdk_table class="content" rdk-scroll ds="dsTable" ds-url="/doc/client/demo/comprehensive/tab/panel/web/data/data" ds_query_if="ready" paging-visible="false" setting="settingPanel"></rdk_table>
+    </rdk_panel>
+</div>
+</body>
+</html>

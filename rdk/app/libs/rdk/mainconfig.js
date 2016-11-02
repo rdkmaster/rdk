@@ -33,6 +33,7 @@ require.config({
 
         "rd.attributes.ds": "../rdk/attributes/ds",
         "rd.attributes.modal": "../rdk/attributes/modal",
+        "rd.attributes.Scroll": "../rdk/attributes/Scroll",
         "rd.containers.Accordion": "../rdk/containers/Accordion",
         "rd.containers.Accordions": "../rdk/containers/Accordions",
         "rd.containers.GraphGroup": "../rdk/containers/GraphGroup",
@@ -54,7 +55,6 @@ require.config({
         "rd.controls.TabSelector": "../rdk/controls/TabSelector",
         "rd.controls.Time": "../rdk/controls/Time",
         "rd.controls.Scroller": "../rdk/controls/Scroller",
-        "rd.controls.Scroll": "../rdk/attributes/Scroll",
         "rd.controls.ProgressBar": "../rdk/controls/ProgressBar",
         "rd.controls.Alert": "../rdk/controls/Alert",
         "rd.controls.Tree": "../rdk/controls/Tree",
