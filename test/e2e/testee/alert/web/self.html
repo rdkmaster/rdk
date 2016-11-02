@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Alert自测</title>
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk"
+        src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="self.js"></script>
+    
+
+    <!-- 应用正式运行的时候，请使用下面这个节点，RDK会使用编译后的代码，代码体积小，下载快 -->
+    <!--
+    <script data-main="main.min.js" src="/rdk_server/app/libs/requirejs/require.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    -->
+    
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/test/module/testee_helper',
+            }
+        });
+    </script>
+</head>
+<style>
+    body>div{
+        margin:20px;
+    }
+</style>
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    <div class="demo1">
+        <!--信息确认框-->
+        <p ng-click="infoConfirm()">信息确认提示框</p>
+        <button ng-click="addMessage()" value="name">message</button>
+        <button ng-click="addTitle()">title</button>
+        <button ng-click="addBtn1()">btn1</button>
+        <button ng-click="addBtn2()">btn2</button>
+        <button ng-click="addBtn4()">btn4</button>
+        <button ng-click="addBtn8()">btn8</button>
+        <button ng-click="addBtn9()">btn9</button>
+        <button ng-click="addBtn10()">btn10</button>
+        <button ng-click="addBtn11()">btn11</button>
+        <button ng-click="addBtn12()">btn12</button>
+    </div>
+    <div class="demo2">
+        <!--错误提示框-->
+        <p ng-click="errConfirm()">错误提示框</p>
+    </div>
+    <div class="demo3">
+        <!--普通信息对话框-->
+        <p ng-click="normalConfirm()">普通信息对话框</p>
+    </div>
+    <div class="demo4">
+        <p ng-click="warnConfirm()">警告提示框</p>
+    </div>
+    <!--回调类型匹配-->
+    <div class="demo5">
+        <p ng-click="clickHandle()">回调类型</p>
+    </div>
+    <!--非模态框-->
+    <div class="demo6">
+        <p ng-click="noModel()">非模态框</p>
+    </div>
+    <div class="demo7">
+        <p ng-click="defaultHandle()">缺省值(confirm除外)</p>
+    </div>
+    <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
+    <!--     这个节点可选，删除后，RDK会自动生成一个    -->
+    <!--           这个节点只支持基本HTML标签           -->
+</body>
+
+</html>
