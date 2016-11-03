@@ -9,20 +9,22 @@
     background: #008fd4 url(../images/calendar.png) no-repeat 5px 5px;
 }
 
-.condition-bar div:last-child{
+.comSelect{
 	display: inline-block;
 }
  
-.rdk-time-module::after,.rdk-time-module::before{
+.comSelect::before,.rdk-time-module::before{
 	content: '';
 	display: inline-block;
 	width: 26px;
 	height: 26px;
 	vertical-align: middle;
 }
-.rdk-time-module::after{
+
+.comSelect::before{
 	background: url(../images/calendar.png); 
 }
+
 .rdk-time-module::before{
 	background: url(../images/positioning.png); 
 }
