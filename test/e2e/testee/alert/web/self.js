@@ -97,10 +97,10 @@ scope.clickHandle=function(){
 }
 function callback(value){
   if(value==4){
-    alert("确认");
+    scope.message='确定';
   }
   if(value==8){
-    alert("取消");
+    scope.message='取消';
   }
 }
 //noModel

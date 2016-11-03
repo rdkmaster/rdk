@@ -45,7 +45,7 @@ describe('Alert Self Test',function(){
         var alert=element.all(by.css(".wrapBox .btnLine input"));
         alert.get(0).click();
     });
-    1 2 4 8对应 是 否 确定 取消按钮
+    // 1 2 4 8对应 是 否 确定 取消按钮
     it('添加按钮1类型',function(){
         var btn=element(by.css(".demo1 button[ng-click='addBtn1()']"));
         btn.click();
@@ -89,6 +89,48 @@ describe('Alert Self Test',function(){
         alert.get(0).click();
     });
     it('添加按钮10类型',function(){
-
+        var btn=element(by.css(".demo1 button[ng-click='addBtn10()']"));
+        btn.click();
+        browser.sleep(300);
+        var alert=element.all(by.css(".wrapBox .btnLine input"));
+        expect(alert.get(0).getAttribute('value')).toBe("否");
+        expect(alert.get(1).getAttribute('value')).toBe('取消');
+        alert.get(0).click();
+    });
+    it('添加按钮12类型',function(){
+        var btn=element(by.css(".demo1 button[ng-click='addBtn12()']"));
+        btn.click();
+        browser.sleep(300);
+        var alert=element.all(by.css(".wrapBox .btnLine input"));
+        expect(alert.get(0).getAttribute('value')).toBe("确定");
+        expect(alert.get(1).getAttribute('value')).toBe('取消');
+        alert.get(0).click();
+    });
+    
+    it('回调类型区分',function(){
+        var locator=element(by.css(".demo5 p"));
+        locator.click();
+        browser.sleep(300);
+        //产生窗口、模态框
+        var alert=element.all(by.css(".wrapBox .btnLine input"));
+        expect(alert.count()).toBe(2);
+        var array=['确定','取消'];
+        alert.each(function(item,index){
+            expect(item.getAttribute('value')).toBe(array[index]);
+        })
+        var message=element(by.css(".demo5>span"));
+        alert.get(0).click();
+        browser.sleep(300);
+        expect(message.getText()).toBe('确定');
+        alert.get(1).click();
+        browser.sleep(300);
+        expect(message.getText()).toBe('取消');
+    });
+    it('非模态框',function(){
+        var locator=element(by.css(".demo6 p"));
+        locator.click();
+        browser.sleep(300);
+        var model=element.all(by.css(".demo6 .ui-widget-overlay"));
+        expect(model.count()).toBe(0);
     });
 });
