@@ -1,8 +1,8 @@
 define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
     'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
     var comboModule = angular.module('rd.controls.ComboSelect', ['rd.core']);
-    comboModule.directive('rdkComboSelect', ['Utils', 'EventService', 'EventTypes', 'RDKConst',
-        function(Utils, EventService, EventTypes, RDKConst) {
+    comboModule.directive('rdkComboSelect', ['Utils', 'EventService', 'EventTypes', 'RDKConst', '$timeout',
+        function(Utils, EventService, EventTypes, RDKConst, $timeout) {
             var zIndex = 0;
             return {
                 restrict: 'E',
@@ -15,22 +15,17 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                     open: '=?',
                     openPolicy:'@?',
                     frozen: '=?',
-                    childChange: '&?',
-
+                    childChange: '&?'
                 },
-                template:'<div>\
-                              <div class="rdk-combo-select-module" ng-mouseleave="closeShow()">\
-                                  <div class="combo-content" ng-mouseenter="openShow()">\
-                                      <span class="combo-caption" ng-show="!!caption">{{caption}}</span>\
-                                      <input class="form-control combo-content-theme" title="{{inputStr}}" \
-                                      readonly="true" ng-model="inputStr" ng-click="toggle()" type="text"\
-                                      ng-mouseenter="mouseEnterHandler()" ng-mouseleave="mouseLeaveHandler()"/>\
-                                      <i class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
-                                  </div>\
-                                  <div class="combo-content-transclude" tabindex="1" ng-blur="blur()"\
-                                      ng-mouseenter="mouseEnterHandler()" ng-mouseleave="mouseLeaveHandler()">\
-                                      <div ng-transclude ng-show="open"></div>\
-                                  </div>\
+                template:'<div class="rdk-combo-select-module" ng-mouseleave="closeShow()">\
+                              <div class="combo-content" ng-mouseenter="openShow()">\
+                                  <span class="combo-caption" ng-show="!!caption">{{caption}}</span>\
+                                  <input class="form-control combo-content-theme" title="{{inputStr}}" \
+                                  readonly="true" ng-model="inputStr" ng-click="toggle()" type="text"/>\
+                                  <i class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
+                              </div>\
+                              <div class="combo-content-transclude">\
+                                  <div ng-transclude ng-show="open"></div>\
                               </div>\
                           </div>',
 
@@ -92,9 +87,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 scope.toggle = _toggle;
                 scope.closeShow = _closeShow;
                 scope.openShow = _openShow;
-                scope.mouseEnterHandler = _mouseEnterHandler;
-                scope.mouseLeaveHandler = _mouseLeaveHandler;
-                scope.blur = _blur;
                 scope.isSelect = false;
 
                 if(scope.id) {
@@ -102,13 +94,14 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                         scope.inputStr = data;
                     });
                 }
-                _resetTranscludeFocus();
 
-                function _resetTranscludeFocus(){
-                    if(scope.open){
-                        $(iEle[0].childNodes[1].childNodes[3]).focus();
+                $(document).mouseup(function(e){
+                    if(!iEle.is(e.target) && iEle.has(e.target).length === 0){
+                        $timeout(function(){
+                            scope.open = false;
+                        }, 0)
                     }
-                }
+                });
 
                 function _toggle(){
                     if(scope.frozen) return;//冻结
@@ -120,7 +113,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                         }
                     }
                     scope.isSelect=true;
-                    _resetTranscludeFocus();
                 }
 
                 function _closeShow()
@@ -136,22 +128,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                         return;
                     }
                     scope.open=true;
-                }
-
-                function _blur(){
-                    if (scope.leaveFlag){//非外面input和transclude内容时响应
-                        scope.open = false;
-                        scope.isSelect = false;
-                    }
-                }
-
-                function _mouseEnterHandler(){
-                    scope.leaveFlag = false;
-                }
-
-                function _mouseLeaveHandler(){
-                    scope.leaveFlag = true;
-                    _resetTranscludeFocus();
                 }
             }
         }])
