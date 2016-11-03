@@ -6,12 +6,12 @@
 
 ### 在Files中找到需要编辑的文件
 
-![](img/find-file-to-edit.PNG)
+<img src="img/find-file-to-edit.PNG" width = "626" height = "466" alt="图片名称" />
 
 ### 开始编辑
 选中目标文件之后，可以查看文件内容，单击右上角的EDIT按钮进入编辑状态：
 
-![](img/start-to-edit.PNG)
+<img src="img/start-to-edit.PNG"  width = "444" height = "542" alt="图片名称" />
 
 如果EDIT按钮是灰色的，有两种可能：
 
@@ -22,13 +22,12 @@
 
 在编辑状态页面拉到最下方，可以看到下图：
 
-![](img/commit-edition.PNG)
-
+<img src="img/commit-edition.PNG" width = "555" height = "311" alt="图片名称" />
 
 ## RDK的工作流 {#work-flow}
 所有参与RDK的人都采用下面的流程来协同工作。
 
-![](img/rdk-work-flow.PNG)
+<img src="img/rdk-work-flow.PNG" width = "569" height = "959" alt="图片名称" />
 
 说明：
 
@@ -46,7 +45,7 @@
 #### ssh-key
 1. 运行git-bash，进去之后输入这个命令 `ssh-keygen -t rsa -C "myname@xxxx.com"`，所有问题都采用默认答案就行啦。
 2. 输入`cat ~/.ssh/id_rsa.pub`，将这个命令的输出拷贝到剪切板备用。输出类似这样的：
-![](img/ssh-key.PNG)
+<img src="img/ssh-key.PNG" width = "672" height = "82" alt="图片名称" />
 3. 打开并登录[这个页面](http://gitlab.zte.com.cn/profile/keys)，单击右上角的ADD SSH KEY，把拷贝出来的粘贴到KEY框中，点击ADD KEY就可以了。
 
 #### git config
@@ -83,11 +82,12 @@ master分支是一个非常重要的分支，一般不允许开发者直接合�
 
 开发者在取得RDK的developer权限之后，可以登录[这个页面](http://gitlab.zte.com.cn/10045812/rdk/merge_requests/new)发起merge request：
 
-![](img/merge-request.PNG)
+<img src="img/merge-request.PNG" width = "917" height = "372" alt="图片名称" />
 
 最后，填写合并的说明：
 
-![](img/merge-request1.PNG)
+<img src="img/merge-request1.PNG" width = "904" height = "751" alt="图片名称" />
+
 
 
 
