@@ -1,14 +1,6 @@
 ﻿define(['angular', 'jquery'], function() {
     var utilsModule = angular.module("rd.services.Utils", []);
     utilsModule.service('Utils', ['RDKConst', function(RDKConst) {
-        // (function() {
-        //     setTimeout(function() {
-        //         try {
-        //             $('.selectpicker').selectpicker();
-        //         } catch (e) {}
-        //     }, 3000);
-        // })();
-
         var _this = this;
 
         var _ready = false;
@@ -220,7 +212,7 @@
             }
         }
 
-        this.publish = function(scope) {
+        this.publishScope = function(scope) {
             if (angular.isUndefined(scope.id)) {
                 return;
             }
@@ -232,11 +224,11 @@
             }
         }
 
-        this.publishController = function(id, controller) {
+        this.publish = function(id, controller) {
             if (!id) {
                 return;
             }
-            
+
             if (angular.isDefined(rdk[id]) && rdk[id] !== controller) {
                 console.warn('conflict dom node id: ' + id);
             } else {

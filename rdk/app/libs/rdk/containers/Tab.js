@@ -43,7 +43,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 },
                 replace: true,
                 controller: ['$scope', function(scope){
-                    Utils.publishController(scope.id, this);
+                    Utils.publish(scope.id, this);
 
                     this.addTab = function(source, tabController, initData){
                         scope.addTab(source, tabController, initData);
@@ -91,7 +91,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 scope.toggleCondition = (attrs.toggleCondition ? attrs.toggleCondition : 'click').toLowerCase();
                 scope.selectedTab = Utils.getValue(scope.selectedTab, attrs.selectedTab, 0); 
                 scope.appScope = Utils.findAppScope(scope);
-                scope.compileScope = scope.appScope;                
+                scope.compileScope = scope.appScope;
 
                 var dom = element[0].querySelector(".tabs");
                 scope.tabs = [];

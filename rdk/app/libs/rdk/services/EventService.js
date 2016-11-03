@@ -38,6 +38,7 @@
         CREATE: "create",
         CHECK: "check",
         ADD: "add",
+        DESTROY: 'destroy',
 
         TAB_SELECT: "tab_select",
         ITEM_SELECTED: "item_selected", //tab_select 从里向外抛，捕捉对象
@@ -232,6 +233,21 @@
                     }
                 });
                 return list;
+            }
+
+            this.raiseControlEvent = function(scope, eventType, data) {
+                if (scope.id) {
+                    this.broadcast(scope.id, eventType, data);
+                }
+                var fn = scope[eventType](scope);
+                if (!fn) {
+                    return;
+                }
+                try {
+                    fn({name: eventType, dispatcher: scope.id}, data);
+                } catch (e) {
+                    console.error('call "' + eventType + '" handler failed! msg=' + e.message);
+                }
             }
 
             function _hasReady() {

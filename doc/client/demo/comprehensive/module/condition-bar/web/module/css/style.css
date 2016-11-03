@@ -1,0 +1,26 @@
+.condition-bar{
+    padding:4px 5px 4px 4px;
+    height:40px;
+    overflow:hide;
+    background:#008fd4;
+}
+
+.comSelect{
+	display: inline-block;
+}
+ 
+.comSelect::before,.rdk-time-module::before{
+	content: '';
+	display: inline-block;
+	width: 26px;
+	height: 26px;
+	vertical-align: middle;
+}
+
+.comSelect::before{
+	background: url(../images/calendar.png) no-repeat; 
+}
+
+.rdk-time-module::before{
+	background: url(../images/positioning.png) no-repeat; 
+}

@@ -1,0 +1,26 @@
+   
+<div controller="SampleModuleController" style="border:1px solid red; margin:6px; padding:6px">
+    <p>
+    模块的模板和控制器不一定需要一一对应，而是可以自由组合，<br>
+    即可以给同一个模板编写多个控制器以适应不同的业务场景。<br>
+    下面的例子演示了模板与控制器自由组合的特性，请仔细阅读本demo代码
+    </p>
+
+    <div>
+        <span>模块URL：</span>
+        <select ng-model="moduleUrl">
+            <option>new-module1.html</option>
+            <option>new-module2.html</option>
+        </select>
+        <span>模块控制器</span>
+        <select ng-model="moduleCtrl">
+            <option>NewModuleController1</option>
+            <option>NewModuleController2</option>
+        </select>
+        <input type="text" ng-model="initData">
+        <button ng-click="load()">load</button>
+
+        <!-- 定义一个空的rdk_module节点，它的所有参数都暂时未知 -->
+        <rdk_module id="newModule" load_on_ready="false"></rdk_module>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Module -> Basic</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='rdk_ctrl'>
+    <button ng-click="hello()">调用 module1 的 hello 方法</button>
+
+    <rdk_module id="module1" url="/doc/client/demo/controls/module/basic/template/sample_module.html"
+        init_data="{data: 'defined in initData of module1'}"></rdk_module>
+    <rdk_module id="module2" url="/doc/client/demo/controls/module/basic/template/sample_module.html" load_timeout=5000></rdk_module>
+</body>
+
+</html>

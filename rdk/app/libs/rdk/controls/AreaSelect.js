@@ -248,7 +248,7 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                     }
                 });
                 $vm.resultData = $vm.resultData.substring(0,$vm.resultData.length-3);
-                !!comboSelectCtrl && comboSelectCtrl.onChildChange($vm.resultData+allProvinceTip);
+                !!comboSelectCtrl && comboSelectCtrl.setValue($vm.resultData+allProvinceTip);
                 var appScope = Utils.findAppScope(scope);
                 var returnObj = {
                     province:null,

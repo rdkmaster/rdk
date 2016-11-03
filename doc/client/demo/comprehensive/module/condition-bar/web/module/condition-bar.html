@@ -1,0 +1,9 @@
+<div class="condition-bar" controller="ConditionBarController">
+    <rdk_time setting="timeSetting" label=""></rdk_time>
+	<rdk_combo_select id="prov@{{$moduleId}}" class="comSelect">
+		<rdk_basic_selector editable=false multiple_select=false
+			data="provinces" selected_items="selectedProvince"
+			child_change="selected2string">
+		</rdk_basic_selector>
+	</rdk_combo_select>
+</div>

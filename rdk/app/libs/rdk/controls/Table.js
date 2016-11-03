@@ -251,7 +251,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
             transclude: true,
             controller: ['$scope', function(scope) {
 
-                Utils.publishController(scope.id, this);
+                Utils.publish(scope.id, this);
 
                 this.setCurrentPage = function(_currentPage) {
                     scope.currentPage = _currentPage;
