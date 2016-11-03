@@ -76,7 +76,7 @@ define(['rd.services.EventService', 'jquery','jquery-ui'], function() {
             });
             $('.ui-dialog-titlebar').remove();//去标题
             jqDom.parent().removeClass('ui-widget');//去样式
-
+            $('.ui-dialog').css('overflow','inherit')
             /*开始设置样式*/
             jqDom.css({ 
                         'top': '', 'left': '',
