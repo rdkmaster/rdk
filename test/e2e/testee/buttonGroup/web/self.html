@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Input -> Basic</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="self.js"></script>
+</head>
+<style type="text/css">
+    .demo2{
+        margin-top:50px;
+    }
+</style>
+<body ng-controller='myCtrl'>
+    <div class="demo1">
+        <rdk_button_group style="margin-right:20px">
+            <button ng-click="p1()" style="bgclor"><i class="fa fa-cc-mastercard"></i></button>
+            <button ng-click="p2()"><i class="fa fa-area-chart"></i></button>
+            <button ng-click="p3()"><i class="fa fa-cc-mastercard"></i></button>
+            <button ng-click="p4()"><i class="fa fa-cc-mastercard"></i></button>
+            <button ng-click="p5()"><i class="fa fa-cc-mastercard"></i></button>
+            <button ng-click="p6()"><i class="fa fa-plug"></i></button>
+            <button ng-click="p7()"><i class="fa fa-cc-mastercard"></i></button>
+        </rdk_button_group>
+    </div>
+
+    <div class="demo2">
+        <rdk_button_group style="margin-right:20px">
+            <button ng-click="f1()"><i class="fa fa-cc-mastercard"></i></button>
+            <button ng-click="f2()"><i class="fa fa-area-chart"></i></button>
+            <rdk_separator> </rdk_separator>
+            <button ng-click="f3()"><i class="fa fa-cc-mastercard"></i></button>
+            <button ng-click="f4()"><i class="fa fa-cc-mastercard"></i></button>
+            <button ng-click="f5()"><i class="fa fa-cc-mastercard"></i></button>
+            <rdk_separator> </rdk_separator>
+            <button ng-click="f6()"><i class="fa fa-plug"></i></button>
+            <button ng-click="f7()"><i class="fa fa-cc-mastercard"></i></button>
+        </rdk_button_group>
+    </div>
+
+</body>
+
+</html>
