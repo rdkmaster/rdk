@@ -35,7 +35,7 @@
     }
 </style>
 <body ng-controller='rdk_ctrl' class="rdk_main">
-    <div class="rdk-tab demo1">
+     <div class="rdk-tab demo1">
         <h5>点击切换</h5>
         <button ng-click="select0index()">1</button>
         <button ng-click="select1index()">2</button>
@@ -109,17 +109,7 @@
             <div title="DIV2">DIV2</div>
             <div title="DIV3">DIV3</div>
         </rdk_tab>
-    </div>
-
-    
-    <div class="rdk-tab demo6">
-        <rdk_tab collapsible="true" draggable="false" show_items="visibleItem">
-            <div title="DIV1">DIV1</div>
-            <div title="DIV2">DIV2</div>
-            <div title="DIV3">DIV3</div>
-        </rdk_tab>
-    </div>
-
+    </div> 
     <div class="rdk-tab demo7">
         <strong> 动态新增Tab页示例</strong>
         <rdk_tab id='tabID4add'>
@@ -130,7 +120,7 @@
         <button id='btn4add' ng-click='addTabHandler()'>动态新增tab</button>        
     </div>
 
-    <div class="rdk-tab demo8">
+     <div class="rdk-tab demo8">
         <strong> destroy Tab页示例</strong>
         <rdk_tab id='tabID4destroy' close='destroyHandler'>
             <div title="DIV1">DIV1</div>
@@ -146,7 +136,7 @@
             <div title="DIV2">DIV2</div>
             <div title="DIV3" show_close_button='true'>DIV3</div>    
         </rdk_tab>     
-    </div>
+    </div> 
 
     <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
     <!--     这个节点可选，删除后，RDK会自动生成一个    -->

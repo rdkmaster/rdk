@@ -1,5 +1,5 @@
 'use strict';
-describe('button test',function(){
+describe('button group test',function(){
     it('点击demo1第一个',function(){
         browser.get("test/e2e/testee/buttongroup/web/self.html");
         // browser.sleep(500);
@@ -8,6 +8,7 @@ describe('button test',function(){
         //对确认框进行处理回应
         browser.sleep(500);
         browser.switchTo().alert().then(function(alert){
+            expect(alert.getText()).toBe('1');
             alert.accept();
         });
     });
@@ -18,6 +19,7 @@ describe('button test',function(){
        //对确认框进行处理回应
         browser.sleep(500);
         browser.switchTo().alert().then(function(alert){
+            expect(alert.getText()).toBe('2');
            alert.accept();
         });
     }); 
@@ -27,6 +29,7 @@ describe('button test',function(){
        //对确认框进行处理回应
         browser.sleep(500);
         browser.switchTo().alert().then(function(alert){
+            expect(alert.getText()).toBe('3');
            alert.accept();
         });
     }); 
@@ -36,7 +39,8 @@ describe('button test',function(){
        //对确认框进行处理回应
         browser.sleep(500);
         browser.switchTo().alert().then(function(alert){
-           alert.accept();
+            expect(alert.getText()).toBe('4');
+            alert.accept();
         });
     });    
     it('点击demo1第五个',function(){
@@ -45,7 +49,8 @@ describe('button test',function(){
        //对确认框进行处理回应
         browser.sleep(500);
         browser.switchTo().alert().then(function(alert){
-           alert.accept();
+            expect(alert.getText()).toBe('5');
+            alert.accept();
         });
     }); 
     it('点击demo1第六个',function(){
@@ -54,7 +59,8 @@ describe('button test',function(){
        //对确认框进行处理回应
         browser.sleep(500);
         browser.switchTo().alert().then(function(alert){
-           alert.accept();
+            expect(alert.getText()).toBe('6');
+            alert.accept();
         });
     }); 
     it('点击demo1第七个',function(){
@@ -63,6 +69,7 @@ describe('button test',function(){
        //对确认框进行处理回应
         browser.sleep(500);
         browser.switchTo().alert().then(function(alert){
+            expect(alert.getText()).toBe('7');
            alert.accept();
         });
     }); 
@@ -72,7 +79,8 @@ describe('button test',function(){
        //对确认框进行处理回应
         browser.sleep(500);
         browser.switchTo().alert().then(function(alert){
-           alert.accept();
+            expect(alert.getText()).toBe('1');
+            alert.accept();
         });
     }); 
         it('点击demo2第二个',function(){
@@ -81,7 +89,8 @@ describe('button test',function(){
        //对确认框进行处理回应
         browser.sleep(500);
         browser.switchTo().alert().then(function(alert){
-           alert.accept();
+            expect(alert.getText()).toBe('2');
+            alert.accept();
         });
     }); 
         it('点击demo2第三个',function(){
@@ -90,7 +99,8 @@ describe('button test',function(){
        //对确认框进行处理回应
         browser.sleep(500);
         browser.switchTo().alert().then(function(alert){
-           alert.accept();
+           expect(alert.getText()).toBe('3');
+            alert.accept();
         });
     }); 
         it('点击demo2第四个',function(){
@@ -99,7 +109,8 @@ describe('button test',function(){
        //对确认框进行处理回应
         browser.sleep(500);
         browser.switchTo().alert().then(function(alert){
-           alert.accept();
+           expect(alert.getText()).toBe('4');
+            alert.accept();
         });
     }); 
         it('点击demo2第五个',function(){
@@ -108,7 +119,8 @@ describe('button test',function(){
        //对确认框进行处理回应
         browser.sleep(500);
         browser.switchTo().alert().then(function(alert){
-           alert.accept();
+           expect(alert.getText()).toBe('5');
+            alert.accept();
         });
     }); 
         it('点击demo2第六个',function(){
@@ -117,7 +129,8 @@ describe('button test',function(){
        //对确认框进行处理回应
         browser.sleep(500);
         browser.switchTo().alert().then(function(alert){
-           alert.accept();
+           expect(alert.getText()).toBe('6');
+            alert.accept();
         });
     }); 
         it('点击demo2第七个',function(){
@@ -126,7 +139,8 @@ describe('button test',function(){
        //对确认框进行处理回应
         browser.sleep(500);
         browser.switchTo().alert().then(function(alert){
-           alert.accept();
+            expect(alert.getText()).toBe('7');
+            alert.accept();
         });
     });  
 });

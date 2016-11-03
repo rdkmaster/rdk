@@ -24,6 +24,7 @@ exports.config = {
     ignoreSynchronization: true,
 
     onPrepare: function() {
+        browser.driver.manage().window().maximize();
         var Jasmine2HtmlReporter = require('./index.js');
         return browser.getProcessedConfig().then(function(config){
             var browserName=config.capabilities.browserName;

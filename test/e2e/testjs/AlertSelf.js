@@ -102,29 +102,31 @@ describe('Alert Self Test',function(){
         btn.click();
         browser.sleep(300);
         var alert=element.all(by.css(".wrapBox .btnLine input"));
-        expect(alert.get(0).getAttribute('value')).toBe("确定");
-        expect(alert.get(1).getAttribute('value')).toBe('取消');
+        expect(alert.get(0).getAttribute('value')).toBe("取消");
+        expect(alert.get(1).getAttribute('value')).toBe('确定');
         alert.get(0).click();
     });
     
     it('回调类型区分',function(){
         var locator=element(by.css(".demo5 p"));
         locator.click();
-        browser.sleep(300);
+        browser.sleep(500);
         //产生窗口、模态框
         var alert=element.all(by.css(".wrapBox .btnLine input"));
         expect(alert.count()).toBe(2);
-        var array=['确定','取消'];
+        var array=['取消','确定'];
         alert.each(function(item,index){
             expect(item.getAttribute('value')).toBe(array[index]);
         })
         var message=element(by.css(".demo5>span"));
         alert.get(0).click();
         browser.sleep(300);
-        expect(message.getText()).toBe('确定');
+        expect(message.getText()).toBe('取消');
+        locator.click();
+        browser.sleep(300);
         alert.get(1).click();
         browser.sleep(300);
-        expect(message.getText()).toBe('取消');
+        expect(message.getText()).toBe('确定');
     });
     it('非模态框',function(){
         var locator=element(by.css(".demo6 p"));
