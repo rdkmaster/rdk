@@ -15,7 +15,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                     open: '=?',
                     openPolicy:'@?',
                     frozen: '=?',
-                    childChange: '&?'
+                    childChange: '&?',
+
                 },
                 template:'<div>\
                               <div class="rdk-combo-select-module" ng-mouseleave="closeShow()">\
@@ -50,18 +51,28 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                         }
                         scope.inputStr = data;
                     });
-                    this.changeOpenStatus=function(){
-                        scope.open=!scope.open;
+                    Utils.publish(scope.id, this);
+
+                    this.changeOpenStatus = function(){
+                        scope.open =! scope.open;
                         scope.isSelect=false;
                     };
-                    this.lockCloseShow=function(){
+                    this.lockCloseShow = function(){
                         scope.isSelect=true;
                     };
-                    this.onChildChange=function(data){
+
+                    this.setValue = function(data){
                         scope.inputStr = data;
                     };
-                    this.setCaption=function(caption){
+                    this.getValue = function() {
+                        return scope.inputStr;
+                    }
+
+                    this.setCaption = function(caption){
                         scope.caption = caption;
+                    }
+                    this.getCaption = function() {
+                        return scope.caption;
                     }
                 }],
                 controllerAs:'comboSelectCtrl',

@@ -4,11 +4,21 @@ define(['rd.controls.Time', 'rd.controls.BasicSelector', 'rd.controls.ComboSelec
 function() {
     rdk.$injectDependency('rd.controls.Time', 'rd.controls.BasicSelector', 'rd.controls.ComboSelect');
 
-    rdk.$app.controller('ConditionBarController', ['$scope', function(scope) {
+    rdk.$app.controller('ConditionBarController', ['$scope', 'BasicSelector', 'Utils','$timeout',
+    function(scope, BasicSelector, Utils, $timeout) {
+        this.getTime = function() {
+            return scope.timeSetting.value;
+        }
+
+        this.getSelectedProvince = function() {
+            return scope.selectedProvince[0];
+        }
+
         scope.timeSetting = {
             value: 'now-1d'
         }
         
+        //这些可以外部给或者直接在模块内部去查
         scope.provinces = [
             { id: 0, label: "江苏省" },
             { id: 1, label: "浙江省" },
@@ -22,14 +32,8 @@ function() {
             { id: 9, label: "四川省" }
         ];
 
-        scope.selectedProvince = {label: "江苏省"};
-
-        this.getTime = function() {
-            return scope.timeSetting.value;
-        }
-
-        this.getSelectedProvince = function() {
-            return scope.selectedProvince[0];
+        scope.selected2string = function(selected, context, index) {
+            return BasicSelector.selected2string(selected, 'label', '...');
         }
     }]);
 });
