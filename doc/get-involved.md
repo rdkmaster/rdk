@@ -6,7 +6,7 @@
 
 ### 在Files中找到需要编辑的文件
 
-<img src="img/find-file-to-edit.PNG" width = "626" height = "466" alt="图片名称" />
+<img src="img/find-file-to-edit.PNG" width = "626" height = "465" alt="图片名称" />
 
 ### 开始编辑
 选中目标文件之后，可以查看文件内容，单击右上角的EDIT按钮进入编辑状态：
