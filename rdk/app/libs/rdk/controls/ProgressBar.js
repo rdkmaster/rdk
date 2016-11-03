@@ -1,5 +1,5 @@
-define(['angular', 'ngProgress', 'rd.services.Utils', 'jquery', 'angular-bootstrap-progressbar', 'css!rd.styles.ProgressBar', 'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
-    var progressApp = angular.module("rd.controls.ProgressBar", ['rd.services.Utils', 'ui.bootstrap.progressbar', 'ngProgress']);
+define(['angular','rd.core', 'ngProgress', 'rd.services.Utils', 'jquery', 'angular-bootstrap-progressbar', 'css!rd.styles.ProgressBar', 'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
+    var progressApp = angular.module("rd.controls.ProgressBar", ['rd.core', 'ui.bootstrap.progressbar', 'ngProgress']);
     progressApp.directive('rdkProgressbar', ['Utils', '$compile', function(Utils, $compile) {
         return {
             restrict: 'E',
