@@ -1,4 +1,4 @@
-define(['angular', 'jquery', 'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
+define(['angular', 'jquery', 'rd.core','css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
     var inputApp = angular.module("rd.controls.Input", ['rd.core']);
     inputApp.directive('rdkInput', function() {
         return {
