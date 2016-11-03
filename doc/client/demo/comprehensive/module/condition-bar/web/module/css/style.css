@@ -1,5 +1,3 @@
-
-
 .condition-bar{
     padding:4px 5px 4px 4px;
     height:40px;
@@ -9,4 +7,22 @@
 
 .icon-calendar {
     background: #008fd4 url(../images/calendar.png) no-repeat 5px 5px;
+}
+
+.condition-bar div:last-child{
+	display: inline-block;
+}
+ 
+.rdk-time-module::after,.rdk-time-module::before{
+	content: '';
+	display: inline-block;
+	width: 26px;
+	height: 26px;
+	vertical-align: middle;
+}
+.rdk-time-module::after{
+	background: url(../images/calendar.png); 
+}
+.rdk-time-module::before{
+	background: url(../images/positioning.png); 
 }
