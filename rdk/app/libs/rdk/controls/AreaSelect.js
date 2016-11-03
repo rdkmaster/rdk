@@ -260,18 +260,7 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                 returnObj.area=$vm.userArr[2];
                 appScope[tAttrs.areaData]=returnObj;
                 _hasDefaultReady=true;
-                if (scope.id) {
-                    //当app给了id属性，表示其可能关注这个事件，需要发出来
-                    EventService.broadcast(scope.id, EventTypes.CHANGE, returnObj);
-                }
-                if (scope.change) {  //如果有回调则执行
-                    var fn = scope.change;
-                    try {
-                        fn({dispatcher: scope.id, type: EventTypes.CHANGE}, returnObj);
-                    } catch(e) {
-                        console.warn('call change error: ' + e);
-                    }
-                }
+                EventService.raiseControlEvent(scope, EventTypes.CHANGE, returnObj);
                 returnObj=null;
             }
 

@@ -9,20 +9,21 @@
                     nodeField: '@?',
                     labelField: '@?',
                     unselectOnBlur: '@?',
+                    draggable: '@?',
+
                     setting: '=?',
                     editable: '=?',
                     checkable: '=?',
                     data: '=',
+
                     click: '&?',
                     doubleClick: '&?',
-                    remove: '&?',
-                    rename: '&?',
-                    collapse: '&?',
-                    expand: '&?',
-                    editname: '&?',
-                    unselect: '&?',
                     check: '&?',
-                    draggable: '@?'
+                    beforeRemove: '&?',
+                    beforeRename: '&?',
+                    beforeCollapse: '&?',
+                    beforeExpand: '&?',
+                    beforeEditName: '&?',
                 },
                 controller: ['$scope', function(scope) {
                     //把控制器暴露给app
@@ -101,15 +102,16 @@
                         enable: scope.checkable || true
                     },
                     callback: {
-                        onClick: _handler,
+                        onClick: on_click,
                         onDblClick: on_dblclick,
+                        onCheck: on_check,
+
                         beforeDrag: before_drag,
                         beforeRename: before_rename,
                         beforeRemove: before_remove,
                         beforeCollapse: before_collapse,
                         beforeExpand: before_expand,
                         beforeEditName: before_editName,
-                        onCheck: on_check 
                     },
                     edit: {
                         enable: scope.editable || true
@@ -120,106 +122,42 @@
                 };
                 return setObj;
 
-                function _handler(event, treeId, treeNode) {
+                function on_click(event, treeId, treeNode) {
                     event.stopPropagation();
-                    if (!!scope.id) {
-                        EventService.broadcast(scope.id, EventTypes.CLICK, treeNode);
-                    }
-                    var fn = scope.click(scope);
-                    if(!!fn){
-                        return fn(event, treeNode);
-                    }else{
-                        return true;
-                    } 
+                    return EventService.raiseControlEvent(scope, EventTypes.CLICK, treeNode, true);
                 }
 
                 function on_dblclick(event, treeId, treeNode) {
-                    if (!!scope.id) {
-                        EventService.broadcast(scope.id, EventTypes.DOUBLE_CLICK, treeNode);
-                    }
-                    var fn = scope.doubleClick(scope);
-                    if(!!fn){
-                        return fn(event, treeNode);
-                    }else{
-                        return true;
-                    } 
+                    return EventService.raiseControlEvent(scope, EventTypes.DOUBLE_CLICK, treeNode, true);
                 }
 
-                function before_drag(treeId, treeNode) {
-                    return eval(scope.draggable)
+                function on_check(event, treeId, treeNode) {
+                    return EventService.raiseControlEvent(scope, EventTypes.CHECK, treeNode, true);
                 }
 
-                function before_expand(treeId, treeNode){
-                    if (!!scope.id) {
-                        EventService.broadcast(scope.id, EventTypes.BEFORE_EXPAND, treeNode);
-                    }
-                    var fn = scope.expand(scope);
-                    if(!!fn){
-                        return fn(event, treeNode);
-                    }else{
-                        return true;
-                    }
+                function before_expand(treeId, treeNode) {
+                    return EventService.raiseControlEvent(scope, EventTypes.BEFORE_EXPAND, treeNode, true);
                 }
 
-                function before_collapse(treeId, treeNode){
-                    if (!!scope.id) {
-                        EventService.broadcast(scope.id, EventTypes.BEFORE_COLLAPSE, treeNode);
-                    }
-                    var fn = scope.collapse(scope);
-                    if(!!fn){
-                        return fn(event, treeNode);
-                    }else{
-                        return true;
-                    }
+                function before_collapse(treeId, treeNode) {
+                    return EventService.raiseControlEvent(scope, EventTypes.BEFORE_COLLAPSE, treeNode, true);
                 }
 
-                function before_rename(treeId, treeNode, newName, isCancel){
-                    if (!!scope.id) {
-                        EventService.broadcast(scope.id, EventTypes.BEFORE_RENAME, treeNode); 
-                    }
-                    var fn = scope.rename(scope);
-                    if(!!fn){
-                        return fn(event, treeNode);
-                    }else{
-                        return true;
-                    }
+                function before_rename(treeId, treeNode, newName, isCancel) {
+                    return EventService.raiseControlEvent(scope, EventTypes.BEFORE_RENAME, treeNode, true);
                 }
 
-                function before_remove(treeId, treeNode) { 
-                    if (!!scope.id) {
-                        EventService.broadcast(scope.id, EventTypes.BEFORE_REMOVE, treeNode); 
-                    }
-                    var fn = scope.remove(scope);
-                    if(!!fn){
-                        return fn(event, treeNode);
-                    }else{
-                        return true;
-                    }
+                function before_remove(treeId, treeNode) {
+                    return EventService.raiseControlEvent(scope, EventTypes.BEFORE_REMOVE, treeNode, true);
                 }  
 
-                function before_editName(treeId, treeNode) { 
-                    if (!!scope.id) {
-                        EventService.broadcast(scope.id, EventTypes.BEFORE_EDITNAME, treeNode); 
-                    }
-                    var fn = scope.editname(scope);
-                    if(!!fn){
-                        return fn(event, treeNode);
-                    }else{
-                        return true;
-                    }
+                function before_editName(treeId, treeNode) {
+                    return EventService.raiseControlEvent(scope, EventTypes.BEFORE_EDIT_NAME, treeNode, true);
                 } 
 
-                function on_check(event, treeId, treeNode) { 
-                    if (!!scope.id) {
-                        EventService.broadcast(scope.id, EventTypes.CHECK, treeNode); 
-                    }
-                    var fn = scope.check(scope);
-                    if(!!fn){
-                        return fn(event, treeNode);
-                    }else{
-                        return true;
-                    }
-                } 
+                function before_drag(treeId, treeNode) {
+                    return eval(scope.draggable);
+                }
             }
 
             function _updateTree(rebornID, scope) {
