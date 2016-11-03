@@ -87,7 +87,3 @@ master分支是一个非常重要的分支，一般不允许开发者直接合�
 最后，填写合并的说明：
 
 <img src="img/merge-request1.PNG" width = "904" height = "751" alt="图片名称" />
-
-
-
-
