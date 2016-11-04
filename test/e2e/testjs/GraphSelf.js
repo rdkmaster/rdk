@@ -43,6 +43,7 @@ describe('Graph Self demo',function(){
     });
     it('周五最高温should be 15 by click',function(){
         browser.actions().mouseMove(element(by.css(".graph_1 canvas")),{x:492.1,y:90}).click().perform();
+        browser.sleep(2000);
         var info=element(by.css(".fromClick"));
         expect(info.getText()).toBe("周五最高气温:15");
     });

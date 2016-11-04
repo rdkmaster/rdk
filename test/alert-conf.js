@@ -2,10 +2,13 @@ exports.config = {
     //出现过11秒页面载入没完成时候，改为15秒
     allScriptsTimeout: 15000,
 
-    specs:['e2e/testjs/ButtonSelf.js'],
+    specs:['e2e/testjs/Alert*.js'],
 
 
     multiCapabilities: [
+        {
+            browserName: 'firefox'
+        }, 
         {
             browserName: 'chrome'
         }
