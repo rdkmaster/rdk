@@ -29,10 +29,12 @@ require.config({
         "jquery-freezeheader":"../jquery-freezeheader/jquery.freezeheader",
         "jquery-gesture":"../jquery-ext/jquery.gesture",
         "throttle-debounce" : '../jquery-headfix/jquery.ba-throttle-debounce.min',
+        "perfect-scrollbar" : '../perfect-scrollbar/perfect-scrollbar',
 
         "rd.attributes.ds": "../rdk/attributes/ds",
         "rd.attributes.modal": "../rdk/attributes/modal",
-
+        "rd.attributes.Scroll": "../rdk/attributes/Scroll",
+        
         "rd.containers.Accordion": "../rdk/containers/Accordion",
         "rd.containers.Accordions": "../rdk/containers/Accordions",
         "rd.containers.ButtonGroup": "../rdk/containers/ButtonGroup",
@@ -85,6 +87,7 @@ require.config({
         "rd.styles.ProgressBar": "../rdk/controls/assets/rdk-progressbar-style",
         "rd.styles.ScoreIndicator": "../rdk/controls/assets/rdk-scoreindicator-style",
         "rd.styles.Scroller": "../rdk/controls/assets/rdk-scroller-style",
+        "rd.styles.Scroll": "../rdk/attributes/assets/perfect-scrollbar-style",
         "rd.styles.SingleIndicator": "../rdk/controls/assets/rdk-singleindicator-style",
         "rd.styles.Tab": "../rdk/containers/assets/rdk-tab-style",
         "rd.styles.Table": "../rdk/controls/assets/rdk-table-style",

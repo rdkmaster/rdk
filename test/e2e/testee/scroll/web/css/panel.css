@@ -1,12 +1,7 @@
-.panel-wrap{
-    position: absolute;
-    top: 300px;
-    background-color: #fff;
-    transition: top 0.35s linear;
-    margin: 100px 200px;
-}
+
 .rdk-panel{
-    opacity: 0;
+    margin: 20px;
+    display: inline-block;
     padding: 8px;
     border: 1px solid #eee;
     box-shadow: 1px -1px 2px #eee;
@@ -16,7 +11,6 @@
     padding: 0;
 }
 /* 滚动条*/
-.panel-content {overflow:hidden}
 .content{height:248px;padding-right:4px;}
 /* title */
 .panel-title {
@@ -34,61 +28,6 @@
     font-style: normal;
     color: #008fd4;
     margin-left: -14px;
-}
-.btn{
-    position: absolute;
-    top: 0;
-    right: 10px;
-}
-.btn-show{
-    width: 64px;
-    height: 13px;
-    border: 0;
-    outline: 0;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    position: absolute;
-    top: -12px;
-    left: 44.2%;
-}
-
-.btn-icon-down{
-    background: url("../images/btn-up.png") no-repeat;
-}
-.btn-icon-up{
-    background: url("../images/btn-down.png") no-repeat;
-}
-/* panel animation*/
-@keyframes slideUp {
-    0%{
-        opacity: 0;
-    }
-    25%{
-        opacity: 0;
-    }
-    50%{
-        opacity: 0.5;
-    }
-    75%{
-        opacity: 0.7;
-    }
-    100%{
-        opacity: 1;
-    }
-}
-.wrap-animation{
-    top:20px;
-}
-.panel-up{
-    animation:  slideUp 0.35s linear;
-    /*animation-fill-mode:forwards;*/
-    transition: opacity 0.35s linear;
-    opacity: 1;
-}
-.panel-down{
-    /*animation:  slideUp 0.5s linear alternate-reverse;*/
-    transition: opacity 0.35s linear;
-    opacity: 0;
 }
 
 /* table */
