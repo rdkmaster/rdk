@@ -22,7 +22,7 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
         }
 
         function _getTemplate(title, imgSrc, message, btnTmpl,close){
-            return '<div id='+ _svrMsgBoxId +' class="rdk-alert-svrMsgBox" rdk_modal="hide">'+
+            return '<div class="rdk-alert-modal"><div id='+ _svrMsgBoxId +' class="rdk-alert-svrMsgBox" rdk_modal="hide">'+
                 '<div class="rdk-alert-wrapBox">'+
                     '<div class="rdk-alert-titleLine">'+
                     title + '<span ng-click="svrClickHandler()" ng-show='+ close +'></span>' +
@@ -35,6 +35,7 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
                         btnTmpl+
                     '</div>'+
                 '</div>'+
+            '</div>'+
             '</div>';
         }
 
@@ -84,6 +85,7 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
         function _clickHandler(val){           
             EventService.broadcast(_svrMsgBoxId, "hide");
             $('#'+_svrMsgBoxId).remove();
+            $('.rdk-alert-modal').remove();
             if(_callback!=null){
                 _callback(val);
             }
@@ -95,7 +97,6 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
             }
             if(!document.getElementById(_svrMsgBoxId)){//不存在则添加，alert界面唯一
                 $(document.body).append($(template).get(0));
-
                 var appScope = Utils.findAppScope(alertService.scope);
                 appScope.svrClickHandler = _clickHandler;
                 $compile($('#'+_svrMsgBoxId))(alertService.scope);
