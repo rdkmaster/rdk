@@ -1,43 +1,87 @@
-define('main', ['application', 'utils', 'i18n', 'blockUI'],
-function(application, utils, i18n) {
-// 创建一个RDK的应用
-var app = angular.module("rdk_app", ['rd.core', 'blockUI']);
-app.config(['blockUIConfig', function(blockUIConfig) {
-    // blockUI默认只要有ajax请求在进行，就会自动启动，阻止页面响应鼠标事件
-    // 使用下面代码可以阻止自动模式，启用手动模式
-    // blockUIConfig.autoBlock=false
-    // 然后在需要阻止页面相应鼠标事件的时候，使用下面代码
-    // blockUI.start();
-    // 在需要继续相应页面相应鼠标事件的时候，使用下面代码
-    // blockUI.stop();
+function Application() {
+    //在这里配置所有需要下载的文件，只有这个列表中的项目才会被浏览器下载
+    //隆重推荐把需要下载的文件一一配置在这里，这样RDK才可以完成自动压缩和合并
+    //写在页面的head中的文件无法被自动压缩和合并，从而导致页面打开变慢
+    this.downloadDependency = [
+        //所有路径中的 base 都会被替换成本页面html文件所在路径
+        //注意这里的条目都不需要加 .js 扩展名
+        'base/template/sample_module',
+        //css类型的文件需要加 css! 的前缀
+        'css!base/css/style.css',
+        //这类 rd. 开头的条目是RDK预定义好的控件路径别名
+        'rd.controls.Module', 
+    ];
 
-    // blockUI的详细用法参考 https://github.com/McNull/angular-block-ui
-    blockUIConfig.template = '<div class="block-ui-message-container">\
-                                  <img src="images/loding.gif" />\
-                              </div>';
-}]);
+    //在这里把页面需要用到的使用控件的别名一一列举出来
+    //未列举出别名的控件会由于浏览器不识别而无法正常工作
+    //注：RDK所有控件的别名与它们的路径别名相同
+    this.requiredComponents = ['rd.controls.Module'];
 
-// 创建一个控制器
-app.controller('rdk_ctrl', ['$scope', 'DataSourceService', 'blockUI',
-function(scope, DSService, blockUI) {
-i18n.$init(scope);
-application.initDataSourceService(DSService);
-/************************ 应用的代码逻辑开始 ************************/
+    //this.controllerDefination 定义了本应用的根控制器，它是所有子控制器的祖先
+    //这个数组遵循Angular的依赖注入的规则，简单的讲，把Angular和RDK提供的服务名字填在这个数组中
+    //然后在main函数的参数列表中，按照顺序填上一个同名的形参就可以使用这些服务了
+    //详细的依赖注入规则解释和例子，请参考这里 http://docs.ngnice.com/guide/di
+    this.controllerDefination = ['$scope', 'DataSourceService', main];
+    function main(scope, DataSourceService) {
+        //RDK内部初始化，一般不需要修改，也请保持这行代码在main函数的第一行
+        application.init(scope, DataSourceService);
 
-    utils.hello('rdk');
+        //=================== 在这里开始写本应用的第一行代码 ========================
 
+        scope.data = 'defined in the root controller';
 
-/************************ 应用的代码逻辑结束 ************************/
-}]);
+        scope.hello = function() {
+            //访问SampleModule中的数据。
+            //每个模块都有一个child属性，值是当前模块所绑定的控制器一个实例。
+            //如果当前模块未绑定控制器，则child属性的值为null
+            console.log(rdk.module1.child.someData);
 
-/********************************************************************
-          应用如果将代码写在此处，可能会导致双向绑定失效
-                需要手工调用 scope.$apply() 函数
-          若非有特别的需要，否则请不要将代码放在这个区域
- ********************************************************************/
+            //调用SampleModule中的方法
+            rdk.module1.child.hello('module1');
+        }
+        
+        //=================== 在这里结束本应用的最后一行代码 ========================
+    };
+};
 
+//==========================================================================
+//                   从这里开始的代码请不要随意修改
+//==========================================================================
+(window || global).application = new Application();
+application.base = (function() {
+    try {
+        if (!!global && !!global.base) {
+            return global.base;
+        }
+    } catch(e) {
+    }
+    var match = location.pathname.match(/^(.*)\//);
+    return match[1];
+})();
+application.init = function(scope, ds) {
+    this.i18n.$init(scope);
+    this.helpers.initDataSourceService(ds);
+};
+application.getDownloads = function() {
+    //我们需要引用这些下载条目返回的对象，所以需要将他们放在下载条目列表的前部
+    //如果需要新增有返回值的下载条目，则请追加到数组的末尾，并修改start函数
+    var extraItems = [
+        '/rdk/app/modules/rdk_app_helpers.js',
+        'base/scripts/i18n',
+        'base/scripts/utils'
+    ];
+    return extraItems.concat(application.downloadDependency);
+}
+
+require.config({
+    paths: { "base": application.base }
 });
-
-/********************************************************************
-                       这个区域不要添加任何代码
- ********************************************************************/
+define('main', application.getDownloads(), start);
+//start 函数的参数列表对应 extraItems 的下载条目的返回值
+function start(helpers, i18n, utils) {
+    application.helpers = helpers;
+    application.i18n = i18n;
+    application.utils = utils;
+    rdk.$injectDependency(application.requiredComponents);
+    rdk.$app.controller('RootController', application.controllerDefination);
+};

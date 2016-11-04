@@ -140,9 +140,9 @@ rdk = (function() {
         return paths;
     }
 
-    function _injectDependency() {
+    function _injectDependency(list) {
         var app = angular.module("rdk_app");
-        angular.forEach(arguments, function(dep) {
+        angular.forEach(list, function(dep) {
             dep = dep.trim();
             if (app.requires.indexOf(dep) == -1) {
                 app.requires.push(dep);
