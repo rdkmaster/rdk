@@ -426,6 +426,16 @@ cells 为 改变的行列信息的数组信息
 `page_number` 非零数值时的详细示例如下：
 <live_demo example="controls/table/demo4PageNumber" width="900"></live_demo>
 
+## headerSwitch ##
+>支持类型：布尔型
+
+ - `true`时滚动条下拉会复制表头。缺省时默认为`true`。
+ - `false`时滚动条下拉不会再出现表头。
+
+实例如下：
+<live_demo example="controls/table/demo4HeaderSwitch" width="900"></live_demo>
+
+
 # 事件 #
 
 如果设置了`id`，即可广播/监听以下事件。
