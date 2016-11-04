@@ -426,6 +426,13 @@ cells 为 改变的行列信息的数组信息
 `page_number` 非零数值时的详细示例如下：
 <live_demo example="controls/table/demo4PageNumber" width="900"></live_demo>
 
+## change/select/check/doubleClick ##
+
+- 编辑单元格后，如果定义了`change`函数，就会调用应用自定义的`change`方法。该属性可绕开事件机制。
+- 单击表格某行后，如果定义了`select`函数，就会调用应用自定义的`select`方法。该属性可绕开事件机制。
+- 双击表格某行后，如果定义了`doubleClick`函数，就会调用应用自定义的`doubleClick`方法。该属性可绕开事件机制。
+- `add_check_box = true`时，首列出现复选框，勾选某个复选框后，如果定义了`check`函数，就会调用应用自定义的`check`方法。该属性可绕开事件机制。
+
 # 事件 #
 
 如果设置了`id`，即可广播/监听以下事件。

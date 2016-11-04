@@ -344,7 +344,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 proxyDs: "@?",
                 pageNumber: "@?",
                 addCheckBox: "=?",
-                defaultConditionProcessor: "&?"
+                defaultConditionProcessor: "&?",
+                change: "&?",
+                select: "&?",
+                doubleClick: "&?",
+                check: "&?"
             },
             compile: function(tElement, tAttributes) {
 
@@ -610,23 +614,29 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         }
 
                         scope.refreshData = function(inputTarget, row, column, itemRowSpan, filterIndex, columnDef) {
+                            var cells = new Array();
+                            if (itemRowSpan && itemRowSpan[columnDef["targets"]]) {
+                                var destData = scope.$filtered.slice(filterIndex, filterIndex + itemRowSpan[columnDef["targets"]]);
+                                for (var i = 0; i < destData.length; i++) {
+                                    cells.push(new Array(destData[i].$index, column));
+                                };
+                            } else {
+                                cells.push(new Array(row, column));
+                            }
+
+                            var changeData = {};
+                            changeData['oldValue'] = scope.data.data[row][column];
+                            changeData['newValue'] = $(inputTarget).val();
+                            changeData['rowIndex'] = row;
+                            changeData['columnIndex'] = column;
+                            changeData['cells'] = cells;                         
+
                             if (angular.isDefined(attrs.id)) {
-                                var cells = new Array();
-                                if (itemRowSpan && itemRowSpan[columnDef["targets"]]) {
-                                    var destData = scope.$filtered.slice(filterIndex, filterIndex + itemRowSpan[columnDef["targets"]]);
-                                    for (var i = 0; i < destData.length; i++) {
-                                        cells.push(new Array(destData[i].$index, column));
-                                    };
-                                } else {
-                                    cells.push(new Array(row, column));
-                                }
-                                EventService.broadcast(attrs.id, EventTypes.CHANGE, {
-                                    'oldValue': scope.data.data[row][column],
-                                    'newValue': $(inputTarget).val(),
-                                    'rowIndex': row,
-                                    'columnIndex': column,
-                                    'cells': cells
-                                });
+                                EventService.broadcast(attrs.id, EventTypes.CHANGE, changeData);
+                            }
+
+                            if(scope.change(scope)){
+                                scope.change(scope)(event, changeData);
                             }
                         }
 
@@ -688,6 +698,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             if (angular.isDefined(attrs.id)) {
                                 EventService.broadcast(attrs.id, EventTypes.SELECT, scope.selectedModel);
                             }
+                            if(scope.select(scope)){
+                                scope.select(scope)(event, scope.selectedModel);
+                            }
                         };
 
                         scope.singleCheck = function(item, index, event){
@@ -704,11 +717,14 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         }
 
                         scope.dbClickHandler = function(item, index) {
+                            var data = {};
+                            data.data = item;
+                            data.index = index;
                             if (angular.isDefined(attrs.id)) {
-                                var data = {};
-                                data.data = item;
-                                data.index = index;
                                 EventService.broadcast(attrs.id, EventTypes.DOUBLE_CLICK, data);
+                            }
+                            if(scope.doubleClick(scope)){
+                                scope.doubleClick(scope)(event, data);
                             }
                         }
 
@@ -801,10 +817,13 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     }
 
                     function _totalBroadcast(){
+                        var data = {};
+                        data.data = _getSelectedItems();
                         if (angular.isDefined(attrs.id)) {
-                            var data = {};
-                            data.data = _getSelectedItems();
                             EventService.broadcast(attrs.id, EventTypes.CHECK, data);
+                        }
+                        if(scope.check(scope)){
+                            scope.check(scope)(event, data);
                         }
                     }
 
