@@ -45,6 +45,15 @@
 
 <live_demo example="common/scroll/options" width="900"></live_demo>
 
+## ScrollConfigProvider ##
+> 滚动条服务配置对象
+
+`ScrollConfigProvider` 在应用配置模块中可以注入此服务，服务提供了一个setOptions方法为整个应用配置统一风格的滚动条效果。
+
+这是一个简单的 `ScrollConfigProvider` 例子：
+
+<live_demo example="common/scroll/provider" width="900"></live_demo>
+
 
 # 事件 #
 ps-scroll-y
