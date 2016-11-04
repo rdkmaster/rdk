@@ -68,7 +68,6 @@ function() {
                    // }, true);
                     EventService.register($scope.id, EventTypes.CLOSE, function(event, data){
                         $scope.panelShow=false; 
-                        console.log(1);
                     });
 
                     EventService.register($scope.id, EventTypes.SHOW, function(event, data){
