@@ -60,6 +60,7 @@ span.images_right{
 	display:inline-block;
 	height:64px;
 	width:12px;
+	cursor: pointer;
 	position:absolute;
 	background:url(../images/left.png) no-repeat;
 	margin-top:100px;
