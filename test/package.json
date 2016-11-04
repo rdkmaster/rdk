@@ -39,6 +39,7 @@
     "button":"protractor button-conf.js",
     "alert":"protractor alert-conf.js",
     "buttonGroup":"protractor buttonGroup-conf.js",
+    "panel":"protractor panel-conf.js",
     "protractor_debug" : "protractor debug protractor-conf.js"
   }
 }

@@ -70,7 +70,8 @@ locator.getLocation();
 expect(locator.count()).toBe();  
 expect(locator.getAttribute(“attr”)).toBe()  
 expect(locator.getText()).toBe();  
-expect(locator.getCssValue()).toBe()  
+expect(locator.getCssValue()).toBe();  
+expect(locator.getCssValue()).toMatch();    
 ##五.常见问题以及优化手段  
 1.element is not visible   
 元素不可见，也就是在那一刻这个选择器定位的元素还未暴露出来  
@@ -88,10 +89,10 @@ Angular没有加载到页面,需要自己手动打开页面控制台是否有什
 ![](imgs/2016-10-21_094148.png)   
 配置官方示例：[https://www.npmjs.com/package/protractor-jasmine2-html-reporter](https://www.npmjs.com/package/protractor-jasmine2-html-reporter)  
 allScriptsTimeout:页面打开的超时限制  
-specs:单元素的数组，支持通配写法，规定要测试的用例路径以及哪些用例  
+specs:测试程序组+测试程序体,单元素的数组，支持通配写法，规定要测试的用例路径以及哪些用例  
 multiCapabilities:数组对象，规定测试环境依赖的浏览器类型  
 baseUrl:完整的html地址的url或者url片段  
-framwork:依托的测试工具/插件，jasmine生成xml，jasmine2生成html测试报告  
+framwork:依托的测试工具/插件，jasmine生成xml，生成html报告需要调用插件，推荐用jasmine2  
 重点说下onPrepare:function(){}  
 var Jasmine2HtmlReporter=require('./index.js');//调用生成Html的插件工具/方法对象  
 jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({//对象}))  
@@ -101,7 +102,7 @@ consolidateAll：true是否所有测试单元生成独立文件报告，默认tr
 consolidate：与上面相反  
 takeScreenshots：是否截图  
 takeScreenshotsOnlyOnFailures：是否仅在失败时截图  
-filePrefix：文件名打头字符串
+filePrefix：文件名打头字符串  
 ##FAQ持续更新
 TypeError:Path must be a string.received undefined.  
 该问题是在xp系统下读取不到环境变量LOCALAPPDATA的值，解决方法就是添加一个环境变量

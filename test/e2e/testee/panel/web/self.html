@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Panel自测</title>
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk"
+        src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="self.js"></script>
+    
+
+    <!-- 应用正式运行的时候，请使用下面这个节点，RDK会使用编译后的代码，代码体积小，下载快 -->
+    <!--
+    <script data-main="main.min.js" src="/rdk_server/app/libs/requirejs/require.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    -->
+    
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/test/module/testee_helper',
+            }
+        });
+    </script>
+</head>
+<style>
+    body>div{
+        margin:20px;
+        width:50%;
+    }
+</style>
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    <div class="demo1">
+        <rdk_panel show_title="true">
+            <div>123</div>
+        </rdk_panel>
+    </div>
+    <div class="demo2">
+        <rdk_panel show_title="true" title="private">
+            <div>123</div>
+        </rdk_panel>
+    </div>
+    <div class="demo3">
+        <rdk_panel show_title="true" title="private" icon="fa fa-cubes">
+            <div>123</div>
+        </rdk_panel>
+    </div>
+    <div class="demo4">
+        <rdk_panel show_close="true" show_title="true">
+            <div>默认200px宽度</div>
+        </rdk_panel>
+    </div>
+    <div class="demo5">
+        <rdk_panel show_title="true" width="250px" height="100px">
+            <div>自定义250px宽度</div>
+        </rdk_panel>
+    </div>
+    <div class="demo6">
+        <rdk_panel id="panel" show_title="true" show_close="true">
+            <div>123</div>
+        </rdk_panel>
+    </div>
+    <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
+    <!--     这个节点可选，删除后，RDK会自动生成一个    -->
+    <!--           这个节点只支持基本HTML标签           -->
+</body>
+
+</html>
