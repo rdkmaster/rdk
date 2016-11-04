@@ -92,17 +92,16 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 if(scope.id) {
                     EventService.register(scope.id, EventTypes.CHANGE, function(event, data) {
                         scope.inputStr = data;
-                        console.log(data)
                     });
                 }
 
-                // $(document).mouseup(function(e){
-                //     if(!iEle.is(e.target) && iEle.has(e.target).length === 0){
-                //         $timeout(function(){
-                //             scope.open = false;
-                //         }, 0)
-                //     }
-                // });
+                $(document).mouseup(function(e){
+                    if(!iEle.is(e.target) && iEle.has(e.target).length === 0){
+                        $timeout(function(){
+                            scope.open = false;
+                        }, 0)
+                    }
+                });
 
                 function _toggle(){
                     if(scope.frozen) return;//冻结
