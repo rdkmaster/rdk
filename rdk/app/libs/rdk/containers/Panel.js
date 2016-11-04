@@ -68,6 +68,7 @@ function() {
                    // }, true);
                     EventService.register($scope.id, EventTypes.CLOSE, function(event, data){
                         $scope.panelShow=false; 
+                        console.log(1);
                     });
 
                     EventService.register($scope.id, EventTypes.SHOW, function(event, data){
@@ -80,18 +81,12 @@ function() {
                       if ($scope.hideOnClose=="true"){
                          $scope.panelShow=false;
                       }
-
+                      
+                      EventService.broadcast($scope.id, EventTypes.BEFORE_CLOSE,null);
                       if ($scope.id && $scope.hideOnClose=="false"){
-                          var fn = Utils.findFunction($scope, $scope.beforeClose);  
-                          if(typeof(fn) == 'function'){
-                            fn();
-                                              
-                          }
-
+                          EventService.broadcast($scope.id, EventTypes.BEFORE_CLOSE,null);
                       }
                     }           
-
-                
                     var elem = el[0].children[0]; 
                     console.log(elem);
                     if ($(el[0]).attr("width")){
