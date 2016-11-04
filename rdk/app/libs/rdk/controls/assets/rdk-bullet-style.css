@@ -26,6 +26,11 @@
     -webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.1);
 }
 
+.progress-bar{
+    -webkit-transition: none !important;
+    transition: none !important;
+}
+
 .rdk-bullet-vertical-module .progress .progress-bar {
     background-color: #577780;
     width: 10px;
