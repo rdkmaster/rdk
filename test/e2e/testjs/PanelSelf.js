@@ -18,7 +18,7 @@ describe('Panel Self Test',function(){
     });
     it('图标显示',function(){
         var i=element(by.css(".demo3 .panel-caption i"));
-        expect(i.getAttrbute('class')).toMatch('fa');
+        expect(i.getAttribute('class')).toMatch('fa');
     });
     it('宽度默认200px',function(){
         var panel=element(by.css(".demo4 .rdk-panel-module"));
@@ -35,6 +35,6 @@ describe('Panel Self Test',function(){
         // i.click();
         // //关闭完成
         // var panel=element(by.css(".demo6 .rdk-panel-module"));
-        // expect(panel.getAttrbute("class")).toMatch("ng-hide");
+        // expect(panel.getAttribute("class")).toMatch("ng-hide");
     });
 });
