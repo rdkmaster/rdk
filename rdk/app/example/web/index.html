@@ -15,11 +15,24 @@
 
 <!-- rdk-loading 样式只能在body节点添加一次，其他节点不要添加 -->
 <body ng-controller='RootController' class="rdk-loading">
-    <button ng-click="hello()">调用 module1 的 hello 方法</button>
+    <h1>这是RDK示例应用</h1>
+    <p ng-bind="version" ds="version" ds_url="$svr/version"
+        ds_query_if="ready" ds_init_data="{{i18n.wait}}"></p>
+    
+    <h2 ng-bind="i18n.welcome"></h2>
 
-    <rdk_module id="module1" url="/doc/client/demo/controls/module/basic/template/sample_module.html"
-        init_data="{data: 'defined in initData of module1'}"></rdk_module>
-    <rdk_module id="module2" url="/doc/client/demo/controls/module/basic/template/sample_module.html" load_timeout=5000></rdk_module>
+    <p ng-bind="i18n.lang.st(i18n.$locale)"></p>
+
+    <!-- 这里演示了如何调用后端服务，应用需要根据自身所在路径修改服务路径 -->
+    <!--
+        $svr 是当前应用的server目录所在路径
+        $svr 只在调用RDK服务时才有效
+     -->
+    <p ds_url="$svr/my_service" ds_query_if="ready" ds_init_data="{{i18n.wait}}"
+        ds="msgFromSvr" ng-bind="msgFromSvr"></p>
+
+    <p style="width:440px; font-size:16px">当一个app的逻辑非常复杂，
+    需要多人一起协作开发的时候，可以使用<a href="../../complex_example/web/index.html">这个例子</a>的方法来拆分代码</p>
 </body>
 
 </html>
