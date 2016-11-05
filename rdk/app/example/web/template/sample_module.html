@@ -1,5 +1,5 @@
    
-<div controller="SampleModuleController" style="border:1px solid red; margin:6px; padding:6px">
+<div controller="SampleModuleController" style="border:1px solid gray; margin-top: 6px; padding: 6px">
     <!--
       模板中使用的所有变量的上下文scope取决于 controller 属性
       如果指定了controller属性的值，则采用该值对应的控制器的scope来解释模板中的变量
@@ -11,7 +11,8 @@
 
       模板的第一个非空白字符，必须是 <div>，模板的注释必须写在div的内部
     -->
-    <h1>这里是 {{$moduleId}}</h1>
-    <p>data = {{data}}</p>
-    <rdk_time></rdk_time>
+    <h4>这是一个稍微复杂些的模块</h4>
+    <p>这是加载模块时的初始化数据：{{initData}}</p>
+    <p>这是模块控制器预定义的数据：{{someData}}</p>
+    <rdk_button label="这是关于模块的一个更复杂例子" click="openExample"></rdk_button>
 </div>
