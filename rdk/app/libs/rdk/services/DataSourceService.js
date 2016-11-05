@@ -116,6 +116,27 @@
                 return ds instanceof DataSource ? ds : dataSourcePool[ds];
             }
 
+            this.remove = function(ds) {
+                ds = this.get(ds);
+                if (!ds || ds.removed) {
+                    console.warn('DataSource has been removed or unexist!' + (ds ? ' id=' + ds.id : ''));
+                    return;
+                }
+
+                ds.removed = true;
+                ds.stopLoop();
+                delete ds.ajaxConfigProcessor;
+                delete ds.conditionProcessor;
+                delete ds.dataProcessor;
+                delete ds.resultHandler;
+                delete ds.data;
+                delete ds.scope;
+
+                EventService.remove(ds.id, EventTypes.RESULT);
+                delete dataSourcePool[ds.id];
+                console.log('DataSource removed! id=' + ds.id);
+            }
+
             function DataSource(dsInfo) {
                 if (!dsInfo) {
                     throw '无效的数据源数据';
@@ -139,6 +160,7 @@
                 _this.busy = false;
                 _this.data = undefined;
                 _this.scope = dsInfo.scope;
+                _this.removed = false;
 
                 var loopHandler = -1;
                 var sequence = 0;
@@ -220,7 +242,7 @@
                     }
                     if (angular.isString(fn)) {
                         Utils.onReady(function() {
-                            if (_this.scope) {
+                            if (_this.scope && !_this.removed) {
                                 _this[type] = Utils.findFunction(_this.scope, fn);
                             }
                         });
@@ -236,6 +258,10 @@
                     Utils.onReady(_doAjax);
 
                     function _doAjax() {
+                        if (_this.removed) {
+                            console.error('the datasource has been removed! id=' + _this.id);
+                            return;
+                        }
                         if (_this.busy) {
                             console.error('DataSource [id=' + _this.id + '] is busy!!!');
                             return;
@@ -285,6 +311,10 @@
                 }
 
                 function _processResult(data, detailEvent) {
+                    if (_this.removed) {
+                        console.warn('the datasource has been removed! id=' + _this.id);
+                        return;
+                    }
                     _this.rawData = data;
                     var data = _callDataProcessor(data);
                     
