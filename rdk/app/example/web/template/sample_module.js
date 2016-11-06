@@ -2,22 +2,21 @@
 (function(application) {
     //控制器名，非常重要，不要和已有的控制器重名
     var controllerName = 'SampleModuleController';
-    //模板控制器需要把模板用到的依赖添加到依赖列表中，这样模块代码更加内聚，方便使用
+    //参考 main.js 中同名变量的说明
     var downloadDependency = [
-        { url: 'base/scripts/i18n', alias: 'i18n' },
         { url: 'base/scripts/utils', alias: 'utils' },
         'rd.controls.Button',
     ];
-    var requiredComponents = [
-        'rd.controls.Button',
-    ];
+    //参考 main.js 中同名变量的说明
+    var requiredComponents = [ ];
+    //参考 main.js 中同名变量的说明
     var controllerDefination = ['$scope', 'DataSourceService', 'EventService', main];
     function main(scope, DataSourceService, EventService) {
         console.log('SampleModule controller is running..........');
 
         //只有定义在this上的方法才能发布给外部。
         this.hello = function(msg) {
-            alert('hello ' + msg);
+            alert(scope.i18n.hello.st(msg));
         }
         //只有定义在this上的属性才能发布给外部。
         this.publicData = 'this is some public data defined in the SampleModule controller';
@@ -38,7 +37,7 @@
     define(application.getDownloads(downloadDependency), start);
     function start() {
         application.initContext(ctx, arguments, downloadDependency);
-        rdk.$injectDependency(requiredComponents);
-        rdk.$app.controller(controllerName, controllerDefination);
+        rdk.$injectDependency(application.getComponents(requiredComponents, downloadDependency));
+        rdk.$ngModule.controller(controllerName, controllerDefination);
     }
 })(application);

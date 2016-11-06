@@ -4,12 +4,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
     <title>RDK应用工程模板</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     
     <!-- === RDK dependency start === -->
     <!-- 这个区域中的代码将被替换掉，请不要在这里添加任何有用代码 -->
     <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/loading.css">
-    <script data-main="/rdk/app/libs/rdk/rdk.js" src="/rdk/app/libs/requirejs/require.js"></script>
-    <script src="scripts/main.js"></script>
+    <script data-main="/rdk/app/libs/rdk/rdk.js" src="/rdk/app/libs/requirejs/require.js"
+        rdk-app="scripts/main"></script>
     <!-- ===  RDK dependency end  === -->
 </head>
 
@@ -25,13 +27,13 @@
     -->
     <ul ds="version" ds_url="$svr/version" ds_query_if="ready" ds_init_data="...">
         <li>RDK框架版本 {{version}}</li>
-        <li>{{i18n.lang.st(i18n.$locale)}}</li>
-        <li><a href="/rdk/app/example-v1/web/index.html">返回</a>上一个版本(v1.0)</li>
+        <li>演示国际化：{{i18n.lang.st(i18n.$locale)}}</li>
+        <li><a href="/rdk/app/example-v1/web/index.html">返回旧版本(v1.0)</a></li>
     </ul>
     
-    <h3>测试REST调用</h3>
-    <p ds_url="$svr/my_service" ds_query_if="ready" ds_init_data="{{i18n.wait}}"
-        ds="msgFromSvr" ng-bind="msgFromSvr"></p>
+    <h3>演示调用REST</h3>
+    <p ds="msgFromSvr" ng-bind="msgFromSvr" ds_url="$svr/my_service"
+        ds_query_if="ready" ds_init_data="{{i18n.wait}}"></p>
 
     <h3>模块化</h3>
     <rdk_module url="template/plain_text.html"></rdk_module>
