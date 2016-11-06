@@ -22,7 +22,10 @@
     //RDK定义的 Angular module 会被自动加入，无需再次添加
     var requiredComponents = [ ];
 
+    //downloadDependency 中带有 alias 的条目的返回值会被保存在这个对象中
+    //可通过 ctx.alias 的方式引用到这些下载项的结果
     var ctx = {};
+
     //controllerDefination 定义了本应用的根控制器，它是所有子控制器的祖先
     //这个数组遵循Angular依赖注入的规则，简单的讲，把Angular和RDK提供的服务名填在数组中
     //然后在 main 函数的参数列表中，按照顺序填上一个同名的形参就才能使用这些服务

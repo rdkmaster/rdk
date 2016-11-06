@@ -2,14 +2,15 @@
 (function(application) {
     //控制器名，非常重要，不要和已有的控制器重名
     var controllerName = 'SampleModuleController';
+
     //参考 main.js 中同名变量的说明
     var downloadDependency = [
         { url: 'base/scripts/utils', alias: 'utils' },
         'rd.controls.Button',
     ];
-    //参考 main.js 中同名变量的说明
     var requiredComponents = [ ];
-    //参考 main.js 中同名变量的说明
+    var ctx = {};
+
     var controllerDefination = ['$scope', 'DataSourceService', 'EventService', main];
     function main(scope, DataSourceService, EventService) {
         console.log('SampleModule controller is running..........');
@@ -33,7 +34,6 @@
     //==========================================================================
     //                   从这里开始的代码请不要随意修改
     //==========================================================================
-    var ctx = {};
     define(application.getDownloads(downloadDependency), start);
     function start() {
         application.initContext(ctx, arguments, downloadDependency);
