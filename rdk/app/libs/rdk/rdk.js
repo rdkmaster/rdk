@@ -67,7 +67,6 @@ application = (function() {
                 var url;
                 if (item.hasOwnProperty('url')) {
                     url = item.url;
-                    item.index = i;
                 } else {
                     url = item;
                 }
@@ -93,7 +92,7 @@ application = (function() {
                 if (!item.hasOwnProperty('url')) {
                     continue;
                 }
-                ctx[item.alias] = values[item.index];
+                ctx[item.alias] = values[i];
             }
         }
     }
