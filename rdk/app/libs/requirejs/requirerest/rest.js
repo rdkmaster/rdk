@@ -9,13 +9,13 @@
         var masterConfig = module.config ? module.config() : {};
 
         return {
-            version: '1.0.0',
+            version: '1.0.1',
             /**
              * Called when a dependency needs to be loaded.
              */
             load: function (restUrl, req, onLoad, config) {
-                if (!window.XMLHttpRequest) {
-                    console.error("no window.XMLHttpRequest supported!");
+                if (!window || !window.XMLHttpRequest) {
+                    console.error("no window or window.XMLHttpRequest supported!");
                     onLoad();
                     return;
                 };
