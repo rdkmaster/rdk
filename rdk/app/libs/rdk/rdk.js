@@ -185,6 +185,12 @@ rdk = (function() {
     }
 
     function _start() {
+        try {
+            (window || document);
+        } catch(e) {
+            console.error('not in browser, i will not continue!!');
+            return;
+        }
         _setupLoading();
 
         /*
@@ -258,4 +264,3 @@ rdk = (function() {
     }
 })();
 rdk.$start();
-
