@@ -345,7 +345,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 pageNumber: "@?",
                 addCheckBox: "=?",
                 defaultConditionProcessor: "&?",
-                headerSwitch: "@?"
+                floatableHeader: "@?"
             },
             compile: function(tElement, tAttributes) {
 
@@ -455,7 +455,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                         //表头开关
                         $timeout(function(){
-                            scope.headerSwitch = Utils.isTrue(scope.headerSwitch, true);
+                            scope.floatableHeader = Utils.isTrue(scope.floatableHeader, true);
                         }, 0);
 
                         //默认国际化
@@ -750,7 +750,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         var off = scope.$on('ngRepeatFinished', function() {
                             _reFreshTable();
 
-                            if(scope.headerSwitch){
+                            if(scope.floatableHeader){
                                 $(element.find("table")).fixHeader();
                             }
 
@@ -868,7 +868,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     }
 
                     function _getOrginTable(){
-                        return scope.headerSwitch ? (element.find('.sticky-enabled')) : (element.find('table'));
+                        return scope.floatableHeader ? (element.find('.sticky-enabled')) : (element.find('table'));
                     }
 
                     function _resetTotalCheck(isChecked){
@@ -878,7 +878,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     }
 
                     function _resetFixHeadTotalCheck(isChecked){
-                        if(!scope.headerSwitch) return;
+                        if(!scope.floatableHeader) return;
                         var arr = element.find('.sticky-thead').find('input[name="totalCheckBox"]');
                         arr[0].checked = isChecked;
                     }

@@ -389,7 +389,7 @@ cells 为 改变的行列信息的数组信息
 `search`后端过滤示例：
 <live_demo example="controls/table/server_search" width="900"></live_demo>
 
-## searchPrompt <binding></binding>##
+## search_prompt <binding></binding>##
 支持类型：字符串
 
 <live_demo example="controls/table/searchPrompt" width="900"></live_demo>
@@ -402,7 +402,7 @@ cells 为 改变的行列信息的数组信息
 `searchable`前端过滤示例：
 <live_demo example="controls/table/searchable" width="900"></live_demo>
 
-## searchPattern ##
+## search_pattern ##
 >支持类型：正则表达式
 
 `search`设置成`true`时，支持搜索过滤。在这基础上设置`searchPattern`，可以对输入的关键字进行校验。校验通过后才能进行过滤。
@@ -410,7 +410,7 @@ cells 为 改变的行列信息的数组信息
 详细示例如下：
 <live_demo example="controls/table/search_pattern" width="900"></live_demo>
 
-## pageNumber ##
+## page_number ##
 >支持类型：数值
 
 表格分页样式目前支持两种：
@@ -426,14 +426,14 @@ cells 为 改变的行列信息的数组信息
 `page_number` 非零数值时的详细示例如下：
 <live_demo example="controls/table/demo4PageNumber" width="900"></live_demo>
 
-## headerSwitch ##
+## floatable_header ##
 >支持类型：布尔型
 
  - `true`时滚动条下拉会复制表头。缺省时默认为`true`。
  - `false`时滚动条下拉不会再出现表头。
 
 实例如下：
-<live_demo example="controls/table/demo4HeaderSwitch" width="900"></live_demo>
+<live_demo example="controls/table/demo4FloatableHeader" width="900"></live_demo>
 
 
 # 事件 #
