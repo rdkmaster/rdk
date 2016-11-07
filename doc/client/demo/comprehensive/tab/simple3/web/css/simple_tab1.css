@@ -28,7 +28,7 @@
 .rdk-table-module .rdk-table > thead > tr>th{
 	text-align:left;
 	font-size: 12px;
-	padding:0px 6px;
+	padding:0px 8px;
 	height:30px;
 }
 .rdk-table-module .rdk-table > thead > tr>th:last-child{
@@ -46,11 +46,11 @@
 /*设置td样式 点击时样式*/
 .rdk-table-module .rdk-table tbody tr.selected-row td{
 	background: #cde4fa;
-	padding: 0 6px
+	padding: 0 8px
 	/*line-height:30px;*/
 }
 .rdk-table-module .rdk-table tbody > tr >td{
-	padding:0px 6px;
+	padding:0px 8px;
 	line-height: 30px;
 	cursor: pointer;
 }
@@ -97,6 +97,7 @@ div.hao >span.title{
 	position:absolute;
 	border: none;
 	top:10px;
+	padding-left: 8px;
 	font-size: 14px;
 	font-style: normal;
 	line-height: 30px;
