@@ -61,9 +61,10 @@
 
 
 
-# 事件 #
-事件是RDK实现交互的主要手段之一，强大但易用。[了解更多](/doc/client/common/event/EventService.md)。控件会广播“BEFORE_CLOSE”事件，同时注册监听“CLOSE”事件，这样用户在点击关闭图标后，可以执行一些其他操作。
+# before_close和hide_on_close #
+>支持类型：字符串
 
+这两个属性是配合使用的；当hide_on_close为"false"时，点击关闭图标会执行before_close函数;反之则不执行这个函数,其默认值为"true"
 示例如下：
 <live_demo example="containers/panel/panel_close" width="405"></live_demo>
 

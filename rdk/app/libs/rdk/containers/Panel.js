@@ -11,8 +11,6 @@ function() {
                 scope:
                 {
                     title: '=?',
-                    // resizabl: '@',
-                    // hidden: '@',
                     icon:'@?',
                     hideOnClose:'@?',
                     beforeClose: '@?',
@@ -41,8 +39,6 @@ function() {
 
                 controller: ['$scope', function(scope) {
 
-                     
-                    
                 }],
                 compile: function(tEle, tAttrs) {
                         return {
@@ -59,13 +55,6 @@ function() {
                    $scope.panelShow=true;
                    
                    $scope.close=_close;
-                   // $scope.$watch('hideonclose', function(){
-                   //  if($scope.hideonclose='false'){
-                   //    $scope.panelShow=false;
-                   //    console.log($scope.panelShow);  
-                   //  }
-                    
-                   // }, true);
                     EventService.register($scope.id, EventTypes.CLOSE, function(event, data){
                         $scope.panelShow=false; 
                     });
@@ -75,38 +64,36 @@ function() {
                     });
 
                     function _close(){
-
-                       // $(el[0].children[0]).removeAttr("class");
                       if ($scope.hideOnClose=="true"){
                          $scope.panelShow=false;
                       }
-                      
-                      EventService.broadcast($scope.id, EventTypes.BEFORE_CLOSE,null);
+
                       if ($scope.id && $scope.hideOnClose=="false"){
-                          EventService.broadcast($scope.id, EventTypes.BEFORE_CLOSE,null);
+                          var fn = Utils.findFunction($scope, $scope.beforeClose);  
+                          if(typeof(fn) == 'function'){
+                            fn();
+                                              
+                          }
                       }
-                    }           
+                    }              
                     var elem = el[0].children[0]; 
                     console.log(elem);
                     if ($(el[0]).attr("width")){
                        $(elem).css('width',$(el[0]).attr("width"));
 
+                    }else{
+                        if (el[0].style.width){
+                            $(elem).css('width',el[0].style.width);
+                        }
                     }
-					else{
-						if (el[0].style.width){
-							$(elem).css('width',el[0].style.width);
-						}
-					}
+					
                     if ($(el[0]).attr("height")){
-                       $(elem).css('height',$(el[0]).attr("height"));
-                       // $((elem).lastElementChild).css('max-height',$(el[0]).attr("height"));
-                    }
-					else {
-						if (el[0].style.height){
-								$(elem).css('height',el[0].style.height);
-						}
-						
-					}
+                        $(elem).css('height',$(el[0]).attr("height"));
+                    }else {
+                        if (el[0].style.height){
+                            $(elem).css('height',el[0].style.height);
+                        }
+					          }
                     
                }
        
