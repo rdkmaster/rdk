@@ -1,51 +1,74 @@
 ## 新增功能
-- 多数据库支持功能
-- 表格直接添加支持checkbox列
-- 多个综合demo
-- Accordion/Tab/Bullet 自动化测试用例
-- 前端自动化测试结果报告汇总
-- 后端新API的文档
-- 前端自动化测试耗时过长优化
-- 支持控件直接方法调用
-- RDK支持导出为excel文档
+- Tab控件支持Tab页可动态添加、删除
+- Tree控件开发
+- ButtonGroup控件开发
+- Button控件开发
+- 前端自动化测试框架protractor二次开发文档
+- time的setting要支持双绑，在外面设置时间，time里面的value要跟着变化
+- RDK数据库查询服务需要可以通过列名称来获取某行中的对应信息
+- 表格checkbox支持回填选中
+- 增加一个滚动条控件
+- rdk_tree unselect_on_blur(暴露一个事件出来用于清空之前选择的节点缓存的数据)
+- tab_select提交
+- [tab] 需支持close/change/add方法
+- Tree懒加载
+- rdk_tree监听check事件获取勾选节点数据
+- [tab] 标题栏打开的标签过多时，允许标题栏撑开转行，后期再优化成转行按钮
+- rdk_table控件选择某个节点后鼠标点击树控件外侧时 选择失效恢复最初没有选择状态
+- 实现将测试结果以浏览器类型区分文件夹(支持chrome、firefox同时测试)
+- [table] 不再暴露scope，pagesize动态更新需修正
+- [tab] 暴露controller提供方法给外部调用
+- 所有控件发事件方式对齐raiseControlEvent
+- 表格添加一个标题随着滚动条下拉而浮动的功能的开关属性以关掉这个功能。
+- 表格给发出的事件都添加对应的属性
+- 新增工单查询/工单处理/下载历史记录图标
+
 
 ## 修改功能
-- 去除rpc编译告警
-- 迁移mq.reply方法到mq消息对象中去
-- mq.rpc 最后一个参数可选 默认值为120秒，修改对应代码和文档
-- 完善部分文档说明
-- 修改Data.fetch方法 maxLine参数为可选，默认值为4000
-- 时间控件宽度微调
+
+- table 控件 placeholder改为searchPrompt
+- 暴露控制器给app，准备替换掉先前的暴露控件的scope
+- 控件依赖的module全部改为rd.core
+- 上传离网用户预测图标
+- 新增一个数据源，2张图示例
+- rdk_main改为rdk-loading
+- 测试用例E2e 维护优化
+- 补充日期控件禁用当日功能demo
+- 后端修改日志级别error->info
+- 注释掉ums.locale配置，从环境读取
+- Alert控件样式对齐Ux设计
+- 补充[tab] 测试用例中动态新增tab的模板
+- 数据源支持删除
 
 	
 ## 修复故障
 
-- 修复加载deploy-usf.properties,serviceaddress.properties, `deploy-console.properties的相对路径错误
-- #100 tree控件放开拖动属性后，可以对树节点进行删除和重命名操作，但此操作对对应的数据源无效。
-- #33 Selector的Accordion打开和关闭未发事件
-- #246 Graph无法正确读出父节点的高度
-- #247 map控件，显示加上 `style="height:300px"` 也不能改变高度，挤成一团
-- 修复应用日志有时候打印标签出错的问题
-- #248 Accordion的expand_direction的demo，最大宽度设置小于800px，否则文档上效果太差
-- #254 [兼容性] Accordion 自测child中"删除","刷新"和"编辑"可以展开child下的示例
-- #253 [兼容性] “Accordion 自测” 中添加button渲染后除“删除”前的小图标展示了，其他几个文字前的小图标均未展示
-- 修复首页manual、service_api文档链接 
-- #252 “Accordion 自测” 中点击‘添加button渲染’后，下方bottom的高度会受影响
-- #258 [兼容性] firefox打开"前端开发文档"无法适应界面
-- 修复init脚本路径查找错误问题
-- 增加init.js变更需重启rdk_server文档说明。
-- #265 [兼容性] time控件文档中的示例所有时间均不能点击
-- #257 [兼容性] firefox打开的time组合和time自测界面，所有日期均不可选择，
-- #269 [兼容性] 对话框&模态框文档中的部分示例展示异常
+- #282 Tab控件外部事件TAB_SELECT没有根据id去广播
+- #275 Tab控件属性 toggleCondition=mouseover异常
+- #312 数据源发送post/put/delete请求的时候，RDK服务端包400 bad request
+- #226 Graph demo微调
+- #277 firefox打开的singleindicator文档中label_position下的示例点击right之后位置显示在下方
+- #276 firefox打开的“前端开发文档”中点击右侧文档结构栏中的子项无法跳转到其所处位置（只有少数可以跳转）
+- #229 修复给控制器打标记的逻辑，兼容scope是空的情况
+- #317 selectedTab不生效
+- #242 修复树livedemo的数据源为绝对路径
+- #247 分隔符样式合并到buttongroups
+- #250 树checkable/draggable这2个属性会引起树控制套报错
+- #328 [tab] tab标签撑满标题栏后，关闭按钮位置异常
+- #308 table后端过滤输入框如果添加了自定义列，输入的时候会有一个空白行，比如设置了一个删除按钮，搜索的时候会有空白
+- #309 table后端过滤，点击搜索按钮没用必须按确认键
+- #335 [tab] 切换Tab页后selectedTab没变化，导致没走watch的处理
+- #338 Tree有4个未暴露的事件回调，删除掉
+- #311 rdk_table集成的checkbox 偶尔选中不生效bug
 - #278 TabSelect 文档实例无法显示
-- #256 [兼容性] firefox打开的"comboSelector组合"中my firest Panel 中的下拉框点击后无小滚动条
-- 修复 locale属性读取文件名 修复 应用配置数据源为默认gbase
-- #271 [兼容性] panel 文档中事件下的示例异常
-- #279 文档菜单显示不全 http://localhost:8080/doc/client/index.html 显示不全，缺少滚动条
-- 修复值为布尔型时强转String类型编译出错
-- CI相关脚本
-- 修复测试用例
-- #287 后端排序应用过程中暴露的问题，复选框全部不勾选时需抛清空数据
-- #297 rdk中Table 控件里的search过滤功能不能用
-- #300 add_check_box 翻页复选数据问题
-- #304 rdk_panel组件内容超出指定高度不出现滚动条
+- #287 修复 加载路径
+- #288 Selector selected_items双向绑定未生效
+- #342 [table] 偶现表头不能点击
+- #299 修复类型匹配错误
+- #348 [table] serverpaging不影响数据上报，但后台有报错
+- #349 [table] addcheckbox全部选中时，滚动条拖动后全部选中的标记消失
+- #304 修改get-involved.md文档打开后描点位置不正确的BUG http://10.9.233.35:8080/doc/#get-involved.md#work-flow
+- #355 [comboselect] 空白处单击精简
+- #280 修改bullet控件横向，多个使用时候滑块挤在一起的BUG
+- #361 rdk_table search 搜索框不输入任何值的时候默认应该不过滤,目前不支持
+- #365 [table] 后端排序时多次进入ngRepeatFinished导致排序结果异常
