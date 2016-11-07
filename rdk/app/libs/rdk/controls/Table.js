@@ -631,13 +631,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             changeData['columnIndex'] = column;
                             changeData['cells'] = cells;                         
 
-                            if (angular.isDefined(attrs.id)) {
-                                EventService.broadcast(attrs.id, EventTypes.CHANGE, changeData);
-                            }
-
-                            if(scope.change(scope)){
-                                scope.change(scope)(event, changeData);
-                            }
+                            EventService.raiseControlEvent(scope, 'change', data);
                         }
 
                         scope.inputPressHandler = function(event, row, columnDef, itemRowSpan, filterIndex) { //input上的event
@@ -695,12 +689,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             } else {
                                 scope.selectedModel = item;
                             }
-                            if (angular.isDefined(attrs.id)) {
-                                EventService.broadcast(attrs.id, EventTypes.SELECT, scope.selectedModel);
-                            }
-                            if(scope.select(scope)){
-                                scope.select(scope)(event, scope.selectedModel);
-                            }
+                            EventService.raiseControlEvent(scope, 'select', data);
                         };
 
                         scope.singleCheck = function(item, index, event){
@@ -720,12 +709,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             var data = {};
                             data.data = item;
                             data.index = index;
-                            if (angular.isDefined(attrs.id)) {
-                                EventService.broadcast(attrs.id, EventTypes.DOUBLE_CLICK, data);
-                            }
-                            if(scope.doubleClick(scope)){
-                                scope.doubleClick(scope)(event, data);
-                            }
+                            EventService.raiseControlEvent(scope, 'double_click', data);
                         }
 
                         scope.isFirstPage = function() {
@@ -819,12 +803,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     function _totalBroadcast(){
                         var data = {};
                         data.data = _getSelectedItems();
-                        if (angular.isDefined(attrs.id)) {
-                            EventService.broadcast(attrs.id, EventTypes.CHECK, data);
-                        }
-                        if(scope.check(scope)){
-                            scope.check(scope)(event, data);
-                        }
+                        EventService.raiseControlEvent(scope, 'check', data);
                     }
 
                     function _getSelectedItems(){
