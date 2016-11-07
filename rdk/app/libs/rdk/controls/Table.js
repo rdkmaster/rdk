@@ -305,7 +305,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         attachCondition.orderBy.field = scope.fieldStr;
                         attachCondition.orderBy.direction = scope.directionStr;
                     }
-                    if ((!!scope.globalSearch) && (scope.search) && (scope.pagingType == "server")) { //服务端过滤时
+                    if ((scope.search) && (scope.pagingType == "server")) { //服务端过滤时
                         attachCondition.search = {};
                         attachCondition.search.searchKey = scope.globalSearch;
                         attachCondition.search.searchFields = scope.searchFields;
@@ -551,7 +551,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         }
 
                         scope.keyPressHandler = function(event) {
-                            if (!scope.globalSearch) return;
+                            if (scope.globalSearch == undefined) return;
                             while (!_validateValue(scope.globalSearch, scope.searchPattern)) {
                                 scope.globalSearch = scope.globalSearch.substring(0, scope.globalSearch.length - 1);
                             }
@@ -562,11 +562,18 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         }
 
                         scope.serverSearchHandler = function(){
+                            if(scope.globalSearch == undefined) return;
                             if(scope.pagingType != 'server') return;
                             scope.currentPage = 0;
-                            if (!scope.searchFields) { //没交互时给默认值
+
+                            if(!scope.searchFields){ //没交互时给默认值
                                 scope.searchFields = _getValue(scope.columnDefs);
                             }
+
+                            if(scope.globalSearch == ''){
+                                scope.searchFields = [];
+                            }
+
                             ctrl.setCurrentPage(scope.currentPage);
                         }
 
