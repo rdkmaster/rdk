@@ -679,8 +679,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 EventService.register(scope.innerID, EventTypes.TABLE_READY, function() {
                                     _addSortArrow(iCol, table);
                                     table.sortCol = iCol;
-                                    scope.serverSortCache = false;
-                                })
+                                });
                             } else {
                                 if (table.sortCol == iCol) {
                                     scope.destData.reverse();
@@ -815,6 +814,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     function _serverSortResponse(){
                         if(scope.serverSortCache){
                             EventService.broadcast(scope.innerID, EventTypes.TABLE_READY);
+                            scope.sortClick = false;
                         }
                     }
 
