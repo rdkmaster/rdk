@@ -12,6 +12,7 @@ define('main', ['rd.controls.Table'], function() {
 
         $scope.tableProcessor = function(baseCondition,additionalCondition){
           baseCondition.paging = additionalCondition.paging;
+          baseCondition.search = additionalCondition.search;
           return baseCondition;
         }
     }]);
