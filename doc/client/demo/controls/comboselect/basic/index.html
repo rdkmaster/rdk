@@ -12,7 +12,7 @@
 </head>
 
 <body ng-controller='myCtrl'>
-    <rdk_combo_select caption="'已选项:'" open='true' open_policy='hover'>
+    <rdk_combo_select caption="'已选项:'" open='true'>
         <rdk_basic_selector data="allItems" multiple_select="true" track_item_by="id" child_change="selected2string"><span>{{item.label}}</span>
         </rdk_basic_selector>
     </rdk_combo_select>
