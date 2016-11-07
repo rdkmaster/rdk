@@ -19,6 +19,7 @@
                     click: '&?',
                     doubleClick: '&?',
                     check: '&?',
+                    rename: '&?',
                     beforeRemove: '&?',
                     beforeRename: '&?',
                     beforeCollapse: '&?',
@@ -105,6 +106,7 @@
                         onClick: on_click,
                         onDblClick: on_dblclick,
                         onCheck: on_check,
+                        onRename: on_rename,
 
                         beforeDrag: before_drag,
                         beforeRename: before_rename,
@@ -135,6 +137,10 @@
                     return EventService.raiseControlEvent(scope, EventTypes.CHECK, treeNode, true);
                 }
 
+                function on_rename(event, treeId, treeNode) {
+                    return EventService.raiseControlEvent(scope, EventTypes.RENAME, treeNode, true);
+                }
+
                 function before_expand(treeId, treeNode) {
                     return EventService.raiseControlEvent(scope, EventTypes.BEFORE_EXPAND, treeNode, true);
                 }
@@ -144,7 +150,8 @@
                 }
 
                 function before_rename(treeId, treeNode, newName, isCancel) {
-                    return EventService.raiseControlEvent(scope, EventTypes.BEFORE_RENAME, treeNode, true);
+                    return EventService.raiseControlEvent(scope, EventTypes.BEFORE_RENAME,
+                        {treeNode: treeNode, newName: newName, isCancel: isCancel}, true);
                 }
 
                 function before_remove(treeId, treeNode) {
