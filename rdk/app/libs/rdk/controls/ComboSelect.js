@@ -79,7 +79,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
             };
 
             function _link(scope, iEle, iAttrs, ctrl, transclude) {
-                scope.open = Utils.isTrue(scope.open, false);
+                var hasOpen = scope.open = Utils.isTrue(scope.open, false);
                 scope.frozen = Utils.isTrue(scope.frozen, false);
                 scope.unfoldedIcon = "fa fa-angle-up";
                 scope.foldedIcon = "fa fa-angle-down";
@@ -108,12 +108,14 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
 
                 function _toggle(){
                     if(scope.frozen) return;//冻结
-                    if(scope.openPolicy!="hover"){
+                    if(hasOpen){   //初始open=true时直接关闭
                         scope.open=!scope.open;
+                        hasOpen=false;
                     }
                     else if(scope.isSelect || !scope.open)
                     {
                         scope.open=!scope.open;
+                        hasOpen=false;
                         if(!scope.open){
                             scope.isSelect = false;
                             return;
