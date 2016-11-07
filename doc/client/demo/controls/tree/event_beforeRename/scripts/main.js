@@ -4,12 +4,13 @@ define('main', ['rd.controls.Tree'], function() {
     // 创建一个控制器
     app.controller('myCtrl', ['$scope', 'EventService', 'EventTypes', function($scope, EventService, EventTypes) {
 
-        $scope.reFun=function(event, treeNode){
-        	if (treeNode.label.length == 0) {  
-                alert("节点名称不能为空.");  
-                return false;  
+        $scope.reFun=function(event, treeNode) {
+            if (treeNode.newName != 'rdk is great') {
+                alert("只能改为：rdk is great");
+                return false;
+            } else {
+                return true;
             }
-            return true;
         }
         //也可以直接监听
         // EventService.register('testZtree', EventTypes.BEFORE_RENAME, function(event, data){

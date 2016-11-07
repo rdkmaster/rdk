@@ -36,13 +36,14 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.BasicSelector',
                     searchable: '=?',
                     editable: '=?',
                     least: '=?',
+                    selectedItems: '=?',
+                    data: '=?',
 
                     change: '&?',
                     error: '&?',
                     childChange: '&?',
-
-                    selectedItems: '=?',                 
-                    data: '=?',
+                    dataChange: '&?',
+                    create: '&?',
 
                     restrict: '@?',
                     maxLength: '@?'
@@ -98,9 +99,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.BasicSelector',
 
                 scope.$watch('data', function(newVal, oldVal) {
                     _refreshSelectedItems();
-                    if (scope.id) {
-                        EventService.broadcast(scope.id, EventTypes.DATA_CHANGE);
-                    }
+                    EventService.raiseControlEvent(scope, EventTypes.DATA_CHANGE, newVal);
                 }, true);
 
                 scope.$watch('least', function(newVal, oldVal) {
@@ -192,20 +191,16 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.BasicSelector',
                 function _validateValue(val){
                     if(!val) return true;//没值了，不能再-1
                     var fn = Utils.findFunction(scope, scope.restrict);                
-                    if(typeof(fn) == 'function'){
-                        if(!fn(val)){
-                            if(scope.id){
-                                EventService.broadcast(scope.id, EventTypes.CREATE, false);
-                            }
+                    if(typeof(fn) == 'function') {
+                        if(!fn(val)) {
+                            EventService.raiseControlEvent(scope, EventTypes.CREATE, false);
                             return false;    
                         }
                     }
                     else{
                         var reg = new RegExp(scope.restrict);
-                        if(!reg.test(val)){
-                            if(scope.id){
-                                EventService.broadcast(scope.id, EventTypes.CREATE, false);
-                            }
+                        if(!reg.test(val)) {
+                            EventService.raiseControlEvent(scope, EventTypes.CREATE, false);
                             return false;
                         }                        
                     }
@@ -227,10 +222,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.BasicSelector',
                         scope.showEditor = true;
                         scope.inputValue = "";
 
-                        if(scope.id){
-                            EventService.broadcast(scope.id, EventTypes.CREATE, true);
-                        } 
-                                     
+                        EventService.raiseControlEvent(scope, EventTypes.CREATE, true);
                     }
                 }
 

@@ -8,7 +8,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 restrict: 'E',
                 replace: true,
                 transclude: true,
-                update: '&?',
+
                 scope: {
                     id: '@',
                     caption: '=?',
@@ -16,7 +16,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                     openPolicy:'@?',
                     frozen: '=?',
                     childChange: '&?',
-
                 },
                 template:'<div>\
                               <div class="rdk-combo-select-module" ng-mouseleave="closeShow()">\

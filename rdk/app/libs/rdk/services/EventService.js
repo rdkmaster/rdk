@@ -24,9 +24,11 @@
         GRAPH_UPDATE: "graph_update",
         UPDATE_GRAPH: "update_graph",
 
+        CLICK: "click",
         OPEN: "open",
         CLOSE: "close",
         SELECT: "select",
+        UNSELECT:"unselect",
         CHANGE: "change",
         ENTER: "enter",
         RESTORE: "restore",
@@ -39,6 +41,7 @@
         CHECK: "check",
         ADD: "add",
         DESTROY: 'destroy',
+        RENAME:"rename",
 
         TAB_SELECT: "tab_select",
         ITEM_SELECTED: "item_selected", //tab_select 从里向外抛，捕捉对象
@@ -52,9 +55,7 @@
         BEFORE_COLLAPSE:"before_collapse",
         BEFORE_RENAME:"before_rename",
         BEFORE_REMOVE:"before_remove",
-        CLICK:"click",
-        BEFORE_EDITNAME:"before_editName",
-        UNSELECT:"unselect"
+        BEFORE_EDIT_NAME:"before_edit_name",
     });
 
     event.service('EventService', ['$rootScope', '$timeout', '$rootScope', 'Utils', 'EventTypes',
@@ -235,19 +236,20 @@
                 return list;
             }
 
-            this.raiseControlEvent = function(scope, eventType, data) {
+            this.raiseControlEvent = function(scope, eventType, data, defaultReturnValue) {
                 if (scope.id) {
                     this.broadcast(scope.id, eventType, data);
                 }
-                var fn = scope[eventType](scope);
+                var fn = scope[Utils.snake2camel(eventType)](scope);
                 if (!fn) {
-                    return;
+                    return defaultReturnValue;
                 }
                 try {
-                    fn({name: eventType, dispatcher: scope.id}, data);
+                    return fn({name: eventType, dispatcher: scope.id}, data);
                 } catch (e) {
                     console.error('call "' + eventType + '" handler failed! msg=' + e.message);
                 }
+                return defaultReturnValue;
             }
 
             function _hasReady() {

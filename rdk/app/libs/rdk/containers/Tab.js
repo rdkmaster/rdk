@@ -170,12 +170,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     event.stopPropagation();
                     var tabId = event.currentTarget.hash;
                     scope.currentSelectedIndex = _getTabIndex(tabId);
-                    if (scope.id) {
-                        EventService.broadcast(scope.id, EventTypes.CHANGE, scope.currentSelectedIndex);
-                    }
-                    if(scope.change(scope)){
-                        scope.change(scope)(event, scope.currentSelectedIndex);
-                    }
+                    EventService.raiseControlEvent(scope, EventTypes.CHANGE, scope.currentSelectedIndex);
                 }
 
                 function _prepareTabs(dom, title, tabid, closable){
@@ -201,12 +196,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     tabs.tabs("refresh");
                     $compile($('#'+scope.tabid))(scope.compileScope);
                     scope.contentDomStr = undefined;//一次新增后重置
-                    if(scope.id){
-                        EventService.broadcast(scope.id, EventTypes.ADD);
-                    }
-                    if(scope.add(scope)){
-                        scope.add(scope)();
-                    }
+                    EventService.raiseControlEvent(scope, EventTypes.ADD);
                 }
 
                 function _getTabIndex(tabId) {
@@ -237,12 +227,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     var data = {};
                     data.tabIndex = index;
                     data.tabData = scope.tabs[index];
-                    if(scope.id){
-                        EventService.broadcast(scope.id, EventTypes.CLOSE, data);
-                    }
-                    if(scope.close(scope)){
-                        scope.close(scope)(event, data);
-                    }
+                    EventService.raiseControlEvent(scope, EventTypes.CLOSE, data);
                 }
 
                 scope.destroyTab = function(index){

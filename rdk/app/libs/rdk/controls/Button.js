@@ -8,7 +8,7 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                 replace: true,
                 transclude: true,
                 template:'<div class="rdk-button-wrap">\
-                                <div  class="rdk-button-comment" ng-click="setSelected()">\
+                                <div class="rdk-button-comment" ng-click="setSelected()">\
                                     <div class="rdk-button-shade rdk-button-{{type}}"></div>\
                                     <button class="rdk-button-btn" ng-mouseover="$mouseOver()" ng-mouseout="$mouseOut()"\
                                     title="{{tooltip}}" ng-class="{\'rdk-button-selected\':toggle?selected:false,\

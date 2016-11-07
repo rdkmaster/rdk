@@ -211,25 +211,9 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                     if (action == EventTypes.CHANGE) {
                         Utils.childChange(scope, data);
                     }
-
-                    if (scope.id) {
-                        EventService.broadcast(scope.id, action, data);
-                    }
-
-                    var fn;
-                    if (scope[action]) {
-                        fn = scope[action](scope);
-                    }
-                    if (!fn) {
-                        return;
-                    }
-
-                    try {
-                        fn({ name: action, dispatcher: scope.id}, data);
-                    } catch (e) {
-                        console.error('call "' + action + '" handler failed! msg=' + e.message);
-                    }
+                    EventService.raiseControlEvent(scope, action, data);
                 }
+                
                 var timer;
                 var sliderFunc = function() {
                     timer = $timeout(function() {

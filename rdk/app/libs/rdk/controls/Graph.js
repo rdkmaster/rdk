@@ -32,7 +32,8 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
                     height: '=?',
                     data: '=?',
                     graphContext: '=?',
-                    eventHandler: '&?'
+                    eventHandler: '&?',
+                    graphUpdate: '&?',
                 },
                 controller: ['$scope', function(scope) {
                     //将内部控制器暴露给app
@@ -236,9 +237,7 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
                     }
                     Utils.safeApply(scope);
 
-                    if (angular.isDefined(attrs.id)) {
-                        EventService.broadcast(attrs.id, EventTypes.GRAPH_UPDATE, scope);
-                    }
+                    EventService.raiseControlEvent(scope, EventTypes.GRAPH_UPDATE, scope);
                 }
             }
 
