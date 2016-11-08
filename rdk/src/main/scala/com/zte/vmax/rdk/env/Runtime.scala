@@ -25,7 +25,10 @@ class Runtime(engine: ScriptEngine) extends Logger {
   private var jsonParser: ScriptObjectMirror = null
 
   implicit var application: String = ""
-  val locale: String = Config.get("ums.locale")
+  val locale: String = Config.get("ums.locale") match{
+    case ""=>"zh_CN"
+    case x =>x
+  }
 
   val fileHelper = new FileHelper
 
