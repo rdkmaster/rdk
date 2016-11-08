@@ -109,7 +109,9 @@ TypeError:Path must be a string.received undefined.
 参考：LOCALAPPDATA= C:\Documents and Settings\Administrator\Application Data  
 注意：  
 1.这个值根据个人电脑而有所不同  
-2.添加后cmd需要重新打开才能获取
+2.添加后cmd需要重新打开才能获取  
+Error: spawn java ENOENT   
+用jekins部署时候，所用chrome浏览器作为默认的启动浏览器，配置文件中加入directConnect：true，chromeOnly：true，作为应用来讲，涉及到XMLhttp请求 在firefox中没做兼容处理导致，包括有些库的源码，除非限定，否则推荐用chrome，selenium启动需要直连chrome才避免报错。
 
 
 
