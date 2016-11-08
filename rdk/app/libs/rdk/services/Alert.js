@@ -82,11 +82,8 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
         }
         delected=true
         function _clickHandler(val,num){
-            // console.log(val,num);
-            val.currentTarget.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(val.currentTarget.parentNode.parentNode.parentNode.parentNode);
-        // console.log($('#'+_svrMsgBoxId)[0])           
+           $('.rdk-alert-svrMsgBox').has(val.currentTarget).remove();
             EventService.broadcast(_svrMsgBoxId, "hide");
-             $('.ui-widget-overlay').remove();
             if(_callback!=null){
                 _callback(num);
             }
