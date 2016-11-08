@@ -281,6 +281,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     scope.refreshCurrentPage();
                 }
 
+                this.setGlobalSearch = function(searchVal){
+                    if(!scope.search) return;
+                    scope.globalSearch = searchVal;
+                }
+
                 function _refreshCheckedRows(items){
                     scope.checkedRows = [];
                     angular.forEach(items, function(item){
