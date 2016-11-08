@@ -123,8 +123,8 @@
                     return;
                 }
 
-                ds.removed = true;
                 ds.stopLoop();
+                delete dataSourcePool[ds.id];
                 delete ds.ajaxConfigProcessor;
                 delete ds.conditionProcessor;
                 delete ds.dataProcessor;
@@ -133,7 +133,7 @@
                 delete ds.scope;
 
                 EventService.remove(ds.id, EventTypes.RESULT);
-                delete dataSourcePool[ds.id];
+                ds.removed = true;
                 console.log('DataSource removed! id=' + ds.id);
             }
 
