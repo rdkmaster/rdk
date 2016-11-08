@@ -34,7 +34,7 @@
     //==========================================================================
     //                   从这里开始的代码请不要随意修改
     //==========================================================================
-    define(application.getDownloads(downloadDependency), start);
+    define(/*fix-from*/application.getDownloads(downloadDependency)/*fix-to*/, start);
     function start() {
         application.initContext(ctx, arguments, downloadDependency);
         rdk.$injectDependency(application.getComponents(requiredComponents, downloadDependency));

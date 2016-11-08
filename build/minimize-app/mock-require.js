@@ -1,13 +1,9 @@
 global.define = function(name, deps, callback) {
     deps = typeof name === 'string' ? deps : name;
-    console.log(deps);
+    global.dependencyArray = deps;
 }
 
-console.log(__filename);
-
-global.requirejs = {
-    config: function() {}
-}
+require.config = function() {}
 
 global.location = {
     pathname: '/rdk/app/example/web/index.html'

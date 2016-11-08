@@ -64,7 +64,7 @@
     
     downloadDependency.push('blockUI');
     downloadDependency.push({ url: '/rdk/app/modules/rdk_app_helpers.js', alias: 'helpers' });
-    define(application.getDownloads(downloadDependency), start);
+    define(/*fix-from*/application.getDownloads(downloadDependency)/*fix-to*/, start);
     function start() {
         application.initContext(ctx, arguments, downloadDependency);
         rdk.$injectDependency(application.getComponents(requiredComponents, downloadDependency));
