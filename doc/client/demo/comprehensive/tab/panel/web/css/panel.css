@@ -85,7 +85,6 @@
     opacity: 1;
 }
 .panel-down{
-    /*animation:  slideUp 0.5s linear alternate-reverse;*/
     transition: opacity 0.35s linear;
     opacity: 0;
 }
@@ -96,7 +95,6 @@
     font-size: 12px;
     background-color: #eeeeee;
     border-bottom: 0;
-    /*border-bottom: 1px solid #008FD4;*/
 }
 .rdk-table-module .rdk-table > thead > tr > th {
     font-weight: normal;
@@ -136,7 +134,6 @@
     background-color: #e2eef9;
 }
 .rdk-table-module .rdk-table tbody tr.selected-row:hover {
-    /*background-color: #e3eef2*/
     background-color:  #e2eef9;
 }
 /*表格字体颜色*/
