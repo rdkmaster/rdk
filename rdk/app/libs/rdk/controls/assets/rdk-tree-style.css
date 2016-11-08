@@ -13,11 +13,13 @@
 }
 
 .ztree li span.button.noline_close{
-	background-position: -73px -72px;
+	background-image: url(u105.png);
+	background-position: 10px 4px;
 }
 
 .ztree li span.button.noline_open {
-    background-position: -91px -72px;
+    background-image: url(u106.png);
+    background-position: 6px 6px;
 }
 
 .ztree li span.button.edit,.ztree li span.button.remove{
