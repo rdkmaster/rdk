@@ -21,10 +21,8 @@
 /* title */
 .panel-title {
     border: 0;
-    /*background-color: #33A5DD;*/
     background-color: #fff;
     height: 32px;
-    /*background-color: #eee;*/
     font-weight: normal;
 }
 .panel-caption{
@@ -32,6 +30,8 @@
 }
 .panel-caption i{
     font-style: normal;
+    font-weight: normal;
+    font-family: "微软雅黑", Helvetica, Arial, sans-serif;
     color: #008fd4;
     margin-left: -14px;
 }
@@ -81,12 +81,10 @@
 }
 .panel-up{
     animation:  slideUp 0.35s linear;
-    /*animation-fill-mode:forwards;*/
     transition: opacity 0.35s linear;
     opacity: 1;
 }
 .panel-down{
-    /*animation:  slideUp 0.5s linear alternate-reverse;*/
     transition: opacity 0.35s linear;
     opacity: 0;
 }
@@ -97,9 +95,9 @@
     font-size: 12px;
     background-color: #eeeeee;
     border-bottom: 0;
-    /*border-bottom: 1px solid #008FD4;*/
 }
 .rdk-table-module .rdk-table > thead > tr > th {
+    font-weight: normal;
     padding: 0 6px;
 }
 /* tr 隔行不同颜色*/
@@ -110,7 +108,7 @@
     background-color: #f3f3f3;
 }
 .rdk-table-module .rdk-table > thead > tr > th,.rdk-table-module .rdk-table > tbody > tr > td {
-    text-align: left; 
+    text-align: left;
 }
 /* td 第2,3,列居中对齐*/
 .text-align,.rdk-panel .rdk-table-module .rdk-table thead>tr>th:nth-of-type(2),.rdk-panel .rdk-table-module .rdk-table thead>tr>th:nth-of-type(3){
@@ -133,10 +131,9 @@
 }
 /*表格hover背景色*/
 .rdk-table-module .rdk-table > tbody > tr:not(.selected-row):hover > td {
-     background-color: #e2eef9;
+    background-color: #e2eef9;
 }
 .rdk-table-module .rdk-table tbody tr.selected-row:hover {
-    /*background-color: #e3eef2*/
     background-color:  #e2eef9;
 }
 /*表格字体颜色*/
