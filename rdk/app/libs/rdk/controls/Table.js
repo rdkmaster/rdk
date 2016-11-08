@@ -814,7 +814,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     function _serverSortResponse(){
                         if(scope.serverSortCache){
                             EventService.broadcast(scope.innerID, EventTypes.TABLE_READY);
-                            scope.sortClick = false;
+                            scope.serverSortCache = false;
                         }
                     }
 
