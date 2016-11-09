@@ -22,10 +22,10 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
         }
 
         function _getTemplate(title, imgSrc, message, btnTmpl,close){
-            return '<div id='+ _svrMsgBoxId +' class="rdk-alert-svrMsgBox" rdk_modal="hide">'+
+            return '<div id='+ _svrMsgBoxId +'  class="rdk-alert-svrMsgBox" rdk_modal="hide">'+
                 '<div class="rdk-alert-wrapBox">'+
                     '<div class="rdk-alert-titleLine">'+
-                    title + '<span ng-click="svrClickHandler()" ng-show='+ close +'></span>' +
+                    title + '<span ng-click="svrClickHandler($event)" ng-show='+ close +'></span>' +
                     '</div>'+
                     '<div class="rdk-alert-tableImg">' +
                         '<img src=' + imgSrc + '>'+
@@ -41,16 +41,16 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
         function _getBtnsTemplate(btnVal){
             var myBtns = '';
             if(btnVal & ButtonTypes.YES){
-                myBtns += '<input class="rdk-alert-svrMsgBtn rdk-alert-yes" type="button" value=' + _i18n.yes + ' ng-click="svrClickHandler('+ ButtonTypes.YES +')">';
+                myBtns += '<input class="rdk-alert-svrMsgBtn rdk-alert-yes" type="button" value=' + _i18n.yes + ' ng-click="svrClickHandler($event,'+ ButtonTypes.YES +')">';
             }
             if(btnVal & ButtonTypes.NO){
-                myBtns += '<input class="rdk-alert-svrMsgBtn rdk-alert-no" type="button" value=' + _i18n.no + '  ng-click="svrClickHandler('+ ButtonTypes.NO +')">';
+                myBtns += '<input class="rdk-alert-svrMsgBtn rdk-alert-no" type="button" value=' + _i18n.no + '  ng-click="svrClickHandler($event,'+ ButtonTypes.NO +')">';
             }
             if(btnVal & ButtonTypes.CANCEL){
-                myBtns += '<input class="rdk-alert-svrMsgBtn rdk-alert-cancel" type="button" value=' + _i18n.cancel + ' ng-click="svrClickHandler('+ ButtonTypes.CANCEL +')"">';
+                myBtns += '<input class="rdk-alert-svrMsgBtn rdk-alert-cancel" type="button" value=' + _i18n.cancel + ' ng-click="svrClickHandler($event,'+ ButtonTypes.CANCEL +')"">';
             }
             if(btnVal & ButtonTypes.OK){
-                myBtns += '<input class="rdk-alert-svrMsgBtn rdk-alert-ok" type="button" value=' + _i18n.ok + ' ng-click="svrClickHandler('+ ButtonTypes.OK +')">';
+                myBtns += '<input class="rdk-alert-svrMsgBtn rdk-alert-ok" type="button" value=' + _i18n.ok + ' ng-click="svrClickHandler($event,'+ ButtonTypes.OK +')">';
             }
             return myBtns;
         }
@@ -80,12 +80,12 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
             _i18n.ok = alertService.scope.i18n.alert_ok ? alertService.scope.i18n.alert_ok : _i18n.ok;
             _i18n.cancel = alertService.scope.i18n.alert_cancel ? alertService.scope.i18n.alert_cancel : _i18n.cancel;
         }
-
-        function _clickHandler(val){           
+        delected=true
+        function _clickHandler(val,num){
+           $('.rdk-alert-svrMsgBox').has(val.currentTarget).remove();
             EventService.broadcast(_svrMsgBoxId, "hide");
-            $('#'+_svrMsgBoxId).remove();
             if(_callback!=null){
-                _callback(val);
+                _callback(num);
             }
         }
         function _popupWindow(modal, template){
@@ -95,9 +95,9 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
             }
             if(!document.getElementById(_svrMsgBoxId)){//不存在则添加，alert界面唯一
                 $(document.body).append($(template).get(0));
-
                 var appScope = Utils.findAppScope(alertService.scope);
                 appScope.svrClickHandler = _clickHandler;
+                appScope.deleted=true
                 $compile($('#'+_svrMsgBoxId))(alertService.scope);
 
                 var pos = {
