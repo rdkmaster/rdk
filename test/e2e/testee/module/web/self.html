@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Module自测</title>
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk"
+        src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="self.js"></script>
+    
+
+    <!-- 应用正式运行的时候，请使用下面这个节点，RDK会使用编译后的代码，代码体积小，下载快 -->
+    <!--
+    <script data-main="main.min.js" src="/rdk_server/app/libs/requirejs/require.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    -->
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //控制器url定义一个别名
+                "searchModule": '/test/e2e/testee/module/web/modules/demo1',
+                "login":"/test/e2e/testee/module/web/modules/demo2",
+                "signout":"/test/e2e/testee/module/web/modules/signOut",
+                "parent":"/test/e2e/testee/module/web/modules/parent",
+                "child":"/test/e2e/testee/module/web/modules/child",
+            }
+        });
+    </script>
+</head>
+<style>
+    body>div{
+        margin:20px;
+        width:50%;
+    }
+</style>
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    <!--业务场景限定-->
+    <div class="searchModule">
+        <button ng-click="loadSearchModule()">load</button>
+        <button ng-click="destroySearchModule()">destroy</button>
+        <span class="loading">{{loading}}</span>
+        <span class="ready">{{ready}}</span>
+        <span class="destroy">{{destroy}}</span>
+        <rdk_module id="firstModule" url="/test/e2e/testee/module/web/modules/demo1.html" 
+        load_on_ready="false"></rdk_module>
+    </div>
+    <!--业务场景可以根据控制器自行选择，相同模板-->
+    <div class="login">
+        <button ng-click="loadLoginModule()">load</button>
+        <button ng-click="destroyLoginModule()">destroy</button>
+        <rdk_module id="secondModule" load_on_ready="false" url="/test/e2e/testee/module/web/modules/demo2.html"
+        init_data="{msg:'load module'}" controller="Login">
+        </rdk_module>
+    </div>
+    <div class="sign-out">
+        <button ng-click="loadSignOut()">load</button>
+        <button ng-click="destroySignOut()">destroy</button>
+        <rdk_module id="thirdModule" load_on_ready="false" url="/test/e2e/testee/module/web/modules/demo2.html"
+        init_data="{msg:'load module'}" controller="sign_out">
+        </rdk_module>
+        <span class="child">{{sayhello}}</span>
+    </div>
+    <!--/模板套用模板-->
+    <div class="moduleInModule">
+        <button ng-click="loadModule()">load</button>
+        <button ng-click="destroyModule()">destroy</button>
+        <rdk_module id="myModule" url="/test/e2e/testee/module/web/modules/parent.html"
+        load_on_ready="false" init_data="{data:'load module manually'}"></rdk_module>
+    </div>
+    <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
+    <!--     这个节点可选，删除后，RDK会自动生成一个    -->
+    <!--           这个节点只支持基本HTML标签           -->
+</body>
+
+</html>
