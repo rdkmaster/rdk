@@ -292,19 +292,15 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
 
                             if(scope.range){
                                 if(scope.setting.selectGranularity === true){
-                                    if(scope.setting.granularityItems[0].value == 'quarter'||scope.setting.granularityItems[0].value == 'hour'){
-                                        iElement[0].getElementsByTagName("div")[0].style.minWidth = "423px";
-                                    }else{
-                                        iElement[0].getElementsByTagName("div")[0].style.minWidth = "420px";
-                                    }
+                                    iElement[0].getElementsByTagName("div")[0].style.minWidth = "407px";
                                 }else{
-                                    iElement[0].getElementsByTagName("div")[0].style.minWidth = "300px";
+                                    iElement[0].getElementsByTagName("div")[0].style.minWidth = "287px";
                                 }
                             }else{
                                 if(scope.setting.selectGranularity === true){
-                                    iElement[0].getElementsByTagName("div")[0].style.minWidth = "267px";
+                                    iElement[0].getElementsByTagName("div")[0].style.minWidth = "262px";
                                 }else{
-                                    iElement[0].getElementsByTagName("div")[0].style.minWidth = "140px";
+                                    iElement[0].getElementsByTagName("div")[0].style.minWidth = "142px";
                                 }
                             }
                         }
