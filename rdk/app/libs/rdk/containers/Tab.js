@@ -262,9 +262,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     if(scope.currentSelectedIndex == index){
                         var activeIndex;
                         (scope.currentSelectedIndex>=1) ? (activeIndex=index-1) : (activeIndex=index+1);
-                        $(dom).tabs({
-                            active: activeIndex
-                        }); 
+                        scope.selectedTab = activeIndex;
                     }
                 }
 
