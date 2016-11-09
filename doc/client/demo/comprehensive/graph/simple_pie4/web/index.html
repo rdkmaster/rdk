@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Graph -> Basic</title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/doc/tools/doc_js/doc_app_helper',
+            }
+        });
+    </script>
+    <style type="text/css">
+        ul,li{
+            list-style: none;
+            padding:0px;
+            margin:0px;
+        }
+        #line ul>li{
+                font-size:14px;
+                margin-top:5px;
+                cursor: pointer;
+        }
+        #line ul>li>span{
+            display:inline-block;
+            padding:6px;
+        }
+        #line ul>li:nth-child(2)>span{
+            background:rgba(0,0,0,0.5);
+         }
+        #line ul>li:first-child{
+            font-size:16px;
+            padding:6px;
+            cursor:default
+        }
+    </style>
+</head>
+
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    <div id='main_image'>
+        <div style="width:350px; display:inline-block">
+            <rdk_graph ds="dsGraph" id='pie' ds_url="$svr/data" ds_query_if="ready"
+    		graph_define="scripts/graph_define/simple_line.js" ></rdk_graph>
+        </div>
+        <div style="width:350px;display:none" id='line'>
+            <ul>
+                <li>其它构成（3项）</li>
+                <li><span>方程因素（12%）</span></li>
+                <li><span>过来问题（5.8%）</span></li>
+                <li><span>来了去了问题（3%）</span></li>
+            </ul>
+        </div>
+    </div>
+    <div id="pie_child" style="width:350px; display:inline-block">
+        <!-- <div ng-repeat="item in [1,2,3,4,6,7,8]"> -->
+            <div ng-show="showNumber==$index" ng-repeat="item in [1,2,3,4]">
+                <rdk_graph ds="dsGraph{{item}}" ds_url="$svr/data{{item}}" ds_query_if="ready"
+                graph_define="scripts/graph_define/simple_line{{item}}.js" ></rdk_graph>
+            </div>
+ <!--        </div> -->
+    </div>
+</body>
+
+</html>

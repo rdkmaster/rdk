@@ -27,35 +27,44 @@
 /*设置tr样式*/
 .rdk-table-module .rdk-table > tbody > tr:nth-child(even){
 	background:#f3f3f3;
+	/*border:1px solid #eee;*/
 }
 .rdk-table-module .rdk-table > thead > tr>th{
 	text-align:left;
 	font-size: 12px;
+	border:1px solid #e5e5e5;
 	font-weight: normal;
 	padding:0px 8px;
 	height:30px;
 }
-.rdk-table-module .rdk-table > thead > tr>th:last-child{
+.rdk-table-module .rdk-table > thead > tr>th{
 	text-align: center;
 }
 .rdk-table-module .rdk-table > tbody > tr>td:not(:last-child){
 	text-align:left;
 	/*padding:10px 20px;*/
 }
-/*.rdk-table-module .rdk-table > tbody > tr>td:nth-child(3){
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(3){
 	text-align:right;
 }
-.rdk-table-module .rdk-table > thead > tr>th:nth-child(3){
+/*.rdk-table-module .rdk-table > thead > tr>th:nth-child(3){
 	text-align:right;
 }*/
 /*.rdk-table-module .rdk-table > thead > tr>th:nth-child(4){
 	text-align:right;
-}
+}*/
 .rdk-table-module .rdk-table > tbody > tr>td:nth-child(4){
 	text-align:right;
+}
+/*.rdk-table-module .rdk-table > thead > tr>th:nth-child(6){
+	text-align:right;
 }*/
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(6){
+	text-align:right;
+}
 .rdk-table-module .rdk-table > tr{
 	height:30px;
+	border:1px solid #e5e5e5;
 }
 .rdk-table-module .rdk-table > tbody > tr:nth-child(odd){
 	background:#ffffff;
@@ -69,6 +78,7 @@
 	padding:0px 8px;
 	line-height: 30px;
 	cursor: pointer;
+	border:1px solid #e5e5e5;
 }
 
 /*图标设置*/
