@@ -94,6 +94,7 @@ require.config({
         "rd.styles.TabSelect": "../rdk/controls/assets/rdk-tabselect-style",
         "rd.styles.TabSelector": "../rdk/controls/assets/rdk-tabselector-style",
         "rd.styles.Time": "../rdk/controls/assets/rdk-time-style",
+        "rd.styles.Tree": "../rdk/controls/assets/rdk-tree-style",
 
         "rd.modules.i18n": "../rdk/modules/I18nModule",
     }),

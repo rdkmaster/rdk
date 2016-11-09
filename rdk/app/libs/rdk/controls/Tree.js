@@ -1,4 +1,4 @@
-    define(['angular', 'rd.services.EventService','ztree'], function() {
+    define(['angular', 'css!rd.styles.Tree','rd.services.EventService','ztree'], function() {
     var menuTreeApp = angular.module("rd.controls.Tree", ['rd.core']);
     menuTreeApp.directive('rdkTree', ['EventService', 'EventTypes', 'Utils',
         function(EventService, EventTypes, Utils) {
@@ -119,7 +119,8 @@
                         enable: scope.editable || true
                     },
                     view: {
-                        fontCss: null
+                        fontCss: null,
+                        showLine: false
                     }
                 };
                 return setObj;
