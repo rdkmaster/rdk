@@ -237,6 +237,10 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     var tabs = $(dom).tabs();
                     tabs.tabs("refresh");
                     _activeTab(index);
+                    
+                    if (scope.compileScope !== scope.appScope && !!scope.compileScope) {
+                        scope.compileScope.$destroy();
+                    }
                 }
 
                 scope.closeTab = function(index){
