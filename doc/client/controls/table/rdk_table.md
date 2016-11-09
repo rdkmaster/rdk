@@ -141,6 +141,56 @@ data对象中应该包含以下**必填属性**：
 
 <live_demo example="controls/table/newcolumn" width="900"></live_demo>
 
+### 添加自定义表头 ###
+
+通过`setting`中的`columnDefs` 的 `title`属性控制。title支持类型：字符串/函数
+为字符串时，直接显示在表头
+为函数时，要求函数返回一个新标题的html字符串，函数定义为 function(data, target);
+
+具体设置格式如下：
+
+        scope.setting = {
+        	"columnDefs" :[
+                {
+                    title : function(data, target) {
+                        $scope.data=data.data;
+                        return '<span>'+data.header[target]+'</span>\
+                                <select ng-change="titleExtraSelecteHandler(titleExtraSelected)"\
+                                        ng-model="titleExtraSelected"\
+                                        ng-options="item[2] as item[2]  for item in data">\
+                                    <option value="">-- choose an item --</option>\
+                                </select>'
+                    },
+                    targets : 1
+                }
+        	]
+        }
+
+- targets标记支持列的索引形式，从0开始。
+
+函数参数说明：
+
+- data表格的数据对象,包含的属性有field(表中的列头信息),header(field的各个列头的国际化内容),data(真实的数据)
+- targets列的索引。
+
+详细示例如下：
+<live_demo example="controls/table/customHeader" width="900"></live_demo>
+
+### 添加多级表头 ###
+
+通过`setting`中的`additionalHeader` 属性控制。
+
+具体设置格式如下：
+
+        scope.setting = {
+            additionalHeader: '<tr class="test1"><th colspan=4>多级表头列1</th><th colspan=3>多级表头列2</th></tr>' +
+                              '<tr class="test2"><th colspan=1>复选框</th><th colspan=2>身份信息</th><th colspan=4>基本信息</th></tr>'
+        }
+
+详细示例如下：
+<live_demo example="controls/table/additionalHeader" width="900"></live_demo>
+
+
 ### 设置水平滚动条 ###
 
 具体设置格式如下：
@@ -311,13 +361,6 @@ cells 为 改变的行列信息的数组信息
     
 详细举例如下
 <live_demo example="controls/table/rowSpan" width="900"></live_demo>
-
-## 自定义表头 ##
-
-可以使用CSS中定义的table标记中的thead、tr、th等标记来修改表头内容。
-
-详细示例如下：
-<live_demo example="controls/table/customheader" width="900"></live_demo>
 
 ## 复选框列 ##
 可以通过自定义表头和列渲染的方式来实现复选框的功能。

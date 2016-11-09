@@ -17,7 +17,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                </div>\
                <div class="wrapper" style="{{scrollStyle}}">\
                     <table class="rdk-table">\
-                        <thead ng-if="(!customHeader&&!noHeader)">\
+                        <thead ng-if="!noHeader">\
                             <tr>\
                                 <th ng-if="addCheckBox"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck($event)"></th>\
                                 <th ng-repeat="columnDef in columnDefs" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)">\
@@ -231,24 +231,23 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 }
             }
         }).directive('onFinishRender', function($timeout) {
-            return {
-                restrict: 'A',
-                link: function(scope, element, attr) {
-                    if (scope.$last === true) {
-                        $timeout(function() {
-                            scope.$emit('ngRepeatFinished');
-                        }, 0);
-                    }
+        return {
+            restrict: 'A',
+            link: function(scope, element, attr) {
+                if (scope.$last === true) {
+                    $timeout(function() {
+                        scope.$emit('ngRepeatFinished');
+                    }, 0);
                 }
             }
-        });
+        }
+    });
 
-    tableModule.directive('rdkTable', ['DataSourceService', 'EventService', 'EventTypes', 'Utils', '$timeout', function(DataSourceService, EventService, EventTypes, Utils, $timeout) {
+    tableModule.directive('rdkTable', ['DataSourceService', 'EventService', 'EventTypes', 'Utils', '$timeout', '$compile',function(DataSourceService, EventService, EventTypes, Utils, $timeout,$compile) {
         return {
             restrict: 'EA',
             replace: true,
             templateUrl: '/src/templates/common.html',
-            transclude: true,
             controller: ['$scope', function(scope) {
 
                 Utils.publish(scope.id, this);
@@ -279,6 +278,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     if(!scope.addCheckBox) return;
                     _refreshCheckedRows(items);
                     scope.refreshCurrentPage();
+                }
+
+                this.setGlobalSearch = function(searchVal){
+                    if(!scope.search) return;
+                    scope.globalSearch = searchVal;
                 }
 
                 function _refreshCheckedRows(items){
@@ -376,7 +380,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     tElement[0].querySelector(".rowTr").setAttribute("ng-repeat", "item in $filtered = destData");
                 }
 
-                return function link(scope, element, attrs, ctrl, transclude) {
+                return function link(scope, element, attrs, ctrl) {
 
                     scope.getRowSpan = function(itemRowSpan, item) {
                         return itemRowSpan && itemRowSpan[item["targets"]] ? itemRowSpan[item["targets"]] : 1;
@@ -391,20 +395,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     }
                     _init();
                     scope.searchPrompt="Search";
-                    transclude(scope, function(clone, innerScope) {
-                        scope.$owner = innerScope.$parent;//自定义表头,必须用属性rdk-table
-                        for (var key in clone) {
-                            if (clone.hasOwnProperty(key) && clone[key].tagName == "THEAD") {
-                                _addHeaderPattern(clone[key]);
-                            }
-                        };
-                    });
-
-                    function _addHeaderPattern(node) {
-                        scope.customHeader = true;
-                        node.removeAttribute('ng-non-bindable');
-                        element.find("table").prepend(node);
-                    };
 
                     function _init() {
 
@@ -432,8 +422,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         scope.pagingType = angular.isDefined(scope.pagingType) ? scope.pagingType : "local";
 
                         scope.currentPage = 0;
-
-                        scope.customHeader = false;
 
                         //appScope 为列渲染器提供可能
                         scope.appScope = Utils.findAppScope(scope);
@@ -643,7 +631,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             changeData['newValue'] = $(inputTarget).val();
                             changeData['rowIndex'] = row;
                             changeData['columnIndex'] = column;
-                            changeData['cells'] = cells;                         
+                            changeData['cells'] = cells;
 
                             EventService.raiseControlEvent(scope, 'change', data);
                         }
@@ -742,8 +730,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             }
                             var currentPage = parseInt(scope.currentPage, 10);
                             var pageSize = parseInt(scope.pageSize, 10);
-                            var start = currentPage * pageSize; 
-                            return scope.destData.slice(start, start+pageSize); //子数组                           
+                            var start = currentPage * pageSize;
+                            return scope.destData.slice(start, start+pageSize); //子数组
                         }
 
                         scope.refreshCurrentPage = function(){
@@ -755,7 +743,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                         var off = scope.$on('ngRepeatFinished', function() {
                             _reFreshTable();
-
+                            _reSetTableHeaders(); //重定义表头
                             if(scope.floatableHeader){
                                 $(element.find("table")).fixHeader();
                             }
@@ -795,7 +783,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                     function _refreshCheckBoxStatus(){
                         _changeSingleStatus();
-                        _singleCheckHandler();                        
+                        _singleCheckHandler();
                     }
 
                     function _changeSingleStatus(){
@@ -803,7 +791,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         var arr = originTable.find('input[name="singleCheckBox"]');
                         for(var i=0; i<scope.checkedIdxArr.length; i++){
                             arr[scope.checkedIdxArr[i]].checked = true;
-                        }                    
+                        }
                     }
 
                     function _updateCheckBoxStatus(){
@@ -835,21 +823,21 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     function _refreshCheckedData(){
                         var currentRows = _getCurrentRows();
                         var originTable = _getOrginTable();
-                        var arr = originTable.find('input[name="singleCheckBox"]');  
+                        var arr = originTable.find('input[name="singleCheckBox"]');
                         for(var i=0; i<arr.length; i++){
-                           if(arr[i].checked){
+                            if(arr[i].checked){
                                 var idx = _.indexOf(scope.checkedRows, currentRows[i]);
                                 if(idx == -1){
                                     scope.checkedRows.push(currentRows[i]);
                                 }
-                           }
-                           else{
+                            }
+                            else{
                                 var idx = _.indexOf(scope.checkedRows, currentRows[i]);
                                 if(idx != -1){
                                     scope.checkedRows.splice(idx, 1);
                                 }
-                           }
-                        }                       
+                            }
+                        }
                     }
 
                     function _getCurrentRows(){
@@ -890,20 +878,20 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                     function _totalCheckHandler(isChecked){
                         var originTable = _getOrginTable();
-                        var arr = originTable.find('input[name="singleCheckBox"]');  
+                        var arr = originTable.find('input[name="singleCheckBox"]');
                         for(var i=0; i<arr.length; i++){
-                           arr[i].checked = isChecked;
+                            arr[i].checked = isChecked;
                         }
                     }
 
                     function _isAllSelected(){
                         var originTable = _getOrginTable();
-                        var arr = originTable.find('input[name="singleCheckBox"]'); 
+                        var arr = originTable.find('input[name="singleCheckBox"]');
                         for(var i=0; i<arr.length; i++){
-                           if(!arr[i].checked) return false;
+                            if(!arr[i].checked) return false;
                         }
                         return true;
-                   }
+                    }
 
                     function _blurHandler(target) {
                         $(target).css('display', "none");
@@ -945,6 +933,27 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         $($(element.find("table")).get(1)).remove();
                     }
 
+                    var _compileHeads={};//需要被编译的表头对象
+
+                    function _reSetTableHeaders(){
+                        var thead = element[0].querySelector('thead');
+                        var ths=thead.querySelector("tr:last-child").querySelectorAll("th[ng-repeat]");
+                        for(var key in _compileHeads)
+                        {
+                            for(var i= 0,thLen=ths.length;i<thLen;i++){
+                                if(_compileHeads.hasOwnProperty(key) && key==i){
+                                    var th= $compile(_compileHeads[key])(scope.appScope);
+                                    ths[i].innerHTML=null;
+                                    $(ths[i]).append(th);
+                                }
+                            }
+                        }
+                        if(!!scope.setting && scope.setting.additionalHeader){
+                            var template=angular.element(scope.setting.additionalHeader);
+                            var trs= $compile(template)(scope.appScope);
+                            $(thead).prepend(trs);
+                        }
+                    }
                     var scrollWidth, first = true,
                         stickyWrapElement;
 
@@ -1055,6 +1064,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 if (def.editable == undefined) {
                                     def.editable = false;
                                 }
+                                _parseTitle(target,def.title);
                                 if (target === undefined) {
                                     columnDef = {};
                                     columnDef.data = def.data;
@@ -1146,7 +1156,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     function _addSortArrow(iCol, table) {
                         var ascChar = "▲";
                         var descChar = "▼";
-                        
+
                         var startCol = 0;
                         if(scope.addCheckBox){
                             ++iCol;
@@ -1164,7 +1174,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                         var thCell = $(table.tHead.rows[0].cells[iCol]);
                         if (thCell.html().indexOf(ascChar) == -1 && thCell.html().indexOf(descChar) == -1) {
-                            thCell.html(thCell.html() + ascChar); //没序先升序                       
+                            thCell.html(thCell.html() + ascChar); //没序先升序
                             table.direction = ['asc', 'desc'];
                         } else if (thCell.html().indexOf(ascChar) != -1) {
                             thCell.html(thCell.html().replace(ascChar, descChar)); //升序改降序
@@ -1212,6 +1222,14 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         scope.pageCtrl = true;
                         if (scope.setting && scope.setting.pageCtrl != undefined) {
                             scope.pageCtrl = scope.setting.pageCtrl
+                        }
+                    }
+
+                    function _parseTitle(target,title){
+                        var isFunction = typeof title === 'function';
+                        target =  target || scope.columnDefs.length;
+                        if(isFunction){
+                            _compileHeads[target]=title(scope.data,target);
                         }
                     }
                 }
