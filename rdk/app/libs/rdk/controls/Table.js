@@ -6,10 +6,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
         $templateCache.put("/src/templates/common.html",
             '<div class="rdk-table-module" ng-click="stopPropagation()">\
                 <div ng-if="search && (noData!=undefined)" class="searchWapper">\
-                    <input type="text" class="form-control search" placeholder="{{searchPrompt}}"\
+                    <input type="text" class="form-control search" placeholder="{{searchPrompt}}" ng-focus="searchFocusHandler()"\
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
                     <i class="glyphicon glyphicon-search search_icon" ng-click="serverSearchHandler()" style="cursor:{{pagingType==\'server\' ? \'pointer\' : \'default\'}}"></i>\
-                    <select ng-show="(pagingType==\'server\' && $parent.globalSearch)?true:false" ng-model="val" ng-change="selectChangeHandler(val)"\
+                    <select ng-show="(pagingType==\'server\' && $parent.globalSearch && searchFocus)?true:false" ng-model="val" ng-change="selectChangeHandler(val)"\
                             ng-options="columnDef.data as columnDef.name for columnDef in columnDefs | realoption"\
                             class="form-control search_select">\
                         <option value="">{{i18n.searchAll}}</option>\
@@ -96,7 +96,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
             return function(inputArray){
                 var array = [];
                 for(var i=0;i<inputArray.length;i++){
-                    if(inputArray[i].data != undefined){
+                    if((inputArray[i].data != undefined) && (inputArray[i].visible !== false) && (inputArray[i].visible != 'false')){
                         array.push(inputArray[i]);
                     }
                 }
@@ -453,9 +453,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         //首列复选框
                         scope.addCheckBox = Utils.isTrue(scope.addCheckBox, false);
 
+                        //后端排序异步id监听
                         scope.innerID = Utils.createUniqueId('table_inner_');
 
-                        scope.serverSortCache = false;
+                        //后端排序开关
+                        scope.serverSortCache = false;             
 
                         //表头开关
                         $timeout(function(){
@@ -481,37 +483,15 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             });
                         }
 
-                        function initializeCheck(){
-                            if(!scope.addCheckBox) return;
-                            scope.checkedIdxArr = [];
-                            scope.checkedRows = [];
-                        }
+                        $(document).mouseup(function(e){
+                            var searchWrapper = element[0].querySelector('.searchWapper');
+                            if(!$(searchWrapper).is(e.target) && $(searchWrapper).has(e.target).length === 0){
+                                scope.searchFocus = false;
+                            }
+                        })
 
-                        function initializeTableI18n() {
-                            scope.lang = scope.lang.toLowerCase();
-                            if (scope.lang == 'zh-cn' || scope.lang == 'zh_cn') {
-                                scope.i18n = {
-                                    'noData': '暂无数据',
-                                    'searchBy': '在',
-                                    'search': '字段中搜索',
-                                    'searchAll': '搜索所有字段'
-                                };
-                            } else {
-                                scope.i18n = {
-                                    'noData': 'No Data',
-                                    'searchBy': 'Search by',
-                                    'search': '',
-                                    'searchAll': 'Search all fields'
-                                };
-                            };
-                        }
-
-                        function refreshTableI18n() {
-                            if (!scope.appScope.i18n) return;
-                            scope.i18n.noData = scope.appScope.i18n.table_noData ? scope.appScope.i18n.table_noData : scope.i18n.noData;
-                            scope.i18n.searchBy = scope.appScope.i18n.table_searchBy ? scope.appScope.i18n.table_searchBy : scope.i18n.searchBy;
-                            scope.i18n.search = scope.appScope.i18n.table_search ? scope.appScope.i18n.table_search : scope.i18n.search;
-                            scope.i18n.searchAll = scope.appScope.i18n.table_searchAll ? scope.appScope.i18n.table_searchAll : scope.i18n.searchAll;
+                        scope.searchFocusHandler = function(){
+                            scope.searchFocus = true;
                         }
 
                         scope.$watch("data", function(newVal, oldVal) {
@@ -566,7 +546,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             while (!_validateValue(scope.globalSearch, scope.searchPattern)) {
                                 scope.globalSearch = scope.globalSearch.substring(0, scope.globalSearch.length - 1);
                             }
-
                             if(event.keyCode == 13){
                                 scope.serverSearchHandler();
                             }
@@ -775,6 +754,39 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         });
                     };
                     //END INIT
+
+                    function initializeCheck(){
+                        if(!scope.addCheckBox) return;
+                        scope.checkedIdxArr = [];
+                        scope.checkedRows = [];
+                    }
+
+                    function initializeTableI18n() {
+                        scope.lang = scope.lang.toLowerCase();
+                        if (scope.lang == 'zh-cn' || scope.lang == 'zh_cn') {
+                            scope.i18n = {
+                                'noData': '暂无数据',
+                                'searchBy': '在',
+                                'search': '字段中搜索',
+                                'searchAll': '搜索所有字段'
+                            };
+                        } else {
+                            scope.i18n = {
+                                'noData': 'No Data',
+                                'searchBy': 'Search by',
+                                'search': '',
+                                'searchAll': 'Search all fields'
+                            };
+                        };
+                    }
+
+                    function refreshTableI18n() {
+                        if (!scope.appScope.i18n) return;
+                        scope.i18n.noData = scope.appScope.i18n.table_noData ? scope.appScope.i18n.table_noData : scope.i18n.noData;
+                        scope.i18n.searchBy = scope.appScope.i18n.table_searchBy ? scope.appScope.i18n.table_searchBy : scope.i18n.searchBy;
+                        scope.i18n.search = scope.appScope.i18n.table_search ? scope.appScope.i18n.table_search : scope.i18n.search;
+                        scope.i18n.searchAll = scope.appScope.i18n.table_searchAll ? scope.appScope.i18n.table_searchAll : scope.i18n.searchAll;
+                    }
 
                     function _initialCheckBoxStatus(){
                         _totalCheckHandler(false);

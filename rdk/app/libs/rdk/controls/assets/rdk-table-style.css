@@ -5,6 +5,9 @@
 .rdk-table-module .searchWapper {
     position: relative;
     height: 40px;
+    display: inline-block;
+    width: 255px;
+    left: 82%;
 }
 
 .rdk-table-module .search {
