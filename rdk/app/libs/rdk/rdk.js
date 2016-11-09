@@ -205,10 +205,11 @@ rdk = (function() {
             }
         };
         if (appScript) {
+            appScript = application.base + '/' + appScript;
             require.config({
                 paths: {
                     "base": application.base,
-                    "main": application.base + '/' + appScript
+                    "main": appScript
                 }
             });
             console.log('starting rdk app from "' + appScript + '" ...');

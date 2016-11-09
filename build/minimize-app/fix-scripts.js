@@ -1,19 +1,29 @@
 var fs = require('fs');
 var jschardet = require('jschardet');
-require(__dirname + '/mock-require.js');
-require(__dirname + '/../../rdk/app/libs/rdk/rdk.js');
-// console.log(define(['fffffff']))
 
 var rootPath = process.argv[2];
-if (!!rootPath) {
-    console.log("listing %s", rootPath);
-    var scripts = listScripts(rootPath);
-    scripts.forEach(function(script) {
-        fixScript(script);
-    });
-} else {
+if (!rootPath) {
     console.log("usage:\n    node fix-scripts.js <path>");
+    process.exit();
 }
+
+//模拟在浏览器中运行时的必要函数
+global.define = function(name, deps, callback) {
+    deps = typeof name === 'string' ? deps : name;
+    global.dependencyArray = deps;
+}
+global.location = {
+    pathname: '/rdk/app/example/web/index.html'
+}
+
+//引入rdk的基础定义
+require(__dirname + '/../../rdk/app/libs/rdk/rdk.js');
+
+console.log("listing %s", rootPath);
+var scripts = listScripts(rootPath);
+scripts.forEach(function(script) {
+    fixScript(script);
+});
 
 function listScripts(root) {
     var res = [] , files = fs.readdirSync(root);
@@ -32,16 +42,6 @@ function listScripts(root) {
 }
 
 function fixScript(script) {
-    global.dependencyArray = undefined;
-    try {
-        require(script);
-    } catch(e) {
-        //unknown error
-        console.log('eval "%s error, detail:', script);
-        console.log(e);
-        return;
-    }
-
     var content = fs.readFileSync(script);
     var charset = jschardet.detect(content);
     content = content.toString();
@@ -51,24 +51,58 @@ function fixScript(script) {
         // do not need to fix
         return;
     }
+
+    console.log("fixing %s", script);
+
+    //backup file
+    fs.renameSync(script, script + ".orignial");
+
+    //nodejs 和 requirejs 都有一个叫 require 的函数/属性，导致在编译时会有冲突
+    //编译时，给nodejs的require添加上必要的空函数以避免代码eval不过。
+    var result = writeFile(script, 'require.config=function(){};' + content, charset);
+    if (!result) {
+        return;
+    }
+
+    global.dependencyArray = undefined;
+    try {
+        require(script);
+    } catch(e) {
+        console.log('eval "%s error, detail:', script);
+        console.log(e);
+        return;
+    }
+    if (!global.dependencyArray) {
+        console.log('eval "%s error, detail: global.dependencyArray not set, unknown error', script);
+        return;
+    }
     var deps = '["' + global.dependencyArray.join('","') + '"]';
     var newContent = content.substring(0, fixFromIdx) + deps + content.substring(fixToIdx);
-    saveScriptWithBackup(script, newContent, charset.encoding);
+
+    result = writeFile(script, newContent, charset);
+    if (!result) {
+        return;
+    }
+    console.log("done!");
 }
 
-function saveScriptWithBackup(script, content, charset) {
+function writeFile(script, content, charset) {
     try {
-        console.log("fixing %s", script);
-        fs.renameSync(script, script + ".orignial");
         var file = fs.openSync(script, "w", 0666);
-        fs.writeSync(file, content, charset);
-        console.log("done!");
-        return true;
     } catch(e) {
+        console.log('open script "%s" error, detail:');
         console.log(e);
-        if (file) {
-            fs.closeSync(file);
-        }
         return false;
     }
+    var result;
+    try {
+        fs.writeSync(file, content, charset);
+        result = true;
+    } catch(e) {
+        console.log('write script "%s" error, detail:');
+        console.log(e);
+        result = false;
+    }
+    fs.closeSync(file);
+    return result;
 }
