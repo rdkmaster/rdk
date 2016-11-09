@@ -13,10 +13,10 @@ define('main', ['rd.controls.Module', 'sample_module'], function() {
     //注入'rd.controls.Module'的依赖，在index.html中，只用到了rdk_module控件，
     //因此这里只需要注入对这个控件的依赖就好，模块内部的依赖由定义module的时候去声明
     //这样代码就有更好的内聚性。
-    rdk.$injectDependency('rd.controls.Module');
+    rdk.$injectDependency(['rd.controls.Module']);
 
     // 创建主控制器，主控制器所有所有子控制器的共同祖先。
     // 子控制器可以直接访问这个控制器中的方法和属性
-    rdk.$app.controller('rdk_ctrl', ['$scope', function(scope) {
+    rdk.$ngModule.controller('rdk_ctrl', ['$scope', function(scope) {
     }]);
 });
