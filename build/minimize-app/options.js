@@ -1,4 +1,6 @@
 ({
+    //node -r D:\Code\rdk\build\minimize-app\mock.js /rdk/app/libs/requirejs/r.js -o options.js
+
     baseUrl:"D:/Code/rdk/rdk/app/libs/rdk",
     name: "rdk",
     out: "main.min.js",
@@ -10,4 +12,3 @@
     	main: 'D:/Code/rdk/rdk/app/example/web/scripts/main'
     }
 })
-//node /rdk/app/libs/requirejs/r.js -o min-options.js
