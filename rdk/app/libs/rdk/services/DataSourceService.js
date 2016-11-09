@@ -113,7 +113,8 @@
             }
 
             this.get = function(ds) {
-                return ds instanceof DataSource ? ds : dataSourcePool[ds];
+                var id = ds instanceof DataSource ? ds.id : ds;
+                return dataSourcePool[id];
             }
 
             this.remove = function(ds) {
