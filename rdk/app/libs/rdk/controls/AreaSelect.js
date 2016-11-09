@@ -50,7 +50,7 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                     <li ng-show="!!$vm.dsAreas.data.data.length" ng-class="{active: $vm.activeTab == 3}"><a ng-click="$vm.activeTab = 3">{{$vm.userArr[2].name || areaLabel || "区"}}</a></li>\
                 </ul>\
                 <div class="tab-content tab-bordered">\
-                    <div class="tab-panel" ng-show="vm.activeTab == 1">\
+                    <div class="tab-panel" ng-show="$vm.activeTab == 1">\
                         <ul>\
                             <li ng-repeat="province in $vm.dsProvinces.data.data">\
                                 <a ng-click="$vm.clkProvinceNextLvOpen(province,0)" ng-class="{selected:$vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
