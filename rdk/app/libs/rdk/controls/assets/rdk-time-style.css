@@ -20,6 +20,7 @@
 
 .rdk-time-module .time-content .startTime,
 .rdk-time-module .time-content .endTime {
+    font-size: 14px;
     display: inline-block;
     cursor: pointer;
     width: 140px;
