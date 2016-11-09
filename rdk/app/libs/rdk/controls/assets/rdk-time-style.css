@@ -9,6 +9,13 @@
     border:1px solid #ccc;
     border-radius:4px;
     position :relative;
+    font-size: 0;
+}
+.rdk-time-module .time-content span.timeSpan{
+    font-size: 14px;
+    display: inline-block;
+    vertical-align: middle;
+    width: 5px;
 }
 
 .rdk-time-module .time-content .startTime,
