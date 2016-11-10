@@ -1,4 +1,3 @@
-
 .rdk-table-module .rdk-table > thead > tr > th{
 	color:#008fd4;
 	font-size: 14px;
@@ -10,36 +9,48 @@
 	margin:0 auto;
 	margin-top:50px;
 }
+ul,li{
+	padding:0;
+	margin:0;
+	list-style:none; 
+}
 .hao{
 	position: relative;
 	width:740px;
-	height: 300px;
+	height: 380px;
     margin-right:12px;
 	top:200px;
 	position:absolute;
 	padding:8px;
 	border:1px solid #eee;
-	box-shadow: 4px 4px 8px #eee;
 }
 /*设置tr样式*/
 .rdk-table-module .rdk-table > tbody > tr:nth-child(even){
-	background:#f3f3f3;
+	background:#f5f5f5;
 }
+/*表格边线设置th*/
 .rdk-table-module .rdk-table > thead > tr>th{
 	text-align:left;
 	font-size: 12px;
-	padding:0px 6px;
+	border-right:1px solid #e5e5e5;
+	font-weight: normal;
+	padding:0px 8px;
 	height:30px;
 }
-.rdk-table-module .rdk-table > thead > tr>th:last-child{
+.rdk-table-module .rdk-table > thead > tr>th:first-child{
+	border-left:1px solid #e5e5e5;
+}
+.rdk-table-module .rdk-table > thead > tr{
+	border-top:1px solid #e5e5e5;
+}
+.rdk-table-module .rdk-table > thead > tr>th{
 	text-align: center;
 }
-.rdk-table-module .rdk-table > tbody > tr>td:not(:last-child){
-	text-align:left;
+.rdk-table-module .rdk-table >tbody> tr{
+	border-top:1px solid #e5e5e5;
 }
-.rdk-table-module .rdk-table > tr{
-	height:30px;
-	color: #434343;
+.rdk-table-module .rdk-table >tbody> tr:last-child{
+	border-bottom:1px solid #e5e5e5;
 }
 .rdk-table-module .rdk-table > tbody > tr:nth-child(odd){
 	background:#ffffff;
@@ -47,36 +58,36 @@
 /*设置td样式 点击时样式*/
 .rdk-table-module .rdk-table tbody tr.selected-row td{
 	background: #cde4fa;
-	padding: 0 6px
-	/*line-height:30px;*/
+	padding: 0 8px
 }
 .rdk-table-module .rdk-table tbody > tr >td{
-	padding:0px 6px;
+	padding:0px 8px;
 	line-height: 30px;
 	cursor: pointer;
+	border-left:1px solid #e5e5e5;
 }
-
-/*图标设置*/
-span.images_right{
-	display:inline-block;
-	height:64px;
-	width:12px;
-	cursor: pointer;
-	position:absolute;
-	background:url(../images/left.png) no-repeat;
-	margin-top:100px;
+.rdk-table-module .rdk-table > tbody > tr>td:not(:last-child){
+	text-align:left;
+	border-right:1px solid #e5e5e5;
 }
-/*进去时换的图标*/
-span.images_left{
-	background:url(../images/right.png) no-repeat;
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(1)>div>div,
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(2)>div>div{
+	overflow: hidden;
+    white-space: nowrap;
+    width:100px;
+    text-overflow: ellipsis;
 }
-.images_up{
-	left:-740px;
-    transition: all 0.25s linear
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(3){
+	text-align:right;
 }
-.images_down{
-	left:0;
-    transition: all 0.25s linear
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(4){
+	text-align:right;
+}
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(6){
+	text-align:right;
+}
+.rdk-table-module .rdk-table > tbody > tr>td:nth-last-child(2){
+	text-align:center;
 }
 .rdk-table-module .rdk-table{
 	border-bottom:1px solid #eeeeee;
@@ -86,8 +97,9 @@ span.images_left{
 	border-bottom:none;
 }
 /*去tr边框 */
-.rdk-table-module .rdk-table tr{
-	border-bottom: none
+.rdk-table-module .rdk-table tr {
+	border-bottom: none;
+	color: #434343;
 }
 /*表格hover背景色*/
 .rdk-table-module .rdk-table > tbody > tr:not(.selected-row):hover > td {
@@ -95,26 +107,33 @@ span.images_left{
 }
 
 /*标题样式*/
-div.hao >span.title{
-	position:absolute;
+div.hao >div.title{
 	border: none;
-	top:10px;
+	padding-left: 8px;
 	font-size: 14px;
+	height: 42px;
 	font-style: normal;
-	line-height: 30px;
+	color: #666;
+}
+div.hao >div.title>ul{
+	overflow: hidden;
+}
+div.hao >div.title>ul>li{
+	float: left;
+	font-size: 12px;
+	margin-top:5px;
+	width: 70px;
+	line-height: 24px;
+	text-align:center; 
+	margin-right:12px;
+	background-color: #dedede;
+}
+div.hao >div.title>ul>li:first-child {
+	margin-right: 50px;
+	font-size: 14px;
+	text-align:left; 
+	background-color: #fff;
 	color: #008FD4;
-}
-.panel-title{
-	background-color: #ffffff; 
-    border: none;
-    height: 32px;
-    font-size: 14px;
-}
-.panel-caption{
-	font-weight: normal;
-	font-size: 14px;
-	font-style: normal;
-	margin-left: 0;
 }
 i{
 	font-style: normal;
@@ -123,7 +142,8 @@ i{
 .rdk-table-module .pagingLine {
 	position: absolute;
 	width: 100%;
-	top: 260px;
+	margin:0 auto;
+	top: 334px;
 }
 /** 下面翻页字体居中 **/
 .rdk-table-module .pagination > li > a, .rdk-table-module .pagination > li > span {
@@ -147,18 +167,6 @@ i{
 .glyphicon-search:before {
 	color:#008fd4;
 	line-height: 16px
-}
-.form-control:hover {
-    border-color: #008fd4;
-    outline: 0;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
-}
-.form-control:focus {
-    border-color: #008fd4;
-    outline: 0;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
 }
 thead.ng-scope>tr >th{
 	height: 30px;
@@ -199,6 +207,18 @@ i.regular_left{
 }
 .rdk-table-module .disabledRecords{
 	font-size:12px;
+}
+.rdk-button-comment {
+	position:absolute;
+	right:16px;
+	bottom:10px;
+}
+.rdk-button-shade {
+	background-color: #008fd4;
+}
+.pagination {
+	position:absolute;
+	left:248px;
 }
 
 

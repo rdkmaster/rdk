@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Tab -> Search</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/simple_tab1.css">
+    <script type="text/javascript">
+    require.config({
+        paths: {
+            //这里引用了rdk应用的公共助手文件，不要改动
+            "application": '/doc/tools/doc_js/doc_app_helper',
+        }
+    });
+    </script>
+</head>
+
+<body ng-controller='myCtrl'>
+    <div class="hao images_down">
+    <div class="title">
+        <ul>
+            <li>全城通信</li>
+            <li>自有厅</li>
+            <li>手机</li>
+            <li>换卡</li>
+        </ul>
+    </div>
+        <rdk_table ds="ds_table" ds-url="/doc/client/demo/controls/table/mockdata/table_paging" ds_query_if="ready" page-size="8" setting="setting" page_number ="4">
+        </rdk_table>
+        <rdk_button click= "clickHandler()" label="导出"  icon="/doc/client/demo/controls/button/basic/image/output.png" toggle="true"></rdk_button>
+    </div>
+</body>
+</html>

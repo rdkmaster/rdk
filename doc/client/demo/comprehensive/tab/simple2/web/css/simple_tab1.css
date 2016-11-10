@@ -15,9 +15,6 @@
 	width:740px;
 	height: 300px;
     margin-right:12px;
-	/*padding-right:12px;*/
-	/*overflow:auto;*/
-	/*border:1px solid red;*/
 	top:200px;
 	position:absolute;
 	padding:8px;
@@ -43,6 +40,7 @@
 }
 .rdk-table-module .rdk-table > tr{
 	height:30px;
+	color: #434343;
 }
 .rdk-table-module .rdk-table > tbody > tr:nth-child(odd){
 	background:#ffffff;
