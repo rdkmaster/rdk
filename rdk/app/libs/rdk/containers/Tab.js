@@ -143,7 +143,9 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 function _compileScopeHandler(tabController, initData){
                     if(tabController){
                         scope.compileScope = scope.appScope.$new();
+                        Utils.shallowCopy(initData, scope.compileScope); 
                         $controller(tabController, {$scope: scope.compileScope, tabIndex: 1});//实例化tabController
+                        return;
                     }                    
                     Utils.shallowCopy(initData, scope.compileScope);                    
                 }
