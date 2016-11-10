@@ -13,11 +13,8 @@
 .hao{
 	position: relative;
 	width:740px;
-	height: 300px;
+	height: 308px;
     margin-right:12px;
-	/*padding-right:12px;*/
-	/*overflow:auto;*/
-	/*border:1px solid red;*/
 	top:200px;
 	position:absolute;
 	padding:8px;
@@ -26,23 +23,31 @@
 }
 /*设置tr样式*/
 .rdk-table-module .rdk-table > tbody > tr:nth-child(even){
-	background:#f3f3f3;
+	background:#f5f5f5;
 }
+/*表格边线设置th*/
 .rdk-table-module .rdk-table > thead > tr>th{
 	text-align:left;
 	font-size: 12px;
-	padding:0px 6px;
+	border-right:1px solid #e5e5e5;
+	font-weight: normal;
+	padding:0px 8px;
 	height:30px;
 }
-.rdk-table-module .rdk-table > thead > tr>th:last-child{
+.rdk-table-module .rdk-table > thead > tr>th:first-child{
+	border-left:1px solid #e5e5e5;
+}
+.rdk-table-module .rdk-table > thead > tr{
+	border-top:1px solid #e5e5e5;
+}
+.rdk-table-module .rdk-table > thead > tr>th{
 	text-align: center;
 }
-.rdk-table-module .rdk-table > tbody > tr>td:not(:last-child){
-	text-align:left;
-	/*padding:10px 20px;*/
+.rdk-table-module .rdk-table >tbody> tr{
+	border-top:1px solid #e5e5e5;
 }
-.rdk-table-module .rdk-table > tr{
-	height:30px;
+.rdk-table-module .rdk-table >tbody> tr:last-child{
+	border-bottom:1px solid #e5e5e5;
 }
 .rdk-table-module .rdk-table > tbody > tr:nth-child(odd){
 	background:#ffffff;
@@ -50,15 +55,34 @@
 /*设置td样式 点击时样式*/
 .rdk-table-module .rdk-table tbody tr.selected-row td{
 	background: #cde4fa;
-	padding: 0 6px
-	/*line-height:30px;*/
+	padding: 0 8px
 }
 .rdk-table-module .rdk-table tbody > tr >td{
-	padding:0px 6px;
+	padding:0px 8px;
 	line-height: 30px;
 	cursor: pointer;
+	border-left:1px solid #e5e5e5;
 }
-
+.rdk-table-module .rdk-table > tbody > tr>td:not(:last-child){
+	text-align:left;
+	border-right:1px solid #e5e5e5;
+}
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(1)>div>div,
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(2)>div>div{
+	overflow: hidden;
+    white-space: nowrap;
+    width:100px;
+    text-overflow: ellipsis;
+}
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(3){
+	text-align:right;
+}
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(4){
+	text-align:right;
+}
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(6){
+	text-align:right;
+}
 /*图标设置*/
 span.images_right{
 	display:inline-block;
@@ -68,8 +92,6 @@ span.images_right{
 	position:absolute;
 	background:url(../images/left.png) no-repeat;
 	margin-top:100px;
-	/*left:100%;*/
-	/*top:100;*/
 }
 /*进去时换的图标*/
 span.images_left{
@@ -104,6 +126,7 @@ div.hao >span.title{
 	position:absolute;
 	border: none;
 	top:10px;
+	padding-left: 8px;
 	font-size: 14px;
 	font-style: normal;
 	line-height: 30px;
@@ -128,7 +151,7 @@ i{
 .rdk-table-module .pagingLine {
 	position: absolute;
 	width: 100%;
-	top: 260px;
+	top: 268px;
 }
 /* 翻页 */
 .rdk-table-module .enabledRecords{
