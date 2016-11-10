@@ -174,6 +174,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 }
 
                 function _prepareTabs(dom, title, tabid, closable){
+                    $(dom).removeAttr('title');
                     var compileTitle = undefined, compileClosable = undefined, renderTitle = undefined;
                     if(title){
                         compileTitle = Utils.compile(scope.compileScope, title);
