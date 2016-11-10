@@ -10,7 +10,12 @@ import org.json4s.{DefaultFormats, Formats}
 import spray.http.HttpCharsets
 import spray.httpx.Json4sSupport
 import spray.routing.{Directives, RequestContext}
-
+import akka.actor.{ Props, Actor }
+import spray.http._
+import spray.http.MediaTypes._
+import spray.routing._
+import spray.http.BodyPart
+import java.io.{ ByteArrayInputStream, InputStream, OutputStream }
 import scala.concurrent.duration._
 
 
@@ -115,5 +120,30 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
               val req = str2ServiceCallParam(json)
               doDispatch(ctx, req.service :: Nil, req.app, req.param)
           }
-      }
+      }~
+      path("upload"){
+        post {
+            entity(as[MultipartFormData]) { formData =>
+              complete{
+                ""
+              }
+//              detachTo(singleRequestServiceActor) {
+//                complete {
+//                  val details = formData.fields.map {
+//                    case (name, BodyPart(entity, headers)) =>
+//                      //val content = entity.buffer
+//                      val content = new ByteArrayInputStream(entity.buffer)
+//                      val contentType = headers.find(h => h.is("content-type")).get.value
+//                      val fileName = headers.find(h => h.is("content-disposition")).get.value.split("filename=").last
+//                      val result = saveAttachment(fileName, content)
+//                      (contentType, fileName, result)
+//                    case _ =>
+//                  }
+//                  s"""{"status": "Processed POST request, details=$details" }"""
+//                }
+//              }
+            }
+          }
+        }
+
 }
