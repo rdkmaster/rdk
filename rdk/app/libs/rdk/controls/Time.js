@@ -220,9 +220,15 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                         })
                         var timer;
                         var updateValue = function() {
-                            timer = $timeout(function() {
-                                if (scope.setting.value.toString().indexOf("now") >= 0 || scope.setting.startDate.toString().indexOf("now") >= 0 ||
-                                    scope.setting.endDate.toString().indexOf("now") >= 0 || initValue.toString().indexOf("now") >= 0 || initStartDate.indexOf("now") >= 0 || initEndDate.indexOf("now") >= 0) {
+                                var value=scope.setting.value.toString();
+                                var endDate=scope.setting.endDate.toString();
+                                var startDate=scope.setting.startDate.toString();
+                                if (value.indexOf("now") >= 0 || 
+                                    startDate.indexOf("now") >= 0 ||
+                                    endDate.toString().indexOf("now") >= 0 || 
+                                    initValue.toString().indexOf("now") >= 0 ||
+                                    initStartDate.indexOf("now") >= 0 || 
+                                    initEndDate.indexOf("now") >= 0) {
 
                                     if (initValue.toString().indexOf("now") >= 0) {
                                         if (scope.range) {
@@ -240,15 +246,14 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                     if (initEndDate.indexOf("now") >= 0) {
                                         scope.setting.endDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(initEndDate), scope.timeFormat), undefined, null);
                                     }
-                                    console.log(scope.setting.endDate);
+
                                     _init();
                                     // $('#datetimepicker').datetimepicker('setEndDate', scope.setting.endDate);
                                 }
                                 timer = $timeout(updateValue, scope.refreshTimeout);
-                            }, scope.refreshTimeout);
                         };
                         if (!!eval(scope.refreshTimeout)) {
-                            updateValue();
+                            $timeout(updateValue, scope.refreshTimeout);
                         }
                         scope.$on('$destroy', function() {
                             //console.log("timer destroy");
