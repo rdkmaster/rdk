@@ -46,8 +46,9 @@
 .rdk-table-module .rdk-table >tbody> tr{
 	border-top:1px solid #e5e5e5;
 }
-.rdk-table-module .rdk-table >tbody> tr:last-child{
-	border-bottom:1px solid #e5e5e5;
+.rdk-table-module .rdk-table > tr{
+	height:30px;
+	color: #434343;
 }
 .rdk-table-module .rdk-table > tbody > tr:nth-child(odd){
 	background:#ffffff;
