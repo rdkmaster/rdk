@@ -199,7 +199,7 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                             if (angular.isUndefined(scope.setting)) {
                                 scope.setting = {};
                             }
-                            if (typeof(scope.setting.value) != undefined) {
+                            if (typeof(scope.setting.value) != 'undefined') {
                                 if (scope.range) {
                                     initValue[0] = scope.setting.value[0];
                                     initValue[1] = scope.setting.value[1];
