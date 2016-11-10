@@ -162,7 +162,7 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                 };
             }]);
 
-        timeApp.directive('rdkTime', ['PickerConstant', 'TimeMacro', 'TimeFormate', 'TimeUnit', 'Utils', 'TimeUtilService', function(PickerConstant, TimeMacro, TimeFormate, TimeUnit, Utils, TimeUtilService) {
+        timeApp.directive('rdkTime', ['PickerConstant', 'TimeMacro', 'TimeFormate', 'TimeUnit', 'Utils', 'TimeUtilService','$timeout', function(PickerConstant, TimeMacro, TimeFormate, TimeUnit, Utils, TimeUtilService,$timeout) {
             return {
                 restrict: 'E',
                 replace: true,
@@ -185,17 +185,82 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                 scope: {
                     setting: "=?",
                     label: "=?",
+                    refreshTimeout: "@?"
                 },
                 compile: function(tElement, tAttrs) {
 
                     return function link(scope, iElement, iAttrs) {
-                        _init();
+                        var initvalue = [];
+                        var initstartDate = "";
+                        var initendDate = "";
+                        scope.range = Utils.isTrue(iAttrs.range);
 
-                        scope.$watch('setting.value', function(newVal, oldVal) {
-                            if(!!newVal&&newVal!==oldVal){
-                                _init();
+                        function getInitValue() {
+
+                            if (scope.setting.value) {
+                                if (scope.range) {
+                    initvalue[0] = scope.setting.value[0];
+                    initvalue[1] = scope.setting.value[1];
+                } else {
+                    initvalue = scope.setting.value;
+                }
+                }
+                initstartDate = scope.setting.startDate;
+                initendDate = scope.setting.endDate;
+                }
+                getInitValue();
+                _init();
+
+                scope.$watch('setting.value', function(newVal, oldVal) {
+                    if (!!newVal && newVal !== oldVal) {
+                        _init();
+                    }
+                })
+
+                // scope.$watchGroup(['setting.value', 'setting.startTime', 'setting.endTime'], function(newVal, oldVal) {
+                //     console.log("new:" + newVal, "old:" + oldVal);
+                //     if (!!newVal && newVal !== oldVal) {
+                //         _init();
+                //     }
+
+                // }, false);
+                var timer;
+                var updateValue = function() {
+                    timer = $timeout(function() {
+                        if (scope.setting.value.toString().indexOf("now") >= 0 || scope.setting.startDate.toString().indexOf("now") >= 0 ||
+                            scope.setting.endDate.toString().indexOf("now") >= 0 || initvalue.toString().indexOf("now") >= 0 || initstartDate.indexOf("now") >= 0 || initendDate.indexOf("now") >= 0) {
+
+                            if (initvalue.toString().indexOf("now") >= 0) {
+                                if (scope.range) {
+                                    scope.setting.value[0] = TimeUtilService.dateFormate(_timeMacroCalculate(initvalue[0]), scope.timeFormat);
+                                    scope.setting.value[1] = TimeUtilService.dateFormate(_timeMacroCalculate(initvalue[1]), scope.timeFormat);
+                                } else {
+
+                                    scope.setting.value = TimeUtilService.dateFormate(_timeMacroCalculate(initvalue), scope.timeFormat);
+                                }
                             }
-                        })
+                            if (initstartDate.indexOf("now") >= 0) {
+                                scope.setting.startDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(initstartDate), scope.timeFormat), undefined, null);
+
+                            }
+                            if (initendDate.indexOf("now") >= 0) {
+                                scope.setting.endDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(initendDate), scope.timeFormat), undefined, null);
+                            }
+                            console.log(scope.setting.endDate);
+                            _init();
+                            // $('#datetimepicker').datetimepicker('setEndDate', scope.setting.endDate);
+                        }
+                        timer = $timeout(updateValue, scope.refreshTimeout);
+                    }, scope.refreshTimeout);
+                };
+                if (!!eval(scope.refreshTimeout)) {
+                    updateValue();
+                 }
+                scope.$on('$destroy', function() {
+                    console.log("timer destroy");
+                    $timeout.cancel(timer);
+                });
+            
 
                         function _init() {
                             scope.range = Utils.isTrue(iAttrs.range);
@@ -224,8 +289,8 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                     scope.setting.value = TimeUtilService.dateFormate(_timeMacroCalculate(scope.setting.value), scope.timeFormat);
                                 }
                             }
-                            scope.setting.startDate = Utils.getValue(_timeMacroCalculate(scope.setting.startDate), undefined, null);
-                            scope.setting.endDate = Utils.getValue(_timeMacroCalculate(scope.setting.endDate), undefined, null);
+                            scope.setting.startDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(scope.setting.startDate),scope.timeFormat), undefined, null);
+                            scope.setting.endDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(scope.setting.endDate), scope.timeFormat),undefined, null);
                             scope.granularityList = Utils.getValue(scope.setting.granularityItems, undefined, undefined);
 
                             if (scope.granularityList) {
@@ -288,6 +353,7 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                     scope.setting.value[1] = newVal;
                                     handleWeekValue();
                                 });
+                                
                             }
 
                             if(scope.range){
