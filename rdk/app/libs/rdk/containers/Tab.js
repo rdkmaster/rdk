@@ -92,6 +92,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 scope.selectedTab = Utils.getValue(scope.selectedTab, attrs.selectedTab, 0); 
                 scope.appScope = Utils.findAppScope(scope);
                 scope.compileScope = scope.appScope;
+                scope.controllerScope = {};
 
                 var dom = element[0].querySelector(".tabs");
                 scope.tabs = [];
@@ -162,9 +163,16 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     var titleDomStr = contentDom.getAttribute('title');
                     var closable = contentDom.getAttribute('show_close_button');
                     _prepareTabs(contentDom, titleDomStr, tabid, closable); 
+                    _add2ControllerScope(tabid);
 
                     scope.contentDomStr = $(contentDom)[0].outerHTML;
                     scope.tabid = tabid;
+                }
+
+                function _add2ControllerScope(tabid){
+                    if(scope.compileScope !== scope.appScope && !!scope.compileScope){
+                        scope.controllerScope[tabid] = scope.compileScope;
+                    }
                 }
 
                 function _tabSwitchHandler(event){
@@ -230,10 +238,12 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     var data = {};
                     data.tabIndex = index;
                     data.tabData = scope.tabs[index];
+                    data.scope = scope.controllerScope[scope.tabs[index].tabid];
                     EventService.raiseControlEvent(scope, EventTypes.CLOSE, data);
                 }
 
                 scope.destroyTab = function(index){
+                    _destroy4ControllerScope(index);
                     var panelId = scope.tabs[index].tabid;
                     scope.tabs.splice(index, 1);
                     $("#" + panelId).remove();
@@ -241,9 +251,6 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     tabs.tabs("refresh");
                     _activeTab(index);
                     
-                    if (scope.compileScope !== scope.appScope && !!scope.compileScope) {
-                        scope.compileScope.$destroy();
-                    }
                 }
 
                 scope.closeTab = function(index){
@@ -254,6 +261,14 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     _activeTab(index);
                 }
 
+                function _destroy4ControllerScope(index){
+                    var tabid = scope.tabs[index].tabid;
+                    if (scope.controllerScope[tabid] !== scope.appScope && !!scope.controllerScope[tabid]) {
+                        scope.controllerScope[tabid].$destroy();
+                        delete scope.controllerScope[tabid];
+                    }
+                }
+
                 function _activeTabByIndex(index){
                     scope.currentSelectedIndex = index;
                     $(dom).tabs({
@@ -262,7 +277,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 }
 
                 function _activeTab(index){
-                    if(scope.currentSelectedIndex == index){
+                    if(scope.currentSelectedIndex >= index){
                         var activeIndex;
                         (scope.currentSelectedIndex>=1) ? (activeIndex=index-1) : (activeIndex=index+1);
                         scope.selectedTab = activeIndex;
