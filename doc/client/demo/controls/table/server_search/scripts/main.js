@@ -15,5 +15,14 @@ define('main', ['rd.controls.Table'], function() {
           baseCondition.search = additionalCondition.search;
           return baseCondition;
         }
+
+        $scope.setting = {
+          "columnDefs" :[
+              {
+                targets : 0,
+                visible : false
+              }
+          ]
+        }
     }]);
 });
