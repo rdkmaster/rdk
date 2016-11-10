@@ -196,8 +196,10 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                         scope.range = Utils.isTrue(iAttrs.range);
 
                         function getInitValue() {
-
-                            if (scope.setting.value) {
+                            if (angular.isUndefined(scope.setting)) {
+                                scope.setting = {};
+                            }
+                            if (typeof(scope.setting.value) != undefined) {
                                 if (scope.range) {
                                     initValue[0] = scope.setting.value[0];
                                     initValue[1] = scope.setting.value[1];
@@ -281,8 +283,17 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                     scope.setting.value = TimeUtilService.dateFormate(_timeMacroCalculate(scope.setting.value), scope.timeFormat);
                                 }
                             }
-                            scope.setting.startDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(scope.setting.startDate), scope.timeFormat), undefined, null);
-                            scope.setting.endDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(scope.setting.endDate), scope.timeFormat), undefined, null);
+                            if (angular.isUndefined(scope.setting.startDate) || !scope.setting.startDate) {
+                                scope.setting.startDate = Utils.getValue(_timeMacroCalculate(scope.setting.startDate), undefined, null);
+                            } else {
+                                scope.setting.startDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(scope.setting.startDate), scope.timeFormat), undefined, null);
+                            }
+                            if (angular.isUndefined(scope.setting.endDate) || !scope.setting.endDate) {
+                                scope.setting.endDate = Utils.getValue(_timeMacroCalculate(scope.setting.endDate), undefined, null);
+                            } else {
+                                scope.setting.endDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(scope.setting.endDate), scope.timeFormat), undefined, null);
+                            }
+
                             scope.granularityList = Utils.getValue(scope.setting.granularityItems, undefined, undefined);
 
                             if (scope.granularityList) {
