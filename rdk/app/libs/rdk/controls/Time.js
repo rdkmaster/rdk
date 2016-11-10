@@ -88,14 +88,14 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
 
                         scope.visible = false;
 
-                        $(element).click(function(){
+                        $(element).click(function() {
                             scope.visible = !scope.visible;
                             scope.visible ? $(this).datetimepicker('show') : $(this).datetimepicker('hide');
-                        }); 
+                        });
 
-                        $(element).blur(function(){
+                        $(element).blur(function() {
                             scope.visible = false;
-                        });                        
+                        });
 
                         $timeout(function() {
                             _init();
@@ -111,15 +111,15 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                 }
                             });
                             ngModel.$render = function() {
-                                 scope.option.realValue = ngModel.$viewValue;
-                                 $(element).datetimepicker('remove');
+                                scope.option.realValue = ngModel.$viewValue;
+                                $(element).datetimepicker('remove');
                                 _init();
                             };
                         }, 0);
 
                         function _getWeekFormat(date) {
                             date = new Date(date);
-                            var week = TimeUtilService.getWeekOfYear(date,scope.option.weekStart);
+                            var week = TimeUtilService.getWeekOfYear(date, scope.option.weekStart);
                             if (scope.option.language === 'zh_cn') {
                                 return date.getFullYear() + '第' + (week < 10 ? '0' : '') + week + '周';
                             } else {
@@ -162,7 +162,7 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                 };
             }]);
 
-        timeApp.directive('rdkTime', ['PickerConstant', 'TimeMacro', 'TimeFormate', 'TimeUnit', 'Utils', 'TimeUtilService','$timeout', function(PickerConstant, TimeMacro, TimeFormate, TimeUnit, Utils, TimeUtilService,$timeout) {
+        timeApp.directive('rdkTime', ['PickerConstant', 'TimeMacro', 'TimeFormate', 'TimeUnit', 'Utils', 'TimeUtilService', '$timeout', function(PickerConstant, TimeMacro, TimeFormate, TimeUnit, Utils, TimeUtilService, $timeout) {
             return {
                 restrict: 'E',
                 replace: true,
@@ -190,77 +190,69 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                 compile: function(tElement, tAttrs) {
 
                     return function link(scope, iElement, iAttrs) {
-                        var initvalue = [];
-                        var initstartDate = "";
-                        var initendDate = "";
+                        var initValue = [];
+                        var initStartDate = "";
+                        var initEndDate = "";
                         scope.range = Utils.isTrue(iAttrs.range);
 
                         function getInitValue() {
 
                             if (scope.setting.value) {
                                 if (scope.range) {
-                    initvalue[0] = scope.setting.value[0];
-                    initvalue[1] = scope.setting.value[1];
-                } else {
-                    initvalue = scope.setting.value;
-                }
-                }
-                initstartDate = scope.setting.startDate;
-                initendDate = scope.setting.endDate;
-                }
-                getInitValue();
-                _init();
-
-                scope.$watch('setting.value', function(newVal, oldVal) {
-                    if (!!newVal && newVal !== oldVal) {
-                        _init();
-                    }
-                })
-
-                // scope.$watchGroup(['setting.value', 'setting.startTime', 'setting.endTime'], function(newVal, oldVal) {
-                //     console.log("new:" + newVal, "old:" + oldVal);
-                //     if (!!newVal && newVal !== oldVal) {
-                //         _init();
-                //     }
-
-                // }, false);
-                var timer;
-                var updateValue = function() {
-                    timer = $timeout(function() {
-                        if (scope.setting.value.toString().indexOf("now") >= 0 || scope.setting.startDate.toString().indexOf("now") >= 0 ||
-                            scope.setting.endDate.toString().indexOf("now") >= 0 || initvalue.toString().indexOf("now") >= 0 || initstartDate.indexOf("now") >= 0 || initendDate.indexOf("now") >= 0) {
-
-                            if (initvalue.toString().indexOf("now") >= 0) {
-                                if (scope.range) {
-                                    scope.setting.value[0] = TimeUtilService.dateFormate(_timeMacroCalculate(initvalue[0]), scope.timeFormat);
-                                    scope.setting.value[1] = TimeUtilService.dateFormate(_timeMacroCalculate(initvalue[1]), scope.timeFormat);
+                                    initValue[0] = scope.setting.value[0];
+                                    initValue[1] = scope.setting.value[1];
                                 } else {
-
-                                    scope.setting.value = TimeUtilService.dateFormate(_timeMacroCalculate(initvalue), scope.timeFormat);
+                                    initValue = scope.setting.value;
                                 }
                             }
-                            if (initstartDate.indexOf("now") >= 0) {
-                                scope.setting.startDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(initstartDate), scope.timeFormat), undefined, null);
-
-                            }
-                            if (initendDate.indexOf("now") >= 0) {
-                                scope.setting.endDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(initendDate), scope.timeFormat), undefined, null);
-                            }
-                            console.log(scope.setting.endDate);
-                            _init();
-                            // $('#datetimepicker').datetimepicker('setEndDate', scope.setting.endDate);
+                            initStartDate = scope.setting.startDate;
+                            initStartDate = scope.setting.endDate;
                         }
-                        timer = $timeout(updateValue, scope.refreshTimeout);
-                    }, scope.refreshTimeout);
-                };
-                if (!!eval(scope.refreshTimeout)) {
-                    updateValue();
-                 }
-                scope.$on('$destroy', function() {
-                    console.log("timer destroy");
-                    $timeout.cancel(timer);
-                });
-            
+                        getInitValue();
+                        _init();
+
+                        scope.$watch('setting.value', function(newVal, oldVal) {
+                            if (!!newVal && newVal !== oldVal) {
+                                _init();
+                            }
+                        })
+                        var timer;
+                        var updateValue = function() {
+                            timer = $timeout(function() {
+                                if (scope.setting.value.toString().indexOf("now") >= 0 || scope.setting.startDate.toString().indexOf("now") >= 0 ||
+                                    scope.setting.endDate.toString().indexOf("now") >= 0 || initValue.toString().indexOf("now") >= 0 || initStartDate.indexOf("now") >= 0 || initEndDate.indexOf("now") >= 0) {
+
+                                    if (initValue.toString().indexOf("now") >= 0) {
+                                        if (scope.range) {
+                                            scope.setting.value[0] = TimeUtilService.dateFormate(_timeMacroCalculate(initValue[0]), scope.timeFormat);
+                                            scope.setting.value[1] = TimeUtilService.dateFormate(_timeMacroCalculate(initValue[1]), scope.timeFormat);
+                                        } else {
+
+                                            scope.setting.value = TimeUtilService.dateFormate(_timeMacroCalculate(initValue), scope.timeFormat);
+                                        }
+                                    }
+                                    if (initStartDate.indexOf("now") >= 0) {
+                                        scope.setting.startDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(initStartDate), scope.timeFormat), undefined, null);
+
+                                    }
+                                    if (initEndDate.indexOf("now") >= 0) {
+                                        scope.setting.endDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(initEndDate), scope.timeFormat), undefined, null);
+                                    }
+                                    console.log(scope.setting.endDate);
+                                    _init();
+                                    // $('#datetimepicker').datetimepicker('setEndDate', scope.setting.endDate);
+                                }
+                                timer = $timeout(updateValue, scope.refreshTimeout);
+                            }, scope.refreshTimeout);
+                        };
+                        if (!!eval(scope.refreshTimeout)) {
+                            updateValue();
+                        }
+                        scope.$on('$destroy', function() {
+                            //console.log("timer destroy");
+                            $timeout.cancel(timer);
+                        });
+
 
                         function _init() {
                             scope.range = Utils.isTrue(iAttrs.range);
@@ -289,8 +281,8 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                     scope.setting.value = TimeUtilService.dateFormate(_timeMacroCalculate(scope.setting.value), scope.timeFormat);
                                 }
                             }
-                            scope.setting.startDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(scope.setting.startDate),scope.timeFormat), undefined, null);
-                            scope.setting.endDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(scope.setting.endDate), scope.timeFormat),undefined, null);
+                            scope.setting.startDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(scope.setting.startDate), scope.timeFormat), undefined, null);
+                            scope.setting.endDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(scope.setting.endDate), scope.timeFormat), undefined, null);
                             scope.granularityList = Utils.getValue(scope.setting.granularityItems, undefined, undefined);
 
                             if (scope.granularityList) {
@@ -305,7 +297,9 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                     scope.selectedGranularity = scope.granularityList[0];
                                 }
                             } else {
-                                scope.selectedGranularity = { "value": scope.setting.granularity };
+                                scope.selectedGranularity = {
+                                    "value": scope.setting.granularity
+                                };
                             }
 
                             _handleOption();
@@ -334,9 +328,9 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                     if (scope.selectedGranularity.gap) {
                                         _handlerGap(newVal, scope.selectedGranularity.gap);
                                     }
-                                    if(scope.selectedGranularity.value == "week"){
+                                    if (scope.selectedGranularity.value == "week") {
                                         scope.endTimeOption.startDate = scope.startTimeOption.realValue;
-                                    }else{
+                                    } else {
                                         scope.endTimeOption.startDate = newVal;
                                     }
                                     if (scope.condition.endTime < scope.endTimeOption.startDate) {
@@ -353,23 +347,23 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                     scope.setting.value[1] = newVal;
                                     handleWeekValue();
                                 });
-                                
+
                             }
 
-                            if(scope.range){
-                                if(scope.setting.selectGranularity === true){
-                                    if(scope.setting.granularityItems[0].value == 'quarter'||scope.setting.granularityItems[0].value == 'hour'){
+                            if (scope.range) {
+                                if (scope.setting.selectGranularity === true) {
+                                    if (scope.setting.granularityItems[0].value == 'quarter' || scope.setting.granularityItems[0].value == 'hour') {
                                         iElement[0].getElementsByTagName("div")[0].style.minWidth = "423px";
-                                    }else{
+                                    } else {
                                         iElement[0].getElementsByTagName("div")[0].style.minWidth = "420px";
                                     }
-                                }else{
+                                } else {
                                     iElement[0].getElementsByTagName("div")[0].style.minWidth = "300px";
                                 }
-                            }else{
-                                if(scope.setting.selectGranularity === true){
+                            } else {
+                                if (scope.setting.selectGranularity === true) {
                                     iElement[0].getElementsByTagName("div")[0].style.minWidth = "267px";
-                                }else{
+                                } else {
                                     iElement[0].getElementsByTagName("div")[0].style.minWidth = "140px";
                                 }
                             }
@@ -400,9 +394,9 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                         }
 
                         function _handlerGap(beginTime, gap) {
-                            if(scope.selectedGranularity.value == "week"){
+                            if (scope.selectedGranularity.value == "week") {
                                 var realTime = beginTime.match(/(\d+).+?(\d+)/);
-                                beginTime = TimeUtilService.dateAdd(new Date(realTime[1]+"-01-01"),'w',realTime[2]-1);
+                                beginTime = TimeUtilService.dateAdd(new Date(realTime[1] + "-01-01"), 'w', realTime[2] - 1);
                             }
                             var endTime = new Date(beginTime);
                             endTime.setHours(23);
