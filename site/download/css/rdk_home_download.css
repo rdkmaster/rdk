@@ -27,10 +27,11 @@ html { font-size: calc(112.5% + 4 * (100vw - 600px) / 400); }
 .nov{
 	font-size: 1rem;
 }
-.nov>li>a{
+.nov>li>span{
 	color: #08c;
+	cursor: pointer;
 }
-.nov>li>a:hover{
+.nov>li>span:hover{
 	border-bottom: 1px solid #08c;
 }
 .margin-bottom{
