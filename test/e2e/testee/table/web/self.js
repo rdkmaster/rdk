@@ -28,6 +28,29 @@ app.controller('rdk_ctrl', ['$scope','$timeout','$filter', 'DataSourceService', 
 function(scope,$timeout, $filter,DSService, blockUI,EventTypes,EventService) {
 application.initDataSourceService(DSService);
 /************************ 应用的代码逻辑开始 ************************/
+//定义表头
+  scope.lessonList={
+    header:['姓名','性别','年龄','专业方向'],
+    field:['name','sexuality','age','major'],
+    data:[
+      ['Xuli','woman',29,'css/html'],
+      ['Liu','man',27,'java'],
+      ['Sun','man',30,'server/node'],
+      ['Gao','man',26,'SQL/java']
+    ],
+  };
+  scope.lessonSetting={
+    'columnDefs':[
+      {
+        title:function(){
+          return "<span>备注"+
+              "</span>"
+        },
+        editable:true
+      },
+    ],
+    'additionalHeader':"<tr><th colspan='5'>内部资料禁止外传</th></tr>"
+  };
  scope.TableData={
     header: ['日期', '城市名','网页响应成功率','网页下载速率','网页响应时延'],
     field: ['clttime', 'cityname','webrspsuccrate','webdownloadrate','webrspdelay'],
@@ -167,14 +190,19 @@ scope.search=function(){
 		"paging":{"currentPage":1,"pageSize":7}
 	};
 	var ds = DSService.get('ds_salary_3');
-	console.log(ds);
 	ds.query(condition);
 };
 
 //demo5 add_check_box
-
+scope.query=function(){
+  var condition = {
+		"paging":{"currentPage":1,"pageSize":7}
+	};
+	var ds = DSService.get('ds_salary_5');
+	ds.query(condition);
+}
 EventService.register('add_check', EventTypes.CHECK, function(event, data){
-            scope.checkData = data.data;
+    scope.checkData = data.data;
 });
 /************************ 应用的代码逻辑结束 ************************/
 }]).filter('myFilter',function(){
