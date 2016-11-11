@@ -25,7 +25,7 @@ html { font-size: calc(112.5% + 4 * (100vw - 600px) / 400); }
 	line-height: 30px;
 }
 .nov{
-	font-size: 1rem;
+	font-size: .7rem;
 }
 .nov>li>span{
 	color: #08c;
@@ -39,21 +39,18 @@ html { font-size: calc(112.5% + 4 * (100vw - 600px) / 400); }
 }
 
 .right,.left{
-	width: 50%;
 	padding: 3rem;
-	height: calc(100vh - 7.5rem );
+	height: calc(100vh - 3rem );
 }
 .right{
+	width: 80%;
 	background-color: #F7F7F9;
+}
+.left{
+	width: 20%;
 }
 .nov>li{
 	text-align: left;
-}
-.column{
-	background-color: #DFE1E8;
-	color: #2A2A2A;
-	font-size: 2rem;
-	text-indent: 10%;
 }
 .container{
 	padding: 0;
@@ -68,6 +65,7 @@ iframe{
 	background-color: #fff;
 	box-shadow:5px 5px 40px #999 inset,-23px -5px 40px #999 inset; 
 }
-.button{
-	cursor: pointer;
+.title-span{
+	padding-left: 10px;
+	color: #fff;
 }
