@@ -11,6 +11,7 @@ body{
     line-height: 1.42857143;
     color: #333;
     background-color: #fff;
+    min-width: 850px;
 }
 .height100,body,html{
 	height: 100%;
@@ -87,6 +88,7 @@ header>nav>ul>li:first-child{
 	box-shadow: inset 0 3px 7px rgba(0,0,0,.2),inset 0 -3px 7px rgba(0,0,0,.2);
 	border-bottom-left-radius: 6px;
 	border-bottom-right-radius: 6px;
+	min-height:calc(100vh - 40px); 
 }
 h1{
 	font-size: 100px;
@@ -138,8 +140,7 @@ em{
 }
 
 .manual-item{
-	border: 1px solid #ddd;
-    height: 200px;
+    min-height: 150px;
     line-height: 30px;
     padding: 30px 15px;
     border-radius: 4px;
@@ -189,4 +190,12 @@ footer h3 ,footer p{
 }
 .plain-text {
 	color: white;
+	line-height: 30px;
+}
+.contentMarginTop{
+	margin-top: calc(25vh - 75px - 20px );
+	margin-bottom: calc(25vh - 75px - 20px );
+}
+.topMinWidth{
+	min-height:calc(50vh - 40px);
 }

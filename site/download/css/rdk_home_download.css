@@ -39,7 +39,7 @@ html { font-size: calc(112.5% + 4 * (100vw - 600px) / 400); }
 }
 
 .right,.left{
-	padding: 3rem;
+	padding: 2rem;
 	height: calc(100vh - 3rem );
 }
 .right{
@@ -63,9 +63,8 @@ footer{
 iframe{
 	border-width:0;
 	background-color: #fff;
-	box-shadow:5px 5px 40px #999 inset,-23px -5px 40px #999 inset; 
 }
-.title-span{
-	padding-left: 10px;
-	color: #fff;
+
+.minWidth{
+	min-width: 800px;
 }

@@ -13,9 +13,9 @@ $(document).ready(function () {
 	download.click(function(){
 		var href = $(this).attr("src");
 		if(!href){
-			href = "manual.md";
+			href = "v2.3.2-beta";
 		}
-		var url = href.slice(0,href.indexOf(".")) + ".7z";
+		var url = "rdk-develop-environment" + href.slice(href.indexOf("v")+1,href.indexOf("/")) + ".zip";
 		window.open(url,"_blank");
 	}) ;
 })
