@@ -366,19 +366,13 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
 
                             }
 
+                            var minWidth;
                             if (scope.range) {
-                                if (scope.setting.selectGranularity === true) {
-                                    iElement[0].getElementsByTagName("div")[0].style.minWidth = "407px";
-                                } else {
-                                    iElement[0].getElementsByTagName("div")[0].style.minWidth = "287px";
-                                }
+                                minWidth = scope.setting.selectGranularity ? "407px" : "287px";
                             } else {
-                                if (scope.setting.selectGranularity === true) {
-                                    iElement[0].getElementsByTagName("div")[0].style.minWidth = "262px";
-                                } else {
-                                    iElement[0].getElementsByTagName("div")[0].style.minWidth = "142px";
-                                }
+                                minWidth = scope.setting.selectGranularity ? "262px" : "142px";
                             }
+                            iElement[0].getElementsByTagName("div")[0].style.minWidth = minWidth;
                         }
 
                         function handleWeekValue() {
