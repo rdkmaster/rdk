@@ -195,6 +195,13 @@
                     _this.stopLoop();
                 });
 
+                if (!!_this.scope) {
+                    _this.scope.$on('$destroy', function() {
+                        //绑定的scope被销毁了，这里自动销毁自己
+                        _dsService.remove(_this);
+                    });
+                }
+
                 _this.query = function(condition,option) {
                     _ajax(condition, _this.queryMethod, EventTypes.QUERY_RESULT,option);
                 }

@@ -28,10 +28,6 @@ define(['rd.services.DataSourceService'], function() {
                         obj = !!obj ? obj : {};
 						ds.data = obj;
 						appScope[ds.id] = obj;
-
-                        appScope.$on('$destroy', function() {
-                            DSService.remove(ds);
-                        });
                     }
                 }
             };
