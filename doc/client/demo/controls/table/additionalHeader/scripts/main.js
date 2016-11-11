@@ -7,7 +7,7 @@ define('main', ['rd.controls.Table', 'rd.services.Alert'], function() {
         $scope.setting = {
             "columnDefs" :[
                 {
-                    title : function(data, target) {
+                    title : function(data, target) { //自定义表头设置
                         return '<span>自定义带select的列</span>\
                                 <select ng-change="titleExtraSelecteHandler(titleExtraSelected)"\
                                         ng-model="titleExtraSelected"\
@@ -28,25 +28,11 @@ define('main', ['rd.controls.Table', 'rd.services.Alert'], function() {
                                 </select>'
                     },
                     targets : 2
-                },
-                {
-                    title : function(data, target) {
-                        $scope.data=data.data;
-                        return '<span>自定义列and自定义表头</span>\
-                                <select ng-change="titleExtraSelecteHandler(titleExtraSelected)"\
-                                        ng-model="titleExtraSelected"\
-                                        ng-options="item[2] as item[2]  for item in data">\
-                                    <option value="">-- choose an item --</option>\
-                                </select>'
-                    },
-                    render : '<a ng-click="appScope.click(item)" href="javascript:void(0)">点击</a>'
                 }
-            ]
-        };
-        $scope.click = function(item) {
-            //弹出选择栏，重填value
-            Alert.scope = $scope;
-            Alert.confirm("自定义editorRenderer，弹出演示", "提示框");
+            ],
+            //多级表头设置
+            additionalHeader: '<tr class="test1"><th colspan=4>合并列1</th><th colspan=3>合并列2</th></tr>' +
+                                  '<tr class="test2"><th colspan=1>复选框</th><th colspan=2>身份信息</th><th colspan=4>基本信息</th></tr>'
         };
         //titleOptions的数据结构根据自身业务逻辑来定
         $scope.titleOptions = [

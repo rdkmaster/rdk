@@ -9,12 +9,23 @@
     -->
     <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
     <script src="scripts/main.js"></script>
+    <style>
+        .test0 > th{
+            border: 1px solid #b5b5b5;
+        }
+        .test1 > th{
+            border: 1px solid #b5b5b5;
+        }
+        .test2 > th{
+            border: 1px solid #b5b5b5;
+        }
+    </style>
 </head>
 
 <body ng-controller='myCtrl'>
-<rdk_table add_check_box='true' ds="ds_table" floatable-header="false" ds-url="/doc/client/demo/controls/table/mockdata/table_paging"
-           ds_query_if="ready" setting="setting">
-</rdk_table>
+    <rdk_table add_check_box='true' ds="ds_table" floatable-header="false" ds-url="/doc/client/demo/controls/table/mockdata/table_paging"
+    	ds_query_if="ready" setting="setting">
+    </rdk_table>
 </body>
 
 </html>
