@@ -37,7 +37,7 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
                 },
                 controller: ['$scope', function(scope) {
                     //将内部控制器暴露给app
-                    Utils.publish(scope.id, this);
+                    Utils.publish(scope, this);
                 }],
                 compile: _compile
             };

@@ -28,7 +28,7 @@
                 },
                 controller: ['$scope', function(scope) {
                     //把控制器暴露给app
-                    Utils.publish(scope.id, this);
+                    Utils.publish(scope, this);
                 }],
                 replace: true,
                 template: '<div><ul id="__unique_id__" class="ztree"></ul></div>',

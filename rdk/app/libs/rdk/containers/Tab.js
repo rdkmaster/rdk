@@ -43,7 +43,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 },
                 replace: true,
                 controller: ['$scope', function(scope){
-                    Utils.publish(scope.id, this);
+                    Utils.publish(scope, this);
 
                     this.addTab = function(source, tabController, initData){
                         scope.addTab(source, tabController, initData);

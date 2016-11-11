@@ -251,7 +251,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
             transclude: true,
             controller: ['$scope', function(scope) {
 
-                Utils.publish(scope.id, this);
+                Utils.publish(scope, this);
 
                 this.setCurrentPage = function(_currentPage) {
                     scope.currentPage = _currentPage;
@@ -286,6 +286,13 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     scope.globalSearch = searchVal;
                 }
 
+                this.getSearchObject = function(){
+                    var searchObject = {};
+                    searchObject.searchKey = scope.globalSearch;
+                    searchObject.searchFields = scope.searchFields;
+                    return searchObject;
+                }
+
                 function _refreshCheckedRows(items){
                     scope.checkedRows = [];
                     angular.forEach(items, function(item){
@@ -294,6 +301,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             scope.checkedRows.push(scope.destData[index].$index);
                         }
                     })
+                }
+
+                function _defaultSearchHandler(){
+                    scope.globalSearch = scope.globalSearch || '';
+                    scope.searchFields = scope.searchFields || [];
+                    scope.globalSearch == '' ? (scope.searchFields = []) : scope.setDefaultSearchFileds();
                 }
 
                 function _loadDataFromServer() {
@@ -311,6 +324,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         attachCondition.orderBy.direction = scope.directionStr;
                     }
                     if ((scope.search) && (scope.pagingType == "server")) { //服务端过滤时
+                        _defaultSearchHandler();
                         attachCondition.search = {};
                         attachCondition.search.searchKey = scope.globalSearch;
                         attachCondition.search.searchFields = scope.searchFields;
@@ -488,13 +502,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             });
                         }
 
-                        $(document).mouseup(function(e){
-                            var searchWrapper = element[0].querySelector('.searchWapper');
-                            if(!$(searchWrapper).is(e.target) && $(searchWrapper).has(e.target).length === 0){
-                                scope.searchFocus = false;
-                            }
-                        })
-
                         scope.searchFocusHandler = function(){
                             scope.searchFocus = true;
                         }
@@ -557,19 +564,16 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         }
 
                         scope.serverSearchHandler = function(){
-                            if(scope.globalSearch == undefined) return;
-                            if(scope.pagingType != 'server') return;
+                            if((scope.globalSearch == undefined) || (scope.pagingType != 'server')) return;
                             scope.currentPage = 0;
+                            scope.globalSearch == '' ? (scope.searchFields = []) : scope.setDefaultSearchFileds();
+                            ctrl.setCurrentPage(scope.currentPage);
+                        }
 
-                            if(!scope.searchFields){ //没交互时给默认值
+                        scope.setDefaultSearchFileds = function(){
+                            if((!scope.searchFields) || (scope.searchFields.length == 0)){ //没交互时给默认值
                                 scope.searchFields = _getValue(scope.columnDefs);
                             }
-
-                            if(scope.globalSearch == ''){
-                                scope.searchFields = [];
-                            }
-
-                            ctrl.setCurrentPage(scope.currentPage);
                         }
 
                         scope.cursorHandler = function(event, sortable) {
@@ -756,9 +760,20 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                             _updateCheckBoxStatus();
                             _serverSortResponse();//后端排序，刷新后的响应
+                            _searchGapClick();
                         });
                     };
                     //END INIT
+
+                    function _searchGapClick(){
+                        if((!scope.search) || (scope.pagingType != 'server')) return;
+                        $(document).mouseup(function(e){
+                            var searchWrapper = element[0].querySelector('.searchWapper');
+                            if(!$(searchWrapper).is(e.target) && $(searchWrapper).has(e.target).length === 0){
+                                scope.searchFocus = false;
+                            }
+                        })
+                    }
 
                     function initializeCheck(){
                         if(!scope.addCheckBox) return;
