@@ -41,7 +41,7 @@ data对象中应该包含以下**必填属性**：
 ## setting <binding></binding>##
 > 支持类型：JSON对象
 
-此属性可以设置展现列表中的列的各种属性,包括样式、显隐性等。
+此属性可以设置展现列表中的列的各种属性，包括样式、显隐性等。
 可以通过列索引（从0开始索引）或者相应的`field`的值进行设置。
 
 ### 设置列样式 ###
@@ -145,7 +145,7 @@ data对象中应该包含以下**必填属性**：
 
 通过`setting`中的`columnDefs` 的 `title`属性控制。title支持类型：字符串/函数
 为字符串时，直接显示在表头
-为函数时，要求函数返回一个新标题的html字符串，函数定义为 function(data, target);
+为函数时，要求函数返回一个新标题的html字符串，函数定义为 `function(data, target);`
 
 具体设置格式如下：
 
@@ -170,7 +170,7 @@ data对象中应该包含以下**必填属性**：
 
 函数参数说明：
 
-- data表格的数据对象,包含的属性有field(表中的列头信息),header(field的各个列头的国际化内容),data(真实的数据)
+- data表格的数据对象，包含的属性有field(表中的列头信息)，header(field的各个列头的国际化内容)，data(真实的数据)
 - targets列的索引。
 
 详细示例如下：
@@ -300,7 +300,7 @@ RDK2.0表格支持服务端和客户端排序两种方式。
 通过`setting`中的`columnDefs` 的 `group`控制。`group` 缺省时默认为`false`，表示列不是合并列。
 `group` 可设置成 true 或者设置成一回调函数。函数的定义为
 
-> function(rowspans,filedName,filterData,target)
+> function(rowspans，filedName，filterData，target)
 
 其中 rowspans 是控件自动计算出的该列的合并单元的rowspan数量。
 比如说表格的数据如下所示，
@@ -582,13 +582,13 @@ cells 为 改变的行列信息的数组信息
 文字水平对齐，默认值center
 
 #### padding ####
-属性定义元素边框与元素内容之间的空间（单位：像素）。默认值：10px 6px,padding属性的默认填充顺序为从上开始的顺时针方向。
+属性定义元素边框与元素内容之间的空间（单位：像素）。默认值：10px 6px，padding属性的默认填充顺序为从上开始的顺时针方向。
 
 #### background-color {#bgc3}
-表头或表尾背景色,默认值: #325BDB
+表头或表尾背景色，默认值: #325BDB
 
 #### color #####
-表头或表尾文字色,默认值: #FFFFFF
+表头或表尾文字色，默认值: #FFFFFF
 
 ### 表体数据属性 ###
 

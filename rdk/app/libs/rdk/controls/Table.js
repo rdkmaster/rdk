@@ -740,8 +740,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             _initialCheckBoxStatus();
                             _refreshCheckBoxStatus();
                         }
-
+                        var _hasOffReady=false; //控制ngRepeatFinished只执行一遍
                         var off = scope.$on('ngRepeatFinished', function() {
+                            if(_hasOffReady){
+                                return
+                            }
                             _reFreshTable();
                             _reSetTableHeaders(); //重定义表头
                             if(scope.floatableHeader){
@@ -760,6 +763,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                             _updateCheckBoxStatus();
                             _serverSortResponse();//后端排序，刷新后的响应
+                            _hasOffReady=true;
                         });
                     };
                     //END INIT
