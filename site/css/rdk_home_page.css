@@ -199,3 +199,7 @@ footer h3 ,footer p{
 .topMinWidth{
 	min-height:calc(50vh - 40px);
 }
+.manual-item a:hover,
+.manual-item a:focus{
+	border-bottom: 1px solid #fff;
+}
