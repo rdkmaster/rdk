@@ -15,7 +15,7 @@ $(document).ready(function () {
 		if(!href){
 			href = "v2.3.2-beta";
 		}
-		var url = "rdk-develop-environment" + href.slice(href.indexOf("v")+1,href.indexOf("/")) + ".zip";
+		var url = "version/rdk-develop-environment" + href.slice(href.indexOf("v")+1,href.indexOf("/")) + ".zip";
 		window.open(url,"_blank");
 	}) ;
 })
