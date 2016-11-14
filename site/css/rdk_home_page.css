@@ -11,6 +11,7 @@ body{
     line-height: 1.42857143;
     color: #333;
     background-color: #fff;
+    min-width: 850px;
 }
 .height100,body,html{
 	height: 100%;
@@ -73,21 +74,21 @@ header{
 header>nav>ul>li:first-child{
 	font-weight: bold;
 }
-header>nav>ul>li>a{
+.title-text{
 	color: #9d9d9d;
 }
-header>nav>ul>li>a:hover,
-header>nav>ul>li>a:focus{
+.title-text:hover,
+.title-text:focus{
 	background-color: transparent;
 	color: #fff;
 }
 .content{
 	text-align: center;
-	text-shadow: 0 1px 3px rgba(0,0,0,.4),0 0 30px rgba(0,0,0,.075);
 	background: linear-gradient(45deg,#020031,#6d3353);
 	box-shadow: inset 0 3px 7px rgba(0,0,0,.2),inset 0 -3px 7px rgba(0,0,0,.2);
 	border-bottom-left-radius: 6px;
 	border-bottom-right-radius: 6px;
+	min-height:calc(100vh - 40px); 
 }
 h1{
 	font-size: 100px;
@@ -125,6 +126,7 @@ em{
     border-radius: 6px;
     line-height: 1.3333333;
     display: inline-block;
+    cursor: pointer;
 }
 .button:hover{
 	background-color: #2a6496;
@@ -138,14 +140,14 @@ em{
 }
 
 .manual-item{
-	border: 1px solid #ddd;
-    height: 200px;
+    min-height: 150px;
     line-height: 30px;
     padding: 30px 15px;
+    border-radius: 4px;
 }
 .manual-item>h3{
 	font-size: 20px;
-	color: #337ab7;
+	color: #fff;
 	transition: all .2s ease-in-out;
 }
 .manual-item>h3:hover{
@@ -153,10 +155,10 @@ em{
 	cursor: pointer;
 }
 .manual-item>p{
-	color:#555; 
+	color:#999; 
 }
 .manual-item a{
-	color:#555;
+	color:#fff;
 }
 footer img{
 	vertical-align: middle;
@@ -188,4 +190,16 @@ footer h3 ,footer p{
 }
 .plain-text {
 	color: white;
+	line-height: 30px;
+}
+.contentMarginTop{
+	margin-top: calc(25vh - 75px - 20px );
+	margin-bottom: calc(25vh - 75px - 20px );
+}
+.topMinWidth{
+	min-height:calc(50vh - 40px);
+}
+.manual-item a:hover,
+.manual-item a:focus{
+	border-bottom: 1px solid #fff;
 }
