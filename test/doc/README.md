@@ -46,13 +46,16 @@ if(browserName==='firefox'){
 element(by.css(‘.some-class’))；  
 element.all(by.css(‘.some-class’)).get(index);  
 element.all(by.css(‘.some-class’)).first()/last();  
-element(by.id(‘id’)); //不需要#号 
+element(by.id(‘id’)); //不需要#号  
 element(by.tagName(‘TagName’));  
 element(by.model(‘model-name’));  
-element(by.repeater(‘变量名’));
+element(by.repeater(‘变量名’));  
 element(by.xpath(‘html/body/div[3]’));  
 element(by.css(‘.some-class[attribute=’value’]’));  
 element(by.linkText(‘文本’));  
+链式写法:  
+var locator=element(by.css(".some-class"));  
+var el=locator.element(by.css(".some-class"))  
 3.交互  
 locator(元素定位)  
 locator.sendKeys("abc");  
@@ -70,8 +73,9 @@ locator.getLocation();
 expect(locator.count()).toBe();  
 expect(locator.getAttribute(“attr”)).toBe()  
 expect(locator.getText()).toBe();  
+expect(locator.getText()).toMatch();  
 expect(locator.getCssValue()).toBe();  
-expect(locator.getCssValue()).toMatch();    
+expect(locator.getCssValue()).toMatch();      
 ##五.常见问题以及优化手段  
 1.element is not visible   
 元素不可见，也就是在那一刻这个选择器定位的元素还未暴露出来  
