@@ -286,6 +286,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 }
 
                 this.getSearchInfo = function(){
+                    _defaultSearchHandler();
                     var searchObject = {};
                     searchObject.searchKey = scope.globalSearch;
                     searchObject.searchFields = scope.searchFields;
@@ -616,7 +617,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             changeData['columnIndex'] = column;
                             changeData['cells'] = cells;
 
-                            EventService.raiseControlEvent(scope, 'change', data);
+                            EventService.raiseControlEvent(scope, 'change', changeData);
                         }
 
                         scope.inputPressHandler = function(event, row, columnDef, itemRowSpan, filterIndex) { //input上的event
@@ -673,7 +674,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             } else {
                                 scope.selectedModel = item;
                             }
-                            EventService.raiseControlEvent(scope, 'select', data);
+                            EventService.raiseControlEvent(scope, 'select', item);
                         };
 
                         scope.singleCheck = function(item, index, event){
