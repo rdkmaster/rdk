@@ -19,7 +19,7 @@ define(['rd.core'], function() {
                 replace: true,
                 template: '<div></div>',
                 controller: ['$scope', function(scope) {
-                    Utils.publish(scope.id, this);
+                    Utils.publish(scope, this);
 
                     this.loadModule = function(initData, url, controller, timeout) {
                         url = url ? url : scope.url;
