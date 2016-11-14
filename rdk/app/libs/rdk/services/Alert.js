@@ -156,7 +156,7 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
 
         this.setLang = function(lang){
             _lang = lang.toLowerCase();
-           console.log("Waring!!!This function has been abandoned,using i18n.$Locale instead!");
+           console.warn("Waring!!!This function has been abandoned,using i18n.$Locale instead!");
         }
     }]);
 
