@@ -53,15 +53,11 @@ Alert 服务用于弹出提示信息的对话框，可能包含消息、标题�
                     alert_ok: '确定',
                     alert_cancel: '取消',
                 }                
- 找到对应的按钮如 ButtonTypes.YES对应alert_yes,改变其文字就可以改变对应按钮的文字内容,如alert_yes的值改为'点下赞成'，那么ButtonTypes.YES按钮的文字内容也变成了'点下赞成'，详细示例:
+ 找到对应的按钮如 ButtonTypes.YES对应`alert_yes`,改变其文字就可以改变对应按钮的文字内容,如alert_yes的值改为'点下赞成'，那么ButtonTypes.YES按钮的文字内容也变成了'点下赞成'，详细示例:
 
  <live_demo example="common/alert/demoi18n" width="900" height="400"></live_demo>
 
 **<font color=red>注意</font>**
-默认语言环境是`zh-CN`，按钮是中文状态，对应`是/否/确定/取消`。用户可以通过`setLang()`方法改写成英文状态。
-
-				Alert.setLang('en_US');
-改成英文状态后，按钮对应分别是`YES/NO/OK/CANCEL`.
 
 ### callback ###
 > 回调函数

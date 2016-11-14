@@ -13,7 +13,7 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
 
         var _callback, _svrMsgBoxId, _i18n; 
         var alertService = this;
-        var _lang = "zh-cn";
+        var _lang =Utils.getLocale;
 
         function _refreshAlertI18nLang(){
             if((alertService.scope.i18n)&&(alertService.scope.i18n.$locale)){
@@ -154,9 +154,6 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
             _initializeTemplate(title, myImgSrc, message, myButton, modal,close);
         }
 
-        this.setLang = function(lang){
-            _lang = lang.toLowerCase();
-        }
     }]);
 
 });
