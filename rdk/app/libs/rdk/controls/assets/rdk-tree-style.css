@@ -37,4 +37,9 @@
 	width: 10px;
 	height: 12px;
 }
+.ztree li a::after{
+	content: '';
+	display: inline-block;
+	width: 30px;
+}
 
