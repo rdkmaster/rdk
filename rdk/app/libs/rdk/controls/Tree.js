@@ -116,7 +116,9 @@
                         beforeEditName: before_editName,
                     },
                     edit: {
-                        enable: scope.editable || true
+                        enable: scope.editable || true,
+                        removeTitle: '',
+                        renameTitle: ''
                     },
                     view: {
                         fontCss: null,
