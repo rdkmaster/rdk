@@ -3,6 +3,7 @@ $(document).ready(function() {
 	var iframe = $('#iframe');
 	var download_develop = $("#download_develop");
 	var download_run = $("#download_run");
+	var init = 'v2.3.2';
 	allSpan.each(function(){
 		$(this).click(function(){
 			$(this).css('color', '#5A5A5A');
@@ -24,7 +25,7 @@ $(document).ready(function() {
 	download_develop.click(function(){
 		var href = $(this).attr("src");
 		if(!href){
-			href = "version/v2.3.2-beta/CHANGELOG";
+			href = "version/"+ init +"/CHANGELOG";
 		}
 		var edition = href.slice(href.indexOf("/")+1);
 		var url = "version/rdk-develop-environment" + edition.slice(edition.indexOf("v")+1,edition.indexOf("/")) + ".zip";
@@ -33,7 +34,7 @@ $(document).ready(function() {
 	download_run.click(function(){
 		var href = $(this).attr("src");
 		if(!href){
-			href = "version/v2.3.2-beta/CHANGELOG";
+			href = "version/"+ init +"/CHANGELOG";
 		}
 		var edition = href.slice(href.indexOf("/")+1);
 		var url = "version/rdk-runtime-environment" + edition.slice(edition.indexOf("v")+1,edition.indexOf("/")) + ".zip";
