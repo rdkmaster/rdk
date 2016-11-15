@@ -397,7 +397,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 }
 
                 return function link(scope, element, attrs, ctrl) {
-                    scope.sortIconStatus=true; //排序图标
                     scope.getRowSpan = function(itemRowSpan, item) {
                         return itemRowSpan && itemRowSpan[item["targets"]] ? itemRowSpan[item["targets"]] : 1;
                     }
