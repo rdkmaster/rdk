@@ -6,7 +6,6 @@ define('main', ['application', 'i18n', 'rd.services.Alert'], function(applicatio
         i18n.$init(scope);
         scope.clickHandler = function() {
             Alert.scope = scope;
-            Alert.setLang('en_US');
             Alert.confirm('信息确认请注意', '确认提示', ButtonTypes.YES + ButtonTypes.NO + ButtonTypes.CANCEL, callbackHandler);
         }
 

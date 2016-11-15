@@ -25,7 +25,7 @@
 按照本小节介绍的方法，可以打造一个基于windows平台的RDK的web和rest服务的开发&调试环境！
 
 ### 设置RDK开发环境
-打开[下载页面](http://10.9.233.35:8080/download)，下载一个与自己项目正在使用的RDK版本匹配的开发环境。将下载得到的压缩包解压缩到任意目录，假设为 `d:\rdk-develop-environment`。
+打开[下载页面](http://10.9.233.35:8080/site/download/index.html)，下载一个与自己项目正在使用的RDK版本匹配的开发环境。将下载得到的压缩包解压缩到任意目录，假设为 `d:\rdk-develop-environment`。
 
 ### 下载app代码
 本小节假设app代码被存放在svn服务器上的这个url：`http://10.5.70.3/ZXVMAX/CODE/dev/ZXVMAX/vmax-app-comm/vmax-rdk/rdk_server/app`。
