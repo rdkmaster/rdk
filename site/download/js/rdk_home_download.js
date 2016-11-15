@@ -1,21 +1,42 @@
-$(document).ready(function () {
+$(document).ready(function() {  
 	var allSpan = $("#nov > li > span");
-	var iframe = $('iframe');
-	var download = $("#download");
+	var iframe = $('#iframe');
+	var download_develop = $("#download_develop");
+	var download_run = $("#download_run");
 	allSpan.each(function(){
-		console.log("1");
 		$(this).click(function(){
+			$(this).css('color', '#5A5A5A');
+			$(this).parent().siblings('li').find('span').css('color', '#08c');
 			var href = $(this).attr("href");
-			iframe.attr("src", href);
-			download.attr("src", href);
+		    $.ajax({
+		    	url: href,
+		    	type: "get",
+		    	dataType: "text",
+		    	success: function(data, textStatus){
+		    		iframe.empty();
+		    		iframe.append(data);
+		    	}
+		    })
+			download_develop.attr("src", href);
+			download_run.attr("src", href);
 		});
 	});
-	download.click(function(){
+	download_develop.click(function(){
 		var href = $(this).attr("src");
 		if(!href){
-			href = "v2.3.2-beta";
+			href = "version/v2.3.2-beta/CHANGELOG";
 		}
-		var url = "version/rdk-develop-environment" + href.slice(href.indexOf("v")+1,href.indexOf("/")) + ".zip";
+		var edition = href.slice(href.indexOf("/")+1);
+		var url = "version/rdk-develop-environment" + edition.slice(edition.indexOf("v")+1,edition.indexOf("/")) + ".zip";
 		window.open(url,"_blank");
 	}) ;
-})
+	download_run.click(function(){
+		var href = $(this).attr("src");
+		if(!href){
+			href = "version/v2.3.2-beta/CHANGELOG";
+		}
+		var edition = href.slice(href.indexOf("/")+1);
+		var url = "version/rdk-runtime-environment" + edition.slice(edition.indexOf("v")+1,edition.indexOf("/")) + ".zip";
+		window.open(url,"_blank");
+	}) ;
+});  
