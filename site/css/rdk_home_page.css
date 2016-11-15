@@ -128,9 +128,7 @@ em{
     display: inline-block;
     cursor: pointer;
 }
-.button:hover,
-.button:focus,
-.button:visited{
+.button:hover{
 	background-color: #2a6496;
 }
 .manual{
