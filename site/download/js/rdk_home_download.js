@@ -24,7 +24,7 @@ $(document).ready(function() {
 	download_develop.click(function(){
 		var href = $(this).attr("src");
 		if(!href){
-			href = "version/v2.3.2-beta/CHANGELOG.md";
+			href = "version/v2.3.2-beta/CHANGELOG";
 		}
 		var edition = href.slice(href.indexOf("/")+1);
 		var url = "version/rdk-develop-environment" + edition.slice(edition.indexOf("v")+1,edition.indexOf("/")) + ".zip";
@@ -33,7 +33,7 @@ $(document).ready(function() {
 	download_run.click(function(){
 		var href = $(this).attr("src");
 		if(!href){
-			href = "version/v2.3.2-beta/CHANGELOG.md";
+			href = "version/v2.3.2-beta/CHANGELOG";
 		}
 		var edition = href.slice(href.indexOf("/")+1);
 		var url = "version/rdk-runtime-environment" + edition.slice(edition.indexOf("v")+1,edition.indexOf("/")) + ".zip";
