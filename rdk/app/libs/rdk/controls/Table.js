@@ -22,6 +22,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 <th ng-if="addCheckBox"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck($event)"></th>\
                                 <th ng-repeat="columnDef in columnDefs" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)">\
                                     {{columnDef.title}}\
+                                    <i ng-if="columnDef.sortable && !columnDef.hasSort" class="rdk-table-icon rdk-table-sort"></i>\
+                                    <i ng-if="columnDef.sortable && columnDef.hasSort" class="rdk-table-icon" ng-class="{true:\'rdk-table-sort-down\',false:\'rdk-table-sort-up\'}[columnDef.sortIconStatus]"></i>\
                                 </th>\
                             </tr>\
                         </thead>\
@@ -395,7 +397,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 }
 
                 return function link(scope, element, attrs, ctrl) {
-
+                    scope.sortIconStatus=true; //排序图标
                     scope.getRowSpan = function(itemRowSpan, item) {
                         return itemRowSpan && itemRowSpan[item["targets"]] ? itemRowSpan[item["targets"]] : 1;
                     }
@@ -632,11 +634,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 $(inputTarget).val(scope.data.data[row][column]);
                                 _blurHandler(divTarget);
                             }
-                        }
+                        };
 
                         scope.sortHandler = function(iCol, columnDef) {
                             if (!columnDef.sortable) return;
-
                             var table = $(element.find("table")).get(0);
 
                             if (scope.pagingType == "server") {
@@ -657,17 +658,19 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 } else {
                                     scope.destData.sort(_compareElement(columnDef)); //从小到大排
                                 }
-
-                                _addSortArrow(iCol, table);
                                 table.sortCol = iCol;
+                                columnDef.hasSort=true;
+                                columnDef.sortIconStatus=!columnDef.sortIconStatus;
                             }
-                        }
+                        };
 
                         scope.ifSelected = function(item) {
                             return item.$$hashKey == scope.selectedModel.$$hashKey;
                         };
 
                         scope.setSelected = function(item, event) {
+                            var data = {};
+                            data.data = _getSelectedItems();
                             if (item.$$hashKey == scope.selectedModel.$$hashKey) {
                                 // scope.selectedModel = {};
                             } else {
@@ -723,14 +726,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             _initialCheckBoxStatus();
                             _refreshCheckBoxStatus();
                         }
-                        var _hasOffReady=false; //控制ngRepeatFinished只执行一遍
+
                         var off = scope.$on('ngRepeatFinished', function() {
-                            if(_hasOffReady){
-                                return
-                            }
-                            _reFreshTable();
+
                             _reSetTableHeaders(); //重定义表头
                             if(scope.floatableHeader){
+                                _reFreshTable();
                                 $(element.find("table")).fixHeader();
                             }
 
@@ -747,7 +748,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             _updateCheckBoxStatus();
                             _serverSortResponse();//后端排序，刷新后的响应
                             _searchGapClick();
-                            _hasOffReady=true;
+
                         });
                     };
                     //END INIT
@@ -965,24 +966,29 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     }
 
                     var _compileHeads={};//需要被编译的表头对象
-
+                    var _hasAddTrReady=false; //标记多级表头的Html字符串是否插入到模板中
                     function _reSetTableHeaders(){
                         var thead = element[0].querySelector('thead');
                         var ths=thead.querySelector("tr:last-child").querySelectorAll("th[ng-repeat]");
+
                         for(var key in _compileHeads)
                         {
                             for(var i= 0,thLen=ths.length;i<thLen;i++){
                                 if(_compileHeads.hasOwnProperty(key) && key==i){
                                     var th= $compile(_compileHeads[key])(scope.appScope);
-                                    ths[i].innerHTML=null;
-                                    $(ths[i]).append(th);
+                                    $(th).on("click",function(event){
+                                        var evt = event || window.event;
+                                        evt.stopPropagation();
+                                    });
+                                    $(ths[i]).prepend(th);
                                 }
                             }
                         }
-                        if(!!scope.setting && scope.setting.additionalHeader){
+                        if(!!scope.setting && scope.setting.additionalHeader && !_hasAddTrReady){
                             var template=angular.element(scope.setting.additionalHeader);
                             var trs= $compile(template)(scope.appScope);
                             $(thead).prepend(trs);
+                            _hasAddTrReady=true;
                         }
                     }
                     var scrollWidth, first = true,
@@ -1071,6 +1077,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             columnDef.sort = undefined;
                             columnDef.editable = false;
                             columnDef.name = scope.i18n.searchBy + scope.data.header[i] + scope.i18n.search;
+                            columnDef.hasSort=false; //此列是否有点击过进行排序
+                            columnDef.sortIconStatus=true; //此列排序状态（升，降）
                             scope.columnDefs.push(columnDef);
                         }
 
@@ -1204,6 +1212,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         }
 
                         var thCell = $(table.tHead.rows[0].cells[iCol]);
+                        debugger;
                         if (thCell.html().indexOf(ascChar) == -1 && thCell.html().indexOf(descChar) == -1) {
                             thCell.html(thCell.html() + ascChar); //没序先升序
                             table.direction = ['asc', 'desc'];
