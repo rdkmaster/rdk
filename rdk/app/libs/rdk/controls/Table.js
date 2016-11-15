@@ -637,6 +637,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                         scope.sortHandler = function(iCol, columnDef) {
                             if (!columnDef.sortable) return;
+                            columnDef.hasSort=true;
+                            columnDef.sortIconStatus=!columnDef.sortIconStatus;
                             var table = $(element.find("table")).get(0);
 
                             if (scope.pagingType == "server") {
@@ -648,7 +650,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                     _loadSortDataFromServer(columnDef.data, 'asc');
                                 }
                                 EventService.register(scope.innerID, EventTypes.TABLE_READY, function() {
-                                    _addSortArrow(iCol, table);
                                     table.sortCol = iCol;
                                 });
                             } else {
@@ -658,8 +659,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                     scope.destData.sort(_compareElement(columnDef)); //从小到大排
                                 }
                                 table.sortCol = iCol;
-                                columnDef.hasSort=true;
-                                columnDef.sortIconStatus=!columnDef.sortIconStatus;
                             }
                         };
 
@@ -1190,39 +1189,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         };
                     }
                     //END produceColumnDefs
-
-                    function _addSortArrow(iCol, table) {
-                        var ascChar = "▲";
-                        var descChar = "▼";
-
-                        var startCol = 0;
-                        if(scope.addCheckBox){
-                            ++iCol;
-                            startCol = 1;
-                        }
-
-                        for (var t = startCol; t < table.tHead.rows[0].cells.length; t++) {
-                            var th = $(table.tHead.rows[0].cells[t]);
-                            var thText = th.html().replace(ascChar, "").replace(descChar, "");
-
-                            if (t != iCol) {
-                                th.html(thText);
-                            }
-                        }
-
-                        var thCell = $(table.tHead.rows[0].cells[iCol]);
-                        debugger;
-                        if (thCell.html().indexOf(ascChar) == -1 && thCell.html().indexOf(descChar) == -1) {
-                            thCell.html(thCell.html() + ascChar); //没序先升序
-                            table.direction = ['asc', 'desc'];
-                        } else if (thCell.html().indexOf(ascChar) != -1) {
-                            thCell.html(thCell.html().replace(ascChar, descChar)); //升序改降序
-                            table.direction = ['desc', 'asc'];
-                        } else if (thCell.html().indexOf(descChar) != -1) {
-                            thCell.html(thCell.html().replace(descChar, ascChar)); //降序改升序
-                            table.direction = ['asc', 'desc'];
-                        }
-                    }
 
                     function _compareElement(columnDef) {
                         return function(tr1, tr2) {
