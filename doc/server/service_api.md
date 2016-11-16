@@ -311,7 +311,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 返回：undefined
 
 
-### `rdk多数据源使用示例`###
+### `rdk多数据源使用示例` {#mulit-ds-example}###
 第一步，在**proc\bin\lib**目录下放置应用所需数据库jdbc驱动包，rdk默认已经提供gbase和mysql的驱动包。
 
 第二步，配置应用需要的数据源信息，包括数据库连接信息以及对应的连接池信息，配置文件位于 **proc/conf/datasource.cfg**，以下示例配置了mysql和hbase的数据库以及各自连接池信息

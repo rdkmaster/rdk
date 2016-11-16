@@ -25,16 +25,23 @@
 按照本小节介绍的方法，可以打造一个基于windows平台的RDK的web和rest服务的开发&调试环境！
 
 ### 设置RDK开发环境
-打开[下载页面](http://10.9.233.35:8080/site/download/index.html)，下载一个与自己项目正在使用的RDK版本匹配的开发环境。将下载得到的压缩包解压缩到任意目录，假设为 `d:\rdk-develop-environment`。
+打开[下载页面](/site/download/index.html)，下载一个与自己项目正在使用的RDK版本匹配的开发环境。将下载得到的压缩包解压缩到任意目录，假设为 `d:\rdk-develop-environment`，运行 `d:\rdk-develop-environment\start.exe` 就可以开始使用rdk来开发页面和调试rest服务了。
 
-### 下载app代码
+### 配置数据库信息
+如果你的app不需要访问任何数据库，那可无视这小节的配置。
+
+编辑 `d:\rdk-develop-environment\rdk\proc\conf\rdk.cfg`，找到 `database.gbase.xxxx` 这类配置项，按照实际情况填写，这样就可以使用gbase数据库了。保存之后，记得重启一下start.exe才能生效。
+
+对于其他任意提供jdbc驱动的数据库的配置，请参考[这个文档](/doc/#/server/service_api.md#mulit-ds-example)。
+
+### 配置app代码（可选）
 本小节假设app代码被存放在svn服务器上的这个url：`http://10.5.70.3/ZXVMAX/CODE/dev/ZXVMAX/vmax-app-comm/vmax-rdk/rdk_server/app`。
 
 在资源管理器中右击这个目录 `d:\rdk-develop-environment\rdk\app`，选择SVN菜单“check out”，在弹出的对话框中，将app所在的url填进去，单击ok就好了：
 
 ![](img/svn-checkout.PNG)
 
-SVN下载完成之后，就可以在 `d:\rdk-develop-environment\rdk\app` 目录下构建或者修改你的app代码了。
+SVN下载完成之后，就可以在 `d:\rdk-develop-environment\rdk\app` 目录下构建或者修改你的app代码，可以直接到app目录下提交你的代码。
 
 ### 配置ActiveMQ（可选）
 如果你的应用使用到了 `mq` 的相关功能，则必须在启动之前，配置好ActiveMQ的相关信息：
