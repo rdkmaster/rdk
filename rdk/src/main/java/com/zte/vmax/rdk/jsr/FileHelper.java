@@ -29,6 +29,9 @@ public class FileHelper extends AbstractAppLoggable {
     }
 
     public String readXml(String path){
+
+       path = fixPath(path, appName);
+
        BufferedReader in=null;
         try{
             in=new BufferedReader(new FileReader(path));

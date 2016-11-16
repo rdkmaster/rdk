@@ -248,7 +248,7 @@ var file = {
         }
         path = path.toString();
         log("reading xml file:",path);
-        return rdk_runtime.fileHelper().readXml(path);
+        return JSON.parse(rdk_runtime.fileHelper().readXml(path));
     },
     save: function (file, content, append, encoding) {
         if (!file) {

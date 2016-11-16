@@ -2,6 +2,9 @@
     var testServiceFilePath="../test/server/test/"
     return {
 
+		file_readXml:function(request, script){
+			return file.readXml(testServiceFilePath+"dialog_settings.xml")
+		},
         file_loadProperty:function(request, script){
             var properties=file.loadProperty(testServiceFilePath+"conf1.propertites");
             var uump=properties.getProperty("conf");
