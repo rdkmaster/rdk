@@ -29,7 +29,6 @@ _init()
 Global $width = 1000
 Global $height = 600
 Global $gui = GUICreate($WIN_TITLE, $width, $height, Default, Default, $WS_MAXIMIZEBOX + $WS_MINIMIZEBOX + $WS_SIZEBOX)
-;~ GUISetFont(8.5, 0, 0, 'Courier New')
 
 $width -= 4
 $height -= 26
