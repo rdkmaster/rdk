@@ -31,6 +31,9 @@ html { font-size: calc(112.5% + 4 * (100vw - 600px) / 400); }
 	color: #08c;
 	cursor: pointer;
 }
+.nov>li:first-child>span{
+	color: #5A5A5A;
+}
 .nov>li>span:hover{
 	border-bottom: 1px solid #08c;
 }

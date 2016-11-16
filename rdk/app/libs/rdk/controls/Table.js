@@ -19,7 +19,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     <table class="rdk-table">\
                         <thead ng-if="!noHeader">\
                             <tr>\
-                                <th ng-if="addCheckBox"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck($event)"></th>\
+                                <th ng-show="{{addCheckBox}}"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
                                 <th ng-repeat="columnDef in columnDefs" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)">\
                                     {{columnDef.title}}\
                                 </th>\
@@ -28,7 +28,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         <tbody>\
                             <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
                                 ng-class="{\'selected-row\':ifSelected(item)}" ng-dblclick="dbClickHandler(item,$index)">\
-                                <td ng-if="addCheckBox"><input name="singleCheckBox" type="checkbox" ng-click="singleCheck(item, $index, $event)"></td>\
+                                <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="currentPageData[$index].checked"></td>\
                                 <td rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" style="width:{{columnDef.width}};cursor:move;{{getRowStyle(itemRowSpan,columnDef)}}">\
                                 </td>\
                             </tr>\
@@ -253,6 +253,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 Utils.publish(scope, this);
 
                 this.setCurrentPage = function(_currentPage) {
+                    scope.hasOffReady = false;//翻页时重置
                     scope.currentPage = _currentPage;
                     scope.proxyDs = Utils.compile(scope.$parent, scope.proxyDs);
                     if (scope.pagingType == "server") {
@@ -276,8 +277,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                 this.setChecked = function(items){
                     if(!scope.addCheckBox) return;
-                    _refreshCheckedRows(items);
-                    scope.refreshCurrentPage();
+                    _refreshSingleCheckedData(items);
+                    scope.refreshSingleCurrentPage();
                 }
 
                 this.setGlobalSearch = function(searchVal){
@@ -293,12 +294,14 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     return searchObject;
                 }
 
-                function _refreshCheckedRows(items){
-                    scope.checkedRows = [];
+                function _refreshSingleCheckedData(items){
+                    angular.forEach(scope.destData, function(item){
+                        item.checked = false;
+                    })
                     angular.forEach(items, function(item){
                         var index = _.findIndex(scope.destData, item);
-                        if(index!=-1){
-                            scope.checkedRows.push(scope.destData[index].$index);
+                        if(index != -1){
+                            scope.destData[index].checked = true;
                         }
                     })
                 }
@@ -478,7 +481,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         /*table国际化*/
                         initializeTableI18n();
                         refreshTableI18n();
-                        initializeCheck();
 
                         if (angular.isDefined(attrs.id)) {
                             EventService.register(attrs.id, EventTypes.HIGHLIGHT, function(event, data) {
@@ -491,6 +493,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         }
 
                         scope.$watch("data", function(newVal, oldVal) {
+                            scope.hasOffReady = false;//watch时重置
                             scope.currentPage = 0;
                             _reloadLocalData();
                             if (scope.pagingType == "server") {
@@ -677,16 +680,13 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             EventService.raiseControlEvent(scope, 'select', item);
                         };
 
-                        scope.singleCheck = function(item, index, event){
-                            _singleCheckHandler();//改变状态
-                            _refreshCheckedData();
+                        scope.singleCheck = function(){
+                            scope.refreshSingleCurrentPage();
                             _totalBroadcast();
                         }
 
-                        scope.totalCheck = function(event){
-                            _resetFixHeadTotalCheck(event.currentTarget.checked);
-                            _totalCheckHandler(event.currentTarget.checked);//改变状态
-                            _refreshCheckedData();
+                        scope.totalCheck = function(isChecked){
+                            scope.refreshTotalCurrentPage(isChecked);
                             _totalBroadcast();
                         }
 
@@ -708,6 +708,16 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             }
                         }
 
+                        scope.refreshSingleCurrentPage = function(){
+                            scope.currentPageData = scope.getCurrentPageDataArr();
+                            scope.refreshTotal4Single();
+                        }
+
+                        scope.refreshTotalCurrentPage = function(isChecked){
+                            scope.currentPageData = scope.getCurrentPageDataArr();
+                            _refreshCurrentSingleChecked(isChecked);
+                        }
+
                         scope.getCurrentPageDataArr = function(){
                             if(scope.pagingType == "server"){
                                 return scope.destData;
@@ -718,19 +728,23 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             return scope.destData.slice(start, start+pageSize); //子数组
                         }
 
-                        scope.refreshCurrentPage = function(){
-                            if(!scope.addCheckBox) return;
-                            _refreshCheckedIdxArr();//取当前页选中idx
-                            _initialCheckBoxStatus();
-                            _refreshCheckBoxStatus();
+                        scope.getOrginTable = function(){
+                            return scope.floatableHeader ? (element.find('.sticky-enabled')) : (element.find('table'));
                         }
-                        var _hasOffReady=false; //控制ngRepeatFinished只执行一遍
-                        var off = scope.$on('ngRepeatFinished', function() {
-                            if(_hasOffReady){
-                                return
-                            }
+
+                        scope.refreshTotal4Single = function(){
+                            var isChecked = _isAllChecked();
+                            scope.allChecked = isChecked;//双绑没生效，后面用dom找
+                            _resetTotalCheckStatus(isChecked);
+                            _resetFixHeadCheckStatus(isChecked);
+                        }
+
+                        var off = scope.$on('ngRepeatFinished', function(event) {
+                            if(scope.hasOffReady) return;
+
                             _reFreshTable();
                             _reSetTableHeaders(); //重定义表头
+
                             if(scope.floatableHeader){
                                 $(element.find("table")).fixHeader();
                             }
@@ -744,14 +758,21 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                     }
                                 }
                             }, true);
-
-                            _updateCheckBoxStatus();
+                            
+                            scope.refreshSingleCurrentPage();//翻页必进，$filtered/watch
                             _serverSortResponse();//后端排序，刷新后的响应
                             _searchGapClick();
-                            _hasOffReady=true;
+                            scope.hasOffReady = true;
                         });
                     };
                     //END INIT
+
+                    function _refreshCurrentSingleChecked(isChecked){
+                        _resetFixHeadCheckStatus(isChecked);
+                        angular.forEach(scope.currentPageData, function(rowData){
+                            rowData.checked = isChecked;
+                        })
+                    }
 
                     function _searchGapClick(){
                         if((!scope.search) || (scope.pagingType != 'server')) return;
@@ -761,12 +782,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 scope.searchFocus = false;
                             }
                         })
-                    }
-
-                    function initializeCheck(){
-                        if(!scope.addCheckBox) return;
-                        scope.checkedIdxArr = [];
-                        scope.checkedRows = [];
                     }
 
                     function initializeTableI18n() {
@@ -796,41 +811,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         scope.i18n.searchAll = scope.appScope.i18n.table_searchAll ? scope.appScope.i18n.table_searchAll : scope.i18n.searchAll;
                     }
 
-                    function _initialCheckBoxStatus(){
-                        _totalCheckHandler(false);
-                        _resetTotalCheck(false);
-                        _resetFixHeadTotalCheck(false);
-                    }
-
-                    function _refreshCheckedIdxArr(){
-                        scope.checkedIdxArr = [];
-                        var currentRows = _getCurrentRows();
-                        angular.forEach(scope.checkedRows, function(item){
-                            var idx = _.indexOf(currentRows, item);
-                            if(idx != -1){
-                                scope.checkedIdxArr.push(idx);
-                            }
-                        })
-                    }
-
-                    function _refreshCheckBoxStatus(){
-                        _changeSingleStatus();
-                        _singleCheckHandler();
-                    }
-
-                    function _changeSingleStatus(){
-                        var originTable = _getOrginTable();
-                        var arr = originTable.find('input[name="singleCheckBox"]');
-                        for(var i=0; i<scope.checkedIdxArr.length; i++){
-                            arr[scope.checkedIdxArr[i]].checked = true;
-                        }
-                    }
-
-                    function _updateCheckBoxStatus(){
-                        if(!scope.addCheckBox) return;
-                        scope.refreshCurrentPage();
-                    }
-
                     function _serverSortResponse(){
                         if(scope.serverSortCache){
                             EventService.broadcast(scope.innerID, EventTypes.TABLE_READY);
@@ -840,87 +820,35 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                     function _totalBroadcast(){
                         var data = {};
-                        data.data = _getSelectedItems();
+                        data.data = _getCheckedItems();
                         EventService.raiseControlEvent(scope, 'check', data);
                     }
 
-                    function _getSelectedItems(){
+                    function _getCheckedItems(){
                         var arr = [];
-                        angular.forEach(scope.checkedRows, function(rowIdx){
-                            arr.push(scope.destData[rowIdx]);
+                        angular.forEach(scope.destData, function(item){
+                            if(item.checked){
+                                arr.push(item);
+                            }
                         })
                         return arr;
                     }
 
-                    function _refreshCheckedData(){
-                        var currentRows = _getCurrentRows();
-                        var originTable = _getOrginTable();
-                        var arr = originTable.find('input[name="singleCheckBox"]');
-                        for(var i=0; i<arr.length; i++){
-                            if(arr[i].checked){
-                                var idx = _.indexOf(scope.checkedRows, currentRows[i]);
-                                if(idx == -1){
-                                    scope.checkedRows.push(currentRows[i]);
-                                }
-                            }
-                            else{
-                                var idx = _.indexOf(scope.checkedRows, currentRows[i]);
-                                if(idx != -1){
-                                    scope.checkedRows.splice(idx, 1);
-                                }
-                            }
-                        }
-                    }
-
-                    function _getCurrentRows(){
-                        var currentDataArr = scope.getCurrentPageDataArr();
-                        var currentRows = _getCurrentPageRows(currentDataArr);
-                        return currentRows;
-                    }
-
-                    function _getCurrentPageRows(rowDataArr){
-                        var arr = [];
-                        angular.forEach(rowDataArr, function(rowData){
-                            arr.push(rowData.$index);
-                        })
-                        return arr;
-                    }
-
-                    function _singleCheckHandler(){
-                        var isChecked = _isAllSelected();
-                        _resetTotalCheck(isChecked);
-                        _resetFixHeadTotalCheck(isChecked);
-                    }
-
-                    function _getOrginTable(){
-                        return scope.floatableHeader ? (element.find('.sticky-enabled')) : (element.find('table'));
-                    }
-
-                    function _resetTotalCheck(isChecked){
-                        var originTable = _getOrginTable();
+                    function _resetTotalCheckStatus(isChecked){
+                        var originTable = scope.getOrginTable();
                         var arr = originTable.find('input[name="totalCheckBox"]');
                         arr[0].checked = isChecked;
                     }
 
-                    function _resetFixHeadTotalCheck(isChecked){
+                    function _resetFixHeadCheckStatus(isChecked){
                         if(!scope.floatableHeader) return;
                         var arr = element.find('.sticky-thead').find('input[name="totalCheckBox"]');
                         arr[0].checked = isChecked;
                     }
 
-                    function _totalCheckHandler(isChecked){
-                        var originTable = _getOrginTable();
-                        var arr = originTable.find('input[name="singleCheckBox"]');
-                        for(var i=0; i<arr.length; i++){
-                            arr[i].checked = isChecked;
-                        }
-                    }
-
-                    function _isAllSelected(){
-                        var originTable = _getOrginTable();
-                        var arr = originTable.find('input[name="singleCheckBox"]');
-                        for(var i=0; i<arr.length; i++){
-                            if(!arr[i].checked) return false;
+                    function _isAllChecked(){
+                        for(var i=0; i<scope.currentPageData.length; i++){
+                            if(!scope.currentPageData[i].checked) return false;
                         }
                         return true;
                     }
@@ -998,6 +926,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                     obj[field] = data[index];
                                 });
                                 obj["$index"] = index; //item上存原行
+                                obj["checked"] = false;
                                 result.push(obj);
                             });
                             return result;
