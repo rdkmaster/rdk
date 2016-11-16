@@ -28,73 +28,74 @@ public class FileHelper extends AbstractAppLoggable {
         logger = AppLogger.getLogger("FileHelper", appName);
     }
 
-    public String readXml(String path){
+    public String readXml(String path) {
 
-       path = fixPath(path, appName);
+        path = fixPath(path, appName);
 
-       BufferedReader in=null;
-        try{
-            in=new BufferedReader(new FileReader(path));
-        }catch(Exception e){
-            logger.error("create BufferedReader error,"+e);
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new FileReader(path));
+        } catch (Exception e) {
+            logger.error("create BufferedReader error," + e);
         }
         String s;
-        StringBuilder sb=new StringBuilder();
-        try{
-            while((s=in.readLine())!=null){
+        StringBuilder sb = new StringBuilder();
+        try {
+            while ((s = in.readLine()) != null) {
                 sb.append(s);
             }
-        }catch(Exception e){
-            logger.error("read stream error,"+e);
+        } catch (Exception e) {
+            logger.error("read stream error," + e);
         }
 
-        try{
+        try {
             in.close();
-        }catch (Exception e){
-            logger.error("close stream error,"+e);
+        } catch (Exception e) {
+            logger.error("close stream error," + e);
         }
 
-        JSONObject jsonObj =null;
-        try{
-            jsonObj=XML.toJSONObject(sb.toString());
-        }catch(Exception e){
-            logger.error("transform json object error,"+e);
+        JSONObject jsonObj = null;
+        try {
+            jsonObj = XML.toJSONObject(sb.toString());
+        } catch (Exception e) {
+            logger.error("transform json object error," + e);
         }
 
-        String result="";
-        try{
-            result=jsonObj.toString();
-        }catch(Exception e){
-            logger.error("toString error,"+e);
+        String result = "";
+        try {
+            result = jsonObj.toString();
+        } catch (Exception e) {
+            logger.error("toString error," + e);
         }
 
         return result;
 
 
     }
-    public Properties loadProperty(String fileStr){
+
+    public Properties loadProperty(String fileStr) {
         Properties props = new Properties();
-        FileInputStream finStream= null;
-        InputStreamReader reader=null;
+        FileInputStream finStream = null;
+        InputStreamReader reader = null;
 
-        try{
-            finStream=new FileInputStream(fileStr);
+        try {
+            finStream = new FileInputStream(fileStr);
             reader = new InputStreamReader(finStream, "UTF-8");
-        }catch(Exception e){
-            logger.error("create inputStream error,"+e);
+        } catch (Exception e) {
+            logger.error("create inputStream error," + e);
         }
 
-        try{
+        try {
             props.load(reader);
-        }catch (Exception e){
-            logger.error("propertity load error,"+e);
+        } catch (Exception e) {
+            logger.error("propertity load error," + e);
         }
 
-        try{
+        try {
             finStream.close();
             reader.close();
-        }catch (Exception e){
-            logger.error("close inputStream error,"+e);
+        } catch (Exception e) {
+            logger.error("close inputStream error," + e);
         }
 
         return props;
@@ -220,7 +221,7 @@ public class FileHelper extends AbstractAppLoggable {
 
         ScriptObjectMirror som = (ScriptObjectMirror) content;
         int length = toInt(som.getMember("length"), 0);
-        for(int i = 0; i < length; i++) {
+        for (int i = 0; i < length; i++) {
             writeCsvRow(writer, som.getMember(Integer.toString(i)), excludeIndexes);
         }
         try {
@@ -259,18 +260,18 @@ public class FileHelper extends AbstractAppLoggable {
         HashMap<String, Object> op = new HashMap<>();
         if (option instanceof ScriptObjectMirror) {
             ScriptObjectMirror som = (ScriptObjectMirror) option;
-            boolean append=(Boolean)som.get("append");
+            boolean append = (Boolean) som.get("append");
             op.put("append", append);
         } else {
             if (!(option instanceof Undefined)) {
                 logger.warn("unsupported option type[" + option.getClass().getName() + "]! ignoring it!");
             }
-            op.put("append",false);
+            op.put("append", false);
         }
         return saveAsEXCEL(file, content, excludeIndexes, op);
     }
 
-    public boolean saveAsEXCEL(String fileStr, ScriptObjectMirror content, ScriptObjectMirror excludeIndexes,HashMap<String, Object> option) {
+    public boolean saveAsEXCEL(String fileStr, ScriptObjectMirror content, ScriptObjectMirror excludeIndexes, HashMap<String, Object> option) {
 
         fileStr = fixPath(fileStr, appName);
 
@@ -285,47 +286,46 @@ public class FileHelper extends AbstractAppLoggable {
             return false;
         }
 
-        int toWritesheetNums=content.size();
+        int toWritesheetNums = content.size();
 
-        boolean append= (boolean)option.get("append");
+        boolean append = (boolean) option.get("append");
 
-        WritableWorkbook rwb=null;
+        WritableWorkbook rwb = null;
 
-        Workbook wb=null;
+        Workbook wb = null;
 
-        Object[] toWritesheetNames= content.keySet().toArray();
+        Object[] toWritesheetNames = content.keySet().toArray();
 
-        if(append) {   //追加
-            try{
-                wb=Workbook.getWorkbook(file);
-                rwb=Workbook.createWorkbook(file, wb);
-            }catch (Exception e){
-                logger.warn("can not find workbook:"+file+",will create new workbook:" + e);
-                try{
-                    rwb=Workbook.createWorkbook(file);
-                }catch (Exception ex){
-                    logger.error("create workbook error:"+e);
+        if (append) {   //追加
+            try {
+                wb = Workbook.getWorkbook(file);
+                rwb = Workbook.createWorkbook(file, wb);
+            } catch (Exception e) {
+                logger.warn("can not find workbook:" + file + ",will create new workbook:" + e);
+                try {
+                    rwb = Workbook.createWorkbook(file);
+                } catch (Exception ex) {
+                    logger.error("create workbook error:" + e);
                     return false;
                 }
             }
 
             for (int i = 0; i < toWritesheetNums; i++) {
                 String sheetname = toWritesheetNames[i].toString();
-                appendEXCEL(rwb, sheetname, (ScriptObjectMirror)content.get(sheetname),(ScriptObjectMirror)excludeIndexes.get(sheetname), option);
+                appendEXCEL(rwb, sheetname, (ScriptObjectMirror) content.get(sheetname), (ScriptObjectMirror) excludeIndexes.get(sheetname), option);
             }
 
-            try{
+            try {
                 rwb.write();
                 rwb.close();
-                if(wb!=null){
+                if (wb != null) {
                     wb.close();
                 }
-            }catch (Exception e){
-                logger.error("write or close error:"+e);
+            } catch (Exception e) {
+                logger.error("write or close error:" + e);
                 return false;
             }
-        }
-        else {        //复写
+        } else {        //复写
             try {
                 rwb = Workbook.createWorkbook(file);
             } catch (Exception e) {
@@ -337,11 +337,11 @@ public class FileHelper extends AbstractAppLoggable {
                 writeEXCEL(rwb, sheetname, i, (ScriptObjectMirror) content.get(sheetname), (ScriptObjectMirror) excludeIndexes.get(sheetname), option);
             }
 
-            try{
+            try {
                 rwb.write();
                 rwb.close();
-            }catch (Exception e){
-                logger.error("write or close error:"+e);
+            } catch (Exception e) {
+                logger.error("write or close error:" + e);
                 return false;
             }
         }
@@ -349,22 +349,22 @@ public class FileHelper extends AbstractAppLoggable {
         return true;
     }
 
-    private boolean writeEXCEL(WritableWorkbook workbook,String sheetname,int sheetindex,ScriptObjectMirror content,ScriptObjectMirror excludeIndexes,HashMap<String, Object> option){
+    private boolean writeEXCEL(WritableWorkbook workbook, String sheetname, int sheetindex, ScriptObjectMirror content, ScriptObjectMirror excludeIndexes, HashMap<String, Object> option) {
         WritableSheet sheet = workbook.createSheet(sheetname, sheetindex);
         int length = toInt(content.getMember("length"), 0);
-        for(int i = 0; i < length; i++) {
-            writeEXCELRow(sheet, i,(ScriptObjectMirror)content.getMember(Integer.toString(i)), excludeIndexes,option);
+        for (int i = 0; i < length; i++) {
+            writeEXCELRow(sheet, i, (ScriptObjectMirror) content.getMember(Integer.toString(i)), excludeIndexes, option);
         }
         return true;
     }
 
-    private boolean appendEXCEL(WritableWorkbook workbook,String sheetName,ScriptObjectMirror content,ScriptObjectMirror excludeIndexes,HashMap<String, Object> option){
-        WritableSheet ws =null;
+    private boolean appendEXCEL(WritableWorkbook workbook, String sheetName, ScriptObjectMirror content, ScriptObjectMirror excludeIndexes, HashMap<String, Object> option) {
+        WritableSheet ws = null;
         int length = toInt(content.getMember("length"), 0);
 
-        String []sheetNames=workbook.getSheetNames();
-        List<String> existsheetNames= Arrays.asList(sheetNames);
-        if(existsheetNames.contains(sheetName)) {//追加表存在
+        String[] sheetNames = workbook.getSheetNames();
+        List<String> existsheetNames = Arrays.asList(sheetNames);
+        if (existsheetNames.contains(sheetName)) {//追加表存在
             try {
                 ws = workbook.getSheet(sheetName);
             } catch (Exception e) {
@@ -373,35 +373,34 @@ public class FileHelper extends AbstractAppLoggable {
             }
             int rows = ws.getRows();
             for (int i = 0; i < length; i++) {
-                writeEXCELRow(ws, i + rows, (ScriptObjectMirror)content.getMember(Integer.toString(i)), excludeIndexes, option);
+                writeEXCELRow(ws, i + rows, (ScriptObjectMirror) content.getMember(Integer.toString(i)), excludeIndexes, option);
             }
-        }
-        else {              //追加但表不存在
-            ws=workbook.createSheet(sheetName,sheetNames.length+1);
-            for(int i = 0; i < length; i++) {
-                writeEXCELRow(ws, i,(ScriptObjectMirror)content.getMember(Integer.toString(i)), excludeIndexes,option);
+        } else {              //追加但表不存在
+            ws = workbook.createSheet(sheetName, sheetNames.length + 1);
+            for (int i = 0; i < length; i++) {
+                writeEXCELRow(ws, i, (ScriptObjectMirror) content.getMember(Integer.toString(i)), excludeIndexes, option);
             }
         }
 
         return true;
     }
 
-    private boolean writeEXCELRow(WritableSheet sheet,int rowIndex,ScriptObjectMirror rowContent,ScriptObjectMirror excludeIndexes,Object option){
+    private boolean writeEXCELRow(WritableSheet sheet, int rowIndex, ScriptObjectMirror rowContent, ScriptObjectMirror excludeIndexes, Object option) {
         if (!likeArray(rowContent)) {
             return false;
         }
         ArrayList<Integer> ci = toIntList(excludeIndexes);
         int length = toInt(rowContent.getMember("length"), 0);
-        int j=0;
+        int j = 0;
         for (int i = 0; i < length; i++) {
             String idx = Integer.toString(i);
             if (rowContent.hasMember(idx) && !ci.contains(i)) {
                 Object cellObj = rowContent.getMember(idx);
-                Label label = new Label(j++,rowIndex,cellObj == null ? "" : cellObj.toString());
-                try{
+                Label label = new Label(j++, rowIndex, cellObj == null ? "" : cellObj.toString());
+                try {
                     sheet.addCell(label);
-                }catch (Exception e){
-                    logger.error("addcell error:"+e);
+                } catch (Exception e) {
+                    logger.error("addcell error:" + e);
                     return false;
                 }
 
@@ -512,9 +511,9 @@ public class FileHelper extends AbstractAppLoggable {
 
         Matcher svrMatcher = svrPattern.matcher(path);
         if (svrMatcher.find()) {
-            if(appName.startsWith("../")){
+            if (appName.startsWith("../")) {
                 return appName;
-            }else{
+            } else {
                 return svrMatcher.replaceFirst("app/" + appName + "/server");
             }
 
