@@ -6,8 +6,9 @@
 .rdk-combo-select-module .combo-caption{
     display: inline-block;
     border-right: 1px #ABABAB solid;
-    padding: 0 10px 20px 10px;
-    height: 18px;
+    padding: 0 10px;
+    line-height: 18px;
+    vertical-align: middle;
 }
 
 .rdk-combo-select-module .combo-content{
@@ -16,7 +17,7 @@
     align-items:center;
     outline: none;
     border: 1px solid #d9d9d9;
-    height: 30px;
+    height: 32px;
     font-family: "微软雅黑", Helvetica, Arial, sans-serif;
     font-size: 14px;
     color: #333;
@@ -30,7 +31,7 @@
     display: inline-block;
     flex:1;
     min-width: 120px;
-    height: 28px;
+    height: 30px;
     box-shadow: none !important;
     border: none;
     color: #333;
