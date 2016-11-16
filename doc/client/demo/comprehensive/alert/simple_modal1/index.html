@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>demo 4 modal</title>
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/simple_modal1.css">
+</head>
+
+<body ng-controller='myCtrl'>
+    <button ng-click="setmodal('topModal', 'none_modal', {x:50, y:50})">可以点击一下</button>
+    <div id="topModal" rdk_modal="hide" class="modalcss">
+        <div class='title'>
+            <span>修改项弹出框</span><i ng-click="setmodal('topModal', 'hide')"></i>
+        </div>
+        <div class='content'>
+            <ul>
+                <li><span>城市:</span><input type="text" name="" placeholder="例：成都市 "> </li>
+                <li><span>是否RRU扇区:</span><i>是</i><i>否</i></li>
+                <li>
+                    <span>系统类型:</span>
+                    <select class="selectpicker">
+                        <option>Mustard</option>
+                        <option>Ketchup</option>
+                        <option>Relish</option>
+                    </select>
+                </li>
+                <li><button ng-click="setmodal('topModal', 'hide')">保存</button></li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
