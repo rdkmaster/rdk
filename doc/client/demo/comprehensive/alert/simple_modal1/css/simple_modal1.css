@@ -74,6 +74,10 @@ ul,li{
 	border: 1px solid #d8d8d8;
 	border-radius: 4px;
 }
+.content>ul>li:first-child>input:focus{
+	outline: 5px auto -webkit-focus-ring-color !important;
+    outline-offset: -2px;
+}
 .content>ul>li:nth-child(2)>i {
 	display: inline-block;
 	width: 45px;
