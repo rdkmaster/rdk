@@ -19,7 +19,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     <table class="rdk-table">\
                         <thead ng-if="!noHeader">\
                             <tr>\
-                                <th ng-show="{{addCheckBox}}"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
+                                <th ng-if="addCheckBox"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
                                 <th ng-repeat="columnDef in columnDefs" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)">\
                                     {{columnDef.title}}\
                                 </th>\
@@ -493,6 +493,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         }
 
                         scope.$watch("data", function(newVal, oldVal) {
+                            if($.isEmptyObject(newVal)) return;
                             scope.hasOffReady = false;//watch时重置
                             scope.currentPage = 0;
                             _reloadLocalData();
@@ -641,7 +642,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         scope.sortHandler = function(iCol, columnDef) {
                             if (!columnDef.sortable) return;
 
-                            var table = $(element.find("table")).get(0);
+                            var table = element[0].querySelector('.sticky-enabled');//$(element.find("table")).get(0);
 
                             if (scope.pagingType == "server") {
                                 scope.serverSortCache = true;
@@ -701,13 +702,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             return scope.currentPage == 0;
                         }
 
-                        scope.afterStickyWrap = function() {
-                            if (scope.setting && scope.setting.scrollX) {
-                                var ele = element[0].querySelector(".sticky-wrap");
-                                $(ele).addClass("sticky-wrap-overflow"); //scrollX作用使滚动条产生在内部
-                            }
-                        }
-
                         scope.refreshSingleCurrentPage = function(){
                             scope.currentPageData = scope.getCurrentPageDataArr();
                             scope.refreshTotal4Single();
@@ -728,10 +722,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             return scope.destData.slice(start, start+pageSize); //子数组
                         }
 
-                        scope.getOrginTable = function(){
-                            return scope.floatableHeader ? (element.find('.sticky-enabled')) : (element.find('table'));
-                        }
-
                         scope.refreshTotal4Single = function(){
                             var isChecked = _isAllChecked();
                             scope.allChecked = isChecked;//双绑没生效，后面用dom找
@@ -742,14 +732,13 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         var off = scope.$on('ngRepeatFinished', function(event) {
                             if(scope.hasOffReady) return;
 
-                            _reFreshTable();
                             _reSetTableHeaders(); //重定义表头
-
-                            if(scope.floatableHeader){
-                                $(element.find("table")).fixHeader();
-                            }
-
-                            scope.afterStickyWrap();
+                            _fixTableHeader();
+                            
+                            scope.refreshSingleCurrentPage();
+                            _serverSortResponse();//后端排序，刷新后的响应
+                            _searchGapClick();
+                            scope.hasOffReady = true;
 
                             scope.$watch("selectedIndex", function(newVal, oldVal) { //根据selectedIndex高亮显示
                                 if (newVal != undefined) {
@@ -758,14 +747,33 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                     }
                                 }
                             }, true);
-                            
-                            scope.refreshSingleCurrentPage();//翻页必进，$filtered/watch
-                            _serverSortResponse();//后端排序，刷新后的响应
-                            _searchGapClick();
-                            scope.hasOffReady = true;
                         });
                     };
                     //END INIT
+
+                    function _fixTableHeader(){
+                        _beforeFixHeader();
+                        $(element.find("table")).fixHeader();//wrapper->[sticky-wrap]->sticky-enabled->[sticky-thead]
+                        _afterFixHeader();
+                        if(scope.floatableHeader) return;
+                        $(element[0].querySelector('.sticky-thead')).remove();                        
+                    }
+
+                    function _beforeFixHeader(){
+                        if($(element).has($('.sticky-wrap')).length != 0){
+                             $(element[0].querySelector('.sticky-enabled')).unwrap();
+                        }
+                        if($(element).has($('.sticky-thead')).length != 0){
+                            $(element[0].querySelector('.sticky-thead')).remove();
+                        }
+                    }
+
+                    function _afterFixHeader(){
+                        if(scope.setting && scope.setting.scrollX) {
+                            var handDragElement = element[0].querySelector(".sticky-wrap");//拖动产生在这层
+                            $(handDragElement).addClass("sticky-wrap-overflow"); 
+                        }
+                    }
 
                     function _refreshCurrentSingleChecked(isChecked){
                         _resetFixHeadCheckStatus(isChecked);
@@ -835,14 +843,17 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     }
 
                     function _resetTotalCheckStatus(isChecked){
-                        var originTable = scope.getOrginTable();
+                        var originTable = element.find('.sticky-enabled');
                         var arr = originTable.find('input[name="totalCheckBox"]');
+                        if(arr.length == 0) return;
                         arr[0].checked = isChecked;
                     }
 
                     function _resetFixHeadCheckStatus(isChecked){
                         if(!scope.floatableHeader) return;
-                        var arr = element.find('.sticky-thead').find('input[name="totalCheckBox"]');
+                        var copyTable = element.find('.sticky-thead');
+                        var arr = copyTable.find('input[name="totalCheckBox"]');
+                        if(arr.length == 0) return;
                         arr[0].checked = isChecked;
                     }
 
@@ -886,11 +897,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             var selectedItem = scope.destData[index];
                             scope.setSelected(selectedItem, null);
                         }
-                    }
-
-                    function _reFreshTable() {
-                        $($(element.find("table")).get(0)).unwrap();
-                        $($(element.find("table")).get(1)).remove();
                     }
 
                     var _compileHeads={};//需要被编译的表头对象
@@ -969,7 +975,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         if (first) {
                             first = false;
                             scrollWidth = element[0].querySelector(".rdk-table").offsetWidth - element[0].offsetWidth;
-                            stickyWrapElement = element[0].querySelector(".sticky-wrap");
+                            stickyWrapElement = element[0].querySelector(".sticky-wrap");//拖动作用在这层
                         }
 
                         var startPoint = e.startPoint;

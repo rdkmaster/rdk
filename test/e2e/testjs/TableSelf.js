@@ -37,7 +37,7 @@ describe('Table Self Test',function(){
     });
     //验证列标题和顺序
     it('表格标题顺序与data一致',function(){
-    	var titles=element.all(by.css(".demo1 .sticky-wrap .sticky-enabled thead tr th+th"));
+    	var titles=element.all(by.css(".demo1 .sticky-wrap .sticky-enabled thead tr th"));
 	    expect(titles.count()).toBe(6);
 	    var items=["日期","城市名","网页响应成功率","网页下载速率","网页响应时延","详情"];
 	    titles.each(function(item,index){
