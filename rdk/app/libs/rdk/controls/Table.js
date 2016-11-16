@@ -752,16 +752,23 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     //END INIT
 
                     function _fixTableHeader(){
+                        _beforeFixHeader();
                         $(element.find("table")).fixHeader();//wrapper->[sticky-wrap]->sticky-enabled->[sticky-thead]
-                        _handDragHandler();
+                        _afterFixHeader();
                         if(scope.floatableHeader) return;
                         $(element[0].querySelector('.sticky-thead')).remove();                        
                     }
 
-                    function _handDragHandler(){
-                        if($(element).has($('.sticky-wrap')).length == 2){
-                            $(element[0].querySelector('.sticky-enabled')).unwrap();//保证只有一层sticky-wrap
+                    function _beforeFixHeader(){
+                        if($(element).has($('.sticky-wrap')).length != 0){
+                             $(element[0].querySelector('.sticky-enabled')).unwrap();
                         }
+                        if($(element).has($('.sticky-thead')).length != 0){
+                            $(element[0].querySelector('.sticky-thead')).remove();
+                        }
+                    }
+
+                    function _afterFixHeader(){
                         if(scope.setting && scope.setting.scrollX) {
                             var handDragElement = element[0].querySelector(".sticky-wrap");//拖动产生在这层
                             $(handDragElement).addClass("sticky-wrap-overflow"); 
