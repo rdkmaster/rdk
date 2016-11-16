@@ -15,8 +15,9 @@ import jxl.Workbook;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.Label;
-import jxl.write.WriteException;
-import jxl.write.biff.RowsExceededException;
+import org.json.JSONObject;
+import org.json.XML;
+
 
 /**
  * Created by 10045812 on 16-5-6.
@@ -27,6 +28,47 @@ public class FileHelper extends AbstractAppLoggable {
         logger = AppLogger.getLogger("FileHelper", appName);
     }
 
+    public String readXml(String path){
+       BufferedReader in=null;
+        try{
+            in=new BufferedReader(new FileReader(path));
+        }catch(Exception e){
+            logger.error("create BufferedReader error,"+e);
+        }
+        String s;
+        StringBuilder sb=new StringBuilder();
+        try{
+            while((s=in.readLine())!=null){
+                sb.append(s);
+            }
+        }catch(Exception e){
+            logger.error("read stream error,"+e);
+        }
+
+        try{
+            in.close();
+        }catch (Exception e){
+            logger.error("close stream error,"+e);
+        }
+
+        JSONObject jsonObj =null;
+        try{
+            jsonObj=XML.toJSONObject(sb.toString());
+        }catch(Exception e){
+            logger.error("transform json object error,"+e);
+        }
+
+        String result="";
+        try{
+            result=jsonObj.toString();
+        }catch(Exception e){
+            logger.error("toString error,"+e);
+        }
+
+        return result;
+
+
+    }
     public Properties loadProperty(String fileStr){
         Properties props = new Properties();
         FileInputStream finStream= null;
