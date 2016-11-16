@@ -2,6 +2,7 @@ package com.zte.vmax.rdk.util
 
 
 import java.io.{File, FilenameFilter}
+import java.lang.reflect.Method
 import java.nio.file._
 import java.nio.file.attribute.BasicFileAttributes
 import java.util.UUID
@@ -11,9 +12,9 @@ import com.google.gson.{Gson, GsonBuilder}
 import com.typesafe.config.{Config=>TypeSafeConfig}
 import com.zte.vmax.activemq.rdk.RDKActiveMQ
 import com.zte.vmax.rdk.RdkServer
-import com.zte.vmax.rdk.actor.Messages.{MQ_Message, NoneContext, RDKContext, ServiceRequest}
+import com.zte.vmax.rdk.actor.Messages._
+import com.zte.vmax.rdk.cache.CacheHelper
 import com.zte.vmax.rdk.config.Config
-import com.zte.vmax.rdk.db.GbaseOptimizer
 import com.zte.vmax.rdk.defaults.RequestMethod
 import com.zte.vmax.rdk.env.Runtime
 import com.zte.vmax.rdk.jsr.FileHelper
@@ -28,10 +29,6 @@ import scala.util.Try
   * Created by 10054860 on 2016/7/15.
   */
 object RdkUtil extends Logger {
-
-
-  private lazy val usingStandardSQL: Boolean = Config.getBool("database.StandardSQL.on", false)
-  private lazy val strictMode: Boolean = Config.getBool("database.StandardSQL.strict", false)
 
   /**
     * 获取真实的app名称
@@ -212,30 +209,31 @@ object RdkUtil extends Logger {
     pathLst
   }
 
-
   /**
     * 获取标准sql
     */
-  def getStandardSql(sql: String): Option[String] = {
-    usingStandardSQL match {
-      case true =>
+  def getVSql(dbSession: DBSession, sql: String): Option[String] = {
+
+    dbSession.opDataSource.map(dsName => {
+      val VSqlProcessorKey = "#_#VSqlProcessor#_#"
+
+      CacheHelper.getAppCache(dbSession.appName).get(VSqlProcessorKey + dsName, None) match {
+        case None => sql
+        case method: Method =>
         try {
-          Some(GbaseOptimizer.optimizeSql(sql))
+            method.invoke(null, sql).asInstanceOf[String]
         } catch {
-          case e: Exception => {
-            logger.warn("optimize sql error", e)
-            strictMode match {
-              case true =>
-                logger.warn("sql not standard, return null in strictMode, sql=" + sql)
-                None
-              case false => Some(sql)
+            case e: Exception =>
+              logger.error(s"toVsql failed: $sql")
+              sql
             }
+        case _ =>sql
           }
         }
-      case false => Some(sql)
+    )
+
     }
 
-  }
 
   /**
     * 安全关闭对象
