@@ -457,6 +457,32 @@ var Mapper = {
 }
 
 var Data = {
+    //标准sql处理器标识
+    VSqlProcessorKey: "#_#VSqlProcessor#_#",
+    /**
+     * 注册vsql处理器
+     * @param dsName 数据源名
+     * @param jar   jar文件路径(可以是目录，也可以是文件名)
+     * @param className 处理类
+     * @param methodName 处理方法（java static方法，或Scala 单例对象方法）
+     */
+    registerVSqlProcessor: function (dsName, jar, className, methodName) {
+        var classDef = JVM.load_class(jar, className);
+        if (classDef != undefined) {
+            var methodCall = classDef.getMethod(methodName, java.String.class);
+            var fixDsName = dsName;
+            if(dsName.indexOf("db.") != 0){
+                fixDsName = "db." + dsName;
+            }
+            Cache.put(Data.VSqlProcessorKey+fixDsName, methodCall);
+            Log.info("registerVSqlProcessor for " + fixDsName);
+        } else {
+            Log.error('Failed to load ' + jar + ":" + className);
+        }
+
+    },
+
+    //数据源选择器标识
     DataSourceSelector:"#_#DataSourceSelector#_#",
 
     //设置数据源选择器
