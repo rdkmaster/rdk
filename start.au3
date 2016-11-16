@@ -98,7 +98,7 @@ GuiCtrlSetFont(-1, 9, $FW_NORMAL, $GUI_FONTUNDER)
 GuiCtrlSetColor(-1, 0x0000ff)
 GuiCtrlSetCursor(-1, 0)
 
-GUICtrlCreateLabel('○ 我有 Bug', 24, 170)
+GUICtrlCreateLabel('○ 报告 Bug', 24, 170)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
 Global $lbBug = GUICtrlCreateLabel ('http://gitlab.zte.com.cn/10045812/rdk/issues/new', 96, 169)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
