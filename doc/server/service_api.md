@@ -104,20 +104,21 @@ RDK提供了一组记录日志的函数，它们有共同的定义：
 
 定义：
 
-	function from_sql(sql, keyField, valueField, defaultValue);
+	function from_sql(sql, keyField, valueField, maxLine,defaultValue);
 
 参数：
 
 - sql 一个用来查询数据库的sql串。必选。
 - keyField 一个字符串，必选，对应构造映射键的列名。
 - valueField 一个字符串，必选，对应构造映射值的列名。
+- maxLine 查询数据返回的最大记录数，数值型，可选，默认为4000。  
 - defaultValue 一个整数/字符串/布尔。可选，默认值是key本身，即默认返回key值。
 
 返回：一个**转换函数**，这个转换函数的作用是返回某个值在根据前三个参数构造而成的jsObject中的映射。
 
 示例：假设需要查询数据库，根据dim_ne表的neid,name列生成一组映射，并根据此映射来构造一个转换函数以便给定一个neid值时方便的得到其对应的name值：
 
-	  var tranformFunction = Mapper.from_sql("select * from dim_ne;",'neid','name',"unknown");
+	  var tranformFunction = Mapper.from_sql("select * from dim_ne;",'neid','name',4000,"unknown");
       tranformFunction("30");//表dim_ne中neid=30对应的name值
       
 
