@@ -195,13 +195,13 @@ object RdkUtil extends Logger {
       val scriptFixSepartor=script.replaceAllLiterally("\\", "/")
       val request = ServiceRequest(ctx = NoneContext, scriptFixSepartor.substring(scriptFixSepartor.indexOf("/app/")+1),
         app = null, param = null, method = "init", timeStamp = System.currentTimeMillis())
-      implicit val timeout:Timeout=Timeout(ServiceConfig.requestTimeout second)
+      implicit val timeout:Timeout=Timeout(ServiceConfig.initTimeout second)
         Future {
           val future=RdkServer.appRouter ? request
-          Await.result(future,ServiceConfig.requestTimeout second)
+          Await.result(future,ServiceConfig.initTimeout second)
         }(ec)
       })
-    Await.result(Future.sequence(result), ServiceConfig.requestTimeout second)
+    Await.result(Future.sequence(result), ServiceConfig.initTimeout second)
   }
 
   def forEachDir(path: Path): List[String] = {
