@@ -28,25 +28,51 @@ public class FileHelper extends AbstractAppLoggable {
         logger = AppLogger.getLogger("FileHelper", appName);
     }
 
-    public String readXml(String path) throws Exception{
+    public Object readXml(String path) {
 
         path = fixPath(path, appName);
 
-        BufferedReader in = new BufferedReader(new FileReader(path));
-
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new FileReader(path));
+        } catch (Exception e) {
+            logger.error("create BufferedReader error," + e);
+            return Undefined.getUndefined();
+        }
         String s;
-
         StringBuilder sb = new StringBuilder();
-
-        while ((s = in.readLine()) != null) {
-            sb.append(s);
+        try {
+            while ((s = in.readLine()) != null) {
+                sb.append(s);
+            }
+        } catch (Exception e) {
+            logger.error("read stream error," + e);
+            return Undefined.getUndefined();
+        } finally {
+            try {
+                in.close();
+            } catch (Exception e) {
+                logger.error("close stream error," + e);
+            }
         }
 
-        in.close();
+        JSONObject jsonObj = null;
+        try {
+            jsonObj = XML.toJSONObject(sb.toString());
+        } catch (Exception e) {
+            logger.error("transform json object error," + e);
+            return Undefined.getUndefined();
+        }
 
-        JSONObject jsonObj = XML.toJSONObject(sb.toString());
+        String result = "";
+        try {
+            result = jsonObj.toString();
+        } catch (Exception e) {
+            logger.error("toString error," + e);
+            return Undefined.getUndefined();
+        }
 
-        return jsonObj.toString();
+        return result;
     }
 
     public Properties loadProperty(String fileStr) {
