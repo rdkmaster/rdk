@@ -28,49 +28,68 @@ public class FileHelper extends AbstractAppLoggable {
         logger = AppLogger.getLogger("FileHelper", appName);
     }
 
-    public String readXml(String path) {
+//    public String readXml(String path) {
+//
+//        path = fixPath(path, appName);
+//
+//        BufferedReader in = null;
+//        try {
+//            in = new BufferedReader(new FileReader(path));
+//        } catch (Exception e) {
+//            logger.error("create BufferedReader error," + e);
+//        }
+//        String s;
+//        StringBuilder sb = new StringBuilder();
+//        try {
+//            while ((s = in.readLine()) != null) {
+//                sb.append(s);
+//            }
+//        } catch (Exception e) {
+//            logger.error("read stream error," + e);
+//        }
+//
+//        try {
+//            in.close();
+//        } catch (Exception e) {
+//            logger.error("close stream error," + e);
+//        }
+//
+//        JSONObject jsonObj = null;
+//        try {
+//            jsonObj = XML.toJSONObject(sb.toString());
+//        } catch (Exception e) {
+//            logger.error("transform json object error," + e);
+//        }
+//
+//        String result = "";
+//        try {
+//            result = jsonObj.toString();
+//        } catch (Exception e) {
+//            logger.error("toString error," + e);
+//        }
+//
+//        return result;
+//    }
+
+    public String readXml(String path) throws Exception{
 
         path = fixPath(path, appName);
 
-        BufferedReader in = null;
-        try {
-            in = new BufferedReader(new FileReader(path));
-        } catch (Exception e) {
-            logger.error("create BufferedReader error," + e);
-        }
+        BufferedReader in = new BufferedReader(new FileReader(path));
+
         String s;
+
         StringBuilder sb = new StringBuilder();
-        try {
-            while ((s = in.readLine()) != null) {
-                sb.append(s);
-            }
-        } catch (Exception e) {
-            logger.error("read stream error," + e);
+
+        while ((s = in.readLine()) != null) {
+            sb.append(s);
         }
 
-        try {
-            in.close();
-        } catch (Exception e) {
-            logger.error("close stream error," + e);
-        }
+        in.close();
 
-        JSONObject jsonObj = null;
-        try {
-            jsonObj = XML.toJSONObject(sb.toString());
-        } catch (Exception e) {
-            logger.error("transform json object error," + e);
-        }
+        JSONObject jsonObj = XML.toJSONObject(sb.toString());
 
-        String result = "";
-        try {
-            result = jsonObj.toString();
-        } catch (Exception e) {
-            logger.error("toString error," + e);
-        }
-
-        return result;
-
-
+        return jsonObj.toString();
     }
 
     public Properties loadProperty(String fileStr) {

@@ -244,11 +244,18 @@ var file = {
     readXml:function(path){
         if (!path) {
             log("invalid file path:", path);
-            return false;
+            return undefined;
         }
         path = path.toString();
         log("reading xml file:",path);
-        return JSON.parse(rdk_runtime.fileHelper().readXml(path));
+        var res;
+        try{
+            res=rdk_runtime.fileHelper().readXml(path)
+        }catch(ex){
+            Log.error(ex);
+            return undefined;
+        }
+        return JSON.parse(res);
     },
     save: function (file, content, append, encoding) {
         if (!file) {
