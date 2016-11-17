@@ -37,8 +37,7 @@ var java = {
     StringMap: Java.type('com.google.gson.internal.StringMap'),
 
     FileHelper: Java.type('com.zte.vmax.rdk.jsr.FileHelper'),
-    RegFileFilter: Java.type('com.zte.vmax.rdk.util.RegFileFilter'),
-    Undefined:Java.type('jdk.nashorn.internal.runtime.Undefined')
+    RegFileFilter: Java.type('com.zte.vmax.rdk.util.RegFileFilter')
 
 };
 
@@ -250,7 +249,7 @@ var file = {
         path = path.toString();
         log("reading xml file:", path);
         var result = rdk_runtime.fileHelper().readXml(path);
-        if (result instanceof java.Undefined) {
+        if (!result) {
             return undefined;
         }
         return JSON.parse(result);

@@ -28,7 +28,7 @@ public class FileHelper extends AbstractAppLoggable {
         logger = AppLogger.getLogger("FileHelper", appName);
     }
 
-    public Object readXml(String path) {
+    public String readXml(String path) {
 
         path = fixPath(path, appName);
 
@@ -37,7 +37,7 @@ public class FileHelper extends AbstractAppLoggable {
             in = new BufferedReader(new FileReader(path));
         } catch (Exception e) {
             logger.error("create BufferedReader error," + e);
-            return Undefined.getUndefined();
+            return "";
         }
         String s;
         StringBuilder sb = new StringBuilder();
@@ -47,7 +47,7 @@ public class FileHelper extends AbstractAppLoggable {
             }
         } catch (Exception e) {
             logger.error("read stream error," + e);
-            return Undefined.getUndefined();
+            return "";
         } finally {
             try {
                 in.close();
@@ -61,18 +61,16 @@ public class FileHelper extends AbstractAppLoggable {
             jsonObj = XML.toJSONObject(sb.toString());
         } catch (Exception e) {
             logger.error("transform json object error," + e);
-            return Undefined.getUndefined();
+            return "";
         }
 
-        String result = "";
+
         try {
-            result = jsonObj.toString();
+            return jsonObj.toString();
         } catch (Exception e) {
             logger.error("toString error," + e);
-            return Undefined.getUndefined();
+            return "";
         }
-
-        return result;
     }
 
     public Properties loadProperty(String fileStr) {
