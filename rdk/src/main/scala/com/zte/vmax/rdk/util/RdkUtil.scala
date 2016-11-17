@@ -208,7 +208,7 @@ object RdkUtil extends Logger {
       logger.info("*" * 20 + s"rdk init complete" + "*" * 20)
     } catch {
       case ex: java.util.concurrent.TimeoutException => logger.warn("init timeout!" + ex)
-      case x: Exception => logger.warn("unexpected exception happen:" + x)
+      case x: Exception => logger.warn("unexpected exception:" + x)
     }
 
   }
