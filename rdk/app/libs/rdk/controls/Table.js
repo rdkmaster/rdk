@@ -725,8 +725,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         scope.refreshTotal4Single = function(){
                             var isChecked = _isAllChecked();
                             scope.allChecked = isChecked;//双绑没生效，后面用dom找
-                            _resetTotalCheckStatus(isChecked);
-                            _resetFixHeadCheckStatus(isChecked);
+                            _resetTotalCheckedDom(isChecked);
                         }
 
                         var off = scope.$on('ngRepeatFinished', function(event) {
@@ -773,10 +772,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             var handDragElement = element[0].querySelector(".sticky-wrap");//拖动产生在这层
                             $(handDragElement).addClass("sticky-wrap-overflow"); 
                         }
+                        $compile($(element[0].querySelector('.sticky-thead th:first-child')))(scope);
                     }
 
                     function _refreshCurrentSingleChecked(isChecked){
-                        _resetFixHeadCheckStatus(isChecked);
+                        _resetTotalCheckedDom(isChecked);
                         angular.forEach(scope.currentPageData, function(rowData){
                             rowData.checked = isChecked;
                         })
@@ -809,6 +809,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 'searchAll': 'Search all fields'
                             };
                         };
+                    }
+
+                    function _resetTotalCheckedDom(isChecked){
+                        _resetTotalCheckStatus(isChecked);
+                        _resetFixHeadCheckStatus(isChecked);
                     }
 
                     function refreshTableI18n() {
