@@ -34,7 +34,7 @@
     function main(scope, DataSourceService, EventService) {
         //应用内部初始化，一般不需要修改，也请保持这2行代码在main函数的最开始
         ctx.i18n.$init(scope);
-        ctx.helpers.initDataSourceService(DataSourceService);
+        ctx.helper.initDataSourceService(DataSourceService);
 
         //=================== 在这里开始写本应用的第一行代码 ========================
 
@@ -63,7 +63,7 @@
     //==========================================================================
     
     downloadDependency.push('blockUI');
-    downloadDependency.push({ url: '/rdk/app/modules/rdk_app_helpers.js', alias: 'helpers' });
+    downloadDependency.push({ url: 'helper', alias: 'helper' });
     define(/*fix-from*/application.getDownloads(downloadDependency)/*fix-to*/, start);
     function start() {
         application.initContext(ctx, arguments, downloadDependency);
