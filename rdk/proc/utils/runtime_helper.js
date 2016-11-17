@@ -432,10 +432,10 @@ var Mapper = {
     },
 
     //from sql or dataTable 可合并
-    from_sql: function (sql, keyName, valueName,defaultValue) {
+    from_sql: function (sql, keyName, valueName, defaultValue) {
         return Mapper.from_object(Mapper.mkMap(sql, keyName, valueName), defaultValue);
     },
-    from_datatable: function (dataTable, keyName, valueName,defaultValue) {
+    from_datatable: function (dataTable, keyName, valueName, defaultValue) {
         return Mapper.from_object(Mapper.mkMap(dataTable, keyName, valueName), defaultValue);
     },
     mkMap: function (param, keyName, valueName) {
