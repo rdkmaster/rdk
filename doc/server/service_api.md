@@ -1,4 +1,4 @@
-﻿<rdk_title>后端服务API</rdk_title>
+<rdk_title>后端服务API</rdk_title>
 
 
 ## 集合/数组/对象的常用功能集 ##
