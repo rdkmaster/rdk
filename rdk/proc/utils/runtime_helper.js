@@ -432,19 +432,16 @@ var Mapper = {
     },
 
     //from sql or dataTable 可合并
-    from_sql: function (sql, keyName, valueName,maxLine,defaultValue) {
-        if(!_.isDefined(maxLine)){
-            maxLine=4000;
-        }
-        return Mapper.from_object(Mapper.mkMap(sql, keyName, valueName,maxLine), defaultValue);
+    from_sql: function (sql, keyName, valueName,defaultValue) {
+        return Mapper.from_object(Mapper.mkMap(sql, keyName, valueName), defaultValue);
     },
     from_datatable: function (dataTable, keyName, valueName,defaultValue) {
-        return Mapper.from_object(Mapper.mkMap(dataTable, keyName, valueName,-1), defaultValue);
+        return Mapper.from_object(Mapper.mkMap(dataTable, keyName, valueName), defaultValue);
     },
-    mkMap: function (param, keyName, valueName,maxLine) {
+    mkMap: function (param, keyName, valueName) {
         var map = {};
         if (_.isString(param)) {
-            param = Data.fetch(param, maxLine);
+            param = Data.fetch(param,20000);
         }
 
         var data = param.data;

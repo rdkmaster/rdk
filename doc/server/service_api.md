@@ -104,25 +104,28 @@ RDK提供了一组记录日志的函数，它们有共同的定义：
 
 定义：
 
-	function from_sql(sql, keyField, valueField, maxLine,defaultValue);
+	function from_sql(sql, keyField, valueField ,defaultValue);
 
 参数：
 
 - sql 一个用来查询数据库的sql串。必选。
 - keyField 一个字符串，必选，对应构造映射键的列名。
-- valueField 一个字符串，必选，对应构造映射值的列名。
-- maxLine 查询数据返回的最大记录数，数值型，可选，默认为4000。  
+- valueField 一个字符串，必选，对应构造映射值的列名。 
 - defaultValue 一个整数/字符串/布尔。可选，默认值是key本身，即默认返回key值。
 
 返回：一个**转换函数**，这个转换函数的作用是返回某个值在根据前三个参数构造而成的jsObject中的映射。
 
 示例：假设需要查询数据库，根据dim_ne表的neid,name列生成一组映射，并根据此映射来构造一个转换函数以便给定一个neid值时方便的得到其对应的name值：
 
-	  var tranformFunction = Mapper.from_sql("select * from dim_ne;",'neid','name',4000,"unknown");
+	  var tranformFunction = Mapper.from_sql("select * from dim_ne;",'neid','name',"unknown");
       tranformFunction("30");//表dim_ne中neid=30对应的name值
       
+说明：**注意，该函数只限制查询20000条记录，若应用需要更大数量的查询，可将[fetch函数](#fetch)和[Mapper.from_datatable 函数](#from_datatable)结合使用：**
 
-#### `Mapper.from_datatable()` ####
+      var regionData = Data.fetch("select distinct region_id,region from ts_cell", 300000);//先调用fetch函数并设置你想要的查询最大记录数
+      Mapper.from_datatable(regionData, 'region_id', 'region'); //再调用Mapper.from_datatable 函数即可                          
+
+#### `Mapper.from_datatable()` {#from_datatable}####
 
 
 该函数可以构造一个基于[DataTable](#dataTable)并完成映射获取的处理函数。
@@ -418,7 +421,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 
    		
-#### `Data.fetch()` ####
+#### `Data.fetch()` {#fetch}####
 
 该函数提供了简便的可查询数据库数据的方法。
 
