@@ -8,6 +8,8 @@ import java.nio.file.attribute.BasicFileAttributes
 import java.util.UUID
 import java.util.regex.{Matcher, Pattern}
 
+import akka.util.Timeout
+import scala.concurrent.duration._
 import com.google.gson.{Gson, GsonBuilder}
 import com.typesafe.config.{Config=>TypeSafeConfig}
 import com.zte.vmax.activemq.rdk.RDKActiveMQ
@@ -15,16 +17,18 @@ import com.zte.vmax.rdk.RdkServer
 import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.cache.CacheHelper
 import com.zte.vmax.rdk.config.Config
-import com.zte.vmax.rdk.defaults.RequestMethod
+import com.zte.vmax.rdk.defaults.{Misc, RequestMethod}
 import com.zte.vmax.rdk.env.Runtime
 import com.zte.vmax.rdk.jsr.FileHelper
+import com.zte.vmax.rdk.service.ServiceConfig
 import jdk.nashorn.api.scripting.ScriptObjectMirror
 import jdk.nashorn.internal.runtime.Undefined
 import spray.http.{IllegalRequestException, StatusCodes}
 
+import scala.concurrent.{Future, Await}
 import scala.reflect.ClassTag
 import scala.util.Try
-
+import akka.pattern.ask
 /**
   * Created by 10054860 on 2016/7/15.
   */
@@ -184,12 +188,20 @@ object RdkUtil extends Logger {
     */
   def initApplications: Unit = {
     val initScripts: List[String] = forEachDir(Paths.get("app"))
-    initScripts.foreach(script => {
+
+    implicit val ec = RdkServer.system.dispatchers.lookup(Misc.routeDispatcher)
+
+    val result =initScripts.map(script => {
       val scriptFixSepartor=script.replaceAllLiterally("\\", "/")
       val request = ServiceRequest(ctx = NoneContext, scriptFixSepartor.substring(scriptFixSepartor.indexOf("/app/")+1),
         app = null, param = null, method = "init", timeStamp = System.currentTimeMillis())
-      RdkServer.appRouter ! request
-    })
+      implicit val timeout:Timeout=Timeout(ServiceConfig.requestTimeout second)
+        Future {
+          val future=RdkServer.appRouter ? request
+          Await.result(future,ServiceConfig.requestTimeout second)
+        }(ec)
+      })
+    Await.result(Future.sequence(result), ServiceConfig.requestTimeout second)
   }
 
   def forEachDir(path: Path): List[String] = {
