@@ -30,6 +30,7 @@
     border:0;
     box-shadow:inset 0 0 0 rgba(0,0,0,0.075);
     -webkit-box-shadow:inset 0 0 0 rgba(0,0,0,0.075);
+    font-family: inherit;
 }
 
 .rdk-time-module input {
