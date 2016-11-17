@@ -16,6 +16,7 @@ require.config({
         "codemirror-mode": "../codemirror/mode/javascript",
 
         "ztree": "../ztree/jquery.ztree.all-3.5",
+        "ztree-exhide": "../ztree/jquery.ztree.exhide-3.5.min",
         "echarts": "../echarts/echarts3.min",
         "echarts3": "../echarts/echarts3.min",
         "jquery": "../jquery/jquery-1.11.3.min",
@@ -138,6 +139,10 @@ require.config({
             exports: "jquery-freezeheader"
        },
         "ztree": {
+            deps: ['css!../ztree/css/zTreeStyle/zTreeStyle'],
+            exports: "ztree",
+        },
+        "ztree-exhide": {
             deps: ['css!../ztree/css/zTreeStyle/zTreeStyle'],
             exports: "ztree",
         },
