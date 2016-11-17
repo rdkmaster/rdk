@@ -8,9 +8,9 @@
     findNestedDependencies : true,
     separateCSS: true,
     paths: {
-        base: 'd:\\Codes\\rdk\\rdk\\app\\example\\web\\',
-        helper: 'd:\\Codes\\rdk\\rdk\\app\\modules\\rdk_app_helpers',
-        main: 'd:\\Codes\\rdk\\rdk\\app\\example\\web\\scripts\\main'
+        base: 'd:\\Code\\rdk\\rdk\\app\\example\\web\\',
+        helper: 'd:\\Code\\rdk\\rdk\\app\\modules\\rdk_app_helpers',
+        main: 'd:\\Code\\rdk\\rdk\\app\\example\\web\\scripts\\main'
     },
     uglify2: {
         //Example of a specialized config. If you are fine

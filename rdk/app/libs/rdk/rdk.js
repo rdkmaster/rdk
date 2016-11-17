@@ -1,5 +1,4 @@
-rdk = (function() {
-
+define(["application", "mainconfig"], function() {
     var bodyHTML = undefined;
     var hasReady = false;
 
@@ -46,7 +45,7 @@ rdk = (function() {
             return;
         }
 
-		window.onload = undefined;
+        window.onload = undefined;
         if (hasReady) {
             return;
         }
@@ -84,46 +83,6 @@ rdk = (function() {
         }
     }
 
-    function _start() {
-        try {
-            (window || document);
-        } catch(e) {
-            console.error('not in browser, i will not continue!!');
-            return;
-        }
-        _setupLoading();
-
-        /*
-         * 初始化应用入口
-         */
-        var appScript;
-        for (var i = 0; i < document.scripts.length; i++) {
-            var s = document.scripts[i];
-            var src = s.getAttribute('src');
-            if (src && src.match(/libs\/requirejs\/require.js$/)) {
-                appScript = s.getAttribute('rdk-app');
-            }
-        };
-        if (appScript) {
-            appScript = application.base + '/' + appScript;
-            require.config({
-                paths: {
-                    "base": application.base,
-                    "main": appScript
-                }
-            });
-            console.log('starting rdk app from "' + appScript + '" ...');
-        }
-
-        require(["mainconfig", "application"], function() {
-            require(["jquery", "angular"] , function() {
-                console.log('IMPORTANT: rdk_app created!');
-                rdk.$ngModule = angular.module("rdk_app", []);
-                require(["main"], _onSuccess, _onError);
-            })
-        });
-    }
-
     function _mergePaths(paths) {
         if (!paths) {
             return paths;
@@ -157,11 +116,41 @@ rdk = (function() {
         });
     }
 
-    return {
-        $start: _start,
-        $mergePaths: _mergePaths,
-        $injectDependency: _injectDependency,
-        $ngModule: undefined, //在 _start() 中初始化
+    function _start() {
+        /*
+         * 初始化应用入口
+         */
+        var appScript;
+        for (var i = 0; i < document.scripts.length; i++) {
+            var s = document.scripts[i];
+            var src = s.getAttribute('src');
+            if (src && src.match(/libs\/requirejs\/require.js$/)) {
+                appScript = s.getAttribute('rdk-app');
+            }
+        };
+        if (appScript) {
+            appScript = application.base + '/' + appScript;
+            require.config({
+                paths: {
+                    "base": application.base,
+                    "main": appScript
+                }
+            });
+            console.log('starting rdk app from "' + appScript + '" ...');
+        }
+
+        console.log('IMPORTANT: rdk_app created!');
+        rdk.$ngModule = angular.module("rdk_app", []);
+        require(["main"], _onSuccess, _onError);
     }
-})();
-rdk.$start();
+
+    _setupLoading();
+    require(['angular', 'jquery'], _start);
+
+    window.rdk = {};
+    window.rdk.$start = _start;
+    window.rdk.$mergePaths = _mergePaths;
+    window.rdk.$injectDependency = _injectDependency;
+    //在 _start() 中初始化
+    window.rdk.$ngModule = undefined;
+});

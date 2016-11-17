@@ -1,13 +1,7 @@
-// require.config({
-//     paths: {
-//         helper: '/rdk/app/modules/rdk_app_helpers'
-//     }
-// });
-
 require.config({
     //下载依赖超时时间，0为不超时
     waitSeconds: 30,
-    paths: ({
+    paths: {
         "angular": "../../libs/angular/angular",
         "angualr-translate": "../../libs/angular/angular-translate.min",
         "angular-translate-static": "../../libs/angular/angular-translate-loader-static-files.min",
@@ -102,7 +96,7 @@ require.config({
         "rd.styles.Time": "../../libs/rdk/controls/assets/rdk-time-style",
 
         "rd.modules.i18n": "../../libs/rdk/modules/I18nModule",
-    }),
+    },
     //这个配置是你在引入依赖的时候的包名
     shim: {
         "angular": {
@@ -173,8 +167,8 @@ require.config({
     },
     map: {
         '*': {
-            'css': 'requirejs/requirecss/css',
-            'rest': 'requirejs/requirerest/rest',
+            'css': 'requirejs-plugins/requirecss/css',
+            'rest': 'requirejs-plugins/requirerest/rest',
         }
     }
 });

@@ -62,6 +62,7 @@
     //                   从这里开始的代码请不要随意修改
     //==========================================================================
     
+    require.config({paths:{helper: '/rdk/app/modules/rdk_app_helpers'}});
     downloadDependency.push('blockUI');
     downloadDependency.push({ url: 'helper', alias: 'helper' });
     define(/*fix-from*/application.getDownloads(downloadDependency)/*fix-to*/, start);

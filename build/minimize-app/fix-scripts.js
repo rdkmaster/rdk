@@ -17,7 +17,7 @@ global.location = {
 }
 
 //引入rdk的基础定义
-require(__dirname + '/../../rdk/app/libs/rdk/rdk.js');
+require(__dirname + '/../../rdk/app/libs/rdk/application.js');
 
 console.log("listing %s", rootPath);
 var scripts = listScripts(rootPath);
