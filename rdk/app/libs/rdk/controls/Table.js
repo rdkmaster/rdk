@@ -22,8 +22,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 <th ng-if="addCheckBox"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck($event)"></th>\
                                 <th ng-repeat="columnDef in columnDefs" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)">\
                                     {{columnDef.title}}\
-                                    <i ng-if="columnDef.sortable && !columnDef.hasSort" class="rdk-table-icon rdk-table-sort"></i>\
-                                    <i ng-if="columnDef.sortable && columnDef.hasSort" class="rdk-table-icon" ng-class="{true:\'rdk-table-sort-down\',false:\'rdk-table-sort-up\'}[columnDef.sortIconStatus]"></i>\
+                                    <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
+                                    <i ng-if="columnDef.sortable && curSortCol($index)" class="rdk-table-icon" ng-class="{true:\'rdk-table-sort-down\',false:\'rdk-table-sort-up\'}[columnDef.sortIconStatus]"></i>\
                                 </th>\
                             </tr>\
                         </thead>\
@@ -635,10 +635,17 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             }
                         };
 
+                        var curSortIndex;
                         scope.sortHandler = function(iCol, columnDef) {
                             if (!columnDef.sortable) return;
-                            columnDef.hasSort=true;
-                            columnDef.sortIconStatus=!columnDef.sortIconStatus;
+                            if(curSortIndex!==iCol){
+                                columnDef.sortIconStatus=false;
+
+                            }else{
+                                columnDef.sortIconStatus=!columnDef.sortIconStatus;
+                            }
+                            curSortIndex=iCol;
+
                             var table = $(element.find("table")).get(0);
 
                             if (scope.pagingType == "server") {
@@ -661,7 +668,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 table.sortCol = iCol;
                             }
                         };
-
+                        scope.curSortCol=function(index){
+                            return curSortIndex===index;
+                        };
                         scope.ifSelected = function(item) {
                             return item.$$hashKey == scope.selectedModel.$$hashKey;
                         };
