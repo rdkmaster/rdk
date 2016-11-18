@@ -30,6 +30,8 @@ return {
         itemWidth: 12,
         itemHeight: 12,
         selectedMode: false,
+        itemGap:20,
+        top: 20,
         textStyle: {
             color: '#434343',
             fontSize: 12,

@@ -29,6 +29,8 @@ return {
         left: 'center',
         itemWidth: 12,
         itemHeight: 12,
+        itemGap:20,
+        top: 20,
         selectedMode: false,
         textStyle: {
             color: '#434343',

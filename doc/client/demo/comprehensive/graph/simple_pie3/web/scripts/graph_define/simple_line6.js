@@ -29,6 +29,8 @@ return {
         left: 'center',
         itemWidth: 12,
         itemHeight: 12,
+        itemGap:20,
+        top: 20,
         selectedMode: false,
         textStyle: {
             color: '#434343',
@@ -65,9 +67,9 @@ return {
                     fontSize : 14,
                     fontWeight:'normal'
                 },
-                formatter : function (params){
-                    return  params.name+'\n'+params.value + '%'
-                }
+                // formatter : function (params){
+                //     return  params.name+'\n'+params.value + '%'
+                // }
             }
         },
         itemStyle: {
