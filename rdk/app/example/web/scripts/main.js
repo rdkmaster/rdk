@@ -14,7 +14,7 @@
         // css类型的文件需要加 css! 的前缀，url上不能加 .css 扩展名
         'css!base/css/style',
 
-        // 这类 rd. 开头的条目是RDK预定义好的控件路径别名
+        // 这类 rd. 开头的条目是RDK预定义好的控件url别名
         'rd.controls.Module'
     ];
 
