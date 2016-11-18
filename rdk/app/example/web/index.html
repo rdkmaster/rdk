@@ -7,9 +7,12 @@
 
     <title>RDK应用工程模板</title>
     
-    <!-- === RDK dependency start === -->
+    <!-- fix-from -->
+    <!--
+        这个区域中的代码将被替换掉，请不要在这里添加任何有用代码
+        fix-from 和 fix-to 是两个重要标志位，请勿改动
+    -->
 
-    <!-- 这个区域中的代码将被替换掉，请不要在这里添加任何有用代码 -->
     <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/loading.css">
     <script data-main="/rdk/app/libs/rdk/rdk.js" src="/rdk/app/libs/requirejs/require.js"
         rdk-app="scripts/main"></script>
@@ -20,7 +23,7 @@
     <script data-main="main.min" src="/rdk/app/libs/requirejs/require.min.js"></script>
     -->
 
-    <!-- ===  RDK dependency end  === -->
+    <!-- fix-to -->
 
 </head>
 
@@ -43,12 +46,21 @@
     
     <h3>演示调用REST服务</h3>
     <ul>
+        <!--
+            ds属性可以放在任意dom节点上，将它放在直接使用数据的节点是一个非常好的实践
+            ds更多用法，请参考各个控件的demo
+        -->
         <li ds="msgFromSvr" ng-bind="msgFromSvr" ds_url="$svr/my_service"
-        ds_query_if="ready" ds_init_data="{{i18n.wait}}"></li>
+            ds_query_if="ready" ds_init_data="{{i18n.wait}}"></li>
     </ul>
 
     <h3>演示国际化</h3>
     <ul>
+        <!--
+            i18n是一个全局属性（准确的说是根scope上的一个属性）
+            lang是i18n.js中任意定义的一个词条
+            lang.st() 是rdk在String的prototype上定义的一个函数
+        -->
         <li>{{i18n.lang.st(i18n.$locale)}}</li>
     </ul>
 
