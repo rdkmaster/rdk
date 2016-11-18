@@ -241,6 +241,19 @@ var file = {
         log("reading property file:",file);
         return rdk_runtime.fileHelper().loadProperty(file);
     },
+    readXml: function (path) {
+        if (!path) {
+            log("invalid file path:", path);
+            return undefined;
+        }
+        path = path.toString();
+        log("reading xml file:", path);
+        var result = rdk_runtime.fileHelper().readXml(path);
+        if (!result) {
+            return undefined;
+        }
+        return JSON.parse(result);
+    },
     save: function (file, content, append, encoding) {
         if (!file) {
             log("invalid file path:", file);
