@@ -1,5 +1,5 @@
 (function() {
-    //控制器名，非常重要，不要和已有的控制器重名
+    //这是本控制器的ID，非常重要，不要和已有的控制器重名
     var controllerName = 'SampleModuleController';
 
     //参考 main.js 中同名变量的说明
