@@ -1,9 +1,7 @@
 ({
-    //node -r D:\Code\rdk\build\minimize-app\mock.js /rdk/app/libs/requirejs/r.js -o options.js
-
     baseUrl:"../../libs/rdk/",
     name: "rdk",
-    out: "scripts/main.min.js",
+    out: "main.min.js",
     mainConfigFile : "../../libs/rdk/mainconfig.js",
     findNestedDependencies : true,
     separateCSS: true,
@@ -12,20 +10,19 @@
         helper: 'd:\\Code\\rdk\\rdk\\app\\modules\\rdk_app_helpers',
         main: 'd:\\Code\\rdk\\rdk\\app\\example\\web\\scripts\\main'
     },
-    uglify2: {
-        //Example of a specialized config. If you are fine
-        //with the default options, no need to specify
-        //any of these properties.
-        output: {
-            beautify: true
-        },
-        compress: {
-            sequences: false,
-            global_defs: {
-                DEBUG: false
-            }
-        },
-        warnings: true,
-        mangle: false
-    },
+
+    //放开这些注释，那将只合并文件而不压缩，可通过这个方法来调试合并后但未被压缩的代码
+    // uglify2: {
+    //     output: {
+    //         beautify: true
+    //     },
+    //     compress: {
+    //         sequences: false,
+    //         global_defs: {
+    //             DEBUG: false
+    //         }
+    //     },
+    //     warnings: true,
+    //     mangle: false
+    // },
 })

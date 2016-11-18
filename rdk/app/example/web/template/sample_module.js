@@ -1,5 +1,4 @@
-
-(function(application) {
+(function() {
     //控制器名，非常重要，不要和已有的控制器重名
     var controllerName = 'SampleModuleController';
 
@@ -40,4 +39,4 @@
         rdk.$injectDependency(application.getComponents(requiredComponents, downloadDependency));
         rdk.$ngModule.controller(controllerName, controllerDefination);
     }
-})(application);
+})();

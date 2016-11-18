@@ -7,7 +7,8 @@ if (!rootPath) {
     process.exit();
 }
 
-//模拟在浏览器中运行时的必要函数
+///////////////////////////////////////////////////////////////////
+//  模拟在浏览器中运行时的必要函数
 global.define = function(name, deps, callback) {
     deps = typeof name === 'string' ? deps : name;
     global.dependencyArray = deps;
@@ -15,9 +16,10 @@ global.define = function(name, deps, callback) {
 global.location = {
     pathname: '/rdk/app/example/web/index.html'
 }
-
-//引入rdk的基础定义
+//引入application的基础定义
 require(__dirname + '/../../rdk/app/libs/rdk/application.js');
+///////////////////////////////////////////////////////////////////
+
 
 console.log("listing %s", rootPath);
 var scripts = listScripts(rootPath);

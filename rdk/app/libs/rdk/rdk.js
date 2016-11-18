@@ -145,7 +145,16 @@ define(["application", "mainconfig"], function() {
     }
 
     _setupLoading();
-    require(['angular', 'jquery'], _start);
+
+    //为了避免在非压缩环境下重复下载 loading.css 而玩的一个小技巧。
+    //实际上r.js直接无视这个if，也就是说r.js在执行时，这两个require都会被扫描到并执行
+    //同时r.js会无视重复的依赖，所以最终效果就是 'angular', 'jquery', 'css!../rdk/css/loading'
+    //这3个依赖都会被r.js找到，从而达到在压缩环境下有loading，非压缩环境下无loading的目的
+    if (window.hasOwnProperty('angular')) {
+        require(['angular', 'jquery', 'css!../rdk/css/loading'], _start);
+    } else {
+        require(['angular', 'jquery'], _start);
+    }
 
     window.rdk = {};
     window.rdk.$start = _start;
@@ -154,3 +163,8 @@ define(["application", "mainconfig"], function() {
     //在 _start() 中初始化
     window.rdk.$ngModule = undefined;
 });
+
+//由于js文件被压缩后， angular 会很快被定义
+//而js在未被压缩时， angular 要在rdk.js被下载之后才定义
+//因此通过这个方式来判定当前是否是在压缩环境
+window.hasOwnProperty('angular') && require(['rdk']);
