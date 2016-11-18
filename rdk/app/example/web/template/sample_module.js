@@ -4,6 +4,7 @@
 
     //参考 main.js 中同名变量的说明
     var downloadDependency = [
+        'css!base/template/css/sample_module',
         { url: 'base/scripts/utils', alias: 'utils' },
         'rd.controls.Button',
     ];
