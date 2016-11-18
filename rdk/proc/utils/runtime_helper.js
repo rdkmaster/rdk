@@ -441,7 +441,7 @@ var Mapper = {
     mkMap: function (param, keyName, valueName) {
         var map = {};
         if (_.isString(param)) {
-            param = Data.fetch(param, 4000);
+            param = Data.fetch(param, 20000);
         }
 
         var data = param.data;

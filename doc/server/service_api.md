@@ -1,3 +1,4 @@
+
 <rdk_title>后端服务API</rdk_title>
 
 
@@ -120,8 +121,12 @@ RDK提供了一组记录日志的函数，它们有共同的定义：
 	  var tranformFunction = Mapper.from_sql("select * from dim_ne;",'neid','name',"unknown");
       tranformFunction("30");//表dim_ne中neid=30对应的name值
       
+说明：**注意，该函数只限制查询20000条记录，若应用需要更大数量的查询，可将[fetch函数](#fetch)和[Mapper.from_datatable 函数](#from_datatable)结合使用：**
 
-#### `Mapper.from_datatable()` ####
+      var regionData = Data.fetch("select distinct region_id,region from ts_cell", 300000);//先调用fetch函数并设置你想要的查询最大记录数
+      Mapper.from_datatable(regionData, 'region_id', 'region'); //再调用Mapper.from_datatable 函数即可                          
+
+#### `Mapper.from_datatable()` {#from_datatable}####
 
 
 该函数可以构造一个基于[DataTable](#dataTable)并完成映射获取的处理函数。
@@ -417,7 +422,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 
    		
-#### `Data.fetch()` ####
+#### `Data.fetch()` {#fetch}####
 
 该函数提供了简便的可查询数据库数据的方法。
 
@@ -762,5 +767,4 @@ Java返回数据给JS，原则也是尽量只返回简单类型。当然也可�
 
 
 ## COMMON包相关 ##
-
 [单击这里](common.md)
