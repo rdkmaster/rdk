@@ -1,0 +1,10 @@
+
+{
+    "rowDescriptor": "",
+    "header":["Item11","Item12","Item13","Item14"],
+    "data": [
+       {"value":20, "name":"方程问题","number":0},
+        {"value":20, "name":"过来问题","number":1},
+        {"value":18, "name":"来了去了问题","number":2}
+    ]
+}

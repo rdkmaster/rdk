@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Graph -> Basic</title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/doc/tools/doc_js/doc_app_helper',
+            }
+        });
+    </script>
+    <style type="text/css">
+        ul,li{
+            list-style: none;
+            padding:0px;
+            margin:0px;
+        }
+        #line ul>li{
+                font-size:14px;
+                margin-top:2px;
+                cursor: pointer;
+        }
+        #line ul>li>span{
+            display:inline-block;
+            font-size:12px;
+            line-height: 20px;
+            padding-left: 6px;
+            padding-right: 6px;
+            border-radius: 2px; 
+        }
+        .color{
+            background: #54acd5;
+            color: #fff;
+        }
+        #line{
+            position: absolute;
+            font-family: "微软雅黑";
+            left:350px;
+            top:80px;
+        }
+        #line ul>li:first-child{
+            padding:6px;
+            color: #54acd5;
+            cursor:default
+        }
+        #line ul>li:last-child{
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    <div id='main_image' style="width:800px;position: relative">
+        <div style="width:350px; display:inline-block">
+            <rdk_graph ds="dsGraph" id='pie' ds_url="$svr/data" ds_query_if="ready"
+    		graph_define="scripts/graph_define/simple_line.js" ></rdk_graph>
+        </div>
+        <div style="width:350px;display:none" id='line'   ds="line" ds_url="../server/data9" ds_query_if="ready">
+            <ul >
+                <li>其它问题（3项）</li>
+                <li ng-repeat="item in line.data"><span data="{{item.number}}" ng-class="{'color' : clickNumber==$index}" ng-click="numClick($event)" >{{item.name}}（12%）</span></li>
+            </ul>
+        </div>
+    </div>
+    <div id="pie_child" style="width:350px; display:inline-block">
+            <div ng-show="showNumber==$index" ng-repeat="item in [1,2,3,4]">
+                <rdk_graph ds="dsGraph{{item}}" ds_url="$svr/data{{item}}" ds_query_if="ready"
+                graph_define="scripts/graph_define/simple_line{{item}}.js" ></rdk_graph>
+            </div>
+            <div ng-show="clickNumber==$index" ng-repeat="item in [4,5,6]">
+                 <rdk_graph ds="dsGraph{{item}}" ds_url="$svr/data{{item}}" ds_query_if="ready"
+                graph_define="scripts/graph_define/simple_line{{item}}.js" ></rdk_graph>
+            </div>
+    </div>
+</body>
+
+</html>
