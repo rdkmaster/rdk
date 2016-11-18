@@ -20,7 +20,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         <thead ng-if="!noHeader">\
                             <tr>\
                                 <th ng-if="addCheckBox"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck($event)"></th>\
-                                <th ng-repeat="columnDef in columnDefs" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)">\
+                                <th ng-repeat="columnDef in columnDefs track by columnDef.title" on-finish-render="tableHeadNgRepeatFinished" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)">\
                                     {{columnDef.title}}\
                                     <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
                                     <i ng-if="columnDef.sortable && curSortCol($index)" class="rdk-table-icon" ng-class="{true:\'rdk-table-sort-down\',false:\'rdk-table-sort-up\'}[columnDef.sortIconStatus]"></i>\
@@ -220,7 +220,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         } else {
                             html += '<div ng-bind="item[columnDef.data]"> </div>';
                             html += '<div ng-show="false">' +
-                                '<input class="editInput" value="{{item[columnDef.data]}}" ng-keyup="inputPressHandler($event, item.$index, columnDef,itemRowSpan,$parent.$index)" ng-blur="editorBlurHandler($event, item.$index, columnDef,itemRowSpan,$parent.$index)">' +
+                                '<input class="editInput" ng-model="item[columnDef.data]"  ng-keyup="inputPressHandler($event, item.$index, columnDef,itemRowSpan,$parent.$index)" ng-blur="editorBlurHandler($event, item.$index, columnDef,itemRowSpan,$parent.$index)">' +
                                 '</div>';
                         }
                     } else {
@@ -232,18 +232,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     $compile(element.contents())(scope);
                 }
             }
-        }).directive('onFinishRender', function($timeout) {
-        return {
-            restrict: 'A',
-            link: function(scope, element, attr) {
-                if (scope.$last === true) {
-                    $timeout(function() {
-                        scope.$emit('ngRepeatFinished');
-                    }, 0);
-                }
-            }
-        }
-    });
+        });
 
     tableModule.directive('rdkTable', ['DataSourceService', 'EventService', 'EventTypes', 'Utils', '$timeout', '$compile',function(DataSourceService, EventService, EventTypes, Utils, $timeout,$compile) {
         return {
@@ -583,7 +572,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 $(firstDivTarget).css('display', "none");
                                 $(lastDivTarget).css('display', "inline");
                                 $(lastDivTarget).removeAttr("class");
-                                $(lastDivTarget.childNodes[0]).val($(lastDivTarget.childNodes[0]).attr("value"));
+                                //$(lastDivTarget.childNodes[0]).val($(lastDivTarget.childNodes[0]).attr("value"));
                                 $(lastDivTarget.childNodes[0]).focus();
                                 event.currentTarget.parentNode.style.width = tdWidthCache + 'px';
                             }
@@ -600,7 +589,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         }
 
                         scope.refreshData = function(inputTarget, row, column, itemRowSpan, filterIndex, columnDef) {
-                            var cells = new Array();
+                            var cells = [];
                             if (itemRowSpan && itemRowSpan[columnDef["targets"]]) {
                                 var destData = scope.$filtered.slice(filterIndex, filterIndex + itemRowSpan[columnDef["targets"]]);
                                 for (var i = 0; i < destData.length; i++) {
@@ -617,7 +606,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             changeData['columnIndex'] = column;
                             changeData['cells'] = cells;
 
-                            EventService.raiseControlEvent(scope, 'change', data);
+                            EventService.raiseControlEvent(scope, 'change', changeData);
                         }
 
                         scope.inputPressHandler = function(event, row, columnDef, itemRowSpan, filterIndex) { //input上的event
@@ -676,14 +665,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         };
 
                         scope.setSelected = function(item, event) {
-                            var data = {};
-                            data.data = _getSelectedItems();
                             if (item.$$hashKey == scope.selectedModel.$$hashKey) {
                                 // scope.selectedModel = {};
                             } else {
                                 scope.selectedModel = item;
                             }
-                            EventService.raiseControlEvent(scope, 'select', data);
+                            EventService.raiseControlEvent(scope, 'select', item);
                         };
 
                         scope.singleCheck = function(item, index, event){
@@ -734,9 +721,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             _refreshCheckBoxStatus();
                         }
 
-                        var off = scope.$on('ngRepeatFinished', function() {
-
-                            _reSetTableHeaders(); //重定义表头
+                        scope.$on('ngRepeatFinished', function() {
+                         
                             if(scope.floatableHeader){
                                 _reFreshTable();
                                 $(element.find("table")).fixHeader();
@@ -757,6 +743,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             _searchGapClick();
 
                         });
+                        scope.$on('tableHeadNgRepeatFinished', function() {
+                            _reSetTableHeaders(); //重定义表头
+                        });
+
                     };
                     //END INIT
 
@@ -975,9 +965,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     var _compileHeads={};//需要被编译的表头对象
                     var _hasAddTrReady=false; //标记多级表头的Html字符串是否插入到模板中
                     function _reSetTableHeaders(){
+
                         var thead = element[0].querySelector('thead');
                         var ths=thead.querySelector("tr:last-child").querySelectorAll("th[ng-repeat]");
-
                         for(var key in _compileHeads)
                         {
                             for(var i= 0,thLen=ths.length;i<thLen;i++){
