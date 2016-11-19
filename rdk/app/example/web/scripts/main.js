@@ -7,11 +7,11 @@
         // 注意：所有的url都不能加 .js 扩展名
         'base/template/sample_module',
 
-        // 带有 alias 属性的条目，可以通过 ctx.utils 来访问
+        // 带有 alias 属性的条目，可以通过 ctx.alias 的方式来访问到
         { url: 'base/scripts/utils', alias: 'utils' },
         { url: 'base/scripts/i18n',  alias: 'i18n'  },
 
-        // css类型的文件需要加 css! 的前缀，url上不能加 .css 扩展名
+        // css类型的文件需要加 css! 的前缀，注意url上不能加 .css 扩展名
         'css!base/css/style',
 
         // 这类 rd. 开头的条目是RDK预定义好的控件url别名
@@ -23,7 +23,7 @@
     var requiredComponents = [ ];
 
     // downloadDependency 中带有 alias 的条目的返回值会被保存在这个对象中
-    // 可通过 ctx.alias 的方式引用到这些下载项的结果
+    // 可通过 ctx.alias 的方式引用到这些下载项的返回值
     var ctx = {};
 
     // controllerDefination 定义了本应用的根控制器，它是所有子控制器的祖先
@@ -36,6 +36,8 @@
         ctx.i18n.$init(scope);
         ctx.helper.initDataSourceService(DataSourceService);
 
+        //                              关于 scope 变量
+        // 
         // 这里的 scope 是一个非常特殊的变量，在Angular术语中，称之为作用域，它是Angular解析
         // html中各种变量、函数的上下文。使用 scope 的最佳原则是：只有在不得不将变量/函数定义
         // 在 scope 之上时，才将变量/函数定义在 scope 上面，否则就不要这么做。因为定义在 scope
@@ -47,31 +49,42 @@
         //
         // 这里有一篇中文文章可帮助理解 scope: http://docs.ngnice.com/guide/scope
         // 不过看不懂也没关系，只要记住这小段对 scope 描述的文字就好，一点都不影响开发。
+        // 
 
         //=================== 在这里开始写本应用的第一行代码 ========================
 
+
+        // 这里演示了调用 scripts/utils.js 的返回值
         ctx.utils.hello('RDK example');
 
         scope.loadModule = function() {
+            // 调用 rdk_module 的方法，详情请参阅这里
+            // http://10.9.233.35:8080/doc/#client/controls/module/module.md#loadModule()
             rdk.myModule.loadModule({initData: 'initData...initData...initData...'});
             scope.moduleLoaded = true;
         }
 
         scope.destroyModule = function() {
+            // 调用 rdk_module 的方法，详情请参阅这里
+            // http://10.9.233.35:8080/doc/#client/controls/module/module.md#destroyModule()
             rdk.myModule.destroyModule();
             scope.moduleLoaded = false;
         }
 
         scope.sayHello = function() {
+            // 关于 child 属性，请参阅这里
+            // http://10.9.233.35:8080/doc/#client/controls/module/module.md#child
+            //下面2行代码演示了直接访问 sample_module.js 中的数据和函数
             console.log(rdk.myModule.child.publicData);
             rdk.myModule.child.hello('RDK example');
         }
+
 
         //=================== 在这里结束本应用的最后一行代码 ========================
     };
 
     //==========================================================================
-    //                   从这里开始的代码请不要随意修改
+    //                 从这里开始的代码、注释请不要随意修改
     //==========================================================================
     
     require.config({paths:{helper: '/rdk/app/modules/rdk_app_helpers'}});

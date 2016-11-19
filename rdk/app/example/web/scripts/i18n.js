@@ -2,7 +2,7 @@ define(['rd.modules.i18n', 'rest!/rdk/service/app/common/locale'],
 function(i18n, locale) {
  
     //默认语言环境，在获取语言服务失败时使用
-    var defaultLocale = 'zh_CN';
+    var defaultLocale = window.navigator.language;
 
     return i18n.init(
 
@@ -39,11 +39,11 @@ function(i18n, locale) {
                 locale = eval('(' + rawLocale + ')').result;
             } catch (e) {
             }
-            if (locale != 'en_US' && locale != 'zh_CN') {
+            if (locale != 'en_US' && locale != 'zh_CN' && locale != 'zh-CN' && locale != 'en-US') {
                 console.warn('invalid locale data: [' + rawLocale + '], using ' + defaultLocale);
                 locale = defaultLocale;
             }
-            return locale;
+            return locale.replace('-', '_');
         })(locale)
     );
 });

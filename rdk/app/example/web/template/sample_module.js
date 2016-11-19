@@ -13,7 +13,7 @@
 
     var controllerDefination = ['$scope', 'DataSourceService', 'EventService', main];
     function main(scope, DataSourceService, EventService) {
-        console.log('SampleModule controller is running..........');
+        console.log('SampleModule controller is initializing..........');
 
         //只有定义在this上的方法才能发布给外部。
         this.hello = function(msg) {
@@ -32,7 +32,7 @@
     }
 
     //==========================================================================
-    //                   从这里开始的代码请不要随意修改
+    //                 从这里开始的代码、注释请不要随意修改
     //==========================================================================
     define(/*fix-from*/application.getDownloads(downloadDependency)/*fix-to*/, start);
     function start() {
