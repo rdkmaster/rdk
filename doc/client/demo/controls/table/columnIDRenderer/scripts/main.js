@@ -13,8 +13,8 @@ define('main', ['rd.controls.Table', 'rd.services.Alert'], function() {
                     title : "编号",
                     targets : 0,
                     override : false,
-                    render : function(){
-                        $scope.idNum = $scope.idNum + 1;
+                    render : function(rowData){
+                        $scope.idNum =  rowData.$index +1;
                         return $scope.idNum;
                     }
                 }
@@ -26,7 +26,7 @@ define('main', ['rd.controls.Table', 'rd.services.Alert'], function() {
             Alert.scope = $scope;
             Alert.confirm("自定义editorRenderer，弹出演示", "提示框");
         }
-        $scope.idNum = 0;
+
 
     }]);
 });

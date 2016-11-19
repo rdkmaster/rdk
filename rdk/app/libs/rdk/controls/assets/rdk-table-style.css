@@ -1,4 +1,4 @@
- .rdk-table-module {
+.rdk-table-module {
     margin: 0 0;
 }
 
@@ -206,4 +206,21 @@
 .rdk-table-module .mouseShape{
   cursor:url("edit.ico"),auto;
 }
-      
+.rdk-table-icon{
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    vertical-align: text-bottom;
+}
+.rdk-table-sort-down{
+    background: url("sort-down.png") no-repeat;
+    background-size:contain;
+}
+.rdk-table-sort-up{
+    background: url("sort-up.png") no-repeat;
+    background-size:contain;
+}
+.rdk-table-sort{
+    background: url("sort.png") no-repeat;
+    background-size:contain;
+}
