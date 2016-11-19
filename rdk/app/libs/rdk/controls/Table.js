@@ -19,8 +19,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     <table class="rdk-table">\
                         <thead ng-if="!noHeader">\
                             <tr>\
-                                <th ng-if="addCheckBox"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck($event)"></th>\
-                                <th ng-repeat="columnDef in columnDefs" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)">\
+                                <th ng-if="addCheckBox"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
+                                <th ng-repeat="columnDef in columnDefs track by columnDef.title" on-finish-render="tableHeadNgRepeatFinished" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)">\
                                     {{columnDef.title}}\
                                     <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
                                     <i ng-if="columnDef.sortable && curSortCol($index)" class="rdk-table-icon" ng-class="{true:\'rdk-table-sort-down\',false:\'rdk-table-sort-up\'}[columnDef.sortIconStatus]"></i>\
@@ -30,7 +30,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         <tbody>\
                             <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
                                 ng-class="{\'selected-row\':ifSelected(item)}" ng-dblclick="dbClickHandler(item,$index)">\
-                                <td ng-if="addCheckBox"><input name="singleCheckBox" type="checkbox" ng-click="singleCheck(item, $index, $event)"></td>\
+                                <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="currentPageData[$index].checked"></td>\
                                 <td rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" style="width:{{columnDef.width}};cursor:move;{{getRowStyle(itemRowSpan,columnDef)}}">\
                                 </td>\
                             </tr>\
@@ -389,6 +389,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 }
 
                 return function link(scope, element, attrs, ctrl) {
+
                     scope.getRowSpan = function(itemRowSpan, item) {
                         return itemRowSpan && itemRowSpan[item["targets"]] ? itemRowSpan[item["targets"]] : 1;
                     }
@@ -632,7 +633,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             if (!columnDef.sortable) return;
                             if(curSortIndex!==iCol){
                                 columnDef.sortIconStatus=false;
-                            } else {
+
+                            }else{
                                 columnDef.sortIconStatus=!columnDef.sortIconStatus;
                             }
                             curSortIndex=iCol;
@@ -722,14 +724,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             _resetTotalCheckedDom(isChecked);
                         }
 
-                        var off = scope.$on('ngRepeatFinished', function(event) {
+                        scope.$on('ngRepeatFinished', function() {
                             _fixTableHeader();
                             
                             scope.refreshSingleCurrentPage();
                             _serverSortResponse();//后端排序，刷新后的响应
                             _searchGapClick();
-                            scope.hasOffReady = true;
-
                             scope.$watch("selectedIndex", function(newVal, oldVal) { //根据selectedIndex高亮显示
                                 if (newVal != undefined) {
                                     if (scope.selectedIndex != undefined) {
@@ -902,7 +902,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     var _compileHeads={};//需要被编译的表头对象
                     var _hasAddTrReady=false; //标记多级表头的Html字符串是否插入到模板中
                     function _reSetTableHeaders(){
-
                         var thead = element[0].querySelector('thead');
                         var ths=thead.querySelector("tr:last-child").querySelectorAll("th[ng-repeat]");
                         for(var key in _compileHeads)
