@@ -177,7 +177,7 @@ require.config({
  * 自定义基础模块
  */
 // RDK核心功能
-define('rd.core', [
-    'rd.services.DataSourceService', 'rd.services.EventService',
-    'rd.services.Utils', 'rd.attributes.ds'
-]);
+// define('rd.core', [
+//     'rd.services.DataSourceService', 'rd.services.EventService',
+//     'rd.services.Utils', 'rd.attributes.ds'
+// ]);
