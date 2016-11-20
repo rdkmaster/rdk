@@ -83,29 +83,29 @@ define(["application", "mainconfig"], function() {
         }
     }
 
-    function _mergePaths(paths) {
-        if (!paths) {
-            return paths;
-        }
-        try {
-            var userPaths = require.s.contexts['_'].config.paths;
-        } catch(e) {
-            console.log('no original paths found!');
-            return paths;
-        }
-        if (!userPaths) {
-            return paths;
-        }
+    // function _mergePaths(paths) {
+    //     if (!paths) {
+    //         return paths;
+    //     }
+    //     try {
+    //         var userPaths = require.s.contexts['_'].config.paths;
+    //     } catch(e) {
+    //         console.log('no original paths found!');
+    //         return paths;
+    //     }
+    //     if (!userPaths) {
+    //         return paths;
+    //     }
 
-        for (var path in paths) {
-            if (userPaths.hasOwnProperty(path)) {
-                console.warn('path config "' + path + '" is overriden, original value="' +
-                    paths[path] + '", user value="' + userPaths[path] + '"');
-                delete paths[path];
-            }
-        }
-        return paths;
-    }
+    //     for (var path in paths) {
+    //         if (userPaths.hasOwnProperty(path)) {
+    //             console.warn('path config "' + path + '" is overriden, original value="' +
+    //                 paths[path] + '", user value="' + userPaths[path] + '"');
+    //             delete paths[path];
+    //         }
+    //     }
+    //     return paths;
+    // }
 
     function _injectDependency(list) {
         angular.forEach(list, function(dep) {
@@ -158,7 +158,7 @@ define(["application", "mainconfig"], function() {
 
     window.rdk = {};
     window.rdk.$start = _start;
-    window.rdk.$mergePaths = _mergePaths;
+    // window.rdk.$mergePaths = _mergePaths;
     window.rdk.$injectDependency = _injectDependency;
     //在 _start() 中初始化
     window.rdk.$ngModule = undefined;
