@@ -16,6 +16,7 @@ object RequestMethod {
 
 object Misc {
   val GlobalCache = "__Global__Cache__"
+  val AgingCache = "__Aging__Cache__"
   val routeDispatcher = "route-dispatcher"
   val router = "router"
   val active_mq_dispatcher = "active-mq-dispatcher"

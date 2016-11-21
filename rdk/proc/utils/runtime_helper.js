@@ -37,7 +37,8 @@ var java = {
     StringMap: Java.type('com.google.gson.internal.StringMap'),
 
     FileHelper: Java.type('com.zte.vmax.rdk.jsr.FileHelper'),
-    RegFileFilter: Java.type('com.zte.vmax.rdk.util.RegFileFilter')
+    RegFileFilter: Java.type('com.zte.vmax.rdk.util.RegFileFilter'),
+    Config: Java.type('com.zte.vmax.rdk.config.Config')
 
 };
 
@@ -92,9 +93,51 @@ var Log = {
     crit: function () {
         var message = _arg2string(arguments);
         rdk_runtime.jsLogger().error(message);
+    },
+    operateLog: function (userOpInfo) {
+        var reqCtxHeaderInfo = getReqCtxHeader()
+        if (!reqCtxHeaderInfo) {
+            Log.error("NoneContext call!");
+            return false;
+        }
+        var userOpFunc = null;
+        try {
+            userOpFunc = load(java.Config.get('operateLogScript'));
+        } catch (e) {
+            Log.error("load operateLog script error:" + e);
+            return false;
+        }
+        try {
+            userOpFunc(userOpInfo, reqCtxHeaderInfo);
+        } catch (e) {
+            Log.error(e);
+            return false;
+        }
+        return true;
     }
 }
 
+function getHostName() {
+    return rdk_runtime.getHostName()
+}
+
+function getReqCtxHeader() {
+    var reqCtxHeaderInfo = rdk_runtime.getReqCtxHeaderInfo()
+    if (!reqCtxHeaderInfo) {
+        Log.warn("NoneContext call!")
+        return "";
+    }
+    return transferHeader(JSON.parse(reqCtxHeaderInfo));
+}
+//reqCtxHeaderInfo为数组，转换为对象方便使用
+//[{"key": "Cookie","value": "JSESSIONID=11ruoxiraug56gcl0ilshlpyk"}]  => {"Cookie":"JSESSIONID=11ruoxiraug56gcl0ilshlpyk"}
+function transferHeader(headerArray) {
+    var headerObject = {};
+    for (var elem in headerArray) {
+        headerObject[headerArray[elem].key] = headerArray[elem].value;
+    }
+    return headerObject
+}
 //兼容以前日志代码
 var log = Log.debug;
 var debug = Log.debug;
@@ -123,6 +166,15 @@ var Cache = {
     },
     global_del: function (k) {
         return rdk_runtime.globalCacheDel(k)
+    },
+    aging_put:function (k, v) {
+        return rdk_runtime.agingCachePut(k, v)
+    },
+    aging_get: function (k) {
+        return rdk_runtime.agingCacheGet(k)
+    },
+    aging_del: function (k) {
+        return rdk_runtime.agingCacheDel(k)
     }
 }
 

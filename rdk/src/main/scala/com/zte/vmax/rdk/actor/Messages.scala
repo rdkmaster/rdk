@@ -30,7 +30,9 @@ object Messages {
 
   case class ServiceResult(result: String)
 
+  case class Header(key:String,value:String)
 
+  case class AgingValue(timeStamp:Long,ttl:Long,value:AnyRef)
   //websocket 消息类型定义
   //websocket 消息头
   type WSHead = Array[String]
