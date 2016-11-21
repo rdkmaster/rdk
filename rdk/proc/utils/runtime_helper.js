@@ -95,7 +95,7 @@ var Log = {
         rdk_runtime.jsLogger().error(message);
     },
     operateLog: function (userOpInfo) {
-        var reqCtxHeaderInfo = getReqCtxHeader()
+        var reqCtxHeaderInfo = getRequestContextHeader()
         if (!reqCtxHeaderInfo) {
             Log.error("NoneContext call!");
             return false;
@@ -121,7 +121,7 @@ function getHostName() {
     return rdk_runtime.getHostName()
 }
 
-function getReqCtxHeader() {
+function getRequestContextHeader() {
     var reqCtxHeaderInfo = rdk_runtime.getReqCtxHeaderInfo()
     if (!reqCtxHeaderInfo) {
         Log.warn("NoneContext call!")
