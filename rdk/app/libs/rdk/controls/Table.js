@@ -902,6 +902,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     var _compileHeads={};//需要被编译的表头对象
                     var _hasAddTrReady=false; //标记多级表头的Html字符串是否插入到模板中
                     function _reSetTableHeaders(){
+                        if(_hasAddTrReady){
+                            return;
+                        }
                         var thead = element[0].querySelector('thead');
                         var ths=thead.querySelector("tr:last-child").querySelectorAll("th[ng-repeat]");
                         for(var key in _compileHeads)
@@ -917,12 +920,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 }
                             }
                         }
-                        if(!!scope.setting && scope.setting.additionalHeader && !_hasAddTrReady){
+                        if(!!scope.setting && scope.setting.additionalHeader){
                             var template=angular.element(scope.setting.additionalHeader);
                             var trs= $compile(template)(scope.appScope);
                             $(thead).prepend(trs);
-                            _hasAddTrReady=true;
                         }
+                        _hasAddTrReady=true;  //表头已重定义
                     }
                     var scrollWidth, first = true,
                         stickyWrapElement;
