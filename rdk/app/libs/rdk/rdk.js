@@ -129,7 +129,11 @@ define(["app-basic", "mainconfig"], function() {
             }
         };
         if (appScript) {
-            appScript = application.base + '/' + appScript;
+            if (appScript[0] != '/') {
+                //非绝对路径时，给拼成绝对路径
+                appScript = application.base + '/' + appScript;
+            }
+            
             require.config({
                 paths: {
                     "base": application.base,
