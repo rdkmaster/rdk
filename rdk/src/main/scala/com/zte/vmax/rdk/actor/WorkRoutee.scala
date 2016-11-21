@@ -26,6 +26,9 @@ class WorkRoutee extends Actor with Json4sSupport with Logger {
   override def receive: Receive = {
     case (no: Long, ServiceRequest(ctx, script, app, param, method, timeStamp)) =>
       val currentTimeMillis = System.currentTimeMillis()
+
+      runtime.setContext(ctx)
+
       if (isRequestTimeout(timeStamp)) {
         //超时消息直接丢弃
         logger.debug(s"<No.${no}> Drop timeout request: $script (${currentTimeMillis - timeStamp}ms)")

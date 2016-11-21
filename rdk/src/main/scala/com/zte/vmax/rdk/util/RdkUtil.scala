@@ -3,6 +3,7 @@ package com.zte.vmax.rdk.util
 
 import java.io.{File, FilenameFilter}
 import java.lang.reflect.Method
+import java.net.InetAddress
 import java.nio.file._
 import java.nio.file.attribute.BasicFileAttributes
 import java.util.UUID
@@ -30,6 +31,9 @@ import scala.concurrent.{Future, Await}
 import scala.reflect.ClassTag
 import scala.util.{Failure, Success, Try}
 import akka.pattern.ask
+
+
+
 /**
   * Created by 10054860 on 2016/7/15.
   */
@@ -296,4 +300,7 @@ object RdkUtil extends Logger {
       case _ =>None
     }
 
+  def getHostName: String = {
+    InetAddress.getLocalHost().getHostName
+  }
 }

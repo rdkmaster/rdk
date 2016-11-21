@@ -37,7 +37,8 @@ var java = {
     StringMap: Java.type('com.google.gson.internal.StringMap'),
 
     FileHelper: Java.type('com.zte.vmax.rdk.jsr.FileHelper'),
-    RegFileFilter: Java.type('com.zte.vmax.rdk.util.RegFileFilter')
+    RegFileFilter: Java.type('com.zte.vmax.rdk.util.RegFileFilter'),
+    Config: Java.type('com.zte.vmax.rdk.config.Config')
 
 };
 
@@ -92,9 +93,51 @@ var Log = {
     crit: function () {
         var message = _arg2string(arguments);
         rdk_runtime.jsLogger().error(message);
+    },
+    operateLog: function (userOpInfo) {
+        var reqCtxHeaderInfo = getRequestContextHeader()
+        if (!reqCtxHeaderInfo) {
+            Log.error("NoneContext call!");
+            return false;
+        }
+        var userOpFunc = null;
+        try {
+            userOpFunc = load(java.Config.get('extension.operateLog'));
+        } catch (e) {
+            Log.error("load operateLog script error:" + e);
+            return false;
+        }
+        try {
+            userOpFunc(userOpInfo, reqCtxHeaderInfo);
+        } catch (e) {
+            Log.error(e);
+            return false;
+        }
+        return true;
     }
 }
 
+function getHostName() {
+    return rdk_runtime.getHostName()
+}
+
+function getRequestContextHeader() {
+    var reqCtxHeaderInfo = rdk_runtime.getReqCtxHeaderInfo()
+    if (!reqCtxHeaderInfo) {
+        Log.warn("NoneContext call!")
+        return "";
+    }
+    return _transferHeader(JSON.parse(reqCtxHeaderInfo));
+}
+//reqCtxHeaderInfo为数组，转换为对象方便使用
+//[{"key": "Cookie","value": "JSESSIONID=11ruoxiraug56gcl0ilshlpyk"}]  => {"Cookie":"JSESSIONID=11ruoxiraug56gcl0ilshlpyk"}
+function _transferHeader(headerArray) {
+    var headerObject = {};
+    for (var elem in headerArray) {
+        headerObject[headerArray[elem].key] = headerArray[elem].value;
+    }
+    return headerObject
+}
 //兼容以前日志代码
 var log = Log.debug;
 var debug = Log.debug;
@@ -116,13 +159,41 @@ var Cache = {
         return rdk_runtime.cacheDel(k)
     },
     global_put: function (k, v) {
+        Log.warn("function deprecated,please use Cache.global.put()");
         return rdk_runtime.globalCachePut(k, v)
     },
     global_get: function (k) {
+        Log.warn("function deprecated,please use Cache.global.get()");
         return rdk_runtime.globalCacheGet(k)
     },
     global_del: function (k) {
+        Log.warn("function deprecated,please use Cache.global.del()");
         return rdk_runtime.globalCacheDel(k)
+    },
+    global: {
+        put: function (k, v) {
+            return rdk_runtime.globalCachePut(k, v)
+        },
+        get: function (k) {
+            return rdk_runtime.globalCacheGet(k)
+        },
+        del: function (k) {
+            return rdk_runtime.globalCacheDel(k)
+        }
+    },
+    aging: {
+        put: function (k, v, ttl) {
+            if (!_.isDefined(ttl)) {
+                ttl = 24 * 60 * 60;
+            }
+            return rdk_runtime.agingCachePut(k, v, ttl)
+        },
+        get: function (k) {
+            return rdk_runtime.agingCacheGet(k)
+        },
+        del: function (k) {
+            return rdk_runtime.agingCacheDel(k)
+        }
     }
 }
 

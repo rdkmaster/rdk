@@ -19,7 +19,9 @@ class AppCache(appName: String) {
 
   //put缓存对象
   def put(key: String, value: AnyRef): AnyRef = {
-    map.put(key, value)
+    if (value != null) {
+      map.put(key, value)
+    }
     value
   }
 

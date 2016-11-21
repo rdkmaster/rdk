@@ -13,6 +13,7 @@ import akka.actor.{ActorRef, ActorSystem, Props}
 import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
 import com.zte.vmax.rdk.actor.{WebSocketServer, AppRouter, MQRouter}
+import com.zte.vmax.rdk.cache.AgingCache.AgingCacheActor
 import com.zte.vmax.rdk.config.Config
 import com.zte.vmax.rdk.db.DataSource
 import com.zte.vmax.rdk.service.RestHandler
@@ -80,7 +81,8 @@ object RdkServer {
   val appRouter: ActorRef = system.actorOf(Props[AppRouter], "appRouter")
   //MQ 处理路由
   val mqRouter: ActorRef = system.actorOf(Props[MQRouter], "mqRouter")
-
+  //aging cache 检查老化
+  val agingActor:ActorRef = system.actorOf(Props[AgingCacheActor], "agingActor")
   //本RDK-server的唯一标识
   val uuid: String = UUID.randomUUID().toString
 
