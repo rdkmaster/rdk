@@ -11,6 +11,7 @@ return {
         } catch (e) {
         }
         if (!i18n) {
+            console.warn('invalid locale config: ' + locale);
             i18n = {};
         }
         i18n.$init = function(scope) { scope.i18n = i18n; }

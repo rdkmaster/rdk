@@ -174,9 +174,8 @@ describe('Table Self Test',function(){
     });
 
     it("验证选中checkbox后数据返回是否正确",function(){
-        var button = element(by.css(".demo5 button"));
-        button.click();
-        browser.sleep(2000);
+        element(by.css("button[ng-click='query()']")).click();
+        browser.sleep(1500);
         var checkBox=element(by.css(".demo5 tbody tr:first-child td:first-child input"));
         checkBox.click();
         var data=element(by.css(".demo5 .check_data"));

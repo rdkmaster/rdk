@@ -34,4 +34,4 @@ define(['rd.services.DataSourceService'], function() {
         }
     ]);
 
-})
+});

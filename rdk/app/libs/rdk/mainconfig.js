@@ -1,7 +1,7 @@
 require.config({
     //下载依赖超时时间，0为不超时
     waitSeconds: 30,
-    paths: rdk.$mergePaths({
+    paths: {
         "angular": "../angular/angular",
         "angualr-translate": "../angular/angular-translate.min",
         "angular-translate-static": "../angular/angular-translate-loader-static-files.min",
@@ -98,7 +98,7 @@ require.config({
         "rd.styles.Tree": "../rdk/controls/assets/rdk-tree-style",
 
         "rd.modules.i18n": "../rdk/modules/I18nModule",
-    }),
+    },
     //这个配置是你在引入依赖的时候的包名
     shim: {
         "angular": {
@@ -114,10 +114,6 @@ require.config({
            deps : ['angular','angualr-translate'],
             exports: "angular-translate-static" 
         },
-        // "ui-codemirror": {
-        //     deps: ['codemirror', 'css!codemirror'],
-        //     exports: "ui-codemirror",
-        // },
         "blockUI" :{
             deps : ['angular','css!../angular/angular-block-ui','jquery'],
             exports: "blockUI"
@@ -177,18 +173,9 @@ require.config({
     },
     map: {
         '*': {
-            'css': '../requirejs/requirecss/css',
-            'rest': '../requirejs/requirerest/rest',
+            'css': 'requirejs-plugins/requirecss/css',
+            'rest': 'requirejs-plugins/requirerest/rest',
         }
     }
 });
 
-/*
- * 自定义基础模块
- */
-// define('codemirror', ["ui-codemirror", "codemirror-core", "css!codemirror-css"]);
-// RDK核心功能
-define('rd.core', [
-    'rd.services.DataSourceService', 'rd.services.EventService',
-    'rd.services.Utils', 'rd.attributes.ds'
-]);

@@ -1,6 +1,6 @@
 define([], function() {
     //创建一个子控制器
-    rdk.$app.controller('SampleModuleController', ['$scope', 'Utils', function(scope, Utils) {
+    rdk.$ngModule.controller('SampleModuleController', ['$scope', 'Utils', function(scope, Utils) {
         scope.load = function() {
             //mymodule是rdk_module节点的id属性值。
             //传递给loadModule函数的第一个参数是该模块的initData，
