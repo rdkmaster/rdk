@@ -210,6 +210,12 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                     }
                     EventService.register($vm.dsAreas.id, EventTypes.RESULT, _areasResultHandler);
                 }
+                if(scope.id) {  //注册外部可设置地区数据事件
+                    EventService.register(scope.id, EventTypes.UPDATE_RESULT, function(event,data) {
+                        _hasDefaultReady=false;
+                        _initDefaultAreaData();
+                    });
+                }
             }
 
             function _initDefaultAreaData(){  //初始化地区默认数据

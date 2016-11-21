@@ -92,7 +92,12 @@
 详细示例如下：
 <live_demo example="controls/area/callback" width="600"></live_demo>
 
+## update_result ##
 
+`update_result` 用于执行其他操作更改地区数据
+
+详细示例如下：
+<live_demo example="controls/area/update" width="600"></live_demo>
 
 
 
