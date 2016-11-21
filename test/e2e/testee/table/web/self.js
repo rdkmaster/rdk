@@ -170,7 +170,13 @@ scope.search=function(){
 	console.log(ds);
 	ds.query(condition);
 };
-
+scope.query=function(){
+  var condition={
+    'paging':{"currentPage":1,"pageSize":7}
+  };
+  var ds=DSService.get('ds_salary_5');
+  ds.query(condition);
+}
 //demo5 add_check_box
 
 EventService.register('add_check', EventTypes.CHECK, function(event, data){
