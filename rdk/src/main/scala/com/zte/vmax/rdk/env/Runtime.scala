@@ -2,7 +2,7 @@ package com.zte.vmax.rdk.env
 
 import javax.script._
 
-import com.google.gson.{Gson, GsonBuilder}
+import com.google.gson.GsonBuilder
 import com.zte.vmax.rdk.actor.Messages.{DBSession, WSBroadcast}
 import com.zte.vmax.rdk.actor.WebSocketServer
 import com.zte.vmax.rdk.cache.{AgingCache, CacheHelper}
