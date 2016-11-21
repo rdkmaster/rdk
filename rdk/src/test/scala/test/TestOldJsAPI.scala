@@ -64,6 +64,10 @@ class TestOldJsAPI extends FunSpec with Matchers{
       RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_loadPropertyerror").fold(ex=>ex,v=> v should be("false"))
     }
 
+    it("readXml(path)=> test cases passed!") {
+      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_readXml").fold(ex=>ex,v=> v.contains("orderedProviders") should be(true))
+    }
+
     it("save(file, content, append, encoding)=>test cases passed!") {
       RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_save")
       new File(ConstForTest.testRelayFilePath+"save.txt").exists() should be(true)

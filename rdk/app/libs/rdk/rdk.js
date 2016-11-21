@@ -1,5 +1,4 @@
-rdk = (function() {
-
+define(["app-basic", "mainconfig"], function() {
     var bodyHTML = undefined;
     var hasReady = false;
 
@@ -46,7 +45,7 @@ rdk = (function() {
             return;
         }
 
-		window.onload = undefined;
+        window.onload = undefined;
         if (hasReady) {
             return;
         }
@@ -58,7 +57,7 @@ rdk = (function() {
             loading = oLoading.outerHTML;
             oLoading.parentNode.removeChild(oLoading);
         } else {
-            loading = '<div class="rdk-loader"><p>loading...<p/></div>';
+            loading = '<div class="rdk-loader">' + application.loadingImage + '</div>';
         }
 
         bodyHTML = document.body.innerHTML;
@@ -84,9 +83,40 @@ rdk = (function() {
         }
     }
 
-    function _start() {
-        _setupLoading();
+    // function _mergePaths(paths) {
+    //     if (!paths) {
+    //         return paths;
+    //     }
+    //     try {
+    //         var userPaths = require.s.contexts['_'].config.paths;
+    //     } catch(e) {
+    //         console.log('no original paths found!');
+    //         return paths;
+    //     }
+    //     if (!userPaths) {
+    //         return paths;
+    //     }
 
+    //     for (var path in paths) {
+    //         if (userPaths.hasOwnProperty(path)) {
+    //             console.warn('path config "' + path + '" is overriden, original value="' +
+    //                 paths[path] + '", user value="' + userPaths[path] + '"');
+    //             delete paths[path];
+    //         }
+    //     }
+    //     return paths;
+    // }
+
+    function _injectDependency(list) {
+        angular.forEach(list, function(dep) {
+            dep = dep.trim();
+            if (rdk.$ngModule.requires.indexOf(dep) == -1) {
+                rdk.$ngModule.requires.push(dep);
+            }
+        });
+    }
+
+    function _start() {
         /*
          * 初始化应用入口
          */
@@ -99,61 +129,46 @@ rdk = (function() {
             }
         };
         if (appScript) {
+            if (appScript[0] != '/') {
+                //非绝对路径时，给拼成绝对路径
+                appScript = application.base + '/' + appScript;
+            }
+            
             require.config({
                 paths: {
+                    "base": application.base,
                     "main": appScript
                 }
             });
             console.log('starting rdk app from "' + appScript + '" ...');
         }
 
-        require(["./mainconfig"], function() {
-            require(["jquery", "angular"] , function() {
-                console.log('IMPORTANT: rdk_app created!');
-                rdk.$app = angular.module("rdk_app", []);
-                require(["main"], _onSuccess, _onError);
-            })
-        });
+        console.log('IMPORTANT: rdk_app created!');
+        rdk.$ngModule = angular.module("rdk_app", []);
+        require(["main"], _onSuccess, _onError);
     }
 
-    function _mergePaths(paths) {
-        if (!paths) {
-            return paths;
-        }
-        try {
-            var userPaths = require.s.contexts['_'].config.paths;
-        } catch(e) {
-            console.log('no original paths found!');
-            return paths;
-        }
-        if (!userPaths) {
-            return paths;
-        }
+    _setupLoading();
 
-        for (var path in paths) {
-            if (userPaths.hasOwnProperty(path)) {
-                console.warn('path config "' + path + '" is overriden, original value="' +
-                    paths[path] + '", user value="' + userPaths[path] + '"');
-                delete paths[path];
-            }
-        }
-        return paths;
+    //为了避免在非压缩环境下重复下载 loading.css 而玩的一个小技巧。
+    //实际上r.js直接无视这个if，也就是说r.js在执行时，这两个require都会被扫描到并执行
+    //同时r.js会无视重复的依赖，所以最终效果就是 'angular', 'jquery', 'css!../rdk/css/loading'
+    //这3个依赖都会被r.js找到，从而达到在压缩环境下有loading，非压缩环境下无loading的目的
+    if (window.hasOwnProperty('angular')) {
+        require(['angular', 'jquery', 'css!../rdk/css/loading'], _start);
+    } else {
+        require(['angular', 'jquery'], _start);
     }
 
-    function _injectDependency() {
-        var app = angular.module("rdk_app");
-        angular.forEach(arguments, function(dep) {
-            dep = dep.trim();
-            if (app.requires.indexOf(dep) == -1) {
-                app.requires.push(dep);
-            }
-        });
-    }
+    window.rdk = {};
+    window.rdk.$start = _start;
+    // window.rdk.$mergePaths = _mergePaths;
+    window.rdk.$injectDependency = _injectDependency;
+    //在 _start() 中初始化
+    window.rdk.$ngModule = undefined;
+});
 
-    return {
-        $start: _start,
-        $mergePaths: _mergePaths,
-        $injectDependency: _injectDependency
-    }
-})();
-rdk.$start();
+//由于js文件被压缩后， angular 会很快被定义
+//而js在未被压缩时， angular 要在rdk.js被下载之后才定义
+//因此通过这个方式来判定当前是否是在压缩环境
+window.hasOwnProperty('angular') && require(['rdk']);

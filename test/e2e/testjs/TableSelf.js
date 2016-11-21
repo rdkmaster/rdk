@@ -37,7 +37,7 @@ describe('Table Self Test',function(){
     });
     //验证列标题和顺序
     it('表格标题顺序与data一致',function(){
-    	var titles=element.all(by.css(".demo1 .sticky-wrap .sticky-enabled thead tr th+th"));
+    	var titles=element.all(by.css(".demo1 .sticky-wrap .sticky-enabled thead tr th"));
 	    expect(titles.count()).toBe(6);
 	    var items=["日期","城市名","网页响应成功率","网页下载速率","网页响应时延","详情"];
 	    titles.each(function(item,index){
@@ -174,9 +174,8 @@ describe('Table Self Test',function(){
     });
 
     it("验证选中checkbox后数据返回是否正确",function(){
-        var button = element(by.css(".demo5 button"));
-        button.click();
-        browser.sleep(2000);
+        element(by.css("button[ng-click='query()']")).click();
+        browser.sleep(1500);
         var checkBox=element(by.css(".demo5 tbody tr:first-child td:first-child input"));
         checkBox.click();
         var data=element(by.css(".demo5 .check_data"));

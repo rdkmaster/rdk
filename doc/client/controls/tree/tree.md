@@ -1,4 +1,4 @@
-<rdk_title>Tree</rdk_title>
+﻿<rdk_title>Tree</rdk_title>
 
 
 # 简介 #
@@ -205,12 +205,6 @@ html代码如下：
 事件类型：EventTypes.BEFORE_RENAME，监听到外层的 before_rename 事件，即修改被选中树的某个节点，也可以在rdk_tree标签里，直接定义rename函数。
 示例如下：
 <live_demo example="controls/tree/event_beforeRename" width="900"></live_demo>
-
-##BEFORE_EDIT_NAME##
-
-事件类型：EventTypes.BEFORE_EDIT_NAME，监听到外层的 before_edit_name 事件，即修改被选中树的某个节点前发生的事件，也可以在rdk_tree标签里，直接定义before_edit_name函数。
-示例如下：
-<live_demo example="controls/tree/event_beforeEditName" width="900"></live_demo>
 
 ##BEFORE_REMOVE##
 

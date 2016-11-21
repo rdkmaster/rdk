@@ -1,4 +1,4 @@
-﻿define('main', ['application', 'blockUI',
+define('main', ['application', 'blockUI',
   'rd.controls.BasicSelector','rd.containers.Tab','rd.controls.TabSelector',
   'rd.controls.FoldSelector', 'rd.containers.Accordion','rd.controls.Time',
   'rd.controls.Graph','rd.controls.ComboSelect','rd.controls.Selector','rd.controls.Table'],
@@ -192,7 +192,6 @@ scope.search=function(){
 	var ds = DSService.get('ds_salary_3');
 	ds.query(condition);
 };
-
 //demo5 add_check_box
 scope.query=function(){
   var condition = {

@@ -2,7 +2,7 @@ define(['rd.modules.i18n', 'rest!/rdk/service/app/common/locale'],
 function(i18n, locale) {
  
     //默认语言环境，在获取语言服务失败时使用
-    var defaultLocale = 'zh_CN';
+    var defaultLocale = window.navigator.language;
 
     return i18n.init(
 
@@ -14,12 +14,12 @@ function(i18n, locale) {
 
     {
         "en_US": {
-            welcome: 'Your RDK application is ready!',
+            hello: 'Hello {0}!\nThis words is alerted in the SampleModuleController.',
             wait: 'Please wait for a moment...',
             lang: 'Current language is {0}'
         },
         "zh_CN": {
-            welcome: '你的 RDK 应用可以正常工作了！',
+            hello: '你好，{0}！\n这些文字是在 SampleModuleController 中弹出出来的。',
             wait: '正在查询，请稍候...',
             lang: '当前的语言环境是 {0}'
         }
@@ -38,10 +38,12 @@ function(i18n, locale) {
             try {
                 locale = eval('(' + rawLocale + ')').result;
             } catch (e) {
+            }
+            if (locale != 'en_US' && locale != 'zh_CN' && locale != 'zh-CN' && locale != 'en-US') {
                 console.warn('invalid locale data: [' + rawLocale + '], using ' + defaultLocale);
                 locale = defaultLocale;
             }
-            return locale;
+            return locale.replace('-', '_');
         })(locale)
     );
 });

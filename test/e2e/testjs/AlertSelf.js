@@ -11,7 +11,7 @@ describe('Alert Self Test',function(){
         //产生窗口、模态框
         var alert=element.all(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
         expect(alert.count()).toBe(3);
-        var array=['YES','NO','CANCEL'];
+        var array=['是','否','取消'];
         alert.each(function(item,index){
             expect(item.getAttribute('value')).toBe(array[index]);
         })
@@ -24,14 +24,14 @@ describe('Alert Self Test',function(){
         browser.sleep(300);
         var alert=element.all(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
         expect(alert.count()).toBe(1);
-        expect(alert.get(0).getAttribute('value')).toBe('OK');
+        expect(alert.get(0).getAttribute('value')).toBe('确定');
         alert.get(0).click();
     });
     it('添加message',function(){
         var btn=element(by.css(".demo1 button[ng-click='addMessage()']"));
         btn.click();
         browser.sleep(300);
-        var message=element(by.css(".rdk-alert-wrapBox .tableMsg"));
+        var message=element(by.css(".rdk-alert-wrapBox .rdk-alert-tableMsg"));
         expect(message.getText()).toBe('message');
         var alert=element.all(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
         alert.get(0).click();
@@ -40,7 +40,7 @@ describe('Alert Self Test',function(){
         var btn=element(by.css(".demo1 button[ng-click='addTitle()']"));
         btn.click();
         browser.sleep(300);
-        var message=element(by.css(".rdk-alert-wrapBox .titleLine"));
+        var message=element(by.css(".rdk-alert-wrapBox .rdk-alert-titleLine"));
         expect(message.getText()).toBe('我是窗口');
         var alert=element.all(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
         alert.get(0).click();

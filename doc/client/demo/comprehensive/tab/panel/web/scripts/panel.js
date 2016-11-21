@@ -13,10 +13,10 @@ define('main', ['application','rd.attributes.Scroll','rd.controls.Table', 'rd.co
                     "columnDefs" :[
                         {
                             targets : 0,
-                            width : "16%"
+                            width : "20%"
                         },{
                             targets : 1,
-                            width : "14%",
+                            width : "10%",
                             class : "text-align"
                         },{
                             targets : 2,
@@ -28,10 +28,10 @@ define('main', ['application','rd.attributes.Scroll','rd.controls.Table', 'rd.co
                         },{
                             targets : 4,
                             width 
-                            : "18%"
+                            : "15%"
                         },{
                             targets : 5,
-                            width : "19%",
+                            width : "22%",
                             class : "col-detail"
                         }
                     ]

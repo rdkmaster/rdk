@@ -1,9 +1,9 @@
 //模板控制器需要把模板用到的依赖添加到依赖列表中，这样模块代码更加内聚，方便使用
 define(['rd.controls.Time'], function() {
-    rdk.$injectDependency('rd.controls.Time');
+    rdk.$injectDependency(['rd.controls.Time']);
 
     //创建一个子控制器
-    rdk.$app.controller('SampleModuleController', ['$scope',
+    rdk.$ngModule.controller('SampleModuleController', ['$scope',
     function(scope) {
         console.log('SampleModule controller is running..........');
 

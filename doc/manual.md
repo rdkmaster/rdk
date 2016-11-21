@@ -25,16 +25,23 @@
 按照本小节介绍的方法，可以打造一个基于windows平台的RDK的web和rest服务的开发&调试环境！
 
 ### 设置RDK开发环境
-打开[下载页面](http://10.9.233.35:8080/site/download/index.html)，下载一个与自己项目正在使用的RDK版本匹配的开发环境。将下载得到的压缩包解压缩到任意目录，假设为 `d:\rdk-develop-environment`。
+打开[下载页面](/site/download/index.html)，下载一个与自己项目正在使用的RDK版本匹配的开发环境。将下载得到的压缩包解压缩到任意目录，假设为 `d:\rdk-develop-environment`，运行 `d:\rdk-develop-environment\start.exe` 就可以开始使用rdk来开发页面和调试rest服务了。
 
-### 下载app代码
+### 配置数据库信息
+如果你的app不需要访问任何数据库，那可无视这小节的配置。
+
+编辑 `d:\rdk-develop-environment\rdk\proc\conf\rdk.cfg`，找到 `database.gbase.xxxx` 这类配置项，按照实际情况填写，这样就可以使用gbase数据库了。保存之后，记得重启一下start.exe才能生效。
+
+对于其他任意提供jdbc驱动的数据库的配置，请参考[这个文档](/doc/#/server/service_api.md#mulit-ds-example)。
+
+### 配置app代码（可选）
 本小节假设app代码被存放在svn服务器上的这个url：`http://10.5.70.3/ZXVMAX/CODE/dev/ZXVMAX/vmax-app-comm/vmax-rdk/rdk_server/app`。
 
 在资源管理器中右击这个目录 `d:\rdk-develop-environment\rdk\app`，选择SVN菜单“check out”，在弹出的对话框中，将app所在的url填进去，单击ok就好了：
 
 ![](img/svn-checkout.PNG)
 
-SVN下载完成之后，就可以在 `d:\rdk-develop-environment\rdk\app` 目录下构建或者修改你的app代码了。
+SVN下载完成之后，就可以在 `d:\rdk-develop-environment\rdk\app` 目录下构建或者修改你的app代码，可以直接到app目录下提交你的代码。
 
 ### 配置ActiveMQ（可选）
 如果你的应用使用到了 `mq` 的相关功能，则必须在启动之前，配置好ActiveMQ的相关信息：
@@ -67,25 +74,31 @@ SVN下载完成之后，就可以在 `d:\rdk-develop-environment\rdk\app` 目录
 
 说明你当前环境使用的Java运行环境版本过低，请使用至少Java1.8以上的版本。这里可以下载到 [Win32](http://10.9.233.35:8080/tools/jre1.8.0_32_101.zip) 或者 [Win64](http://10.9.233.35:8080/tools/jre1.8.0_64_101.zip) 的Java8运行环境。
 
+#### 无nodejs运行环境
+如果启动的时候，报错：
 
-#### example页面长时间都是空白 {#can-not-open-example}
-
-1. 检查一下本地的目录的最里面的文件夹是不是 `rdk_server`，如果不是，请改过来。
-
-
-#### 'node' 不是内部或外部命令
-
-控制台报错：
-
-	'node' 不是内部或外部命令，也不是可运行的程序
-	或批处理文件。
-	请按任意键继续. . .
+![](server/img/no_nodejs_error.PNG)
 
 原因：说明当前电脑没有安装nodejs
 
-解决：[下载nodejs](http://10.9.233.35:8080/tools/node-v5.10.1-x86.msi)并正确安装
+解决：[下载nodejs](http://nodejs.cn/)并正确安装，需要至少 v4.2 以上版本
 
-#### 端口被占
+#### RDK服务端口被占
+在 “RDK Server for Windows” 的RDK页的控制台看到如下打印
+
+	2016-11-16 12:34:51,507 WARN  [UpgradableHttpListener] Bind to localhost/127.0.0.1:5888 failed
+	2016-11-16 12:34:51,523 WARN  [HttpListener] Bind to localhost/127.0.0.1:5812 failed
+	2016-11-16 12:34:51,539 ERROR [Run$] !!! RDK Server starts failed. java.lang.RuntimeException: Binding failed. Switch on DEBUG-level logging for `akka.io.TcpListener` to log the cause.
+
+原因：5812端口被占用
+
+解决方案：看看是否有其他RDK调试工具正在运行，请释放5812端口。
+
+也可以修改RDK服务进程的监听端口，编辑 `d:\rdk-develop-environment\rdk\proc\conf\rdk.cfg`，修改 `listen.port` 配置项就好。修改RDK默认监听端口比较麻烦，不推荐。
+
+
+#### HTTP端口被占
+在 “RDK Server for Windows” 的HTTP页的控制台看到如下打印
 
 	connect.limit() will be removed in connect 3.0
 	events.js:141
@@ -108,22 +121,44 @@ SVN下载完成之后，就可以在 `d:\rdk-develop-environment\rdk\app` 目录
 
 解决方案：
 
+建议释放8080端口给RDK调试器使用，或者更改RDK的调试端口：
+
 <a name="config-http-port"></a>
-编辑 `d:\vmax-rdk\tools\http_server\serv\config.json` 文件，修改其中的端口号就行啦：
+编辑 `d:\rdk-develop-environment\tools\http_server\config.json` 文件，修改其中的端口号就行啦：
 
 	{
-		"root": "./../../../",
+		"root": "./../../",
 		"port": 8080,
 		"proxy": [{
 			"url": "/rdk/service",
 			"port": 5812,
 			"host": "localhost"
+		},{
+			"url": "/demos",
+			"port": 9090,
+			"host": "localhost"
 		}]
 	}
 
-> **注意**<br>
-> 1. 8080端口可以随意改为其他值<br>
-> 2. 这些配置项能工作的前提是你已经按照[搭建基于windows的调试环境](#make-dev-env)小节的方法配置好本地Rest服务的运行环境了。否则请根据自身实际情况修改上述配置项。
+#### REST端口被占
+在 “RDK Server for Windows” 的REST页的控制台看到如下打印
+
+	events.js:141
+	      throw er; // Unhandled 'error' event
+	      ^
+
+	Error: listen EADDRINUSE 0.0.0.0:9090
+	    at Object.exports._errnoException (util.js:870:11)
+	    at exports._exceptionWithHostPort (util.js:893:20)
+
+原因：9090端口被占用
+
+解决方案：释放9090端口给RDK调试器，也可修改这个端口，但是比较麻烦，不推荐。
+
+> 提示：
+> 
+> 这个错误只会影响本地文档阅读体验，不会造成无法调试应用，可无视。
+
 
 ## 开发第一个应用
 

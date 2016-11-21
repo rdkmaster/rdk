@@ -2,36 +2,38 @@ package com.zte.vmax.rdk.util
 
 
 import java.io.{File, FilenameFilter}
+import java.lang.reflect.Method
 import java.nio.file._
 import java.nio.file.attribute.BasicFileAttributes
 import java.util.UUID
 import java.util.regex.{Matcher, Pattern}
 
+
+import akka.util.Timeout
+import scala.concurrent.duration._
 import com.google.gson.{Gson, GsonBuilder}
 import com.typesafe.config.{Config=>TypeSafeConfig}
 import com.zte.vmax.activemq.rdk.RDKActiveMQ
 import com.zte.vmax.rdk.RdkServer
-import com.zte.vmax.rdk.actor.Messages.{MQ_Message, NoneContext, RDKContext, ServiceRequest}
+import com.zte.vmax.rdk.actor.Messages._
+import com.zte.vmax.rdk.cache.CacheHelper
 import com.zte.vmax.rdk.config.Config
-import com.zte.vmax.rdk.db.GbaseOptimizer
-import com.zte.vmax.rdk.defaults.RequestMethod
+import com.zte.vmax.rdk.defaults.{Misc, RequestMethod}
 import com.zte.vmax.rdk.env.Runtime
 import com.zte.vmax.rdk.jsr.FileHelper
+import com.zte.vmax.rdk.service.ServiceConfig
 import jdk.nashorn.api.scripting.ScriptObjectMirror
 import jdk.nashorn.internal.runtime.Undefined
 import spray.http.{IllegalRequestException, StatusCodes}
 
+import scala.concurrent.{Future, Await}
 import scala.reflect.ClassTag
-import scala.util.Try
-
+import scala.util.{Failure, Success, Try}
+import akka.pattern.ask
 /**
   * Created by 10054860 on 2016/7/15.
   */
 object RdkUtil extends Logger {
-
-
-  private lazy val usingStandardSQL: Boolean = Config.getBool("database.StandardSQL.on", false)
-  private lazy val strictMode: Boolean = Config.getBool("database.StandardSQL.strict", false)
 
   /**
     * 获取真实的app名称
@@ -186,13 +188,29 @@ object RdkUtil extends Logger {
     * RDK启动时，调用应用的初始化脚本
     */
   def initApplications: Unit = {
+    logger.info("*" * 20 + s"rdk init begin..." + "*" * 20)
     val initScripts: List[String] = forEachDir(Paths.get("app"))
-    initScripts.foreach(script => {
-      val scriptFixSepartor=script.replaceAllLiterally("\\", "/")
-      val request = ServiceRequest(ctx = NoneContext, scriptFixSepartor.substring(scriptFixSepartor.indexOf("/app/")+1),
+
+    implicit val ec = RdkServer.system.dispatchers.lookup(Misc.routeDispatcher)
+
+    val result = initScripts.map(script => {
+      val scriptFixSepartor = script.replaceAllLiterally("\\", "/")
+      val request = ServiceRequest(ctx = NoneContext, scriptFixSepartor.substring(scriptFixSepartor.indexOf("/app/") + 1),
         app = null, param = null, method = "init", timeStamp = System.currentTimeMillis())
-      RdkServer.appRouter ! request
+      implicit val timeout: Timeout = Timeout(ServiceConfig.initTimeout second)
+      Future {
+        val future = RdkServer.appRouter ? request
+        Await.result(future, ServiceConfig.initTimeout second)
+      }(ec)
     })
+    try {
+      Await.result(Future.sequence(result), ServiceConfig.initTimeout second)
+      logger.info("*" * 20 + s"rdk init complete" + "*" * 20)
+    } catch {
+      case ex: java.util.concurrent.TimeoutException => logger.warn("init timeout!" + ex)
+      case x: Exception => logger.warn("unexpected exception:" + x)
+    }
+
   }
 
   def forEachDir(path: Path): List[String] = {
@@ -212,30 +230,31 @@ object RdkUtil extends Logger {
     pathLst
   }
 
-
   /**
     * 获取标准sql
     */
-  def getStandardSql(sql: String): Option[String] = {
-    usingStandardSQL match {
-      case true =>
+  def getVSql(dbSession: DBSession, sql: String): Option[String] = {
+
+    dbSession.opDataSource.map(dsName => {
+      val VSqlProcessorKey = "#_#VSqlProcessor#_#"
+
+      CacheHelper.getAppCache(dbSession.appName).get(VSqlProcessorKey + dsName, None) match {
+        case None => sql
+        case method: Method =>
         try {
-          Some(GbaseOptimizer.optimizeSql(sql))
+            method.invoke(null, sql).asInstanceOf[String]
         } catch {
-          case e: Exception => {
-            logger.warn("optimize sql error", e)
-            strictMode match {
-              case true =>
-                logger.warn("sql not standard, return null in strictMode, sql=" + sql)
-                None
-              case false => Some(sql)
+            case e: Exception =>
+              logger.error(s"toVsql failed: $sql")
+              sql
             }
+        case _ =>sql
           }
         }
-      case false => Some(sql)
+    )
+
     }
 
-  }
 
   /**
     * 安全关闭对象

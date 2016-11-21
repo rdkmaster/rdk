@@ -10,7 +10,7 @@
 
 基本用法如下
 
-    <rdk_module url="xx/yy.html" controller="conditionController"></rdk_module>
+    <rdk_module url="xx/yy.html"></rdk_module>
 
 # 属性 #
 
@@ -105,7 +105,7 @@
 下面是一个基本用法的demo
 <live_demo example="controls/module/simple_load" width="900"></live_demo>
 
-## `child`属性 ##
+## `child`属性 {#child} ##
 
 可以这样类比：controller属性的值是控制器的名字，相当于一个类，RDK在编译这个模块的模板的时候，会将这个类实例化出一个对象出来，并将这个对象用`child`属性来引用，因此`child`属性本质上是本模块的控制器的一个实例。
 
@@ -117,7 +117,7 @@
 	rdk.mymodule.child;
 
 请参考下面这个demo的main.js中`scope.hello`函数的代码
-<live_demo example="controls/module/simple_load" width="900"></live_demo>
+<live_demo example="controls/module/basic" width="900"></live_demo>
 
 
 # 事件 #

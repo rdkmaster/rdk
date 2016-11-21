@@ -86,7 +86,7 @@ describe('Tab Self test',function(){
     it('设置可见选项卡 可伸缩',function(){
         var item=element.all(by.css(".demo6 .rdk-tab-module ul li a"));
         item.get(2).click();
-        browse.sleep(500);
+        browser.sleep(500);
         item.get(2).click();
         // 展开内容DIV3
         expect(element(by.css(".demo6 .rdk-tab-module .content div[title='DIV3']")).getText()).toBe("DIV3");
