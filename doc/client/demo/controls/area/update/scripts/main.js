@@ -7,12 +7,15 @@ define('main', ['application','rd.controls.AreaSelect', 'rd.controls.ComboSelect
         application.initDataSourceService(DataSourceService);
         scope.change=function(){
             //其它操作更新地区数据
+
             scope.test={
                 province:{name:"广东",code:"1"},
                 city:{name:"深圳",code:"2"},
                 area:{name:"南山区",code:"3"}
             };
-            EventService.broadcast('areaID', EventTypes.UPDATE_RESULT,scope.test);
+
+            rdk.areaID.updateAreaData(scope.test);
+
         };
         //默认的地区数据
         scope.test={
