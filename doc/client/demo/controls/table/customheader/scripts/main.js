@@ -2,10 +2,13 @@ define('main', ['rd.controls.Table', 'rd.services.Alert'], function() {
     // 创建一个RDK的应用
     var app = angular.module("rdk_app", ['rd.controls.Table', 'rd.core', 'rd.services.Alert']);
     // 创建一个控制器
-    app.controller('myCtrl', ['$scope', 'EventService', 'EventTypes', 'Alert', function($scope, EventService, EventTypes, Alert) {
-
+    app.controller('myCtrl', ['$scope', 'EventService', 'EventTypes', 'Alert', 'DataSourceService', function($scope, EventService, EventTypes, Alert,DataSourceService) {
         $scope.setting = {
             "columnDefs" :[
+                {
+                    targets : 0,
+                    sortable: true
+                },
                 {
                     title : function(data, target) {
                         return '<span>自定义带select的列</span>\
@@ -15,7 +18,8 @@ define('main', ['rd.controls.Table', 'rd.services.Alert'], function() {
                                     <option value="">-- choose an item --</option>\
                                 </select>'
                     },
-                    targets : 1
+                    targets : 1,
+                    sortable: true
                 },
                 {
                     title : function(data, target) {
@@ -27,7 +31,8 @@ define('main', ['rd.controls.Table', 'rd.services.Alert'], function() {
                                     <option value="">-- choose an item --</option>\
                                 </select>'
                     },
-                    targets : 2
+                    targets : 2,
+                    sortable: true
                 },
                 {
                     title : function(data, target) {

@@ -32,6 +32,21 @@ define(['rd.services.DataSourceService'], function() {
                 }
             };
         }
-    ]);
-
+    ])
+    .directive('onFinishRender', function($timeout) {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attr) {
+                if (scope.$last === true) {
+                    $timeout(function() {
+                        if(!attr.onFinishRender){ //事件默认为ngRepeatFinished
+                            scope.$emit('ngRepeatFinished');
+                        }else{
+                            scope.$emit(attr.onFinishRender);
+                        }
+                    }, 0);
+                }
+            }
+        }
+    })
 });
