@@ -1,4 +1,4 @@
-define(["application", "mainconfig"], function() {
+define(["app-basic", "mainconfig"], function() {
     var bodyHTML = undefined;
     var hasReady = false;
 
