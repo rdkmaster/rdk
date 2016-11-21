@@ -159,25 +159,41 @@ var Cache = {
         return rdk_runtime.cacheDel(k)
     },
     global_put: function (k, v) {
+        Log.warn("function deprecated,please use Cache.global.put()");
         return rdk_runtime.globalCachePut(k, v)
     },
     global_get: function (k) {
+        Log.warn("function deprecated,please use Cache.global.get()");
         return rdk_runtime.globalCacheGet(k)
     },
     global_del: function (k) {
+        Log.warn("function deprecated,please use Cache.global.del()");
         return rdk_runtime.globalCacheDel(k)
     },
-    aging_put:function (k, v,ttl) {
-        if(!_.isDefined(ttl)){
-            ttl= 24 * 60 * 60;
+    global: {
+        put: function (k, v) {
+            return rdk_runtime.globalCachePut(k, v)
+        },
+        get: function (k) {
+            return rdk_runtime.globalCacheGet(k)
+        },
+        del: function (k) {
+            return rdk_runtime.globalCacheDel(k)
         }
-        return rdk_runtime.agingCachePut(k, v,ttl)
     },
-    aging_get: function (k) {
-        return rdk_runtime.agingCacheGet(k)
-    },
-    aging_del: function (k) {
-        return rdk_runtime.agingCacheDel(k)
+    aging: {
+        put: function (k, v, ttl) {
+            if (!_.isDefined(ttl)) {
+                ttl = 24 * 60 * 60;
+            }
+            return rdk_runtime.agingCachePut(k, v, ttl)
+        },
+        get: function (k) {
+            return rdk_runtime.agingCacheGet(k)
+        },
+        del: function (k) {
+            return rdk_runtime.agingCacheDel(k)
+        }
     }
 }
 
