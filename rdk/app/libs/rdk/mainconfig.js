@@ -139,7 +139,7 @@ require.config({
             exports: "ztree",
         },
         "ztree-exhide": {
-            deps: ['css!../ztree/css/zTreeStyle/zTreeStyle'],
+            deps: ['css!../ztree/css/zTreeStyle/zTreeStyle','ztree'],
             exports: "ztree",
         },
         "jquery-ui": {
