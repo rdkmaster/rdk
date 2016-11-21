@@ -92,7 +92,15 @@
 详细示例如下：
 <live_demo example="controls/area/callback" width="600"></live_demo>
 
+# 方法 #
 
+## updateAreaData(data) ##
+
+方法名：`updateAreaData` 用于执行其他操作更改地区数据
+参数：`data` 需要更新的地区数据
+
+详细示例如下：
+<live_demo example="controls/area/update" width="600"></live_demo>
 
 
 

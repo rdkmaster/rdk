@@ -103,6 +103,17 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                 showAll:"=?"
             },
             require:'^?rdkComboSelect',
+            controller: ['$scope', function(scope){
+                Utils.publish(scope, this);
+                //外部可设置地区数据事件
+                this.updateAreaData = function(data){
+                    if(data==null)
+                    {
+                        return
+                    }
+                    scope.updateAreaData(data);
+                }
+            }],
             link:_link
         };
 
@@ -211,7 +222,11 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                     EventService.register($vm.dsAreas.id, EventTypes.RESULT, _areasResultHandler);
                 }
             }
-
+            scope.updateAreaData=function(data){
+                _hasDefaultReady=false;
+                scope.areaData=data;
+                _initDefaultAreaData();
+            };
             function _initDefaultAreaData(){  //初始化地区默认数据
                 var defaultProvince;
                 if($vm.dsProvinces.data && scope.areaData.province){
