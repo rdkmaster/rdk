@@ -47,16 +47,12 @@
 
         //根据reqCtxHeaderInfo填vmaxOpLogInfo
         if (reqCtxHeader.hasOwnProperty("Cookie") && reqCtxHeader.Cookie) {
-            var sessionId = reqCtxHeader.Cookie.split(";").filter(
+            var sessionIds = reqCtxHeader.Cookie.split(";").filter(
                 function getSessionId(value) {
-                    if (value.contains("JSESSIONID"))
-                        return true;
-                    else
-                        return false;
+                    return value.contains("JSESSIONID");
                 });
-
-            if (sessionId) {
-                var sessionIdValue = sessionId[0].replace("JSESSIONID=", "")
+            if (sessionIds && sessionIds.length > 0) {
+                var sessionIdValue = sessionIds[0].replace("JSESSIONID=", "")
                 if (sessionIdValue) {
                     vmaxOpLogInfo.username = getUserName(sessionIdValue);
                 }

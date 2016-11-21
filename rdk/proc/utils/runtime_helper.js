@@ -102,7 +102,7 @@ var Log = {
         }
         var userOpFunc = null;
         try {
-            userOpFunc = load(java.Config.get('operateLogScript'));
+            userOpFunc = load(java.Config.get('extension.operateLog'));
         } catch (e) {
             Log.error("load operateLog script error:" + e);
             return false;
@@ -127,11 +127,11 @@ function getReqCtxHeader() {
         Log.warn("NoneContext call!")
         return "";
     }
-    return transferHeader(JSON.parse(reqCtxHeaderInfo));
+    return _transferHeader(JSON.parse(reqCtxHeaderInfo));
 }
 //reqCtxHeaderInfo为数组，转换为对象方便使用
 //[{"key": "Cookie","value": "JSESSIONID=11ruoxiraug56gcl0ilshlpyk"}]  => {"Cookie":"JSESSIONID=11ruoxiraug56gcl0ilshlpyk"}
-function transferHeader(headerArray) {
+function _transferHeader(headerArray) {
     var headerObject = {};
     for (var elem in headerArray) {
         headerObject[headerArray[elem].key] = headerArray[elem].value;
@@ -167,8 +167,11 @@ var Cache = {
     global_del: function (k) {
         return rdk_runtime.globalCacheDel(k)
     },
-    aging_put:function (k, v) {
-        return rdk_runtime.agingCachePut(k, v)
+    aging_put:function (k, v,ttl) {
+        if(!_.isDefined(ttl)){
+            ttl= 24 * 60 * 60;
+        }
+        return rdk_runtime.agingCachePut(k, v,ttl)
     },
     aging_get: function (k) {
         return rdk_runtime.agingCacheGet(k)

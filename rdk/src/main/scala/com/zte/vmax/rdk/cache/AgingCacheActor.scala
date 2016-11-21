@@ -1,7 +1,7 @@
 package com.zte.vmax.rdk.cache
 
 import java.util.concurrent.ConcurrentHashMap
-
+import scala.collection.JavaConverters._
 import akka.actor.Actor
 import com.zte.vmax.rdk.actor.Messages.AgingValue
 import scala.concurrent.duration._
@@ -23,8 +23,13 @@ object AgingCache {
     return value
   }
 
-  def put(key: String, value: AnyRef): AnyRef = {
-    map.put(key, AgingValue(System.currentTimeMillis(), 24 * 60 * 60, value))
+  def put(key: String, value: AnyRef, ttl: Long): AnyRef = {
+    if (value != null) {
+      map.put(key, AgingValue(System.currentTimeMillis(), ttl, value))
+    } else {
+      null
+    }
+
   }
 
   def remove(key: String): Unit = map.remove(key)
@@ -34,7 +39,7 @@ object AgingCache {
     import context._
 
     private val startTimerMessage = "StartTimer"
-    context.system.scheduler.schedule(30 second, 30 second) {
+    context.system.scheduler.schedule(1 minute, 30 second) {
       self ! startTimerMessage
     }
 
@@ -46,19 +51,14 @@ object AgingCache {
     //检查oplogcache中超时sessionid并remove
     def checkAgingCache: Unit = {
       val currentTime = System.currentTimeMillis()
-      val keys = map.keySet()
-      if (keys != null) {
-        val iterator = keys.iterator()
-        while (iterator.hasNext()) {
-          val key = iterator.next()
-          val value = map.get(key)
-          if (currentTime - value.timeStamp > value.ttl * 1000) {
-            map.remove(key)
-          }
+      val entrySet = map.entrySet().asScala
+      for (entry <- entrySet) {
+        val value = entry.getValue
+        if (currentTime - value.timeStamp > value.ttl * 1000) {
+          map.remove(entry.getKey)
         }
       }
     }
-
   }
 
 }

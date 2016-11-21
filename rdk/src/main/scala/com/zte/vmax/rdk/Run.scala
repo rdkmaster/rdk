@@ -82,7 +82,7 @@ object RdkServer {
   //MQ 处理路由
   val mqRouter: ActorRef = system.actorOf(Props[MQRouter], "mqRouter")
   //aging cache 检查老化
-  val agingActor:ActorRef =system.actorOf(Props[AgingCacheActor], "agingActor")
+  val agingActor:ActorRef = system.actorOf(Props[AgingCacheActor], "agingActor")
   //本RDK-server的唯一标识
   val uuid: String = UUID.randomUUID().toString
 
