@@ -132,10 +132,93 @@
                 delete ds.resultHandler;
                 delete ds.data;
                 delete ds.scope;
+                delete ds.syncQuery;
+                delete ds.syncAdd;
+                delete ds.syncUpdate;
+                delete ds.syncDelete;
 
                 EventService.remove(ds.id, EventTypes.RESULT);
                 ds.removed = true;
                 console.log('DataSource removed! id=' + ds.id);
+            }
+
+            function _syncCall(url, condition, config) {
+                var cfg = {
+                    cache: false,
+                    type: 'GET',
+                    dataType: 'json'
+                }
+
+                angular.extend(cfg, config);
+                cfg.async = false;
+                cfg.url = url;
+                cfg.type = cfg.type.toUpperCase();
+                if (!!condition && url.match(/^\s*\/rdk\/service\//) && cfg.type == 'GET') {
+                    //RDK服务
+                    cfg.url += encodeURI('?p=' + JSON.stringify(condition));
+                } else {
+                    cfg.data = condition;
+                }
+
+                var result = undefined;
+                cfg.success = function(data) {
+                    if (url.match(/^\s*\/rdk\/service\//)) {
+                        //标准rdk服务返回值是data.result
+                        try {
+                            result = eval('(' + data.result + ')');
+                        } catch(e) {
+                            result = data.hasOwnProperty('result') ? data.result : data;
+                        }
+                    } else {
+                        result = data;
+                    }
+                }
+                cfg.error = function(data, error, detail) {
+                    console.error('sync call "%s" error! detal: %s', url, detail);
+                }
+
+                $.ajax(cfg);
+                return result;
+            }
+
+            this.syncQuery = function(url, condition, config) {
+                if (!config) {
+                    config = {};
+                }
+                if (!config.hasOwnProperty('type')) {
+                    config.type = 'GET';
+                }
+                return _syncCall(url, condition, config);
+            }
+
+            this.syncAdd = function(url, condition, config) {
+                if (!config) {
+                    config = {};
+                }
+                if (!config.hasOwnProperty('type')) {
+                    config.type = 'PUT';
+                }
+                return _syncCall(url, condition, config);
+            }
+
+            this.syncUpdate = function(url, condition, config) {
+                if (!config) {
+                    config = {};
+                }
+                if (!config.hasOwnProperty('type')) {
+                    config.type = 'POST';
+                }
+                return _syncCall(url, condition, config);
+            }
+
+            this.syncDelete = function(url, condition, config) {
+                if (!config) {
+                    config = {};
+                }
+                if (!config.hasOwnProperty('type')) {
+                    config.type = 'DELETE';
+                }
+                return _syncCall(url, condition, config);
             }
 
             function DataSource(dsInfo) {
@@ -201,6 +284,11 @@
                         _dsService.remove(_this);
                     });
                 }
+
+                _this.syncQuery = _dsService.syncQuery;
+                _this.syncAdd = _dsService.syncAdd;
+                _this.syncUpdate = _dsService.syncUpdate;
+                _this.syncDelete = _dsService.syncDelete;
 
                 _this.query = function(condition,option) {
                     _ajax(condition, _this.queryMethod, EventTypes.QUERY_RESULT,option);
