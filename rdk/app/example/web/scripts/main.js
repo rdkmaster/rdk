@@ -20,6 +20,7 @@
 
     // 在这里把页面需要用到的 Angular module 一一列出来，包括所需的第三方 module
     // RDK定义的 Angular module 会被自动加入，无需再次添加
+    // 如果你没有用到第三方的 Angular module，那这里留空就好
     var requiredComponents = [ ];
 
     // downloadDependency 中带有 alias 的条目的返回值会被保存在这个对象中
