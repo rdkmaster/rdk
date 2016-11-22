@@ -55,6 +55,13 @@ data对象中应该包含以下**必填属性**：
 
 <live_demo example="controls/graph/ds" width="900"></live_demo>
 
+##width和height <binding></binding>##
+> 支持类型：number类型。
+
+width和height表示graph的宽和高，只支持数字不用加单位，默认单位都是px;width默认值为其父元素的100%;height默认值为300;
+
+<live_demo example="controls/graph/height-width" width="900"></live_demo>
+
 #事件#
 `rdk_graph`控件支持echart3中的所有常用的事件。
 
