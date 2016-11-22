@@ -25,12 +25,11 @@ return function(data, context, GraphService, attributes) {
 
 return {
     legend: {
-        top: 'top',
-        left: 'center',
         itemWidth: 12,
         itemHeight: 12,
-        itemGap:20,
-        top: 20,
+        itemGap:10,
+        top: 10,
+        left: 30,
         selectedMode: false,
         textStyle: {
             color: '#434343',
@@ -40,8 +39,8 @@ return {
     },
     title: {
         text: 'xxxx广告\n二级原因',
-        x: 'center',//主题位置
-        y: 'center',
+        x: '20%',//主题位置
+        y: '45%',
         textStyle : {
             color:'#333',
             fontFamily : '微软雅黑',
@@ -80,7 +79,8 @@ return {
             }
         },
         type:'pie',
-        radius: ['45', '57'],
+        radius: ['45', '63'],
+        center : ['30%', '50%'],
         avoidLabelOverlap: false,
         hoverAnimation:false,
        // itemStyle : ,
@@ -90,22 +90,22 @@ return {
                 show: false
             }
         },
-        data:[{
+       data:[{
                     name: data.data[0].name,
                     value: data.data[0].value,
-                    itemStyle:{normal: {color: '#398ec5'}}
+                    itemStyle:{normal: {color: '#6b598d'}}
                 }, {
                     name: data.data[1].name,
                     value: data.data[1].value,
-                    itemStyle:{normal: {color: '#68c2d0'}}
+                    itemStyle:{normal: {color: '#9793bd'}}
                 }, {
                     name: data.data[2].name,
                     value: data.data[2].value,
-                    itemStyle:{normal: {color: '#9fd7de'}}
+                    itemStyle:{normal: {color: '#c0b7da'}}
                 }, {
                     name: data.data[3].name,
                     value: data.data[3].value,
-                    itemStyle:{normal: {color: '#d8d8d8'}}
+                    itemStyle:{normal: {color: '#dad6e8'}}
         }]
     }]
 };

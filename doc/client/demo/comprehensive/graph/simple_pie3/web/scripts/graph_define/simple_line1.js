@@ -25,13 +25,12 @@ return function(data, context, GraphService, attributes) {
 
 return {
  legend: {
-        top: 'top',
-        left: 'center',
         itemWidth: 12,
         itemHeight: 12,
+        itemGap:10,
+        top: 10,
+        left: 30,
         selectedMode: false,
-        itemGap:20,
-        top: 20,
         textStyle: {
             color: '#434343',
             fontSize: 12,
@@ -44,8 +43,8 @@ return {
     },
     title: {
         text: '容量问题\n二级原因',
-        x: 'center',//主题位置
-        y: 'center',
+        x: '20%',//主题位置
+        y: '45%',
         textStyle : {
             color:'#333',
             fontFamily : '微软雅黑',
@@ -84,7 +83,8 @@ return {
             }
         },
         type:'pie',
-        radius: ['45', '57'],
+        radius: ['45', '63'],
+        center : ['30%', '50%'],
         avoidLabelOverlap: false,
         hoverAnimation:false,
        // itemStyle : ,
