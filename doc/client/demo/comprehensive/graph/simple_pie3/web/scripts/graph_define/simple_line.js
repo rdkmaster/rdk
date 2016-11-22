@@ -25,28 +25,29 @@ return function(data, context, GraphService, attributes) {
 
 return {
      legend: {
-        top: 'top',
-        left: 'center',
         itemWidth: 12,
         itemHeight: 12,
-        itemGap:20,
-        top: 20,
+        itemGap:10,
+        top: 30,
+        left: 30,
         selectedMode: false,
         textStyle: {
             color: '#434343',
             fontSize: 12,
         },
         data: data.header
-        //data:data.data,
     },
     tooltip: {
         trigger: 'item',
         formatter: "{a} <br/>{b}: {c} ({d}%)"
     },
+    grid: {
+        width: 200,
+    },
     title: {
         text: '接入失败\n一级原因',
-        x: 'center',//主题位置
-        y: 'center',
+        x: '20%',//主题位置
+        y: '65%',
         textStyle : {
             color:'#333',
             fontFamily : '微软雅黑',
@@ -85,12 +86,10 @@ return {
             }
         },
         type:'pie',
-        radius: ['45', '57'],
-        animation: true,
-        animationDelayUpdate: 1,
+        radius: ['45', '63'],
+        center : ['30%', '70%'],
         avoidLabelOverlap: false,
         hoverAnimation:false,
-       // itemStyle : ,
         selectedMode: 'single',
         labelLine: {
             normal: {
@@ -114,7 +113,12 @@ return {
                     name: data.data[3].name,
                     value: data.data[3].value,
                     itemStyle:{normal: {color: '#54acd5'}}
-        }]
+                },{
+                    name: data.data[4].name,
+                    value: data.data[4].value,
+                    itemStyle:{normal: {color: '#bea5c8'}}
+                }
+        ]
     }]
 };
 
