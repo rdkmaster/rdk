@@ -67,4 +67,4 @@ $(document).ready(function() {
 		var url = "version/rdk-runtime-environment" + edition.slice(edition.indexOf("v")+1,edition.indexOf("/")) + ".zip";
 		window.open(url,"_blank");
 	}) ;
-});  
+}); 

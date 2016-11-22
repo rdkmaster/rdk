@@ -54,8 +54,8 @@ describe('Comb_select combined Test',function(){
         var box=element(by.css(".demo4 .combo-content-transclude>div"));
         var li=element.all(by.css(".demo4 .selector li"));
         expect(li.count()).toBe(4);
-        expect(li.get(0).getText()).toBe('江苏省');
         comboSelector1.click();
+        expect(li.get(0).getText()).toBe('江苏省');
         li.get(0).click();
         var span = element(by.css(".demo4>span"));
         span.getText().then(function(txt){

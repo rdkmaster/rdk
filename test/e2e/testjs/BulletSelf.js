@@ -1,17 +1,13 @@
 'use strcit';
 describe('Bullet Self Test',function(){
-    // beforeEach(function(){
-    //     browser.get("test/e2e/testee/bullet/web/self.html");
-    //     browser.waitForAngular();
-    // });
     it('拖拽功能实现与限制',function(){
         browser.get("test/e2e/testee/bullet/web/self.html")
         .then(function(){
             browser.waitForAngular();
         });
         var sliders=element.all(by.css(".sliders .progress .slider"));
-        // browser.actions().mouseDown(sliders.get(0)).mouseMove(sliders.get(0))
-        // .mouseMove({x:30,y:70}).mouseUp({x:30,y:70}).perform();
+        browser.actions().mouseDown(sliders.get(0)).mouseMove(sliders.get(0))
+        .mouseMove({x:30,y:70}).mouseUp({x:30,y:70}).perform();
         
         // browser.actions().dragAndDrop(element.all(by.css(".sliders .progress .slider")).get(0),{x:30,y:70}).perform();
         // sliders.get(2).getLocation().then(function(loc){
@@ -36,7 +32,7 @@ describe('Bullet Self Test',function(){
         expect(bullet.getAttribute("class")).toBe("rdk-bullet-horizontal-module");
         //中心轴width:98% height:10px
         var bar=element(by.css(".horizontal .progress .progress-bar"));
-        expect(bar.getCssValue("width")).toBe("98%");
+        // expect(bar.getCssValue("width")).toBe("98%");浏览器解析是具体px值
         expect(bar.getCssValue("height")).toBe("10px");
         //每个滑块的对应的left值=480px*98%*数据百分比（默认最小0  最大100%）500px 去掉padding两边10px=>480px
         //案例用所给数据是 [10,20,50,87] 依次left为 47px 94px 235px 408.9px
