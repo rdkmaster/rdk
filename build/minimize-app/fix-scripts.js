@@ -1,11 +1,14 @@
 var fs = require('fs');
 var jschardet = require('jschardet');
 
-var rootPath = process.argv[2];
-if (!rootPath) {
-    console.log("usage:\n    node fix-scripts.js <path>");
+var appPath = process.argv[2];
+if (!appPath) {
+    console.log("usage:\n    node fix-scripts.js <path of index.html>");
     process.exit();
 }
+// 最后加上斜杠
+appPath = appPath.replace(/\\/g, '/');
+appPath = appPath.match(/\/$/) ? appPath : appPath + '/';
 
 ///////////////////////////////////////////////////////////////////
 //  模拟在浏览器中运行时的必要函数
@@ -13,27 +16,29 @@ global.define = function(name, deps, callback) {
     deps = typeof name === 'string' ? deps : name;
     global.dependencyArray = deps;
 }
+// app-basic.js中用到
 global.location = {
-    pathname: '/rdk/app/example/web/index.html'
+    // 这个appPath必须是index.html文件所在路径
+    pathname: appPath
 }
 //引入application的基础定义
 require(__dirname + '/../../rdk/app/libs/rdk/application.js');
 ///////////////////////////////////////////////////////////////////
 
 
-console.log("listing %s", rootPath);
-var scripts = listScripts(rootPath);
+console.log("listing %s", appPath);
+var scripts = listScripts(appPath);
 scripts.forEach(function(script) {
     fixScript(script);
 });
 
-function listScripts(root) {
-    var res = [] , files = fs.readdirSync(root);
+function listScripts(dir) {
+    var res = [] , files = fs.readdirSync(dir);
     files.forEach(function(file) {
-        var pathname = root+'/'+file, stat = fs.lstatSync(pathname);
+        var pathname = dir + file, stat = fs.lstatSync(pathname);
 
         if (stat.isDirectory()) {
-            res = res.concat(listScripts(pathname));
+            res = res.concat(listScripts(pathname+'/'));
         } else {
             if (pathname.match(/\.js$/i)) {
                 res.push(pathname);
@@ -59,7 +64,7 @@ function fixScript(script) {
     //backup file
     fs.renameSync(script, script + ".orignial");
 
-    //nodejs 和 requirejs 都有一个叫 require 的函数/属性，导致在编译时会有冲突
+    //nodejs 和 requirejs 都有一个叫 require 的函数/属性，导致在eval时会有冲突
     //编译时，给nodejs的require添加上必要的空函数以避免代码eval不过。
     var result = writeFile(script, 'require.config=function(){};' + content, charset);
     if (!result) {
