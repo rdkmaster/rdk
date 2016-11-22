@@ -45,9 +45,11 @@ return {
         width: 200,
     },
     title: {
-        text: '接入失败\n一级原因',
+        text: "接入失败",
         x: '20%',//主题位置
         y: '62%',
+        itemGap: 5,
+        subtext: "一级原因",
         textStyle : {
             color:'#333',
             fontFamily : '微软雅黑',

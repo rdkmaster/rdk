@@ -37,8 +37,14 @@ return {
         },
         data:  data.header
     },
+    tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+    },
     title: {
-        text: '视频广告\n二级原因',
+        text: '视频广告',
+        itemGap: 5,
+        subtext: "二级原因",
         x: '20%',//主题位置
         y: '42%',
         textStyle : {

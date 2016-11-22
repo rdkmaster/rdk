@@ -42,7 +42,9 @@ return {
         formatter: "{a} <br/>{b}: {c} ({d}%)"
     },
     title: {
-        text: '联盟广告\n二级原因',
+        text: '联盟广告',
+        itemGap: 5,
+        subtext: "二级原因",
         x: '20%',//主题位置
         y: '42%',
         textStyle : {
