@@ -70,6 +70,9 @@
     line-height: 16px;
 }
 
+.rdk-time-module .btn>span{
+    font-size: 14px;
+}
 .rdk-time-module .bootstrap-select.btn-group,
 .bootstrap-select.btn-group[class*="span"] {
     margin-bottom: 0px;
