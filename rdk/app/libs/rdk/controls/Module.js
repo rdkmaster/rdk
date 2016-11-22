@@ -1,6 +1,6 @@
 define(['rd.core'], function() {
-    var tabApp = angular.module("rd.controls.Module", ['rd.core']);
-    tabApp.directive('rdkModule', ['EventService', 'EventTypes', 'Utils', '$compile', '$controller', '$http', '$timeout',
+    var moduleApp = angular.module("rd.controls.Module", ['rd.core']);
+    moduleApp.directive('rdkModule', ['EventService', 'EventTypes', 'Utils', '$compile', '$controller', '$http', '$timeout',
         function(EventService, EventTypes, Utils, $compile, $controller, $http, $timeout) {
             return {
                 restrict: 'E',

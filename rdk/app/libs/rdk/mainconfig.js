@@ -66,6 +66,7 @@ require.config({
         "rd.controls.Time": "../rdk/controls/Time",
         "rd.controls.Tree": "../rdk/controls/Tree", 
         
+        "rd.services.PopupService": "../rdk/services/PopupService",
         "rd.services.Alert": "../rdk/services/Alert",
         "rd.services.DataSourceService": "../rdk/services/DataSourceService",
         "rd.services.EventService": "../rdk/services/EventService",
