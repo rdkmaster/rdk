@@ -1,74 +1,53 @@
 ## 新增功能
-- Tab控件支持Tab页可动态添加、删除
-- Tree控件开发
-- ButtonGroup控件开发
-- Button控件开发
-- 前端自动化测试框架protractor二次开发文档
-- time的setting要支持双绑，在外面设置时间，time里面的value要跟着变化
-- RDK数据库查询服务需要可以通过列名称来获取某行中的对应信息
-- 表格checkbox支持回填选中
-- 增加一个滚动条控件
-- rdk_tree unselect_on_blur(暴露一个事件出来用于清空之前选择的节点缓存的数据)
-- tab_select提交
-- [tab] 需支持close/change/add方法
-- Tree懒加载
-- rdk_tree监听check事件获取勾选节点数据
-- [tab] 标题栏打开的标签过多时，允许标题栏撑开转行，后期再优化成转行按钮
-- rdk_table控件选择某个节点后鼠标点击树控件外侧时 选择失效恢复最初没有选择状态
-- 实现将测试结果以浏览器类型区分文件夹(支持chrome、firefox同时测试)
-- [table] 不再暴露scope，pagesize动态更新需修正
-- [tab] 暴露controller提供方法给外部调用
-- 所有控件发事件方式对齐raiseControlEvent
-- 表格添加一个标题随着滚动条下拉而浮动的功能的开关属性以关掉这个功能。
-- 表格给发出的事件都添加对应的属性
-- 新增工单查询/工单处理/下载历史记录图标
+- RDK工程支持非标准部署方式
+- [table] 搜索框过滤支持外部给定过滤值，需要提供对应的方法。 
+- [table] 后端搜索过滤时，隐藏的列不允许出现在过滤栏。失焦时关闭搜索下拉框。
+- Table表格列头可定制功能重构
+- 表格自定义表头功能必须使用table作为根标签，现去除该约束
+- time控件加一个刷新属性“刷新间隔” 默认值0，刷新的时候把所有的和now有关的都刷新一下！
+- rdk官网下载页面完成 
+- [modal] 模态框支持拖动
+- rdk_time 和 rdk_combo_select的高度需要统一 
+- 后台文件操作API能否增加支持xml配置文件操作
+- 表格支持按行渲染功能
+- 后端服务优化：多进程+分布式，前端请求负载均衡
+- DataSourceService增加同步调用rest服务的方法
 
 
 ## 修改功能
 
-- table 控件 placeholder改为searchPrompt
-- 暴露控制器给app，准备替换掉先前的暴露控件的scope
-- 控件依赖的module全部改为rd.core
-- 上传离网用户预测图标
-- 新增一个数据源，2张图示例
-- rdk_main改为rdk-loading
-- 测试用例E2e 维护优化
-- 补充日期控件禁用当日功能demo
-- 后端修改日志级别error->info
-- 注释掉ums.locale配置，从环境读取
-- Alert控件样式对齐Ux设计
-- 补充[tab] 测试用例中动态新增tab的模板
-- 数据源支持删除
+- rdk_tree组件样式调整(字体不要那么大12-14px即可,节点上面的修改和删除图标改成下面的样式) 
+- [tab] 内容页去除tooltips形式的title
+- [tab] tabcontroller需要能取到initData里值
+- [tab] compileScope的销毁及多个controller下的close事件监听
+- rdk前端页面文档图片改成了14*14
+- BLOCK UI 手动添加开始和消失的时机 具体操作方式文档补充
+
 
 	
 ## 修复故障
 
-- #282 Tab控件外部事件TAB_SELECT没有根据id去广播
-- #275 Tab控件属性 toggleCondition=mouseover异常
-- #312 数据源发送post/put/delete请求的时候，RDK服务端包400 bad request
-- #226 Graph demo微调
-- #277 firefox打开的singleindicator文档中label_position下的示例点击right之后位置显示在下方
-- #276 firefox打开的“前端开发文档”中点击右侧文档结构栏中的子项无法跳转到其所处位置（只有少数可以跳转）
-- #229 修复给控制器打标记的逻辑，兼容scope是空的情况
-- #317 selectedTab不生效
-- #242 修复树livedemo的数据源为绝对路径
-- #247 分隔符样式合并到buttongroups
-- #250 树checkable/draggable这2个属性会引起树控制套报错
-- #328 [tab] tab标签撑满标题栏后，关闭按钮位置异常
-- #308 table后端过滤输入框如果添加了自定义列，输入的时候会有一个空白行，比如设置了一个删除按钮，搜索的时候会有空白
-- #309 table后端过滤，点击搜索按钮没用必须按确认键
-- #335 [tab] 切换Tab页后selectedTab没变化，导致没走watch的处理
-- #338 Tree有4个未暴露的事件回调，删除掉
-- #311 rdk_table集成的checkbox 偶尔选中不生效bug
-- #278 TabSelect 文档实例无法显示
-- #287 修复 加载路径
-- #288 Selector selected_items双向绑定未生效
-- #342 [table] 偶现表头不能点击
-- #299 修复类型匹配错误
-- #348 [table] serverpaging不影响数据上报，但后台有报错
-- #349 [table] addcheckbox全部选中时，滚动条拖动后全部选中的标记消失
-- #304 修改get-involved.md文档打开后描点位置不正确的BUG http://10.9.233.35:8080/doc/#get-involved.md#work-flow
-- #355 [comboselect] 空白处单击精简
-- #280 修改bullet控件横向，多个使用时候滑块挤在一起的BUG
-- #361 rdk_table search 搜索框不输入任何值的时候默认应该不过滤,目前不支持
-- #365 [table] 后端排序时多次进入ngRepeatFinished导致排序结果异常
+- #325 rdk控件中设置标注线长度不成功，还有另一个控件（二级表格标题控件）有类似问题！
+- #320 rdk_tab删除问题
+- #312 新增tab页 tab页对应的html内容中若含有modal框代码 rdk_modal=‘hide'失效 
+- #354 通过网址链接得到的是json对象字符串，不能转成java对象。 
+- #356 rdk_table拉动X方向滚动条悬浮列头消失
+- #369 修改 !291 时引入的新bug，独立运行时，RDK进程没有默认国际化语言
+- #373 time边框样式异常
+- #358 Panel的close 事件无效 
+- #353 Alert 非模态框模式bug
+- #372 [tab] destroy()中scope.compileScope.$destroy()对原来demo有影响
+- #160 scroller和time控件结合时，样式有冲突，time的时间粒度不能显示
+- #383 长沙XDR应用开发问题综合5项  
+- #381 Table 多级列头bug
+- #390 rdk_tree 当名字长度大于边框长度的时候，点不到树节点后面的编辑和修改，以及去除了编辑hover时候显示字体
+- #398 rdk_time 时间内容被遮住了，如下图 
+- #69 accordion 使用 ng-if 时报错
+- #364 table add_check_box 往下滑，选中表头的check-box,不会取消勾，但是会取消下面选项的勾
+- #413 Table控件，title为函数时，自定义的列，排序的列列头出现2个，更改数据源之后，列头变成三个
+- #404 issue#379 （Table控件事件触发的报错问题），现在select不报错，修改会报错，报错信息如下，并且原来显示的受影响的单元也不显示了
+- #403 Table 自动添加行编号，如果设置了page_size属性，在上一页和下一页之间切换，行编号会一直增加
+- #402 Table自定义列头，title为函数时，加上'rd.containers.Tab', 列头会出现两个
+- #389 自定义表列头Bug
+- #379 Table控件事件触发的报错问题
+- #415 area-selector控件测试用例页面数据异常
