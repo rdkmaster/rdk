@@ -42,7 +42,9 @@ return {
         formatter: "{a} <br/>{b}: {c} ({d}%)"
     },
     title: {
-        text: '设备问题\n二级原因',
+        text: '设备问题',
+        itemGap: 5,
+        subtext: "二级原因",
         x: '20%',//主题位置
         y: '42%',
         textStyle : {

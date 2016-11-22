@@ -37,8 +37,14 @@ return {
         },
         data:  data.header
     },
+    tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+    },
     title: {
-        text: 'xxxx广告\n二级原因',
+        text: 'xxxx广告',
+        itemGap: 5,
+        subtext: "二级原因",
         x: '20%',//主题位置
         y: '42%',
         textStyle : {
@@ -83,8 +89,6 @@ return {
         center : ['30%', '50%'],
         avoidLabelOverlap: false,
         hoverAnimation:false,
-       // itemStyle : ,
-        // selectedMode: 'single',
         labelLine: {
             normal: {
                 show: false

@@ -37,8 +37,14 @@ return {
         },
         data:  data.header
     },
+    tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+    },
     title: {
-        text: '联盟广告\n二级原因',
+        text: '联盟广告',
+        itemGap: 5,
+        subtext: "二级原因",
         x: '20%',//主题位置
         y: '42%',
         textStyle : {
@@ -56,7 +62,7 @@ return {
     },
         series: [
     {   
-        name: "Title2",
+        name:  "联盟广告<br/>二级原因",
         label : {
             normal: {
                 show: false,
