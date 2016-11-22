@@ -40,7 +40,7 @@ return {
     title: {
         text: '视频广告\n二级原因',
         x: '20%',//主题位置
-        y: '45%',
+        y: '42%',
         textStyle : {
             color:'#333',
             fontFamily : '微软雅黑',

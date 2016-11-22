@@ -47,7 +47,7 @@ return {
     title: {
         text: '接入失败\n一级原因',
         x: '20%',//主题位置
-        y: '65%',
+        y: '62%',
         textStyle : {
             color:'#333',
             fontFamily : '微软雅黑',
