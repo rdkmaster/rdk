@@ -77,23 +77,24 @@ describe('Tab Self test',function(){
         //整个rdk_tab高度根据标签定义分配，选项卡处为59px,在页面审查得知最终属于该测试块的高度仅为52px
         var item=element.all(by.css(".demo5 .rdk-tab-module ul li"));
         // item.get(0).click();
-        expect(element(by.css(".demo5 .rdk-tab-module .content")).getCssValue("height")).toBe("52px");
+        expect(element(by.css(".demo5 .rdk-tab-module .content")).getCssValue("height")).toBe("59px");
         item.get(1).click();
-        expect(element(by.css(".demo5 .rdk-tab-module .content")).getCssValue("height")).toBe("52px");
+        expect(element(by.css(".demo5 .rdk-tab-module .content")).getCssValue("height")).toBe("59px");
         item.get(2).click();
-        expect(element(by.css(".demo5 .rdk-tab-module .content")).getCssValue("height")).toBe("52px");
+        expect(element(by.css(".demo5 .rdk-tab-module .content")).getCssValue("height")).toBe("59px");
     });
     it('设置可见选项卡 可伸缩',function(){
-        var item=element.all(by.css(".demo6 .rdk-tab-module ul li a"));
+        expect(element.all(by.css(".demo6 .rdk-tab-module ul li")).count()).toBe(3);
+        var item=element.all(by.css(".demo6 .rdk-tab-module ul li"));
         item.get(2).click();
         browser.sleep(500);
         item.get(2).click();
         // 展开内容DIV3
-        expect(element(by.css(".demo6 .rdk-tab-module .content div[title='DIV3']")).getText()).toBe("DIV3");
+        expect(element.all(by.css(".demo6 .rdk-tab-module .content div[role='tabpanel']")).get(2).getText()).toBe("DIV3");
         item.get(2).click();
         browser.sleep(1000);
         //原本展开的div display属性为none(不存在dom中)
-        expect(element(by.css(".demo6 .rdk-tab-module .content div[title='DIV3']")).getCssValue("display")).toBe("none");
+        expect(element.all(by.css(".demo6 .rdk-tab-module .content div[role='tabpanel']")).get(2).getCssValue("display")).toBe("none");
     });
 
     it('动态新增TAB页',function(){

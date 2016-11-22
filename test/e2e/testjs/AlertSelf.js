@@ -11,7 +11,7 @@ describe('Alert Self Test',function(){
         //产生窗口、模态框
         var alert=element.all(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
         expect(alert.count()).toBe(3);
-        var array=['是','否','取消'];
+        var array=['YES','NO','CANCEL'];
         alert.each(function(item,index){
             expect(item.getAttribute('value')).toBe(array[index]);
         })
@@ -24,7 +24,7 @@ describe('Alert Self Test',function(){
         browser.sleep(300);
         var alert=element.all(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
         expect(alert.count()).toBe(1);
-        expect(alert.get(0).getAttribute('value')).toBe('确定');
+        expect(alert.get(0).getAttribute('value')).toBe('OK');
         alert.get(0).click();
     });
     it('添加message',function(){
@@ -45,13 +45,13 @@ describe('Alert Self Test',function(){
         var alert=element.all(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
         alert.get(0).click();
     });
-    // 1 2 4 8对应 是 否 确定 取消按钮
+    // 1 2 4 8对应 YES NO OK CANCEL按钮
     it('添加按钮1类型',function(){
         var btn=element(by.css(".demo1 button[ng-click='addBtn1()']"));
         btn.click();
         browser.sleep(300);
         var alert=element(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
-        expect(alert.getAttribute('value')).toBe("是");
+        expect(alert.getAttribute('value')).toBe("YES");
         alert.click();
     });
     it('添加按钮2类型',function(){
@@ -59,7 +59,7 @@ describe('Alert Self Test',function(){
         btn.click();
         browser.sleep(300);
         var alert=element(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
-        expect(alert.getAttribute('value')).toBe("否");
+        expect(alert.getAttribute('value')).toBe("NO");
         alert.click();
     });
     it('添加按钮4类型',function(){
@@ -67,7 +67,7 @@ describe('Alert Self Test',function(){
         btn.click();
         browser.sleep(300);
         var alert=element(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
-        expect(alert.getAttribute('value')).toBe("确定");
+        expect(alert.getAttribute('value')).toBe("OK");
         alert.click();
     });
     it('添加按钮8类型',function(){
@@ -75,17 +75,17 @@ describe('Alert Self Test',function(){
         btn.click();
         browser.sleep(300);
         var alert=element(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
-        expect(alert.getAttribute('value')).toBe("取消");
+        expect(alert.getAttribute('value')).toBe("CANCEL");
         alert.click();
     });
-    //组合类型 比如9=8+1 就是说按钮存在 是 和 取消 两种;10=8+2 以此类推
+    //组合类型 比如9=8+1 就YES说按钮存在 YES 和 CANCEL 两种;10=8+2 以此类推
     it('添加按钮9类型',function(){
         var btn=element(by.css(".demo1 button[ng-click='addBtn9()']"));
         btn.click();
         browser.sleep(300);
         var alert=element.all(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
-        expect(alert.get(0).getAttribute('value')).toBe("是");
-        expect(alert.get(1).getAttribute('value')).toBe('取消');
+        expect(alert.get(0).getAttribute('value')).toBe("YES");
+        expect(alert.get(1).getAttribute('value')).toBe('CANCEL');
         alert.get(0).click();
     });
     it('添加按钮10类型',function(){
@@ -93,8 +93,8 @@ describe('Alert Self Test',function(){
         btn.click();
         browser.sleep(300);
         var alert=element.all(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
-        expect(alert.get(0).getAttribute('value')).toBe("否");
-        expect(alert.get(1).getAttribute('value')).toBe('取消');
+        expect(alert.get(0).getAttribute('value')).toBe("NO");
+        expect(alert.get(1).getAttribute('value')).toBe('CANCEL');
         alert.get(0).click();
     });
     it('添加按钮12类型',function(){
@@ -102,8 +102,8 @@ describe('Alert Self Test',function(){
         btn.click();
         browser.sleep(300);
         var alert=element.all(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
-        expect(alert.get(0).getAttribute('value')).toBe("取消");
-        expect(alert.get(1).getAttribute('value')).toBe('确定');
+        expect(alert.get(0).getAttribute('value')).toBe("CANCEL");
+        expect(alert.get(1).getAttribute('value')).toBe('OK');
         alert.get(0).click();
     });
     
@@ -114,7 +114,7 @@ describe('Alert Self Test',function(){
         //产生窗口、模态框
         var alert=element.all(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
         expect(alert.count()).toBe(2);
-        var array=['取消','确定'];
+        var array=['CANCEL','OK'];
         alert.each(function(item,index){
             expect(item.getAttribute('value')).toBe(array[index]);
         })
