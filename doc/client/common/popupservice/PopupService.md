@@ -7,7 +7,7 @@
 
 *PopupService* 提供了两个可调用的方法：
 
-## Popup ##
+## popup ##
 
 *基本用法*
 
@@ -26,23 +26,23 @@
 
 *出参说明*
 
-		var moduleID 返回的是弹出模块的ID，后面用户可以用这个ID销毁弹出框
+		返回的是弹出模块的ID，后面用户可以用这个ID销毁弹出框
 
 ## removePopup ##
 
 **注意** 
 
-1、如果是主控制器上关闭弹出框，直接使用 *popup()* 方法缓存的出参 *moduleID* 即可。
+1、如果是主控制器上关闭弹出框，直接使用 *popup()* 方法缓存的出参 *moduleID* 销毁即可。
 
-2、如果是在自己编写的模板控制器上关闭弹出框， *scope.$moduleId* 即可获取弹出框模块ID。
+		scope.destroyHandler = function(){
+             PopupService.removePopup(moduleID);//主控制器上直接取popup()缓存的moduleID
+         }
 
-*基本用法*
 
-        	PopupService.removePopup(scope.$moduleId);//模板控制器上这样获取moduleID
-				或者
-			 scope.destroyHandler = function(){
-	             PopupService.removePopup(moduleID);//主控制器上直接取popup()缓存的moduleID
-	         }
+
+2、如果是在自己编写的模板控制器上关闭弹出框， *scope.$moduleId* 即可获取弹出框模块ID进行销毁。
+
+        PopupService.removePopup(scope.$moduleId);//模板控制器上这样获取moduleID
 
 
 ***
