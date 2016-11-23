@@ -609,8 +609,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             changeData['rowIndex'] = row;
                             changeData['columnIndex'] = column;
                             changeData['cells'] = cells;
-
                             EventService.raiseControlEvent(scope, 'change', changeData);
+
+                            scope.data.data[row][column] = $(inputTarget).val();
                         }
 
                         scope.inputPressHandler = function(event, row, columnDef, itemRowSpan, filterIndex) { //input上的event
