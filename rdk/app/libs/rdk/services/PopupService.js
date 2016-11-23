@@ -1,4 +1,4 @@
-﻿define(['angular', 'rd.core', 'jquery-ui', 'rd.controls.Module'], function(){
+﻿define(['angular', 'rd.core', 'jquery-ui', 'rd.controls.Module', 'css!rd.styles.PopupService'], function(){
     var popupModule = angular.module('rd.services.PopupService', []);
     popupModule.service('PopupService', ['$rootScope', 'EventService', 'EventTypes', 'Utils', '$compile',function($rootScope, EventService, EventTypes, Utils, $compile){
         var popupService = this;
@@ -11,6 +11,7 @@
             $(document.body).append(moduleHtml);
             $compile($('#'+mainModuleID))($rootScope.$$childHead);  
 
+            $('#'+mainModuleID).css({'display': 'none'});//避免load进来时刹那的显现
             EventService.register(mainModuleID, EventTypes.READY, _readyHandler);
             rdk[mainModuleID].loadModule(initData); 
             return mainModuleID;
@@ -19,11 +20,15 @@
                 EventService.remove(mainModuleID, EventService, _readyHandler);
                 var status = Utils.isTrue(moduleStatus, true);
                 $('#'+mainModuleID).dialog({
-                    modal: status, 
+                    modal: status,  
+                    show: {effect:'scale'},  //blind,clip,drop,explode,fold,puff,slide,scale,size,pulsate
+                    hide: {effect:'scale'},  
                     close: function(ev, ui) {
                         _destroyPopupModule(mainModuleID);
                     }
                 });
+                $('.ui-dialog').addClass('rdk-popupservice-module');//调整样式
+                $('#'+mainModuleID).css({'display': ''});
             }
         }
 
