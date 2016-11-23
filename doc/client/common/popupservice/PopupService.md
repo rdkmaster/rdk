@@ -19,8 +19,8 @@
 
 ### 入参说明
 
-1. sampleUrl 是需要动态加载的模板路径
-2. initData 是模板的初始化数据，可以被模板内部定义的同名变量覆盖
+1. sampleUrl 字符串，必选。是需要动态加载的模板路径
+2. initData json对象，可选。是模板的初始化数据，可以被模板内部定义的同名变量覆盖
 3. moduleStatus 缺省时默认为 true 代表模态弹出，设置成false时代表弹出框非模态
 4. effect 弹出框特效，缺省时默认为'scale'。支持设置的特效属性有：blind,clip,drop,explode,fold,puff,slide,scale,size,pulsate 
 
