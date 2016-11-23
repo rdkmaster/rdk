@@ -1,10 +1,12 @@
 package com.zte.vmax.rdk.db
 
 import java.sql.Connection
-import javax.sql.{DataSource=>SqlDataSource}
-import com.zte.vmax.rdk.db.Defines.{DbPoolInfo, DatabaseInfo}
+import javax.sql.{DataSource => SqlDataSource}
+
+import com.zte.vmax.rdk.db.Defines.{DatabaseInfo, DbPoolInfo}
+
+import com.zte.vmax.rdk.loader.RdkClassLoader
 import com.zte.vmax.rdk.util.Logger
-import org.apache.tomcat.dbcp.dbcp.BasicDataSource
 
 /**
   * Created by 10054860 on 2016/9/20.
@@ -20,12 +22,12 @@ object DBPoolFactory {
   }
 }
 
-private class DbcpConnectionPool(dbInfo: DatabaseInfo, poolInfo: DbPoolInfo) extends DBPool with Logger{
+private class DbcpConnectionPool(dbInfo: DatabaseInfo, poolInfo: DbPoolInfo) extends DBPool with Logger {
   private lazy val dataSource: SqlDataSource = initDataSource
 
   def initDataSource: SqlDataSource = {
-    val bs: BasicDataSource = new BasicDataSource
-
+    val bs: RdkBasicDataSource = new RdkBasicDataSource
+    bs.setDriverClassLoader(RdkClassLoader)
     bs.setDriverClassName(dbInfo.driver)
     bs.setUrl(dbInfo.url)
 
