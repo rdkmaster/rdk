@@ -11,8 +11,6 @@ define('main', ['rd.controls.Module', 'rd.services.PopupService', 'sample_module
     rdk.$injectDependency(['rd.controls.Module', 'rd.services.PopupService']);
 
     rdk.$ngModule.controller('rdk_ctrl', ['$scope', 'Utils', '$compile', 'PopupService', function(scope, Utils, $compile, PopupService) {
-
-        PopupService.scope = scope;
         
         var moduleID;
 
