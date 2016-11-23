@@ -23,7 +23,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinished" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)">\
                                     {{columnDef.title}}\
                                     <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
-                                    <i ng-if="columnDef.sortable && curSortCol($index)" class="rdk-table-icon" ng-class="{true:\'rdk-table-sort-down\',false:\'rdk-table-sort-up\'}[columnDef.sortIconStatus]"></i>\
+                                    <i ng-if="columnDef.sortable && curSortCol($index)" class="rdk-table-icon" ng-class="{true:\'rdk-table-sort-down\',false:\'rdk-table-sort-up\'}[changeSortIconStatus($index)]"></i>\
                                 </th>\
                             </tr>\
                         </thead>\
@@ -453,7 +453,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         scope.innerID = Utils.createUniqueId('table_inner_');
 
                         //后端排序开关
-                        scope.serverSortCache = false;             
+                        scope.serverSortCache = false;
 
                         //表头开关
                         $timeout(function(){
@@ -630,23 +630,19 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         }
 
                         var curSortIndex;
+                        var sortIconStatus=true;
                         scope.sortHandler = function(iCol, columnDef) {
                             if (!columnDef.sortable) return;
                             if(curSortIndex!==iCol){
-                                columnDef.sortIconStatus=false;
-
-                            }else{
-                                columnDef.sortIconStatus=!columnDef.sortIconStatus;
+                                sortIconStatus=true;
                             }
+                            sortIconStatus=!sortIconStatus;
                             curSortIndex=iCol;
-
                             var table = element[0].querySelector('.sticky-enabled');
-
                             if (scope.pagingType == "server") {
                                 scope.serverSortCache = true;
                                 if (table.sortCol == iCol) {
-                                    table.direction.reverse();
-                                    _loadSortDataFromServer(columnDef.data, table.direction[0]);
+                                    _loadSortDataFromServer(columnDef.data, sortIconStatus?'desc':'asc');
                                 } else { //不是先前列
                                     _loadSortDataFromServer(columnDef.data, 'asc');
                                 }
@@ -665,6 +661,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         scope.curSortCol=function(index){
                             return curSortIndex===index;
                         };
+                        scope.changeSortIconStatus=function(index){
+                            return curSortIndex===index &&  sortIconStatus;
+                        };
+
                         scope.ifSelected = function(item) {
                             return item.$$hashKey == scope.selectedModel.$$hashKey;
                         };
@@ -727,7 +727,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                         scope.$on('ngRepeatFinished', function() {
                             _fixTableHeader();
-                            
+
                             scope.refreshSingleCurrentPage();
                             _serverSortResponse();//后端排序，刷新后的响应
                             _searchGapClick();
@@ -751,7 +751,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         $(element.find("table")).fixHeader();//wrapper->[sticky-wrap]->sticky-enabled->[sticky-thead]
                         _afterFixHeader();
                         if(scope.floatableHeader) return;
-                        $(element[0].querySelector('.sticky-thead')).remove();                        
+                        $(element[0].querySelector('.sticky-thead')).remove();
                     }
 
                     function _beforeFixHeader(){
@@ -766,7 +766,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     function _afterFixHeader(){
                         if(scope.setting && scope.setting.scrollX) {
                             var handDragElement = element[0].querySelector(".sticky-wrap");//拖动产生在这层
-                            $(handDragElement).addClass("sticky-wrap-overflow"); 
+                            $(handDragElement).addClass("sticky-wrap-overflow");
                         }
                         $compile($(element[0].querySelector('.sticky-thead th:first-child')))(scope);
                     }
@@ -1016,7 +1016,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             columnDef.editable = false;
                             columnDef.name = scope.i18n.searchBy + scope.data.header[i] + scope.i18n.search;
                             columnDef.hasSort=false; //此列是否有点击过进行排序
-                            columnDef.sortIconStatus=true; //此列排序状态（升，降）
+                            //columnDef.sortIconStatus=true;  todo:数据刷新columnDefs会被重置
                             scope.columnDefs.push(columnDef);
                         }
 

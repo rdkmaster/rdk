@@ -36,11 +36,19 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                 var perfectOptions = angular.extend(defaultOptions, scrollOptions);
                 iElement.css({position: 'relative',overflow: 'hidden'}); //滚动条容器必要的样式
                 perfectScroll.initialize(container,perfectOptions);  //初始化滚动条
+                //获取滚动槽的样式宽度
+                var railOffsetWidth=getCurrentStyle(container.querySelector(".ps-scrollbar-y-rail"))["width"];
                 perfectScroll.lazyResize=function(){  //DOM元素内容不确定是否加载完，滚动条进行延时加载处理
                     if (hlazyResize) clearTimeout(hlazyResize);
                     hlazyResize = setTimeout(function(){
                         perfectScroll.update(container);
-                    },200);
+                        if(container.querySelector(".ps-scrollbar-y").offsetHeight==0)
+                        {
+                            container.querySelector(".ps-scrollbar-y-rail").style.width=0;
+                        }else {
+                            container.querySelector(".ps-scrollbar-y-rail").style.width=railOffsetWidth;
+                        }
+                    },50);
                 };
 
                 perfectScroll.lazyResize();
@@ -50,36 +58,68 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                     //观察配置对象,观察所有子节点(包括子节点和子节点的子节点)
                     var observerOption={
                         'childList': true,
-                        'subtree': true
+                        'attributes':true,
+                        'characterData':true,
+                        'subtree': true,
+                        'attributeOldValue':true
                     };
-                    //观察DOM树变动,更新滚动条
-                    perfectScroll.observer=new MutationObserver(
-                        function(mutations){
-                            perfectScroll.lazyResize();
+                    //观察子节点变动,更新滚动条,
+                    perfectScroll.observerList=[];
+                    for(var i= 0 , len=container.children.length ; i<len ; i++){
+                        //过滤滚动条节点的观察
+                        if(!(container.children[i].classList.contains("ps-scrollbar-x-rail") || container.children[i].classList.contains("ps-scrollbar-y-rail")))
+                        {
+                            perfectScroll.observer=new MutationObserver(perfectScroll.lazyResize);
+                            perfectScroll.observer.observe(container.children[i], observerOption);
+                            perfectScroll.observerList.push(perfectScroll.observer);
                         }
-                    ).observe(container, observerOption);
-                    //观察滚动条注销，取消观察
+                    }
+                    //观察自己
+                    perfectScroll.observer=new MutationObserver(perfectScroll.lazyResize);
+                    perfectScroll.observer.observe(container, {
+                        'childList': true,
+                        'attributes':true,
+                        'characterData':true,
+                        'subtree': false
+                    });
+                    perfectScroll.observerList.push(perfectScroll.observer);
+
+                    //dom注销，取消观察对象
                     perfectScroll.observerRemover = new MutationObserver(
                         function(mutations) {
                             mutations.forEach(function(mo) {
-                            if (mo.removedNodes.length > 0) {
-                                for (var dom in mo.removedNodes) {
-                                    if (mo.removedNodes[dom] == container)
-                                    {
-                                        perfectScroll.observer.disconnect();
+                                if (mo.removedNodes.length > 0) {
+                                    for (var dom in mo.removedNodes) {
+                                        if (mo.removedNodes[dom] == container)
+                                        {
+                                            perfectScroll.observerList.forEach(function(observer){
+                                                observer.disconnect();
+                                            });
+                                            perfectScroll.observer.disconnect();
+                                            perfectScroll.observerList=[];
+                                        }
                                     }
                                 }
-                            }
+                            });
                         });
-                    }).observe(container.parentNode, observerOption);
+                    perfectScroll.observerRemover.observe(container.parentNode, observerOption);
                 }
                 scope.$on('$destroy', function () { // 注册'$destroy'事件来删除任何易于内存泄漏的代码。
                     if (angular.isDefined(container)) {
                         perfectScroll.destroy(container);
                     }
                 });
+
+                function getCurrentStyle(node) {
+                    var style = null;
+                    if(window.getComputedStyle) {
+                        style = window.getComputedStyle(node, null);
+                    }else{
+                        style = node.currentStyle;
+                    }
+                    return style;
+                }
             }
         }]);
+
 });
-
-
