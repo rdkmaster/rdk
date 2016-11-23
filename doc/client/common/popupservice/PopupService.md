@@ -34,22 +34,18 @@
 
 1、如果是在模块外部需要关闭弹出框，直接使用 *popup()* 方法缓存的出参 *moduleID* 销毁即可。
 
-```
-var mid = PopupService.popup(...);
+	var mid = PopupService.popup(...);
 
-....
+	....
 
-//取popup()返回的id
-PopupService.removePopup(mid);
-```
+	//取popup()返回的id
+	PopupService.removePopup(mid);
 
 2、如果需要在模块内部关闭弹出框，使用 *scope.$moduleId* 即可。
 
-```
-PopupService.removePopup(scope.$moduleId);//模板控制器上这样获取moduleID
-```
+    PopupService.removePopup(scope.$moduleId);//模板控制器上这样获取moduleID
 
 
-***
+
 *PopupService* 示例如下：
 <live_demo example="common/popupservice/demo4loadModule" width="900" height="400"></live_demo>
