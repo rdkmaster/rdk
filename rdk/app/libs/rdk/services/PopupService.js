@@ -1,20 +1,22 @@
 ﻿define(['angular', 'rd.core', 'jquery-ui', 'rd.controls.Module'], function(){
     var popupModule = angular.module('rd.services.PopupService', []);
-    popupModule.service('PopupService', ['EventService', 'EventTypes', 'Utils', '$compile',function(EventService, EventTypes, Utils, $compile){
+    popupModule.service('PopupService', ['$rootScope', 'EventService', 'EventTypes', 'Utils', '$compile',function($rootScope, EventService, EventTypes, Utils, $compile){
         var popupService = this;
 
-        this.popup = function(moduleSource, initData, moduleStatus){
-            if(popupService.scope == undefined) return;
-            var moduleFractionStr = Utils.getHtmlFraction(moduleSource);
+        this.popup = function(source, initData, moduleStatus){
+            var moduleFractionStr = '<rdk_module load_on_ready="false" url=' + source + '></rdk_module>';
             var moduleHtml = $(moduleFractionStr);
             var mainModuleID = Utils.createUniqueId('mainModule_');
             moduleHtml.attr('id', mainModuleID);
             $(document.body).append(moduleHtml);
-            $compile($('#'+mainModuleID))(popupService.scope);  
+            $compile($('#'+mainModuleID))($rootScope.$$childHead);  
 
+            EventService.register(mainModuleID, EventTypes.READY, _readyHandler);
             rdk[mainModuleID].loadModule(initData); 
+            return mainModuleID;
 
-            EventService.register(mainModuleID, EventTypes.READY, function(event, data){
+            function _readyHandler(){
+                EventService.remove(mainModuleID, EventService, _readyHandler);
                 var status = Utils.isTrue(moduleStatus, true);
                 $('#'+mainModuleID).dialog({
                     modal: status, 
@@ -22,9 +24,7 @@
                         _destroyPopupModule(mainModuleID);
                     }
                 });
-            })
-
-            return mainModuleID;
+            }
         }
 
         this.removePopup = function(moduleID){
@@ -35,7 +35,7 @@
             $('#'+moduleID).remove();
             rdk[moduleID].destroyModule();
             delete rdk[moduleID];            
-        }
+        }      
     }])
 })
 

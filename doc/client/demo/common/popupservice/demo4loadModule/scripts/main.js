@@ -13,17 +13,17 @@ define('main', ['rd.controls.Module', 'rd.services.PopupService', 'sample_module
     rdk.$ngModule.controller('rdk_ctrl', ['$scope', 'Utils', '$compile', 'PopupService', function(scope, Utils, $compile, PopupService) {
 
         PopupService.scope = scope;
-
-        scope.sampleUrl = '/doc/client/demo/common/popupservice/demo4loadModule/template/sample_module.html'
+        
+        var moduleID;
 
         scope.load = function(){
-            var moduleUrl = '/doc/client/demo/common/popupservice/demo4loadModule/template/main_module.html';
+            var sampleUrl = '/doc/client/demo/common/popupservice/demo4loadModule/template/sample_module.html';
             var initData = {myData: 'load module manually...'};
-            scope.moduleID = PopupService.popup(moduleUrl, initData, false);
+            moduleID = PopupService.popup(sampleUrl, initData, false);
         }
 
-        scope.destroyHandler = function(){
-            PopupService.removePopup(scope.moduleID);
-        }
+        // scope.destroyHandler = function(){
+        //     PopupService.removePopup(moduleID);
+        // }
     }]);
 });
