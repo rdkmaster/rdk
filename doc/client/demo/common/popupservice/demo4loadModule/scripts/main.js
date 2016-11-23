@@ -17,7 +17,7 @@ define('main', ['rd.controls.Module', 'rd.services.PopupService', 'sample_module
         scope.load = function(){
             var sampleUrl = '/doc/client/demo/common/popupservice/demo4loadModule/template/sample_module.html';
             var initData = {myData: 'load module manually...'};
-            moduleID = PopupService.popup(sampleUrl, initData, false);
+            moduleID = PopupService.popup(sampleUrl, initData, false, 'explode');
         }
 
         // scope.destroyHandler = function(){

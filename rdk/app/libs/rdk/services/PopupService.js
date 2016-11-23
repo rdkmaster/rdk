@@ -3,7 +3,7 @@
     popupModule.service('PopupService', ['$rootScope', 'EventService', 'EventTypes', 'Utils', '$compile',function($rootScope, EventService, EventTypes, Utils, $compile){
         var popupService = this;
 
-        this.popup = function(source, initData, moduleStatus){
+        this.popup = function(source, initData, moduleStatus, effect){
             var moduleFractionStr = '<rdk_module load_on_ready="false" url=' + source + '></rdk_module>';
             var moduleHtml = $(moduleFractionStr);
             var mainModuleID = Utils.createUniqueId('mainModule_');
@@ -19,10 +19,11 @@
             function _readyHandler(){
                 EventService.remove(mainModuleID, EventService, _readyHandler);
                 var status = Utils.isTrue(moduleStatus, true);
+                var actualEffect = effect || 'scale';
                 $('#'+mainModuleID).dialog({
                     modal: status,  
-                    show: {effect:'scale'},  //blind,clip,drop,explode,fold,puff,slide,scale,size,pulsate
-                    hide: {effect:'scale'},  
+                    show: {effect: actualEffect},  //blind,clip,drop,explode,fold,puff,slide,scale,size,pulsate
+                    hide: {effect: actualEffect},  
                     close: function(ev, ui) {
                         _destroyPopupModule(mainModuleID);
                     }
