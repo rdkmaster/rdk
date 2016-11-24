@@ -15,7 +15,8 @@
         var initData = {myData: 'load module manually...'};
 		var moduleStatus = false;
 		var effect = 'explode';
-        var moduleID = PopupService.popup(sampleUrl, initData, moduleStatus, effect);
+		var dialogID = 'dialog_id'
+        var moduleID = PopupService.popup(sampleUrl, initData, moduleStatus, effect, dialogID);
 
 ### 入参说明
 
@@ -23,6 +24,7 @@
 2. initData json对象，可选。是模板的初始化数据，可以被模板内部定义的同名变量覆盖
 3. moduleStatus 缺省时默认为 true 代表模态弹出，设置成false时代表弹出框非模态
 4. effect 弹出框特效，缺省时默认为'scale'。支持设置的特效属性有：blind,clip,drop,explode,fold,puff,slide,scale,size,pulsate 
+5. dialogID 弹出框id，缺省时弹出框没有id属性。设置该属性可以用于样式覆盖。
 
 ### 出参说明
 
@@ -49,3 +51,28 @@
 
 *PopupService* 示例如下：
 <live_demo example="common/popupservice/demo4loadModule" width="900" height="400"></live_demo>
+
+## Style ##
+
+要覆盖弹出框原有样式，可以利用 *popup()* 中的第五个入参 *dialogID* 。在用户自定义 *css* 文件时，通过覆盖样式文件 *rdk-PopupService-style.css* 中的各样样式，以实现用户的样式定制。
+
+### 基本用法
+
+	var moduleID = PopupService.popup(sampleUrl, initData, false, 'explode', 'dialogID');
+
+	...以下是css文件中的样式定义...
+
+	#dialogID{
+		border: 5px solid green;
+	}
+	
+	#dialogID .rdk-popupservice-titlebar{
+		background-color: red;
+	}
+	
+	#dialogID .rdk-popupservice-content{
+		background-color: blue;
+	}
+
+*PopupService* 样式覆盖示例如下：
+<live_demo example="common/popupservice/demo4css" width="900" height="400"></live_demo>

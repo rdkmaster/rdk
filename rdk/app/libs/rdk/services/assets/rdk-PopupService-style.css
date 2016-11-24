@@ -1,4 +1,18 @@
-.rdk-popupservice-module{
+.rdk-popupservice-dialog{
 	padding: 0;
 	margin: 0;
+}
+
+.rdk-popupservice-dialog .rdk-popupservice-titlebar{
+	padding: 6px 2px;
+}
+
+.rdk-popupservice-dialog .rdk-popupservice-content{
+	margin: 0;
+	padding: 0;
+}
+
+.rdk-popupservice-dialog .rdk-popupservice-titlebar i{
+	float: left;
+	margin: 5px;
 }
