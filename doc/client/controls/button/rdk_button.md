@@ -12,14 +12,14 @@
 ---
 # 属性 #
 
-## label <binding></binding> ##
+## label ##
 > 支持类型：字符串。
 
 label 用于按钮文字说明 ，支持双绑。默认值""。
 
 <live_demo example="controls/button/label" width="900"></live_demo>
 
-## icon <binding></binding>  ##
+## icon ##
 > 支持类型：字符串。
 
 icon 按钮图标,放在文字说明的前面,支持双绑，值为图标路径时显示图标，其值为false时不显示，默认值为false。icon同时也支持符号。
@@ -51,7 +51,7 @@ enabled 表示按钮当前是否可响应单击，默认值true，支持双绑�
 
 <live_demo example="controls/button/enabled" width="900"></live_demo>
 
-## tooltip <binding></binding> ##
+## tooltip ##
 > 支持类型：字符串。
 
 tooltip 表示按钮的tooltip，支持双绑。
@@ -65,7 +65,7 @@ click 表示按钮单击之后的回调函数。
 
 <live_demo example="controls/button/click" width="900"></live_demo>
 
-## type <binding></binding>##
+## type ##
 > 支持类型：字符串。
 
 type 表示按钮的不用样式，目前只有3种样式，分别为 normal,danger,guidance ,默认值为normal。
