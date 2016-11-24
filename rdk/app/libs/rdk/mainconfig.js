@@ -66,6 +66,7 @@ require.config({
         "rd.controls.Time": "../rdk/controls/Time",
         "rd.controls.Tree": "../rdk/controls/Tree", 
         
+        "rd.services.PopupService": "../rdk/services/PopupService",
         "rd.services.Alert": "../rdk/services/Alert",
         "rd.services.DataSourceService": "../rdk/services/DataSourceService",
         "rd.services.EventService": "../rdk/services/EventService",
@@ -73,6 +74,7 @@ require.config({
         "rd.services.NodeService": "../rdk/services/NodeService",
         "rd.services.Utils": "../rdk/services/Utils",
 
+        "rd.styles.PopupService": "../rdk/services/assets/rdk-PopupService-style",
         "rd.styles.Accordion": "../rdk/containers/assets/rdk-accordion-style",
         "rd.styles.Alert": "../rdk/services/assets/rdk-Alert-style",
         "rd.styles.Area": "../rdk/controls/assets/rdk-area-style",

@@ -1,0 +1,18 @@
+.sampleClass{
+	border: 1px solid blue;
+	margin: 6px;
+	padding: 6px;
+  	background-color: yellow;
+}
+
+#dialogID{
+	border: 5px solid green;
+}
+
+#dialogID .rdk-popupservice-titlebar{
+	background-color: red;
+}
+
+#dialogID .rdk-popupservice-content{
+	background-color: blue;
+}
