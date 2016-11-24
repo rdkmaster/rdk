@@ -54,9 +54,11 @@
 
 ## Style ##
 
+### 弹出框样式
+
 要覆盖弹出框原有样式，可以利用 *popup()* 中的第五个入参 *dialogID* 。在用户自定义 *css* 文件时，通过覆盖样式文件 *rdk-PopupService-style.css* 中的各样样式，以实现用户的样式定制。
 
-### 基本用法
+#### 基本用法
 
 	var moduleID = PopupService.popup(sampleUrl, initData, false, 'explode', 'dialogID');
 
@@ -73,6 +75,21 @@
 	#dialogID .rdk-popupservice-content{
 		background-color: blue;
 	}
+
+### 标题和图标
+
+弹出框的标题和图标，读取的是用户自定义的模板的 *caption* 及 *icon* 属性。缺省时为空。
+
+<font color=red>**注意**</font> *icon* 目前只支持 *font-awesome* 标准图标。譬如 
+`<i class="fa fa-windows">`
+
+#### 基本用法
+
+	<div controller="SampleModuleController" class='sampleClass' caption='弹出框标题' icon='<i class="fa fa-windows"></i>'>
+	    ...
+	</div>
+
+
 
 *PopupService* 样式覆盖示例如下：
 <live_demo example="common/popupservice/demo4css" width="900" height="400"></live_demo>
