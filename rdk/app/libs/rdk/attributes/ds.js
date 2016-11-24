@@ -49,4 +49,13 @@ define(['rd.services.DataSourceService'], function() {
             }
         }
     })
+    .directive('rdkTheme', function($timeout) {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attr) {
+                console.log(attr,element,scope);
+                element.addClass(attr.rdkTheme);
+           }
+        }
+    })
 });
