@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/doc/client/demo/common/theme/themeTable/css/simple_tab1.css">
+    <title>Tab -> Search</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="/doc/client/demo/common/theme/themeTable/scripts/main.js"></script>
+    <script type="text/javascript">
+    require.config({
+        paths: {
+            //这里引用了rdk应用的公共助手文件，不要改动
+            "application": '/doc/tools/doc_js/doc_app_helper',
+        }
+    });
+    </script>
+    <style type="text/css">
+        .selecter{
+            display: none;
+        }
+    </style>
+</head>
+
+<body ng-controller='myCtrl'>
+
+    <button style="margin-top: 50px">点击一下</button><br>
+
+   点击一下可以给控件加一个主题2 rdk_theme="rdk-theme-table2" ，再点一下会移除主题2  rdk_theme="rdk-theme-table2"<br>
+
+    <div class="hao images_down">
+        <span class="title">全城通信</span>
+        <span class='images_right' ng-click="images()" ></span>
+        <rdk_table ds="ds_table" ds-url="/doc/client/demo/controls/table/mockdata/table_paging" ds_query_if="ready" page-size="6" setting="setting" page_number ="4" search="true" searchprompt="搜索一下">
+        </rdk_table>
+    </div>
+    <div class="hao images_down selecter">
+        <span class="title">全城通信</span>
+        <span class='images_right' ng-click="images()" ></span>
+        <rdk_table ds="ds_table" rdk_theme="rdk-theme-table2" ds-url="/doc/client/demo/controls/table/mockdata/table_paging" ds_query_if="ready" page-size="6" setting="setting" page_number ="4" search="true" searchprompt="搜索一下">
+        </rdk_table>
+    </div>
+</body>
+</html>

@@ -53,7 +53,6 @@ define(['rd.services.DataSourceService'], function() {
         return {
             restrict: 'A',
             link: function(scope, element, attr) {
-                console.log(attr,element,scope);
                 element.addClass(attr.rdkTheme);
            }
         }
