@@ -9,7 +9,7 @@ import org.apache.log4j.{Level, LogManager}
 import org.json4s.{DefaultFormats, Formats}
 import spray.http.HttpCharsets
 import spray.httpx.Json4sSupport
-import spray.routing.Directives
+import spray.routing.{RoutingSettings, Directives, RequestContext}
 
 import scala.concurrent.duration._
 
@@ -17,7 +17,6 @@ import spray.http._
 import spray.http.MediaTypes._
 import spray.http.HttpHeaders.{Connection, `Content-Disposition`}
 import spray.http.HttpResponse
-import spray.routing.RequestContext
 import spray.http.ChunkedResponseStart
 import java.io.{FileInputStream, File}
 
@@ -126,91 +125,22 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
 }
 
 
+class ExportHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport with Directives with CustomMarshallers with Logger {
+  implicit def json4sFormats: Formats = DefaultFormats
+  override def routeSettings = implicitly[RoutingSettings]
+  implicit val actorRefFactory = system
+  implicit val dispatcher = system.dispatcher
 
-
-  class ExportHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport with Directives with Logger{
-    implicit def json4sFormats: Formats = DefaultFormats
-
-    implicit val _sys = system
-    implicit val timeout = Timeout(50 minute)
-    implicit val dispatcher = system.dispatcher
-
-    def runRoute =
-      path("download") {
-        get {
-          detach() {
-                ctx => {
-//                           val filename="C:\\Users\\Administrator.ZTE-20150324QNX\\Desktop\\test.csv"  // GBase8a与sybaseiq语法对照表.xls
-//              val filename = "F:\\4092workspace\\文档资料\\后台\\http协议.PDF"
-                  val filename="F:\\4092workspace\\软件工具\\jdk-7u51-windows-i586.exe"
-              val file = new File(filename)
-              if (file.exists()) {
-                try {
-                  downloadStream(filename)(ctx)
-                } catch {
-                  case e: Exception => ctx.complete(s"Download Error:${e.getMessage}")
-                }
-//                               file.delete()
-              } else {
-                ctx.complete("File not found")
-              }
-            }
+  def runRoute =
+    path("export") {
+      get {
+        val path = "F:\\4092workspace\\软件工具\\ideaIU-14.1.2.exe"
+        val tempResultsFile = new File(path)
+        respondWithHeader(`Content-Disposition`(s"attachment;filename=${new String(tempResultsFile.getName.getBytes("UTF-8"), "ISO_8859_1")}")) {
+          respondWithLastModifiedHeader(tempResultsFile.lastModified) {
+            complete(tempResultsFile)
           }
         }
       }
-
-
-    def downloadStream(fileName: String)(ctx: RequestContext): Unit = {
-      val response = HttpResponse(headers = List(Connection("Keep-Alive"),
-        `Content-Disposition`(s"attachment;filename=${new String(fileName.replaceAllLiterally("\\", "/")
-          .split("/").last.getBytes("UTF-8"), "ISO_8859_1")}"))) //entity = HttpEntity(`text/csv`,""),
-      ctx.responder ! ChunkedResponseStart(response)
-//      getStream(fileName, null).foreach(ctx.responder ! MessageChunk(_))
-      getStream(fileName, null).foreach{
-        stream=>
-          ctx.responder ! MessageChunk(stream)
-          Thread.sleep(300)
-      }
-
-      ctx.responder ! ChunkedMessageEnd
     }
-
-    def getStream(fileName: String, is: FileInputStream): Stream[Array[Byte]] = {
-      var fis: FileInputStream = is
-      if (is == null) {
-        val file = new File(fileName)
-        fis = new FileInputStream(file)
-      }
-      val bytes = new Array[Byte](2 * 1024 * 1024)
-      if (fis.available() > 0) {
-        val len = fis.read(bytes)
-        Stream.cons(bytes.take(len), getStream(fileName, fis))
-      } else {
-        fis.close()
-        Stream.empty
-      }
-    }
-
-//    def downloadStream(fileName:String)(ctx: RequestContext): Unit={
-//      val response = HttpResponse(entity = HttpEntity(`text/csv`,""), headers = List(`Content-Disposition`(s"attachment;filename=${new String(fileName.getBytes("UTF-8"), "ISO_8859_1")}")))
-//      ctx.responder ! ChunkedResponseStart(response)
-//      getStream(fileName,null).foreach(ctx.responder ! MessageChunk(_))
-//      ctx.responder ! ChunkedMessageEnd
-//    }
-//
-//    def getStream(fileName:String,is:FileInputStream) : Stream[Array[Byte]] = {
-//      var fis:FileInputStream = is
-//      if(is == null) {
-//        val file = new File(fileName)
-//        fis = new FileInputStream(file)
-//      }
-//      val bytes = new Array[Byte](2*1024*1024)
-//      if(fis.available() > 0){
-//        val len = fis.read(bytes)
-//        Stream.cons(bytes.take(len),getStream(fileName,fis))
-//      }else{
-//        fis.close()
-//        Stream.empty
-//      }
-//    }
 }
