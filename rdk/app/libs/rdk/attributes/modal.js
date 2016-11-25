@@ -7,6 +7,7 @@ define(['rd.services.EventService', 'jquery','jquery-ui'], function() {
             compile: function(tElement, tAttrs) {
                 return {
                     post: function(scope, iElement, iAttrs) {
+                        console.warn('Modal has been abandoned, pls use PopupService! Reference: http://10.9.233.35:8080/doc/#client/common/popupservice/PopupService.md ');
                         var modalId = iAttrs['id'] || Utils.createUniqueId('modal_frame_');
                         EventService.register(modalId, 'modal', _handler);
                         EventService.register(modalId, 'hide', _handler);
