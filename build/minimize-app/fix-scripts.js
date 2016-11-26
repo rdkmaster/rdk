@@ -22,7 +22,7 @@ global.location = {
     pathname: appPath
 }
 //引入application的基础定义
-require(__dirname + '/../../rdk/app/libs/rdk/application.js');
+require(__dirname + '/../../rdk/app/libs/rdk/app-basic.js');
 ///////////////////////////////////////////////////////////////////
 
 
