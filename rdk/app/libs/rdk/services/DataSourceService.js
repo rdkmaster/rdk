@@ -95,7 +95,13 @@
                             if (arr[0] == 'ready') {
                                 arr[0] = 'EventService';
                                 arr[1] = 'ready';
-                            } else {
+                            } 
+                            else if(arr[0] == 'module_ready'){
+                                arr[0] = 'EventService';
+                                arr[1] = 'module_ready';
+                            }
+
+                            else {
                                 console.error('无效的数据源监听事件定义，请使用这个方式定义 dispatcher.event_type');
                                 return;
                             }
