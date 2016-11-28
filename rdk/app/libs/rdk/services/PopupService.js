@@ -18,7 +18,7 @@
             return retModuleID;
 
             function _readyHandler(){
-                EventService.remove(popupModuleID, EventService, _readyHandler);
+                EventService.remove(popupModuleID, EventTypes.READY, _readyHandler);
                 var sampleHtml = $('#'+popupModuleID).children();
                 var myTitle = sampleHtml.attr('caption') || '';
                 var myIcon = sampleHtml.attr('icon') || '';
