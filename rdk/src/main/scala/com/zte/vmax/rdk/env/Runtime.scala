@@ -56,7 +56,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
   //获取主机名
   def getHostName: String = RdkUtil.getHostName
   //当前数据源
-  private var opCurDataSource: Option[String] = None
+  private var opCurDataSource: Option[String] = Some("db.default")
 
   def setAppName(appName: String): Unit = {
     application = appName
@@ -67,7 +67,10 @@ class Runtime(engine: ScriptEngine) extends Logger {
   }
   //重置当前数据源
   def resetDataSource: Unit = {
-    opCurDataSource = None
+    opCurDataSource =ProxyManager.getDefaultDataSource(application) match {
+      case None=>Some("db.default")
+      case x=>x
+    }
   }
 
   //数据库访问会话
