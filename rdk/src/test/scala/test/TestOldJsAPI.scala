@@ -2,23 +2,14 @@ package test
 
 import java.io.File
 import java.sql.ResultSet
-import akka.pattern.ask
-import akka.util.Timeout
-import com.zte.vmax.rdk.RdkServer
-import com.zte.vmax.rdk.actor.Messages
 import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.config.Config
 import com.zte.vmax.rdk.env._
 import com.zte.vmax.rdk.proxy.{DeprecatedDBAccessTrait, ProxyManager}
-import com.zte.vmax.rdk.service.ServiceConfig
 import com.zte.vmax.rdk.util.RdkUtil
-import org.apache.log4j.PropertyConfigurator
 import org.scalatest.{Matchers, FunSpec}
-import spray.http.HttpHeaders.RawHeader
-import spray.http.{HttpHeader, HttpRequest}
-import spray.routing.RequestContext
 import test.mock.db.{BaseMetaData, BaseResultSetMock}
-import scala.concurrent.duration._
+
 
 
 /**
@@ -26,7 +17,7 @@ import scala.concurrent.duration._
  */
 class TestOldJsAPI extends FunSpec with Matchers{
   Config.setConfig("proc/conf/")
-  PropertyConfigurator.configureAndWatch("proc/conf/log4j.properties", 30000)
+//  PropertyConfigurator.configureAndWatch("proc/conf/log4j.properties", 30000)
   val _meta = new BaseMetaData {
     def getColumnType(column: Int) = 1
 
