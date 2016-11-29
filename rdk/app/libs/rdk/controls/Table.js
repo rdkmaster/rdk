@@ -768,7 +768,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             var handDragElement = element[0].querySelector(".sticky-wrap");//拖动产生在这层
                             $(handDragElement).addClass("sticky-wrap-overflow");
                         }
-                        $compile($(element[0].querySelector('.sticky-thead th:first-child')))(scope);
+                        if(scope.addCheckBox){
+                            $compile($(element[0].querySelector('.sticky-thead th:first-child')))(scope);
+                        }
                     }
 
                     function _refreshCurrentSingleChecked(isChecked){
