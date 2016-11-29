@@ -131,16 +131,28 @@ class ExportHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport
   implicit val actorRefFactory = system
   implicit val dispatcher = system.dispatcher
 
+  implicit def str2SExportParam(json: String): ExportParam = {
+    RdkUtil.json2Object[ExportParam](json).getOrElse(null)
+  }
   def runRoute =
     path("export") {
       get {
-        val path = "F:\\4092workspace\\软件工具\\ideaIU-14.1.2.exe"
-        val tempResultsFile = new File(path)
-        respondWithHeader(`Content-Disposition`(s"attachment;filename=${new String(tempResultsFile.getName.getBytes("UTF-8"), "ISO_8859_1")}")) {
-          respondWithLastModifiedHeader(tempResultsFile.lastModified) {
-            complete(tempResultsFile)
+        parameters('p.as[ExportParam]){
+          req=>
+            val path = req.filetype match{
+              case "csv"=>  writeCSV(req.export)
+              case "excel"=> writeExcel(req.export)
+              case "text"=>  writeTxt(req.export)
+            }
+
+          val tempResultsFile = new File(path)
+          respondWithHeader(`Content-Disposition`(s"attachment;filename=${new String(tempResultsFile.getName.getBytes("UTF-8"), "ISO_8859_1")}")) {
+            respondWithLastModifiedHeader(tempResultsFile.lastModified) {
+              complete(tempResultsFile)
+            }
           }
         }
+
       }
     }
 }
