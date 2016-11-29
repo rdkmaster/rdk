@@ -58,12 +58,6 @@ public class JarHelper extends AbstractAppLoggable {
         } catch (Exception e) {
             logger.error("loadClass error: ", e);
             return null;
-        }finally {
-            try {
-                RdkClassLoader.close();
-            } catch (IOException e) {
-                logger.error(e.getMessage());
-            }
         }
     }
 
