@@ -623,7 +623,9 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  
    undefined
 
-#### `Cache.global_put()` （已过时，请使用[Cache.global.put()](#Cacheglobalput)）####
+#### `Cache.global_put()` （已过时）####
+
+已过时，请使用[Cache.global.put()](#Cache_global_put)
 
 定义：
 
@@ -643,7 +645,10 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  
    同v,即缓冲数据
 
-#### `Cache.global_get()` （已过时，请使用[Cache.global.get()](#Cacheglobalget)）####
+
+#### `Cache.global_get()` （已过时）####
+
+已过时，请使用[Cache.global.get()](#Cache_global_get)
 
 定义：
 
@@ -662,7 +667,9 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 
 
-#### `Cache.global_del()`（已过时，请使用[Cache.global.del()](#Cacheglobaldel)）####
+#### `Cache.global_del()`（已过时）####
+
+已过时，请使用[Cache.global.del()](#Cache_global_del)
 
 定义：
 
@@ -679,7 +686,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  
    undefined
    
-#### `Cache.global.put()`{#Cacheglobalput} ####
+#### `Cache.global.put()`{#Cache_global_put} ####
 
 定义：
 
@@ -702,7 +709,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
    
 ###rdk提供了一组可以操作基于rdk的所有应用共享内存操作###
 
-#### `Cache.global.get()`{#Cacheglobalget}####
+#### `Cache.global.get()`{#Cache_global_get}####
 
 定义：
 
@@ -721,7 +728,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 
 
-#### `Cache.global.del()`{#Cacheglobaldel}####
+#### `Cache.global.del()`{#Cache_global_del}####
 
 定义：
 
