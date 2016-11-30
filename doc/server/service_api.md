@@ -75,10 +75,32 @@ rdk为应用提供可扩展的日志上报功能。
 参数：
 
 - userOpInfo 一个js对象。必选。
+对于vmax操作日志，userOpInfo的结构为：
+
+		  vmaxOpLogInfo = {
+			sequenceno: "",
+			clientip: "",
+			issuccess: "",
+			logtype: "",
+			logstartdate: "",
+			loginitdate: "",
+			commandcode: "",
+			logrank: "",
+			descinfo: "",
+			logenddate: "",
+			connectmode: "",
+			oprateset: "",
+			paraDetail: "",
+			username: "",
+			servicename: "",
+			rolename: "",
+			hostname: ""
+		 }
+	 
 
 返回：true/false。
 
-说明：rdk将自动调用应用配置操作日志脚本，配置路径位于**proc/conf/rdk.cfg**，用户需配置**extension.operateLog** 属性以告知rdk应用操作日志服务所在位置，应用可按自己的业务来实现日志上报，具体可参考Vmax日志上报的应用日志模板，SVN路径为**(http://10.5.70.3/ZXVMAX/CODE/dev/ZXVMAX/vmax-app-cn/CODE/ZTECOMMON/ClientCode/rdk_server/app/common/vmaxOperateLog.js)**。
+说明：rdk将自动调用应用配置操作日志脚本，配置路径位于**proc/conf/rdk.cfg**，用户需配置**extension.operateLog** 属性以告知rdk应用操作日志服务所在位置，应用可按自己的业务来实现日志上报，具体可参考[Vmax日志上报的应用日志模板](vmaxOperateLog.js)。
 
 示例：
 
@@ -86,7 +108,7 @@ rdk为应用提供可扩展的日志上报功能。
 
 1、放开proc/conf/rdk.cfg extension.operateLog属性配置（默认属性值为app/common/vmaxOperateLog.js）
 
-2、下载vmax操作日志文件(http://10.5.70.3/ZXVMAX/CODE/dev/ZXVMAX/vmax-app-cn/CODE/ZTECOMMON/ClientCode/rdk_server/app/common/vmaxOperateLog.js)，并将该文件放置于app/common目录下
+2、下载[Vmax日志上报的应用日志模板](vmaxOperateLog.js)，并将该文件放置于app/common目录下
 
 3、调用服务：
 
@@ -776,7 +798,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
     function get(k);
 
-说明：返回老化内存中key对应的值
+说明：返回老化内存中key对应的值，**注意，每次get会刷新时间戳，从而延长该记录的存活时间，建议少调用该方法。**
 
 参数：
 
