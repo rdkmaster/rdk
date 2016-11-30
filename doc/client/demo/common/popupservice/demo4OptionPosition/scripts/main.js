@@ -18,10 +18,12 @@ define('main', ['rd.controls.Module', 'rd.services.PopupService', 'sample_module
             var sampleUrl = '/doc/client/demo/common/popupservice/demo4OptionPosition/template/sample_module.html';
             var initData = {myData: 'load module manually...'};
             var myOption = {
-                modal: false,
+                modal: true,
                 effect: 'explode',
                 x: 100,
-                y: 100
+                y: 100,
+                // left: 100,
+                // top: 100,         
                 // right: 100,
                 // bottom: 100,//bottom时有像素差
             }
