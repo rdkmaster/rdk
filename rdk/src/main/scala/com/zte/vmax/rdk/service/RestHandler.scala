@@ -131,6 +131,7 @@ class ExportHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport
   override def routeSettings = implicitly[RoutingSettings]
   implicit val actorRefFactory = system
   implicit val dispatcher = system.dispatcher
+  implicit val timeout = Timeout(10 minute)
 
   implicit def str2SExportParam(json: String): ExportParam = {
     RdkUtil.json2Object[ExportParam](json).getOrElse(null)

@@ -53,6 +53,13 @@ class WorkRoutee extends Actor with Json4sSupport with Logger {
 
     case (no: Long, ExportParam(export,param,fileType))   =>
       logger.debug(s"<No.${no}> ${export} fileType:${fileType}")
+      runtime.setAppName("export")
       val data:String=runtime.restHelper.get(export.url,export.option)
+
+      fileType match{
+        case "excel" =>
+        case "csv"   =>
+        case "txt"   =>
+      }
   }
 }
