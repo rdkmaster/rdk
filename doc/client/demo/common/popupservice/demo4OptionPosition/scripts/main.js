@@ -20,10 +20,10 @@ define('main', ['rd.controls.Module', 'rd.services.PopupService', 'sample_module
             var myOption = {
                 modal: false,
                 effect: 'explode',
-                // left: 100,
-                // top: 100
-                right: 100,
-                bottom: 100
+                x: 100,
+                y: 100
+                // right: 100,
+                // bottom: 100,//bottom时有像素差
             }
             moduleID = PopupService.popup(sampleUrl, initData, myOption);
         }

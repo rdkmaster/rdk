@@ -48,7 +48,12 @@
                         my: positionX+' '+positionY,
                         at: atX+' '+atY,
                         of: window,
-                        collision: 'fit'
+                        collision: 'fit',
+                        using: function(pos) {
+                            var offsetTop = $(this)[0].offsetTop;
+                            var offsetLeft = $(this)[0].offsetLeft;
+                            $(this).css({'top': pos.top+offsetTop, 'left': pos.left+offsetLeft});
+                        }
                     },
                     close: function(ev, ui){
                         _destroyPopupModule(popupModuleID);
@@ -58,7 +63,7 @@
                     }
                 });
 
-                // _basicAppearanceHandler(popupModuleID, option.id);
+                _basicAppearanceHandler(popupModuleID, option.id);
 
                 $('#'+popupModuleID).css({'display': ''});
             }
