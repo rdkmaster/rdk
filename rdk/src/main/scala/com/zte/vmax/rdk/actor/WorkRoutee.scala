@@ -51,5 +51,8 @@ class WorkRoutee extends Actor with Json4sSupport with Logger {
       sender ! WSResponse(head, if (result.isLeft) result.left.get.getMessage else result.right.get)
 
 
+    case (no: Long, ExportParam(export,param,fileType))   =>
+      logger.debug(s"<No.${no}> ${export} fileType:${fileType}")
+      runtime.restHelper.get(export.url,export.option)
   }
 }

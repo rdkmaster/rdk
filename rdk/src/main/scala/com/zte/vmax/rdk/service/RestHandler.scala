@@ -11,6 +11,7 @@ import spray.http.HttpCharsets
 import spray.httpx.Json4sSupport
 import spray.routing.{RoutingSettings, Directives, RequestContext}
 
+import scala.concurrent.Await
 import scala.concurrent.duration._
 
 import spray.http._
@@ -138,13 +139,9 @@ class ExportHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport
     path("export") {
       get {
         parameters('p.as[ExportParam]){
-          req=>
-            val path = req.filetype match{
-              case "csv"=>  writeCSV(req.export)
-              case "excel"=> writeExcel(req.export)
-              case "text"=>  writeTxt(req.export)
-            }
-
+          exportParam=>
+          val future = router ? exportParam
+          val path=Await.result(future,10 minute).asInstanceOf[String]
           val tempResultsFile = new File(path)
           respondWithHeader(`Content-Disposition`(s"attachment;filename=${new String(tempResultsFile.getName.getBytes("UTF-8"), "ISO_8859_1")}")) {
             respondWithLastModifiedHeader(tempResultsFile.lastModified) {
