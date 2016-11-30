@@ -2,15 +2,14 @@ package test
 
 import java.io.File
 import java.sql.ResultSet
-
-import com.zte.vmax.rdk.actor.Messages.{DBSession, NoneContext}
+import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.config.Config
 import com.zte.vmax.rdk.env._
 import com.zte.vmax.rdk.proxy.{DeprecatedDBAccessTrait, ProxyManager}
 import com.zte.vmax.rdk.util.RdkUtil
-import org.apache.log4j.PropertyConfigurator
 import org.scalatest.{Matchers, FunSpec}
 import test.mock.db.{BaseMetaData, BaseResultSetMock}
+
 
 
 /**
@@ -18,7 +17,7 @@ import test.mock.db.{BaseMetaData, BaseResultSetMock}
  */
 class TestOldJsAPI extends FunSpec with Matchers{
   Config.setConfig("proc/conf/")
-
+//  PropertyConfigurator.configureAndWatch("proc/conf/log4j.properties", 30000)
   val _meta = new BaseMetaData {
     def getColumnType(column: Int) = 1
 
@@ -195,6 +194,11 @@ class TestOldJsAPI extends FunSpec with Matchers{
       RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "Mapper_from_object").fold(ex=>ex,v=> v should be("否"))
       runtime = Runtime.newInstance
       RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "Mapper_from_datatable").fold(ex=>ex,v=> v should be("test1"))
+    }
+
+    it("getRequestContextHeader=>test cases passed!") {
+      var runtime: Runtime = Runtime.newInstance
+      RdkUtil.handleJsRequest(runtime, NoneContext, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", "test", null, "getReqCtxHeader").fold(ex=>ex,v=> v should be(""))
     }
   }
 }

@@ -65,6 +65,35 @@ RDK提供了一组记录日志的函数，它们有共同的定义：
 
 文件配置后无需重启rdk服务，30秒后自动生效。
 
+### 操作日志 ###
+
+rdk为应用提供可扩展的日志上报功能。
+
+定义：
+
+	function Log.operateLog(userOpInfo); 
+	
+参数：
+
+- userOpInfo 一个js对象。必选。它具体的数据结构，由实现写操作日志的脚本决定。
+	 
+
+返回：true/false。
+
+说明：rdk将自动调用应用配置操作日志脚本，配置路径位于**proc/conf/rdk.cfg**，用户需配置**extension.operateLog** 属性以告知rdk应用操作日志服务所在位置，应用可按自己的业务来实现日志上报，具体可参考[Vmax操作日志的实现](vmaxOperateLog.js)。
+
+示例：
+
+用户想要调用Vmax操作日志服务，并按自己要求填写“descinfo”的详细信息。
+
+1、放开proc/conf/rdk.cfg extension.operateLog属性配置（默认属性值为app/common/vmaxOperateLog.js）
+
+2、下载[Vmax操作日志的实现](vmaxOperateLog.js)，并将该文件放置于app/common目录下
+
+3、调用服务：
+
+    Log.operateLog({"descinfo":"查询表dim_ne"})
+
 ### `Mapper` ###
 
 实际开发中，常常需要定义一个可根据给定的属性来从一个映射中获取其对应的值的处理函数，Mapper变量提供了简便的处理方法。
@@ -597,7 +626,9 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  
    undefined
 
-#### `Cache.global_put()` ####
+#### `Cache.global_put()` （已过时）####
+
+已过时，请使用[Cache.global.put()](#Cache_global_put)
 
 定义：
 
@@ -618,7 +649,9 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
    同v,即缓冲数据
 
 
-#### `Cache.global_get()` ####
+#### `Cache.global_get()` （已过时）####
+
+已过时，请使用[Cache.global.get()](#Cache_global_get)
 
 定义：
 
@@ -636,14 +669,136 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
    对应k名称的共享缓冲数据，没有的话返回null
 
 
+#### `Cache.global_del()`（已过时）####
 
-#### `Cache.global_del()` ####
+已过时，请使用[Cache.global.del()](#Cache_global_del)
+
+定义：
+
+    function global_del(k);
+
+说明：删除rdk所有应用共享的名为k的缓存数据
+
+参数：
+
+ - k: 字符串，缓冲数据的名称。
+
+
+返回：
+ 
+   undefined
+   
+#### `Cache.global.put()`{#Cache_global_put} ####
+
+定义：
+
+    function put(k,v);
+
+说明：缓存rdk所有应用共享的数据
+
+参数：
+
+ - k: 字符串，缓冲数据的名称。
+
+ - v: 任意对象，缓冲数据。
+
+
+
+返回：
+ 
+   同v,即缓冲数据
+
+   
+###rdk提供了一组可以操作基于rdk的所有应用共享内存操作###
+
+#### `Cache.global.get()`{#Cache_global_get}####
+
+定义：
+
+    function get(k);
+
+说明：返回rdk所有应用共享的缓存数据
+
+参数：
+
+ - k: 字符串，缓冲数据的名称。
+
+
+返回：
+ 
+   对应k名称的共享缓冲数据，没有的话返回null
+
+
+
+#### `Cache.global.del()`{#Cache_global_del}####
 
 定义：
 
     function del(k);
 
 说明：删除rdk所有应用共享的名为k的缓存数据
+
+参数：
+
+ - k: 字符串，缓冲数据的名称。
+
+
+返回：
+ 
+   undefined
+
+
+###rdk提供了一组带生命时长的缓存操作###
+
+#### `Cache.aging.put()` ####
+
+定义：
+
+    function put(k, v, ttl);
+
+说明：缓存k,v映射数据于老化内存中，同时设置该数据的生命时长
+
+参数：
+
+ - k: 字符串，缓冲数据的名称。
+
+ - v: 任意对象，缓冲数据。
+ 
+ - ttl: 可选，数据生命时长，单位秒，默认为24小时。
+
+
+
+返回：
+ 
+   同v,即缓冲数据
+
+
+#### `Cache.aging.get()`####
+
+定义：
+
+    function get(k);
+
+说明：返回老化内存中key对应的值，**注意，每次get会刷新时间戳，从而延长该记录的存活时间。**
+
+参数：
+
+ - k: 字符串，缓冲数据的名称。
+
+
+返回：
+ 
+   对应k名称的共享缓冲数据，没有的话返回null
+
+
+
+#### `Cache.aging.del()`####
+
+定义：
+
+    function del(k);
+
+说明：删除老化内存中key对应的记录
 
 参数：
 
@@ -760,7 +915,27 @@ Java返回数据给JS，原则也是尽量只返回简单类型。当然也可�
 	//动态国际化标签
 	var label = i18n('select', 10); // 选中了 10 个对象
 
+### `getRequestContextHeader()` ###
+定义：
 
+	function getRequestContextHeader();
+
+参数：
+
+无
+
+返回：对应的当前请求对应http请求头对应的js对象。
+
+### `getHostName()` ###
+定义：
+
+	function getHostName();
+
+参数：
+
+无
+
+返回：获取服务主机名。
 ## 日期相关 ##
 
 [单击这里](service_date_api.md)
