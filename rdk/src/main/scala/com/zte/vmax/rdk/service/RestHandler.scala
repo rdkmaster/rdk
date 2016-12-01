@@ -143,6 +143,7 @@ class ExportHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport
           exportParam=>
           val future = router ? exportParam
           val path=Await.result(future,10 minute).asInstanceOf[String]
+            logger.info("rest return =>"+path)
           val tempResultsFile = new File(path)
           respondWithHeader(`Content-Disposition`(s"attachment;filename=${new String(tempResultsFile.getName.getBytes("UTF-8"), "ISO_8859_1")}")) {
             respondWithLastModifiedHeader(tempResultsFile.lastModified) {

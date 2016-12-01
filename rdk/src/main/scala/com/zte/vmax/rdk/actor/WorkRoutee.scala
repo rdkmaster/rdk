@@ -1,10 +1,16 @@
 package com.zte.vmax.rdk.actor
 
+import java.text.SimpleDateFormat
+import java.util._
+import java.util.Date
+import javax.script.{ScriptEngineManager, ScriptEngine}
+
 import akka.actor.Actor
 import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.env.Runtime
 import com.zte.vmax.rdk.service.ServiceConfig
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
+import jdk.nashorn.api.scripting.ScriptObjectMirror
 import org.json4s.{DefaultFormats, Formats}
 import spray.httpx.Json4sSupport
 
@@ -51,15 +57,41 @@ class WorkRoutee extends Actor with Json4sSupport with Logger {
       sender ! WSResponse(head, if (result.isLeft) result.left.get.getMessage else result.right.get)
 
 
-    case (no: Long, ExportParam(export,param,fileType))   =>
-      logger.debug(s"<No.${no}> ${export} fileType:${fileType}")
+    case (no: Long, ExportParam(source, fileType, param)) =>
+      logger.debug(s"<No.${no}> ${source} export fileType:${fileType}")
       runtime.setAppName("export")
-      val data:String=runtime.restHelper.get(export.url,export.option)
-
-      fileType match{
-        case "excel" =>
-        case "csv"   =>
-        case "txt"   =>
+      var sourceData: String = ""
+      try {
+        sourceData = runtime.getEngine.eval(s"rest.get('${source.url}',${RdkUtil.toJsonString(source.peerParam)})").asInstanceOf[String]
+      } catch {
+        case e:Exception =>
+          logger.error("get source error:" + e)
+          throw e
       }
+
+
+      val fileNamePreFix = RdkUtil.getCurrentTime
+
+      RdkUtil.json2Object[ServiceResult](sourceData) match {
+        case Some(rdkResult) =>
+          val rdkData = rdkResult.result
+          println(rdkData)
+          val excludeIndexes = RdkUtil.toJsonString(if (param != null) param.excludeIndexes else null)
+          val option = RdkUtil.toJsonString(if (param != null) param.option else null)
+          fileType match {
+            case "excel" =>
+              runtime.getEngine.eval(s"file.saveAsEXCEL('${fileNamePreFix}.xls',${rdkData},${excludeIndexes},${option})")
+              sender ! fileNamePreFix + ".xls"
+            case "csv" =>
+              runtime.getEngine.eval(s"file.saveAsCSV('${fileNamePreFix}.csv',${rdkData},${excludeIndexes},${option})")
+              sender ! fileNamePreFix + ".csv"
+            case "txt" =>
+              runtime.getEngine.eval(s"file.save('${fileNamePreFix}.txt','${rdkData}',${excludeIndexes},${option})")
+              sender ! fileNamePreFix + ".txt"
+          }
+        case None => RdkUtil.json2Object[ServiceResult](sourceData)
+      }
+
+
   }
 }

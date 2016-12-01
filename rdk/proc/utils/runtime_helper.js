@@ -326,6 +326,7 @@ var file = {
         return JSON.parse(result);
     },
     save: function (file, content, append, encoding) {
+        log("$$$$$$$$"+content)
         if (!file) {
             log("invalid file path:", file);
             return false;
@@ -334,7 +335,12 @@ var file = {
             log("invalid file content:", content);
             return false;
         }
-
+        if (null == append) {
+            append = undefined;
+        }
+        if (null == encoding) {
+            encoding = undefined;
+        }
         file = file.toString();
         log("saving file to:", file);
         return rdk_runtime.fileHelper().save(file, content.toString(), !!append, encoding);
@@ -343,6 +349,12 @@ var file = {
         file = file.toString();
         log("saving to csv:", file);
 
+        if (null == excludeIndexes) {
+            excludeIndexes = undefined;
+        }
+        if (null == option) {
+            option = undefined;
+        }
         var csv = _fixContent(content, excludeIndexes);
         var b = rdk_runtime.fileHelper().saveAsCSV(file, csv.data, csv.excludeIndexes, option);
         //_fixContent中修改了content.data，这里还原
@@ -359,6 +371,12 @@ var file = {
         if(!_.isDefined(content)){
             Log.error("please input extract content!");
             return;
+        }
+        if (null == excludeIndexes) {
+            excludeIndexes = undefined;
+        }
+        if (null == option) {
+            option = undefined;
         }
         var excel = _fixEXCELContent(content, excludeIndexes);
 
@@ -722,6 +740,10 @@ function DataTable(header, field, data) {
 function json(data, indent) {
     var i = indent === undefined ? '  ' : indent;
     return _.isString(data) ? data : JSON.stringify(data, '', i);
+}
+
+function jsonToJSObject(arg){
+    return JSON.parse(arg);
 }
 
 function matrix(resultSet, mapIterator, keepResultSet) {

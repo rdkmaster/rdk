@@ -24,6 +24,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
   var serviceCaller: ScriptObjectMirror = null
   private var jsonParser: ScriptObjectMirror = null
 
+
   implicit var application: String = ""
   val locale: String = Config.get("ums.locale") match{
     case ""=>"zh_CN"
@@ -108,6 +109,10 @@ class Runtime(engine: ScriptEngine) extends Logger {
   @throws(classOf[ScriptException])
   def eval(script: String): ScriptObjectMirror = {
     return engine.eval(script).asInstanceOf[ScriptObjectMirror]
+  }
+
+  def getEngine:ScriptEngine={
+    return engine
   }
 
   def callService(callable: ScriptObjectMirror, param: AnyRef, script: String): String = {

@@ -6,7 +6,8 @@ import java.lang.reflect.Method
 import java.net.InetAddress
 import java.nio.file._
 import java.nio.file.attribute.BasicFileAttributes
-import java.util.UUID
+import java.text.SimpleDateFormat
+import java.util.{Date, UUID}
 import java.util.regex.{Matcher, Pattern}
 
 
@@ -302,5 +303,11 @@ object RdkUtil extends Logger {
 
   def getHostName: String = {
     InetAddress.getLocalHost().getHostName
+  }
+
+  def getCurrentTime: String = {
+    val sdf = new SimpleDateFormat()
+    sdf.applyPattern("yyyyMMddHHmmssSSS")
+    sdf.format(new Date())
   }
 }

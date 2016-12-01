@@ -34,9 +34,11 @@ object Messages {
 
   case class AgingValue(timeStamp:Long,ttl:Long,value:AnyRef)
 
-  case class Service(url:String,peerParam:AnyRef=null,option:AnyRef=null)
+  case class Source(url:String,peerParam:AnyRef=null)
 
-  case class ExportParam(export:Service,param:AnyRef=null,fileType:String)
+  case class ExportParam(source:Source,fileType:String,param:Param=null)
+
+  case class Param(excludeIndexes:AnyRef=null, option:AnyRef=null)
   //websocket 消息类型定义
   //websocket 消息头
   type WSHead = Array[String]
