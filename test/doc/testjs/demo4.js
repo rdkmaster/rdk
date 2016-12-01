@@ -48,7 +48,6 @@ describe('文件功能模拟',function(){
         
     });
     it('尝试抓取滚动条并操作',function(){
-        var first_scroll=element(by.css(".first-scroll"));
         //仅仅对于整个浏览器侧的滚动条
         browser.executeScript('window.scrollTo(0,1000)')
         .then(function(){
