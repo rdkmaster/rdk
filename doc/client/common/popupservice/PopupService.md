@@ -9,32 +9,32 @@
 
 ## popup ##
 
-### 基本用法
+### 基本用法{#a}
 
         var moduleID = PopupService.popup(module, initData, option);
 
 ### 入参说明
 
-1. module 字符串，必选。是需要动态加载的模板路径，或者html片段字符串。给的url的话就去下载。
+1. module 字符串，必选。是需要动态加载的模板路径，或者html片段字符串。
 2. initData json对象，可选。是模板的初始化数据，可以被模板内部定义的同名变量覆盖
 3. option json对象，可选。option的结构为：
 
-	{
-	    id: '', 			//对话框id，可选
-	    modal: true, 		//是否模态，缺省时默认为true
-	    controller: '', 	//模块的控制器
-	    showTitle: true, 	//是否显示标题，缺省时默认为true
-	    effect: '',			//特效，缺省时默认为scale
-
-	    //绝对位置
-	    x: 12,				//x,y 属性优先级最高，出现x,y则无视其他位置属性
-	    y: 12,
-		//相对位置
-	    left: 12,			//left优先级大于right
-	    right: 12,
-	    top: 12,			//top优先级大于bottom
-	    bottom: 12
-	}
+		{
+		    id: '', 			//对话框id，只用于样式覆盖，可选
+		    modal: true, 		//是否模态，缺省时默认为true
+		    controller: '', 	//模块的控制器
+		    showTitle: true, 	//是否显示标题，缺省时默认为true
+		    effect: '',			//特效，缺省时默认为scale
+		
+		    //绝对位置
+		    x: 12,				//x,y 属性优先级最高，出现x,y则无视其他位置属性
+		    y: 12,
+			//相对位置
+		    left: 12,			//left优先级大于right
+		    right: 12,
+		    top: 12,			//top优先级大于bottom
+		    bottom: 12
+		}
 
 
 ### 出参说明
@@ -81,25 +81,32 @@
 
 ### 弹出框样式
 
-要覆盖弹出框原有样式，可以利用 *popup()* 中的第五个入参 *dialogID* 。在用户自定义 *css* 文件时，通过覆盖样式文件 *rdk-PopupService-style.css* 中的各样样式，以实现用户的样式定制。
+要覆盖弹出框原有样式，可以利用 *popup()* 中 第三个入参 *option* 的 *id* 。在用户自定义 *css* 文件时，通过覆盖样式文件 *rdk-PopupService-style.css* 中的各样样式，以实现用户的样式定制。
 
-#### 基本用法
+#### 基本用法{#b}
 
-	var moduleID = PopupService.popup(sampleUrl, initData, false, 'explode', 'dialogID');
-
-	...以下是css文件中的样式定义...
-
-	#dialogID{
-		border: 5px solid green;
-	}
-	
-	#dialogID .rdk-popupservice-titlebar{
-		background-color: red;
-	}
-	
-	#dialogID .rdk-popupservice-content{
-		background-color: blue;
-	}
+		var sampleUrl = '/doc/client/demo/common/popupservice/demo4css/template/sample_module.html';
+		var initData = {myData: 'load module manually...'};
+		var myOption = {
+		    modal: false,
+		    effect: 'explode',
+		    id: 'dialogID'
+		}
+		var moduleID = PopupService.popup(sampleUrl, initData, myOption);
+		
+		...以下是css文件中的样式定义...
+		
+		#dialogID{
+			border: 5px solid green;
+		}
+		
+		#dialogID .rdk-popupservice-titlebar{
+			background-color: red;
+		}
+		
+		#dialogID .rdk-popupservice-content{
+			background-color: blue;
+		}
 
 ### 标题和图标
 
@@ -108,7 +115,7 @@
 <font color=red>**注意**</font> *icon* 目前只支持 *font-awesome* 标准图标。譬如 
 `<i class="fa fa-windows">`
 
-#### 基本用法
+#### 基本用法{#c}
 
 	<div controller="SampleModuleController" class='sampleClass' caption='弹出框标题' icon='<i class="fa fa-windows"></i>'>
 	    ...
@@ -118,3 +125,29 @@
 
 *PopupService* 样式覆盖示例如下：
 <live_demo example="common/popupservice/demo4css" width="900" height="400"></live_demo>
+
+
+## child ##
+
+### 基本用法{#d}
+
+1、模板控制器上的方法
+
+			this.destroy = function(){
+	            alert('ready to destroy the dialog...');
+	        }
+
+2、主控制器上的调用
+
+			var moduleID = PopupService.popup(sampleUrl, initData, myOption);
+			rdk[moduleID].child.destroy();
+	
+
+
+- *moduleID* 返回的是弹出框的模块ID
+
+- *rdk[moduleID].child* 返回的是模板控制器实例，可以访问定义在模板控制器的方法。
+
+
+*child* 使用示例如下：
+<live_demo example="common/popupservice/demo4child" width="900" height="400"></live_demo>

@@ -16,8 +16,7 @@
             EventService.register(popupModuleID, EventTypes.READY, _readyHandler);
             rdk[popupModuleID].loadModule(initData, module, option.controller); 
 
-            var retModuleID = option.id ? option.id : popupModuleID;
-            return retModuleID;
+            return popupModuleID;
 
             function _readyHandler(){
                 EventService.remove(popupModuleID, EventTypes.READY, _readyHandler);
@@ -88,7 +87,7 @@
             $('#'+popupModuleID).siblings('.ui-dialog-titlebar').addClass('rdk-popupservice-titlebar');//标题
             $('#'+popupModuleID).addClass('rdk-popupservice-content');//内容
             if(!dialogID) return;
-            $('#'+popupModuleID).parent('.ui-dialog').attr('id', dialogID);
+            $('#'+popupModuleID).parent('.ui-dialog').attr('id', dialogID);//id仅用于样式覆盖
         }
     }])
 })
