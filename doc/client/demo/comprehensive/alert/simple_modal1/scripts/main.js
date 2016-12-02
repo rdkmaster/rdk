@@ -7,7 +7,7 @@ define('main', ['rd.attributes.modal','bootstrap','bootstrap-select','rd.control
             EventService.broadcast(id, modal, position);
             $('.selectpicker').selectpicker();
             $('.content>ul>li:nth-child(2)>i').click(function(){
-            	$(this).css({'background': '#008fd4',
+            	$(this).css({'background': '#5395d8',
 							 'color': '#fff'}).siblings('i').css({'background': '#fff',
 							 								'color': '#999'})
             })
