@@ -19,20 +19,9 @@
 </head>
 
 <body ng-controller='myCtrl'>
-    <rdk_table id="testID" lang="zh-CN" config="0" setting="setting" data="data"></rdk_table>
+    <rdk_table id="testID" lang="zh-CN" config="0"  setting="setting" data="data" page-size="1"></rdk_table>
 
-    <div id="selectModal_1" rdk_modal="hide" class="modalcss">
-        <div style="margin: 20px">
-            <rdk_basic_selector id="selectorID_1" editable="false" multiple_select="false" selected_items="selectedItems_1" data="allItems_1"></rdk_basic_selector>
-        </div>
-    </div>
 
-    <div id="selectModal" rdk_modal="hide" class="modalcss">
-	    <div style="margin: 20px">
-	    	<rdk_basic_selector id="selectorID" editable="false" selected_items="selectedItems" data="allItems"></rdk_basic_selector>
-	    </div>
-        <button style="margin: 20px" ng-click="closeHandler()">close</button>
-    </div>
 </body>
 
 </html>

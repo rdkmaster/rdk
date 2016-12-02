@@ -362,6 +362,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 select: "&?",
                 doubleClick: "&?",
                 check: "&?",
+                noHeader:'=?'
             },
             compile: function(tElement, tAttributes) {
 
@@ -960,7 +961,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         } else if (scope.data.header.length == 0) { //column.title是从header取
                             scope.noHeader = true;
                         } else {
-                            scope.noHeader = false;
+                            if(!scope.noHeader){
+                                scope.noHeader = false;
+                            }
                         }
 
                         scope.destData = _convertToObject(scope.data);
