@@ -1,5 +1,7 @@
 .title{
    margin:20px 0 0 20px; 
+   font-size: 12px;
+   color:#333;
 }
 ul,li{
     list-style: none;
@@ -17,7 +19,7 @@ ul,li{
 .select_container li span{
     font-family: '微软雅黑';
     color:#434343;
-    font-size: 14px;
+    font-size: 12px;
 }
 #graph{
     float:left;
