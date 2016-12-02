@@ -74,7 +74,11 @@ require.config({
         "rd.services.NodeService": "../rdk/services/NodeService",
         "rd.services.Utils": "../rdk/services/Utils",
 
+        "rd.styles.Bootstrap": "../bootstrap/css/bootstrap.min",
         "rd.styles.FontAwesome": "../font-awesome-4.3.0/css/font-awesome",
+
+        "rdk.theme.zte-blue":"css/theme/zte-blue/zte-blue",
+        "rdk.theme.default":"css/theme/default/default",
 
         "rd.modules.i18n": "../rdk/modules/I18nModule",
     },

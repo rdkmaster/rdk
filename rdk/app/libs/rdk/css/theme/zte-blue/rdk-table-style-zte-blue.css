@@ -157,7 +157,7 @@
     background: url("../../../controls/assets/sort.png") no-repeat;
     background-size:contain;
 }
-/*todo:style start*/
+/*todo:theme style start*/
 .rdk-table-module .rdk-table thead>tr {
     background-color: #FFFFFF;
     color: #333;
@@ -174,7 +174,7 @@
 .rdk-table-theme-gray .rdk-table-module .rdk-table > tbody > tr:nth-child(even){
     background-color: #fff;
 }
-/*todo:style end*/
+/*todo:theme style end*/
 
 /*todo:theme colors*/
 .rdk-table-module .search_icon {

@@ -61,3 +61,7 @@
 .rdk-accordion-module .content{
     background-color: #fff;
 }
+/*todo:theme style start*/
+.rdk-tab-theme-default .rdk-accordion-module .normal-theme{
+    background-color: #E2EEF9;
+}

@@ -52,7 +52,50 @@
     background-color: #63B1EF;
     color: #fff;
 }
+
 .rdk-tab-module .title li a.selected{
     background-color: #FEA211;
     color: #fff;
+}
+
+/*todo:theme style start*/
+/*rdk-tab-theme-default 另一种风格的页签*/
+.rdk-tab-theme-default .ui-tabs .ui-tabs-nav li a.ui-tabs-anchor{
+    background-color: initial;
+    font-size: 14px;
+    color: initial;
+}
+.rdk-tab-theme-default .rdk-tab-module .title li a.selected {
+    color: #008FD4;
+}
+.rdk-tab-theme-default .rdk-tab-module .bottom_line {
+    width: 100%;
+    height: 4px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background :#008FD4 ;
+}
+.rdk-tab-theme-default .rdk-tab-module .bottom_line em{
+    position:absolute;
+    bottom:-4px;
+    left:50%;
+    margin-left:-2px;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #008FD4;
+    border-bottom: 0;
+}
+.rdk-tab-theme-default .rdk-tab-module .ui-widget-header {
+    border-bottom: 1px solid #008FD4;
+    background-color: transparent;
+}
+.rdk-tab-theme-default .ui-widget-content {
+    border: 1px solid #ddd;
+    background: #ffffff;
+    color: #333;
+    margin: 8px 0px;
 }
