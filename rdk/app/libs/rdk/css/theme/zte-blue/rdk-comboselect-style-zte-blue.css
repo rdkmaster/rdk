@@ -16,27 +16,22 @@
     flex-flow: row;
     align-items:center;
     outline: none;
-    border: 1px solid #d9d9d9;
     height: 32px;
     font-family: "微软雅黑", Helvetica, Arial, sans-serif;
     font-size: 14px;
-    color: #333;
     border-radius: 4px;
     padding: 0;
-    background-color: white;
 }
 
 .rdk-combo-select-module .combo-content-theme{
-    cursor: pointer !important;
+    cursor: pointer;
     display: inline-block;
     flex:1;
     min-width: 120px;
     height: 30px;
-    box-shadow: none !important;
+    box-shadow: none;
     border: none;
-    color: #333;
     padding: 4px 22px 4px 8px;
-    background-color: white !important;
     width: auto;
 }
 
@@ -45,7 +40,6 @@
     position: absolute;
     top: 5px;
     pointer-events: none;
-    color: #008FD4;
 }
 .fa-angle-down:before,.fa-angle-up:before {
      font-size: 18px;
@@ -58,4 +52,18 @@
     background-color: white;
     left: 0;
     right: 0;
+}
+
+
+/*todo:theme colors*/
+.rdk-combo-select-module .combo-content{
+    border: 1px solid #d9d9d9;
+    color: #333;
+    background-color: white;
+}
+.rdk-combo-select-module .combo-content .combo-content-theme{
+    background-color: white;
+}
+.rdk-combo-select-module .combo-content .combo-content-icon{
+    color: #008FD4;
 }

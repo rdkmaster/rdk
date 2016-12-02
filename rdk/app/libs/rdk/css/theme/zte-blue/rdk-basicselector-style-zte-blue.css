@@ -2,67 +2,73 @@
     min-width: 120px;
     width: 100%;
     max-height: 800px;
-    border: 1px solid #A5A6AA;
     border-radius: 4px;
     overflow: auto;
     position: relative;
     display: inline-block;
-    background-color: white;
 }
-
 .rdk-selector-module .search{
     width: 100%;
     padding: 10px;
 }
-
 .rdk-selector-module .search-input{
     padding-left: 30px;
     width: 100%;
 }
-
 .rdk-selector-module .search-icon{
-    color: #767676;
     position: absolute;
     left: 20px;
     top: 18px;
 }
-
 .rdk-selector-module .selector{
     width: 100%;
     padding: 5px;
 }
-
 .rdk-selector-module .original-item{
     list-style: none;
     float: left;
     margin: 5px;
-    border: 2px solid #A5A6AA;
     padding: 3px;
     border-radius: 4px;
     cursor: pointer;
 }
-
 .rdk-selector-module .selected-item{
     list-style: none;
     float: left;
     margin: 5px;
-    border: 2px solid #00AAFF;/* 00AAFF */
     padding: 3px;
     border-radius: 4px;
     cursor: pointer;
 }
-
 .rdk-selector-module .selector-plus-icon{
     width: 37px;
-    color: #767676;
     text-align: center;
 }
-
 .rdk-selector-module .selector-editor{
     float: left;
     margin: 5px;
     padding: 3px;
     width: 50px;
-    border: 2px solid #A5A6AA;
     border-radius: 4px;
+}
+
+/*todo:theme colors*/
+.rdk-selector-module{
+    border: 1px solid #A5A6AA;
+    background-color: white;
+}
+.rdk-selector-module .search-icon{
+    color: #767676;
+}
+.rdk-selector-module .original-item{
+    border: 2px solid #A5A6AA;
+}
+.rdk-selector-module .selected-item{
+    border: 2px solid #00AAFF;
+}
+.rdk-selector-module .selector-plus-icon{
+    color: #767676;
+}
+.rdk-selector-module .selector-editor{
+    border: 2px solid #A5A6AA;
 }

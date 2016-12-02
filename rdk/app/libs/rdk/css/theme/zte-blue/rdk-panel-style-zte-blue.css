@@ -1,0 +1,51 @@
+.rdk-panel-module{
+    display: flex;
+    flex-direction: column;
+    position: relative; 
+    border-radius: 4px;
+    width: 200px;
+	height:100%;
+    float:left;
+    border: 0;
+    padding: 0;
+}
+.rdk-panel-close{
+    float:right;
+    margin-right:10px;
+}
+.rdk-panel-caption{
+    width:80%;
+    font-weight: bold;
+    font-size: medium;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    cursor: pointer;
+    line-height: 30px;
+}
+.rdk-panel-caption i{
+    font-style: normal;
+    font-weight: normal;
+    font-family: "微软雅黑", Helvetica, Arial, sans-serif;
+}
+
+.rdk-panel-title {
+    width: 100%;
+    border: 0;
+    height: 32px;
+    font-weight: normal;
+}
+.rdk-panel-content{
+	overflow-y:auto;
+    width: 100%;
+}
+
+.rdk-panel-module  .panel-caption   .panel-content .panel-content-transclude{
+    display: inline-block;
+}
+
+/*todo:theme colors*/
+.rdk-panel-caption i{
+    color: #008fd4;
+}
+.rdk-panel-title {
+    background-color: #fff;
+}

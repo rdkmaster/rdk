@@ -1,0 +1,58 @@
+.rdk-tab-module{
+	margin : 10px;
+}
+.rdk-tab-module .ui-widget-header {
+    border-bottom: none;
+    background-color: transparent;
+}
+
+.rdk-tab-module .ui-tabs .ui-tabs-nav .ui-tabs-anchor{
+	font-size: 14px;
+}
+.ui-tabs .ui-widget-content {
+    padding: 0 8px;
+}
+.rdk-tab-module .tabs>.content{
+    border: 1px solid #ddd;
+    margin: 0 .2em;
+}
+
+.ui-tabs .ui-tabs-nav li {
+    margin: 1px 1px 0 0;
+}
+/*rdk-tab-item 样式类：为外部额外增加页签项到到tab里提供统一的样式*/
+.ui-tabs .ui-tabs-nav li a.ui-tabs-anchor,.rdk-tab-item{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.rdk-tab-module .bottom_line em {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    margin-left: -1px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 0;
+    border-bottom: 5px solid #fff;
+}
+
+.rdk-tab-module .ui-state-default, .ui-widget-content, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+	border: 0;
+	background : transparent;
+}
+
+/*todo:theme colors*/
+.rdk-tab-module .title li a {
+    color: #333333;
+}
+.ui-tabs .ui-tabs-nav li a.ui-tabs-anchor,.rdk-tab-item{
+    background-color: #63B1EF;
+    color: #fff;
+}
+.rdk-tab-module .title li a.selected{
+    background-color: #FEA211;
+    color: #fff;
+}

@@ -1,32 +1,23 @@
-
 .slider{
 	position: relative;
-	
 }
 .slide {
 	display:flex;
 	box-sizing:border-box;
 }
 .context{
-
 	overflow: hidden;
 }
 .arrows{
  opacity: 0.5;
  font-size:50px;
- color: #209DD3;
  cursor:pointer;
 }
-
 .left_arrow  {
  top: 50%;
  position: absolute;
  left: 7px;
  transform: translate(-50%,-50%);
-
-}
-.left_deny {
- color: #E0E0E0;
 }
 .right_arrow   {
  top: 50%;
@@ -34,10 +25,14 @@
  right: -7px;
  transform: translate(-50%,-50%);
 }
-.right_deny {
- color: #E0E0E0;
+
+/*todo:theme colors*/
+.arrows{
+    color: #209DD3;
 }
-
-
- 
-
+.left_deny {
+    color: #E0E0E0;
+}
+.right_deny {
+    color: #E0E0E0;
+}

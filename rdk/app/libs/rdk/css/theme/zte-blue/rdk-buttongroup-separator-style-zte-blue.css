@@ -1,43 +1,20 @@
 .rdk-buttongroup-module{
 	height:28px;
 	display:inline-block;
-	
-	font-size: 0;  
+	font-size: 0;
     -webkit-text-size-adjust:none;  
 }
-.rdk-buttongroup-module button:hover {
-	
-	background: rgba(0 ,143, 212, 0.18 );
-    
-	
-}
-
 .rdk-buttongroup-separator {
-	border-left: 1px solid #7291b1;
 	position:relative;
 	height: 28px;
 	display:inline-block;
 	vertical-align: bottom;
-
-}
-
-.rdk-buttongroup-module button:active {
-	background:#67b9e0; 
-}
-
-.rdk-buttongroup-module button:active  .fa{
-	color:white; 
 }
 .rdk-buttongroup-module  button:first-child{
 	border-radius: 3px 0 0 3px;
-	box-shadow: -1px 0px 2px #7291b1;
 }
 .rdk-buttongroup-module button:last-child{
 	border-radius: 0 3px 3px 0;
-	box-shadow: 1px 0px 2px #7291b1;
-}
-.rdk-buttongroup-module .fa{
-	color: #008fd4;
 }
 .rdk-buttongroup-module button{
 	width:40px;
@@ -55,6 +32,25 @@
     background: linear-gradient(to bottom,  #fbfbfe 0%,#e0f2fa 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbfbfe', endColorstr='#e0f2fa',GradientType=0 );
 }
+/*todo:theme colors*/
+.rdk-buttongroup-module button:hover {
+	background: rgba(0 ,143, 212, 0.18 );
 }
-
-
+.rdk-buttongroup-separator {
+	border-left: 1px solid #7291b1;
+}
+.rdk-buttongroup-module button:active {
+	background:#67b9e0;
+}
+.rdk-buttongroup-module button:active  .fa{
+	color:white;
+}
+.rdk-buttongroup-module  button:first-child{
+	box-shadow: -1px 0 2px #7291b1;
+}
+.rdk-buttongroup-module button:last-child{
+	box-shadow: 1px 0 2px #7291b1;
+}
+.rdk-buttongroup-module .fa{
+	color: #008fd4;
+}

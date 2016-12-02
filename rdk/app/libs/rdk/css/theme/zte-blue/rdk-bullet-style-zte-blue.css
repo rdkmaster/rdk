@@ -32,7 +32,6 @@
 }
 
 .rdk-bullet-vertical-module .progress .progress-bar {
-    background-color: #577780;
     width: 10px;
     height: 98%;
 }
@@ -93,7 +92,6 @@
 }
 
 .rdk-bullet-horizontal-module .progress .progress-bar {
-    background-color: #577780;
     width: 98%;
     height: 10px;
 }
@@ -126,4 +124,12 @@
 .rdk-bullet-horizontal-module .progress .slider .icon::selection,
 .rdk-bullet-horizontal-module .progress .slider .num::selection {
     background: transparent;
+}
+
+/*todo:theme colors*/
+.rdk-bullet-vertical-module .progress .progress-bar {
+    background-color: #577780;
+}
+.rdk-bullet-horizontal-module .progress .progress-bar {
+    background-color: #577780;
 }
