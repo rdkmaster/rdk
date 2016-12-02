@@ -2,7 +2,7 @@
 .tab_wrap{
     position: absolute;
     width: 580px;
-
+    bottom:0;
     height: 550px;
     transition: bottom 0.3s linear;
 }

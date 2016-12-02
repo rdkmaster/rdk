@@ -1,7 +1,7 @@
-define('main', ['application', 'blockUI','rd.controls.Table','rd.attributes.Scroll', 'rd.containers.Tab', 'rd.containers.Accordion'],
+define('main', ['application', 'blockUI','rd.controls.Table', 'rd.containers.Tab', 'rd.containers.Accordion'],
     function(application) {
 // 创建一个RDK的应用
-        var app = angular.module("rdk_app", ['rd.core', 'blockUI','rd.controls.Table','rd.attributes.Scroll', 'rd.containers.Tab', 'rd.containers.Accordion']);
+        var app = angular.module("rdk_app", ['rd.core', 'blockUI','rd.controls.Table', 'rd.containers.Tab', 'rd.containers.Accordion']);
         app.config(['blockUIConfig', function(blockUIConfig) {
             // blockUI的详细用法参考 https://github.com/McNull/angular-block-ui
             blockUIConfig.template = '<div class="block-ui-message-container">\
