@@ -64,9 +64,8 @@ class WorkRoutee extends Actor with Json4sSupport with Logger {
       try {
         sourceData = runtime.getEngine.eval(s"rest.get('${source.url}',${RdkUtil.toJsonString(source.peerParam)})").asInstanceOf[String]
       } catch {
-        case e:Exception =>
+        case e:Throwable =>
           logger.error("get source error:" + e)
-          throw e
       }
 
       val fileNamePreFix = RdkUtil.getCurrentTime
