@@ -22,15 +22,15 @@ function() {
                 },
                 template:'<div>\
                               <div class="rdk-panel-module" ng-show="panelShow">\
-                                   <div class="panel-title" ng-show="{{showTitle}}" >\
-                                        <span class="panel-caption">\
-                                          <i class="{{icon}}" >&nbsp;&nbsp;{{title}} </i></span>\
-                                        <div class="panel-close"  ng-show="{{showClose}}">\
+                                   <div class="rdk-panel-title" ng-show="{{showTitle}}" >\
+                                        <span class="rdk-panel-caption">\
+                                          <i class="{{icon}}" >{{title}}</i></span>\
+                                        <div class="rdk-panel-close"  ng-show="{{showClose}}">\
                                             <i class="fa fa-close" ng-click="close()"></i>\
                                         </div>\
                                    </div>\
-                                   <div class="panel-content" >\
-                                       <div ng-transclude class="panel-content-transclude">\
+                                   <div class="rdk-panel-content" >\
+                                       <div ng-transclude class="rdk-panel-content-transclude">\
                                        </div>\
                                    </div>\
                               </div>\

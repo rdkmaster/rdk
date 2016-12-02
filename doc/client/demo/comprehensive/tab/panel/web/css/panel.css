@@ -3,7 +3,7 @@
     top: 300px;
     background-color: #fff;
     transition: top 0.35s linear;
-    margin: 100px 200px;
+    margin: 10%;
 }
 .rdk-panel{
     opacity: 0;
@@ -11,52 +11,14 @@
     border: 1px solid #eee;
     box-shadow: 1px -1px 2px #eee;
 }
-.rdk-panel-module {
-    border: 0;
-    padding: 0;
-}
 /* 滚动条*/
-.panel-content {overflow:hidden}
 .content{height:248px;padding-right:4px;}
-/* title */
-.panel-title {
-    border: 0;
-    background-color: #fff;
-    height: 32px;
-    font-weight: normal;
-}
-.panel-caption{
-    line-height: 28px;
-}
-.panel-caption i{
-    font-style: normal;
-    font-weight: normal;
-    font-family: "微软雅黑", Helvetica, Arial, sans-serif;
-    color: #008fd4;
-    margin-left: -14px;
-}
-.btn{
-    position: absolute;
-    top: 0;
-    right: 10px;
-}
 .btn-show{
-    width: 64px;
-    height: 13px;
     border: 0;
     outline: 0;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
     position: absolute;
     top: -12px;
     left: 44.2%;
-}
-
-.btn-icon-down{
-    background: url("../images/btn-up.png") no-repeat;
-}
-.btn-icon-up{
-    background: url("../images/btn-down.png") no-repeat;
 }
 /* panel animation*/
 @keyframes slideUp {
@@ -67,7 +29,7 @@
         opacity: 0;
     }
     50%{
-        opacity: 0.5;
+        opacity: 0.3;
     }
     75%{
         opacity: 0.7;
@@ -81,35 +43,15 @@
 }
 .panel-up{
     animation:  slideUp 0.35s linear;
-    transition: opacity 0.35s linear;
     opacity: 1;
 }
 .panel-down{
     transition: opacity 0.35s linear;
     opacity: 0;
 }
-
 /* table */
-.rdk-panel .rdk-table-module .rdk-table thead>tr {
-    color: #008fd4;
-    font-size: 12px;
-    background-color: #eeeeee;
-    border-bottom: 0;
-}
 .rdk-table-module .rdk-table > thead > tr > th {
-    font-weight: normal;
     padding: 0 6px;
-}
-/* tr 隔行不同颜色*/
-.rdk-panel .rdk-table-module .rdk-table > tbody > tr:nth-child(odd){
-    background-color: #fff;
-}
-.rdk-panel .rdk-table-module .rdk-table > tbody > tr:nth-child(even){
-    background-color: #f3f3f3;
-}
-.rdk-table-module .rdk-table > thead > tr > th,.rdk-table-module .rdk-table > tbody > tr > td {
-    text-align: center;
-    border: 1px solid #e5e5e5;
 }
 /* td 第1,2,3列右对齐*/
 .rdk-panel .rdk-table-module .rdk-table tbody>tr>td:nth-of-type(1),
@@ -130,27 +72,4 @@
     width:110px;
     white-space: nowrap;
     text-overflow: ellipsis;
-}
-/*设置head tr 固定在表格头部时的偏移量*/
-.sticky-wrap .sticky-thead, .sticky-wrap .sticky-col, .sticky-wrap .sticky-intersect {
-    left: 0;
-}
-/*表格选择行的背景色*/
-.rdk-table-module .rdk-table tbody tr.selected-row td {
-    background-color: #cde4fa;
-}
-/*表格hover背景色*/
-.rdk-table-module .rdk-table > tbody > tr:not(.selected-row):hover > td {
-    background-color: #e2eef9;
-}
-.rdk-table-module .rdk-table tbody tr.selected-row:hover {
-    background-color:  #e2eef9;
-}
-/*表格字体颜色*/
-.rdk-table-module .rdk-table tr{
-    color: #434343;
-    border-bottom: none;
-}
-.rdk-table-module .rdk-table > tbody > tr > td {
-    padding: 5px 8px;
 }

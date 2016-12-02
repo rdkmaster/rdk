@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
     <title>RDK控件Demo : panel 弹出</title>
     <link rel="stylesheet" type="text/css" href="css/panel.css">
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
     <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
     <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
     <script src="scripts/panel.js"></script>
@@ -18,11 +19,12 @@
     </script>
 </head>
 <body ng-controller='rdk_ctrl' class="rdk-loading">
-<div class="panel-wrap" ng-class="{'wrap-animation':panelStatus}">
-    <button ng-click="clkShowPanel()" class="btn-show btn-icon-down" ng-class="{'btn-icon-up':panelStatus}"></button>
+<div class="panel-wrap rdk-table-theme-blue" ng-class="{'wrap-animation':panelStatus}">
+    <button ng-click="clkShowPanel()" class="btn-show rdk-icon" ng-class="{true:'btn-down-icon',false:' btn-up-icon'}[panelStatus]"></button>
     <rdk_panel title="'华城小区'" class="rdk-panel" ng-class="{'panel-up':panelStatus,'panel-down':!panelStatus}" show-title="true" height="280" width="580">
         <rdk_table class="content" rdk-scroll ds="dsTable" ds-url="/doc/client/demo/comprehensive/tab/panel/web/data/data" ds_query_if="ready" paging-visible="false" setting="settingPanel"></rdk_table>
     </rdk_panel>
 </div>
+
 </body>
 </html>
