@@ -326,7 +326,6 @@ var file = {
         return JSON.parse(result);
     },
     save: function (file, content, append, encoding) {
-        log("$$$$$$$$"+content)
         if (!file) {
             log("invalid file path:", file);
             return false;

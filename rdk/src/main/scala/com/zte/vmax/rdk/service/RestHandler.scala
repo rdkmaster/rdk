@@ -136,20 +136,21 @@ class ExportHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport
   implicit def str2SExportParam(json: String): ExportParam = {
     RdkUtil.json2Object[ExportParam](json).getOrElse(null)
   }
+
   def runRoute =
     path("export") {
       get {
-        parameters('p.as[ExportParam]){
-          exportParam=>
-          val future = router ? exportParam
-          val path=Await.result(future,10 minute).asInstanceOf[String]
-            logger.info("rest return =>"+path)
-          val tempResultsFile = new File(path)
-          respondWithHeader(`Content-Disposition`(s"attachment;filename=${new String(tempResultsFile.getName.getBytes("UTF-8"), "ISO_8859_1")}")) {
-            respondWithLastModifiedHeader(tempResultsFile.lastModified) {
-              complete(tempResultsFile)
+        parameters('p.as[ExportParam]) {
+          exportParam =>
+            val begin = System.currentTimeMillis()
+            val future = router ? (exportParam.copy(timeStamp = begin))
+            val path = Await.result(future, 10 minute).asInstanceOf[String]
+            val tempResultsFile = new File(path)
+            respondWithHeader(`Content-Disposition`(s"attachment;filename=${new String(tempResultsFile.getName.getBytes("UTF-8"), "ISO_8859_1")}")) {
+              respondWithLastModifiedHeader(tempResultsFile.lastModified) {
+                complete(tempResultsFile)
+              }
             }
-          }
         }
 
       }

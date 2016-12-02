@@ -57,7 +57,7 @@ class WorkRoutee extends Actor with Json4sSupport with Logger {
       sender ! WSResponse(head, if (result.isLeft) result.left.get.getMessage else result.right.get)
 
 
-    case (no: Long, ExportParam(source, fileType, param)) =>
+    case (no: Long, ExportParam(source, fileType, param,timeStamp)) =>
       logger.debug(s"<No.${no}> ${source} export fileType:${fileType}")
       runtime.setAppName("export")
       var sourceData: String = ""
@@ -69,27 +69,45 @@ class WorkRoutee extends Actor with Json4sSupport with Logger {
           throw e
       }
 
-
       val fileNamePreFix = RdkUtil.getCurrentTime
+      val excludeIndexes = RdkUtil.toJsonString(if (param != null) param.excludeIndexes else null)
+      val option = RdkUtil.toJsonString(if (param != null) param.option else null)
 
       RdkUtil.json2Object[ServiceResult](sourceData) match {
         case Some(rdkResult) =>
           val rdkData = rdkResult.result
-          println(rdkData)
-          val excludeIndexes = RdkUtil.toJsonString(if (param != null) param.excludeIndexes else null)
-          val option = RdkUtil.toJsonString(if (param != null) param.option else null)
           fileType match {
             case "excel" =>
               runtime.getEngine.eval(s"file.saveAsEXCEL('${fileNamePreFix}.xls',${rdkData},${excludeIndexes},${option})")
+              logger.debug(s"<No.${no}> $source (${System.currentTimeMillis() - timeStamp}ms)")
               sender ! fileNamePreFix + ".xls"
             case "csv" =>
               runtime.getEngine.eval(s"file.saveAsCSV('${fileNamePreFix}.csv',${rdkData},${excludeIndexes},${option})")
+              logger.debug(s"<No.${no}> $source (${System.currentTimeMillis() - timeStamp}ms)")
               sender ! fileNamePreFix + ".csv"
             case "txt" =>
               runtime.getEngine.eval(s"file.save('${fileNamePreFix}.txt','${rdkData}',${excludeIndexes},${option})")
+              logger.debug(s"<No.${no}> $source (${System.currentTimeMillis() - timeStamp}ms)")
               sender ! fileNamePreFix + ".txt"
           }
-        case None => RdkUtil.json2Object[ServiceResult](sourceData)
+        case None =>
+          RdkUtil.json2Object[ArrayList[String]](sourceData) match{
+            case Some(arrayData)=>
+                fileType match {
+                  case "csv" =>
+                    runtime.getEngine.eval(s"file.saveAsCSV('${fileNamePreFix}.csv',${sourceData},${excludeIndexes},${option})")
+                    logger.debug(s"<No.${no}> $source (${System.currentTimeMillis() - timeStamp}ms)")
+                    sender ! fileNamePreFix + ".csv"
+                  case "txt" =>
+                    runtime.getEngine.eval(s"file.save('${fileNamePreFix}.txt','${sourceData}',${excludeIndexes},${option})")
+                    logger.debug(s"<No.${no}> $source (${System.currentTimeMillis() - timeStamp}ms)")
+                    sender ! fileNamePreFix + ".txt"
+                }
+            case None =>
+              runtime.getEngine.eval(s"file.save('${fileNamePreFix}.txt','${sourceData}',${excludeIndexes},${option})")
+              logger.debug(s"<No.${no}> $source (${System.currentTimeMillis() - timeStamp}ms)")
+              sender ! fileNamePreFix + ".txt"
+          }
       }
 
 

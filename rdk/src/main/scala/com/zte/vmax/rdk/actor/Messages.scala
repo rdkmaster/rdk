@@ -36,7 +36,7 @@ object Messages {
 
   case class Source(url:String,peerParam:AnyRef=null)
 
-  case class ExportParam(source:Source,fileType:String,param:Param=null)
+  case class ExportParam(source:Source,fileType:String,param:Param=null, timeStamp: Long=0)
 
   case class Param(excludeIndexes:AnyRef=null, option:AnyRef=null)
   //websocket 消息类型定义
