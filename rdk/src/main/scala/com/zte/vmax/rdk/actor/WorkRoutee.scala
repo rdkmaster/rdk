@@ -57,58 +57,17 @@ class WorkRoutee extends Actor with Json4sSupport with Logger {
       sender ! WSResponse(head, if (result.isLeft) result.left.get.getMessage else result.right.get)
 
 
-    case (no: Long, ExportParam(source, fileType, param,timeStamp)) =>
+    case (no: Long, ExportParam(source, fileType, param, timeStamp)) =>
       logger.debug(s"<No.${no}> ${source} export fileType:${fileType}")
       runtime.setAppName("export")
-      var sourceData: String = ""
-      try {
-        sourceData = runtime.getEngine.eval(s"rest.get('${source.url}',${RdkUtil.toJsonString(source.peerParam)})").asInstanceOf[String]
-      } catch {
-        case e:Throwable =>
-          logger.error("get source error:" + e)
+      var sourceData: String = runtime.getEngine.eval(s"rest.get('${source.url}',${RdkUtil.toJsonString(source.peerParam)})").asInstanceOf[String]
+      if (null == sourceData) {
+        logger.error("get source error:empty!")
+        sender ! None
       }
-
-      val fileNamePreFix = RdkUtil.getCurrentTime
-      val excludeIndexes = RdkUtil.toJsonString(if (param != null) param.excludeIndexes else null)
-      val option = RdkUtil.toJsonString(if (param != null) param.option else null)
-
-      RdkUtil.json2Object[ServiceResult](sourceData) match {
-        case Some(rdkResult) =>
-          val rdkData = rdkResult.result
-          fileType match {
-            case "excel" =>
-              runtime.getEngine.eval(s"file.saveAsEXCEL('${fileNamePreFix}.xls',${rdkData},${excludeIndexes},${option})")
-              logger.debug(s"<No.${no}> $source (${System.currentTimeMillis() - timeStamp}ms)")
-              sender ! fileNamePreFix + ".xls"
-            case "csv" =>
-              runtime.getEngine.eval(s"file.saveAsCSV('${fileNamePreFix}.csv',${rdkData},${excludeIndexes},${option})")
-              logger.debug(s"<No.${no}> $source (${System.currentTimeMillis() - timeStamp}ms)")
-              sender ! fileNamePreFix + ".csv"
-            case "txt" =>
-              runtime.getEngine.eval(s"file.save('${fileNamePreFix}.txt','${rdkData}',${excludeIndexes},${option})")
-              logger.debug(s"<No.${no}> $source (${System.currentTimeMillis() - timeStamp}ms)")
-              sender ! fileNamePreFix + ".txt"
-          }
-        case None =>
-          RdkUtil.json2Object[ArrayList[String]](sourceData) match{
-            case Some(arrayData)=>
-                fileType match {
-                  case "csv" =>
-                    runtime.getEngine.eval(s"file.saveAsCSV('${fileNamePreFix}.csv',${sourceData},${excludeIndexes},${option})")
-                    logger.debug(s"<No.${no}> $source (${System.currentTimeMillis() - timeStamp}ms)")
-                    sender ! fileNamePreFix + ".csv"
-                  case "txt" =>
-                    runtime.getEngine.eval(s"file.save('${fileNamePreFix}.txt','${sourceData}',${excludeIndexes},${option})")
-                    logger.debug(s"<No.${no}> $source (${System.currentTimeMillis() - timeStamp}ms)")
-                    sender ! fileNamePreFix + ".txt"
-                }
-            case None =>
-              runtime.getEngine.eval(s"file.save('${fileNamePreFix}.txt','${sourceData}',${excludeIndexes},${option})")
-              logger.debug(s"<No.${no}> $source (${System.currentTimeMillis() - timeStamp}ms)")
-              sender ! fileNamePreFix + ".txt"
-          }
-      }
-
-
+      val excludeIndexes: String = RdkUtil.toJsonString(if (param != null) param.excludeIndexes else null)
+      val option: String = RdkUtil.toJsonString(if (param != null) param.option else null)
+      sender ! RdkUtil.writeFile(runtime, sourceData, fileType, excludeIndexes, option)
+      logger.debug(s"<No.${no}> $source (${System.currentTimeMillis() - timeStamp}ms)")
   }
 }

@@ -54,7 +54,7 @@ object Run extends App with SimpleRoutingApp with Logger {
       WebSocketServer.startWebSocket(ip, wsPort)
     }
     //初始化应用
-//    RdkUtil.initApplications
+    RdkUtil.initApplications
 
     startServer(interface = ip, port = port) {
       new ExportHandler(system, RdkServer.appRouter).runRoute ~ new RestHandler(system, RdkServer.appRouter).runRoute

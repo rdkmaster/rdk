@@ -312,4 +312,39 @@ object RdkUtil extends Logger {
     sdf.format(new Date())
   }
 
+  def writeFile(runtime: Runtime, sourceData: String, fileType: String, excludeIndexes: String, option: String): Option[String] = {
+    val fileNamePreFix = RdkUtil.getCurrentTime
+    RdkUtil.json2Object[ServiceResult](sourceData) match {
+      case Some(rdkResult) =>
+        val rdkData = rdkResult.result
+        fileType match {
+          case "excel" =>
+            runtime.getEngine.eval(s"file.saveAsEXCEL('${fileNamePreFix}.xls',${rdkData},${excludeIndexes},${option})")
+            Some(fileNamePreFix + ".xls")
+          case "csv" =>
+            runtime.getEngine.eval(s"file.saveAsCSV('${fileNamePreFix}.csv',${rdkData},${excludeIndexes},${option})")
+            Some(fileNamePreFix + ".csv")
+          case "txt" =>
+            runtime.getEngine.eval(s"file.save('${fileNamePreFix}.txt','${rdkData}',${excludeIndexes},${option})")
+            Some(fileNamePreFix + ".txt")
+          case _ => None
+        }
+      case None =>
+        RdkUtil.json2Object[ArrayList[String]](sourceData) match {
+          case Some(arrayData) =>
+            fileType match {
+              case "csv" =>
+                runtime.getEngine.eval(s"file.saveAsCSV('${fileNamePreFix}.csv',${sourceData},${excludeIndexes},${option})")
+                Some(fileNamePreFix + ".csv")
+              case "txt" =>
+                runtime.getEngine.eval(s"file.save('${fileNamePreFix}.txt','${sourceData}',${excludeIndexes},${option})")
+                Some(fileNamePreFix + ".txt")
+              case _ => None
+            }
+          case None =>
+            runtime.getEngine.eval(s"file.save('${fileNamePreFix}.txt','${sourceData}',${excludeIndexes},${option})")
+            Some(fileNamePreFix + ".txt")
+        }
+    }
+  }
 }

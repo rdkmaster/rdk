@@ -145,13 +145,19 @@ class ExportHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport
             exportParam =>
               val begin = System.currentTimeMillis()
               val future = router ? (exportParam.copy(timeStamp = begin))
-              val path = Await.result(future, ServiceConfig.exportTimeout second).asInstanceOf[String]
-              val tempResultsFile = new File(path)
-              respondWithHeader(`Content-Disposition`(s"attachment;filename=${new String(tempResultsFile.getName.getBytes("UTF-8"), "ISO_8859_1")}")) {
-                respondWithLastModifiedHeader(tempResultsFile.lastModified) {
-                  complete(tempResultsFile)
-                }
+              Await.result(future, ServiceConfig.exportTimeout second).asInstanceOf[Option[String]]
+              match {
+                case Some(path) =>
+                  val tempResultsFile = new File(path)
+                  respondWithHeader(`Content-Disposition`(s"attachment;filename=${new String(tempResultsFile.getName.getBytes("UTF-8"), "ISO_8859_1")}")) {
+                    respondWithLastModifiedHeader(tempResultsFile.lastModified) {
+                      complete(tempResultsFile)
+                    }
+                  }
+                case None =>
+                  complete("file export error")
               }
+
           }
         }
       }
