@@ -138,8 +138,7 @@ class ExportHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport
   }
 
   def runRoute =
-  //    path("rdk" / "service" / "common" / "export") {
-    path("export") {
+    path("rdk" / "service" / "common" / "export") {
       detach() {
         get {
           parameters('p.as[ExportParam]) {
