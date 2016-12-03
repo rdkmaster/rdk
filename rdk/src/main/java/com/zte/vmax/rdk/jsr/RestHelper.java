@@ -108,9 +108,6 @@ public class RestHelper extends AbstractAppLoggable {
     }
 	
 	private void setRequestProperties(HttpURLConnection conn, Object option) {
-        if (option == null) {
-            return;
-        }
         if (option instanceof Undefined) {
             return;
         }
@@ -126,9 +123,6 @@ public class RestHelper extends AbstractAppLoggable {
     }
 
     private String getProperty(Object option, String prop, String defaultValue) {
-        if (option == null) {
-            return defaultValue;
-        }
         if (option instanceof Undefined) {
             return defaultValue;
         }

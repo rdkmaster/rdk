@@ -7,10 +7,10 @@ import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 import org.apache.log4j.{Level, LogManager}
 import org.json4s.{DefaultFormats, Formats}
-import spray.http.HttpCharsets
+import spray.http.{ChunkedMessageEnd, HttpCharsets}
 import spray.httpx.Json4sSupport
 import spray.routing.{RoutingSettings, Directives, RequestContext}
-
+import scala.util.control._
 import scala.concurrent.Await
 import scala.concurrent.duration._
 import spray.http.HttpHeaders.{Connection, `Content-Disposition`}
@@ -138,20 +138,22 @@ class ExportHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport
   }
 
   def runRoute =
-//    path("rdk" / "service" / "common" / "export") {
+  //    path("rdk" / "service" / "common" / "export") {
     path("export") {
-      get {
-        parameters('p.as[ExportParam]) {
-          exportParam =>
-            val begin = System.currentTimeMillis()
-            val future = router ? (exportParam.copy(timeStamp = begin))
-            val path = Await.result(future, ServiceConfig.exportTimeout second).asInstanceOf[String]
-            val tempResultsFile = new File(path)
-            respondWithHeader(`Content-Disposition`(s"attachment;filename=${new String(tempResultsFile.getName.getBytes("UTF-8"), "ISO_8859_1")}")) {
-              respondWithLastModifiedHeader(tempResultsFile.lastModified) {
-                complete(tempResultsFile)
+      detach() {
+        get {
+          parameters('p.as[ExportParam]) {
+            exportParam =>
+              val begin = System.currentTimeMillis()
+              val future = router ? (exportParam.copy(timeStamp = begin))
+              val path = Await.result(future, ServiceConfig.exportTimeout second).asInstanceOf[String]
+              val tempResultsFile = new File(path)
+              respondWithHeader(`Content-Disposition`(s"attachment;filename=${new String(tempResultsFile.getName.getBytes("UTF-8"), "ISO_8859_1")}")) {
+                respondWithLastModifiedHeader(tempResultsFile.lastModified) {
+                  complete(tempResultsFile)
+                }
               }
-            }
+          }
         }
       }
     }

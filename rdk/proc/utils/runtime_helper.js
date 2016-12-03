@@ -422,6 +422,9 @@ var file = {
 
 var rest = {
     get: function(url, option) {
+        if(null==option){
+            option=undefined;
+        }
         return rdk_runtime.restHelper().get(encodeURI(url),option);
     }
 }
