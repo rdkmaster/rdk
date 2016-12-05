@@ -744,10 +744,6 @@ function json(data, indent) {
     return _.isString(data) ? data : JSON.stringify(data, '', i);
 }
 
-function jsonToJSObject(arg){
-    return JSON.parse(arg);
-}
-
 function matrix(resultSet, mapIterator, keepResultSet) {
     if (_.isString(resultSet)) {
         return matrix(sql(resultSet), mapIterator);

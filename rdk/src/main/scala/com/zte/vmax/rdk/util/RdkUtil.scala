@@ -9,9 +9,6 @@ import java.nio.file.attribute.BasicFileAttributes
 import java.text.SimpleDateFormat
 import java.util.{ArrayList, Date, UUID}
 import java.util.regex.{Matcher, Pattern}
-
-
-import akka.actor.ActorRef
 import akka.util.Timeout
 import scala.concurrent.duration._
 import com.google.gson.{Gson, GsonBuilder}
@@ -31,7 +28,7 @@ import spray.http.{IllegalRequestException, StatusCodes}
 
 import scala.concurrent.{Future, Await}
 import scala.reflect.ClassTag
-import scala.util.{Failure, Success, Try}
+import scala.util.Try
 import akka.pattern.ask
 
 

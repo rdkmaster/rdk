@@ -1,16 +1,10 @@
 package com.zte.vmax.rdk.actor
 
-import java.text.SimpleDateFormat
-import java.util._
-import java.util.Date
-import javax.script.{ScriptEngineManager, ScriptEngine}
-
 import akka.actor.Actor
 import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.env.Runtime
 import com.zte.vmax.rdk.service.ServiceConfig
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
-import jdk.nashorn.api.scripting.ScriptObjectMirror
 import org.json4s.{DefaultFormats, Formats}
 import spray.httpx.Json4sSupport
 

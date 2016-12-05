@@ -7,17 +7,13 @@ import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 import org.apache.log4j.{Level, LogManager}
 import org.json4s.{DefaultFormats, Formats}
-import spray.http.{ChunkedMessageEnd, HttpCharsets}
+import spray.http.HttpCharsets
 import spray.httpx.Json4sSupport
 import spray.routing.{RoutingSettings, Directives, RequestContext}
-import scala.util.control._
 import scala.concurrent.Await
 import scala.concurrent.duration._
-import spray.http.HttpHeaders.{Connection, `Content-Disposition`}
-
-import java.io.{FileInputStream, File}
-
-import scala.util.{Failure, Success}
+import spray.http.HttpHeaders.`Content-Disposition`
+import java.io.File
 
 class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport with Directives with Logger {
   implicit def json4sFormats: Formats = DefaultFormats
