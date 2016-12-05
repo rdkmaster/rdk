@@ -58,7 +58,9 @@
                         _destroyPopupModule(popupModuleID);
                     },
                     open: function(){
-                        myShowTitle ? ($(this).parent().children(".ui-dialog-titlebar").prepend(myIcon)) : ($(this).parent().children(".ui-dialog-titlebar").addClass('rdk-popupservice-hidetitlebar'));
+                        var $myIcon = $("<i></i>");
+                        $myIcon.addClass(myIcon);
+                        myShowTitle ? ($(this).parent().children(".ui-dialog-titlebar").prepend($myIcon)) : ($(this).parent().children(".ui-dialog-titlebar").addClass('rdk-popupservice-hidetitlebar'));
                     }
                 });
 

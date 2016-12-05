@@ -113,11 +113,11 @@
 弹出框的标题和图标，读取的是用户自定义的模板的 *caption* 及 *icon* 属性。缺省时为空。
 
 <font color=red>**注意**</font> *icon* 目前只支持 *font-awesome* 标准图标。譬如 
-`<i class="fa fa-windows">`
+`fa fa-windows`
 
 #### 基本用法{#c}
 
-	<div controller="SampleModuleController" class='sampleClass' caption='弹出框标题' icon='<i class="fa fa-windows"></i>'>
+	<div controller="SampleModuleController" class='sampleClass' caption='弹出框标题' icon='fa fa-windows'>
 	    ...
 	</div>
 
@@ -127,7 +127,7 @@
 <live_demo example="common/popupservice/demo4css" width="900" height="400"></live_demo>
 
 
-## child ##
+## 访问弹出模块内部方法/属性 ##
 
 ### 基本用法{#d}
 
