@@ -77,49 +77,53 @@ return {
         }
     ],
     series : [
-         {
-            name:'bar',
-            type:'bar',
-            stack:"总量",
-            animation:false,//关闭动画
-            itemStyle: {
-                normal: {
-                    color:'#54acd5',
-                    barBorderRadius: 0
-                },
-                emphasis: {color: '#54acd5'}
-            },
-             barWidth:8,
-             data: data.data
-          
-        },
         {
             name:'bar1',
             type:'bar',
-            stack:"总量",
-            label : {//图形数据显示位置
-                normal: {
-                    show: true, position:['100%' , -5] ,
-                    textStyle: {
-                        color: "#434343",
-                        fontSize:14
-                    },
-                    formatter: function(params){
-                        return  "    "+(100 - params.value)
-                    }
-                },
-            },
+            silent: true,
             itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
                 normal: {
-                    color: "#dedede",
-                    barBorderRadius: 0
+                    color: "#ddeef7",
+                    barBorderRadius: 5,
                 },
-                emphasis: {color: "#dedede"}
+                emphasis: {
+                    color: "#ddeef7",
+                    barBorderRadius: 5,
+                }
             },
-            barWidth:8,//条形宽度
-            data:[100-data.data[0] , 100-data.data[1] , 100-data.data[2] , 100-data.data[3] , 100-data.data[4] , 100-data.data[5], 100-data.data[6]]
-        }
-        
+            barWidth:10,//条形宽度
+            data:[100 , 100 , 100 , 100 , 100 , 100,100 ]
+        },
+         {
+            name:'bar',
+            type:'bar',
+            silent: true,
+            barGap:'-100%',
+            animation:false,//关闭动画
+            label : {//图形数据显示位置
+                normal: {
+                    show: true, position:[145 , -3] ,
+                    textStyle: {
+                        color: "#434343",
+                        fontSize:12,
+                        fontFamily:'微软雅黑'
+
+                    },
+                    formatter: "{c}"
+
+                   
+                },
+            },
+            itemStyle: {
+                normal: {
+                    color:'#54acd5',
+                    barBorderRadius:5
+                },
+                emphasis: {color: '#54acd5'}
+            },
+             barWidth:10,
+             data: data.data
+        },
     ]
 };
 
