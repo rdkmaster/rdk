@@ -22,7 +22,7 @@ class AppRouter extends Actor with Logger {
     case msg: WSCallJSMethod =>
       printLog(msg)
       httpRouter.forward(msg)
-    case msg: ExportParam=>
+    case msg: ExportParam =>
       printLog(msg)
       httpRouter.forward((msgNO, msg))
     case Terminated(a) =>

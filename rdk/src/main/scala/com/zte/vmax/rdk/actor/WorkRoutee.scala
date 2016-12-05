@@ -51,17 +51,16 @@ class WorkRoutee extends Actor with Json4sSupport with Logger {
       sender ! WSResponse(head, if (result.isLeft) result.left.get.getMessage else result.right.get)
 
 
-    case (no: Long, ExportParam(source, fileType, param, timeStamp)) =>
+    case (no: Long, ExportParam(source, fileType, fileParam, timeStamp)) =>
       logger.debug(s"<No.${no}> ${source} export fileType:${fileType}")
       runtime.setAppName("export")
       var sourceData: String = runtime.getEngine.eval(s"rest.get('${source.url}',${RdkUtil.toJsonString(source.peerParam)})").asInstanceOf[String]
-      if (null == sourceData) {
+      if (sourceData == null) {
         logger.error("get source error:empty!")
         sender ! None
+      } else {
+        sender ! RdkUtil.writeExportTempFile(runtime, sourceData, fileType, fileParam)
+        logger.debug(s"<No.${no}> $source (${System.currentTimeMillis() - timeStamp}ms)")
       }
-      val excludeIndexes: String = RdkUtil.toJsonString(if (param != null) param.excludeIndexes else null)
-      val option: String = RdkUtil.toJsonString(if (param != null) param.option else null)
-      sender ! RdkUtil.writeFile(runtime, sourceData, fileType, excludeIndexes, option)
-      logger.debug(s"<No.${no}> $source (${System.currentTimeMillis() - timeStamp}ms)")
   }
 }

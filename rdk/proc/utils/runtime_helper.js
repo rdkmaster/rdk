@@ -330,7 +330,7 @@ var file = {
             log("invalid file path:", file);
             return false;
         }
-        if (content == undefined || null) {
+        if (undefined || null == content) {
             log("invalid file content:", content);
             return false;
         }
