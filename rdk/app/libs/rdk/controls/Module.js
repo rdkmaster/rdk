@@ -84,8 +84,10 @@ define(['rd.core'], function() {
 
                         EventService.raiseControlEvent(scope, EventTypes.LOADING, scope.id);
 
-                        $http.get(url, {timeout: timeout}).success(_compileModule).error(_loadError);
                         scope.loadContext = {controller: controller, initData: initData};
+
+                        var reg = /^\s*<div\s+.*<\/div>\s*$/im;
+                        reg.test(url) ? _compileModule(url) : ($http.get(url, {timeout: timeout}).success(_compileModule).error(_loadError));
                     }
 
                     function _compileModule(htmlSource) {
