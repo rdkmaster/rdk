@@ -15,7 +15,7 @@ import spray.http._
 import spray.http.MediaTypes._
 import spray.routing._
 import spray.http.BodyPart
-import java.io.{ ByteArrayInputStream, InputStream, OutputStream }
+import java.io._
 import scala.concurrent.duration._
 
 
@@ -124,9 +124,19 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
       path("upload"){
         post {
             entity(as[MultipartFormData]) { formData =>
-              complete{
-                ""
+              val ftmp=File.createTempFile("upload",".tmp",new File(".tmp"))
+              val out=new FileOutputStream(ftmp)
+              formData.fields.foreach{
+                f=>
+                  try{
+                    out.write(f.entity.data.toByteArray)
+                  }catch{
+                    case e:Throwable=>logger.error(""+e)
+                  }finally {
+                    out.close()
+                  }
               }
+              complete("upload")
 //              detachTo(singleRequestServiceActor) {
 //                complete {
 //                  val details = formData.fields.map {
