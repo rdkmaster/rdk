@@ -5,7 +5,7 @@ define('main', ['rd.services.Alert'], function() {
     app.controller('rdk_ctrl', ['$scope', 'Alert', 'ButtonTypes', function(scope, Alert, ButtonTypes) {
         scope.clickHandler = function() {
             Alert.scope = scope;
-            Alert.confirm('信息确认请注意认请注意认请注意认请注意认请注意认请注意认请注意认请注意', '确认提示',  ButtonTypes.YES+ButtonTypes.NO , callbackHandler);
+            Alert.confirm('信息确认请注意认请注意认请注意认请注意认请注意认请注意认请注意认请注意', '确认提示',  ButtonTypes.YES + ButtonTypes.NO , callbackHandler);
         }
 
         function callbackHandler(val) {
