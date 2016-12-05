@@ -1,4 +1,19 @@
 .rdk-alert-svrMsgBtn{
 	padding: 0 16px;
+	margin: 0 10px 20px 10px;
 	min-width: 80px;
+}
+.rdk-alert-no {
+	background: #f6f6f6;
+	border: #f6f6f6;
+	color: #5395d8;
+}
+.rdk-alert-no:focus {
+	border: none;
+}
+.rdk-alert-no:hover {
+	background: #e8e8e8;
+}
+.rdk-alert-no:active {
+	background: #e0e0e0
 }
