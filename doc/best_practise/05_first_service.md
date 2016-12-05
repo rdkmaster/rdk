@@ -28,7 +28,7 @@ RDK的rest服务也是通过编写js代码实现，拷贝这个文件 `app/my_fi
 		require('$svr/mock_api.js');
 		
 		log('querying citys!');
-        var m = matrix('select cityid, cityname from dim_comm_city');
+        var m = Data.fetch('select cityid, cityname from dim_comm_city');
 		log('city result', m);
 		return m;
     }
@@ -53,25 +53,41 @@ RDK的rest服务也是通过编写js代码实现，拷贝这个文件 `app/my_fi
 
 格式很不友好，但是没关系，这些是原始数据，RDK会把他们转成一个优雅的json对象的。
 
-注意到citys服务打印了一写日志 `log('querying citys!');` 这些日志写在了这个文件里了：`app/my_first_app/server/logs/log.txt`
+注意到citys服务打印了一写日志 `log('querying citys!');` 日志路径在proc/log目录下，应用若要生成自己的日志文件需要配置proc/conf/log4j.propertites文件，比如自己的日志文件路径为：`app/my_first_app/server/logs/log.txt`，那么，添加如下配置（文件配置后无需重启rdk服务，30秒后自动生效）：
+
+~~~
+log4j.logger.my_first_app=DEBUG,my_first_app
+log4j.appender.my_first_app=org.apache.log4j.RollingFileAppender
+log4j.appender.my_first_app.File=./app/my_first_app/server/logs/log.txt
+log4j.appender.my_first_app.Threshold=DEBUG
+log4j.appender.my_first_app.Append=true
+log4j.appender.my_first_app.MaxFileSize=10MB
+log4j.appender.my_first_app.MaxBackupIndex=10
+log4j.appender.my_first_app.layout=org.apache.log4j.PatternLayout
+log4j.appender.my_first_app.layout.ConversionPattern=%d %p [%c] - %m%n
+log4j.additivity.my_first_app=true
+~~~
+
+打印的日志：
 
 <a name="log"></a>
 ~~~
-2016-06-11 21:47:57,601 INFO [RunTimeHelper@my_first_app] - loading script: app/my_first_app/server/citys.js
-2016-06-11 21:47:57,601 INFO [runtime_helper.js:195@citys.js] - loading script in js: app/my_first_app/server/mock_api.js 
-2016-06-11 21:47:57,616 DEBUG [citys.js:7] - querying citys! 
-2016-06-11 21:47:57,616 DEBUG [citys.js:9] - city result: {
-  "header": ["cityid", "cityname"],
-  "field": ["cityid", "cityname"],
+2016-12-05 08:52:58,259 INFO [my_first_app] - handling request(my_first_app), script=app/my_first_app/server/citys.js , method=get param={}
+2016-12-05 08:52:58,261 INFO [my_first_app] - loading script:app/my_first_app/server/citys.js (1ms)
+2016-12-05 08:52:58,268 DEBUG [my_first_app] - [citys.js:7] - querying citys! 
+2016-12-05 08:52:58,269 WARN [my_first_app] - [mock_api.js:24] - param maxLine empty,set maxLine=4000 
+2016-12-05 08:52:58,269 DEBUG [my_first_app] - [citys.js:9] - city result {
+  "header": ["cityid","cityname"],
+  "field": ["cityid","cityname"],
   "data": [
     [1,"南京"],
     [2,"扬州"],
     [3,"苏州"],
     [4,"镇江"]
   ]
-}  
+}   
 ~~~
-最后一行就是我们调用`log()`打印的日志。日志是调试服务的一个重要的手段，所以一定要熟练使用，[这里详细描述了rdk提供的所有日志api](/doc/server/service_api.md#日志)。
+最后一行就是我们调用`log()`打印的日志。日志是调试服务的一个重要的手段，所以一定要熟练使用，[这里详细描述了rdk提供的所有日志api](/doc/#/server/service_api.md##%E6%97%A5%E5%BF%97)
 
 > 提示
 > 
@@ -79,7 +95,7 @@ RDK的rest服务也是通过编写js代码实现，拷贝这个文件 `app/my_fi
 > - `log()`函数可以接收任意类型的参数，它会尝试将其转为字符串。
 
 ### 查阅API函数手册
-在实现citys服务的时候，我们用到了两个API函数，分别是[`log()`](/doc/server/service_api.md#日志)和[`matrix()`](/doc/server/service_api.md#matrix())，[这个页面](/doc/server/service_api.md)提供了所有RDK的所有API函数的说明。为了更好的使用它们，建议仔细阅读。
+在实现citys服务的时候，我们用到了两个API函数，分别是[`log()`](/doc/server/service_api.md#API)和[`Data.fetch()`](/doc/server/service_api.md#fetch)，[这个页面](/doc/server/service_api.md)提供了所有RDK的所有API函数的说明。为了更好的使用它们，建议仔细阅读。
 
 ### 调用citys服务
 citys服务是一个标准的restful服务，它可以被任意ajax请求调用。

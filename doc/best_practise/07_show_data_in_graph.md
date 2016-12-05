@@ -18,7 +18,7 @@
 <rdk_graph ds="dsWebAnalysis" ds_url="$svr/webAnalysis"
 	graph_define="scripts/graphDefine.js"></rdk_graph>
 ~~~
-这里引入了一个新的控件rdk_graph，注意要使用[第三步的方法](03_use_first_control.md#dep-inject)注入图形的依赖。
+这里引入了一个新的控件rdk_graph，注意要使用[第三步的方法](03_use_first_control.md#dep-inject)注入图形的依赖`'rd.controls.Graph'`。
 
 在scripts目录中，创建一个graphDefine.js文件，它用于描述一个图形，代码如下：
 ~~~
@@ -73,37 +73,12 @@ RDK的Graph控件使用的是echart作为基础库，echart官网提供了非常
 > 
 > 当条件框中多选城市的时，图形展示的数据并没有实际意义，这里仅仅是为了介绍图形的使用方法而已，不用过于在意业务上是否有意义。
 
-### 优化页面
-前一步完成之后，在查询按钮还没单击之前，图形就显示出来了，我们希望一开始图形和表格都是隐藏起来的，单击了查询按钮之后才显示出来。
-
-编辑页面代码，找到 `rdk_graph` 和 `rdk_table` 这2个标签，都添加属性：`ng-show="showResult"`
-
-编辑js代码，给scope添加一个属性showResult：`scope.showResult = false;`，再编辑scope上的search函数，在最后添加一行代码：`scope.showResult = true;`
-
-这样我们的目的就达到了。
-
-> 扩展：<br>
-> 这里我们由用到了另一个AngularJS的执行，ng-show，[查看这里](http://docs.ngnice.com/api/ng/directive/ngShow)可以了解它的作用和用法。
-
 ### 数据复用
 
 `rdk_graph` 和 `rdk_table` 这2个标签都有ds属性，并且有相同的值，这就意味着表格和图形使用了同一份数据。
 
 ### 实现图形交互
 图形的交互，可以通过事件来完成。RDK提供了一套简单但强大的事件机制，[单击这里](/doc/client/common/event/EventService.md)了解详情。
-
-先注入EventService的依赖，编辑js代码，找到下面这行代码：
-~~~
-app.controller('rdk_ctrl', ['$scope', 'DataSourceService', 'blockUI',
-~~~
-改为：
-~~~
-app.controller('rdk_ctrl', ['$scope', 'DataSourceService', 'blockUI', 'EventService',
-function(scope, DSService, blockUI, EventService)
-	...
-~~~
-
-这样就实现了EventService的注入了。[这个小节](/doc/client/common/dependency_injection.md#ctrl)详细描述了与controller相关的依赖注入的知识，感兴趣的同学可以仔细阅读。
 
 编辑页面代码，在rdk_graph节点上加入一个id属性：`id="myGraph"`。
 

@@ -17,16 +17,8 @@ BA告诉我们，这个功能需要有一个可以选择开始时间和结束时
 编辑 `app/my_first_app/web/index.html` 文件，把body节点修改为：
 
 ~~~
-<body ng-controller='rdk_ctrl' class="rdk_main">
+<body ng-controller='RootController' class="rdk-loading">
     <rdk_time ></rdk_time>
-
-
-    <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
-    <!--     这个节点可选，删除后，RDK会自动生成一个    -->
-    <!--           这个节点只支持基本HTML标签           -->
-    <rdk_loading>
-        <img src="images/loding.gif" alt="loading..."/>
-    </rdk_loading>
 </body>
 ~~~
 页面其他部分保持不变。`<rdk_time></rdk_time>` 就是RDK提供的时间控件，在注入时间控件的依赖之前，浏览器是不可能认识这样的标签的。
@@ -47,23 +39,42 @@ BA告诉我们，这个功能需要有一个可以选择开始时间和结束时
 
 将
 
-	define('main', ['application', 'utils', 'i18n', 'blockUI'],
+	var downloadDependency = [
+        // 所有路径中的 base 都会被替换成本页面html文件所在路径
+        // 注意：所有的url都不能加 .js 扩展名
+        'base/template/sample_module',
+
+        // 带有 alias 属性的条目，可以通过 ctx.alias 的方式来访问到
+        { url: 'base/scripts/utils', alias: 'utils' },
+        { url: 'base/scripts/i18n',  alias: 'i18n'  },
+
+        // css类型的文件需要加 css! 的前缀，注意url上不能加 .css 扩展名
+        'css!base/css/style',
+
+        // 这类 rd. 开头的条目是RDK预定义好的控件url别名
+        'rd.controls.Module'
+    ];
 
 修改为
 
-	define('main', ['application', 'utils', 'i18n', 'blockUI', 'rd.controls.Time'],
+	var downloadDependency = [
+        // 所有路径中的 base 都会被替换成本页面html文件所在路径
+        // 注意：所有的url都不能加 .js 扩展名
+        
 
-将
+        // 带有 alias 属性的条目，可以通过 ctx.alias 的方式来访问到
+        { url: 'base/scripts/utils', alias: 'utils' },
+        { url: 'base/scripts/i18n',  alias: 'i18n'  },
 
-	var app = angular.module("rdk_app", ['rd.core', 'blockUI']);
+        // css类型的文件需要加 css! 的前缀，注意url上不能加 .css 扩展名
+        'css!base/css/style',
 
-修改为
+        // 这类 rd. 开头的条目是RDK预定义好的控件url别名
+        'rd.controls.Time'
+    ];
 
-	var app = angular.module("rdk_app", ['rd.core', 'blockUI', 'rd.controls.Time']);
 
-这两处修改，都是在数组中，增加了一个 `rd.controls.Time`，这就可以让浏览器能够认识rdk_time标签了。
-
-<span style="color:red">新的依赖必须追加到模板已有依赖的后面！否则会导致页面出错。</span>
+这一处修改，是在数组中，增加了一个 `rd.controls.Time`，这就可以让浏览器能够认识rdk_time标签了。
 
 保存之后，在浏览器中打开下面的url
 
@@ -127,6 +138,9 @@ scope.timeSetting = {
 		]
 	}
 > 刷新一下页面看看，开始时间框是当前时间前两个小时了。访问这里可以得到[关于vaule的更多描述](/doc/client/controls/time/rdk_time.md#value)。
+
+### 样式调整
+我们可能需要更改时间控件的时间粒度背景，添加style样式`.btn-group .btn{background:#fff;}`
 
 ## 小结
 本小节用了非常大的篇幅介绍了时间控件的使用过程，目的不仅仅是为了介绍时间控件，这个过程实际上是通用的，RDK的所有控件的使用过程和时间控件是一样的：
