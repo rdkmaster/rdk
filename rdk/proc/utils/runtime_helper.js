@@ -631,10 +631,11 @@ var Data = {
     }
 }
 
-function DataTable(header, field, data) {
+function DataTable(header, field, data, paging) {
     this.header = header;
     this.field = field;
     this.data = data;
+    this.paging=paging;
 
     this.transform = function (trans_object_conf) {
         for (field in trans_object_conf) {
@@ -683,6 +684,7 @@ function DataTable(header, field, data) {
         var field = [];
         var header = [];  //delete
         var data = [];    //转置？
+        var paging={};
         var index = 0;
         for (var i = 0; i < colNameArray.length; i++) {
             var colName = colNameArray[i];
@@ -702,6 +704,7 @@ function DataTable(header, field, data) {
         this.header = header;
         this.field = field;
         this.data = data;
+        this.paging=paging;
         return this;
     },
 
@@ -715,7 +718,7 @@ function DataTable(header, field, data) {
     },
 
     this.clone = function () {
-        return new DataTable(this.header, this.field, this.data);
+        return new DataTable(this.header, this.field, this.data, this.paging);
     }
 }
 
