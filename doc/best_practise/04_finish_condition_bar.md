@@ -1,4 +1,4 @@
-<rdk_title>第4步 完成查询条件栏 - RDK应用开发最佳实践</rdk_title>
+<rdk_title>第3步 完成查询条件栏 - RDK应用开发最佳实践</rdk_title>
 
 ## 目标与收获
 
@@ -93,7 +93,6 @@ var downloadDependency = [
 > angular.forEach是angular提供的一个遍历函数，很有用，[访问这里](http://docs.ngnice.com/api/ng/function/angular.forEach)可以了解更多。站点 <http://docs.ngnice.com/api> 提供了AngularJS所有文档，建议仔细阅读。
 
 ### 样式调整
-时间控件和地区控件并不在一行，为了简单，直接在body标签上设置样式：`style="width:100%"`
 
 三个控件并未对齐，分别在地区控件和查询按钮控件上增加样式：`style="vertical-align:bottom"`
 
@@ -106,6 +105,9 @@ var downloadDependency = [
 
 ## 小结
 我们完成了查询条件栏的剩余部分，碰到了三个新的RDK控件：[`ComboSelect`](/doc/client/controls/comboselect/rdk_comboselect.md)、[`BasicSelector`](/doc/client/controls/basicselector/rdk_basic_selector.md)和[`Button`](/doc/client/controls/button/rdk_button.md)
+
+## 跳转
+[上一步](03_use_first_control.md)、[下一步](05_first_service.md)
 
 ## 源码
 [04_finish_condition_bar.zip](04_finish_condition_bar.zip) 下载后解压到 `rdk/app/my_first_app` 目录下即可。

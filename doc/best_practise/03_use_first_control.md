@@ -1,4 +1,4 @@
-<rdk_title>第3步 使用第一个RDK控件 - RDK应用开发最佳实践</rdk_title>
+<rdk_title>第2步 使用第一个RDK控件 - RDK应用开发最佳实践</rdk_title>
 
 ## 目标与收获
 
@@ -140,7 +140,7 @@ scope.timeSetting = {
 > 刷新一下页面看看，开始时间框是当前时间前两个小时了。访问这里可以得到[关于vaule的更多描述](/doc/client/controls/time/rdk_time.md#value)。
 
 ### 样式调整
-我们可能需要更改时间控件的时间粒度背景，添加style样式`.btn-group .btn{background:#fff;}`
+我们可能需要更改时间控件的时间粒度背景，清空style.css文件中的样式，并添加样式`body{margin:8px}.btn-group .btn{background:#fff;}`
 
 ## 小结
 本小节用了非常大的篇幅介绍了时间控件的使用过程，目的不仅仅是为了介绍时间控件，这个过程实际上是通用的，RDK的所有控件的使用过程和时间控件是一样的：
@@ -148,6 +148,9 @@ scope.timeSetting = {
 1. 在页面上合适位置加入控件的标签
 2. 在main.js中注入相应控件的依赖，如果你发现控件不显示出来，那很可能就是忘记注入它的依赖了
 3. 对控件进行配置，一般就是查询该控件的手册，在手册中获得你需要信息
+
+## 跳转
+[上一步](02_first_rdk_app.md)、[下一步](04_finish_condition_bar.md)
 
 ## 源码
 [03_use_first_control.zip](03_use_first_control.zip) 下载后解压到 `rdk/app/my_first_app` 目录下即可。

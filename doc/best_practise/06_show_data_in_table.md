@@ -1,4 +1,4 @@
-<rdk_title>第6步 将查询得到的数据表格方式呈现 - RDK应用开发最佳实践</rdk_title>
+<rdk_title>第5步 将查询得到的数据表格方式呈现 - RDK应用开发最佳实践</rdk_title>
 
 ## 目标与收获
 
@@ -169,12 +169,13 @@ sql = tableUtil.generatePagingSQL(sql, request.paging.pageSize, request.paging.c
 
 表格的服务端分页非常常用，基本上所有用于显示数据的表格都使用服务端分页的方式呈现数据。
 
-
-
 ## 小结
 我们实现了一个数据查询服务，并利用表格呈现这些数据。同时还在表格中添加了“详情”列，可以查看表格一行数据的详情。
 
 最主要的我们实现了表格的服务端分页这个极常用的功能。
+
+## 跳转
+[上一步](05_first_service.md)、[下一步](07_show_data_in_graph.md)
 
 ## 源码
 [06_show_data_in_table.zip](06_show_data_in_table.zip) 下载后解压到 `rdk/app/my_first_app` 目录下即可。

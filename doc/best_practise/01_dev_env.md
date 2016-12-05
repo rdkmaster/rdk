@@ -1,4 +1,4 @@
-<rdk_title>第1步 搭建开发环境 - RDK应用开发最佳实践</rdk_title>
+<rdk_title>搭建开发环境 - RDK应用开发最佳实践</rdk_title>
 
 ## 目标与收获
 
@@ -25,6 +25,9 @@
 
 - 一个notepad++或者sublime等任意文本编辑软件即可
 - 相应的浏览器，推荐使用chrome
+
+## 跳转
+[下一步](02_first_rdk_app.md)
 
 
 

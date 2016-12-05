@@ -1,4 +1,4 @@
-<rdk_title>第7步 将查询得到的数据以图形方式呈现 - RDK应用开发最佳实践</rdk_title>
+<rdk_title>第6步 将查询得到的数据以图形方式呈现 - RDK应用开发最佳实践</rdk_title>
 
 ## 目标与收获
 
@@ -122,10 +122,11 @@ EventService.register('myGraph', 'click', function(event, item) {
 > 这些事件的详细信息，可以[查看这页面](http://echarts.baidu.com/api.html#events)
 
 
-
-
 ## 小结
 我们在页面上增加了一个柱状图和折线图，并给图形做了一个简单的交互过程。
+
+## 跳转
+[上一步](06_show_data_in_table.md)、[下一步](09_detail_dialog.md)
 
 ## 源码
 [07_show_data_in_graph.zip](07_show_data_in_graph.zip) 下载后解压到 `rdk/app/my_first_app` 目录下即可。

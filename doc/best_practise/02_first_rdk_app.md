@@ -1,4 +1,4 @@
-<rdk_title>第2步 编写第一个应用 - RDK应用开发最佳实践</rdk_title>
+<rdk_title>第1步 编写第一个应用 - RDK应用开发最佳实践</rdk_title>
 
 ## 目标与收获
 
@@ -43,6 +43,9 @@ RDK推出新的功能后，会第一时间更新[example应用](/rdk/app/example
 ## 小结
 
 我们创建了第一个应用。
+
+## 跳转
+[上一步](01_dev_env.md)、[下一步](03_use_first_control.md)
 
 ## 源码
 [02_first_rdk_app.zip](02_first_rdk_app.zip) 下载后解压到 `rdk/app/my_first_app` 目录下即可。

@@ -1,4 +1,4 @@
-<rdk_title>第5步 实现第一个RDK服务并调用它 - RDK应用开发最佳实践</rdk_title>
+<rdk_title>第4步 实现第一个RDK服务并调用它 - RDK应用开发最佳实践</rdk_title>
 
 ## 目标与收获
 
@@ -151,6 +151,9 @@ scope.cityProcessor = function(rawCitys) {
 
 ## 小结
 我们实现了第一个RDK服务citys，并成功利用[数据源](/doc/client/common/datasource/DataSourceService.md)调用这个服务，同时对数据做了一些转换。
+
+## 跳转
+[上一步](04_finish_condition_bar.md)、[下一步](06_show_data_in_table.md)
 
 ## 源码
 [05_first_service.zip](05_first_service.zip) 下载后解压到 `rdk/app/my_first_app` 目录下即可。

@@ -17,7 +17,7 @@
   var moduleID;
   scope.click = function(item) { 
       var sampleHtml = '<div caption="上网分析详情" 
-      icon="<i class=\'fa fa-windows\'></i>" style="border:1px solid red; margin:6px; padding:6px">\
+      icon="<i class=\'fa fa-windows\'></i>" style="margin:6px; padding:6px">\
       </div>';
       var initData = {};
       var myOption = {
@@ -50,7 +50,7 @@ var controllerDefination = ['$scope', 'DataSourceService', 'EventService','Popup
   var moduleID;
   scope.click = function(item) { 
       var sampleHtml = '<div caption="上网分析详情" 
-      icon="<i class=\'fa fa-windows\'></i>" style="border:1px solid red; margin:6px; padding:6px">\
+      icon="<i class=\'fa fa-windows\'></i>" style="margin:6px; padding:6px">\
           <rdk_map id="my_gis" query_if="ready" 
           map_define="/doc/client/demo/controls/map/basic/scripts/graph_define/map.js" 
           map="\'/doc/client/demo/controls/map/basic/data/jilin.json\'" \
@@ -88,6 +88,9 @@ scope.destroyHandler=function(){
 
 ## 小结
 在点击详情后，我们使用了一个弹出框，显示Gis地图，点击确定时，关闭弹出框。
+
+## 跳转
+[上一步](08_i18n.md)
 
 ## 源码
 [09_detail_dialog.zip](09_detail_dialog.zip) 下载后解压到 `rdk/app/my_first_app` 目录下即可。
