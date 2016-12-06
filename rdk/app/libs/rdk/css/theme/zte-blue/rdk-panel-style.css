@@ -38,7 +38,7 @@
     width: 100%;
 }
 
-.rdk-panel-module  .panel-caption   .panel-content .panel-content-transclude{
+.rdk-panel-module  .rdk-panel-caption   .rdk-panel-content .rdk-panel-content-transclude{
     display: inline-block;
 }
 
