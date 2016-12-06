@@ -59,17 +59,17 @@ describe('time Combined Demos',function(){
         var option = element(by.css(".demo1 .btn-group>div>ul>li:nth-child(2)"));
         select.click();
         option.click();
+        // expect(element.all(by.css('.datetimepicker')).count()).toBe();
+        var timeOneDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days .switch"));
+        var timeOneMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months thead tr .switch"));
+        var timeOneYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years thead tr .switch"));
 
-        var timeOneDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch"));
-        var timeOneMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months thead tr .switch"));
-        var timeOneYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years thead tr .switch"));
-
-        var oneYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
-        var oneMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
-        var oneDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+        var oneYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var oneMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var oneDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
 
         timeOne.click();
-        
+        browser.sleep(500);
         timeOneDays.click();
         timeOneMonths.click();
         timeOneYears.click();
@@ -78,13 +78,13 @@ describe('time Combined Demos',function(){
         oneMonths.click();
         oneDays.click();
         
-        var timeTwoDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days thead tr .switch"));
-        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months thead tr .switch"));
-        var timeTwoYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years thead tr .switch"));
+        var timeTwoDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch"));
+        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months thead tr .switch"));
+        var timeTwoYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years thead tr .switch"));
 
-        var twoYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
-        var twoMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
-        var twoDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+        var twoYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var twoMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var twoDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
 
         timeTwo.click();
         
@@ -888,6 +888,7 @@ describe('time Combined Demos',function(){
         var select = element(by.css(".demo4 .btn-group"));
         var option = element(by.css(".demo4 .btn-group>div>ul>li:nth-child(3)"));
         select.click();
+        browser.sleep(300);
         option.click();
         
         var timeOneDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch"));
@@ -1113,6 +1114,7 @@ describe('time Combined Demos',function(){
         var select = element(by.css(".demo5 button"));
         var option = element(by.css(".demo5 ul.dropdown-menu li:nth-child(2)"));
         select.click();
+        browser.sleep(500);
         option.click();
         
         var timeOneHours = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-hours thead tr .switch"));
