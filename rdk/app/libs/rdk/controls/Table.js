@@ -416,6 +416,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                         if (scope.proxyDs) {
                             EventService.register(scope.proxyDs, EventTypes.BEFORE_QUERY, function(event, data) {
+                                curSortIndex=-1; //重置排序索引
                                 scope.baseCondition = data.condition;
                             });
                         };
@@ -1007,7 +1008,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                     function _produceColumnDefs() {
                         scope.columnDefs = [];
-                        curSortIndex=-1; //重置排序索引
                         for (var i = 0; i < scope.data.field.length; i++) {
                             columnDef = {};
                             columnDef.data = scope.data.field[i];
