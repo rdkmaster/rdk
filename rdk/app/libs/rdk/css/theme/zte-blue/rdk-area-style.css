@@ -60,7 +60,13 @@ ul, ol ,p{margin: 0; padding: 0;}
     font-weight: bold;
     font-size: 13px;
 }
-
+.rdk-area-contain .area-null{
+    cursor: default;
+    padding: 0 10px;
+}
+.rdk-area-contain .area-null:hover{
+    background-color: #fff;
+}
 
 /*todo:theme colors*/
 .rdk-area-contain .nav-tabs{

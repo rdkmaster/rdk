@@ -6,20 +6,12 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area', 'rd.ser
                 <ul class="nav nav-tabs">\
                     <li ng-class="{active: $vm.activeTab == 1}"><a ng-click="$vm.activeTab = 1">{{$vm.userArr[0].name || provinceLabel || "省"}}</a></li>\
                 </ul>\
-<<<<<<< HEAD
                 <div class="rdk-area-content">\
                     <div class="rdk-area-panel" ng-show="$vm.activeTab == 1">\
-                        <ul>\
-                            <li ng-repeat="province in $vm.dsProvinces.data.data">\
-                                <a ng-click="$vm.changeSelected(province,0)" ng-class="{selected:$vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
-=======
-                <div class="tab-content tab-bordered">\
-                    <div class="tab-panel" ng-show="$vm.activeTab == 1">\
                         <ul ng-style="$vm.getWidth()">\
                             <li ng-repeat="province in $vm.dsProvinces.data.data track by $index" on-finish-render="provinceRender">\
                                 <a ng-if="!$vm.isNull(province)" ng-click="$vm.clkProvinceNextLvOpen(province,0)" ng-class="{selected:$vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
                                 <a ng-if="$vm.isNull(province)" class="area-null">{{province.name}}</a>\
->>>>>>> 960dc36c332b696b995b2030196868b66cd04900
                             </li>\
                         </ul>\
                     </div>\
@@ -32,20 +24,12 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area', 'rd.ser
                     <li ng-if="!freezeProvince" ng-class="{active: $vm.activeTab == 1}"><a ng-click="$vm.activeTab = 1">{{$vm.userArr[0].name || provinceLabel || "省"}}</a></li>\
                     <li ng-show="!!$vm.dsCitys.data.data.length" ng-class="{active: $vm.activeTab == 2}"><a ng-click="$vm.activeTab = 2">{{$vm.userArr[1].name || cityLabel || "市"}}</a></li>\
                 </ul>\
-<<<<<<< HEAD
                 <div class="rdk-area-content">\
                     <div class="rdk-area-panel" ng-show="$vm.activeTab == 1" ng-if="!freezeProvince">\
-                        <ul>\
-                            <li ng-repeat="province in $vm.dsProvinces.data.data">\
-                                <a ng-click="$vm.clkProvinceNextLvOpen(province,0)" ng-class="{selected:$vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
-=======
-                <div class="tab-content tab-bordered">\
-                    <div class="tab-panel" ng-show="$vm.activeTab == 1" ng-if="!freezeProvince">\
                         <ul ng-style="$vm.getWidth()">\
                             <li ng-repeat="province in $vm.dsProvinces.data.data track by $index" on-finish-render="provinceRender">\
                                 <a ng-if="!$vm.isNull(province)" ng-click="$vm.clkProvinceNextLvOpen(province,0)" ng-class="{selected:$vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
                                 <a ng-if="$vm.isNull(province)" class="area-null">{{province.name}}</a>\
->>>>>>> 960dc36c332b696b995b2030196868b66cd04900
                             </li>\
                         </ul>\
                     </div>\
@@ -67,20 +51,12 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area', 'rd.ser
                     <li ng-show="!!$vm.dsCitys.data.data.length" ng-class="{active: $vm.activeTab == 2}"><a ng-click="$vm.activeTab = 2">{{$vm.userArr[1].name || cityLabel || "市"}}</a></li>\
                     <li ng-show="!!$vm.dsAreas.data.data.length" ng-class="{active: $vm.activeTab == 3}"><a ng-click="$vm.activeTab = 3">{{$vm.userArr[2].name || areaLabel || "区"}}</a></li>\
                 </ul>\
-<<<<<<< HEAD
                 <div class="rdk-area-content">\
                     <div class="rdk-area-panel" ng-show="$vm.activeTab == 1">\
-                        <ul>\
-                            <li ng-repeat="province in $vm.dsProvinces.data.data">\
-                                <a ng-click="$vm.clkProvinceNextLvOpen(province,0)" ng-class="{selected:$vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
-=======
-                <div class="tab-content tab-bordered">\
-                    <div class="tab-panel" ng-show="$vm.activeTab == 1">\
                         <ul ng-style="$vm.getWidth()">\
                             <li ng-repeat="province in $vm.dsProvinces.data.data track by $index" on-finish-render="provinceRender">\
                                 <a ng-if="!$vm.isNull(province)" ng-click="$vm.clkProvinceNextLvOpen(province,0)" ng-class="{selected:$vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
                                 <a ng-if="$vm.isNull(province)" class="area-null">{{province.name}}</a>\
->>>>>>> 960dc36c332b696b995b2030196868b66cd04900
                             </li>\
                         </ul>\
                     </div>\
