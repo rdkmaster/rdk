@@ -32,6 +32,9 @@
     width: 18px;
     height: 18px;
 }
+.rdk-button-btn:active{
+	background:rgba(0,0,0,0.15);
+}
 .rdk-button-shade {
     width:100%;
     height:100%;
@@ -58,8 +61,8 @@
 	background:rgba(0,0,0,0.15);
 }
 .rdk-button-enabled{
-	background:#ddd;
-	color :#f3f3f3;
+	background:#cdcdcd;
+	color :#fff;
 	cursor:default;
 }
 .rdk-padding-right{

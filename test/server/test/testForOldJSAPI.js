@@ -185,6 +185,10 @@
             var tabledata={field:['neid','name'],data:[['30','test1']]}
             var tranformFunction = Mapper.from_datatable(tabledata,'neid','name',"unknown");
             return tranformFunction("30");
+        },
+		
+		getReqCtxHeader:function(request, script){
+            return getRequestContextHeader();
         }
     }
 })()

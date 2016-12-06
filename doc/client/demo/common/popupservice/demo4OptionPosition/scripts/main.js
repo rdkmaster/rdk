@@ -2,7 +2,7 @@
 require.config({
     paths: {
         //给sample_module的控制器url定义一个别名
-        "sample_module": '/doc/client/demo/common/popupservice/demo4loadModule/template/sample_module'
+        "sample_module": '/doc/client/demo/common/popupservice/demo4OptionPosition/template/sample_module'
     }
 });
 
@@ -15,9 +15,19 @@ define('main', ['rd.controls.Module', 'rd.services.PopupService', 'sample_module
         var moduleID;
 
         scope.load = function(){
-            var sampleUrl = '/doc/client/demo/common/popupservice/demo4loadModule/template/sample_module.html';
+            var sampleUrl = '/doc/client/demo/common/popupservice/demo4OptionPosition/template/sample_module.html';
             var initData = {myData: 'load module manually...'};
-            moduleID = PopupService.popup(sampleUrl, initData, false, 'explode');
+            var myOption = {
+                modal: true,
+                effect: 'explode',
+                x: 100,
+                y: 100,
+                // left: 100,
+                // top: 100,         
+                // right: 100,
+                // bottom: 100,//bottom时有像素差
+            }
+            moduleID = PopupService.popup(sampleUrl, initData, myOption);
         }
 
         // scope.destroyHandler = function(){

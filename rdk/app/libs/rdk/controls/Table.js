@@ -362,6 +362,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 select: "&?",
                 doubleClick: "&?",
                 check: "&?",
+                noHeader:'=?'
             },
             compile: function(tElement, tAttributes) {
 
@@ -403,6 +404,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     }
                     _init();
                     scope.searchPrompt="Search";
+                    var curSortIndex;
+                    var sortIconStatus=true;
 
                     function _init() {
 
@@ -629,19 +632,16 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             }
                         }
 
-                        var curSortIndex;
-                        var sortIconStatus=true;
                         scope.sortHandler = function(iCol, columnDef) {
                             if (!columnDef.sortable) return;
                             if(curSortIndex!==iCol){
                                 sortIconStatus=true;
                             }
                             sortIconStatus=!sortIconStatus;
-                            curSortIndex=iCol;
                             var table = element[0].querySelector('.sticky-enabled');
                             if (scope.pagingType == "server") {
                                 scope.serverSortCache = true;
-                                if (table.sortCol == iCol) {
+                                if (curSortIndex == iCol) {
                                     _loadSortDataFromServer(columnDef.data, sortIconStatus?'desc':'asc');
                                 } else { //不是先前列
                                     _loadSortDataFromServer(columnDef.data, 'asc');
@@ -650,13 +650,13 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                     table.sortCol = iCol;
                                 });
                             } else {
-                                if (table.sortCol == iCol) {
+                                if (curSortIndex == iCol) {
                                     scope.destData.reverse();
                                 } else {
                                     scope.destData.sort(_compareElement(columnDef)); //从小到大排
                                 }
-                                table.sortCol = iCol;
                             }
+                            curSortIndex=iCol;
                         };
                         scope.curSortCol=function(index){
                             return curSortIndex===index;
@@ -768,7 +768,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             var handDragElement = element[0].querySelector(".sticky-wrap");//拖动产生在这层
                             $(handDragElement).addClass("sticky-wrap-overflow");
                         }
-                        $compile($(element[0].querySelector('.sticky-thead th:first-child')))(scope);
+                        if(scope.addCheckBox){
+                            $compile($(element[0].querySelector('.sticky-thead th:first-child')))(scope);
+                        }
                     }
 
                     function _refreshCurrentSingleChecked(isChecked){
@@ -958,7 +960,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         } else if (scope.data.header.length == 0) { //column.title是从header取
                             scope.noHeader = true;
                         } else {
-                            scope.noHeader = false;
+                            if(!scope.noHeader){
+                                scope.noHeader = false;
+                            }
                         }
 
                         scope.destData = _convertToObject(scope.data);
@@ -1003,6 +1007,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                     function _produceColumnDefs() {
                         scope.columnDefs = [];
+                        curSortIndex=-1; //重置排序索引
                         for (var i = 0; i < scope.data.field.length; i++) {
                             columnDef = {};
                             columnDef.data = scope.data.field[i];

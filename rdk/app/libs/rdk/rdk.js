@@ -1,7 +1,5 @@
 define(["app-basic", "mainconfig"], function() {
-    require(["rest!/rdk/service/app/common/theme"] , function(theme) {
-        //debugger; // rest!/rdk/service/app/common/theme
-
+    require(["rest!/rdk/app/common/theme.json"] , function(theme) {
         var bodyHTML = undefined;
         var hasReady = false;
         var themeConfig=_parse(theme);
@@ -89,17 +87,14 @@ define(["app-basic", "mainconfig"], function() {
 
         function _parse(data) {
             var result;
-            if(data){
-                data = JSON.parse(data);
-            }
-            if (data.hasOwnProperty('result') && typeof data.result==='string') {
+            if (typeof data==='string') {
                 try {
-                    result = JSON.parse(data.result);
+                    result = JSON.parse(data);
                 } catch (e) {
-                    result = data.result;
+                    result = data;
                 }
             } else {
-                result = data.result;
+                result = data;
             }
             return result;
         }

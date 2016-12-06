@@ -65,12 +65,12 @@ define('main', ['rd.controls.Table', 'rd.attributes.modal', 'rd.controls.BasicSe
                 {
                     targets : 0,
                     editable : true,
-                    editorRenderer: '<a ng-click="appScope.clickHandler(item, $parent.$index, $index)">{{data.data[$parent.$index][$index]}}</a>'
+                    editorRenderer: '<a ng-click="appScope.clickHandler(item, $parent.$index, $index)">{{data.data[item.$index][$index]}}</a>'
                 },
                 {
                     targets : 2,
                     editable : true,
-                    editorRenderer: '<a ng-click="appScope.click(item, $parent.$index, $index)">{{data.data[$parent.$index][$index]}}</a>'
+                    editorRenderer: '<a ng-click="appScope.click(item, $parent.$index, $index)">{{data.data[item.$index][$index]}}</a>'
                 }
 
             ]

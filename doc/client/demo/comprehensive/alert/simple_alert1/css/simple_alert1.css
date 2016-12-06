@@ -1,4 +1,4 @@
 .rdk-alert-svrMsgBtn{
 	padding: 0 16px;
-	width: initial;
+	min-width: 80px;
 }
