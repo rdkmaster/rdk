@@ -56,7 +56,7 @@ object Run extends App with SimpleRoutingApp with Logger {
     //RdkUtil.initApplications
 
     startServer(interface = ip, port = port) {
-      new RestHandler(system, RdkServer.appRouter).runRoute
+      new UploadHandler(system, RdkServer.appRouter).runRoute ~ new RestHandler(system, RdkServer.appRouter).runRoute
     } onComplete {
       case Success(x) =>
         logger.info("#" * 50)
