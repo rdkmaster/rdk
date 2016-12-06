@@ -76,12 +76,9 @@ define(['rd.services.EventService', 'jquery','jquery-ui'], function() {
                 modal: modalFlag,
             });
 
-            $('.ui-dialog-titlebar').css({'position': 'absolute', 'opacity': '0', 'width': '100%', 'height': '5px', 'padding': '0', 'z-index': '9999'});
-            $('.ui-dialog-title').remove();
-            $('.ui-dialog-titlebar-close').remove();
+            jqDom.siblings('.ui-dialog-titlebar').css({'position': 'absolute', 'opacity': '0', 'width': '100%', 'height': '5px', 'padding': '0', 'z-index': '9999'});
+            jqDom.parent('.ui-dialog').css('overflow','inherit'); 
 
-            jqDom.parent().removeClass('ui-widget');//去样式
-            $('.ui-dialog').css('overflow','inherit')
             /*开始设置样式*/
             jqDom.css({ 
                         'top': '', 'left': '',
