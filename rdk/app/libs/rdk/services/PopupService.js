@@ -1,6 +1,6 @@
 ﻿define(['angular', 'rd.core', 'jquery-ui', 'rd.controls.Module', 'css!rd.styles.FontAwesome', 'css!rd.styles.PopupService'], function(){
     var popupModule = angular.module('rd.services.PopupService', []);
-    popupModule.service('PopupService', ['$rootScope', 'EventService', 'EventTypes', 'Utils', '$compile',function($rootScope, EventService, EventTypes, Utils, $compile){
+    popupModule.service('PopupService', ['$rootScope', 'EventService', 'EventTypes', 'Utils', '$compile', '$timeout', function($rootScope, EventService, EventTypes, Utils, $compile, $timeout){
 
         this.popup = function(module, initData, option){
             if(option == undefined) option = {};
@@ -46,13 +46,7 @@
                     position: {
                         my: positionX+' '+positionY,
                         at: atX+' '+atY,
-                        of: window,
-                        collision: 'fit',
-                        using: function(pos) {
-                            var offsetTop = $(this)[0].offsetTop;
-                            var offsetLeft = $(this)[0].offsetLeft;
-                            $(this).css({'top': pos.top+offsetTop, 'left': pos.left+offsetLeft});
-                        }
+                        of: window
                     },
                     close: function(ev, ui){
                         _destroyPopupModule(popupModuleID);
@@ -65,6 +59,9 @@
                 });
 
                 _basicAppearanceHandler(popupModuleID, option.id);
+                $timeout(function(){
+                    _positionHandler(popupModuleID, option);
+                }, 0);
 
                 $('#'+popupModuleID).css({'display': ''});
             }
@@ -90,6 +87,18 @@
             $('#'+popupModuleID).addClass('rdk-popupservice-content');//内容
             if(!dialogID) return;
             $('#'+popupModuleID).parent('.ui-dialog').attr('id', dialogID);//id仅用于样式覆盖
+        }
+
+        function _positionHandler(popupModuleID, option){
+            var dialogWidth = $('#'+popupModuleID).parent('.ui-dialog').width();
+            var dialogHeight = $('#'+popupModuleID).parent('.ui-dialog').height();
+            var myLeft = option.x ? (option.x) : (option.left ? (option.left) : undefined);
+            var myRight = option.right ? (option.right) : undefined;
+            var myTop = option.y ? (option.y) : (option.top ? (option.top) : undefined);
+            var myBottom = option.bottom ? (option.bottom) : undefined;
+            var positionX = myLeft ? myLeft : (myRight ? ($(window).width()-myRight-dialogWidth) : ($(window).width()-dialogWidth)/2);
+            var positionY = myTop ? myTop : (myBottom ? ($(window).height()-myBottom-dialogHeight) : ($(window).height()-dialogHeight)/2);
+            $('#'+popupModuleID).parent('.ui-dialog').css({left: positionX, top: positionY});
         }
     }])
 })
