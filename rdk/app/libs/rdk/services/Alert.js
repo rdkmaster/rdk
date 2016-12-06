@@ -40,11 +40,11 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
 
         function _getBtnsTemplate(btnVal){
             var myBtns = '';
-            if(btnVal & ButtonTypes.YES){
-                myBtns += '<input class="rdk-alert-svrMsgBtn rdk-alert-yes" type="button" value=' + _i18n.yes + ' ng-click="svrClickHandler($event,'+ ButtonTypes.YES +')">';
-            }
             if(btnVal & ButtonTypes.NO){
                 myBtns += '<input class="rdk-alert-svrMsgBtn rdk-alert-no" type="button" value=' + _i18n.no + '  ng-click="svrClickHandler($event,'+ ButtonTypes.NO +')">';
+            }
+            if(btnVal & ButtonTypes.YES){
+                myBtns += '<input class="rdk-alert-svrMsgBtn rdk-alert-yes" type="button" value=' + _i18n.yes + ' ng-click="svrClickHandler($event,'+ ButtonTypes.YES +')">';
             }
             if(btnVal & ButtonTypes.CANCEL){
                 myBtns += '<input class="rdk-alert-svrMsgBtn rdk-alert-cancel" type="button" value=' + _i18n.cancel + ' ng-click="svrClickHandler($event,'+ ButtonTypes.CANCEL +')"">';
