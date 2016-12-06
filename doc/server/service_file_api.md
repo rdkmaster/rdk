@@ -41,7 +41,7 @@
 	   file.readXml("app/example/server/dialog_settings.xml")	
         
 	   
-### `file.save()` ###
+### `file.save()` {#save}###
 
 定义：
 
@@ -58,7 +58,7 @@
 
 说明：无
 
-### `file.saveAsCSV()` ###
+### `file.saveAsCSV()` {#saveAsCSV}###
 
 定义：
 
@@ -102,7 +102,7 @@
 	log("file save success:", b);
 
 
-### `file.saveAsEXCEL()` ###
+### `file.saveAsEXCEL()` {#saveAsEXCEL}###
 
 该方法提供了一个可以同时写多张excel sheet页的简便方法。
 
