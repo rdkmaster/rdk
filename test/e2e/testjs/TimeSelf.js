@@ -35,6 +35,7 @@ describe('time Self Demos',function(){
         var select = element(by.css(".demo4 button"));
         var option = element(by.css(".demo4 ul.dropdown-menu>li:nth-child(1)"));
         select.click();
+        browser.sleep(300);
         option.click();
 
         var timeOneMinutes = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-minutes thead tr .switch"));
@@ -135,6 +136,7 @@ describe('time Self Demos',function(){
         var select = element(by.css(".demo3 .btn-group"));
         var option = element(by.css(".demo3 .btn-group>div>ul>li:nth-child(2)"));
         select.click();
+        browser.sleep(300);
         option.click();
         
         var time = element(by.css(".demo3 p"));
@@ -249,6 +251,7 @@ describe('time Self Demos',function(){
         var select = element(by.css(".demo3 .btn-group"));
         var option = element(by.css(".demo3 .btn-group>div>ul>li:nth-child(4)"));
         select.click();
+        browser.sleep(300);
         option.click();
         
         var time = element(by.css(".demo3 p"));
@@ -299,6 +302,7 @@ describe('time Self Demos',function(){
         var select = element(by.css(".demo3 .btn-group"));
         var option = element(by.css(".demo3 .btn-group>div>ul>li:nth-child(5)"));
         select.click();
+        browser.sleep(400);
         option.click();
         
         var time = element(by.css(".demo3 p"));
@@ -388,6 +392,7 @@ describe('time Self Demos',function(){
         var twoYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
    
         select.click();
+        browser.sleep(300);
         option.click();
 
         timeOne.click();
@@ -414,6 +419,7 @@ describe('time Self Demos',function(){
     it('点击选择时间点是否正确',function(){
         //直接输入点击显示结果
         browser.get("test/e2e/testee/time/web/self3.html");
+        browser.sleep(200);
         var select = element(by.css(".demo4 .btn-group"));
         var option = element(by.css(".demo4 .btn-group>div>ul>li:nth-child(2)"));
         
@@ -429,6 +435,7 @@ describe('time Self Demos',function(){
         var ontDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
 
         select.click();
+        browser.sleep(300);
         option.click();
 
         timeOne.click();
@@ -466,6 +473,7 @@ describe('time Self Demos',function(){
         
         var time = element(by.css(".demo4 p"));
         select.click();
+        browser.sleep(400);
         option.click();
 
         var timeOne = element(by.css(".demo4 input:first-child"));

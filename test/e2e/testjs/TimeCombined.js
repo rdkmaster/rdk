@@ -59,8 +59,8 @@ describe('time Combined Demos',function(){
         var option = element(by.css(".demo1 .btn-group>div>ul>li:nth-child(2)"));
         select.click();
         option.click();
-
-        var timeOneDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days thead tr .switch"));
+        // expect(element.all(by.css('.datetimepicker')).count()).toBe();
+        var timeOneDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days .switch"));
         var timeOneMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months thead tr .switch"));
         var timeOneYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years thead tr .switch"));
 
@@ -69,7 +69,7 @@ describe('time Combined Demos',function(){
         var oneDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
 
         timeOne.click();
-        
+        browser.sleep(500);
         timeOneDays.click();
         timeOneMonths.click();
         timeOneYears.click();
@@ -888,6 +888,7 @@ describe('time Combined Demos',function(){
         var select = element(by.css(".demo4 .btn-group"));
         var option = element(by.css(".demo4 .btn-group>div>ul>li:nth-child(3)"));
         select.click();
+        browser.sleep(300);
         option.click();
         
         var timeOneDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch"));
@@ -1113,6 +1114,7 @@ describe('time Combined Demos',function(){
         var select = element(by.css(".demo5 button"));
         var option = element(by.css(".demo5 ul.dropdown-menu li:nth-child(2)"));
         select.click();
+        browser.sleep(500);
         option.click();
         
         var timeOneHours = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-hours thead tr .switch"));
