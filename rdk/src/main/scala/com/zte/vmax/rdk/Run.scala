@@ -15,7 +15,7 @@ import com.typesafe.config.ConfigFactory
 import com.zte.vmax.rdk.actor.{WebSocketServer, AppRouter, MQRouter}
 import com.zte.vmax.rdk.config.Config
 import com.zte.vmax.rdk.db.DataSource
-import com.zte.vmax.rdk.service.RestHandler
+import com.zte.vmax.rdk.service.{UploadHandler, RestHandler}
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 
 

@@ -120,40 +120,6 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
               val req = str2ServiceCallParam(json)
               doDispatch(ctx, req.service :: Nil, req.app, req.param)
           }
-      }~
-      path("upload"){
-        post {
-            entity(as[MultipartFormData]) { formData =>
-              val ftmp=File.createTempFile("upload",".tmp",new File(".tmp"))
-              val out=new FileOutputStream(ftmp)
-              formData.fields.foreach{
-                f=>
-                  try{
-                    out.write(f.entity.data.toByteArray)
-                  }catch{
-                    case e:Throwable=>logger.error(""+e)
-                  }finally {
-                    out.close()
-                  }
-              }
-              complete("upload")
-//              detachTo(singleRequestServiceActor) {
-//                complete {
-//                  val details = formData.fields.map {
-//                    case (name, BodyPart(entity, headers)) =>
-//                      //val content = entity.buffer
-//                      val content = new ByteArrayInputStream(entity.buffer)
-//                      val contentType = headers.find(h => h.is("content-type")).get.value
-//                      val fileName = headers.find(h => h.is("content-disposition")).get.value.split("filename=").last
-//                      val result = saveAttachment(fileName, content)
-//                      (contentType, fileName, result)
-//                    case _ =>
-//                  }
-//                  s"""{"status": "Processed POST request, details=$details" }"""
-//                }
-//              }
-            }
-          }
-        }
+      }
 
 }
