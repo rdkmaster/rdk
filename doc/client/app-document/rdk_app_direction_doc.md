@@ -163,7 +163,7 @@ var controllerDefination = ['$scope', 'DataSourceService', 'EventService', main]
 
 **提示：** 将关心返回值的依赖写在前面，不关心返回值的依赖排在最后
 
-那么，该如何将demo中依赖注入部分转化为v2.0的版本呢？请看栗子：
+那么，该如何将demo中依赖注入部分转化为v2.0的版本呢？请看例子：
 
 main.js(demo):
 
@@ -223,14 +223,14 @@ v2.0:
 
 因控件的依赖以及rdk相关的依赖在mainconfig.js中配置完成了，可直接在define函数的数组参数中引入别名即可。
 
-那么当我们需要自定义某一个逻辑功能时，比如详表导出功能，举个栗子：
+那么当我们需要自定义某一个逻辑功能时，比如详表导出功能，举个例子：
 
 > 注入我们的依赖
 
 ~~~
 var downloadDependency = [
         // 带有 alias 属性的条目，可以通过 ctx.alias 的方式来访问到
-        { url: 'base/scripts/ tableOutput', alias: 'tableOutput' },
+        { url: 'base/scripts/tableOutput', alias: 'tableOutput' },
         ......
     ];
 ~~~
@@ -259,7 +259,7 @@ define([' rd.core'],function() {
 
 控制发起数据查询的时机：`EventService.broadcast('ds_user', EventTypes.START_QUERY, condition);`
 
-举个栗子（当点击查询按钮时发起数据查询）
+举个例子（当点击查询按钮时发起数据查询）
 
 ~~~
 html:
@@ -434,7 +434,7 @@ ds_url属性的值为后端服务文件的url
 
 后端服务请查看（网站介绍比较详细）：[点击这里](/doc/#/server/service_api.md)
 
-举个栗子：
+举个例子：
 
 ~~~
 /*视频单用户饼图查询：入参：userid 业务账号，时间day.出参：一维数组result[直播qoe,点播qoe]*/
