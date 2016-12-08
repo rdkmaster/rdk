@@ -47,7 +47,6 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                          $event.stopPropagation();
                         }
                     }
-                    console.log(scope.enabled);
                     scope.iconShow=false;
                     var classFlag=/\w+\.\w+/;
                     if(classFlag.test(scope.icon)){
