@@ -9,10 +9,11 @@ Alert 服务用于弹出提示信息的对话框，可能包含消息、标题�
 
 提示信息对话框目前支持四种表现形式：
 
-- 信息确认对话框，调用时直接使用 `Alert.confirm(message, title, button, callback, modal, close)`
-- 错误提示对话框，调用时直接使用 `Alert.error(message, title, button, callback, modal, close)` 
-- 普通信息提示对话框，调用时直接使用 `Alert.info(message, title, button, callback, modal, close)`
-- 警告提示对话框，调用时直接使用 `Alert.warn(message, title, button, callback, modal, close)`
+- 信息确认对话框，调用时直接使用 `Alert.confirm(message, title, button, callback, modal, 
+- )`
+- 错误提示对话框，调用时直接使用 `Alert.error(message, title, button, callback, modal)` 
+- 普通信息提示对话框，调用时直接使用 `Alert.info(message, title, button, callback, modal)`
+- 警告提示对话框，调用时直接使用 `Alert.warn(message, title, button, callback, modal)`
 
 ## 参数 ##
 
@@ -88,22 +89,6 @@ Alert 服务用于弹出提示信息的对话框，可能包含消息、标题�
 - `modal` 设置成 `false` 时，代表弹出框为非模态窗口。
 
 `modal`设置成 `空字符串` 或者`null`时，默认弹出框是模态窗口。
-
-### close ###
-> 布尔型
-
-取值只可能是 `true` 或者 `false` 两种。代表出现一个有叉叉图标的闭关按钮 和 隐藏关闭按钮 。作为最后一个形参，`false` 可以缺省，缺省时默认为`true`。
-
-- `close` 设置成 `true` 时，代表弹出框有关闭按钮 。
-- `close` 设置成 `false` 时，代表弹出框没有闭按钮 。
-
-`close`设置成 `空字符串` ，默认弹出框是有关闭按钮。
-
-当`close` 设置成'true' 时，详细示例：
-<live_demo example="common/alert/close1" width="900" height="400"></live_demo>
-
-当`close` 设置成'false' 时，详细示例：
-<live_demo example="common/alert/close2" width="900" height="400"></live_demo>
 
 # 对话框示例 #
 
