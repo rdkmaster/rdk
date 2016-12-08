@@ -9,7 +9,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     <input type="text" class="form-control search" placeholder="{{searchPrompt}}" ng-focus="searchFocusHandler()"\
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
                     <i class="glyphicon glyphicon-search search_icon" ng-click="serverSearchHandler()" style="cursor:{{pagingType==\'server\' ? \'pointer\' : \'default\'}}"></i>\
-                    <select ng-show="(pagingType==\'server\' && $parent.globalSearch && searchFocus)?true:false" ng-model="val" ng-change="selectChangeHandler(val)"\
+                    <select ng-show="($parent.globalSearch && searchFocus)?true:false" ng-model="val" ng-change="selectChangeHandler(val)"\
                             ng-options="columnDef.data as columnDef.name for columnDef in columnDefs | realoption"\
                             class="form-control search_select">\
                         <option value="">{{i18n.searchAll}}</option>\
@@ -102,6 +102,19 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         array.push(inputArray[i]);
                     }
                 }
+                return array;
+            }
+        })
+        .filter('fieldfilter', function(){
+            return function(data, searchFields, globalSearch){
+                if((!searchFields)||(searchFields.length != 1)) return data;
+                var array = [];
+                angular.forEach(data, function(obj){
+                    var fieldStr = obj[searchFields[0]];
+                    if(fieldStr.toLowerCase().indexOf(globalSearch.toLowerCase()) != -1){
+                        array.push(obj);
+                    }
+                })
                 return array;
             }
         })
@@ -277,10 +290,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 }
 
                 this.getSearchInfo = function(){
-                    _defaultSearchHandler();
+                    scope.defaultSearchHandler();
                     var searchObject = {};
                     searchObject.searchKey = scope.globalSearch;
-                    searchObject.searchFields = scope.searchFields;
+                    searchObject.searchFields = _getSearchFields();
                     return searchObject;
                 }
 
@@ -296,10 +309,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     })
                 }
 
-                function _defaultSearchHandler(){
-                    scope.globalSearch = scope.globalSearch || '';
-                    scope.searchFields = scope.searchFields || [];
-                    scope.globalSearch == '' ? (scope.searchFields = []) : scope.setDefaultSearchFileds();
+                function _getSearchFields(){
+                    return scope.globalSearch == '' ? [] : scope.searchFields;//后端过滤要求:空字符串时，fields填空数组
                 }
 
                 function _loadDataFromServer() {
@@ -316,11 +327,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         attachCondition.orderBy.field = scope.fieldStr;
                         attachCondition.orderBy.direction = scope.directionStr;
                     }
-                    if ((scope.search) && (scope.pagingType == "server")) { //服务端过滤时
-                        _defaultSearchHandler();
+                    if ((scope.search) && (scope.pagingType == "server")) {
+                        scope.defaultSearchHandler();
                         attachCondition.search = {};
                         attachCondition.search.searchKey = scope.globalSearch;
-                        attachCondition.search.searchFields = scope.searchFields;
+                        attachCondition.search.searchFields = _getSearchFields();
                     }
 
                     var handler = scope.defaultConditionProcessor(scope.baseCondition, attachCondition);
@@ -381,9 +392,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 var pagingFilter = "";
                 pagingFilter += " | offset: currentPage:pageSize |limitTo: pageSize";
 
+                var searchFieldFilter = "";
+                searchFieldFilter = " | fieldfilter: searchFields : globalSearch";
+
                 if (tAttributes.pagingType !== "server") {
                     tElement.find("rdk-paging").attr("count", "$filtered.length");
-                    tElement[0].querySelector(".rowTr").setAttribute("ng-repeat", "item in $filtered = (destData" + rowFilter + ")" + pagingFilter);
+                    tElement[0].querySelector(".rowTr").setAttribute("ng-repeat", "item in $filtered = (destData" + rowFilter + ")" + pagingFilter + searchFieldFilter);
                 } else {
                     tElement.find("rdk-paging").attr("count", "data.paging.totalRecord");
                     tElement[0].querySelector(".rowTr").setAttribute("ng-repeat", "item in $filtered = destData");
@@ -539,6 +553,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             while (!_validateValue(scope.globalSearch, scope.searchPattern)) {
                                 scope.globalSearch = scope.globalSearch.substring(0, scope.globalSearch.length - 1);
                             }
+                            scope.defaultSearchHandler();
                             if(event.keyCode == 13){
                                 scope.serverSearchHandler();
                             }
@@ -547,12 +562,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         scope.serverSearchHandler = function(){
                             if((scope.globalSearch == undefined) || (scope.pagingType != 'server')) return;
                             scope.currentPage = 0;
-                            scope.globalSearch == '' ? (scope.searchFields = []) : scope.setDefaultSearchFileds();
                             ctrl.setCurrentPage(scope.currentPage);
                         }
 
-                        scope.setDefaultSearchFileds = function(){
-                            if((!scope.searchFields) || (scope.searchFields.length == 0)){ //没交互时给默认值
+                        scope.defaultSearchHandler = function(){
+                            scope.globalSearch = scope.globalSearch || '';
+                            if((!scope.searchFields) || (scope.searchFields.length == 0)){//没交互时给默认值
                                 scope.searchFields = _getValue(scope.columnDefs);
                             }
                         }
@@ -782,7 +797,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     }
 
                     function _searchGapClick(){
-                        if((!scope.search) || (scope.pagingType != 'server')) return;
+                        if(!scope.search) return;
                         $(document).mouseup(function(e){
                             var searchWrapper = element[0].querySelector('.searchWapper');
                             if(!$(searchWrapper).is(e.target) && $(searchWrapper).has(e.target).length === 0){
