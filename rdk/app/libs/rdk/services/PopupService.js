@@ -1,5 +1,5 @@
 ﻿define(['angular', 'rd.core', 'jquery-ui', 'rd.controls.Module', 'css!rd.styles.FontAwesome', 'css!rd.styles.PopupService'], function(){
-    var popupModule = angular.module('rd.services.PopupService', []);
+    var popupModule = angular.module('rd.services.PopupService', ['rd.controls.Module']);
     popupModule.service('PopupService', ['$rootScope', 'EventService', 'EventTypes', 'Utils', '$compile', '$timeout', function($rootScope, EventService, EventTypes, Utils, $compile, $timeout){
 
         this.popup = function(module, initData, option){
@@ -43,6 +43,7 @@
                     show: {effect: myEffect},  //blind,clip,drop,explode,fold,puff,slide,scale,size,pulsate
                     hide: {effect: myEffect},  
                     title: myTitle,
+                    width: 500,
                     position: {
                         my: positionX+' '+positionY,
                         at: atX+' '+atY,
