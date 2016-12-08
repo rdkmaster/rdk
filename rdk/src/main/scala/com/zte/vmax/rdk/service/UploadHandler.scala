@@ -21,7 +21,7 @@ class UploadHandler(system: ActorSystem, router: ActorRef) extends Directives wi
     path("upload") {
       post {
         entity(as[MultipartFormData]) { formData =>
-          val ftmp = File.createTempFile("upload", "tmp", new File("."))
+          val ftmp = File.createTempFile("rdk_", "upload", new File("."))
           val out = new FileOutputStream(ftmp)
           formData.fields.foreach {
             f =>
