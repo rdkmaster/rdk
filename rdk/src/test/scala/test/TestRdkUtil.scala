@@ -1,6 +1,7 @@
 package test
 
 
+import java.io.File
 import java.nio.file.Paths
 
 import com.zte.vmax.rdk.actor.Messages.MQ_P2P
@@ -130,6 +131,23 @@ class RdkUtilTest extends FunSpec with Matchers{
           }
 
         }
+
+      describe("check pass function writeExportTempFile()") {
+        it("export file ok") {
+          val runtime = Runtime.newInstance
+          runtime.setAppName("export")
+          val fileName: Option[String] = RdkUtil.writeExportTempFile(runtime, "test export", "txt", null)
+
+          fileName match {
+            case Some(file) =>
+              file.isEmpty should be(false)
+              new File(file).delete()
+            case None =>
+          }
+
+        }
+
+      }
   }
 
 

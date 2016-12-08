@@ -8,9 +8,8 @@ import java.nio.file._
 import java.nio.file.attribute.BasicFileAttributes
 import java.util.UUID
 import java.util.regex.{Matcher, Pattern}
-
-
 import akka.util.Timeout
+import com.google.gson.internal.StringMap
 import scala.concurrent.duration._
 import com.google.gson.{Gson, GsonBuilder}
 import com.typesafe.config.{Config=>TypeSafeConfig}
@@ -26,10 +25,9 @@ import com.zte.vmax.rdk.service.ServiceConfig
 import jdk.nashorn.api.scripting.ScriptObjectMirror
 import jdk.nashorn.internal.runtime.Undefined
 import spray.http.{IllegalRequestException, StatusCodes}
-
 import scala.concurrent.{Future, Await}
 import scala.reflect.ClassTag
-import scala.util.{Failure, Success, Try}
+import scala.util.Try
 import akka.pattern.ask
 
 
@@ -302,5 +300,67 @@ object RdkUtil extends Logger {
 
   def getHostName: String = {
     InetAddress.getLocalHost().getHostName
+  }
+
+  private def getFileParam(fileParamMap: StringMap[String], fileType: String): Tuple2[String, String] = {
+    fileType.toLowerCase match {
+      case param if param.equals("csv") || param.equals("excel") =>
+        val excludeIndexes: String =
+          if (fileParamMap != null) RdkUtil.toJsonString(fileParamMap.get("excludeIndexes")) else null
+        val option: String =
+          if (fileParamMap != null) RdkUtil.toJsonString(fileParamMap.get("option")) else null
+        (excludeIndexes, option)
+      case param if param.equals("txt") =>
+        val append: String =
+          if (fileParamMap != null) RdkUtil.toJsonString(fileParamMap.get("append")) else null
+        val encoding: String =
+          if (fileParamMap != null) RdkUtil.toJsonString(fileParamMap.get("encoding")) else null
+        (append, encoding)
+    }
+  }
+
+  def writeExportTempFile(runtime: Runtime, sourceData: String, fileType: String, fileParam: AnyRef): Option[String] = {
+    val fileNamePreFix = UUID.randomUUID()
+    val fparam = getFileParam(fileParam.asInstanceOf[StringMap[String]], fileType)
+    var writeData = sourceData
+    RdkUtil.json2Object[ServiceResult](sourceData) match {
+      case Some(rdkResult) =>
+        writeData = rdkResult.result
+      case None =>
+    }
+
+    fileType.toLowerCase match {
+      case "excel" =>
+        try {
+          runtime.getEngine.eval(s"file.saveAsEXCEL('${fileNamePreFix}.xls',${writeData},${fparam._1},${fparam._2})")
+          Some(fileNamePreFix + ".xls")
+        } catch {
+          case e: Throwable =>
+            logger.error("call file.saveAsEXCEL error =>" + e)
+            None
+        }
+
+      case "csv" =>
+        try {
+          runtime.getEngine.eval(s"file.saveAsCSV('${fileNamePreFix}.csv',${writeData},${fparam._1},${fparam._2})")
+          Some(fileNamePreFix + ".csv")
+        } catch {
+          case e: Throwable =>
+            logger.error("call file.saveAsCSV error =>" + e)
+            None
+        }
+
+      case "txt" =>
+        try {
+          runtime.getEngine.eval(s"file.save('${fileNamePreFix}.txt','${writeData}',${fparam._1},${fparam._2})")
+          Some(fileNamePreFix + ".txt")
+        } catch {
+          case e: Throwable =>
+            logger.error("call file.save error =>" + e)
+            None
+        }
+      case _ =>
+        None
+    }
   }
 }

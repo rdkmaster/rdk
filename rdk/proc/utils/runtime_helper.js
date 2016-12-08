@@ -330,11 +330,16 @@ var file = {
             log("invalid file path:", file);
             return false;
         }
-        if (content == undefined || null) {
+        if ((!_.isDefined(content)) || (null == content)) {
             log("invalid file content:", content);
             return false;
         }
-
+        if (null == append) {
+            append = undefined;
+        }
+        if (null == encoding) {
+            encoding = undefined;
+        }
         file = file.toString();
         log("saving file to:", file);
         return rdk_runtime.fileHelper().save(file, content.toString(), !!append, encoding);
@@ -343,6 +348,12 @@ var file = {
         file = file.toString();
         log("saving to csv:", file);
 
+        if (null == excludeIndexes) {
+            excludeIndexes = undefined;
+        }
+        if (null == option) {
+            option = undefined;
+        }
         var csv = _fixContent(content, excludeIndexes);
         var b = rdk_runtime.fileHelper().saveAsCSV(file, csv.data, csv.excludeIndexes, option);
         //_fixContent中修改了content.data，这里还原
@@ -359,6 +370,12 @@ var file = {
         if(!_.isDefined(content)){
             Log.error("please input extract content!");
             return;
+        }
+        if (null == excludeIndexes) {
+            excludeIndexes = undefined;
+        }
+        if (null == option) {
+            option = undefined;
         }
         var excel = _fixEXCELContent(content, excludeIndexes);
 
@@ -405,6 +422,9 @@ var file = {
 
 var rest = {
     get: function(url, option) {
+        if(null==option){
+            option=undefined;
+        }
         return rdk_runtime.restHelper().get(encodeURI(url),option);
     }
 }
