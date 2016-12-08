@@ -12,6 +12,10 @@
 
 [查看文件操作API](service_file_api.md)
 
+## 公共导出服务 ##
+
+[查看公共导出服务](common_export.md)
+
 ## 消息队列 ##
 
 - [查看消息队列API -- JS](service_mq_js_api.md)
