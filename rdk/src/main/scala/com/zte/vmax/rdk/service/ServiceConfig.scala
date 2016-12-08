@@ -18,4 +18,9 @@ object ServiceConfig {
     case "infinite" ⇒ 1800//30 min
     case x ⇒ Duration(x).toSeconds.toInt
   }
+
+  val uploadTimeout: Int = RdkServer.system.settings.config.getString("spray.can.server.upload-timeout") match {
+    case "infinite" ⇒ 1800//30 min
+    case x ⇒ Duration(x).toSeconds.toInt
+  }
 }

@@ -277,4 +277,29 @@ object RdkUtil extends Logger {
       case _ =>None
     }
 
+   def ensureFileExists(file: File): Boolean = {
+    val parent: File = if (file.isDirectory) file else file.getParentFile
+    if (parent != null && !parent.exists) {
+      logger.debug("making parent dirs: " + parent)
+      if (!parent.mkdirs) {
+        logger.error("unable to create parent dir:" + parent)
+        return false
+      }
+    }
+    if (!file.exists) {
+      logger.debug("creating file: " + file)
+      try {
+        if (!file.createNewFile) {
+          logger.error("unable to create file: " + file)
+          return false
+        }
+      }
+      catch {
+        case e: Throwable => {
+          logger.error("createNewFile[" + file + "] error", e)
+        }
+      }
+    }
+    return true
+  }
 }
