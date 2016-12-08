@@ -4,7 +4,6 @@ define('main', ['rd.services.Alert'], function() {
     // 创建一个控制器
     app.controller('rdk_ctrl', ['$scope', 'Alert', 'ButtonTypes', function(scope, Alert, ButtonTypes) {
         scope.clickHandler = function() {
-            Alert.scope = scope;
             Alert.error('内部发生错误请注意', '错误提示', ButtonTypes.OK, callbackHandler);
         }
 

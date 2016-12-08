@@ -91,13 +91,7 @@ Alert 服务用于弹出提示信息的对话框，可能包含消息、标题�
 
 # 对话框示例 #
 
-**<font color=red>注意</font>** 调用对话框 `confirm/error/info/warn` 方法前，请一定先初始化scope。
-
-		Alert.scope = scope;
-
-
 ## 信息确认 ##
-		Alert.scope = scope;//scope必须初始化
 
 		Alert.confirm('信息确认请注意', '确认提示', 
 		ButtonTypes.YES+ButtonTypes.NO+ButtonTypes.CANCEL, callbackHandler);
@@ -107,7 +101,6 @@ Alert 服务用于弹出提示信息的对话框，可能包含消息、标题�
 
 
 ## 错误提示 ##
-			Alert.scope = scope;//scope必须初始化
 
             Alert.error('内部发生错误请注意', '错误提示', ButtonTypes.OK, callbackHandler);
 
@@ -115,7 +108,6 @@ Alert 服务用于弹出提示信息的对话框，可能包含消息、标题�
 <live_demo example="common/alert/error" width="900" height="400"></live_demo>
 
 ## 普通信息提示 ##
-			Alert.scope = scope;//scope必须初始化
 
             Alert.info('提示信息请注意', '信息提示', ButtonTypes.OK, callbackHandler);
 
@@ -123,7 +115,6 @@ Alert 服务用于弹出提示信息的对话框，可能包含消息、标题�
 <live_demo example="common/alert/info" width="900" height="400"></live_demo>
 
 ## 警告提示 ##
-            Alert.scope = scope;//scope必须初始化
 
             Alert.warn('发生警告请注意', '警告提示', ButtonTypes.OK, callbackHandler);
 

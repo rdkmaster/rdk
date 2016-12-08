@@ -11,20 +11,21 @@ define(['angular', 'jquery', 'rd.services.PopupService', 'rd.services.EventServi
     alertModule.service('Alert', ['ButtonTypes', 'EventService', '$timeout', '$rootScope', '$compile', 'Utils', 'PopupService',
         function(ButtonTypes, EventService, $timeout, $rootScope, $compile, Utils, PopupService){
 
-        var alertService = this;
         var popupModuleID, myCallback, myI18n;
+        $rootScope.$$childHead.__alert_svrClickHandler = _clickHandler;
 
-        var loadTemplate = 
-            '<div class="rdk-alert-svrMsgBox" caption="{{__alert_myTitle}}">\
-                <div class="rdk-alert-tableImg"><img src={{__alert_myImg}}></div>\
-                <p class="rdk-alert-tableMsg"><span>{{__alert_myMessage}}</span></p>\
-                <div class="rdk-alert-btnLine">\
-                    <input ng-if="__alert_yes" class="rdk-alert-svrMsgBtn rdk-alert-yes" type="button" value={{__alert_myI18n.yes}} ng-click="__alert_svrClickHandler($event, __alert_ButtonTypes.YES)">\
-                    <input ng-if="__alert_ok" class="rdk-alert-svrMsgBtn rdk-alert-ok" type="button" value={{__alert_myI18n.ok}} ng-click="__alert_svrClickHandler($event, __alert_ButtonTypes.OK)">\
-                    <input ng-if="__alert_no" class="rdk-alert-svrMsgBtn rdk-alert-no" type="button" value={{__alert_myI18n.no}} ng-click="__alert_svrClickHandler($event, __alert_ButtonTypes.NO)">\
-                    <input ng-if="__alert_cancel" class="rdk-alert-svrMsgBtn rdk-alert-cancel" type="button" value={{__alert_myI18n.cancel}} ng-click="__alert_svrClickHandler($event, __alert_ButtonTypes.CANCEL)">\
-                </div>\
-            </div>';
+        function _getLoadTemplate(message, title, img, alertYes, alertOk, alertNo, alertCancel){
+            return '<div class="rdk-alert-svrMsgBox" caption="'+ title + '">\
+                        <div class="rdk-alert-tableImg"><img src=' + img + '></div>\
+                        <p class="rdk-alert-tableMsg"><span>'+ message + '</span></p>\
+                        <div class="rdk-alert-btnLine">\
+                            <input ng-if="'+ alertYes + '" class="rdk-alert-svrMsgBtn rdk-alert-yes" type="button" value=' + myI18n.yes +' ng-click="__alert_svrClickHandler($event, '+ ButtonTypes.YES + ')">\
+                            <input ng-if="' + alertOk + '" class="rdk-alert-svrMsgBtn rdk-alert-ok" type="button" value=' + myI18n.ok + ' ng-click="__alert_svrClickHandler($event, '+ ButtonTypes.OK + ')">\
+                            <input ng-if="' + alertNo + '" class="rdk-alert-svrMsgBtn rdk-alert-no" type="button" value=' + myI18n.no + ' ng-click="__alert_svrClickHandler($event, '+ ButtonTypes.NO + ')">\
+                            <input ng-if="' + alertCancel + '" class="rdk-alert-svrMsgBtn rdk-alert-cancel" type="button" value=' + myI18n.cancel + ' ng-click="__alert_svrClickHandler($event, '+ ButtonTypes.CANCEL + ')">\
+                        </div>\
+                    </div>';
+        }
 
         function _clickHandler(event, num){
             PopupService.removePopup(popupModuleID);
@@ -34,7 +35,7 @@ define(['angular', 'jquery', 'rd.services.PopupService', 'rd.services.EventServi
         }
 
         function _initializeAlertI18nData(){
-            var myLang = Utils.getLocale(alertService.scope);
+            var myLang = Utils.getLocale($rootScope.$$childHead);
             if(myLang == 'zh-cn' || myLang == 'zh_cn'){
                 myI18n = {
                     'yes': '是',
@@ -54,11 +55,11 @@ define(['angular', 'jquery', 'rd.services.PopupService', 'rd.services.EventServi
         }
 
         function _refreshAlertI18nData(){
-            if(!alertService.scope.i18n) return;
-            myI18n.yes = alertService.scope.i18n.alert_yes ? alertService.scope.i18n.alert_yes : myI18n.yes;
-            myI18n.no = alertService.scope.i18n.alert_no ? alertService.scope.i18n.alert_no : myI18n.no;
-            myI18n.ok = alertService.scope.i18n.alert_ok ? alertService.scope.i18n.alert_ok : myI18n.ok;
-            myI18n.cancel = alertService.scope.i18n.alert_cancel ? alertService.scope.i18n.alert_cancel : myI18n.cancel;
+            if(!$rootScope.$$childHead.i18n) return;
+            myI18n.yes = $rootScope.$$childHead.i18n.alert_yes ? $rootScope.$$childHead.i18n.alert_yes : myI18n.yes;
+            myI18n.no = $rootScope.$$childHead.i18n.alert_no ? $rootScope.$$childHead.i18n.alert_no : myI18n.no;
+            myI18n.ok = $rootScope.$$childHead.i18n.alert_ok ? $rootScope.$$childHead.i18n.alert_ok : myI18n.ok;
+            myI18n.cancel = $rootScope.$$childHead.i18n.alert_cancel ? $rootScope.$$childHead.i18n.alert_cancel : myI18n.cancel;
         }
 
         function _initializeAlertI18nInfo(){
@@ -66,30 +67,24 @@ define(['angular', 'jquery', 'rd.services.PopupService', 'rd.services.EventServi
             _refreshAlertI18nData();
         }
 
-        function _initializeGlobalInfo(callback){
-            myCallback = callback || null;
-            _initializeAlertI18nInfo();
-        }
-
-        function _initializeAlertScopeData(message, title, myImg, button){
-            alertService.scope.__alert_myMessage = message;
-            alertService.scope.__alert_myTitle = title;
-            alertService.scope.__alert_myImg = myImg;
-            alertService.scope.__alert_yes = button & ButtonTypes.YES;
-            alertService.scope.__alert_ok = button & ButtonTypes.OK;
-            alertService.scope.__alert_no = button & ButtonTypes.NO;
-            alertService.scope.__alert_cancel = button & ButtonTypes.CANCEL;
-            alertService.scope.__alert_ButtonTypes = ButtonTypes;
-            alertService.scope.__alert_myI18n = myI18n;
-            alertService.scope.__alert_svrClickHandler = _clickHandler;
+        function _getPopupTemplate(message, title, myImg, button){
+            var alertYes = (button & ButtonTypes.YES) ? true : false;
+            var alertOk = (button & ButtonTypes.OK) ? true : false;
+            var alertNo = (button & ButtonTypes.NO) ? true : false;
+            var alertCancel = (button & ButtonTypes.CANCEL) ? true : false;
+            var myTitle = title || '';
+            var myMessage = message || '';
+            var loadTemplate = _getLoadTemplate(myMessage, myTitle, myImg, alertYes, alertOk, alertNo, alertCancel)
+            return loadTemplate;
         }
 
         function _popupAlertModule(message, title, button, callback, modal, img){
-            _initializeGlobalInfo(callback);
-            _initializeAlertScopeData(message, title, img, button);
+            _initializeAlertI18nInfo();
+            var popupTemplate = _getPopupTemplate(message, title, img, button);
+            myCallback = callback ? callback : null;
             var option = {};
             option.modal = modal;
-            popupModuleID = PopupService.popup(loadTemplate, undefined, option);
+            popupModuleID = PopupService.popup(popupTemplate, undefined, option);
         }
 
         this.setLang = function(lang){
