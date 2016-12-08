@@ -12,7 +12,7 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                                     <div class="rdk-button-shade rdk-button-{{type}}"></div>\
                                     <button class="rdk-button-btn" ng-mouseover="$mouseOver()" ng-mouseout="$mouseOut()"\
                                     title="{{tooltip}}" ng-class="{\'rdk-button-selected\':toggle?selected:false,\
-                                        \'rdk-button-enabled\':!enabled,\'rdk-shade-opacity\': mouse}" ng-disabled="!enabled">\
+                                        \'rdk-button-enabled\':disabled,\'rdk-shade-opacity\': mouse}" ng-disabled="disabled">\
                                         <img src="{{icon}}" ng-click="$stopPro($event)" ng-if="iconShow" ng-class="{\'rdk-padding-right\':paddingHide}">\
                                         <i ng-click="$stopPro($event)" ng-class="{\'rdk-padding-right\':paddingHide}" class="{{icon}}" ng-if="!iconShow"></i>{{label}}\
                                     </button>\
@@ -41,6 +41,7 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                             fn();
                         }
                     }
+                    scope.disabled=!scope.enabled;
                     scope.$stopPro=function($event){
                         if(!scope.enabled){
                          $event.stopPropagation();
