@@ -21,7 +21,7 @@
 <body ng-controller='rdk_ctrl' class="rdk-loading">
 <div class="panel-wrap rdk-table-theme-blue" ng-class="{'wrap-animation':panelStatus}">
     <button ng-click="clkShowPanel()" class="btn-show rdk-icon" ng-class="{true:'btn-down-icon',false:' btn-up-icon'}[panelStatus]"></button>
-    <rdk_panel title="'华城小区'" class="rdk-panel" ng-class="{'panel-up':panelStatus,'panel-down':!panelStatus}" show-title="true" height="280" width="580">
+    <rdk_panel title="'华城小区'" class="rdk-panel rdk-panel-theme-blue" ng-class="{'panel-up':panelStatus,'panel-down':!panelStatus}" show-title="true" height="280" width="580">
         <rdk_table class="content" rdk-scroll ds="dsTable" ds-url="/doc/client/demo/comprehensive/tab/panel/web/data/data" ds_query_if="ready" paging-visible="false" setting="settingPanel"></rdk_table>
     </rdk_panel>
 </div>

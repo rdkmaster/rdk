@@ -45,6 +45,15 @@
     animation:  slideUp 0.35s linear;
     opacity: 1;
 }
+.rdk-panel-module{
+    border: 0;
+}
+.rdk-panel-caption{
+    margin-left: 0;
+}
+.rdk-panel-content{
+    padding: 0;
+}
 .panel-down{
     transition: opacity 0.35s linear;
     opacity: 0;

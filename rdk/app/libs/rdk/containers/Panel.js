@@ -24,7 +24,7 @@ function() {
                               <div class="rdk-panel-module" ng-show="panelShow">\
                                    <div class="rdk-panel-title" ng-show="{{showTitle}}" >\
                                         <span class="rdk-panel-caption">\
-                                          <i class="{{icon}}" >{{title}}</i></span>\
+                                          <i class="{{icon}}"></i>{{title}}</span>\
                                         <div class="rdk-panel-close"  ng-show="{{showClose}}">\
                                             <i class="fa fa-close" ng-click="close()"></i>\
                                         </div>\
