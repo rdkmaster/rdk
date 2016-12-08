@@ -6,7 +6,16 @@ rdk 提供了可支持导出excel，csv，txt格式的公共导出服务
 
     http://ip:port/rdk/service/common/export?p=%7B%22source%22:%7B%22url%22:%22http://localhost:5812/rdk/service/app/example/server/my_service%22%7D,%22fileType%22:%22txt%22,%22param%22:%7B%22excludeIndexes%22:%7B'sheet1':%5B'a'%5D,'sheet2':%5B'0'%5D%7D%7D%7D
 
-参数p被url编码，格式为：`{"source":{"url":"","peerParam":""},"fileType":"","param":{}}`
+参数p被url编码，格式为：
+
+	{
+		"source":{
+			"url":"",
+			"peerParam":""
+		},
+		"fileType":"",
+		"param":{}
+	}
 
 参数含义：
 
@@ -65,4 +74,4 @@ my_service.js 服务：
 				    return function(request, script) {
 				    	return  "rdk common download";
 				    }
-				})();				
+				})();
