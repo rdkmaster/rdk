@@ -796,7 +796,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     }
 
                     function _searchGapClick(){
-                        if((!scope.search) || (scope.pagingType != 'server')) return;
+                        if(!scope.search) return;
                         $(document).mouseup(function(e){
                             var searchWrapper = element[0].querySelector('.searchWapper');
                             if(!$(searchWrapper).is(e.target) && $(searchWrapper).has(e.target).length === 0){
