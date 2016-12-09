@@ -5,7 +5,6 @@ define('main', ['application', 'i18n', 'rd.services.Alert'], function(applicatio
     app.controller('rdk_ctrl', ['$scope', 'Alert', 'ButtonTypes', function(scope, Alert, ButtonTypes) {
         i18n.$init(scope);
         scope.clickHandler = function() {
-            Alert.scope = scope;
             Alert.confirm('信息确认请注意', '确认提示', ButtonTypes.YES + ButtonTypes.NO + ButtonTypes.CANCEL, callbackHandler);
         }
 
