@@ -34,7 +34,6 @@ return function(data, context, GraphService, attributes) {
         var gridRight = ""+data.data[0][0]
         return gridRight.length*8
     }
-    var a='1';
 return {
     tooltip : {
         trigger: 'axis',
@@ -44,9 +43,7 @@ return {
         formatter: function (params){
             return params[1].name + '<br/>'
                    + params[1].seriesName + ' : ' + params[1].value 
-                 
         }
-    
     },
     grid:{
         left:100,
@@ -72,7 +69,7 @@ return {
             },
             axisTick:{//坐标轴刻度相关设置
                 show:true,
-				inside:true,
+				inside:false,
                 color:'#ddd',
                 length:3,//刻度长短设置
                 lineStyle:{

@@ -31,12 +31,11 @@ return {
         textAlign:'left',
         top:20,
         textStyle:{
-            fontSize:12,
+            fontSize:14,
             fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
             fontWeight: 'normal',
             color: '#008fd4' 
         },
-        left:43,
     },
     grid:{
         left:45,

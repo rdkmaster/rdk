@@ -36,15 +36,14 @@ function getGridRight(){
 }
 return {
     title : {
-        text:"",
+        text:"时延比例分布",
         textStyle: {
-            fontSize: 12,
+            fontSize: 14,
             fontWeight:'normal',
-            color:'#666666',
+            color: '#008fd4',
             fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
         },
-        x:1200,
-        y: 20
+        top:20
     }, 
      grid:{
         left:100,
@@ -89,14 +88,6 @@ return {
    yAxis : [
         {   
             type : 'category',
-            name:"时延比例分布",
-            nameGap:20,
-            nameTextStyle:{
-                fontSize:12,  
-                fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
-                fontWeight: 'normal',
-                color: '#008fd4' 
-            },
             splitLine: {show:false},
             data : data.header,
             boundaryGap :[0.01,0.01],
@@ -128,7 +119,6 @@ return {
     ],
     series : [
         {
-               
             type:'bar',  
             barGap:'-100%',
             itemStyle : { 
