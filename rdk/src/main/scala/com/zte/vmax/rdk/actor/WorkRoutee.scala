@@ -51,7 +51,7 @@ class WorkRoutee extends Actor with Json4sSupport with Logger {
     case (no: Long, UploadServiceParam(ctx: RDKContext, data: MultipartFormData, fileName: String, timeStamp: Long)) =>
       runtime.setAppName("uploadFile")
       val result = RdkUtil.uploadFile(runtime, data, fileName)
-      logger.debug(s"<No.${no}>  (${System.currentTimeMillis() - timeStamp}ms)")
+      logger.debug(s"<No.${no}> upload ${fileName} (${System.currentTimeMillis() - timeStamp}ms)")
       sender ! result
   }
 }

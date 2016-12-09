@@ -10,6 +10,7 @@ import org.json4s.{DefaultFormats, Formats}
 import spray.http.HttpCharsets
 import spray.httpx.Json4sSupport
 import spray.routing.{Directives, RequestContext}
+
 import scala.concurrent.duration._
 
 
@@ -115,5 +116,4 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
               doDispatch(ctx, req.service :: Nil, req.app, req.param)
           }
       }
-
 }
