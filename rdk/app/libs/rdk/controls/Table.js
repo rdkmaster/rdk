@@ -373,7 +373,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 select: "&?",
                 doubleClick: "&?",
                 check: "&?",
-                noHeader:'=?'
             },
             compile: function(tElement, tAttributes) {
 
