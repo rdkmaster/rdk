@@ -1,7 +1,7 @@
 package com.zte.vmax.rdk.util
 
 
-import java.io.{File, FilenameFilter}
+import java.io.{FileOutputStream, File, FilenameFilter}
 import java.nio.file._
 import java.nio.file.attribute.BasicFileAttributes
 import java.util.UUID
@@ -19,7 +19,7 @@ import com.zte.vmax.rdk.env.Runtime
 import com.zte.vmax.rdk.jsr.FileHelper
 import jdk.nashorn.api.scripting.ScriptObjectMirror
 import jdk.nashorn.internal.runtime.Undefined
-import spray.http.{IllegalRequestException, StatusCodes}
+import spray.http.{MultipartFormData, IllegalRequestException, StatusCodes}
 
 import scala.reflect.ClassTag
 import scala.util.Try
@@ -277,29 +277,22 @@ object RdkUtil extends Logger {
       case _ =>None
     }
 
-   def ensureFileExists(file: File): Boolean = {
-    val parent: File = if (file.isDirectory) file else file.getParentFile
-    if (parent != null && !parent.exists) {
-      logger.debug("making parent dirs: " + parent)
-      if (!parent.mkdirs) {
-        logger.error("unable to create parent dir:" + parent)
-        return false
-      }
-    }
-    if (!file.exists) {
-      logger.debug("creating file: " + file)
-      try {
-        if (!file.createNewFile) {
-          logger.error("unable to create file: " + file)
-          return false
+  def uploadFile(runtime: Runtime, formData: MultipartFormData, fileName: String): Either[Exception, String] = {
+    val file = new File(fileName)
+    runtime.fileHelper.ensureFileExists(file)
+    val out = new FileOutputStream(file)
+    var result: Either[Exception, String] = Right("upload file success!")
+    formData.fields.foreach {
+      field =>
+        try {
+          out.write(field.entity.data.toByteArray)
+        } catch {
+          case e: Throwable =>
+            result = Left(new Exception(e))
+        } finally {
+          out.close()
         }
-      }
-      catch {
-        case e: Throwable => {
-          logger.error("createNewFile[" + file + "] error", e)
-        }
-      }
     }
-    return true
+    result
   }
 }

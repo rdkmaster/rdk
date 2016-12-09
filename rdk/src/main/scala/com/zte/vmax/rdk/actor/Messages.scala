@@ -4,6 +4,7 @@ package com.zte.vmax.rdk.actor
 import akka.routing.ConsistentHashingRouter.ConsistentHashable
 import com.zte.vmax.activemq.rdk.RDKMessage
 import org.json4s.JObject
+import spray.http.MultipartFormData
 import spray.routing.RequestContext
 
 import scala.language.existentials
@@ -29,6 +30,8 @@ object Messages {
                             app: String, param: AnyRef, method: String, timeStamp: Long)
 
   case class ServiceResult(result: String)
+
+  case class UploadServiceParam(ctx:RDKContext,data:MultipartFormData,fileName:String,timeStamp: Long)
 
 
   //websocket 消息类型定义

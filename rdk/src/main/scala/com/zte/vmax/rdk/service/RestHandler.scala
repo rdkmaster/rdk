@@ -10,12 +10,6 @@ import org.json4s.{DefaultFormats, Formats}
 import spray.http.HttpCharsets
 import spray.httpx.Json4sSupport
 import spray.routing.{Directives, RequestContext}
-import akka.actor.{ Props, Actor }
-import spray.http._
-import spray.http.MediaTypes._
-import spray.routing._
-import spray.http.BodyPart
-import java.io._
 import scala.concurrent.duration._
 
 
