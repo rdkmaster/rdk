@@ -71,6 +71,10 @@
 
         this.removePopup = function(id){
             var popupModuleID = id;
+            if(!document.getElementById(popupModuleID)){
+                console.warn("该元素不存在！");
+                return;
+            }
             if(!$('#'+id).hasClass('ui-dialog-content')){
                 popupModuleID = $('#'+id).children('.ui-dialog-content').attr('id');
             }

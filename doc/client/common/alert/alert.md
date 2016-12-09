@@ -139,4 +139,19 @@ Alert 服务用于弹出提示信息的对话框，可能包含消息、标题�
 以`confirm`为例，演示缺省所有形参时的提示框：
 <live_demo example="common/alert/param_default" width="900" height="400"></live_demo>
 
+## 手动销毁对话框 ##
 
+<font color=red>**注意**</font>
+*confirm/error/info/warn* 会返回 alert对话框的 *popupModuleID*，可以用于：
+
+ - 注册监听对话框右上角关闭按钮的 *CLOSE* 事件
+ 
+ 		EventService.register(moduleID, EventTypes.CLOSE, function(event, data){...});
+
+ - 手动调用销毁alert对话框
+ 
+		Alert.remove(popupModuleID)
+
+
+以`confirm`为例，演示对话框销毁 *remove* 及 *CLOSE* 事件监听：
+<live_demo example="common/alert/demo4remove" width="900" height="400"></live_demo>
