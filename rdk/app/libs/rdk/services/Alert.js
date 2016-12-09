@@ -56,10 +56,11 @@ define(['angular', 'jquery', 'rd.services.PopupService', 'rd.services.EventServi
 
         function _refreshAlertI18nData(){
             if(!$rootScope.$$childHead.i18n) return;
-            myI18n.yes = $rootScope.$$childHead.i18n.alert_yes ? $rootScope.$$childHead.i18n.alert_yes : myI18n.yes;
-            myI18n.no = $rootScope.$$childHead.i18n.alert_no ? $rootScope.$$childHead.i18n.alert_no : myI18n.no;
-            myI18n.ok = $rootScope.$$childHead.i18n.alert_ok ? $rootScope.$$childHead.i18n.alert_ok : myI18n.ok;
-            myI18n.cancel = $rootScope.$$childHead.i18n.alert_cancel ? $rootScope.$$childHead.i18n.alert_cancel : myI18n.cancel;
+            var mainI18n = $rootScope.$$childHead.i18n;
+            myI18n.yes = mainI18n.alert_yes ? mainI18n.alert_yes : myI18n.yes;
+            myI18n.no = mainI18n.alert_no ? mainI18n.alert_no : myI18n.no;
+            myI18n.ok = mainI18n.alert_ok ? mainI18n.alert_ok : myI18n.ok;
+            myI18n.cancel = mainI18n.alert_cancel ? mainI18n.alert_cancel : myI18n.cancel;
         }
 
         function _initializeAlertI18nInfo(){

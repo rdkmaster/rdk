@@ -51,6 +51,7 @@
                     },
                     close: function(ev, ui){
                         _destroyPopupModule(popupModuleID);
+                        EventService.broadcast(popupModuleID, EventTypes.CLOSE);
                     },
                     open: function(){
                         var $myIcon = $("<i></i>");
