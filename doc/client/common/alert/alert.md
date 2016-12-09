@@ -93,8 +93,8 @@ Alert 服务用于弹出提示信息的对话框，可能包含消息、标题�
 
 ## 信息确认 ##
 
-		Alert.confirm('信息确认请注意', '确认提示', 
-		ButtonTypes.YES+ButtonTypes.NO+ButtonTypes.CANCEL, callbackHandler);
+		Alert.confirm('信息确认请注意', '确认提示',
+			ButtonTypes.YES+ButtonTypes.NO+ButtonTypes.CANCEL, callbackHandler);
 
 `Alert.confirm()`详细示例：
 <live_demo example="common/alert/confirm" width="900" height="400"></live_demo>
