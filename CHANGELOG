@@ -1,74 +1,26 @@
 ## 新增功能
-- Tab控件支持Tab页可动态添加、删除
-- Tree控件开发
-- ButtonGroup控件开发
-- Button控件开发
-- 前端自动化测试框架protractor二次开发文档
-- time的setting要支持双绑，在外面设置时间，time里面的value要跟着变化
-- RDK数据库查询服务需要可以通过列名称来获取某行中的对应信息
-- 表格checkbox支持回填选中
-- 增加一个滚动条控件
-- rdk_tree unselect_on_blur(暴露一个事件出来用于清空之前选择的节点缓存的数据)
-- tab_select提交
-- [tab] 需支持close/change/add方法
-- Tree懒加载
-- rdk_tree监听check事件获取勾选节点数据
-- [tab] 标题栏打开的标签过多时，允许标题栏撑开转行，后期再优化成转行按钮
-- rdk_table控件选择某个节点后鼠标点击树控件外侧时 选择失效恢复最初没有选择状态
-- 实现将测试结果以浏览器类型区分文件夹(支持chrome、firefox同时测试)
-- [table] 不再暴露scope，pagesize动态更新需修正
-- [tab] 暴露controller提供方法给外部调用
-- 所有控件发事件方式对齐raiseControlEvent
-- 表格添加一个标题随着滚动条下拉而浮动的功能的开关属性以关掉这个功能。
-- 表格给发出的事件都添加对应的属性
-- 新增工单查询/工单处理/下载历史记录图标
+- #151 测试页面time增加panel combo和scroller结合的用例
+- #417, #429 新增PopupService，提供popup/removePopup方法，及demo/文档/测试用例输出
+- 动态加载jdbc驱动功能
+- !407 增加了捕获页面报错;新增页面滚动条操作的用例
 
+## 修改过功能
+- 保留旧版modal，抛warning 提示 popupservice 代替
+- !405 优化操作日志功能
+- !415 天龙八部对齐example2.0第二次修改 
+- !419 地市选择框在只有一个省的选项时填充'- -'来扩充容器宽度和提示用户补充数据表
 
-## 修改功能
-
-- table 控件 placeholder改为searchPrompt
-- 暴露控制器给app，准备替换掉先前的暴露控件的scope
-- 控件依赖的module全部改为rd.core
-- 上传离网用户预测图标
-- 新增一个数据源，2张图示例
-- rdk_main改为rdk-loading
-- 测试用例E2e 维护优化
-- 补充日期控件禁用当日功能demo
-- 后端修改日志级别error->info
-- 注释掉ums.locale配置，从环境读取
-- Alert控件样式对齐Ux设计
-- 补充[tab] 测试用例中动态新增tab的模板
-- 数据源支持删除
-
-	
 ## 修复故障
-
-- #282 Tab控件外部事件TAB_SELECT没有根据id去广播
-- #275 Tab控件属性 toggleCondition=mouseover异常
-- #312 数据源发送post/put/delete请求的时候，RDK服务端包400 bad request
-- #226 Graph demo微调
-- #277 firefox打开的singleindicator文档中label_position下的示例点击right之后位置显示在下方
-- #276 firefox打开的“前端开发文档”中点击右侧文档结构栏中的子项无法跳转到其所处位置（只有少数可以跳转）
-- #229 修复给控制器打标记的逻辑，兼容scope是空的情况
-- #317 selectedTab不生效
-- #242 修复树livedemo的数据源为绝对路径
-- #247 分隔符样式合并到buttongroups
-- #250 树checkable/draggable这2个属性会引起树控制套报错
-- #328 [tab] tab标签撑满标题栏后，关闭按钮位置异常
-- #308 table后端过滤输入框如果添加了自定义列，输入的时候会有一个空白行，比如设置了一个删除按钮，搜索的时候会有空白
-- #309 table后端过滤，点击搜索按钮没用必须按确认键
-- #335 [tab] 切换Tab页后selectedTab没变化，导致没走watch的处理
-- #338 Tree有4个未暴露的事件回调，删除掉
-- #311 rdk_table集成的checkbox 偶尔选中不生效bug
-- #278 TabSelect 文档实例无法显示
-- #287 修复 加载路径
-- #288 Selector selected_items双向绑定未生效
-- #342 [table] 偶现表头不能点击
-- #299 修复类型匹配错误
-- #348 [table] serverpaging不影响数据上报，但后台有报错
-- #349 [table] addcheckbox全部选中时，滚动条拖动后全部选中的标记消失
-- #304 修改get-involved.md文档打开后描点位置不正确的BUG http://10.9.233.35:8080/doc/#get-involved.md#work-flow
-- #355 [comboselect] 空白处单击精简
-- #280 修改bullet控件横向，多个使用时候滑块挤在一起的BUG
-- #361 rdk_table search 搜索框不输入任何值的时候默认应该不过滤,目前不支持
-- #365 [table] 后端排序时多次进入ngRepeatFinished导致排序结果异常
+- #411 time 和 tab一起用的时候，会出现样式被jqUI覆盖，字体大小会变成0。
+- #419 table表格编辑时，效验不通过，不支持回滚！
+- #392 rdk_scroll默认不出现滚动条，需要滑动鼠标才出现滚动条
+- 完善滚动条的显示
+- #367 Map控件demo出不来
+- !398 修复application.js错误
+- #424 [module] 动态加载的模板，使用数据源的 ds_query_if 时，无法获取数据正确显示
+- !402 修复未设置数据源时默认使用db.default
+- #428 rdk_table表格悬浮重复列头
+- #430 动态jar包加载器存在bug，因为RdkClassLoader关闭之后不能加载class
+- #437 datatable添加自定义列和翻页同时使用，翻页失效
+- #445 [614005588236] 【VMAX-CN 河南移动VoLTE】【呼叫分析】时间控件，当重新选择开始时间时，结束时间自动跳变成当前时刻，应该保持不变
+- #420 表格第一次查询完数据，点击某列排序后，排序正常，且正常显示，当再次点击查询按钮查询时，之前排序的那一列仍是排序状态显示，但数据并没有排序.

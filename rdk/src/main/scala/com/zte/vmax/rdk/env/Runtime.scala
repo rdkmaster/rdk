@@ -5,7 +5,7 @@ import javax.script._
 import com.google.gson.GsonBuilder
 import com.zte.vmax.rdk.actor.Messages.{DBSession, WSBroadcast}
 import com.zte.vmax.rdk.actor.WebSocketServer
-import com.zte.vmax.rdk.cache.CacheHelper
+import com.zte.vmax.rdk.cache.{AgingCache, CacheHelper}
 import com.zte.vmax.rdk.config.Config
 import com.zte.vmax.rdk.db.DataBaseHelper
 import com.zte.vmax.rdk.jsr._
@@ -13,7 +13,7 @@ import com.zte.vmax.rdk.mq.MqHelper
 import com.zte.vmax.rdk.proxy.ProxyManager
 import com.zte.vmax.rdk.util.{RdkUtil, Logger}
 import jdk.nashorn.api.scripting.ScriptObjectMirror
-
+import com.zte.vmax.rdk.actor.Messages._
 
 /**
   * Created by 10054860 on 2016/7/11.
@@ -23,6 +23,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   var serviceCaller: ScriptObjectMirror = null
   private var jsonParser: ScriptObjectMirror = null
+
 
   implicit var application: String = ""
   val locale: String = Config.get("ums.locale") match{
@@ -36,8 +37,27 @@ class Runtime(engine: ScriptEngine) extends Logger {
   val jarHelper = new JarHelper
   val dbHelper = ProxyManager.deprecatedDbAccess
 
+  var context: Option[RDKContext] = None
+
+  def setContext(context: RDKContext): Unit = {
+    if (context != NoneContext) {
+      this.context = Option(context)
+    }
+  }
+
+  //获取context信息
+  def getReqCtxHeaderInfo: String = {
+    this.context match {
+      case Some(context) => RdkUtil.toJsonString(context.asInstanceOf[HttpRequestContext].wrap.request.headers.map { header => Header(header.name, header.value) }.toArray)
+
+      case None => ""
+    }
+  }
+
+  //获取主机名
+  def getHostName: String = RdkUtil.getHostName
   //当前数据源
-  private var opCurDataSource: Option[String] = None
+  private var opCurDataSource: Option[String] = Some("db.default")
 
   def setAppName(appName: String): Unit = {
     application = appName
@@ -48,7 +68,10 @@ class Runtime(engine: ScriptEngine) extends Logger {
   }
   //重置当前数据源
   def resetDataSource: Unit = {
-    opCurDataSource = None
+    opCurDataSource =ProxyManager.getDefaultDataSource(application) match {
+      case None=>Some("db.default")
+      case x=>x
+    }
   }
 
   //数据库访问会话
@@ -89,6 +112,10 @@ class Runtime(engine: ScriptEngine) extends Logger {
   @throws(classOf[ScriptException])
   def eval(script: String): ScriptObjectMirror = {
     return engine.eval(script).asInstanceOf[ScriptObjectMirror]
+  }
+
+  def getEngine:ScriptEngine={
+    return engine
   }
 
   def callService(callable: ScriptObjectMirror, param: AnyRef, script: String): String = {
@@ -138,6 +165,11 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   def globalCacheDel(key: String) = CacheHelper.globalCache.remove(key)
 
+  def agingCachePut(key: String, data: AnyRef, ttl: Long) = AgingCache.put(key, data, ttl)
+
+  def agingCacheGet(key: String) = AgingCache.get(key, null)
+
+  def agingCacheDel(key: String) = AgingCache.remove(key)
 
   /**
     * 数据库数据获取处理

@@ -28,14 +28,25 @@ define(['rd.services.DataSourceService'], function() {
                         obj = !!obj ? obj : {};
 						ds.data = obj;
 						appScope[ds.id] = obj;
-
-                        appScope.$on('$destroy', function() {
-                            DSService.remove(ds);
-                        });
                     }
                 }
             };
         }
-    ]);
-
-})
+    ])
+    .directive('onFinishRender', function($timeout) {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attr) {
+                if (scope.$last === true) {
+                    $timeout(function() {
+                        if(!attr.onFinishRender){ //事件默认为ngRepeatFinished
+                            scope.$emit('ngRepeatFinished');
+                        }else{
+                            scope.$emit(attr.onFinishRender);
+                        }
+                    }, 0);
+                }
+            }
+        }
+    })
+});

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>RDK应用工程模板</title>
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/loading.css">
+
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk"
+        src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+
+    <!-- 应用正式运行的时候，请使用下面这个节点，RDK会使用编译后的代码，代码体积小，下载快 -->
+    <!--
+    <script data-main="main.min.js" src="/rdk/app/libs/requirejs/require.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    -->
+    
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/rdk/app/modules/rdk_app_helpers',
+                //这里引用了当前应用自身的助手文件，路径需要根据实际情况修改
+                "utils": '/rdk/app/example/web/scripts/utils',
+                //页面的国际化文件配置信息
+                "i18n": '/rdk/app/example/web/scripts/i18n',
+            }
+        });
+    </script>
+</head>
+
+<!-- rdk-loading 样式只能在body节点添加一次，其他节点不要添加 -->
+<body ng-controller='rdk_ctrl' class="rdk-loading">
+    <h1>这是RDK示例应用</h1>
+    <p ng-bind="version" ds="version" ds_url="$svr/version"
+        ds_query_if="ready" ds_init_data="{{i18n.wait}}"></p>
+    
+    <h2 ng-bind="i18n.welcome"></h2>
+
+    <p ng-bind="i18n.lang.st(i18n.$locale)"></p>
+
+    <!-- 这里演示了如何调用后端服务，应用需要根据自身所在路径修改服务路径 -->
+    <!--
+        $svr 是当前应用的server目录所在路径
+        $svr 只在调用RDK服务时才有效
+     -->
+    <p ds_url="$svr/my_service" ds_query_if="ready" ds_init_data="{{i18n.wait}}"
+        ds="msgFromSvr" ng-bind="msgFromSvr"></p>
+
+    <p style="width:440px; font-size:16px">当一个app的逻辑非常复杂，
+    需要多人一起协作开发的时候，可以使用<a href="../../complex_example/web/index.html">这个例子</a>的方法来拆分代码</p>
+
+
+
+    <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
+    <!--     这个节点可选，删除后，RDK会自动生成一个    -->
+    <!--           这个节点只支持基本HTML标签           -->
+    <rdk_loading>
+        <img src="images/loding.gif" alt="loading..." style="width: 60px;height: 60px" />
+    </rdk_loading>
+</body>
+
+</html>

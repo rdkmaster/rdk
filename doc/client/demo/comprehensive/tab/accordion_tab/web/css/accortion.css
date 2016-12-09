@@ -1,7 +1,7 @@
 /* animation start*/
 .tab_wrap{
     position: absolute;
-    width: 650px;
+    width: 580px;
     bottom:0;
     min-height: 550px;
     transition: bottom 0.3s linear;
@@ -150,18 +150,20 @@
 }
 /*表格选择行的背景色*/
 .rdk-table-module .rdk-table tbody tr.selected-row td {
-    /*background-color: #e3eef2*/
     background-color: #cde4fa;
 }
 /*表格hover背景色*/
 .rdk-table-module .rdk-table > tbody > tr:not(.selected-row):hover > td {
     background-color: #e2eef9;
 }
-.rdk-table-module .rdk-table > tbody > tr > td {
-    padding: 5px 6px;
+.rdk-table-module .rdk-table > thead > tr > th ,.rdk-table-module .rdk-table > tbody > tr > td {
+    text-align: center;
+    padding: 5px 8px;
+    border: 1px solid #e5e5e5;
 }
-.rdk-table-module .rdk-table > thead > tr > th {
-    padding: 5px 6px;
+.rdk-table-module .rdk-table tbody>tr>td
+{
+    text-align: right;
 }
 /*表格字体颜色*/
 .rdk-table-module .rdk-table tr{
@@ -170,6 +172,10 @@
 /* table2 不同也签下的多表格样式*/
 .table2 .rdk-table-module .rdk-table thead>tr {
     background-color: #f3f3f3;
+}
+.table2 .rdk-table-module .rdk-table tbody>tr>td:nth-of-type(1)
+{
+    text-align: left;
 }
 .table2 .rdk-table-module .rdk-table > tbody > tr:nth-child(even){
     background-color: #fff;

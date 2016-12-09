@@ -93,11 +93,14 @@
         paging_type="server" page_size="7"></rdk_table>
     </div>
     <div class="demo5">
+        <button ng-click="query()">query</button>
         <rdk_table ds_url="$svr/salary4" ds="ds_salary_5" id="add_check"
         paging_type="server" page_size="7" add_check_box='true'></rdk_table>
         <p class="check_data">{{checkData}}</p>
     </div>
-    
+    <div class="demo6">
+        <rdk_table id="lesson_list" data="lessonList" setting="lessonSetting"></rdk_table>
+    </div>
     <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
     <!--     这个节点可选，删除后，RDK会自动生成一个    -->
     <!--           这个节点只支持基本HTML标签           -->

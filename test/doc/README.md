@@ -30,48 +30,56 @@ Webdriver (api)，webdriver其实是selenium 2.0和原webdriver的结合，他�
 ##四.常用的Api  
 分为四个部分  
 1.浏览器操作  
-browser.get(url);  
-browser.sleep();  
-browser.waitForAngular();   
-browser.driver.manage().window().maximize();  
+<pre><code>browser.get(url);//url是页面地址
+browser.sleep(t);//等待加载
+browser.waitForAngular();//等待angular加载
+browser.driver.manage().window().maximize();//窗口最大化
 //前端样式兼容区分  
 browser.getCapabilities().then(function(caps){  
 var browserName=caps.get('browserName');  
-if(browserName==='chrome'){  
-}  
-if(browserName==='firefox'){  
-}
+	if(browserName==='chrome'){  
+	}  
+	if(browserName==='firefox'){  
+	}
 })  
-2.获取元素  
-element(by.css(‘.some-class’))；  
+</code></pre>
+2.获取元素
+<pre><code>element(by.css(‘.some-class’))；  
 element.all(by.css(‘.some-class’)).get(index);  
 element.all(by.css(‘.some-class’)).first()/last();  
-element(by.id(‘id’)); //不需要#号 
+element(by.id(‘id’)); //不需要#号  
 element(by.tagName(‘TagName’));  
 element(by.model(‘model-name’));  
-element(by.repeater(‘变量名’));
+element(by.repeater(‘变量名’));  
 element(by.xpath(‘html/body/div[3]’));  
 element(by.css(‘.some-class[attribute=’value’]’));  
-element(by.linkText(‘文本’));  
-3.交互  
-locator(元素定位)  
-locator.sendKeys("abc");  
+element(by.linkText(‘文本’));
+//链式写法:  
+var locator=element(by.css(".some-class"));  
+var el=locator.element(by.css(".some-class"))  
+</code></pre>
+3.交互
+<pre><code>locator;//已定位的元素(集)  
+locator.sendKeys("abc");//输入'abc'
 locator.clear().sendKeys("abc");//清空并输入  
-locator.click();  
+locator.click();//点击
 //在图片上点击,缺省坐标默认在正中心点击  
 browser.actions().mouseMove(locator,{x:a,y:b}).click().perform();  
 //两个元素对调位置、移动  
 browser.actions().dragAndDrop(drag,{x:140,y:14,hCode:872415232,class:'org.openqa.selenium.Point'}).perform();  
 其中坐标完整信息通过下面方法获取  
 locator.getLocation();  
-//文件上传的动作模拟在testjs/demo4.js中有教完整的写法  
-4.断言(验证)  
-基本语法expect().toBe();//第一个括号填写真实测试对象的属性，如class、attribute、html、cssValue等，后面括号填写猜想值  
-expect(locator.count()).toBe();  
-expect(locator.getAttribute(“attr”)).toBe()  
-expect(locator.getText()).toBe();  
-expect(locator.getCssValue()).toBe();  
-expect(locator.getCssValue()).toMatch();    
+//文件上传的动作模拟在testjs/demo4.js中有教完整的写法 
+</code></pre>
+4.断言(验证)
+<pre><code>基本语法expect().toBe();//第一个括号填写真实测试对象的属性，如class、某个attribute、标签间的内容、cssValue属性等，后面括号填写猜想值  
+expect(locator.count()).toBe();//断言集合个数
+expect(locator.getAttribute(“attr”)).toBe();//断言某个attribute值  
+expect(locator.getText()).toBe();//标签中间的内容
+expect(locator.getText()).toMatch();//匹配某个值 
+expect(locator.getCssValue()).toBe();//断言某个css属性  
+</code></pre>  
+      
 ##五.常见问题以及优化手段  
 1.element is not visible   
 元素不可见，也就是在那一刻这个选择器定位的元素还未暴露出来  
@@ -81,7 +89,7 @@ expect(locator.getCssValue()).toMatch();
 优化：检查选择器配合场景是否正确是否唯一，此类问题多数是选择器不够精确导致  
 3.angular is undefined  
 Angular没有加载到页面,需要自己手动打开页面控制台是否有什么加载阻塞了页面运行，尤其是firefox浏览器；  
-优化:增加等待sleep();browser.waitForAngular()  
+优化:增加等待sleep();<code>browser.waitForAngular()</code>  
 4.其他  
 看报错信息配合运行时候仔细观察
 网络搜索答案：[http://stackoverflow.com/](http://stackoverflow.com/)  
@@ -93,16 +101,17 @@ specs:测试程序组+测试程序体,单元素的数组，支持通配写法，
 multiCapabilities:数组对象，规定测试环境依赖的浏览器类型  
 baseUrl:完整的html地址的url或者url片段  
 framwork:依托的测试工具/插件，jasmine生成xml，生成html报告需要调用插件，推荐用jasmine2  
-重点说下onPrepare:function(){}  
+重点说下:<code>
+onPrepare:function(){}  
 var Jasmine2HtmlReporter=require('./index.js');//调用生成Html的插件工具/方法对象  
-jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({//对象}))  
+jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({//对象}))  </code>
 里面的对象解析：  
 savePath:报告保存路径  
 consolidateAll：true是否所有测试单元生成独立文件报告，默认true 所有单元生成一份报告  
 consolidate：与上面相反  
 takeScreenshots：是否截图  
 takeScreenshotsOnlyOnFailures：是否仅在失败时截图  
-filePrefix：文件名打头字符串  
+filePrefix：文件名  
 ##FAQ持续更新
 TypeError:Path must be a string.received undefined.  
 该问题是在xp系统下读取不到环境变量LOCALAPPDATA的值，解决方法就是添加一个环境变量

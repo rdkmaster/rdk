@@ -1,4 +1,4 @@
-<rdk_title>第4步 完成查询条件栏 - RDK应用开发最佳实践</rdk_title>
+<rdk_title>第3步 完成查询条件栏 - RDK应用开发最佳实践</rdk_title>
 
 ## 目标与收获
 
@@ -6,52 +6,52 @@
 
 - ComboSelect控件
 - BasicSelector控件
+- Button控件
 
 
 ## 修改
 
 BA告诉我们，这个功能的查询条件除了时间段以外，还有一个地市选择框。当然我们还需要有一个查询按钮可以触发一次查询。
 
-### 增加地市选择框
+### 增加地市选择框和查询按钮
 
-Ux团队要求我们把时段框，地市框，查询按钮这3个控件放在一行上，并且地市框是一个下拉框，因此我们需要将这3个东西放在一个div里头。
+一般的，我们把时段框，地市框，查询按钮这3个控件放在一行上，因此我们需要将这3个东西放在一个div里头。
 
 编辑 `app/my_first_app/web/index.html` 文件，把body节点修改为：
 
 ~~~
-<body ng-controller='rdk_ctrl' class="rdk_main">
+<body ng-controller='RootController' class="rdk-loading">
     <div>
 		<rdk_time range setting="timeSetting"></rdk_time>
         <rdk_combo_select caption="'地市'">
             <rdk_basic_selector data="citys" multiple_select="true" label_field="name" track_item_by="id" editable="false">
             </rdk_basic_selector>
         </rdk_combo_select>
+        <rdk_button label="查询"></rdk_button>
 	</div>
 
-
-    <!-- 在页面渲染完成之前，显示在界面上，防止页面抖动 -->
-    <!--     这个节点可选，删除后，RDK会自动生成一个    -->
-    <!--           这个节点只支持基本HTML标签           -->
-    <rdk_loading>
-        <img src="images/loding.gif" alt="loading..."/>
-    </rdk_loading>
 </body>
 ~~~
-页面其他部分保持不变。我们碰到两个新的控件，分别是 [`ComboSelect`](/doc/client/controls/comboselect/rdk_comboselect.md) 和 [`BasicSelector`](/doc/client/controls/basicselector/rdk_basic_selector.md)，在页面上引用之后，还需要注入对他们的依赖才能生效，[参考这里](03_use_first_control.md#dep-inject)。
+页面其他部分保持不变。我们碰到三个新的控件，分别是 [`ComboSelect`](/doc/client/controls/comboselect/rdk_comboselect.md) 、[`BasicSelector`](/doc/client/controls/basicselector/rdk_basic_selector.md)和[`Button`](/doc/client/controls/button/rdk_button.md)，在页面上引用之后，还需要注入对他们的依赖才能生效，[参考这里](03_use_first_control.md#dep-inject)。
 
-编辑 `app/my_first_app/web/scripts/main.js`，增加[`ComboSelect`](/doc/client/controls/comboselect/rdk_comboselect.md)和[`BasicSelector`](/doc/client/controls/basicselector/rdk_basic_selector.md)这两个控件的依赖，具体操作方法和上一步类似，修改后的代码为：
+编辑 `app/my_first_app/web/scripts/main.js`，增加[`ComboSelect`](/doc/client/controls/comboselect/rdk_comboselect.md)、[`BasicSelector`](/doc/client/controls/basicselector/rdk_basic_selector.md)和[`Button`](/doc/client/controls/button/rdk_button.md)这三个控件的依赖，具体操作方法和上一步类似，修改后的代码为：
 
 ~~~
-define('main', ['application', 'utils', 'i18n', 'blockUI',
-	'rd.controls.Time', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector'],
-function(application, utils, i18n) {
-// 创建一个RDK的应用
-var app = angular.module("rdk_app", ['rd.core', 'blockUI',
-	'rd.controls.Time', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector']);
+var downloadDependency = [
+        // 所有路径中的 base 都会被替换成本页面html文件所在路径
+        // 注意：所有的url都不能加 .js 扩展名
+        
 
-...
+        // 带有 alias 属性的条目，可以通过 ctx.alias 的方式来访问到
+        { url: 'base/scripts/utils', alias: 'utils' },
+        { url: 'base/scripts/i18n',  alias: 'i18n'  },
 
-});
+        // css类型的文件需要加 css! 的前缀，注意url上不能加 .css 扩展名
+        'css!base/css/style',
+
+        // 这类 rd. 开头的条目是RDK预定义好的控件url别名
+        'rd.controls.Time','rd.controls.ComboSelect', 'rd.controls.BasicSelector','rd.controls.Button'
+    ];
 ~~~
 
 <a name="city-mock-data"></a>
@@ -67,14 +67,6 @@ var app = angular.module("rdk_app", ['rd.core', 'blockUI',
 
 > 注意<br>
 > 一般来说，地市的备选项是需要从服务端查询得到的，这里为了调试界面能够正常显示，直接写死，这个问题留在后续步骤解决。
-
-### 添加查询按钮
-我们直接使用bootstrap风格的按钮即可。编辑 `app/my_first_app/web/index.html` 文件，在div的最后追加上下面这行代码
-
-	<button type="button" class="btn btn-primary">查询</button>
-
-保存后刷新浏览器，我们就得到一个简单的查询条件栏了，此时页面看起应该是这样的
-![](img/condition.PNG)
 
 ### 地市显示异常
 此时刷新页面后，选中任意一个地市，地市框显示异常：
@@ -101,12 +93,21 @@ var app = angular.module("rdk_app", ['rd.core', 'blockUI',
 > angular.forEach是angular提供的一个遍历函数，很有用，[访问这里](http://docs.ngnice.com/api/ng/function/angular.forEach)可以了解更多。站点 <http://docs.ngnice.com/api> 提供了AngularJS所有文档，建议仔细阅读。
 
 ### 样式调整
-看起来条件框中所有的元素都挤在一起，我们可以增加一些留白，让每个控件看起来更独立一些。为了简单，我们直接使用style属性，你也可以在css文件中定义样式。
 
-给时间控件和ComboSelect控件增加一个这样的属性 `style="margin-right:30px"`
+三个控件并未对齐，分别在地区控件和查询按钮控件上增加样式：`style="vertical-align:bottom"`
+
+给时间控件和ComboSelect控件增加样式： `margin-right:30px`
+
+### 效果预览
+
+保存后刷新浏览器，我们就得到一个简单的查询条件栏了，此时页面看起应该是这样的：
+![](img/condition.PNG)
 
 ## 小结
-我们完成了查询条件栏的剩余部分，碰到了两个新的RDK控件：[`ComboSelect`](/doc/client/controls/comboselect/rdk_comboselect.md)和[`BasicSelector`](/doc/client/controls/basicselector/rdk_basic_selector.md)
+我们完成了查询条件栏的剩余部分，碰到了三个新的RDK控件：[`ComboSelect`](/doc/client/controls/comboselect/rdk_comboselect.md)、[`BasicSelector`](/doc/client/controls/basicselector/rdk_basic_selector.md)和[`Button`](/doc/client/controls/button/rdk_button.md)
+
+## 跳转
+[上一步](03_use_first_control.md)、[下一步](05_first_service.md)
 
 ## 源码
 [04_finish_condition_bar.zip](04_finish_condition_bar.zip) 下载后解压到 `rdk/app/my_first_app` 目录下即可。

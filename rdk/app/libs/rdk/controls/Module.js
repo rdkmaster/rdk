@@ -1,6 +1,6 @@
 define(['rd.core'], function() {
-    var tabApp = angular.module("rd.controls.Module", ['rd.core']);
-    tabApp.directive('rdkModule', ['EventService', 'EventTypes', 'Utils', '$compile', '$controller', '$http', '$timeout',
+    var moduleApp = angular.module("rd.controls.Module", ['rd.core']);
+    moduleApp.directive('rdkModule', ['EventService', 'EventTypes', 'Utils', '$compile', '$controller', '$http', '$timeout',
         function(EventService, EventTypes, Utils, $compile, $controller, $http, $timeout) {
             return {
                 restrict: 'E',
@@ -19,7 +19,7 @@ define(['rd.core'], function() {
                 replace: true,
                 template: '<div></div>',
                 controller: ['$scope', function(scope) {
-                    Utils.publish(scope.id, this);
+                    Utils.publish(scope, this);
 
                     this.loadModule = function(initData, url, controller, timeout) {
                         url = url ? url : scope.url;
@@ -84,8 +84,10 @@ define(['rd.core'], function() {
 
                         EventService.raiseControlEvent(scope, EventTypes.LOADING, scope.id);
 
-                        $http.get(url, {timeout: timeout}).success(_compileModule).error(_loadError);
                         scope.loadContext = {controller: controller, initData: initData};
+
+                        var reg = /^\s*<div\s+.*<\/div>\s*$/im;
+                        reg.test(url) ? _compileModule(url) : ($http.get(url, {timeout: timeout}).success(_compileModule).error(_loadError));
                     }
 
                     function _compileModule(htmlSource) {
@@ -128,6 +130,7 @@ define(['rd.core'], function() {
 
                         $timeout(function() {
                             EventService.raiseControlEvent(scope, EventTypes.READY, scope.id);
+                            EventService.broadcast('EventService', 'module_ready');
                         }, 0);
                     }
 

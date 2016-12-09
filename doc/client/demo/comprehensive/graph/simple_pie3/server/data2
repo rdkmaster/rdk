@@ -1,0 +1,10 @@
+{
+    "rowDescriptor": "",
+    "header":["Item22","Item23","Item24","Item25"],
+    "data": [
+        {"value":52, "name":"Item22"},
+        {"value":16, "name":"Item23"},
+        {"value":14, "name":"Item24"},
+        {"value":18, "name":"Item25"}
+    ]
+}

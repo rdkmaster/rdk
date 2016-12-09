@@ -59,17 +59,17 @@ describe('time Combined Demos',function(){
         var option = element(by.css(".demo1 .btn-group>div>ul>li:nth-child(2)"));
         select.click();
         option.click();
+        // expect(element.all(by.css('.datetimepicker')).count()).toBe();
+        var timeOneDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days .switch"));
+        var timeOneMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months thead tr .switch"));
+        var timeOneYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years thead tr .switch"));
 
-        var timeOneDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch"));
-        var timeOneMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months thead tr .switch"));
-        var timeOneYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years thead tr .switch"));
-
-        var oneYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
-        var oneMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
-        var oneDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+        var oneYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var oneMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var oneDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
 
         timeOne.click();
-        
+        browser.sleep(500);
         timeOneDays.click();
         timeOneMonths.click();
         timeOneYears.click();
@@ -78,13 +78,13 @@ describe('time Combined Demos',function(){
         oneMonths.click();
         oneDays.click();
         
-        var timeTwoDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days thead tr .switch"));
-        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months thead tr .switch"));
-        var timeTwoYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years thead tr .switch"));
+        var timeTwoDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch"));
+        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months thead tr .switch"));
+        var timeTwoYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years thead tr .switch"));
 
-        var twoYears = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
-        var twoMonths = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
-        var twoDays = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+        var twoYears = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var twoMonths = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var twoDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
 
         timeTwo.click();
         
@@ -888,6 +888,7 @@ describe('time Combined Demos',function(){
         var select = element(by.css(".demo4 .btn-group"));
         var option = element(by.css(".demo4 .btn-group>div>ul>li:nth-child(3)"));
         select.click();
+        browser.sleep(300);
         option.click();
         
         var timeOneDays = element(by.css(".datetimepicker:nth-child(5)>.datetimepicker-days thead tr .switch"));
@@ -1113,6 +1114,7 @@ describe('time Combined Demos',function(){
         var select = element(by.css(".demo5 button"));
         var option = element(by.css(".demo5 ul.dropdown-menu li:nth-child(2)"));
         select.click();
+        browser.sleep(500);
         option.click();
         
         var timeOneHours = element(by.css(".datetimepicker:nth-child(6)>.datetimepicker-hours thead tr .switch"));
@@ -1327,4 +1329,178 @@ describe('time Combined Demos',function(){
             expect(txt).toBe("2010-01 2010-01");
         });
     });
+
+    it('双时间控件和scroller结合点击选择时间点(小时)是否正确',function(){
+        browser.get('test/e2e/testee/time/web/combined5.html');
+        browser.sleep(2000);
+        //直接输入点击显示结果
+        var right = element(by.css(".fa-angle-right"));
+        right.click();
+        right.click();
+        right.click();
+        browser.sleep(2000);
+        var select = element(by.css(".demo6 .dropdown-toggle"));
+        var option = element(by.css(".demo6 ul.dropdown-menu li:nth-child(2)"));
+        var time=element(by.css(".domep"));
+        var timeOne = element(by.css(".demo6 .time-content input:first-child"));
+        var timeTwo = element(by.css(".demo6 .time-content input:nth-child(3)"));
+        select.click();
+        option.click();
+        
+        var timeOneHours = element(by.css(".datetimepicker:nth-child(20)>.datetimepicker-hours thead tr .switch"));
+        var timeOneDays = element(by.css(".datetimepicker:nth-child(20)>.datetimepicker-days thead tr .switch"));
+        var timeOneMonths = element(by.css(".datetimepicker:nth-child(20)>.datetimepicker-months thead tr .switch"));
+        var timeOneYears = element(by.css(".datetimepicker:nth-child(20)>.datetimepicker-years thead tr .switch"));
+
+        var oneYears = element(by.css(".datetimepicker:nth-child(20)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var oneMonths = element(by.css(".datetimepicker:nth-child(20)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var oneDays = element(by.css(".datetimepicker:nth-child(20)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+        var ontHours = element(by.css(".datetimepicker:nth-child(20)>.datetimepicker-hours tbody tr:first-child td span:nth-child(1)"));
+        browser.sleep(2000);
+        timeOne.click();
+
+        timeOneHours.click();
+        timeOneDays.click();
+        timeOneMonths.click();
+        timeOneYears.click();
+
+        oneYears.click();
+        oneMonths.click();
+        oneDays.click();
+        ontHours.click();
+
+        var timeTwoHours = element(by.css(".datetimepicker:nth-child(21)>.datetimepicker-hours thead tr .switch"));
+        var timeTwoDays = element(by.css(".datetimepicker:nth-child(21)>.datetimepicker-days thead tr .switch"));
+        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(21)>.datetimepicker-months thead tr .switch"));
+        var timeTwoYears = element(by.css(".datetimepicker:nth-child(21)>.datetimepicker-years thead tr .switch"));
+
+        var twoYears = element(by.css(".datetimepicker:nth-child(21)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var twoMonths = element(by.css(".datetimepicker:nth-child(21)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var twoDays = element(by.css(".datetimepicker:nth-child(21)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+        var twoHours = element(by.css(".datetimepicker:nth-child(21)>.datetimepicker-hours tbody tr:first-child td span:nth-child(1)"));
+
+        timeTwo.click();
+
+        timeTwoHours.click();
+        timeTwoDays.click();
+        timeTwoMonths.click();
+        timeTwoYears.click();
+
+        twoYears.click();
+        twoMonths.click();
+        twoDays.click();
+        twoHours.click();
+
+        time.getText().then(function(txt){
+            expect(txt).toBe("2010-01-01 00:00 2010-01-01 00:00");
+        });
+    });
+    
+    it('双时间控件和scroller结合点击选择时间点(天)是否正确',function(){
+        browser.get('test/e2e/testee/time/web/combined5.html');
+        browser.sleep(2000);
+        //直接输入点击显示结果
+        var right = element(by.css(".fa-angle-right"));
+        right.click();
+        right.click();
+        right.click();
+        browser.sleep(2000);
+        var select = element(by.css(".demo6 button"));
+        var option = element(by.css(".demo6 ul.dropdown-menu li:nth-child(3)"));
+        var time=element(by.css(".domep"));
+        var timeOne = element(by.css(".demo6 .time-content input:first-child"));
+        var timeTwo = element(by.css(".demo6 .time-content input:nth-child(3)"));
+        select.click();
+        option.click();
+        
+        var timeOneDays = element(by.css(".datetimepicker:nth-child(20)>.datetimepicker-days thead tr .switch"));
+        var timeOneMonths = element(by.css(".datetimepicker:nth-child(20)>.datetimepicker-months thead tr .switch"));
+        var timeOneYears = element(by.css(".datetimepicker:nth-child(20)>.datetimepicker-years thead tr .switch"));
+
+        var oneYears = element(by.css(".datetimepicker:nth-child(20)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var oneMonths = element(by.css(".datetimepicker:nth-child(20)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var oneDays = element(by.css(".datetimepicker:nth-child(20)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+        browser.sleep(2000);
+        timeOne.click();
+
+        timeOneDays.click();
+        timeOneMonths.click();
+        timeOneYears.click();
+
+        oneYears.click();
+        oneMonths.click();
+        oneDays.click();
+
+        var timeTwoDays = element(by.css(".datetimepicker:nth-child(21)>.datetimepicker-days thead tr .switch"));
+        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(21)>.datetimepicker-months thead tr .switch"));
+        var timeTwoYears = element(by.css(".datetimepicker:nth-child(21)>.datetimepicker-years thead tr .switch"));
+
+        var twoYears = element(by.css(".datetimepicker:nth-child(21)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var twoMonths = element(by.css(".datetimepicker:nth-child(21)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        var twoDays = element(by.css(".datetimepicker:nth-child(21)>.datetimepicker-days tbody tr:first-child td:nth-child(6)"));
+
+        timeTwo.click();
+
+        timeTwoDays.click();
+        timeTwoMonths.click();
+        timeTwoYears.click();
+
+        twoYears.click();
+        twoMonths.click();
+        twoDays.click();
+        time.getText().then(function(txt){
+            expect(txt).toBe("2010-01-01 2010-01-01");
+        });
+    });
+
+    it('双时间控件和scroller结合点击选择时间点(月)是否正确',function(){
+        browser.get('test/e2e/testee/time/web/combined5.html');
+        browser.sleep(2000);
+        //直接输入点击显示结果
+        var right = element(by.css(".fa-angle-right"));
+        right.click();
+        right.click();
+        right.click();
+        browser.sleep(2000);
+        var select = element(by.css(".demo6 button"));
+        var option = element(by.css(".demo6 ul.dropdown-menu li:nth-child(4)"));
+        var time=element(by.css(".domep"));
+        var timeOne = element(by.css(".demo6 .time-content input:first-child"));
+        var timeTwo = element(by.css(".demo6 .time-content input:nth-child(3)"));
+        select.click();
+        option.click();
+    
+        var timeOneMonths = element(by.css(".datetimepicker:nth-child(20)>.datetimepicker-months thead tr .switch"));
+        var timeOneYears = element(by.css(".datetimepicker:nth-child(20)>.datetimepicker-years thead tr .switch"));
+
+        var oneYears = element(by.css(".datetimepicker:nth-child(20)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var oneMonths = element(by.css(".datetimepicker:nth-child(20)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        browser.sleep(2000);
+        timeOne.click();
+
+        timeOneMonths.click();
+        timeOneYears.click();
+
+        oneYears.click();
+        oneMonths.click();
+
+        var timeTwoMonths = element(by.css(".datetimepicker:nth-child(21)>.datetimepicker-months thead tr .switch"));
+        var timeTwoYears = element(by.css(".datetimepicker:nth-child(21)>.datetimepicker-years thead tr .switch"));
+
+        var twoYears = element(by.css(".datetimepicker:nth-child(21)>.datetimepicker-years tbody tr:first-child td span:nth-child(2)"));
+        var twoMonths = element(by.css(".datetimepicker:nth-child(21)>.datetimepicker-months tbody tr:first-child td span:nth-child(1)"));
+        
+        timeTwo.click();
+       
+        timeTwoMonths.click();
+        timeTwoYears.click();
+
+        twoYears.click();
+        twoMonths.click();
+
+        time.getText().then(function(txt){
+            expect(txt).toBe("2010-01 2010-01");
+        });
+    });
+
 });

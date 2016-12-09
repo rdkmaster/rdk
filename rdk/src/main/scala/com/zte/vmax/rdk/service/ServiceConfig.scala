@@ -13,14 +13,17 @@ object ServiceConfig {
   val callTimeout = Config.getInt("overload.protection.callTimeout", 180)
   val maxFailures = Config.getInt("overload.protection.maxFailures", 32)
   val resetTimeout = Config.getInt("overload.protection.resetTimeout", 20)
-
+  val initTimeout = Config.getInt("init.execTimeout", 600)
   val requestTimeout: Int = RdkServer.system.settings.config.getString("spray.can.server.request-timeout") match {
     case "infinite" ⇒ 1800//30 min
     case x ⇒ Duration(x).toSeconds.toInt
   }
-
   val uploadTimeout: Int = RdkServer.system.settings.config.getString("spray.can.server.upload-timeout") match {
     case "infinite" ⇒ 1800 //30 min
+    case x ⇒ Duration(x).toSeconds.toInt
+  }
+  val exportTimeout:Int =RdkServer.system.settings.config.getString("spray.can.server.export-timeout") match {
+    case "infinite" ⇒ 1800//30 min
     case x ⇒ Duration(x).toSeconds.toInt
   }
 }

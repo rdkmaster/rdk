@@ -1,4 +1,4 @@
-<rdk_title>第6步 将查询得到的数据表格方式呈现 - RDK应用开发最佳实践</rdk_title>
+<rdk_title>第5步 将查询得到的数据表格方式呈现 - RDK应用开发最佳实践</rdk_title>
 
 ## 目标与收获
 
@@ -30,7 +30,7 @@
 			'where clttime between "' + request.beginTime + '" and "' + request.endTime +
 			'" and city in (' + request.citys.join(',') + ')';
 		
-		var data = matrix(sql);
+		var data = Data.fetch(sql);
 		data.header = ['日期', '城市名','网页响应成功率','网页下载速率','网页响应时延'];
 		return data;
     }
@@ -47,11 +47,11 @@
 ### 添加表格控件
 编辑`app\my_first_app\web\index.html`文件，在body节点中添加：
 ~~~
-<rdk_table ds="dsWebAnalysis" ds_url="$svr/webAnalysis" page_size="20">
+<rdk_table ds="dsWebAnalysis" ds_url="$svr/webAnalysis" page_size="15">
 </rdk_table>
 ~~~
 
-这里引入了一个新的控件rdk_table，注意要使用[第三步的方法](03_use_first_control.md#dep-inject)注入表格的依赖。
+这里引入了一个新的控件rdk_table，注意要使用[第三步的方法](03_use_first_control.md#dep-inject)注入表格的依赖`"rd.controls.Table"`。
 
 在引入表格的时候同时创建了一个名为dsWebAnalysis的数据源，它指向前一小节实现的数据查询服务。
 
@@ -61,16 +61,16 @@
 1. 开始结束时间
 2. 选中的地市，为了能够获取到当前选中的地市，需要编辑页面，在rdk_basic_selector节点上添加一个属性：`selected_items="selectedCitys"` 即可。selectedCitys是scope上的一个属性。
 
-下面开始给查询按钮添加单击响应动作，编辑页面，找到button节点，添加一个属性：`ng-click="search()"`，再编辑js代码，在scope上创建search函数，代码如下：
+下面开始给查询按钮添加单击响应动作，编辑页面，找到button节点，添加一个属性：`click="search()"`，再编辑js代码，在scope上创建search函数，代码如下：
 ~~~
 scope.search = function() {
 	//由于服务端需要的是选中城市id列表，因此需要先处理一下选中的城市
 	var citys = [];
 	angular.forEach(scope.selectedCitys, function(city) {
-		citys.push(city.id);
+		citys.push(city.name);
 	});
 	
-	var ds = DSService.get('dsWebAnalysis');
+	var ds = DataSourceService.get('dsWebAnalysis');
 	var condition = {
 		beginTime: scope.timeSetting.value[0],
 		endTime: scope.timeSetting.value[1],
@@ -85,14 +85,8 @@ scope.search = function() {
 
 ![](img/table_data.PNG)
 
-> 注意：<br>
-> 这里城市名显示成了城市的id了，这个问题我们将在后续的步骤中解决。
-
 ### 查询条件优化
-如果地市条件是必选的，那在用户选中一个地市之前，查询按钮应该是灰色的。编辑页面代码，在button节点中添加一个属性：`ng-disabled="selectedCitys.length == 0"` 即可。
-
-> 扩展：<br>
-> 本小节使用到了两个AngularJS原生指令，分别是 [ng-click](http://docs.ngnice.com/api/ngTouch/directive/ngClick) 和 [ng-disabled](http://docs.ngnice.com/api/ng/directive/ngDisabled)，可以翻阅AngularJS的文档了解他们的用法。
+如果地市条件是必选的，那在用户选中一个地市之前，查询按钮应该是灰色的。编辑页面代码，在button节点中添加一个属性：`enabled="selectedCitys.length != 0"` 即可。
 
 完成了这一步之后，完整的代码可以通过[单击这里](06_show_data_in_table_1.zip)下载。
 
@@ -159,12 +153,12 @@ var condition = {
 	citys: citys,
 	paging: {
 		//一页的记录数
-		pageSize:20
+		pageSize:15
 	}
 }
 ~~~
 
-修改数据查询服务webAnalysis.js代码，在 `var data = matrix(sql);` 这一行前面插入如下代码
+修改数据查询服务webAnalysis.js代码，在 `var data = Data.fetch(sql);` 这一行前面插入如下代码
 ~~~
 var tableUtil = require('app/common/server/util/tableUtil.js');
 sql = tableUtil.generatePagingSQL(sql, request.paging.pageSize, request.paging.currentPage || 1);
@@ -175,12 +169,13 @@ sql = tableUtil.generatePagingSQL(sql, request.paging.pageSize, request.paging.c
 
 表格的服务端分页非常常用，基本上所有用于显示数据的表格都使用服务端分页的方式呈现数据。
 
-
-
 ## 小结
 我们实现了一个数据查询服务，并利用表格呈现这些数据。同时还在表格中添加了“详情”列，可以查看表格一行数据的详情。
 
 最主要的我们实现了表格的服务端分页这个极常用的功能。
+
+## 跳转
+[上一步](05_first_service.md)、[下一步](07_show_data_in_graph.md)
 
 ## 源码
 [06_show_data_in_table.zip](06_show_data_in_table.zip) 下载后解压到 `rdk/app/my_first_app` 目录下即可。

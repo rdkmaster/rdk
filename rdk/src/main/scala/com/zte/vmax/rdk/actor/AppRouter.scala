@@ -2,7 +2,7 @@ package com.zte.vmax.rdk.actor
 
 import akka.actor._
 import akka.routing.FromConfig
-import com.zte.vmax.rdk.actor.Messages.{UploadServiceParam, WSCallJSMethod, ServiceRequest}
+import com.zte.vmax.rdk.actor.Messages.{ExportParam, UploadServiceParam, WSCallJSMethod, ServiceRequest}
 import com.zte.vmax.rdk.defaults.Misc
 import com.zte.vmax.rdk.util.Logger
 
@@ -23,6 +23,9 @@ class AppRouter extends Actor with Logger {
       printLog(msg)
       httpRouter.forward(msg)
     case msg: UploadServiceParam =>
+      printLog(msg)
+      httpRouter.forward((msgNO, msg))
+    case msg: ExportParam =>
       printLog(msg)
       httpRouter.forward((msgNO, msg))
     case Terminated(a) =>

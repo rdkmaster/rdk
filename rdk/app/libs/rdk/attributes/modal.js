@@ -7,6 +7,7 @@ define(['rd.services.EventService', 'jquery','jquery-ui'], function() {
             compile: function(tElement, tAttrs) {
                 return {
                     post: function(scope, iElement, iAttrs) {
+                        console.warn('Modal has been abandoned, pls use PopupService! Reference: http://10.9.233.35:8080/doc/#client/common/popupservice/PopupService.md ');
                         var modalId = iAttrs['id'] || Utils.createUniqueId('modal_frame_');
                         EventService.register(modalId, 'modal', _handler);
                         EventService.register(modalId, 'hide', _handler);
@@ -74,9 +75,10 @@ define(['rd.services.EventService', 'jquery','jquery-ui'], function() {
                 resizable: false,
                 modal: modalFlag,
             });
-            $('.ui-dialog-titlebar').remove();//去标题
-            jqDom.parent().removeClass('ui-widget');//去样式
-            $('.ui-dialog').css('overflow','inherit')
+
+            jqDom.siblings('.ui-dialog-titlebar').css({'position': 'absolute', 'opacity': '0', 'width': '100%', 'height': '5px', 'padding': '0', 'z-index': '9999'});
+            jqDom.parent('.ui-dialog').css('overflow','inherit'); 
+
             /*开始设置样式*/
             jqDom.css({ 
                         'top': '', 'left': '',

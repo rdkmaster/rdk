@@ -1,4 +1,4 @@
-<rdk_title>第2步 编写第一个应用 - RDK应用开发最佳实践</rdk_title>
+<rdk_title>第1步 编写第一个应用 - RDK应用开发最佳实践</rdk_title>
 
 ## 目标与收获
 
@@ -15,7 +15,6 @@ RDK推出新的功能后，会第一时间更新[example应用](/rdk/app/example
 
 - web：应用所有前端代码存放的位置
 - server：应用所有后端代码存放的位置
-- build：应用构建脚本存放位置，一般直接无视它即可。
 
 这也是任何应用应有的目录结构。
 
@@ -25,33 +24,7 @@ RDK推出新的功能后，会第一时间更新[example应用](/rdk/app/example
 
 ### 拷贝
 
-在 `rdk_server/app` 目录下，创建一个目录，名称为 `my_first_app`，将 `rdk/app/example` 目录下的所有文件和文件夹都拷贝到 `rdk/app/my_first_app` 目录下。
-
-### 修正路径
-编辑 `rdk/app/my_first_app/web/index.html`，找到文档头中的内嵌JS代码，将
-
-~~~
-"utils": '/rdk/app/example/web/scripts/utils',
-~~~
-修改为：
-~~~
-"utils": '/rdk/app/my_first_app/web/scripts/utils',
-~~~
-
-再将：
-~~~
-"i18n": '/rdk/app/example/web/scripts/i18n',
-~~~
-修改为：
-~~~
-"i18n": '/rdk/app/my_first_app/web/scripts/i18n',
-~~~
-
-### 删除不用的文件
-
-本步骤可选。
-
-`rdk/app/my_first_app/build` 目录可以删除。
+在 `rdk/app` 目录下，创建一个目录，名称为 `my_first_app`，将 `rdk/app/example` 目录下的所有文件和文件夹都拷贝到 `rdk/app/my_first_app` 目录下。
 
 ### 搞定！
 
@@ -70,6 +43,9 @@ RDK推出新的功能后，会第一时间更新[example应用](/rdk/app/example
 ## 小结
 
 我们创建了第一个应用。
+
+## 跳转
+[上一步](01_dev_env.md)、[下一步](03_use_first_control.md)
 
 ## 源码
 [02_first_rdk_app.zip](02_first_rdk_app.zip) 下载后解压到 `rdk/app/my_first_app` 目录下即可。

@@ -8,9 +8,10 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                 </ul>\
                 <div class="tab-content tab-bordered">\
                     <div class="tab-panel" ng-show="$vm.activeTab == 1">\
-                        <ul>\
-                            <li ng-repeat="province in $vm.dsProvinces.data.data">\
-                                <a ng-click="$vm.changeSelected(province,0)" ng-class="{selected:$vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
+                        <ul ng-style="$vm.getWidth()">\
+                            <li ng-repeat="province in $vm.dsProvinces.data.data track by $index" on-finish-render="provinceRender">\
+                                <a ng-if="!$vm.isNull(province)" ng-click="$vm.clkProvinceNextLvOpen(province,0)" ng-class="{selected:$vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
+                                <a ng-if="$vm.isNull(province)" class="area-null">{{province.name}}</a>\
                             </li>\
                         </ul>\
                     </div>\
@@ -25,9 +26,10 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                 </ul>\
                 <div class="tab-content tab-bordered">\
                     <div class="tab-panel" ng-show="$vm.activeTab == 1" ng-if="!freezeProvince">\
-                        <ul>\
-                            <li ng-repeat="province in $vm.dsProvinces.data.data">\
-                                <a ng-click="$vm.clkProvinceNextLvOpen(province,0)" ng-class="{selected:$vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
+                        <ul ng-style="$vm.getWidth()">\
+                            <li ng-repeat="province in $vm.dsProvinces.data.data track by $index" on-finish-render="provinceRender">\
+                                <a ng-if="!$vm.isNull(province)" ng-click="$vm.clkProvinceNextLvOpen(province,0)" ng-class="{selected:$vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
+                                <a ng-if="$vm.isNull(province)" class="area-null">{{province.name}}</a>\
                             </li>\
                         </ul>\
                     </div>\
@@ -51,9 +53,10 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                 </ul>\
                 <div class="tab-content tab-bordered">\
                     <div class="tab-panel" ng-show="$vm.activeTab == 1">\
-                        <ul>\
-                            <li ng-repeat="province in $vm.dsProvinces.data.data">\
-                                <a ng-click="$vm.clkProvinceNextLvOpen(province,0)" ng-class="{selected:$vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
+                        <ul ng-style="$vm.getWidth()">\
+                            <li ng-repeat="province in $vm.dsProvinces.data.data track by $index" on-finish-render="provinceRender">\
+                                <a ng-if="!$vm.isNull(province)" ng-click="$vm.clkProvinceNextLvOpen(province,0)" ng-class="{selected:$vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
+                                <a ng-if="$vm.isNull(province)" class="area-null">{{province.name}}</a>\
                             </li>\
                         </ul>\
                     </div>\
@@ -103,6 +106,17 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                 showAll:"=?"
             },
             require:'^?rdkComboSelect',
+            controller: ['$scope', function(scope){
+                Utils.publish(scope, this);
+                //外部可设置地区数据事件
+                this.updateAreaData = function(data){
+                    if(data==null)
+                    {
+                        return
+                    }
+                    scope.updateAreaData(data);
+                }
+            }],
             link:_link
         };
 
@@ -116,6 +130,9 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
             var _hasOver=true; //选择是否结束标志
             var _hasDefaultReady = false; //读取默认地区数据是否完成
             var allProvinceTip=''; //提示"全省"
+            var _areaNull = {name:'- -'};//空对象，当数据少于_areaCount时用于填充数据。
+            var _areaCount = 6;
+            var _provincesInNull=false; //省数据数组里是否存在空对象
             //默认在选择项里显示：全省，全市标签
             scope.showAll=  Utils.isTrue(scope.showAll, true);
             scope.freezeProvince = Utils.isTrue(scope.freezeProvince, true);
@@ -180,6 +197,20 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                     return false;
                 }
             };
+            $vm.isNull=function(province)
+            {
+                return province && angular.equals(province,_areaNull);
+            };
+            $vm.getWidth=function()
+            {
+                if(!_provincesInNull)
+                {
+                    return
+                }
+                return{
+                    width:255+'px'
+                }
+            };
             //关闭选择框,返回选择结果信息
             function _closeRdkArea(){
                 !!comboSelectCtrl && comboSelectCtrl.changeOpenStatus();
@@ -211,7 +242,11 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                     EventService.register($vm.dsAreas.id, EventTypes.RESULT, _areasResultHandler);
                 }
             }
-
+            scope.updateAreaData=function(data){
+                _hasDefaultReady=false;
+                scope.areaData=data;
+                _initDefaultAreaData();
+            };
             function _initDefaultAreaData(){  //初始化地区默认数据
                 var defaultProvince;
                 if($vm.dsProvinces.data && scope.areaData.province){
@@ -265,6 +300,14 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
             }
 
             function _provincesResultHandler(){
+                for(var i=_areaCount , len = $vm.dsProvinces.data.data.length ; i>len ; i--)
+                {
+                    $vm.dsProvinces.data.data.push(_areaNull);
+                }
+                if(i===len)
+                {
+                    _provincesInNull=true; //provinces数组里存在空数据
+                }
                 if(_hasDefaultReady || !scope.areaData){
                     return
                 }

@@ -11,6 +11,7 @@ describe("Combo Test Self",function(){
         var p = element(by.css(".demo1 p"));
         //解冻 
         thanBut.click();
+        comboSelector1.click();
         var li=element(by.css(".demo1 .selector li:first-child"));
         //选中第一个选项(江苏省)
         li.click();

@@ -224,7 +224,8 @@
             }
         }
 
-        this.publish = function(id, controller) {
+        this.publish = function(scope, controller) {
+            var id = scope.id;
             if (!id) {
                 return;
             }
@@ -234,6 +235,10 @@
             } else {
                 rdk[id] = controller;
             }
+
+            scope.$on("$destroy", function() {
+                delete rdk[id];
+            });
         }
 
         this.shallowCopy = function(src, dest) {

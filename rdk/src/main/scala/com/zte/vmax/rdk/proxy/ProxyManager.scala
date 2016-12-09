@@ -19,7 +19,7 @@ object ProxyManager extends Logger {
   private final val DS_Default = "db.default"
 
   //读取rdk.cfg中默认数据源配置
-  private def getDefaultDataSource(configKey: String): Option[String] = {
+  def getDefaultDataSource(configKey: String): Option[String] = {
     Config.get(configKey, null) match {
       case null => None
       case s: String => Some(s)

@@ -39,7 +39,7 @@
     position: absolute;
     /* please don't change 'position' */
     background-color: #008fd4;
-    opacity: 0.2;
+    opacity: 0.3;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 6px;
@@ -73,7 +73,7 @@
     position: absolute;
     /* please don't change 'position' */
     background-color: #008fd4;
-    opacity: 0.2;
+    opacity: 0.3;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 6px;

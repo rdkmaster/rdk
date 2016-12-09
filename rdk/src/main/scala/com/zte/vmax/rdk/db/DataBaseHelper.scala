@@ -33,7 +33,7 @@ object DataBaseHelper extends Logger {
       try {
         val currentTime = System.currentTimeMillis()
         val statement = connection.createStatement
-        val opSql = RdkUtil.getStandardSql(sql)
+        val opSql = RdkUtil.getVSql(session, sql)
         if (opSql.isEmpty) {
           return None
         }

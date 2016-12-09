@@ -37,7 +37,8 @@ var java = {
     StringMap: Java.type('com.google.gson.internal.StringMap'),
 
     FileHelper: Java.type('com.zte.vmax.rdk.jsr.FileHelper'),
-    RegFileFilter: Java.type('com.zte.vmax.rdk.util.RegFileFilter')
+    RegFileFilter: Java.type('com.zte.vmax.rdk.util.RegFileFilter'),
+    Config: Java.type('com.zte.vmax.rdk.config.Config')
 
 };
 
@@ -92,9 +93,51 @@ var Log = {
     crit: function () {
         var message = _arg2string(arguments);
         rdk_runtime.jsLogger().error(message);
+    },
+    operateLog: function (userOpInfo) {
+        var reqCtxHeaderInfo = getRequestContextHeader()
+        if (!reqCtxHeaderInfo) {
+            Log.error("NoneContext call!");
+            return false;
+        }
+        var userOpFunc = null;
+        try {
+            userOpFunc = load(java.Config.get('extension.operateLog'));
+        } catch (e) {
+            Log.error("load operateLog script error:" + e);
+            return false;
+        }
+        try {
+            userOpFunc(userOpInfo, reqCtxHeaderInfo);
+        } catch (e) {
+            Log.error(e);
+            return false;
+        }
+        return true;
     }
 }
 
+function getHostName() {
+    return rdk_runtime.getHostName()
+}
+
+function getRequestContextHeader() {
+    var reqCtxHeaderInfo = rdk_runtime.getReqCtxHeaderInfo()
+    if (!reqCtxHeaderInfo) {
+        Log.warn("NoneContext call!")
+        return "";
+    }
+    return _transferHeader(JSON.parse(reqCtxHeaderInfo));
+}
+//reqCtxHeaderInfo为数组，转换为对象方便使用
+//[{"key": "Cookie","value": "JSESSIONID=11ruoxiraug56gcl0ilshlpyk"}]  => {"Cookie":"JSESSIONID=11ruoxiraug56gcl0ilshlpyk"}
+function _transferHeader(headerArray) {
+    var headerObject = {};
+    for (var elem in headerArray) {
+        headerObject[headerArray[elem].key] = headerArray[elem].value;
+    }
+    return headerObject
+}
 //兼容以前日志代码
 var log = Log.debug;
 var debug = Log.debug;
@@ -116,13 +159,41 @@ var Cache = {
         return rdk_runtime.cacheDel(k)
     },
     global_put: function (k, v) {
+        Log.warn("function deprecated,please use Cache.global.put()");
         return rdk_runtime.globalCachePut(k, v)
     },
     global_get: function (k) {
+        Log.warn("function deprecated,please use Cache.global.get()");
         return rdk_runtime.globalCacheGet(k)
     },
     global_del: function (k) {
+        Log.warn("function deprecated,please use Cache.global.del()");
         return rdk_runtime.globalCacheDel(k)
+    },
+    global: {
+        put: function (k, v) {
+            return rdk_runtime.globalCachePut(k, v)
+        },
+        get: function (k) {
+            return rdk_runtime.globalCacheGet(k)
+        },
+        del: function (k) {
+            return rdk_runtime.globalCacheDel(k)
+        }
+    },
+    aging: {
+        put: function (k, v, ttl) {
+            if (!_.isDefined(ttl)) {
+                ttl = 24 * 60 * 60;
+            }
+            return rdk_runtime.agingCachePut(k, v, ttl)
+        },
+        get: function (k) {
+            return rdk_runtime.agingCacheGet(k)
+        },
+        del: function (k) {
+            return rdk_runtime.agingCacheDel(k)
+        }
     }
 }
 
@@ -241,16 +312,34 @@ var file = {
         log("reading property file:",file);
         return rdk_runtime.fileHelper().loadProperty(file);
     },
+    readXml: function (path) {
+        if (!path) {
+            log("invalid file path:", path);
+            return undefined;
+        }
+        path = path.toString();
+        log("reading xml file:", path);
+        var result = rdk_runtime.fileHelper().readXml(path);
+        if (!result) {
+            return undefined;
+        }
+        return JSON.parse(result);
+    },
     save: function (file, content, append, encoding) {
         if (!file) {
             log("invalid file path:", file);
             return false;
         }
-        if (content == undefined || null) {
+        if ((!_.isDefined(content)) || (null == content)) {
             log("invalid file content:", content);
             return false;
         }
-
+        if (null == append) {
+            append = undefined;
+        }
+        if (null == encoding) {
+            encoding = undefined;
+        }
         file = file.toString();
         log("saving file to:", file);
         return rdk_runtime.fileHelper().save(file, content.toString(), !!append, encoding);
@@ -259,6 +348,12 @@ var file = {
         file = file.toString();
         log("saving to csv:", file);
 
+        if (null == excludeIndexes) {
+            excludeIndexes = undefined;
+        }
+        if (null == option) {
+            option = undefined;
+        }
         var csv = _fixContent(content, excludeIndexes);
         var b = rdk_runtime.fileHelper().saveAsCSV(file, csv.data, csv.excludeIndexes, option);
         //_fixContent中修改了content.data，这里还原
@@ -275,6 +370,12 @@ var file = {
         if(!_.isDefined(content)){
             Log.error("please input extract content!");
             return;
+        }
+        if (null == excludeIndexes) {
+            excludeIndexes = undefined;
+        }
+        if (null == option) {
+            option = undefined;
         }
         var excel = _fixEXCELContent(content, excludeIndexes);
 
@@ -321,6 +422,9 @@ var file = {
 
 var rest = {
     get: function(url, option) {
+        if(null==option){
+            option=undefined;
+        }
         return rdk_runtime.restHelper().get(encodeURI(url),option);
     }
 }
@@ -441,7 +545,7 @@ var Mapper = {
     mkMap: function (param, keyName, valueName) {
         var map = {};
         if (_.isString(param)) {
-            param = Data.fetch(param, 4000);
+            param = Data.fetch(param, 20000);
         }
 
         var data = param.data;
@@ -457,6 +561,32 @@ var Mapper = {
 }
 
 var Data = {
+    //标准sql处理器标识
+    VSqlProcessorKey: "#_#VSqlProcessor#_#",
+    /**
+     * 注册vsql处理器
+     * @param dsName 数据源名
+     * @param jar   jar文件路径(可以是目录，也可以是文件名)
+     * @param className 处理类
+     * @param methodName 处理方法（java static方法，或Scala 单例对象方法）
+     */
+    registerVSqlProcessor: function (dsName, jar, className, methodName) {
+        var classDef = JVM.load_class(jar, className);
+        if (classDef != undefined) {
+            var methodCall = classDef.getMethod(methodName, java.String.class);
+            var fixDsName = dsName;
+            if(dsName.indexOf("db.") != 0){
+                fixDsName = "db." + dsName;
+            }
+            Cache.put(Data.VSqlProcessorKey+fixDsName, methodCall);
+            Log.info("registerVSqlProcessor for " + fixDsName);
+        } else {
+            Log.error('Failed to load ' + jar + ":" + className);
+        }
+
+    },
+
+    //数据源选择器标识
     DataSourceSelector:"#_#DataSourceSelector#_#",
 
     //设置数据源选择器
@@ -521,10 +651,11 @@ var Data = {
     }
 }
 
-function DataTable(header, field, data) {
+function DataTable(header, field, data, paging) {
     this.header = header;
     this.field = field;
     this.data = data;
+    this.paging=paging;
 
     this.transform = function (trans_object_conf) {
         for (field in trans_object_conf) {
@@ -573,6 +704,7 @@ function DataTable(header, field, data) {
         var field = [];
         var header = [];  //delete
         var data = [];    //转置？
+        var paging={};
         var index = 0;
         for (var i = 0; i < colNameArray.length; i++) {
             var colName = colNameArray[i];
@@ -592,6 +724,7 @@ function DataTable(header, field, data) {
         this.header = header;
         this.field = field;
         this.data = data;
+        this.paging=paging;
         return this;
     },
 
@@ -605,7 +738,7 @@ function DataTable(header, field, data) {
     },
 
     this.clone = function () {
-        return new DataTable(this.header, this.field, this.data);
+        return new DataTable(this.header, this.field, this.data, this.paging);
     }
 }
 

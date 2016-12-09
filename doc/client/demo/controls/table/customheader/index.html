@@ -3,8 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>Table -> ColumnVisible</title>
-
+    <title>Table ->ID</title>
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
     -->
@@ -12,25 +11,11 @@
     <script src="scripts/main.js"></script>
 </head>
 
-<body ng-controller='myCtrl' style="margin-top:20px">
-    <table rdk_table ds="ds_table" ds_url="/doc/client/demo/controls/table/mockdata/table" ds_query_if="ready">
-        <thead>
-            <tr>
-                <th colspan="6">自定义表头</th> 
-            </tr>
-            <tr>
-                <th>姓名</th>
-                <th>职位</th>
-                <th>薪资</th>
-                <th>入职日期</th>
-                <th>部门</th>
-                <th>其他</th>
-            </tr>
-        </thead>
-    </table>   
+<body ng-controller='myCtrl'>
+<rdk_table add_check_box='true' ds="ds_table" floatable-header="false" ds-url="/doc/client/demo/controls/table/mockdata/table_paging"
+           ds_query_if="ready" setting="setting">
+</rdk_table>
+
 </body>
 
 </html>
-
-
-

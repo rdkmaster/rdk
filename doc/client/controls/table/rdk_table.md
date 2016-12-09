@@ -41,7 +41,7 @@ data对象中应该包含以下**必填属性**：
 ## setting <binding></binding>##
 > 支持类型：JSON对象
 
-此属性可以设置展现列表中的列的各种属性,包括样式、显隐性等。
+此属性可以设置展现列表中的列的各种属性，包括样式、显隐性等。
 可以通过列索引（从0开始索引）或者相应的`field`的值进行设置。
 
 ### 设置列样式 ###
@@ -140,6 +140,56 @@ data对象中应该包含以下**必填属性**：
 详细示例如下：
 
 <live_demo example="controls/table/newcolumn" width="900"></live_demo>
+
+### 添加自定义表头 ###
+
+通过`setting`中的`columnDefs` 的 `title`属性控制。title支持类型：字符串/函数
+为字符串时，直接显示在表头
+为函数时，要求函数返回一个新标题的html字符串，函数定义为 `function(data, target);`
+
+具体设置格式如下：
+
+        scope.setting = {
+        	"columnDefs" :[
+                {
+                    title : function(data, target) {
+                        $scope.data=data.data;
+                        return '<span>'+data.header[target]+'</span>\
+                                <select ng-change="titleExtraSelecteHandler(titleExtraSelected)"\
+                                        ng-model="titleExtraSelected"\
+                                        ng-options="item[2] as item[2]  for item in data">\
+                                    <option value="">-- choose an item --</option>\
+                                </select>'
+                    },
+                    targets : 1
+                }
+        	]
+        }
+
+- targets标记支持列的索引形式，从0开始。
+
+函数参数说明：
+
+- data表格的数据对象，包含的属性有field(表中的列头信息)，header(field的各个列头的国际化内容)，data(真实的数据)
+- targets列的索引。
+
+详细示例如下：
+<live_demo example="controls/table/customHeader" width="900"></live_demo>
+
+### 添加多级表头 ###
+
+通过`setting`中的`additionalHeader` 属性控制。
+
+具体设置格式如下：
+
+        scope.setting = {
+            additionalHeader: '<tr class="test1"><th colspan=4>多级表头列1</th><th colspan=3>多级表头列2</th></tr>' +
+                              '<tr class="test2"><th colspan=1>复选框</th><th colspan=2>身份信息</th><th colspan=4>基本信息</th></tr>'
+        }
+
+详细示例如下：
+<live_demo example="controls/table/additionalHeader" width="900"></live_demo>
+
 
 ### 设置水平滚动条 ###
 
@@ -250,7 +300,7 @@ RDK2.0表格支持服务端和客户端排序两种方式。
 通过`setting`中的`columnDefs` 的 `group`控制。`group` 缺省时默认为`false`，表示列不是合并列。
 `group` 可设置成 true 或者设置成一回调函数。函数的定义为
 
-> function(rowspans,filedName,filterData,target)
+> function(rowspans，filedName，filterData，target)
 
 其中 rowspans 是控件自动计算出的该列的合并单元的rowspan数量。
 比如说表格的数据如下所示，
@@ -311,13 +361,6 @@ cells 为 改变的行列信息的数组信息
     
 详细举例如下
 <live_demo example="controls/table/rowSpan" width="900"></live_demo>
-
-## 自定义表头 ##
-
-可以使用CSS中定义的table标记中的thead、tr、th等标记来修改表头内容。
-
-详细示例如下：
-<live_demo example="controls/table/customheader" width="900"></live_demo>
 
 ## 复选框列 ##
 可以通过自定义表头和列渲染的方式来实现复选框的功能。
@@ -539,13 +582,13 @@ cells 为 改变的行列信息的数组信息
 文字水平对齐，默认值center
 
 #### padding ####
-属性定义元素边框与元素内容之间的空间（单位：像素）。默认值：10px 6px,padding属性的默认填充顺序为从上开始的顺时针方向。
+属性定义元素边框与元素内容之间的空间（单位：像素）。默认值：10px 6px，padding属性的默认填充顺序为从上开始的顺时针方向。
 
 #### background-color {#bgc3}
-表头或表尾背景色,默认值: #325BDB
+表头或表尾背景色，默认值: #325BDB
 
 #### color #####
-表头或表尾文字色,默认值: #FFFFFF
+表头或表尾文字色，默认值: #FFFFFF
 
 ### 表体数据属性 ###
 

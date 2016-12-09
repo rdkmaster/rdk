@@ -1,0 +1,10 @@
+
+{
+    "rowDescriptor": "",
+    "header":["Item11","Item12","Item13","Item14"],
+    "data": [
+       {"value":20, "name":"视频广告","number":0,"chance":"5%"},
+        {"value":20, "name":"联盟广告","number":1,"chance":"5%"},
+        {"value":18, "name":"xxxx广告","number":2,"chance":"1.72%"}
+    ]
+}

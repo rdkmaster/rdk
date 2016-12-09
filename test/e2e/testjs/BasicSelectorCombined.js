@@ -40,13 +40,15 @@ describe("test basic_selector combined",function(){
 		var tab=element(by.css(".tab .tabs ul li a[href='#tab_item_1']"));
 		tab.click();
 		browser.sleep(500);
-		var lis=element.all(by.css("div[title='basic'] .rdk-selector-module .selector li"));
+		tab.click();
+		browser.sleep(500);
+		var lis=element.all(by.css("div[id='tab_item_1'] .rdk-selector-module .selector li"));
 		expect(lis.count()).toBe(6);
 		lis.each(function(item,index){
 			item.click();
 			browser.sleep(300);
 		});
-		expect(element.all(by.css("div[title='basic'] .rdk-selector-module .selector .selected-item")).count()).toBe(6);
+		expect(element.all(by.css("div[id='tab_item_1'] .rdk-selector-module .selector .selected-item")).count()).toBe(6);
 	});
 	//测试scroller配合basic能否正常显示和切换
 	it('scroller basic test toggle',function(){

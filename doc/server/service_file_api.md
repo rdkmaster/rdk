@@ -19,8 +19,29 @@
        var properties=file.loadProperty("conf/test.properties");
   
        var uump=properties.getProperty("uump");
+	   
+### `file.readXml()` ###
 
-### `file.save()` ###
+定义：
+
+    function readXml(file);
+
+参数：
+
+- file 字符串。需要读取的文件路径，如果是目录则会报错。可使用[路径宏](relative_path_rule.md)简化路径。
+
+返回：返回一个json格式的js对象
+
+说明：异常情况返回undefined。
+
+示例： 解析xml文件并返回对应json对象。
+		//使用宏路径
+       file.readXml("$svr/dialog_settings.xml")
+        //普通路径
+	   file.readXml("app/example/server/dialog_settings.xml")	
+        
+	   
+### `file.save()` {#save}###
 
 定义：
 
@@ -37,7 +58,7 @@
 
 说明：无
 
-### `file.saveAsCSV()` ###
+### `file.saveAsCSV()` {#saveAsCSV}###
 
 定义：
 
@@ -81,7 +102,7 @@
 	log("file save success:", b);
 
 
-### `file.saveAsEXCEL()` ###
+### `file.saveAsEXCEL()` {#saveAsEXCEL}###
 
 该方法提供了一个可以同时写多张excel sheet页的简便方法。
 

@@ -13,7 +13,7 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
 
         var _callback, _svrMsgBoxId, _i18n; 
         var alertService = this;
-        var _lang = "zh-cn";
+        var _lang = Utils.getLocale;
 
         function _refreshAlertI18nLang(){
             if((alertService.scope.i18n)&&(alertService.scope.i18n.$locale)){
@@ -40,11 +40,11 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
 
         function _getBtnsTemplate(btnVal){
             var myBtns = '';
-            if(btnVal & ButtonTypes.YES){
-                myBtns += '<input class="rdk-alert-svrMsgBtn rdk-alert-yes" type="button" value=' + _i18n.yes + ' ng-click="svrClickHandler($event,'+ ButtonTypes.YES +')">';
-            }
             if(btnVal & ButtonTypes.NO){
                 myBtns += '<input class="rdk-alert-svrMsgBtn rdk-alert-no" type="button" value=' + _i18n.no + '  ng-click="svrClickHandler($event,'+ ButtonTypes.NO +')">';
+            }
+            if(btnVal & ButtonTypes.YES){
+                myBtns += '<input class="rdk-alert-svrMsgBtn rdk-alert-yes" type="button" value=' + _i18n.yes + ' ng-click="svrClickHandler($event,'+ ButtonTypes.YES +')">';
             }
             if(btnVal & ButtonTypes.CANCEL){
                 myBtns += '<input class="rdk-alert-svrMsgBtn rdk-alert-cancel" type="button" value=' + _i18n.cancel + ' ng-click="svrClickHandler($event,'+ ButtonTypes.CANCEL +')"">';
@@ -155,7 +155,7 @@ define(['angular', 'jquery', 'rd.attributes.modal', 'rd.services.EventService','
         }
 
         this.setLang = function(lang){
-            _lang = lang.toLowerCase();
+           console.warn("该方法已过时，烦请删掉该方法的调用！");
         }
     }]);
 

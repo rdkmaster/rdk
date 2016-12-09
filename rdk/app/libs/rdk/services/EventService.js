@@ -19,6 +19,7 @@
         RESIZE: "resize",
 
         READY: "ready",
+        MODULE_READY: "module_ready",
         TABLE_READY: "table_ready",
         GRAPH_READY: "graph_ready",
         GRAPH_UPDATE: "graph_update",

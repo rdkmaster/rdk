@@ -1,0 +1,238 @@
+.rdk-table-module .rdk-table > thead > tr > th{
+	color:#008fd4;
+	font-size: 14px;
+	background:#eeeeee;
+}
+.content{
+	width:752px;
+	overflow: hidden;
+	margin:0 auto;
+	margin-top:50px;
+}
+ul,li{
+	padding:0;
+	margin:0;
+	list-style:none; 
+}
+.hao{
+	position: relative;
+	width:740px;
+	height: 380px;
+    margin-right:12px;
+    font-family: '微软雅黑';
+	top:200px;
+	position:absolute;
+	padding:8px;
+	border:1px solid #eee;
+}
+/*设置tr样式*/
+.rdk-table-module .rdk-table > tbody > tr:nth-child(even){
+	background:#f5f5f5;
+}
+/*表格边线设置th*/
+.rdk-table-module .rdk-table > thead > tr>th{
+	text-align:left;
+	font-size: 12px;
+	border-right:1px solid #e5e5e5;
+	font-weight: normal;
+	padding:0px 8px;
+	height:30px;
+}
+.rdk-table-module .rdk-table > thead > tr>th:first-child{
+	border-left:1px solid #e5e5e5;
+}
+.rdk-table-module .rdk-table > thead > tr{
+	border-top:1px solid #e5e5e5;
+}
+.rdk-table-module .rdk-table > thead > tr>th{
+	text-align: center;
+}
+.rdk-table-module .rdk-table >tbody> tr{
+	border-top:1px solid #e5e5e5;
+}
+.rdk-table-module .rdk-table >tbody> tr:last-child{
+	border-bottom:1px solid #e5e5e5;
+	width: 80px;
+}
+.rdk-table-module .rdk-table > tbody > tr:nth-child(odd){
+	background:#ffffff;
+}
+/*设置td样式 点击时样式*/
+.rdk-table-module .rdk-table tbody tr.selected-row td{
+	background: #cde4fa;
+	padding: 0 8px
+}
+.rdk-table-module .rdk-table tbody > tr >td{
+	padding:0px 8px;
+	line-height: 30px;
+	cursor: pointer;
+	border-left:1px solid #e5e5e5;
+}
+.rdk-table-module .rdk-table > tbody > tr>td:not(:last-child){
+	text-align:left;
+	border-right:1px solid #e5e5e5;
+}
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(1),
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(2){
+	width:100px;
+}
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(1)>div>div,
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(2)>div>div{
+	overflow: hidden;
+    white-space: nowrap;
+    width:100px;
+    text-overflow: ellipsis;
+}
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(3),
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(4){
+	text-align:right;
+	width:80px;
+}
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(6){
+	text-align:right;
+	width:60px;
+}
+.rdk-table-module .rdk-table > tbody > tr>td:nth-last-child(2){
+	text-align:center;
+	width: 80px;
+}
+.rdk-table-module .rdk-table{
+	border-bottom:1px solid #eeeeee;
+	border-top: 1px solid #eeeeee;
+}
+.rdk-table-module .rdk-table tfoot tr, .rdk-table-module .rdk-table thead>tr{
+	border-bottom:none;
+}
+/*去tr边框 */
+.rdk-table-module .rdk-table tr {
+	border-bottom: none;
+	color: #434343;
+}
+/*表格hover背景色*/
+.rdk-table-module .rdk-table > tbody > tr:not(.selected-row):hover > td {
+    background-color: #e2eef9;
+}
+
+/*标题样式*/
+div.hao >div.title{
+	border: none;
+	padding-left: 8px;
+	font-size: 14px;
+	height: 42px;
+	font-style: normal;
+	color: #666;
+}
+div.hao >div.title>ul{
+	overflow: hidden;
+}
+div.hao >div.title>ul>li{
+	float: left;
+	font-size: 12px;
+	margin-top:5px;
+	width: 70px;
+	line-height: 24px;
+	text-align:center; 
+	margin-right:12px;
+	background-color: #dedede;
+}
+div.hao >div.title>ul>li:first-child {
+	margin-right: 50px;
+	font-size: 14px;
+	text-align:left; 
+	background-color: #fff;
+	color: #008FD4;
+}
+i{
+	font-style: normal;
+}
+/* 翻页定位 */
+.rdk-table-module .pagingLine {
+	position: absolute;
+	width: 100%;
+	margin:0 auto;
+	top: 334px;
+}
+/** 下面翻页字体居中 **/
+.rdk-table-module .pagination > li > a, .rdk-table-module .pagination > li > span {
+    margin: 10px 0 0px;
+}
+.rdk-table-module .spanRecords {
+    margin: 10px 10px 1px 10px;
+}
+.rdk-table-module .pagination {
+	margin: 0;
+}
+/*输入框的样式*/
+.form-control {
+	border: 1px solid #008fd4;
+	height: 30px;
+}
+.rdk-table-module .search {
+	margin-bottom: 10px;
+    margin-top: 2px;
+}
+.glyphicon-search:before {
+	color:#008fd4;
+	line-height: 16px
+}
+thead.ng-scope>tr >th{
+	height: 30px;
+}
+/* 翻页 */
+.rdk-table-module .enabledRecords{
+	color: #008FD4;
+}
+.rdk-table-module .disabledRecords {
+	color: #999999 !important;
+}
+.rdk-table-module .regularRecords {
+	color: #333;
+}
+i.regular_right,i.regular_left{
+	line-height: 17px;
+}
+i.regular_right{
+	color:#666;
+}
+i.regular_left{
+	color:#333;
+}
+.pagination>li>a:hover, .pagination>li>span:hover, .pagination>li>a:focus,
+.pagination>li>span:focus {
+	background: none;
+} 
+/*********** 翻页样式 ***********/
+.rdk-table-module .pagination > li > a{
+    padding: 0 6px;
+    font-size:12px;
+}
+.rdk-table-module .pagination > li:nth-child(2) >a{
+    padding: 0 18px 0 4px;
+}
+.rdk-table-module .pagination > li:nth-last-child(2) >a{
+	padding: 0 4px 0 18px;
+}
+.rdk-table-module .disabledRecords{
+	font-size:12px;
+}
+.rdk-button-comment {
+	position:absolute;
+	right:16px;
+	bottom:10px;
+}
+.rdk-button-shade {
+	background-color: #008fd4;
+}
+.pagination {
+	position:absolute;
+	left:248px;
+}
+
+
+
+
+
+
+
+
+

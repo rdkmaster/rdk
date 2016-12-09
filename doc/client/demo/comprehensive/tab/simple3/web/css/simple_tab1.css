@@ -13,6 +13,7 @@
 	position: relative;
 	width:740px;
 	height: 308px;
+	font-family: '微软雅黑';
     margin-right:12px;
 	top:200px;
 	position:absolute;
@@ -47,6 +48,7 @@
 }
 .rdk-table-module .rdk-table >tbody> tr:last-child{
 	border-bottom:1px solid #e5e5e5;
+	width: 80px;
 }
 .rdk-table-module .rdk-table > tbody > tr:nth-child(odd){
 	background:#ffffff;
@@ -66,21 +68,28 @@
 	text-align:left;
 	border-right:1px solid #e5e5e5;
 }
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(1),
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(2){
+	width:110px;
+}
 .rdk-table-module .rdk-table > tbody > tr>td:nth-child(1)>div>div,
 .rdk-table-module .rdk-table > tbody > tr>td:nth-child(2)>div>div{
 	overflow: hidden;
     white-space: nowrap;
-    width:100px;
+    width:110px;
     text-overflow: ellipsis;
 }
-.rdk-table-module .rdk-table > tbody > tr>td:nth-child(3){
-	text-align:right;
-}
+.rdk-table-module .rdk-table > tbody > tr>td:nth-child(3),
 .rdk-table-module .rdk-table > tbody > tr>td:nth-child(4){
 	text-align:right;
+	width:100px;
 }
 .rdk-table-module .rdk-table > tbody > tr>td:nth-child(6){
 	text-align:right;
+	width:60px;
+}
+.rdk-table-module .rdk-table > tbody > tr>td:last-child{
+	text-align:center;
 }
 /*图标设置*/
 span.images_right{

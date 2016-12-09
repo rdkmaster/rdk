@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Time -> Basic</title>
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='myCtrl'>
+	<rdk_scroller id="scroller" data="data" scroll_policy='manual' loop="false" >
+		<div  >
+		  <img ng-src="{{item.src}}"/>
+		  <span>{{item.title}} </span>
+		  <rdk_time range setting="item.showGranularity" ></rdk_time>
+		</div>
+    </rdk_scroller>
+</body>
+
+</html>

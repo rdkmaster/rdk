@@ -2,6 +2,9 @@
     var testServiceFilePath="../test/server/test/"
     return {
 
+		file_readXml:function(request, script){
+			return file.readXml(testServiceFilePath+"dialog_settings.xml")
+		},
         file_loadProperty:function(request, script){
             var properties=file.loadProperty(testServiceFilePath+"conf1.propertites");
             var uump=properties.getProperty("conf");
@@ -182,6 +185,10 @@
             var tabledata={field:['neid','name'],data:[['30','test1']]}
             var tranformFunction = Mapper.from_datatable(tabledata,'neid','name',"unknown");
             return tranformFunction("30");
+        },
+		
+		getReqCtxHeader:function(request, script){
+            return getRequestContextHeader();
         }
     }
 })()

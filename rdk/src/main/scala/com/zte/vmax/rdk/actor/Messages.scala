@@ -33,6 +33,14 @@ object Messages {
 
   case class UploadServiceParam(ctx:RDKContext,data:MultipartFormData,fileName:String,timeStamp: Long)
 
+  case class Header(key:String,value:String)
+
+  case class AgingValue(timeStamp:Long,ttl:Long,value:AnyRef)
+
+  case class ExportSource(url: String, peerParam: AnyRef = null)
+
+  case class ExportParam(source: ExportSource, fileType: String, param: AnyRef = null, timeStamp: Long = 0)
+
 
   //websocket 消息类型定义
   //websocket 消息头

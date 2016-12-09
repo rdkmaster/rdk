@@ -94,13 +94,15 @@ describe('Table Combined Test',function(){
         var title=element.all(by.css(".title2 .combo-content-transclude .sticky-enabled thead tr th"));
         expect(title.count()).toBe(6);
         expect(title.get(0).getText()).toBe("姓名");
-        var item=element.all(by.css(".title2 .combo-content-transclude .sticky-enabled tbody tr"));
+        var item=element.all(by.css(".title2 .sticky-enabled tbody tr"));
+        expect(item.count()).toBe(12);
+        
         item.each(function(obj,index){
             obj.click();
             browser.sleep(500);
         });
     });
-    it('tab控件下，嵌套的accordion控件点击，展开table并点击获取每条数据',function(){
+    xit('tab控件下，嵌套的accordion控件点击，展开table并点击获取每条数据',function(){
         var tab_title=element.all(by.css(".demo3 .rdk-tab-module .tabs .title li a"));
         tab_title.get(2).click();
         browser.sleep(2000);

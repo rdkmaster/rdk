@@ -253,3 +253,20 @@
 ![](数据源查询流程图.PNG)
 
 
+## 同步调用Rest服务 ##
+
+<span style="color:red">注意：</span>尽管同步调用Rest服务会让代码更简洁和清晰，但是还是应该少用，因为这会导致界面短暂无响应。
+
+以`syncQuery()`为例：
+
+    var citys = DataSourceService.syncQuery('/doc/client/demo/common/datasource/mockdata/city_list');
+    alert(citys);
+
+提供如下sync方法：
+
+- `syncQuery()`：同步查询，默认采用get动作
+- `syncUpdate()`：同步更新，默认采用post动作
+- `syncAdd()`：同步添加，默认采用put动作
+- `syncDelete()`：同步更新，默认采用delete动作
+
+<live_demo example="common/datasource/sync_call" width="600" height="120"></live_demo>

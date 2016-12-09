@@ -77,7 +77,7 @@ div:focus{outline: none;}
 .rdk-area-contain .nav-tabs>li {
     float: left;
     margin-bottom: -1px;
-    margin-right: 1px;
+    margin-right: -2px;
     color: #333 ;
 }
 .rdk-area-contain .nav-tabs>li.active>a,.rdk-area-contain .nav-tabs>li.active>a:hover,.rdk-area-contain .nav-tabs>li.active>a:focus{
@@ -94,7 +94,7 @@ div:focus{outline: none;}
 .rdk-area-contain .nav-tabs li a{
     height: 30px;
     line-height: 8px;
-    padding: 10px 16px;
+    padding: 10px 14px;
     color: #333;
     text-decoration: none;
     border: 1px solid rgba(0,0,0,0.15);
@@ -105,7 +105,7 @@ div:focus{outline: none;}
 
 /*rdk-area 省市区数据 --start*/
 .tab-content.tab-bordered ul{
-    width: 520px;
+    width: 510px;
 }
 
 .tab-content.tab-bordered {
@@ -124,7 +124,7 @@ div:focus{outline: none;}
 .tab-panel ul li{
     list-style: none;
     display: inline-block;
-    min-width: 16%;
+    min-width: 85px;
     position: relative;
     box-sizing: border-box;
     line-height: 26px;
@@ -153,6 +153,13 @@ div:focus{outline: none;}
 .tab-panel ul li a:hover{
     background-color: #eee;
     color: #666;
+}
+.rdk-area-contain .area-null{
+    cursor: default;
+    padding: 0 10px;
+}
+.rdk-area-contain .area-null:hover{
+    background-color: #fff;
 }
 /*激活已选择地区项的样式*/
 .tab-content .tab-panel .selected{

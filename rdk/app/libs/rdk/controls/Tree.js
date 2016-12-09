@@ -1,4 +1,4 @@
-    define(['angular', 'css!rd.styles.Tree','rd.services.EventService','ztree'], function() {
+    define(['angular', 'css!rd.styles.Tree','rd.services.EventService','ztree','ztree-exhide'], function() {
     var menuTreeApp = angular.module("rd.controls.Tree", ['rd.core']);
     menuTreeApp.directive('rdkTree', ['EventService', 'EventTypes', 'Utils',
         function(EventService, EventTypes, Utils) {
@@ -28,7 +28,7 @@
                 },
                 controller: ['$scope', function(scope) {
                     //把控制器暴露给app
-                    Utils.publish(scope.id, this);
+                    Utils.publish(scope, this);
                 }],
                 replace: true,
                 template: '<div><ul id="__unique_id__" class="ztree"></ul></div>',
@@ -116,7 +116,9 @@
                         beforeEditName: before_editName,
                     },
                     edit: {
-                        enable: scope.editable || true
+                        enable: scope.editable || true,
+                        removeTitle: '',
+                        renameTitle: ''
                     },
                     view: {
                         fontCss: null,

@@ -9,8 +9,7 @@ import org.apache.log4j.{Level, LogManager}
 import org.json4s.{DefaultFormats, Formats}
 import spray.http.HttpCharsets
 import spray.httpx.Json4sSupport
-import spray.routing.{Directives, RequestContext}
-
+import spray.routing.{ Directives, RequestContext}
 import scala.concurrent.duration._
 
 
@@ -23,7 +22,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
 
 
   implicit def str2ServiceCallParam(json: String): ServiceParam = {
-     RdkUtil.json2Object[ServiceParam](json).getOrElse(null)
+    RdkUtil.json2Object[ServiceParam](json).getOrElse(null)
   }
 
   private lazy val breaker = new CircuitBreaker(system.scheduler,
@@ -101,7 +100,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
                 doDispatch(ctx, url, req.app, req.param)
             }
         }
-      }~
+      } ~
       path("rdk" / "service") {
         get {
           parameters('p.as[ServiceParam]) {
@@ -117,3 +116,6 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
           }
       }
 }
+
+
+

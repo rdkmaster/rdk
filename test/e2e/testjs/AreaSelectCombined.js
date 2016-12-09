@@ -50,7 +50,7 @@ describe("test area_selector combined",function(){
 									areaItem.getText().then(function(areaName){
 										areaItem.click().then(function(){
 											var result = provinceName + " | " + cityName + " | " + areaName;
-											//验证选择到区时的结果是否正确
+											// 验证选择到区时的结果是否正确
 											expect(input.getAttribute("title")).toBe(result);
 										})
 									})
@@ -64,7 +64,6 @@ describe("test area_selector combined",function(){
 	});
 
 	it('area-select test scene 3 : select province ,city',function(){
-		//要求浏览器访问网址http://www.angularjs.org
 		browser.get("test/e2e/testee/area/web/combined.html")
 		.then(function(){
 			browser.waitForAngular();
@@ -96,7 +95,6 @@ describe("test area_selector combined",function(){
 	});
 
 	it('area-select test scene 4 :only select city,province is freezed',function(){
-		//要求浏览器访问网址http://www.angularjs.org
 		browser.get("test/e2e/testee/area/web/combined.html")
 			.then(function(){
 				browser.waitForAngular();

@@ -1,7 +1,7 @@
 require.config({
     //下载依赖超时时间，0为不超时
     waitSeconds: 30,
-    paths: rdk.$mergePaths({
+    paths: {
         "angular": "../angular/angular",
         "angualr-translate": "../angular/angular-translate.min",
         "angular-translate-static": "../angular/angular-translate-loader-static-files.min",
@@ -16,6 +16,7 @@ require.config({
         "codemirror-mode": "../codemirror/mode/javascript",
 
         "ztree": "../ztree/jquery.ztree.all-3.5",
+        "ztree-exhide": "../ztree/jquery.ztree.exhide-3.5.min",
         "echarts": "../echarts/echarts3.min",
         "echarts3": "../echarts/echarts3.min",
         "jquery": "../jquery/jquery-1.11.3.min",
@@ -65,6 +66,7 @@ require.config({
         "rd.controls.Time": "../rdk/controls/Time",
         "rd.controls.Tree": "../rdk/controls/Tree", 
         
+        "rd.services.PopupService": "../rdk/services/PopupService",
         "rd.services.Alert": "../rdk/services/Alert",
         "rd.services.DataSourceService": "../rdk/services/DataSourceService",
         "rd.services.EventService": "../rdk/services/EventService",
@@ -72,6 +74,7 @@ require.config({
         "rd.services.NodeService": "../rdk/services/NodeService",
         "rd.services.Utils": "../rdk/services/Utils",
 
+        "rd.styles.PopupService": "../rdk/services/assets/rdk-PopupService-style",
         "rd.styles.Accordion": "../rdk/containers/assets/rdk-accordion-style",
         "rd.styles.Alert": "../rdk/services/assets/rdk-Alert-style",
         "rd.styles.Area": "../rdk/controls/assets/rdk-area-style",
@@ -97,7 +100,7 @@ require.config({
         "rd.styles.Tree": "../rdk/controls/assets/rdk-tree-style",
 
         "rd.modules.i18n": "../rdk/modules/I18nModule",
-    }),
+    },
     //这个配置是你在引入依赖的时候的包名
     shim: {
         "angular": {
@@ -113,10 +116,6 @@ require.config({
            deps : ['angular','angualr-translate'],
             exports: "angular-translate-static" 
         },
-        // "ui-codemirror": {
-        //     deps: ['codemirror', 'css!codemirror'],
-        //     exports: "ui-codemirror",
-        // },
         "blockUI" :{
             deps : ['angular','css!../angular/angular-block-ui','jquery'],
             exports: "blockUI"
@@ -139,6 +138,10 @@ require.config({
        },
         "ztree": {
             deps: ['css!../ztree/css/zTreeStyle/zTreeStyle'],
+            exports: "ztree",
+        },
+        "ztree-exhide": {
+            deps: ['css!../ztree/css/zTreeStyle/zTreeStyle','ztree'],
             exports: "ztree",
         },
         "jquery-ui": {
@@ -172,18 +175,9 @@ require.config({
     },
     map: {
         '*': {
-            'css': '../requirejs/requirecss/css',
-            'rest': '../requirejs/requirerest/rest',
+            'css': 'requirejs-plugins/requirecss/css',
+            'rest': 'requirejs-plugins/requirerest/rest',
         }
     }
 });
 
-/*
- * 自定义基础模块
- */
-// define('codemirror', ["ui-codemirror", "codemirror-core", "css!codemirror-css"]);
-// RDK核心功能
-define('rd.core', [
-    'rd.services.DataSourceService', 'rd.services.EventService',
-    'rd.services.Utils', 'rd.attributes.ds'
-]);

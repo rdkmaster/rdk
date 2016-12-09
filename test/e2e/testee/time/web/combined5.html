@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Time -> Basic</title>
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="main.js"></script>
+    <style type="text/css">
+    .context{
+    	height: 200px;
+    }
+    }.datetimepicker:nth-child(20)>.datetimepicker-hours thead tr .switch{
+    	background-color: red;
+    }.datetimepicker:nth-child(21)>.datetimepicker-hours thead tr .switch{
+    	background-color: red;
+    }
+    .datetimepicker:nth-child(20)>.datetimepicker-days thead tr .switch{
+    	background-color: red;
+    }.datetimepicker:nth-child(21)>.datetimepicker-days thead tr .switch{
+    	background-color: red;
+    }
+    .datetimepicker:nth-child(20)>.datetimepicker-months thead tr .switch{
+    	background-color: red;
+    }.datetimepicker:nth-child(21)>.datetimepicker-months thead tr .switch{
+    	background-color: red;
+    }
+    </style>
+</head>
+<body ng-controller='myCtrl'>
+	<div class="demo6">
+		<rdk_scroller id="scroller" data="data" scroll_policy='manual' loop="false" >
+			<div>
+			  <span>{{item.title}} </span>
+			  <rdk_time range setting="item.showGranularity" ></rdk_time>
+			  <p class="domep">{{item.showGranularity.granularity=='week'?item.showGranularity.value[0].label:item.showGranularity.value[0]}}&nbsp{{item.showGranularity.granularity=='week'?item.showGranularity.value[1].label:item.showGranularity.value[1]}}</p>
+			</div>
+	    </rdk_scroller>
+	</div>
+</body>
+</html>

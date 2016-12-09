@@ -1,0 +1,76 @@
+html { font-size: calc(112.5% + 4 * (100vw - 600px) / 400); }
+.float-left{
+	float: left;
+}
+.float-right{
+	float: right;
+}
+.rdk_dot::before{
+	content: "";
+	display: inline-block;
+	width: 5px;
+	height: 5px;
+	border-radius: 5px;
+	background-color: #5A5A5A; 
+	vertical-align: middle;
+    margin: 5px;
+}
+.line-height10{
+	line-height: 10px;
+}
+.line-height20{
+	line-height: 20px;
+}
+.line-height30{
+	line-height: 30px;
+}
+.nov{
+	font-size: .7rem;
+}
+.nov>li>span{
+	color: #08c;
+	cursor: pointer;
+}
+.nov>li:first-child>span{
+	color: #5A5A5A;
+}
+.nov>li>span:hover{
+	border-bottom: 1px solid #08c;
+}
+.margin-bottom{
+	margin-bottom: 20px;
+}
+
+.right,.left{
+	padding: 2rem;
+	height: calc(100vh - 3rem );
+}
+.right{
+	width: 80%;
+	background-color: #F7F7F9;
+}
+.left{
+	width: 20%;
+}
+.nov>li{
+	text-align: left;
+}
+.container{
+	padding: 0;
+}
+footer{
+	border-top: 1px solid #dfe1e8;;
+	width: 100%;
+	background-color: #FFFFFF;
+}
+
+.minWidth{
+	min-width: 800px;
+}
+.docField{
+	width:95%;
+    height:90%;
+    overflow-y:auto;
+    white-space:pre;
+	font-family: 微软雅黑;
+}

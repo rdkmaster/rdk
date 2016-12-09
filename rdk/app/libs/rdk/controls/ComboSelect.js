@@ -46,7 +46,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                         }
                         scope.inputStr = data;
                     });
-                    Utils.publish(scope.id, this);
+                    Utils.publish(scope, this);
 
                     this.changeOpenStatus = function(){
                         scope.open =! scope.open;
@@ -96,7 +96,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 }
 
                 $(document).mouseup(function(e){
-                    if(!iEle.is(e.target) && iEle.has(e.target).length === 0){
+                    if(!$(iEle).is(e.target) && $(iEle).has(e.target).length === 0){
                         $timeout(function(){
                             scope.open = false;
                             if(scope.openPolicy==="hover"){
