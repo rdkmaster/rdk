@@ -111,7 +111,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 var array = [];
                 angular.forEach(data, function(obj){
                     var fieldStr = obj[searchFields[0]];
-                    if(fieldStr.toLowerCase().indexOf(globalSearch.toLowerCase()) != -1){
+                    if(fieldStr.toString().toLowerCase().indexOf(globalSearch.toLowerCase()) != -1){
                         array.push(obj);
                     }
                 })
