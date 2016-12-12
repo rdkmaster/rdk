@@ -15,8 +15,6 @@
 .rdk-panel-caption{
     margin-left: 10px;
     width:80%;
-    font-weight: bold;
-    font-size: medium;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     cursor: pointer;
 }
@@ -31,7 +29,6 @@
 }
 
 .rdk-panel-content{
-    padding: 8px;
     width: 100%;
 }
 
