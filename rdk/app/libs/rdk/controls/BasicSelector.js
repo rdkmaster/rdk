@@ -22,7 +22,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.BasicSelector',
                             <div ng-click="addItem($event)" ng-show="showEditor" class="original-item">\
                                 <i class="fa fa-plus selector-plus-icon" ng-show="showEditor"></i>\
                             </div>\
-                            <input type="text" ng-show="!showEditor" ng-model="inputValue" ng-blur="blur()" \
+                            <input type="text" ng-show="!showEditor" ng-model="inputValue" ng-blur="blur($event)" \
                             ng-keyup="keyPressHandler($event)" maxlength="{{maxLength}}" class="selector-editor">\
                         </div>\
                     </div>\
@@ -167,17 +167,18 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.BasicSelector',
                     return true;
                 }
 
-                function _blur(){
-                    _resetInput();
+                function _blur(event){
+                    _resetInput(event);
                 }
 
                 function _keyPressHandler(event){                    
                     if(event.keyCode == 13){
-                        _resetInput();
+                        _resetInput(event);
                     }
                     else if(event.keyCode == 27){
                         scope.showEditor = true;
                         scope.inputValue = "";
+                        event.currentTarget.blur();
                     }
                     else{
                         if(!scope.inputValue) return;
@@ -207,9 +208,10 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.BasicSelector',
                     return true;
                 }
 
-                function _resetInput(){
+                function _resetInput(event){
                     if((scope.inputValue == "") || (typeof(scope.inputValue) == 'undefined')){
                         scope.showEditor = true;
+                        event.currentTarget.blur();
                     }
                     else{
                         var obj = {};
