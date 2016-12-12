@@ -31,7 +31,7 @@ object Messages {
 
   case class ServiceResult(result: String)
 
-  case class UploadServiceParam(ctx: RDKContext, data: MultipartFormData, fileName: String, timeStamp: Long)
+  case class UploadServiceParam(data: MultipartFormData, fileName: String, timeStamp: Long)
 
   case class Header(key:String,value:String)
 

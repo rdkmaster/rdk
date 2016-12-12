@@ -27,8 +27,8 @@ class UploadHandler(system: ActorSystem, router: ActorRef) extends Directives wi
         entity(as[MultipartFormData]) {
           formData => ctx =>
             val begin = System.currentTimeMillis()
-            val fileName: String = formData.fields.headOption.flatMap(_.name).getOrElse(UUID.randomUUID().toString)
-            val future = (router ? UploadServiceParam(HttpRequestContext(ctx), formData, fileName, begin))
+            val fileName: String = formData.fields.headOption.flatMap(_.filename).getOrElse(UUID.randomUUID().toString)
+            val future = (router ? UploadServiceParam(formData, fileName, begin))
               .mapTo[Either[Exception, String]]
             future.onFailure {
               case e => ctx.failWith(e)
