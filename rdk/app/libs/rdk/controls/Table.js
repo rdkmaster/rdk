@@ -31,7 +31,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
                                 ng-class="{\'selected-row\':ifSelected(item)}" ng-dblclick="dbClickHandler(item,$index)">\
                                 <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="currentPageData[$index].checked"></td>\
-                                <td rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" style="width:{{columnDef.width}};cursor:move;{{getRowStyle(itemRowSpan,columnDef)}}">\
+                                <td rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" ng-style="getCellStyle(itemRowSpan,columnDef)">\
                                 </td>\
                             </tr>\
                              <tr ng-if="noData">\
@@ -535,6 +535,17 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 }
                             }
                         }, true);
+
+                        scope.getCellStyle = function(itemRowSpan,columnDef){
+                            var destObj = {};
+                            var result = scope.getRowStyle(itemRowSpan,columnDef);
+                            angular.forEach(result, function(value, key) {
+                                destObj[key] = value;
+                            });                          
+                            destObj.width = columnDef.width;
+                            destObj.cursor = 'move';
+                            return destObj;
+                        }
 
                         scope.stopPropagation = function() {
                             event.stopPropagation();
