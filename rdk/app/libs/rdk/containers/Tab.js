@@ -79,6 +79,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 scope.draggable = Utils.isTrue(attrs.draggable, true);
                 scope.toggleCondition = (attrs.toggleCondition ? attrs.toggleCondition : 'click').toLowerCase();
                 scope.selectedTab = Utils.getValue(scope.selectedTab, attrs.selectedTab, 0);
+                if(scope.showItems) scope.selectedTab = scope.showItems[scope.showItems.length-1];
                 scope.appScope = Utils.findAppScope(scope);
                 scope.compileScope = scope.appScope;
                 scope.controllerScope = {};
@@ -228,7 +229,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 }
 
                 scope.getIndex = function(idx) {
-                    if (!scope.showItems) return 0; //没定义，默认全部显示
+                    if(!scope.showItems) return 0; //没定义，默认全部显示
                     return scope.showItems.indexOf(idx); //定义了数组，部分显示
                 }
 
