@@ -43,7 +43,7 @@ object AgingCache extends Logger {
     import context._
 
     private val startTimerMessage = "StartTimer"
-    context.system.scheduler.schedule(1 second, 1 second) {
+    context.system.scheduler.schedule(1 minute, 30 second) {
       self ! startTimerMessage
     }
 
