@@ -16,3 +16,7 @@ rdk 提供了可支持客户端文件上传的服务
 			        max-content-length = 200m        //上传文件大小设置
 			  }
 		}
+
+示例：
+
+1、使用ajax jqery		
