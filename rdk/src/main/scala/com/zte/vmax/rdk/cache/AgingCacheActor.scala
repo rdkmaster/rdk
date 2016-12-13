@@ -1,6 +1,10 @@
 package com.zte.vmax.rdk.cache
 
 import java.util.concurrent.ConcurrentHashMap
+import com.zte.vmax.rdk.util.Logger
+import jdk.nashorn.api.scripting.ScriptObjectMirror
+import jdk.nashorn.internal.runtime.Undefined
+
 import scala.collection.JavaConverters._
 import akka.actor.Actor
 import com.zte.vmax.rdk.actor.Messages.AgingValue
@@ -9,7 +13,7 @@ import scala.concurrent.duration._
 /**
  * Created by 10184092 on 2016/11/18.
  */
-object AgingCache {
+object AgingCache extends Logger {
 
   private val map = new ConcurrentHashMap[String, AgingValue] {}
 
@@ -19,13 +23,13 @@ object AgingCache {
       return null
     }
     val value = elem.value
-    map.put(key, AgingValue(System.currentTimeMillis(), 24 * 60 * 60, value))
+    map.put(key, AgingValue(System.currentTimeMillis(), elem.ttl, value, elem.callback))
     return value
   }
 
-  def put(key: String, value: AnyRef, ttl: Long): AnyRef = {
+  def put(key: String, value: AnyRef, ttl: Long, callback: Object): AnyRef = {
     if (value != null) {
-      map.put(key, AgingValue(System.currentTimeMillis(), ttl, value))
+      map.put(key, AgingValue(System.currentTimeMillis(), ttl, value, callback))
     } else {
       null
     }
@@ -55,6 +59,17 @@ object AgingCache {
       for (entry <- entrySet) {
         val value = entry.getValue
         if (currentTime - value.timeStamp > value.ttl * 1000) {
+          val callback = value.callback
+          if (!callback.isInstanceOf[Undefined]) {
+            val callable = callback.asInstanceOf[ScriptObjectMirror]
+            try {
+              callable.call(callable)
+            } catch {
+              case e: Throwable =>
+                logger.error("callback function error:" + e)
+            }
+
+          }
           map.remove(entry.getKey)
         }
       }

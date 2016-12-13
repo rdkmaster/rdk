@@ -165,7 +165,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   def globalCacheDel(key: String) = CacheHelper.globalCache.remove(key)
 
-  def agingCachePut(key: String, data: AnyRef, ttl: Long) = AgingCache.put(key, data, ttl)
+  def agingCachePut(key: String, data: AnyRef, ttl: Long, callback: Object) = AgingCache.put(key, data, ttl, callback)
 
   def agingCacheGet(key: String) = AgingCache.get(key, null)
 
