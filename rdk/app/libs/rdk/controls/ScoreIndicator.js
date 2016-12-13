@@ -51,7 +51,7 @@ define(['rd.core', 'css!rd.styles.ScoreIndicator',
                     return "fa "+ faSmile +" faceSpan"+index
                 };
                 scope.isIcon=function(item){
-                    if(item.emotion && item.emotion.match(/[^\s]+\.(jpg|gif|png|bmp)/i))
+                    if(item.emotion && item.emotion.match(/[^\s]+\.(jpg|gif|png|bmp|jpeg)/i))
                     {
                         return false;
                     }
