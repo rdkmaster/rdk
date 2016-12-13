@@ -1,28 +1,4 @@
 .score_indicator {
     height:120px;
-    padding:15px 10px;
-}
-.distributionSub>div>div:last-child{
-    margin-left:-30px;
-}
-.distributionSub>div>div:first-child{
-    position:relative;
-}
-.distributionSub>.ng-scope>div:last-child{
-    height:2px;
-}
-.hrLinePart0,.hrLinePart1,.hrLinePart2,.hrLinePart3,.hrLinePart4,.hrLinePart5{
-    border-top-width:1px;
-}
-.distributionSub>.ng-scope{
-    margin-bottom:1px;
-}
-.distributionSub{
-    font-size:12px!important;
-}
-.distributionSub>div>div img{
-    position:absolute;
-}
-.distributionSub>div>div hr{
-    margin-left:20px;
+    margin: 50px;
 }
