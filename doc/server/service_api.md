@@ -758,7 +758,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 定义：
 
-    function put(k, v, ttl);
+    function put(k, v, ttl, callback);
 
 说明：缓存k,v映射数据于老化内存中，同时设置该数据的生命时长
 
@@ -770,6 +770,15 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  
  - ttl: 可选，数据生命时长，单位秒，默认为24小时。
 
+ - callback:可选，回调函数，资源老化时rdk会自动调用它，用户可在清除老化对象时释放与该对象相关的资源，用户甚至可以利用该特性实现定时器回调功能。
+
+示例：实现一个定时器，30秒后调用mycallback函数。
+
+		     Cache.aging.put("timer","A",30,mycallback)
+
+		     var mycallback = function () {
+		        log("callback function!")
+		     }
 
 
 返回：
