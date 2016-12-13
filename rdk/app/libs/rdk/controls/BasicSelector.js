@@ -15,6 +15,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.BasicSelector',
                     <div class="selector">\
                         <li ng-repeat="item in data |filter:search"\
                             ng-click="selectItem(item, $event)" \
+                            ng-style="getStyle()"\
                             ng-class="{true:\'selected-item\',false:\'original-item\'}[isSelected(item)]">\
                             {{item[labelField]}}\
                         </li>\
@@ -109,6 +110,12 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.BasicSelector',
                 scope.$watch('multipleSelect', function(newVal, oldVal) {
                     _refreshSelectedItems();
                 }, true);
+
+                scope.getStyle = function(){
+                    var destObj = {};
+                    destObj['list-style'] = 'none';
+                    return destObj;
+                }
 
                 function _bindData(){//根据appScope重置scope上数据
                     scope.appScope[iAttrs.selectedItems] = scope.appScope[iAttrs.selectedItems] ? scope.appScope[iAttrs.selectedItems] : [];
