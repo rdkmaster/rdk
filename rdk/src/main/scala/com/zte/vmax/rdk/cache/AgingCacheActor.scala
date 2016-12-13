@@ -1,6 +1,7 @@
 package com.zte.vmax.rdk.cache
 
 import java.util.concurrent.ConcurrentHashMap
+import com.zte.vmax.rdk.util.Logger
 import jdk.nashorn.api.scripting.ScriptObjectMirror
 import jdk.nashorn.internal.runtime.Undefined
 
@@ -12,7 +13,7 @@ import scala.concurrent.duration._
 /**
  * Created by 10184092 on 2016/11/18.
  */
-object AgingCache {
+object AgingCache extends Logger {
 
   private val map = new ConcurrentHashMap[String, AgingValue] {}
 
@@ -42,7 +43,7 @@ object AgingCache {
     import context._
 
     private val startTimerMessage = "StartTimer"
-    context.system.scheduler.schedule(1 minute, 30 second) {
+    context.system.scheduler.schedule(1 second, 1 second) {
       self ! startTimerMessage
     }
 
@@ -61,7 +62,13 @@ object AgingCache {
           val callback = value.callback
           if (!callback.isInstanceOf[Undefined]) {
             val callable = callback.asInstanceOf[ScriptObjectMirror]
-            callable.call(callable)
+            try {
+              callable.call(callable)
+            } catch {
+              case e: Throwable =>
+                logger.error("callback function error:" + e)
+            }
+
           }
           map.remove(entry.getKey)
         }
