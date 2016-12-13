@@ -17,7 +17,7 @@ define(['rd.core', 'css!rd.styles.ScoreIndicator',
                                             <hr style="width:6px;border-top:1px solid {{item.color}};"/>\
                                         </div>\
                                         <div style="display:flex;position: absolute">\
-                                            <hr class="hrLinePart" style="border-top-color:{{item.color}}" ng-style="getRealWidth($index,item)">\
+                                            <hr class="hrLinePart" style="border-top-color:{{item.color}}" ng-style="getRealWidth($index)">\
                                             <span id="scoreText" style="white-space: nowrap;color:{{item.color}};">{{item.label + item.value + "%"}}</span>\
                                         </div>\
                                     </div>\
@@ -61,8 +61,8 @@ define(['rd.core', 'css!rd.styles.ScoreIndicator',
                 var height = iEle[0].offsetHeight > 0 ? iEle[0].offsetHeight : 300;
 
                 scope.setHeight = function (proValue) {
-                    var parentHeight = height;//parseInt
-                    var itemHeight =  parentHeight / 100 * proValue ;
+                    var parentHeight = height;
+                    var itemHeight = parentHeight * proValue / 100;
                     return itemHeight;
                 };
 
@@ -70,14 +70,14 @@ define(['rd.core', 'css!rd.styles.ScoreIndicator',
                     return item.mark ? true : false;
                 };
 
-                scope.getRealWidth = function (elemID,item) {
+                scope.getRealWidth = function (elemID) {
                     var tmpWidth = scope.initWidth;
                     var tmpWidthArr = scope.widthArr.slice(elemID + 1);
                     angular.forEach(tmpWidthArr, function (data) {
                         tmpWidth = tmpWidth + data + 5;
                     });
                     return {
-                        "width": tmpWidth + "px",
+                        "width": tmpWidth + "px"
                     };
                 };
 
