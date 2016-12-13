@@ -21,7 +21,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                               <div class="combo-content" ng-mouseenter="openShow()">\
                                   <span class="combo-caption" ng-show="!!caption">{{caption}}</span>\
                                   <input class="form-control combo-content-theme" title="{{inputStr}}" \
-                                  readonly="true" ng-model="inputStr" ng-click="toggle()" type="text"/>\
+                                  readonly="true"unselectable="on" ng-model="inputStr" ng-click="toggle()" type="text"/>\
                                   <i class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
                               </div>\
                               <div class="combo-content-transclude">\
