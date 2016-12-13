@@ -1,4 +1,4 @@
-define(['angular', 'jquery', 'rd.core','css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
+define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
     var inputApp = angular.module("rd.controls.Input", ['rd.core']);
     inputApp.directive('rdkInput', function() {
         return {
@@ -13,7 +13,7 @@ define(['angular', 'jquery', 'rd.core','css!rd.styles.FontAwesome', 'css!rd.styl
                      <input type="text" class="form-control" placeholder="{{placeholder}}">\
                  <span class="glyphicon glyphicon-remove" \
                    style="position:absolute;right:10px;color:gray;font-size:14px"\
-                   ng-show="{{showDelete}}"></span>\
+                   ng-show="showDelete"></span>\
                  <div style="clear:both"></div>\
                 </div>',
             compile: function(tElement, tAttrs, transclude) {
@@ -36,10 +36,11 @@ define(['angular', 'jquery', 'rd.core','css!rd.styles.FontAwesome', 'css!rd.styl
                         if(newVal == 'true'){
                             $(iElement[0]).find("input").attr("readOnly", true);
                             scope.showDelete = false;
+                            $(inputElement).attr("unselectable", "on");
                         }
                         else{
                             $(iElement[0]).find("input").removeAttr("readOnly");
-
+                            $(inputElement).attr("unselectable", "off");
                         }      
                     }, true);                    
 
