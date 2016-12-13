@@ -74,6 +74,7 @@ require.config({
         "rd.services.NodeService": "../rdk/services/NodeService",
         "rd.services.Utils": "../rdk/services/Utils",
 
+        "rd.styles.Input": "../rdk/controls/assets/rdk-input-style",
         "rd.styles.PopupService": "../rdk/services/assets/rdk-PopupService-style",
         "rd.styles.Accordion": "../rdk/containers/assets/rdk-accordion-style",
         "rd.styles.Alert": "../rdk/services/assets/rdk-Alert-style",
