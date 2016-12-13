@@ -3,187 +3,45 @@
     position: absolute;
     width: 580px;
     bottom:0;
-    min-height: 550px;
+    height: 550px;
     transition: bottom 0.3s linear;
 }
 .wrap-animation{
     bottom:-500px;
 }
-.tab_wrap .rdk-tab-content{
-    height: 540px;
+/*固定高度可设置滚动条*/
+.rdk-tab-module .tabs>.content{
+    /*height: 540px;*/
 }
 .rdk-tab-content,.content{
     opacity: 1;
-    overflow-y: auto;
     transition: opacity 0.3s linear;
 }
 .content-hiddan{
     opacity: 0;
 }
 /* animation end*/
-.ui-widget-content{
-    border: 0;
-}
-.rdk-tab-content,.content{
-    border: 1px solid #ddd;
-    margin: 0 .2em;
-}
-.ui-tabs .ui-tabs-panel {
-     padding: 0 8px;
-}
-.rdk-tab-module .ui-widget-header{
-    border-bottom: 0 solid #008FD4;
-}
-.ui-tabs .ui-tabs-nav li {
-    margin: 1px 0.1em 0 0;
-}
 /*table 容器*/
 .sticky-wrap {
     overflow: hidden;
 }
-/* tabs nav */
-.ui-tabs .ui-tabs-nav .ui-tabs-anchor,.tab_btn{
-    background-color: #63B1EF;
-    color: #fff;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-}
 /* tabs nav->btn */
 .tab_btn{
     margin-top: 9px;
-    padding: 12px 12px;
+    padding: 6px 7px;
     border: 0;
+    outline: none;
     position: absolute;
-    top: 13px;
+    top: 14px;
     left: 425px;
 }
-.tab_btn:focus {
-    outline: none;
-}
-.tab_btn_up{
-    background-image: url("../images/icon_up.png");
-    background-repeat: no-repeat;
-    background-position: center;
-}
-.tab_btn_down{
-    background-image: url("../images/icon_down.png");
-    background-repeat: no-repeat;
-    background-position: center;
-}
-/* tabs nav selected */
-.rdk-tab-module .title li a.selected{
-    background-color: #FEA211;
-    color: #fff;
-}
-/*tab ->nav span*/
-.rdk-tab-module .bottom_line{
-    /*display: none !important;*/
-    height: 0;
-}
-/* tabs nav selected -> 白色小三角*/
-.rdk-tab-module .bottom_line em {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    margin-left: -1px;
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 0;
-    border-bottom: 5px solid #fff;
-}
-/*tab content*/
-/* content tr */
-.rdk-accordion-module .theme{
-    background-color: #beddfa;
-    margin: 3px 0;
-    border-radius: 0;
-    font-size: 14px;
-    color: #333;
-    padding: 10px 5px;
-    font-weight: normal;
-    border: 0;
-}
-/*背景3：#e4e4e4*/
-.theme-disabled{
-    background-color: #e4e4e4 !important;
-}
-/* icon */
-.fa{
-    float: right;
-    margin: 3px 6px;
-    vertical-align: middle;
-}
-/* table*/
-.rdk-accordion-module .content{
-    margin:0;
-    border:0;
-    border-radius: 0;
-    padding: 0;
-    background-color: white;
-    margin-top: -3px;
-}
-.rdk-table-module .rdk-table {
-    background-color: #fff;
-}
-/*table head tr*/
-.rdk-table tfoot tr, .rdk-table-module .rdk-table thead>tr {
-    color: #333;
-    border-bottom: 0 solid #008FD4;
-    opacity: 1;
-    font-size: 12px;
-}
-.rdk-table-module .rdk-table > thead > tr > th,.rdk-table-module .rdk-table > tbody > tr > td {
-    text-align: left;
-    font-weight: normal;
-}
-.rdk-table-module .rdk-table > tbody > tr:nth-child(even){
-    background-color: #f3f3f3;
-}
-/*分割线：#dfdfdf；表内展开、收缩三角按钮：#a2a2a2*/
-.rdk-table-module .rdk-table > thead > tr {
-    border-bottom: 1px solid #dfdfdf;
-}
-.rdk-table-module .rdk-table tr  {
-    border-bottom: 0;
-}
-/*表格选择行的背景色*/
-.rdk-table-module .rdk-table tbody tr.selected-row td {
-    background-color: #cde4fa;
-}
-/*表格hover背景色*/
-.rdk-table-module .rdk-table > tbody > tr:not(.selected-row):hover > td {
-    background-color: #e2eef9;
-}
-.rdk-table-module .rdk-table > thead > tr > th ,.rdk-table-module .rdk-table > tbody > tr > td {
-    text-align: center;
-    padding: 5px 8px;
-    border: 1px solid #e5e5e5;
-}
+/*table*/
 .rdk-table-module .rdk-table tbody>tr>td
 {
     text-align: right;
 }
-/*表格字体颜色*/
-.rdk-table-module .rdk-table tr{
-    color: #434343;
-}
-/* table2 不同也签下的多表格样式*/
-.table2 .rdk-table-module .rdk-table thead>tr {
-    background-color: #f3f3f3;
-}
-.table2 .rdk-table-module .rdk-table tbody>tr>td:nth-of-type(1)
+/* rdk-table-theme-gray*/
+.rdk-table-theme-gray .rdk-table-module .rdk-table tbody>tr>td:nth-of-type(1)
 {
     text-align: left;
-}
-.table2 .rdk-table-module .rdk-table > tbody > tr:nth-child(even){
-    background-color: #fff;
-}
-.table2 .rdk-table-module .rdk-table > tbody > tr{
-    border-bottom: 1px solid #dfdfdf;
-}
-/*icon ^ 大小*/
-.fa-angle-down:before,.fa-angle-up:before {
-    font-size: 18px;
 }

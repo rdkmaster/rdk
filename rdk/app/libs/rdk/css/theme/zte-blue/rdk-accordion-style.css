@@ -1,0 +1,67 @@
+.rdk-accordion-module{
+    position: relative;
+}
+.rdk-accordion-module .theme{
+    cursor: pointer;
+    position: relative;
+    margin: 3px 0;
+    border-radius: 0;
+    font-size: 14px;
+    padding: 10px 5px;
+    font-weight: normal;
+    border: 0;
+}
+.rdk-accordion-module .fa{
+    float: right;
+    margin: 3px 6px;
+    vertical-align: middle;
+}
+.rdk-accordion-module .theme-caption{
+    outline:none;
+    font-family:"微软雅黑", Helvetica, Arial, sans-serif
+}
+
+.rdk-accordion-module .theme-buttons{
+    float: right;
+    margin-top: -5px;
+}
+
+.rdk-accordion-module .theme-link-btn{
+    padding: 5px;
+}
+
+.rdk-accordion-module .content{
+    width: 100%;
+    height: inherit;
+    margin:0;
+    border-radius: 0;
+    padding: 0;
+    margin-top: -3px;
+}
+
+.rdk-accordion-module .imgShape{
+    width: 20px;
+    height: 15px;
+    margin: auto;
+}
+
+/*icon ^ 大小*/
+.rdk-accordion-module .fa-angle-down:before,.fa-angle-up:before {
+    font-size: 18px;
+}
+
+/*todo:theme colors*/
+.rdk-accordion-module .theme{
+    background-color: #beddfa;
+    color: #333;
+}
+.rdk-accordion-module .frozen-theme{
+    background-color: #eee;
+}
+.rdk-accordion-module .content{
+    background-color: #fff;
+}
+/*todo:theme style start*/
+.rdk-tab-theme-default .rdk-accordion-module .normal-theme{
+    background-color: #E2EEF9;
+}
