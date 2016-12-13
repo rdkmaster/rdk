@@ -35,6 +35,7 @@ require.config({
         "rd.attributes.ds": "../rdk/attributes/ds",
         "rd.attributes.modal": "../rdk/attributes/modal",
         "rd.attributes.Scroll": "../rdk/attributes/Scroll",
+        "rd.attributes.theme": "../rdk/attributes/theme",
         
         "rd.containers.Accordion": "../rdk/containers/Accordion",
         "rd.containers.Accordions": "../rdk/containers/Accordions",

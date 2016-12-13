@@ -10,12 +10,12 @@
 }
 .rdk-time-module .time-content {
     display: inline-block;
-    box-shadow:inset 0 1px 1px rgba(0,0,0,0.075);
-    -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075);
-    border:1px solid #ccc;
     border-radius:4px;
     position :relative;
     font-size: 0;
+    min-width: 0px !important;
+    padding-right:0px;
+    height: 32px;
 }
 .rdk-time-module .time-content span.timeSpan{
     font-size: 14px;
@@ -29,45 +29,46 @@
     font-size: 14px;
     display: inline-block;
     cursor: pointer;
-    width: 140px;
-    height: 30px;
-    background-color :#fff !important;
     border:0;
-    box-shadow:inset 0 0 0 rgba(0,0,0,0.075);
-    -webkit-box-shadow:inset 0 0 0 rgba(0,0,0,0.075);
     font-family: inherit;
+    width:120px;
+    height: 30px;
+    margin-bottom: 4px;
 }
 
 .rdk-time-module input {
     height: 30px;
-    background-color :#fff !important;
     text-align:center !important;
 }
 
 .rdk-time-module select {
     border:0 !important;
-    width: 70px;
+    width:72px;
     color: transparent;
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
-    background: url("../../../controls/assets/arrow.png") no-repeat scroll right center transparent !important;
+    background: url("arrow.png") no-repeat scroll right center transparent !important; 
+    margin-right:8px;
+    height: 30px;
 }
-
-.rdk-time-module select>option{
-    color: black;
+input, button, select, textarea {
+    font-family:"微软雅黑";
 }
-
 .rdk-time-module select:focus{
    outline:none;
 }
-
 .rdk-time-module .bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]) {
-    width: 120px;
+    width: 80px;
 }
 
 .rdk-time-module .btn {
     line-height: 16px;
+    margin-bottom: 5px;
+    border-radius:0;
+    height: 18px;
+    padding-right: 8px;
+    line-height: 3px;
 }
 
 .rdk-time-module .btn>span{
@@ -85,26 +86,22 @@
     text-align: center;
     top: 5px;
     pointer-events:none;
-    border-left:1px solid #ccc;
 }
 
 .datetimepicker th, .datetimepicker td, .datetimepicker table tr td span{
     font-family: Arial;
     font-weight: normal;
     font-size: 12px;
-    color: #666666;
 }
-
+ .datetimepicker table tr td span {
+    height: 26px;
+    line-height: 26px;
+ }
 .datetimepicker th, .datetimepicker .year, .datetimepicker .day{
     font-weight: bold;
 }
-
-.datetimepicker .active{
-    background-image: -webkit-gradient(linear,0 0,0 100%,from(#008fd4),to(#008fd4)) !important;
-}
-
 .datetimepicker .day{
-    padding: 7px 7px;
+    padding: 6px 6px;
 }
 
 .datetimepicker-dropdown-bottom-right:after{
@@ -112,9 +109,158 @@
 }
 
 [class*=" datetimepicker-dropdown"]:before {
-  content: none ;
+    content: '';
+    display: inline-block;
+    border:none;
+    position: absolute;
 }
 
 .datetimepicker{
     margin-top: 0;
+}
+
+.fa-angle-down,.fa-angle-up{
+    font-size:25px;
+}
+.rdk-time-module .time-content span.timeSpan{
+    line-height: 27px;
+    vertical-align: top;
+}
+.rdk-combo-select-module .combo-content-icon{
+    top:1px;
+}
+[class*=" datetimepicker-dropdown"]:after {
+    content: '';
+    display: inline-block;
+    border: 6px solid transparent;
+    position: absolute;
+}
+
+.btn-group.open .dropdown-toggle{
+    box-shadow: none;
+}
+.bootstrap-select .btn:focus{
+    outline-offset: none !important; 
+    outline:none !important;
+}
+.bootstrap-select .btn:active{
+    outline:none !important;
+    box-shadow: none;.
+}
+/** 粒度样式 **/
+.bootstrap-select.btn-group .btn .caret {
+    right: 8px;
+}
+.bootstrap-select.btn-group .btn .filter-option {
+    overflow: inherit;
+    left: 2px;
+    right: 25px;
+    height: 18px;
+    text-align: center;
+}
+.rdk-time-module .time-content .granularity {
+    height: 18px;
+    top: 6px;
+}
+.dropdown-menu>li>a {
+    width: 80px;
+}
+/* 悬浮状态样式 */
+.dropdown-menu>li>a:active {
+    outline:none;
+}
+
+/**** 激活状态样式 *****/
+.dropdown-menu>li>a:focus{ 
+    outline: none;
+}
+.caret {
+    width: 10px;
+    height:10px;
+    border-top:1px solid transparent;
+    border-left:1px solid transparent;
+    transform:rotate(45deg); 
+}
+.bootstrap-select.btn-group .btn .caret {
+    margin-top: -8px;
+}
+/*时间色值*/
+.form-control{
+    padding:6px 0px;
+}
+
+/*todo :theme colors*/
+
+.rdk-time-module .time-content {
+    box-shadow:inset 0 1px 1px rgba(0,0,0,0.075);
+    -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075);
+    border:1px solid #ccc;
+    background:#fff;
+}
+.rdk-time-module .time-content .startTime,
+.rdk-time-module .time-content .endTime {
+    background-color :#fff !important;
+    box-shadow:inset 0 0 0 rgba(0,0,0,0.075);
+    -webkit-box-shadow:inset 0 0 0 rgba(0,0,0,0.075);
+}
+.rdk-time-module input {
+     background-color :#fff !important;
+}
+.rdk-time-module select>option{
+    color: black;
+}
+.rdk-time-module .btn{
+    border-left:1px solid #666;
+    background:#fff;
+}
+.rdk-time-module .time-content .granularity{
+    border-left:1px solid #ccc;
+}
+.datetimepicker th, .datetimepicker td, .datetimepicker table tr td span{
+    color: #666666;
+}
+.datetimepicker .active{
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#008fd4),to(#008fd4)) !important;
+}
+[class*=" datetimepicker-dropdown"]:before {
+    border-bottom-color: rgba(0,0,0,0.2);
+}
+.datetimepicker th.switch {
+    color:#333;
+}
+.datetimepicker table tr td.disabled, .datetimepicker table tr td.disabled:hover {
+    color: #dedede;
+}
+.datetimepicker table tr td.old {
+    color: #dedede;
+}
+.form-control{
+    color:#333;
+}
+.rdk-combo-select-module .combo-content{
+    background:#fff;
+}
+.datetimepicker table tr td.active:active, .datetimepicker table tr td.active:hover:active, .datetimepicker table tr td.active.disabled:active, .datetimepicker table tr td.active.disabled:hover:active, .datetimepicker table tr td.active.active, .datetimepicker table tr td.active:hover.active, .datetimepicker table tr td.active.disabled.active,
+ .datetimepicker table tr td.active.disabled:hover.active{
+    background:#3ab1ea !important;
+}
+ .datetimepicker table tr td span.active:active, .datetimepicker table tr td span.active:hover:active, .datetimepicker table tr td span.active.disabled:active, .datetimepicker table tr td span.active.disabled:hover:active, .datetimepicker table tr td span.active.active, .datetimepicker table tr td span.active:hover.active, .datetimepicker table tr td span.active.disabled.active,
+  .datetimepicker table tr td span.active.disabled:hover.active{
+    background:#3ab1ea !important;
+}
+  .dropdown-menu>li>a:hover {
+    background: #eee;
+    color: #333;
+}
+.bootstrap-select.btn-group .dropdown-menu>li.selected{
+    background: #eee ;
+}
+.dropdown-menu>li>a:focus{ 
+    background: #3ab1ea;
+    color: #fff;
+}
+.caret {
+    border:1px solid #008fd4;
+    border-top:1px solid transparent;
+    border-left:1px solid transparent;
 }

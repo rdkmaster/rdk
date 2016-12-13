@@ -1,6 +1,6 @@
-define('main', ['rd.controls.Time'], function() {
+define('main', ['rd.controls.Time','rd.attributes.theme'], function() {
     // 创建一个RDK的应用
-    var app = angular.module("rdk_app", ['rd.controls.Time']);
+    var app = angular.module("rdk_app", ['rd.controls.Time','rd.attributes.theme']);
     // 创建一个控制器
     app.controller('myCtrl', ['$scope', function(scope) {
         scope.gap = {

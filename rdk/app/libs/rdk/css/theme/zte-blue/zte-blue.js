@@ -22,7 +22,7 @@ require.config({
         "rd.styles.Table": "../rdk/css/theme/zte-blue/rdk-table-style",
         "rd.styles.TabSelect": "../rdk/css/theme/zte-blue/rdk-tabselect-style",
         "rd.styles.TabSelector": "../rdk/css/theme/zte-blue/rdk-tabselector-style",
-
+        "rd.styles.Theme": "../rdk/css/theme/zte-blue/rdk-theme-style",
         "rd.styles.Time": "../rdk/css/theme/zte-blue/rdk-time-style",
         "rd.styles.Tree": "../rdk/css/theme/zte-blue/rdk-tree-style",
     }
