@@ -54,7 +54,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     return '<div class="rdk-tab-module">\
                                 <div class="tabs">\
                                     <ul class="title">\
-                                        <li style="display:{{getIndex($index)==-1?\'none\':\'inline\'}}" ng-repeat="tab in tabs"  on-finish-render>\
+                                        <li ng-style="getLiStyle($index)" ng-repeat="tab in tabs"  on-finish-render>\
                                             <a href="#{{tab.tabid}}" ng-click="tabClick($event, $index)" ng-mouseover="tabMouseOver($event)" ng-class="{\'selected\':currentSelectedIndex == $index}" rdk-tabtitle-parser>\
                                               {{tab.title}}\
                                             </a>\
@@ -109,6 +109,12 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     }, true);
 
                 });
+
+                scope.getLiStyle = function(index){
+                    var destObj = {};
+                    destObj.display = (scope.getIndex(index) == -1 ? 'none' : 'inline');
+                    return destObj;
+                }
 
                 scope.addTab = function(source, tabController, initData){//变量controlscope私有化
                     _compileScopeHandler(tabController, initData);
