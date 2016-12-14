@@ -1,8 +1,8 @@
 define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
 ], function() {
     var btnSearchApp = angular.module('rd.controls.Button', ['rd.core']);
-    btnSearchApp.directive('rdkButton', ['EventService', 'Utils', 'EventTypes', '$compile','$timeout',
-        function(EventService, Utils, EventTypes,  $compile,$timeout) {
+    btnSearchApp.directive('rdkButton', ['EventService', 'Utils', 'EventTypes', '$compile', '$timeout', 
+        function(EventService, Utils, EventTypes, $compile, $timeout) {
             return {
                 restrict: 'E',
                 replace: true,
@@ -34,11 +34,15 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                     scope.enabled = Utils.getValue(scope.enabled, attr.enabled ,true);
                     console.log(scope.enabled);
                     scope.setSelected=function(){
-                        if(scope.disabled) return;
                         if(scope.toggle==true){
                             scope.selected=!scope.selected
                         }
-                        var fn=scope.click(scope);
+                        var fn;
+                        if(scope.enabled){
+                            $timeout(function(){
+                                fn=scope.click(scope);
+                            },1);
+                        }
                         if (!!fn) {
                             fn();
                         }
