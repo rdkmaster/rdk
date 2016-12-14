@@ -59,10 +59,10 @@
            <span>{{dclick}}</span>
         </div>
         <div class="section_3">
-            <input type="text" placeholder="set selected_index" ng-model="Table.index">
-            <input type="text" placeholder="set page_size" ng-model="pageSize" 
+            <input type="text" placeholder="set selected_index" ng-model="Table.index" ng-style="{'width': '180px', 'display': 'inline-block'}" class="form-control">
+            <input type="text" placeholder="set page_size" ng-model="pageSize" ng-style="{'width': '180px', 'display': 'inline-block'}" class="form-control" 
             ng-change="getPageSize(pageSize)">
-            <input placeholder="set searchPattern" ng-model="searchPattern"
+            <input placeholder="set searchPattern" ng-model="searchPattern" ng-style="{'width': '180px', 'display': 'inline-block'}" class="form-control"
              ng-change="getSearchPattern(searchPattern)">
              <button class="changeWidth" ng-click="changeWidth()">第一列宽度调整</button>
              <button class="changeData" ng-click="changData(change)">data change</button>
