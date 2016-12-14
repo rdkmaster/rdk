@@ -32,7 +32,6 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                     scope.label = Utils.getValue(scope.label, attr.label, '');
                     scope.icon = Utils.getValue(scope.icon, attr.icon, false);
                     scope.enabled = Utils.getValue(scope.enabled, attr.enabled ,true);
-                    console.log(scope.enabled);
                     scope.setSelected=function(){
                         if(scope.toggle==true){
                             scope.selected=!scope.selected
