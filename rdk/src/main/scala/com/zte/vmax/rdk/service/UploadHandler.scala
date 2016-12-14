@@ -5,6 +5,7 @@ import java.util.UUID
 import akka.actor.{ActorRef, ActorSystem}
 import akka.util.Timeout
 import com.zte.vmax.rdk.actor.Messages.{ServiceResult, UploadServiceParam, HttpRequestContext, ServiceRequest}
+import com.zte.vmax.rdk.defaults.Const
 import com.zte.vmax.rdk.util.{RdkUtil, Logger}
 import spray.http.MultipartFormData
 import spray.routing.Directives
@@ -27,7 +28,7 @@ class UploadHandler(system: ActorSystem, router: ActorRef) extends Directives wi
         entity(as[MultipartFormData]) {
           formData => ctx =>
             val begin = System.currentTimeMillis()
-            val fileName: String = formData.fields.headOption.flatMap(_.filename).getOrElse(UUID.randomUUID().toString)
+            val fileName: String = Const.uploadFileDir + UUID.randomUUID().toString
             val future = (router ? UploadServiceParam(formData, fileName, begin))
               .mapTo[Either[Exception, String]]
             future.onFailure {
@@ -35,7 +36,7 @@ class UploadHandler(system: ActorSystem, router: ActorRef) extends Directives wi
             }
             future.onSuccess {
               case Left(e) => ctx.failWith(e)
-              case Right(s) => ctx.complete(s)
+              case Right(s) => ctx.complete("rdk/" + fileName)
             }
 
         }

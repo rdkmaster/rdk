@@ -24,3 +24,7 @@ object Misc {
   val blocking_io_dispatcher ="blocking-io-dispatcher"
   val monitorFile = "proc/monitor/list.conf"
 }
+
+object Const {
+  val uploadFileDir = "upload_files/"
+}
