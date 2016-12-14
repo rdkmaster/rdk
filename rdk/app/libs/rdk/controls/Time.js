@@ -169,7 +169,7 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                 template: '<div class="rdk-time-module">\
                             <span>{{label}}</span>\
                             <div class="time-content">\
-                                <input class="form-control startTime" ng-model="condition.startTime" type="text" \
+                                <input class="form-control startTime" ng-model="condition.startTime" unselectable="on" type="text" \
                                  readonly datetimepicker option="startTimeOption">\
                                 <span class="timeSpan" ng-if="range">-</span>\
                                 <input class="form-control endTime" ng-model="condition.endTime" type="text" \
