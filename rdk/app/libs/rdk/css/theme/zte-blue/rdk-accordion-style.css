@@ -11,7 +11,7 @@
     font-weight: normal;
     border: 0;
 }
-.rdk-accordion-module .fa{
+.rdk-accordion-module .theme .fa{
     float: right;
     margin: 3px 6px;
     vertical-align: middle;
@@ -46,7 +46,7 @@
 }
 
 /*icon ^ 大小*/
-.rdk-accordion-module .fa-angle-down:before,.fa-angle-up:before {
+.rdk-accordion-module .fa-angle-down:before,.rdk-accordion-module .fa-angle-up:before {
     font-size: 18px;
 }
 

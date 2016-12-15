@@ -1,11 +1,6 @@
 .rdk-tab-module{
 	margin : 10px;
 }
-.rdk-tab-module .ui-widget-header {
-    border-bottom: none;
-    background-color: transparent;
-}
-
 .rdk-tab-module .ui-tabs .ui-tabs-nav .ui-tabs-anchor{
 	font-size: 14px;
 }
@@ -16,7 +11,6 @@
     border: 1px solid #ddd;
     margin: 0 .2em;
 }
-
 .ui-tabs .ui-tabs-nav li {
     margin: 1px .1em 0 0;
 }
@@ -25,50 +19,27 @@
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
-
-.rdk-tab-module .bottom_line em {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    margin-left: -1px;
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 0;
-    border-bottom: 5px solid #fff;
+.rdk-tab-module .ui-corner-all{
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
-
 .rdk-tab-module .ui-state-default,.rdk-tab-module .ui-widget-content,.rdk-tab-module .ui-widget-content .ui-widget-content,.rdk-tab-module .ui-widget-header .ui-state-default{
 	border: 0;
 	background : transparent;
 }
-
 /*todo:theme colors*/
-.rdk-tab-module .title li a {
-    color: #333333;
-}
-.ui-tabs .ui-tabs-nav li a.ui-tabs-anchor,.rdk-tab-item{
-    background-color: #63B1EF;
-    color: #fff;
-}
-
-.rdk-tab-module .title li a.selected{
-    background-color: #FEA211;
-    color: #fff;
-}
-
 /*todo:theme style start*/
-/*rdk-tab-theme-default 另一种风格的页签*/
-.rdk-tab-theme-default .ui-tabs .ui-tabs-nav li a.ui-tabs-anchor{
+/*rdk-tab-theme-default*/
+.ui-tabs .ui-tabs-nav li a.ui-tabs-anchor{
     background-color: initial;
     font-size: 14px;
     color: initial;
 }
-.rdk-tab-theme-default .rdk-tab-module .title li a.selected {
+.rdk-tab-module .title li a.selected {
     color: #008FD4;
 }
-.rdk-tab-theme-default .rdk-tab-module .bottom_line {
+
+.rdk-tab-module .bottom_line {
     width: 100%;
     height: 4px;
     position: absolute;
@@ -76,7 +47,7 @@
     left: 0;
     background :#008FD4 ;
 }
-.rdk-tab-theme-default .rdk-tab-module .bottom_line em{
+.rdk-tab-module .bottom_line em{
     position:absolute;
     bottom:-4px;
     left:50%;
@@ -89,13 +60,44 @@
     border-top: 4px solid #008FD4;
     border-bottom: 0;
 }
-.rdk-tab-theme-default .rdk-tab-module .ui-widget-header {
+.rdk-tab-module .ui-widget-header {
     border-bottom: 1px solid #008FD4;
     background-color: transparent;
 }
-.rdk-tab-theme-default .ui-widget-content {
+
+.ui-widget-content {
     border: 1px solid #ddd;
     background: #ffffff;
     color: #333;
     margin: 8px 0px;
+}
+/*rdk-tab-theme-default 另一种蓝色风格的页签*/
+.rdk-tab-theme-blue .rdk-tab-module .title li a {
+    color: #333333;
+}
+.rdk-tab-theme-blue .ui-tabs .ui-tabs-nav li a.ui-tabs-anchor,.rdk-tab-item{
+    background-color: #63B1EF;
+    color: #fff;
+}
+.rdk-tab-theme-blue .rdk-tab-module .title li a.selected{
+    background-color: #FEA211;
+    color: #fff;
+}
+.rdk-tab-theme-blue .rdk-tab-module .bottom_line em {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    margin-left: -1px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 0;
+    border-bottom: 5px solid #fff;
+}
+.rdk-tab-theme-blue .rdk-tab-module .bottom_line {
+    height: 0;
+}
+.rdk-tab-theme-blue .rdk-tab-module .ui-widget-header {
+    border-bottom: none;
 }

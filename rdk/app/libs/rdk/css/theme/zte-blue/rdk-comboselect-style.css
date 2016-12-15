@@ -41,7 +41,7 @@
     top: 5px;
     pointer-events: none;
 }
-.fa-angle-down:before,.fa-angle-up:before {
+.rdk-combo-select-module .fa-angle-down:before,.rdk-combo-select-module .fa-angle-up:before {
      font-size: 18px;
 }
 .rdk-combo-select-module .combo-content-transclude{
