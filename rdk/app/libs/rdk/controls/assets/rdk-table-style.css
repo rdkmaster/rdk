@@ -10,6 +10,17 @@
     z-index: 9999;
 }
 
+.rdk-table-module select{
+    -webkit-appearance:none;
+    appearance:none; 
+    background: url("selectArrow.png") no-repeat scroll right center;
+    background-color: white;
+}
+
+.rdk-table-module select::-ms-expand {
+    display: none;
+} 
+
 .rdk-table-module .search {
     max-width: 250px;
     padding-right: 25px;
@@ -204,7 +215,8 @@
 }
 
 .rdk-table-module .mouseShape{
-  cursor:url("edit.ico"),auto;
+ /* cursor: url("edit.ico"),auto;*/
+  cursor: crosshair;
 }
 .rdk-table-icon{
     display: inline-block;
