@@ -1,8 +1,8 @@
 define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
 ], function() {
     var btnSearchApp = angular.module('rd.controls.Button', ['rd.core']);
-    btnSearchApp.directive('rdkButton', ['EventService', 'Utils', 'EventTypes', '$compile',
-        function(EventService, Utils, EventTypes,  $compile) {
+    btnSearchApp.directive('rdkButton', ['EventService', 'Utils', 'EventTypes', '$compile', '$timeout', 
+        function(EventService, Utils, EventTypes, $compile, $timeout) {
             return {
                 restrict: 'E',
                 replace: true,
@@ -32,25 +32,30 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                     scope.icon = Utils.getValue(scope.icon, attr.icon, false);
                     scope.enabled = Utils.getValue(scope.enabled, attr.enabled ,true);
                     scope.setSelected=function(){
-                        if(scope.toggle==true){
-                            scope.selected=!scope.selected
+                        if(!scope.enabled){
+                            return;
                         }
-                        var fn = scope.click(scope);
-                        if (!!fn) {
-                            fn();
+                        // $timeout为了兼容IE11
+                        $timeout(function() {
+                            if(scope.toggle==true){
+                                scope.selected=!scope.selected
+                            }
+                            var fn=scope.click(scope);
+                            if (!!fn) {
+                                fn();
+                            }
+                        }, 0);
+                    }
+                    scope.$stopPro=function($event){
+                        if(!scope.enabled){
+                         $event.stopPropagation();
                         }
                     }
-                    scope.setBtnClass=function(){
+                     scope.setBtnClass=function(){
                         return  {
                             'rdk-button-selected':scope.toggle?scope.selected:false,
                             'rdk-button-enabled' :!scope.enabled,
                             'rdk-shade-opacity': scope.mouse
-                        }
-            
-                    }                 
-                    scope.$stopPro=function($event){
-                        if(!scope.enabled){
-                         $event.stopPropagation();
                         }
                     }
                     scope.iconShow=false;
