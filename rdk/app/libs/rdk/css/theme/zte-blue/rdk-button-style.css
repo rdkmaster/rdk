@@ -48,7 +48,9 @@
 }
 
 /*todo :theme colors*/
-
+.rdk-button-btn:active{
+	background:rgba(0,0,0,0.15);
+}
 .rdk-button-btn{
 	background: rgba(0,0,0,0);
 	color:#ffffff;

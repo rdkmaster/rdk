@@ -126,9 +126,6 @@ input, button, select, textarea {
     line-height: 27px;
     vertical-align: top;
 }
-.rdk-combo-select-module .combo-content-icon{
-    top:1px;
-}
 [class*=" datetimepicker-dropdown"]:after {
     content: '';
     display: inline-block;
@@ -236,9 +233,6 @@ input, button, select, textarea {
 }
 .form-control{
     color:#333;
-}
-.rdk-combo-select-module .combo-content{
-    background:#fff;
 }
 .datetimepicker table tr td.active:active, .datetimepicker table tr td.active:hover:active, .datetimepicker table tr td.active.disabled:active, .datetimepicker table tr td.active.disabled:hover:active, .datetimepicker table tr td.active.active, .datetimepicker table tr td.active:hover.active, .datetimepicker table tr td.active.disabled.active,
  .datetimepicker table tr td.active.disabled:hover.active{
