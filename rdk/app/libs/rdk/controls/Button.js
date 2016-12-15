@@ -36,6 +36,7 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                         if(!scope.enabled){
                             return;
                         }
+                        // $timeout为了兼容IE11
                         $timeout(function() {
                             if(scope.toggle==true){
                                 scope.selected=!scope.selected
