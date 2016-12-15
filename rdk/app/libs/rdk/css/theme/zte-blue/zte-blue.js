@@ -18,6 +18,7 @@ require.config({
         "rd.styles.Scroller": "../rdk/css/theme/zte-blue/rdk-scroller-style",
         "rd.styles.Scroll": "../rdk/css/theme/zte-blue/perfect-scrollbar-style",
         "rd.styles.SingleIndicator": "../rdk/css/theme/zte-blue/rdk-singleindicator-style",
+        "rd.styles.Input":"../rdk/css/theme/zte-blue/rdk-input-style",
         "rd.styles.Tab": "../rdk/css/theme/zte-blue/rdk-tab-style",
         "rd.styles.Table": "../rdk/css/theme/zte-blue/rdk-table-style",
         "rd.styles.TabSelect": "../rdk/css/theme/zte-blue/rdk-tabselect-style",

@@ -159,11 +159,6 @@
 }
 /*todo:theme style start*/
 .rdk-table-module .rdk-table thead>tr {
-    background-color: #FFFFFF;
-    color: #333;
-    opacity:1;
-}
-.rdk-table-theme-blue .rdk-table-module .rdk-table thead>tr {
     color: #008fd4;
     background-color: #eee;
     border-bottom: 0;
