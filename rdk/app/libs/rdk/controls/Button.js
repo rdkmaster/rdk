@@ -36,24 +36,15 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                         if(!scope.enabled){
                             return;
                         }
-                        if(scope.toggle==true){
-                            scope.selected=!scope.selected
-                        }
-                        var fn=scope.click(scope);
-                        if (!!fn) {
-                            fn();
-                        }
-                        // if(scope.enabled){
-                            // if(scope.toggle==true){
-                            //     scope.selected=!scope.selected
-                            // }
-                        //     $timeout(function(){
-                        //         fn=scope.click(scope);
-                        //         if (!!fn) {
-                        //             fn();
-                        //         }
-                        //     },0);
-                        // }
+                        $timeout(function() {
+                            if(scope.toggle==true){
+                                scope.selected=!scope.selected
+                            }
+                            var fn=scope.click(scope);
+                            if (!!fn) {
+                                fn();
+                            }
+                        }, 0);
                     }
                     scope.$stopPro=function($event){
                         if(!scope.enabled){
