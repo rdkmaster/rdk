@@ -216,7 +216,7 @@
 
 .rdk-table-module .mouseShape{
  /* cursor: url("edit.ico"),auto;*/
-  cursor: crosshair;
+  cursor: pointer;
 }
 .rdk-table-icon{
     display: inline-block;
