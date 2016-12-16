@@ -4,6 +4,20 @@
         var _this = this;
 
         var _ready = false;
+        //优先检测属性回调事件是否正确
+        this.checkEventHanders=function(attrs,eventTypeList){
+            var len=eventTypeList.length;
+            for (var j=0;j<len;j++){
+                var eventType=eventTypeList[j];
+                var handlerScript=attrs[eventType];
+                if(handlerScript.match(/\(.*\)/)){
+                    // 带有supress warn的则不给warn
+                    if(handlerScript.indexOf('/*supress*/')){
+                        console.warn('事件属性 %s 的值 %s 不应该有圆括号！改为 %s 可抑制此告警。', eventType, handlerScript, handlerScript.replace(/\(.*\)/,'') + '/*supress warn*/');
+                    }
+                }
+            }
+        };
         var _onReadyCallbackList = [];
 
         this.swipeOnReadyCallbacks = function() {
