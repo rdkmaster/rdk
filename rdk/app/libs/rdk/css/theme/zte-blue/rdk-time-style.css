@@ -1,4 +1,4 @@
-.rdk-time-module {
+.btn.rdk-time-module {
     display: inline-block;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
@@ -40,7 +40,6 @@
     height: 30px;
     text-align:center !important;
 }
-
 .rdk-time-module select {
     border:0 !important;
     width:72px;
@@ -99,6 +98,7 @@ input, button, select, textarea {
  }
 .datetimepicker th, .datetimepicker .year, .datetimepicker .day{
     font-weight: bold;
+    line-height: normal
 }
 .datetimepicker .day{
     padding: 6px 6px;
@@ -133,10 +133,7 @@ input, button, select, textarea {
     position: absolute;
 }
 
-.btn-group.open .dropdown-toggle{
-    box-shadow: none;
-}
-.bootstrap-select .btn:focus{
+.rdk-time-module .bootstrap-select .btn:focus{
     outline-offset: none !important; 
     outline:none !important;
 }
@@ -145,7 +142,7 @@ input, button, select, textarea {
     box-shadow: none;.
 }
 /** 粒度样式 **/
-.bootstrap-select.btn-group .btn .caret {
+.rdk-time-module .bootstrap-select.btn-group .btn .caret {
     right: 8px;
 }
 .bootstrap-select.btn-group .btn .filter-option {
@@ -159,6 +156,9 @@ input, button, select, textarea {
     height: 18px;
     top: 6px;
 }
+.time-content> span.granularity {
+    font-family: "微软雅黑"
+}
 .dropdown-menu>li>a {
     width: 80px;
 }
@@ -171,21 +171,28 @@ input, button, select, textarea {
 .dropdown-menu>li>a:focus{ 
     outline: none;
 }
-.caret {
+.rdk-time-module .bootstrap-select.btn-group .btn .caret {
     width: 10px;
     height:10px;
     border-top:1px solid transparent;
     border-left:1px solid transparent;
     transform:rotate(45deg); 
 }
-.bootstrap-select.btn-group .btn .caret {
+.rdk-time-module .bootstrap-select.btn-group .btn .caret {
     margin-top: -8px;
 }
 /*时间色值*/
-.form-control{
+.time-content .form-control{
     padding:6px 0px;
 }
-
+.rdk-time-module .time-content .startTime, 
+.rdk-time-module .time-content .endTime {
+    width: 140px;
+    font-family: arial;
+}
+div.datetimepicker th.switch {
+    line-height: 24px;
+}
 /*todo :theme colors*/
 
 .rdk-time-module .time-content {
@@ -207,8 +214,10 @@ input, button, select, textarea {
     color: black;
 }
 .rdk-time-module .btn{
+    border: 1px solid transparent;
     border-left:1px solid #666;
     background:#fff;
+    box-shadow:none !important;
 }
 .rdk-time-module .time-content .granularity{
     border-left:1px solid #ccc;
@@ -224,6 +233,7 @@ input, button, select, textarea {
 }
 .datetimepicker th.switch {
     color:#333;
+    line-height: 24px;
 }
 .datetimepicker table tr td.disabled, .datetimepicker table tr td.disabled:hover {
     color: #dedede;
@@ -234,7 +244,7 @@ input, button, select, textarea {
 .form-control{
     color:#333;
 }
-.datetimepicker table tr td.active:active, .datetimepicker table tr td.active:hover:active, .datetimepicker table tr td.active.disabled:active, .datetimepicker table tr td.active.disabled:hover:active, .datetimepicker table tr td.active.active, .datetimepicker table tr td.active:hover.active, .datetimepicker table tr td.active.disabled.active,
+.rdk-time-module .datetimepicker table tr td.active:active,.rdk-time-module .datetimepicker table tr td.active:hover:active, .datetimepicker table tr td.active.disabled:active, .datetimepicker table tr td.active.disabled:hover:active, .datetimepicker table tr td.active.active, .datetimepicker table tr td.active:hover.active, .datetimepicker table tr td.active.disabled.active,
  .datetimepicker table tr td.active.disabled:hover.active{
     background:#3ab1ea !important;
 }
@@ -242,18 +252,18 @@ input, button, select, textarea {
   .datetimepicker table tr td span.active.disabled:hover.active{
     background:#3ab1ea !important;
 }
-  .dropdown-menu>li>a:hover {
+.rdk-time-module .dropdown-menu>li>a:hover {
     background: #eee;
     color: #333;
 }
 .bootstrap-select.btn-group .dropdown-menu>li.selected{
     background: #eee ;
 }
-.dropdown-menu>li>a:focus{ 
+.rdk-time-module .dropdown-menu>li>a:focus{ 
     background: #3ab1ea;
     color: #fff;
 }
-.caret {
+.rdk-time-module .bootstrap-select.btn-group .btn .caret {
     border:1px solid #008fd4;
     border-top:1px solid transparent;
     border-left:1px solid transparent;
