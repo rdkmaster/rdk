@@ -101,7 +101,7 @@ public class FileHelper extends AbstractAppLoggable {
         return props;
     }
 
-    private boolean ensureFileExists(File file) {
+     public boolean ensureFileExists(File file) {
         File parent = file.isDirectory() ? file : file.getParentFile();
         if (parent != null && !parent.exists()) {
             logger.debug("making parent dirs: " + parent);
