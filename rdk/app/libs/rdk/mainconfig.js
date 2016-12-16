@@ -35,6 +35,7 @@ require.config({
         "rd.attributes.ds": "../rdk/attributes/ds",
         "rd.attributes.modal": "../rdk/attributes/modal",
         "rd.attributes.Scroll": "../rdk/attributes/Scroll",
+        "rd.attributes.theme": "../rdk/attributes/theme",
 
         "rd.containers.Accordion": "../rdk/containers/Accordion",
         "rd.containers.Accordions": "../rdk/containers/Accordions",
@@ -74,31 +75,11 @@ require.config({
         "rd.services.NodeService": "../rdk/services/NodeService",
         "rd.services.Utils": "../rdk/services/Utils",
 
-        "rd.styles.Input": "../rdk/controls/assets/rdk-input-style",
-        "rd.styles.PopupService": "../rdk/services/assets/rdk-PopupService-style",
-        "rd.styles.Accordion": "../rdk/containers/assets/rdk-accordion-style",
-        "rd.styles.Alert": "../rdk/services/assets/rdk-Alert-style",
-        "rd.styles.Area": "../rdk/controls/assets/rdk-area-style",
-        "rd.styles.BasicSelector": "../rdk/controls/assets/rdk-basicselector-style",
         "rd.styles.Bootstrap": "../bootstrap/css/bootstrap.min",
-        "rd.styles.Bullet": "../rdk/controls/assets/rdk-bullet-style",
-        "rd.styles.Button": "../rdk/controls/assets/rdk-button-style",
-        "rd.styles.ButtonGroup": "../rdk/containers/assets/rdk-buttongroup-separator-style",
-        "rd.styles.ComboSelect": "../rdk/controls/assets/rdk-comboselect-style",
         "rd.styles.FontAwesome": "../font-awesome-4.3.0/css/font-awesome",
-        "rd.styles.Graph": "../rdk/controls/assets/rdk-graph-style",
-        "rd.styles.Panel": "../rdk/containers/assets/rdk-panel-style",
-        "rd.styles.ProgressBar": "../rdk/controls/assets/rdk-progressbar-style",
-        "rd.styles.ScoreIndicator": "../rdk/controls/assets/rdk-scoreindicator-style",
-        "rd.styles.Scroller": "../rdk/controls/assets/rdk-scroller-style",
-        "rd.styles.Scroll": "../rdk/attributes/assets/perfect-scrollbar-style",
-        "rd.styles.SingleIndicator": "../rdk/controls/assets/rdk-singleindicator-style",
-        "rd.styles.Tab": "../rdk/containers/assets/rdk-tab-style",
-        "rd.styles.Table": "../rdk/controls/assets/rdk-table-style",
-        "rd.styles.TabSelect": "../rdk/controls/assets/rdk-tabselect-style",
-        "rd.styles.TabSelector": "../rdk/controls/assets/rdk-tabselector-style",
-        "rd.styles.Time": "../rdk/controls/assets/rdk-time-style",
-        "rd.styles.Tree": "../rdk/controls/assets/rdk-tree-style",
+
+        "rdk.theme.zte-blue":"css/theme/zte-blue/zte-blue",
+        "rdk.theme.default":"css/theme/default/default",
 
         "rd.modules.i18n": "../rdk/modules/I18nModule",
     },
@@ -114,7 +95,7 @@ require.config({
         },
 
         "angular-translate-static":{
-           deps : ['angular','angualr-translate'],
+            deps : ['angular','angualr-translate'],
             exports: "angular-translate-static"
         },
         "blockUI" :{
@@ -129,14 +110,14 @@ require.config({
             deps : ['jquery'],
             exports: "throttle-debounce"
         },
-       "jquery-headfix" :{
+        "jquery-headfix" :{
             deps : ['throttle-debounce'],
             exports: "jquery-headfix"
-       },
-       "jquery-freezeheader" :{
+        },
+        "jquery-freezeheader" :{
             deps : ['jquery'],
             exports: "jquery-freezeheader"
-       },
+        },
         "ztree": {
             deps: ['css!../ztree/css/zTreeStyle/zTreeStyle'],
             exports: "ztree",
@@ -166,8 +147,8 @@ require.config({
             exports: "bootstrap"
         },
         "angular-bootstrap-progressbar":{
-             deps: ["angular"],
-             exports: "angular-bootstrap-progressbar"
+            deps: ["angular"],
+            exports: "angular-bootstrap-progressbar"
         },
         "ngProgress":{
             deps: ["angular","css!../angular/ngprogress"],
@@ -181,4 +162,3 @@ require.config({
         }
     }
 });
-
