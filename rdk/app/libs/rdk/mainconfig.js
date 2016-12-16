@@ -36,7 +36,7 @@ require.config({
         "rd.attributes.modal": "../rdk/attributes/modal",
         "rd.attributes.Scroll": "../rdk/attributes/Scroll",
         "rd.attributes.theme": "../rdk/attributes/theme",
-        
+
         "rd.containers.Accordion": "../rdk/containers/Accordion",
         "rd.containers.Accordions": "../rdk/containers/Accordions",
         "rd.containers.ButtonGroup": "../rdk/containers/ButtonGroup",
@@ -57,7 +57,7 @@ require.config({
         "rd.controls.Module": "../rdk/controls/Module",
         "rd.controls.PieGraph": "../rdk/controls/PieGraph",
         "rd.controls.ProgressBar": "../rdk/controls/ProgressBar",
-        "rd.controls.ScoreIndicator": "../rdk/controls/ScoreIndicator", 
+        "rd.controls.ScoreIndicator": "../rdk/controls/ScoreIndicator",
         "rd.controls.Scroller": "../rdk/controls/Scroller",
         "rd.controls.Selector": "../rdk/controls/Selector",
         "rd.controls.SingleIndicator": "../rdk/controls/SingleIndicator",
@@ -65,8 +65,8 @@ require.config({
         "rd.controls.TabSelect": "../rdk/controls/TabSelect",
         "rd.controls.TabSelector": "../rdk/controls/TabSelector",
         "rd.controls.Time": "../rdk/controls/Time",
-        "rd.controls.Tree": "../rdk/controls/Tree", 
-        
+        "rd.controls.Tree": "../rdk/controls/Tree",
+
         "rd.services.PopupService": "../rdk/services/PopupService",
         "rd.services.Alert": "../rdk/services/Alert",
         "rd.services.DataSourceService": "../rdk/services/DataSourceService",
@@ -95,8 +95,8 @@ require.config({
         },
 
         "angular-translate-static":{
-           deps : ['angular','angualr-translate'],
-            exports: "angular-translate-static" 
+            deps : ['angular','angualr-translate'],
+            exports: "angular-translate-static"
         },
         "blockUI" :{
             deps : ['angular','css!../angular/angular-block-ui','jquery'],
@@ -110,14 +110,14 @@ require.config({
             deps : ['jquery'],
             exports: "throttle-debounce"
         },
-       "jquery-headfix" :{
+        "jquery-headfix" :{
             deps : ['throttle-debounce'],
             exports: "jquery-headfix"
-       },
-       "jquery-freezeheader" :{
+        },
+        "jquery-freezeheader" :{
             deps : ['jquery'],
             exports: "jquery-freezeheader"
-       },
+        },
         "ztree": {
             deps: ['css!../ztree/css/zTreeStyle/zTreeStyle'],
             exports: "ztree",
@@ -147,8 +147,8 @@ require.config({
             exports: "bootstrap"
         },
         "angular-bootstrap-progressbar":{
-             deps: ["angular"],
-             exports: "angular-bootstrap-progressbar"
+            deps: ["angular"],
+            exports: "angular-bootstrap-progressbar"
         },
         "ngProgress":{
             deps: ["angular","css!../angular/ngprogress"],
@@ -162,4 +162,3 @@ require.config({
         }
     }
 });
-
