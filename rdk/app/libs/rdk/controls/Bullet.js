@@ -8,7 +8,7 @@ define(['angular', 'rd.services.Utils', 'rd.services.EventService', 'jquery', 'c
             template: '<div class="rdk-bullet-{{direction}}-module">\
                                 <h4 class="title" ng-show="title !=\'\' ">{{title}}</h4>\
                                 <div class="legend" ng-show ="showLegend">\
-                                    <span ng-repeat="sliderStyle in sliderStyles" class="label" style="background-color:{{sliderStyle.color}};">\
+                                    <span ng-repeat="sliderStyle in sliderStyles" class="label" ng-style="setStyle(sliderStyle,\'background-color\')">\
                                         {{sliderStyle.label}}\
                                     </span>\
                                 </div>\
@@ -17,9 +17,9 @@ define(['angular', 'rd.services.Utils', 'rd.services.EventService', 'jquery', 'c
                                    </div>\
                                     <div class="slider" ng-style="calculateLeft(slider,$index)" ng-class="{true:\'slider-up\',false:\'slider-down\'}[sliderStyles[$index].position==\'up\' || sliderStyles[$index].position==\'left\']"\
                                         ng-repeat="slider in sliders track by $index" title="{{sliderStyles[$index].label}} : {{slider}}" ng-mousedown="sliderPointerMouseDownHandle($event,$index)">\
-                                            <div ng-if="sliderStyles[$index].position==\'down\' || sliderStyles[$index].position==\'right\'" class="icon" style="color:{{sliderStyles[$index].color}}">▲</div>\
+                                            <div ng-if="sliderStyles[$index].position==\'down\' || sliderStyles[$index].position==\'right\'" class="icon" ng-style="setStyle(sliderStyles[$index],\'color\')">▲</div>\
                                             <span class="num">{{slider}}</span>\
-                                            <div ng-if="sliderStyles[$index].position==\'up\' || sliderStyles[$index].position==\'left\'" class="icon" style="color:{{sliderStyles[$index].color}}">▼</div>\
+                                            <div ng-if="sliderStyles[$index].position==\'up\' || sliderStyles[$index].position==\'left\'" class="icon" ng-style="setStyle(sliderStyles[$index],\'color\')">▼</div>\
                                     </div>\
                                 </div>\
                             </div>',
@@ -160,6 +160,15 @@ define(['angular', 'rd.services.Utils', 'rd.services.EventService', 'jquery', 'c
                         _calculateLimit();
                         movement = 0;
 
+                    }
+
+                    //ie11兼容性处理：start
+                    scope.setStyle=function(item,attribute){
+                        return (
+                            _style = {},
+                            _style[attribute] = item.color,
+                            _style
+                        );
                     }
                 }
             }
