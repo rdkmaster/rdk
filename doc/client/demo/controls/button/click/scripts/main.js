@@ -10,6 +10,9 @@ var userInfo = "用户接口";
     scope.clickHandler = function() {
     	alert(userInfo)
     };
+    scope.clickHandlerErr=function(){
+        alert('查看控制台提示');
+    }
 }
 ]);
 });
