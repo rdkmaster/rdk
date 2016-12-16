@@ -6,7 +6,7 @@ define('main', ['angular', 'rd.containers.Accordion'], function() {
     myApp.controller('myCtrl', ['$scope',
         function(scope) {
             scope.buttonSource = [{
-                icon: "images/edit.png",
+                icon: "./../img/edit.png",
                 label: "编辑",
                 tooltips: "点击可进行编辑",
                 callback: function(obj, htmlID) {
