@@ -40,6 +40,10 @@
 {
     text-align: right;
 }
+.rdk-table-module .rdk-table thead>tr {
+    color: #333;
+    background-color: #fff;
+}
 /* rdk-table-theme-gray*/
 .rdk-table-theme-gray .rdk-table-module .rdk-table tbody>tr>td:nth-of-type(1)
 {

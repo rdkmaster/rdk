@@ -21,7 +21,6 @@
 ## tabler 控件可用主题 ##
 
 - 默认主题，不使用属性
-- rdk-table-theme-blue
 - rdk-table-theme-gray
 
 上面主题分别如下：
@@ -29,13 +28,6 @@
 事例代码：
 
 	<rdk_table ……></rdk_table>
-
-效果如右图：
-	<img src="table-default.png" alt="默认主题" title="默认主题">
-
-事例代码：
-
-	<rdk_table rdk_theme="rdk-table-theme-blue" ……></rdk_table>
 
 效果如右图：
 	<img src="table-blue.png" alt="rdk-table-theme-blue主题" title="rdk-table-theme-blue主题">
@@ -51,7 +43,7 @@
 ## tab 控件可用主题 ##
 
 - 默认主题，不使用属性
-- rdk-tab-theme-default
+- rdk-tab-theme-blue
 
 上面主题分别如下：
 
@@ -60,14 +52,14 @@
 	<rdk_tab  ……></rdk_tab>
 
 效果如右图：
-	<img src="tab-blue.png" alt="默认主题" title="默认主题">
-
+	<img src="tab-default.png" alt="rdk-tab-theme-default主题" title="rdk-tab-theme-default主题">
+	
 事例代码：
 
-	<rdk_tab rdk_theme="rdk-tab-theme-default" ……></rdk_tab>
+	<rdk_tab rdk_theme="rdk-tab-theme-blue" ……></rdk_tab>
 	
 效果如右图：
-	<img src="tab-default.png" alt="rdk-tab-theme-default主题" title="rdk-tab-theme-default主题">
+	<img src="tab-blue.png" alt="默认主题" title="默认主题">
 
 ## panel 控件可用主题 ##
 

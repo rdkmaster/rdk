@@ -164,6 +164,7 @@
     border-bottom: 0;
 }
 .rdk-table-theme-gray .rdk-table-module .rdk-table thead>tr {
+    color: #333;
     background-color: #eee;
 }
 .rdk-table-theme-gray .rdk-table-module .rdk-table > tbody > tr:nth-child(even){
