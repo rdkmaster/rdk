@@ -271,7 +271,15 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 this.setPageSize = function(_pageSize){
                     if(scope.pageSize == _pageSize) return;
                     scope.pageSize = _pageSize;
-                    this.setCurrentPage(scope.currentPage);
+
+                    var ctrl = this;
+                    $timeout(function(){
+                        var maxCount = ctrl.pageCtrl.pageCount();
+                        if(scope.currentPage > maxCount){
+                            scope.currentPage = maxCount;
+                        }
+                        ctrl.pageCtrl.setPage(scope.currentPage);
+                    }, 0);
                 }
 
                 this.getTableAppScope = function() {
