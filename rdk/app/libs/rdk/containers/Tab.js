@@ -107,6 +107,8 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
 
                     scope.$watch("selectedTab", function(newVal, oldVal) {
                         _activeTabByIndex(newVal);
+                        var tabs = $(dom).tabs();
+                        tabs.tabs("refresh"); 
                     }, true);
 
                 });
@@ -246,8 +248,6 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     var panelId = scope.tabs[index].tabid;
                     scope.tabs.splice(index, 1);
                     $("#" + panelId).remove();
-                    var tabs = $(dom).tabs();
-                    tabs.tabs("refresh");
                     _activeTab(index);
 
                 }
