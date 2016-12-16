@@ -5,16 +5,16 @@
 
         var _ready = false;
         //优先检测属性回调事件是否正确
-        this.checkEventHanders=function(attrs,eventTypeList){
+        this.checkEventHandlers=function(attrs,eventTypeList){
             var len=eventTypeList.length;
-            if(attrs['supressWarn']!==undefined){
+            if(attrs['supressWarning']!==undefined){
                 return ;
             }else{
                 for (var j=0;j<len;j++){
                     var eventType=eventTypeList[j];
                     var handlerScript=attrs[eventType];
                     if(handlerScript.match(/\(.*\)/)){
-                        console.warn('事件属性 %s 的值 %s 不应该有圆括号！添加属性%s 可抑制此告警。', eventType, handlerScript, 'supress_warn');
+                        console.warn('事件属性 %s 的值 %s 不应该有圆括号！给控件dom节点添加supress_warning属性可抑制此告警。', eventType, handlerScript);
                     }
                 }
             }
