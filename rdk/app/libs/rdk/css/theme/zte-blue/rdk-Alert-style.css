@@ -2,11 +2,13 @@ div,p,button {
 	margin:0; 
 	padding:0;
 }
-.rdk-alert-tableMsg{
+.rdk-popupservice-dialog {
+	font-family: '微软雅黑';
 	font-size: 14px;
+}
+.rdk-alert-tableMsg{
 	padding: 20px 60px;
 	margin: 0;
-	font-family: '微软雅黑';
 	line-height: 26px;
 	text-align:center;
 }
@@ -19,8 +21,6 @@ div.rdk-popupservice-dialog .ui-widget-header {
 	padding: 0px 5px 0px 7px;
 	border-radius: 0;
 	border: none;
-	font-size:14px;
-	font-family: '微软雅黑';
 }
 div.rdk-popupservice-dialog .ui-widget-header .ui-dialog-title {
 	line-height: 30px;
@@ -35,6 +35,7 @@ div.rdk-popupservice-dialog .ui-widget-header .ui-dialog-title {
 }
 .rdk-popupservice-dialog.ui-dialog{
 	padding: 0;
+	background-color: #eaeaea
 }
 .rdk-popupservice-dialog .ui-dialog-titlebar-close:focus {
 	outline: none;
@@ -48,8 +49,9 @@ div.rdk-popupservice-dialog .ui-widget-header .ui-dialog-title {
     margin-top: -9px;
     margin-left: -9px;
 }
-div.ui-dialog .ui-dialog-content  {
+div.ui-dialog .ui-dialog-content{
 	padding: 0;
+	background-color: #f6f6f6
 }
 .rdk-alert-left {
 	text-align: left;
@@ -62,10 +64,8 @@ div.ui-dialog .ui-dialog-content  {
 	height: 30px;
 	line-height: 26px;
 	outline: none;
-	font-family: "微软雅黑";
 	border-radius: 5px;
 	margin: 0 13px 20px 13px;
-	font-size: 14px;
 }
 .rdk-alert-tableImg >img {
 	height:42px;
@@ -99,9 +99,7 @@ div.ui-dialog .ui-dialog-content  {
 .rdk-alert-yes:hover ,.rdk-alert-ok:hover{
 	background: #7bb664;
 }
-.rdk-popupservice-dialog.ui-widget-content {
-	background-color: #eaeaea
-}
+
 .rdk-alert-yes:active ,.rdk-alert-ok:active{
 	background: #71a85c;
 }
