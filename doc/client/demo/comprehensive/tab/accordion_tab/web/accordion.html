@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
     <title>RDK控件Demo : Tabs And Accordion</title>
     <link rel="stylesheet" type="text/css" href="css/accortion.css">
-
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
     <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
     <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
     <script src="scripts/accordion.js"></script>
@@ -18,11 +18,11 @@
     </script>
 </head>
 <body ng-controller='rdk_ctrl' class="rdk-loading">
-<div class="tab_wrap" ng-class="{'wrap-animation':!btnStatus}">
+<div class="tab_wrap rdk-tab-theme-blue" ng-class="{'wrap-animation':!btnStatus}">
     <rdk_tab selected_tab="0" draggable="true" collapsible="false" class="rdk_tab">
         <div title="空口问题">
             <rdk_accordion caption="'区域指标'">
-                <rdk_table ds="dsTable3" ds-url="/doc/client/demo/comprehensive/tab/accordion_tab/web/data/tabelData2" ds_query_if="ready" paging-visible="false"></rdk_table>
+                <rdk_table   ds="dsTable3" ds-url="/doc/client/demo/comprehensive/tab/accordion_tab/web/data/tabelData2" ds_query_if="ready" paging-visible="false"></rdk_table>
             </rdk_accordion>
             <rdk_accordion caption="'弱覆盖问题'">
                 <div>除了可以填充RDK控件，还支持标准的标签</div>
@@ -50,7 +50,7 @@
             <rdk_accordion caption="'接入问题'">
                 <div>除了可以填充RDK控件，还支持标准的标签</div>
             </rdk_accordion>
-            <rdk_accordion caption="'RRC建立失败原因'" open="true" class="table2">
+            <rdk_accordion caption="'RRC建立失败原因'" open="true" class="rdk-table-theme-gray">
                 <rdk_table ds="dsTable" ds-url="/doc/client/demo/comprehensive/tab/accordion_tab/web/data/tabelData1" ds_query_if="ready" paging-visible="false"></rdk_table>
                 <rdk_table data="dsTable" paging-visible="false"></rdk_table>
             </rdk_accordion>
@@ -78,7 +78,9 @@
             <p>RDK最突出的特点就是易用！</p>
         </div>
     </rdk_tab>
-    <button class="tab_btn" ng-click="changeTabsStatus()" ng-class="{true:'tab_btn_down',false:'tab_btn_up'}[btnStatus]"></button>
+    <button class="tab_btn rdk-tab-item" ng-click="changeTabsStatus()">
+        <i class="rdk-icon" ng-class="{true:'tab-down-icon',false:'tab-up-icon'}[btnStatus]"></i>
+    </button>
 </div>
 </body>
 </html>

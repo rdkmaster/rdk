@@ -1,0 +1,39 @@
+.distributionNew{
+  height:100%; 
+  display: inline-flex;
+  flex-direction: column; 
+  line-height:1.2; 
+}
+.distributionSub{
+  margin-left:0px;
+  margin-top: 0px;
+  height:100%;
+}
+.hrLinePart0,.hrLinePart1,.hrLinePart2,.hrLinePart3,.hrLinePart4,.hrLinePart5{
+  height: 1px;
+  border: none;
+  border-top: 1px solid #64D083;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  margin-left: 0px;
+}
+/* todo:theme colors*/
+.hrLinePart1{
+  border-top: 1px solid #6AA6C5;
+}
+.hrLinePart2{
+  border-top: 1px solid #FC9B58;
+}
+.hrLinePart3{
+  border-top: 1px solid #EE6D66;
+}
+.hrLinePart4{
+  border-top: 1px solid #EE6D66;
+}
+.hrLinePart5{
+  border-top: 1px solid #DDDDDD;
+}
+.faceSpan{
+  color: #FFFFFF;
+  text-align:left;
+}
