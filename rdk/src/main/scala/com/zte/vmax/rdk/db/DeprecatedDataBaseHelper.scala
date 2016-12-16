@@ -9,12 +9,12 @@ import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 
 
 /**
-  * Created by 10054860 on 2016/8/19.
-  */
+ * Created by 10054860 on 2016/8/19.
+ */
 //@deprecated("DO NOT USE IT", "2.1")
 class DeprecatedDataBaseHelper extends DeprecatedDBAccessTrait with Logger {
 
-  case class DBContext(conn: Connection, stm: Statement, timestamp: Long = System.currentTimeMillis())
+  case class DBContext(conn: Connection, stm: Statement, sql: String, timestamp: Long = System.currentTimeMillis())
 
   private val statements = new ConcurrentHashMap[ResultSet, DBContext]
 
@@ -54,7 +54,7 @@ class DeprecatedDataBaseHelper extends DeprecatedDBAccessTrait with Logger {
         return null
       }
     }
-    statements.put(resultSet, DBContext(connection, statement))
+    statements.put(resultSet, DBContext(connection, statement, sql))
     return resultSet
   }
 
@@ -65,6 +65,7 @@ class DeprecatedDataBaseHelper extends DeprecatedDBAccessTrait with Logger {
       RdkUtil.safeClose(rs)
       RdkUtil.safeClose(ctx.stm)
       RdkUtil.safeClose(ctx.conn)
+      appLogger(session.appName).debug(s"sql->${ctx.sql} (${System.currentTimeMillis - ctx.timestamp} ms)")
     }
 
   }
