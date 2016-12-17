@@ -63,7 +63,6 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                     restrict: 'A',
                     priority: 1000,
                     link: function(scope, elem, attrs) {
-                        console.log(attrs);
                         $timeout(function() {
                             $(elem).selectpicker({
                                 style: 'btn',
@@ -81,7 +80,6 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                         option: '='
                     },
                     link: function(scope, element, attrs, ngModel) {
-                        // console.log(attrs);
                         if (!ngModel) return;
 
                         if (scope.option == undefined) {
