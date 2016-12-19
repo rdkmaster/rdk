@@ -2,11 +2,21 @@ define('main', ['rd.services.Alert'], function() {
     // 创建一个RDK的应用
     var app = angular.module("rdk_app", ['rd.services.Alert']);
     // 创建一个控制器
-    app.controller('rdk_ctrl', ['$scope', 'Alert', 'ButtonTypes', function(scope, Alert, ButtonTypes) {
+    app.controller('rdk_ctrl', ['$scope', 'Alert', 'ButtonTypes', 'EventService', 'EventTypes', function(scope, Alert, ButtonTypes, EventService, EventTypes) {
+
+        var moduleID;
         scope.clickHandler = function() {
-            Alert.scope = scope;
-            Alert.info('提示信息请注意', '信息提示', ButtonTypes.OK, callbackHandler,false,true);
+            moduleID = Alert.confirm('信息确认请注意', '确认提示', ButtonTypes.YES + ButtonTypes.NO + ButtonTypes.CANCEL, callbackHandler, false);
         }
+
+        EventService.register(moduleID, EventTypes.CLOSE, function(event, data){
+            alert('call close');
+        });
+
+        scope.removeHandler = function(){
+            Alert.remove(moduleID);
+        }
+
         function callbackHandler(val) {
             if (val == ButtonTypes.YES) {
                 alert('call back YES');

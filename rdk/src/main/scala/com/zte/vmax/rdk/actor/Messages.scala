@@ -35,7 +35,7 @@ object Messages {
 
   case class Header(key:String,value:String)
 
-  case class AgingValue(timeStamp:Long,ttl:Long,value:AnyRef)
+  case class AgingValue(timeStamp: Long, ttl: Long, value: AnyRef, callback: Object)
 
   case class ExportSource(url: String, peerParam: AnyRef = null)
 

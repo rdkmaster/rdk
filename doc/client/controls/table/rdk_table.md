@@ -189,7 +189,13 @@ data对象中应该包含以下**必填属性**：
 
 详细示例如下：
 <live_demo example="controls/table/additionalHeader" width="900"></live_demo>
+>删除自带表头：如果自定义了多级表头，可以通过属性设置删除表格自带的表头
 
+具体设置格式如下：
+
+        scope.setting = {
+            noHeader:true,
+        }
 
 ### 设置水平滚动条 ###
 

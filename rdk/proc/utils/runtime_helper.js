@@ -182,11 +182,11 @@ var Cache = {
         }
     },
     aging: {
-        put: function (k, v, ttl) {
+        put: function (k, v, ttl, callback) {
             if (!_.isDefined(ttl)) {
                 ttl = 24 * 60 * 60;
             }
-            return rdk_runtime.agingCachePut(k, v, ttl)
+            return rdk_runtime.agingCachePut(k, v, ttl, callback)
         },
         get: function (k) {
             return rdk_runtime.agingCacheGet(k)

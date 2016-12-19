@@ -169,7 +169,7 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                 template: '<div class="rdk-time-module">\
                             <span>{{label}}</span>\
                             <div class="time-content">\
-                                <input class="form-control startTime" ng-model="condition.startTime" type="text" \
+                                <input class="form-control startTime" ng-model="condition.startTime" unselectable="on" type="text" \
                                  readonly datetimepicker option="startTimeOption">\
                                 <span class="timeSpan" ng-if="range">-</span>\
                                 <input class="form-control endTime" ng-model="condition.endTime" type="text" \
@@ -450,7 +450,8 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                             break;
                                     }
                             }
-                            if(new Date(scope.condition.endTime) < limitTime){
+
+                            if((new Date(scope.condition.endTime) > new Date(beginTime))&&(new Date(scope.condition.endTime) < limitTime)){
                                 limitTime = new Date(scope.condition.endTime);
                             }
                             if (limitTime < endTime) {
@@ -459,7 +460,6 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                             scope.endTimeOption.endDate = endTime;
 
                             scope.condition.endTime = endTime;
-
                         }
 
 

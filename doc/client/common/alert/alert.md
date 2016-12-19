@@ -9,10 +9,10 @@ Alert 服务用于弹出提示信息的对话框，可能包含消息、标题�
 
 提示信息对话框目前支持四种表现形式：
 
-- 信息确认对话框，调用时直接使用 `Alert.confirm(message, title, button, callback, modal, close)`
-- 错误提示对话框，调用时直接使用 `Alert.error(message, title, button, callback, modal, close)` 
-- 普通信息提示对话框，调用时直接使用 `Alert.info(message, title, button, callback, modal, close)`
-- 警告提示对话框，调用时直接使用 `Alert.warn(message, title, button, callback, modal, close)`
+- 信息确认对话框，调用时直接使用 `Alert.confirm(message, title, button, callback, modal)`
+- 错误提示对话框，调用时直接使用 `Alert.error(message, title, button, callback, modal)` 
+- 普通信息提示对话框，调用时直接使用 `Alert.info(message, title, button, callback, modal)`
+- 警告提示对话框，调用时直接使用 `Alert.warn(message, title, button, callback, modal)`
 
 ## 参数 ##
 
@@ -89,41 +89,18 @@ Alert 服务用于弹出提示信息的对话框，可能包含消息、标题�
 
 `modal`设置成 `空字符串` 或者`null`时，默认弹出框是模态窗口。
 
-### close ###
-> 布尔型
-
-取值只可能是 `true` 或者 `false` 两种。代表出现一个有叉叉图标的闭关按钮 和 隐藏关闭按钮 。作为最后一个形参，`false` 可以缺省，缺省时默认为`true`。
-
-- `close` 设置成 `true` 时，代表弹出框有关闭按钮 。
-- `close` 设置成 `false` 时，代表弹出框没有闭按钮 。
-
-`close`设置成 `空字符串` ，默认弹出框是有关闭按钮。
-
-当`close` 设置成'true' 时，详细示例：
-<live_demo example="common/alert/close1" width="900" height="400"></live_demo>
-
-当`close` 设置成'false' 时，详细示例：
-<live_demo example="common/alert/close2" width="900" height="400"></live_demo>
-
 # 对话框示例 #
 
-**<font color=red>注意</font>** 调用对话框 `confirm/error/info/warn` 方法前，请一定先初始化scope。
-
-		Alert.scope = scope;
-
-
 ## 信息确认 ##
-		Alert.scope = scope;//scope必须初始化
 
-		Alert.confirm('信息确认请注意', '确认提示', 
-		ButtonTypes.YES+ButtonTypes.NO+ButtonTypes.CANCEL, callbackHandler);
+		Alert.confirm('信息确认请注意', '确认提示',
+			ButtonTypes.YES+ButtonTypes.NO+ButtonTypes.CANCEL, callbackHandler);
 
 `Alert.confirm()`详细示例：
 <live_demo example="common/alert/confirm" width="900" height="400"></live_demo>
 
 
 ## 错误提示 ##
-			Alert.scope = scope;//scope必须初始化
 
             Alert.error('内部发生错误请注意', '错误提示', ButtonTypes.OK, callbackHandler);
 
@@ -131,7 +108,6 @@ Alert 服务用于弹出提示信息的对话框，可能包含消息、标题�
 <live_demo example="common/alert/error" width="900" height="400"></live_demo>
 
 ## 普通信息提示 ##
-			Alert.scope = scope;//scope必须初始化
 
             Alert.info('提示信息请注意', '信息提示', ButtonTypes.OK, callbackHandler);
 
@@ -139,7 +115,6 @@ Alert 服务用于弹出提示信息的对话框，可能包含消息、标题�
 <live_demo example="common/alert/info" width="900" height="400"></live_demo>
 
 ## 警告提示 ##
-            Alert.scope = scope;//scope必须初始化
 
             Alert.warn('发生警告请注意', '警告提示', ButtonTypes.OK, callbackHandler);
 
@@ -164,4 +139,19 @@ Alert 服务用于弹出提示信息的对话框，可能包含消息、标题�
 以`confirm`为例，演示缺省所有形参时的提示框：
 <live_demo example="common/alert/param_default" width="900" height="400"></live_demo>
 
+## 手动销毁对话框 ##
 
+<font color=red>**注意**</font>
+*confirm/error/info/warn* 会返回 alert对话框的 *popupModuleID*，可以用于：
+
+ - 注册监听对话框右上角关闭按钮的 *CLOSE* 事件
+ 
+ 		EventService.register(moduleID, EventTypes.CLOSE, function(event, data){...});
+
+ - 手动调用销毁alert对话框
+ 
+		Alert.remove(popupModuleID)
+
+
+以`confirm`为例，演示对话框销毁 *remove* 及 *CLOSE* 事件监听：
+<live_demo example="common/alert/demo4remove" width="900" height="400"></live_demo>

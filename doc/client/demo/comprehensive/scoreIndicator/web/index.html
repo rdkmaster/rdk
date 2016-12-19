@@ -22,7 +22,10 @@
 
 <body ng-controller='myCtrl'>
     <!--得分分布指示器控件-->
-    <rdk_score_indicator class="score_indicator" config="config" ds="my_ds" ds_url="$svr/data" ds_query_if="ready"></rdk_score_indicator>
+    <div class="score_indicator">
+        <rdk_score_indicator  config="config" ds="my_ds" ds_url="$svr/data" ds_query_if="ready"></rdk_score_indicator>
+    </div>
+
 </body>
 
 </html>

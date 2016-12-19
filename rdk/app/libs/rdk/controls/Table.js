@@ -31,7 +31,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
                                 ng-class="{\'selected-row\':ifSelected(item)}" ng-dblclick="dbClickHandler(item,$index)">\
                                 <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="currentPageData[$index].checked"></td>\
-                                <td rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" style="width:{{columnDef.width}};cursor:move;{{getRowStyle(itemRowSpan,columnDef)}}">\
+                                <td rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" ng-style="getCellStyle(itemRowSpan,columnDef)">\
                                 </td>\
                             </tr>\
                              <tr ng-if="noData">\
@@ -111,7 +111,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 var array = [];
                 angular.forEach(data, function(obj){
                     var fieldStr = obj[searchFields[0]];
-                    if(fieldStr.toLowerCase().indexOf(globalSearch.toLowerCase()) != -1){
+                    if(fieldStr.toString().toLowerCase().indexOf(globalSearch.toLowerCase()) != -1){
                         array.push(obj);
                     }
                 })
@@ -271,7 +271,15 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 this.setPageSize = function(_pageSize){
                     if(scope.pageSize == _pageSize) return;
                     scope.pageSize = _pageSize;
-                    this.setCurrentPage(scope.currentPage);
+
+                    var ctrl = this;
+                    $timeout(function(){
+                        var maxCount = ctrl.pageCtrl.pageCount();
+                        if(scope.currentPage > maxCount){
+                            scope.currentPage = maxCount;
+                        }
+                        ctrl.pageCtrl.setPage(scope.currentPage);
+                    }, 0);
                 }
 
                 this.getTableAppScope = function() {
@@ -373,7 +381,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 select: "&?",
                 doubleClick: "&?",
                 check: "&?",
-                noHeader:'=?'
             },
             compile: function(tElement, tAttributes) {
 
@@ -535,6 +542,17 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 }
                             }
                         }, true);
+
+                        scope.getCellStyle = function(itemRowSpan,columnDef){
+                            var destObj = {};
+                            var result = scope.getRowStyle(itemRowSpan,columnDef);
+                            angular.forEach(result, function(value, key) {
+                                destObj[key] = value;
+                            });                          
+                            destObj.width = columnDef.width;
+                            destObj.cursor = 'move';
+                            return destObj;
+                        }
 
                         scope.stopPropagation = function() {
                             event.stopPropagation();
@@ -742,6 +760,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         }
 
                         scope.$on('ngRepeatFinished', function() {
+                            _reSetTableAddHeaders();
                             _fixTableHeader();
 
                             scope.refreshSingleCurrentPage();
@@ -921,9 +940,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     var _compileHeads={};//需要被编译的表头对象
                     var _hasAddTrReady=false; //标记多级表头的Html字符串是否插入到模板中
                     function _reSetTableHeaders(){
-                        if(_hasAddTrReady){
-                            return;
-                        }
                         var thead = element[0].querySelector('thead');
                         var ths=thead.querySelector("tr:last-child").querySelectorAll("th[ng-repeat]");
                         for(var key in _compileHeads)
@@ -939,7 +955,18 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 }
                             }
                         }
+                    }
+                    function _reSetTableAddHeaders(){
+                        if(_hasAddTrReady){
+                            return;
+                        }
                         if(!!scope.setting && scope.setting.additionalHeader){
+                            var thead = element[0].querySelector('thead');
+                            if(thead==null){ //没有表头则创建
+                                var table = element[0].querySelector('table');
+                                thead=document.createElement("thead");
+                                $(table).prepend(thead);
+                            }
                             var template=angular.element(scope.setting.additionalHeader);
                             var trs= $compile(template)(scope.appScope);
                             $(thead).prepend(trs);
@@ -975,10 +1002,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             scope.noHeader = true;
                         } else if (scope.data.header.length == 0) { //column.title是从header取
                             scope.noHeader = true;
+                        } else if (scope.setting && scope.setting.noHeader) {
+                            scope.noHeader = true;
                         } else {
-                            if(!scope.noHeader){
-                                scope.noHeader = false;
-                            }
+                            scope.noHeader = false;
                         }
 
                         scope.destData = _convertToObject(scope.data);

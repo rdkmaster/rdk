@@ -1,5 +1,5 @@
 ﻿define(['angular', 'rd.core', 'jquery-ui', 'rd.controls.Module', 'css!rd.styles.FontAwesome', 'css!rd.styles.PopupService'], function(){
-    var popupModule = angular.module('rd.services.PopupService', []);
+    var popupModule = angular.module('rd.services.PopupService', ['rd.controls.Module']);
     popupModule.service('PopupService', ['$rootScope', 'EventService', 'EventTypes', 'Utils', '$compile', '$timeout', function($rootScope, EventService, EventTypes, Utils, $compile, $timeout){
 
         this.popup = function(module, initData, option){
@@ -43,6 +43,7 @@
                     show: {effect: myEffect},  //blind,clip,drop,explode,fold,puff,slide,scale,size,pulsate
                     hide: {effect: myEffect},  
                     title: myTitle,
+                    width: 500,
                     position: {
                         my: positionX+' '+positionY,
                         at: atX+' '+atY,
@@ -50,6 +51,7 @@
                     },
                     close: function(ev, ui){
                         _destroyPopupModule(popupModuleID);
+                        EventService.broadcast(popupModuleID, EventTypes.CLOSE);
                     },
                     open: function(){
                         var $myIcon = $("<i></i>");
@@ -67,8 +69,12 @@
             }
         }
 
-        this.removePopup = function(id){
+        this.removePopup = function(id) {
             var popupModuleID = id;
+            if(!document.getElementById(popupModuleID)) {
+                console.warn("弹出框[id=%s]不存在！", popupModuleID);
+                return;
+            }
             if(!$('#'+id).hasClass('ui-dialog-content')){
                 popupModuleID = $('#'+id).children('.ui-dialog-content').attr('id');
             }

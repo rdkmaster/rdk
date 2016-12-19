@@ -54,7 +54,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     return '<div class="rdk-tab-module">\
                                 <div class="tabs">\
                                     <ul class="title">\
-                                        <li style="display:{{getIndex($index)==-1?\'none\':\'inline\'}}" ng-repeat="tab in tabs"  on-finish-render>\
+                                        <li ng-style="getLiStyle($index)" ng-repeat="tab in tabs"  on-finish-render>\
                                             <a href="#{{tab.tabid}}" ng-click="tabClick($event, $index)" ng-mouseover="tabMouseOver($event)" ng-class="{\'selected\':currentSelectedIndex == $index}" rdk-tabtitle-parser>\
                                               {{tab.title}}\
                                             </a>\
@@ -79,6 +79,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 scope.draggable = Utils.isTrue(attrs.draggable, true);
                 scope.toggleCondition = (attrs.toggleCondition ? attrs.toggleCondition : 'click').toLowerCase();
                 scope.selectedTab = Utils.getValue(scope.selectedTab, attrs.selectedTab, 0);
+                if(scope.showItems) scope.selectedTab = scope.showItems[scope.showItems.length-1];
                 scope.appScope = Utils.findAppScope(scope);
                 scope.compileScope = scope.appScope;
                 scope.controllerScope = {};
@@ -106,9 +107,17 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
 
                     scope.$watch("selectedTab", function(newVal, oldVal) {
                         _activeTabByIndex(newVal);
+                        var tabs = $(dom).tabs();
+                        tabs.tabs("refresh"); 
                     }, true);
 
                 });
+
+                scope.getLiStyle = function(index){
+                    var destObj = {};
+                    destObj.display = (scope.getIndex(index) == -1 ? 'none' : 'inline');
+                    return destObj;
+                }
 
                 scope.addTab = function(source, tabController, initData){//变量controlscope私有化
                     _compileScopeHandler(tabController, initData);
@@ -222,7 +231,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 }
 
                 scope.getIndex = function(idx) {
-                    if (!scope.showItems) return 0; //没定义，默认全部显示
+                    if(!scope.showItems) return 0; //没定义，默认全部显示
                     return scope.showItems.indexOf(idx); //定义了数组，部分显示
                 }
 
@@ -239,8 +248,6 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     var panelId = scope.tabs[index].tabid;
                     scope.tabs.splice(index, 1);
                     $("#" + panelId).remove();
-                    var tabs = $(dom).tabs();
-                    tabs.tabs("refresh");
                     _activeTab(index);
 
                 }
