@@ -3,21 +3,22 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
         var scrollerApp = angular.module("rd.controls.Scroller", ['rd.core']);
 
         scrollerApp.directive('rdkScroller', ['Utils', 'EventService', 'EventTypes', '$timeout', '$compile', function(Utils, EventService, EventTypes, $timeout, $compile) {
+            var scopeDefine={
+                data: '=?',
+                pageNum: '@?',
+                scrollPolicy: '@?',
+                timeout: '@?',
+                loop: '@?',
+                change: '&?',
+                id: '@?',
+                offset: '@?',
+                
+            };
             return {
                 restrict: 'E',
                 replace: true,
                 transclude: true,
-                scope: {
-                    data: '=?',
-                    pageNum: '@?',
-                    scrollPolicy: '@?',
-                    timeout: '@?',
-                    loop: '@?',
-                    change: '&?',
-                    id: '@?',
-                    offset: '@?',
-                   
-                },
+                scope: scopeDefine,
                 //要想ng-repeat开始的时候不编译，这样才能使用其中的数组项
                 // terminal: true,
 
@@ -40,6 +41,7 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                            </div>',
 
                 compile: function(tEle, tAttrs) {
+                        Utils.checkEventHandlers(tAttrs,scopeDefine);
                         Utils.bindDataSource(tAttrs, 'data', 'ds');
                         return {
                             post: _link

@@ -85,6 +85,16 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
             "province":"province.html",
             "city":"city.html"
         };
+        var scopeDefine={
+            id: '@?',
+            areaData:'=?',
+            change:'&?',
+            provinceLabel:'@?',
+            cityLabel:'@?',
+            areaLabel:'@?',
+            freezeProvince:"=?",
+            showAll:"=?"
+        };
         return {
             restrict: 'E',
             templateUrl: function(elem, attr){
@@ -95,16 +105,7 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                 }
             },
             replace: true,
-            scope: {
-                id: '@?',
-                areaData:'=?',
-                change:'&?',
-                provinceLabel:'@?',
-                cityLabel:'@?',
-                areaLabel:'@?',
-                freezeProvince:"=?",
-                showAll:"=?"
-            },
+            scope: scopeDefine,
             require:'^?rdkComboSelect',
             controller: ['$scope', function(scope){
                 Utils.publish(scope, this);
@@ -121,6 +122,7 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
         };
 
         function _link(scope,tElement,tAttrs,comboSelectCtrl) {
+            Utils.checkEventHandlers(tAttrs,scopeDefine);
             //TODO:处理控件内部数据的国际化:省市区标签
             var $vm = scope.$vm = {
                 resultData:"", //返回结果，字符串

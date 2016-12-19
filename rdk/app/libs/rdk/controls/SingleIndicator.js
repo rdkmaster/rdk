@@ -2,18 +2,18 @@ define( ['rd.core', 'css!rd.styles.SingleIndicator', 'css!rd.styles.FontAwesome'
 function() {
         var SingleIndicatorApp = angular.module("rd.controls.SingleIndicator", ['rd.core']);
         SingleIndicatorApp.directive('rdkSingleIndicator', ['Utils',function(Utils) {
+            var scopeDefine={
+                value:'=?',
+                pointTo:'=?',
+                label:'=?',
+                labelPosition:'@?',
+                icon : '@?',
+                formatter:'@?'
+            };
             return {
                 restrict: 'E',
                 replace: true,
-                scope:
-                {
-                  value:'=?',
-                  pointTo:'=?',
-                  label:'=?',
-                  labelPosition:'@?',
-                  icon : '@?',
-                  formatter:'@?'
-                },
+                scope:scopeDefine,
                 template: '<div  class="rdk-single-indicator">\
                               <div class="single-indicator-title  position_{{labelPosition}} single-indicator-bc">\
                                   <i class="{{icon}} single-indicator-icon"></i>\
@@ -28,6 +28,7 @@ function() {
                 controller: ['$scope', function(scope) {
                 }],
                 compile: function(tEle, tAttrs) {
+                    Utils.checkEventHandlers(tAttrs,scopeDefine);
                     Utils.bindDataSource(tAttrs, 'value');
                     return {
                         post: _link

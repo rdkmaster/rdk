@@ -3,6 +3,16 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
     var btnSearchApp = angular.module('rd.controls.Button', ['rd.core']);
     btnSearchApp.directive('rdkButton', ['EventService', 'Utils', 'EventTypes', '$compile', '$timeout', 
         function(EventService, Utils, EventTypes, $compile, $timeout) {
+            var scopeDefine={
+                click: '&?',
+                icon:'@?',
+                label:'@?',
+                selected:'=?',
+                enabled:'=?',
+                toggle:'=?',
+                tooltip:'@?',
+                type:'@?'
+            };
             return {
                 restrict: 'E',
                 replace: true,
@@ -17,17 +27,9 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                                     </button>\
                                 </div>\
                            </div>',
-                scope:{
-                    click: '&?',
-                    icon:'@?',
-                    label:'@?',
-                    selected:'=?',
-                    enabled:'=?',
-                    toggle:'=?',
-                    tooltip:'@?',
-                    type:'@?'
-                },
+                scope:scopeDefine,
                 link: function(scope,ele, attr) {
+                    Utils.checkEventHandlers(attr,scopeDefine);
                     scope.label = Utils.getValue(scope.label, attr.label, '');
                     scope.icon = Utils.getValue(scope.icon, attr.icon, false);
                     scope.enabled = Utils.getValue(scope.enabled, attr.enabled ,true);
