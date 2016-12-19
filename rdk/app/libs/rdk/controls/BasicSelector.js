@@ -218,7 +218,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.BasicSelector',
                 function _resetInput(event){
                     if((scope.inputValue == "") || (typeof(scope.inputValue) == 'undefined')){
                         scope.showEditor = true;
-                        event.currentTarget.blur();
                     }
                     else{
                         var obj = {};
@@ -233,6 +232,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.BasicSelector',
 
                         EventService.raiseControlEvent(scope, EventTypes.CREATE, true);
                     }
+                    event.currentTarget.blur();
                 }
 
                 function _refreshSelectedItems(){
