@@ -6,9 +6,8 @@ define('main', ['application','rd.attributes.Scroll'], function (application) {
         /************************ panel demo test data start ************************/
         application.initDataSourceService(DataSourceService);
         scope.upload = function () {
-            var formData=new FormData();
-            var url = "/rdk/service/common/upload";
-		    formData.append("file",$("#myfile")[0].files[0]);
+            var formData = $("#myfile")[0].value;
+        	var url = "/rdk/service/common/upload";
         	DataSourceService.firmData(url, formData);
         }
 
