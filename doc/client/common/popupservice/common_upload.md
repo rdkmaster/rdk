@@ -44,17 +44,24 @@ rdk 提供了可支持客户端文件上传的服务
 在html中插入input用于选择文件：
 
             <input type="file"  id="myfile" name="myfile" class="filecss">
-                 
-或者用于上传字符串：             
-
-            <input type="text" id="myfile" >
-
-这是一个简单的上传字符串的例子：
-<live_demo example="common/upload/str" width="405"></live_demo>  
-
+ 
 在js中编写回调：
 
-    DataSourceService.firmData(url, data);
+            var formData=new FormData();
+            formData.append("file",$("#myfile")[0].files[0]);   //或者上传内存数据formData.append("file","内存数据");
+            $.ajax({  
+                  url:"/rdk/service/common/upload",    
+                  type: 'POST',  
+                  data: formData,            
+                  cache: false,  
+                  contentType: false,  
+                  processData: false,
+                  success:function(res) {
+                        alert(res)
+                    },
+                  failure:function(res) {
+                    }
+             }) ;   
 
 
     
