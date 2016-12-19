@@ -5,20 +5,18 @@
 
         var _ready = false;
         //优先检测属性回调事件是否正确
-        this.checkEventHandlers=function(attrs,eventTypeList){
-            var len=eventTypeList.length;
-            if(attrs['supressWarning']!==undefined){
-                return ;
-            }else{
-                for (var j=0;j<len;j++){
-                    var eventType=eventTypeList[j];
-                    var handlerScript=attrs[eventType];
-                    if(handlerScript.match(/\(.*\)/)){
-                        console.warn('事件属性 %s 的值 %s 不应该有圆括号！给控件dom节点添加supress_warning属性可抑制此告警。', eventType, handlerScript);
+        this.checkEventHandlers=function(attrs,scopes){
+            for(var key in scopes){
+                if(scopes[key].match(/&/)){
+                    if(attrs['supressWarning']!==undefined){
+                        return;
+                    }else{
+                       if(attrs[key].match(/\(.*\)/)){
+                           console.warn('事件属性%s 不该有圆括号!关于如何抑制此警告请查看 http://10.9.233.35:8080/doc/client/common/supress_warning.html',attrs[key]);
+                       } 
                     }
                 }
             }
-            
         };
         var _onReadyCallbackList = [];
 
