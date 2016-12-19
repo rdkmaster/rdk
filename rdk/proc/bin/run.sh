@@ -7,7 +7,7 @@ if [ "" != "$pid" ]; then
 	exit
 fi
 #jvm_opts="$jvm_opts -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n"
-jvm_opts="-server -Xms4g -Xmx8g -XX:-UseGCOverheadLimit -XX:+PrintGCDetails $jvm_opts"
+jvm_opts="-server -Xms4g -Xmx8g -XX:-UseGCOverheadLimit $jvm_opts"
 
 if [ -d "./jre" ]; then
     JAVA_HOME="./proc/bin/jre"
