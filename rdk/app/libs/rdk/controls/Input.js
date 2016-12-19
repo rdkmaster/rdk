@@ -1,14 +1,15 @@
 define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
     var inputApp = angular.module("rd.controls.Input", ['rd.core']);
-    inputApp.directive('rdkInput', function() {
+    inputApp.directive('rdkInput', ['Utils',function(Utils) {
+        var scopeDefine={
+            placeholder : "@?", 
+            readonly: "@?"
+        };
         return {
             restrict: 'EA',
             require: '?ngModel',
             replace: true,
-            scope:{
-               placeholder : "@?", 
-               readonly: "@?"
-            },
+            scope:scopeDefine,
             template: '<div>\
                      <input type="text" class="form-control" placeholder="{{placeholder}}">\
                  <span class="glyphicon glyphicon-remove" \
@@ -17,6 +18,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
                  <div style="clear:both"></div>\
                 </div>',
             compile: function(tElement, tAttrs, transclude) {
+                Utils.checkEventHandlers(tAttrs,scopeDefine);
                 return function(scope, iElement, iAttrs, ngModel) {
                     if (!ngModel) return;
                     var inputElement = iElement[0].children[0];
@@ -72,5 +74,5 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
                 }
             }
         };
-    });
+    }]);
 });

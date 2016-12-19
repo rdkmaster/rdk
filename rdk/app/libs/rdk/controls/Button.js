@@ -3,7 +3,7 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
     var btnSearchApp = angular.module('rd.controls.Button', ['rd.core']);
     btnSearchApp.directive('rdkButton', ['EventService', 'Utils', 'EventTypes', '$compile', '$timeout', 
         function(EventService, Utils, EventTypes, $compile, $timeout) {
-            var scopes={
+            var scopeDefine={
                 click: '&?',
                 icon:'@?',
                 label:'@?',
@@ -28,9 +28,9 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                                     </button>\
                                 </div>\
                            </div>',
-                scope:scopes,
+                scope:scopeDefine,
                 link: function(scope,ele, attr) {
-                    Utils.checkEventHandlers(attr,scopes);
+                    Utils.checkEventHandlers(attr,scopeDefine);
                     scope.label = Utils.getValue(scope.label, attr.label, '');
                     scope.icon = Utils.getValue(scope.icon, attr.icon, false);
                     scope.enabled = Utils.getValue(scope.enabled, attr.enabled ,true);

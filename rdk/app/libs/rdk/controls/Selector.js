@@ -2,35 +2,36 @@ define(['angular', 'jquery', 'underscore', 'rd.core','rd.controls.FoldSelector',
     'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function(){
     var selectorApp = angular.module('rd.controls.Selector', ['rd.core','rd.controls.FoldSelector']);
     selectorApp.directive('rdkSelector', ['Utils', 'EventService', 'EventTypes', function (Utils, EventService, EventTypes) {
+        var scopeDefine={
+            foldedIcon: '=?',
+            unfoldedIcon: '=?',  
+            frozen: '=?',
+            open: '=?',
+            captionEditable: '=?',
+
+            labelField: '=?',
+            multipleSelect: '=?',
+            searchable: '=?',
+            selectorEditable: '=?',
+            least: '=?',
+
+            data: '=?',
+            selectedItems: '=?',
+
+            groupby: '&?',
+            childChange: '&?',
+
+            change: '&?',
+            error: '&?',
+
+            id: '@?',
+            trackItemBy: '@?'
+        };
         return {
             restrict: 'E',
             replace: true,
             transclude: true,
-            scope: {
-                foldedIcon: '=?',
-                unfoldedIcon: '=?',  
-                frozen: '=?',
-                open: '=?',
-                captionEditable: '=?',
-
-                labelField: '=?',
-                multipleSelect: '=?',
-                searchable: '=?',
-                selectorEditable: '=?',
-                least: '=?',
-
-                data: '=?',
-                selectedItems: '=?',
-
-                groupby: '&?',
-                childChange: '&?',
-
-                change: '&?',
-                error: '&?',
-
-                id: '@?',
-                trackItemBy: '@?'
-            },
+            scope: scopeDefine,
             controller: ['$scope', '$attrs', function(scope, iAttrs) {
                 scope.appScope = Utils.findAppScope(scope);
 
@@ -170,6 +171,7 @@ define(['angular', 'jquery', 'underscore', 'rd.core','rd.controls.FoldSelector',
                     </rdk_fold_selector>\
                 </div>',
             compile: function(tEle, tAttrs) {
+                Utils.checkEventHandlers(tAttrs,scopeDefine);
                 Utils.bindDataSource(tAttrs, 'data');
                 return {
                     post: _link

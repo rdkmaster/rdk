@@ -5,16 +5,20 @@
 
         var _ready = false;
         //优先检测属性回调事件是否正确
-        this.checkEventHandlers=function(attrs,scopes){
-            for(var key in scopes){
-                if(scopes[key].match(/&/)){
-                    if(attrs['supressWarning']!==undefined){
-                        return;
-                    }else{
-                       if(attrs[key].match(/\(.*\)/)){
-                           console.warn('事件属性%s 不该有圆括号!关于如何抑制此警告请查看 http://10.9.233.35:8080/doc/client/common/supress_warning.html',attrs[key]);
-                       } 
-                    }
+        this.checkEventHandlers=function(attrs,scopeDefine){
+            if(attrs['supressWarning']!==undefined){
+                return;
+            }
+            var filterScopeDefine={};
+            //只针对需要使用的属性回调进行检测
+            for(var key in scopeDefine){
+                if(attrs[key]!==undefined){
+                    filterScopeDefine[key]=attrs[key];
+                }
+            }
+            for(var filterKey in filterScopeDefine){
+                if(scopeDefine[key].match(/&/) && filterScopeDefine[filterKey].match(/\(.*\)/)){
+                    console.warn('事件属性%s 不该有圆括号!关于如何抑制此警告请查看 http://10.9.233.35:8080/doc/client/common/supress_warning.md',attrs[key]);
                 }
             }
         };

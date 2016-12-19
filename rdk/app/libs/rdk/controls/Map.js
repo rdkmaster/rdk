@@ -3,6 +3,15 @@ define(['rd.controls.Graph'], function() {
 
     gisApp.directive('rdkMap', ['GraphService', 'DataSourceService', 'EventService', 'EventTypes', 'Utils',
         function(GraphService, DataSourceService, EventService, EventTypes, Utils) {
+            var scopeDefine={
+                id: '@',
+                mapDefine: '@?',
+                width: '=?',
+                height: '=?',
+                data: '=?',
+                map: '=',
+                graphContext: '=?'
+            };
             return {
                 restrict: 'E',
                 replace: true,
@@ -12,19 +21,12 @@ define(['rd.controls.Graph'], function() {
                                   event_handler="gisEventHandler">\
                               </rdk_graph>\
                            </div>',
-                scope: {
-                    id: '@',
-                    mapDefine: '@?',
-                    width: '=?',
-                    height: '=?',
-                    data: '=?',
-                    map: '=',
-                    graphContext: '=?'
-                },
+                scope: scopeDefine,
                 compile: _compile
             };
 
             function _compile(tElement, tAttributes) {
+                Utils.checkEventHandlers(tAttributes,scopeDefine);
                 tAttributes.graphContext = 'this';
                 Utils.bindDataSource(tAttributes, 'data', undefined, false);
                 return _postLink;

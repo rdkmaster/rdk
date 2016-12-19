@@ -248,6 +248,27 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
         });
 
     tableModule.directive('rdkTable', ['DataSourceService', 'EventService', 'EventTypes', 'Utils', '$timeout', '$compile',function(DataSourceService, EventService, EventTypes, Utils, $timeout,$compile) {
+        var scopeDefine={
+            id: '@',
+            setting: '=?',
+            data: '=?',
+            selectedIndex: '=?',
+            pageSize: "@?",
+            pagingType: "@?",
+            pagingVisible: "@?",
+            lang: "@?",
+            searchPrompt: "@?",
+            searchPattern: '@?',
+            proxyDs: "@?",
+            pageNumber: "@?",
+            addCheckBox: "=?",
+            defaultConditionProcessor: "&?",
+            floatableHeader: "@?",
+            change: "&?",
+            select: "&?",
+            doubleClick: "&?",
+            check: "&?",
+        };
         return {
             restrict: 'EA',
             replace: true,
@@ -353,29 +374,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     ds.query(finallyCondition, { "directQuery": true, "supressEvent": false });
                 }
             }],
-            scope: {
-                id: '@',
-                setting: '=?',
-                data: '=?',
-                selectedIndex: '=?',
-                pageSize: "@?",
-                pagingType: "@?",
-                pagingVisible: "@?",
-                lang: "@?",
-                searchPrompt: "@?",
-                searchPattern: '@?',
-                proxyDs: "@?",
-                pageNumber: "@?",
-                addCheckBox: "=?",
-                defaultConditionProcessor: "&?",
-                floatableHeader: "@?",
-                change: "&?",
-                select: "&?",
-                doubleClick: "&?",
-                check: "&?",
-            },
+            scope: scopeDefine,
             compile: function(tElement, tAttributes) {
-
+                Utils.checkEventHandlers(tAttributes,scopeDefine);
                 if (!tAttributes.hasOwnProperty('proxyDs')) {
                     tAttributes.proxyDs = tAttributes.ds;
                 }

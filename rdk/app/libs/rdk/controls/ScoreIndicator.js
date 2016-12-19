@@ -2,8 +2,11 @@ define(['rd.core', 'css!rd.styles.ScoreIndicator',
     'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'
 ], function () {
     var scoreIndicatorApp = angular.module('rd.controls.ScoreIndicator', ['rd.core']);
-    scoreIndicatorApp.directive('rdkScoreIndicator', [
-        function () {
+    scoreIndicatorApp.directive('rdkScoreIndicator', ['Utils',
+        function (Utils) {
+            var scopeDefine={
+                config: '=?'
+            };
             return {
                 restrict: 'E',
                 replace: true,
@@ -24,13 +27,12 @@ define(['rd.core', 'css!rd.styles.ScoreIndicator',
                                 </div>\
                             </div>\
                        </div>',
-                scope: {
-                    config: '=?'
-                },
+                scope: scopeDefine,
                 link: _link
             };
 
             function _link(scope, iEle, iAttrs, ctrl, transclude) {
+                Utils.checkEventHandlers(iAttrs,scopeDefine);
                 var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
                 scope.initWidth = 20; //初始横线长度
                 scope.widthArr = [];

@@ -163,6 +163,11 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
             }]);
 
         timeApp.directive('rdkTime', ['PickerConstant', 'TimeMacro', 'TimeFormate', 'TimeUnit', 'Utils', 'TimeUtilService', '$timeout', function(PickerConstant, TimeMacro, TimeFormate, TimeUnit, Utils, TimeUtilService, $timeout) {
+            var scopeDefine={
+                setting: "=?",
+                label: "=?",
+                refreshTimeout: "@?"
+            };
             return {
                 restrict: 'E',
                 replace: true,
@@ -182,13 +187,9 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                 </select>\
                             </div>\
                         </div>',
-                scope: {
-                    setting: "=?",
-                    label: "=?",
-                    refreshTimeout: "@?"
-                },
+                scope:scopeDefine,
                 compile: function(tElement, tAttrs) {
-
+                    Utils.checkEventHandlers(tAttrs,scopeDefine);
                     return function link(scope, iElement, iAttrs) {
                         var initValue = [];
                         var initStartDate = "";

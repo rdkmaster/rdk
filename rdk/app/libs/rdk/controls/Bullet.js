@@ -2,6 +2,16 @@ define(['angular', 'rd.services.Utils', 'rd.services.EventService', 'jquery', 'c
     var scoreApp = angular.module('rd.controls.Bullet', ['rd.core']);
 
     scoreApp.directive('rdkBullet', ['Utils','EventService', 'EventTypes',function(Utils,EventService,EventTypes) {
+        var scopeDefine={
+            sliders: '=',
+            sliderStyles: '=',
+            id: '@?',
+            minValue: "=?",
+            maxValue: "=?",
+            step: "=?",
+            editable: "=?",
+            showLegend: "=?"
+        };
         return {
             restrict: 'E',
             replace: true,
@@ -23,18 +33,10 @@ define(['angular', 'rd.services.Utils', 'rd.services.EventService', 'jquery', 'c
                                     </div>\
                                 </div>\
                             </div>',
-            scope: {
-                sliders: '=',
-                sliderStyles: '=',
-                id: '@?',
-                minValue: "=?",
-                maxValue: "=?",
-                step: "=?",
-                editable: "=?",
-                showLegend: "=?"
-            },
+            scope: scopeDefine,
             compile: function(tElems, tAttrs) {
                 return function postLink(scope, tElement, tAttrs, ctrl) {
+                    Utils.checkEventHandlers(tAttrs,scopeDefine);
                     scope.showLegend = Utils.isTrue(tAttrs.showLegend);
                     scope.title = angular.isDefined(tAttrs.title) ? tAttrs.title : "";
                     scope.editable = Utils.isTrue(tAttrs.editable);

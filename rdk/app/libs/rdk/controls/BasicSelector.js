@@ -4,6 +4,27 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.BasicSelector',
     var basicSelectorApp = angular.module('rd.controls.BasicSelector', ['rd.core']);
     basicSelectorApp.directive('rdkBasicSelector', ['EventService', 'Utils', 'EventTypes', '$timeout', '$compile',
         function(EventService, Utils, EventTypes, $timeout, $compile) {
+            var scopeDefine={
+                id: '@?',
+                trackItemBy: '@?',
+
+                labelField: '=?',
+                multipleSelect: '=?',
+                searchable: '=?',
+                editable: '=?',
+                least: '=?',
+                selectedItems: '=?',
+                data: '=?',
+
+                change: '&?',
+                error: '&?',
+                childChange: '&?',
+                dataChange: '&?',
+                create: '&?',
+
+                restrict: '@?',
+                maxLength: '@?'
+            };
             return {
                 restrict: 'E',
                 replace: true,
@@ -28,31 +49,12 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.BasicSelector',
                         </div>\
                     </div>\
                 </div>',
-                scope: {
-                    id: '@?',
-                    trackItemBy: '@?',
-
-                    labelField: '=?',
-                    multipleSelect: '=?',
-                    searchable: '=?',
-                    editable: '=?',
-                    least: '=?',
-                    selectedItems: '=?',
-                    data: '=?',
-
-                    change: '&?',
-                    error: '&?',
-                    childChange: '&?',
-                    dataChange: '&?',
-                    create: '&?',
-
-                    restrict: '@?',
-                    maxLength: '@?'
-                },
+                scope: scopeDefine,
                 controller: ['$scope', function(scope) {
                     Utils.onChildChange(scope, scope.childChange(scope));
                 }],
                 compile: function(tEle, tAttrs) {
+                    Utils.checkEventHandlers(tAttrs,scopeDefine);
                     Utils.bindDataSource(tAttrs, 'data');
                     return {
                         post: _link
