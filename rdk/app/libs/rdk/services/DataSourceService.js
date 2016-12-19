@@ -498,6 +498,31 @@
                 }
             }
 
+            this.firmData = function(url, data) {
+                if(isString(data)){
+                    var formData=new FormData();
+                    formData.append("file",data);
+                }
+                $.ajax({  
+                    url:url,    
+                    type: 'POST',  
+                    data: data,            
+                    cache: false,  
+                    contentType: false,  
+                    processData: false,
+                    success:function(res) {
+                        console.log(res);
+                    },
+                    failure:function(res) {
+
+                    }
+                }) ;
+            }
+
+            function isString(str){ 
+                return (typeof str=='string')&&str.constructor==String; 
+            } 
+
         }
     ]);
 
