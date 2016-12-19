@@ -22,8 +22,8 @@
                 if (!attrs[prop].match(/\(.*\)/)) {
                     continue;
                 }
-                console.warn('事件属性 %s 不该有圆括号！关于如何抑制此警告请查看 ' +
-                    'http://10.9.233.35:8080/doc/#client/common/supress_warning.md', attrs[prop]);
+                console.warn('事件属性 %s 的值 %s 不该有圆括号！关于此警告请查看 ' +
+                    'http://10.9.233.35:8080/doc/#client/common/supress_warning.md', prop, attrs[prop]);
             }
         };
 
