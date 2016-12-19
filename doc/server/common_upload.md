@@ -19,7 +19,7 @@ rdk 提供了可支持客户端文件上传的服务
 
 示例：
 
- 使用html表单元素和ajax jQery实现一个简单的文件上传客户端
+ 1、使用html表单元素和ajax jQery实现一个简单的文件上传客户端
 
 			<!DOCTYPE html>
 			<html>
@@ -66,4 +66,43 @@ rdk 提供了可支持客户端文件上传的服务
 			</html>
 
 
+2、使用html表单元素和ajax jQery实现前端内存数据上传客户端
 
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>upload</title>
+                <meta charset = "utf-8">
+                <script src="jquery-1.11.3.min.js"></script>
+                 <script>
+                        $(document).ready(function ()  {
+                                    $('#submitbtn').click(function (){  
+                                        $('#fileinput_form').submit(function(){
+                                            var formData=new FormData();
+                                            formData.append("file","自定义内存数据");   //使用append方法添加内存数据
+                                            $.ajax({  
+                                                  url:"http://127.0.0.1:5812/rdk/service/common/upload",    
+                                                  type: 'POST',  
+                                                  data: formData,           
+                                                  async: false,  
+                                                  cache: false,  
+                                                  contentType: false,  
+                                                  processData: false,
+                                                  success:function(res) {
+                                                    },
+                                                  failure:function(res) {
+                                                    }
+                                             }) 
+                                             return false;    
+                                        })
+                                    })
+
+                                })
+                 </script>
+            </head>
+            <body >
+                 <form id= "fileinput_form" enctype="multipart/form-data">             
+                            <button id= "submitbtn" style="width:60px;height:40px;" label="test">上传</button>
+                </form>       
+            </body>
+            </html>
