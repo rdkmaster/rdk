@@ -63,7 +63,6 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                 //scrollstatus:1-click,2-timer,3-都支持，默认3
                 //获取偏移量
                 scope.offset=Utils.getValue(scope.offset, attrs.offset, 0);
-
                 if (scope.offset>0){
                     var left=$(elem.find('.left_arrow')).css('left');
                     left=parseInt(left)-parseInt(scope.offset);
@@ -111,7 +110,7 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                 }
                 var parentEle = elem.find(".slide");
                 var elements = [];
-
+                
                 //对data数据进行监控，发生变化时，清空elements，并重新绑定数据
                 scope.$watch('showdata', function(newVal, oldVal) {
                     if (elements.length > 0) {
@@ -148,10 +147,9 @@ define(['rd.core', 'css!rd.styles.Scroller', 'css!rd.styles.FontAwesome', 'css!r
                         $(elem.find('.context')).css('overflow','hidden');
                         var contextWidth=$(elem.find('.context')).width();
                         var siderWidth=contextWidth*scope.pageNum;
-                        if (contextWidth>=100 && totalWidth>siderWidth){
-                            
+                        if (contextWidth>=110 && totalWidth>siderWidth){
                             $(elem[0]).css('width',siderWidth+2*parseInt(scope.offset)+2);
-                        }                   
+                        }
                     }
                 };
 
