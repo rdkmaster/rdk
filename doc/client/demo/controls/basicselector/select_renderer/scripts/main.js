@@ -10,7 +10,7 @@ define('main', ['rd.controls.BasicSelector'], function() {
             ******************************************************/
             scope.initialValue = function() {
                 scope.img_selected = 'fa fa-pencil fa-fw';
-                scope.img_base = "/demo/controls/basicselector/select_renderer/images/";
+                scope.img_base = "client/demo/controls/basicselector/select_renderer/images/";
                 scope.img_value = scope.img_base + "edit.png";
 
                 scope.allItems = [{
@@ -60,11 +60,12 @@ define('main', ['rd.controls.BasicSelector'], function() {
     app.directive('render', function() {
         return {
             restrict: 'E',
-            template: '<item_renderer>\
-            <span>{{item.label + "~渲染"}}</sapn>\
-            <i class="{{appScope.img_selected}}" ng-click="appScope.selfImageByRender()"></i>\
-            </item_renderer>',
-            replace: true
+            template: '<item_render>\
+                <span>{{appScope.img_selected}}</span>\
+                <i ng-attr-class="{{appScope.img_selected}}" ng-click="appScope.selfImageByRender()"></i>\
+                </item_render>\
+            ',
+            replace:true
         };
     });
 });

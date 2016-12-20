@@ -15,8 +15,8 @@
     <div>
         <rdk_basic_selector id="id_selector" data="allItems" ng-init="initialValue()">
             <item_renderer>
-                <span>{{item.label + '~渲染'}}</sapn>
-                <i class="{{appScope.img_selected}}" ng-click="appScope.selfImageByRender()"></i>
+                <span>{{item.label + '~渲染'}}</span>
+                <i ng-attr-class="{{appScope.img_selected}}" ng-click="appScope.selfImageByRender()"></i>
             </item_renderer>
         </rdk_basic_selector>
     </div>
