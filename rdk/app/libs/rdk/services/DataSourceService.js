@@ -498,6 +498,26 @@
                 }
             }
 
+            this.upload = function(data, onSuccess, onError) {
+                var formData;
+                if(angular.isString(data)) {
+                    formData = new FormData();
+                    formData.append("data", data);
+                } else {
+                    formData = data;
+                }
+                $.ajax({  
+                    url: "/rdk/service/common/upload",    
+                    type: "POST",  
+                    data: formData,            
+                    cache: false,  
+                    contentType: false,  
+                    processData: false,
+                    success: onSuccess,
+                    error: onError
+                }) ;
+            }
+
         }
     ]);
 

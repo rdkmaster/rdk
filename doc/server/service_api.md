@@ -16,10 +16,6 @@
 
 [查看公共导出服务](common_export.md)
 
-## 文件上传服务 ##
-
-[查看文件上传服务](common_upload.md)
-
 ## 消息队列 ##
 
 - [查看消息队列API -- JS](service_mq_js_api.md)
