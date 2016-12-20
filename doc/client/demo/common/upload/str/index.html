@@ -19,8 +19,8 @@
     </script>
 </head>
 <body ng-controller='myCtrl' style="position: relative">
-    <input type="text"  id="myfile" >
+    <input type="text"  ng-model="data" >
 
-    <button id= "submitbtn"  ng-click="upload()">上传</button>
+    <button ng-click="upload()">上传</button>
 </body>
 </html>

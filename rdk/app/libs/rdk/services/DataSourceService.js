@@ -498,30 +498,25 @@
                 }
             }
 
-            this.firmData = function(url, data) {
-                if(isString(data)){
-                    var formData=new FormData();
-                    formData.append("file",data);
+            this.upload = function(data, onSuccess, onError) {
+                var formData;
+                if(angular.isString(data)) {
+                    formData = new FormData();
+                    formData.append("data", data);
+                } else {
+                    formData = data;
                 }
                 $.ajax({  
-                    url:url,    
-                    type: 'POST',  
-                    data: data,            
+                    url: "/rdk/service/common/upload",    
+                    type: "POST",  
+                    data: formData,            
                     cache: false,  
                     contentType: false,  
                     processData: false,
-                    success:function(res) {
-                        console.log(res);
-                    },
-                    failure:function(res) {
-
-                    }
+                    success: onSuccess,
+                    error: onError
                 }) ;
             }
-
-            function isString(str){ 
-                return (typeof str=='string')&&str.constructor==String; 
-            } 
 
         }
     ]);
