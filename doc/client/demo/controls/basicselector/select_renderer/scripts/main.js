@@ -10,7 +10,7 @@ define('main', ['rd.controls.BasicSelector'], function() {
             ******************************************************/
             scope.initialValue = function() {
                 scope.img_selected = 'fa fa-pencil fa-fw';
-                scope.img_base = "client/demo/controls/basicselector/select_renderer/images/";
+                scope.img_base = "demo/controls/basicselector/select_renderer/images/";
                 scope.img_value = scope.img_base + "edit.png";
 
                 scope.allItems = [{
