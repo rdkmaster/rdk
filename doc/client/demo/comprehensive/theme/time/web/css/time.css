@@ -1,0 +1,7 @@
+ .combo_select{
+    padding:4px 5px 4px 40px;
+    height:40px;
+    background-image:url(../images/calendar.png);
+    background-repeat: no-repeat;
+    background-position: 5px 5px;
+}

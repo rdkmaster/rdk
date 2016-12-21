@@ -13,7 +13,7 @@
 /* 滚动条*/
 .content{height:248px;padding-right:4px;}
 /* title */
-.panel-title {
+.rdk-panel-title {
     border: 0;
     /*background-color: #33A5DD;*/
     background-color: #fff;
@@ -21,13 +21,14 @@
     /*background-color: #eee;*/
     font-weight: normal;
 }
-.panel-caption{
+.rdk-panel-caption{
     line-height: 28px;
+    margin-left: -2px;
 }
-.panel-caption i{
+.rdk-panel-caption i{
     font-style: normal;
     color: #008fd4;
-    margin-left: -14px;
+
 }
 
 /* table */

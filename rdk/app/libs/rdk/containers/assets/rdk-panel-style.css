@@ -10,11 +10,11 @@
 
 }
 
-.panel-close{
+.rdk-panel-close{
     float:right;
     margin-right:10px;
 }
-.panel-caption{
+.rdk-panel-caption{
     margin-left:10px;
     width:80%;   
     font-weight: bold;
@@ -23,18 +23,18 @@
     cursor: pointer;  
     
 }
-.panel-title{
+.rdk-panel-title{
     background-color: #E3E3E3;
     border: 1px solid #CDCDCD;
     width: 100%; 
 }
 
-.panel-content{
+.rdk-panel-content{
 	overflow-y:auto;
     width: 100%;
 }
 
-.rdk-panel-module  .panel-caption   .panel-content .panel-content-transclude{
+.rdk-panel-module  .rdk-panel-caption   .rdk-panel-content .rdk-panel-content-transclude{
     display: inline-block;
     
 }
