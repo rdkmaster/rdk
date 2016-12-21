@@ -114,8 +114,6 @@ define(['angular', 'rd.services.Utils', 'rd.services.EventService', 'jquery', 'c
             this.element.style.left = this.x + 'px';
             this.element.style.top  = this.y + 'px';
         };
-
-<<<<<<< HEAD
         return {
             //创建一个可拖动元素节点
             createDragNode: function(element,dragBar,index,groupName,parentNode,mDownFn,mMoveFn,endMoveFn,isInit){
