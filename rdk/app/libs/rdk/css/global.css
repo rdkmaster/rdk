@@ -11,9 +11,9 @@ h1, h2, h3, h4, h5, h6{ font-size:100%; }
 em { font-style:normal; }
 input, select, textarea { outline:none; }
 button{
-	font-family : 微软雅黑,宋体;
-	font-size :14px;
-	outline:none;
+    font-family : 微软雅黑,宋体;
+    font-size :14px;
+    outline:none; 
 }
 
 textarea { resize:none; } //禁用了文本的拖拉，尤其在谷歌下
@@ -23,11 +23,11 @@ a { color: #666; text-decoration:none; }
 a:hover { color: #f60; text-decoration:none; }
 
 .rdk_main {
-	display: none;
+    display: none;
 }
 
 .rdk_loading {
-	position: absolute;
+    position: absolute;
     top: 35%;
     left: 0;
     right: 0;
@@ -40,20 +40,3 @@ a:hover { color: #f60; text-decoration:none; }
     width:60px;
     height: 60px;
 }
-
-.rdk-icon{background: url("rdk-icon.png");display: block}
-.sort-icon {background-position: -184px -0px; width: 12px; height: 22px; }
-.sort-up-icon {background-position: -212px -0px; width: 12px; height: 22px; }
-.sort-down-icon {background-position: -198px -0px; width: 12px; height: 22px; }
-.tab-down-icon {background-position: -160px -0px; width: 10px; height: 11px; }
-.tab-up-icon {background-position: -172px -0px; width: 10px; height: 11px; }
-.btn-down-icon {background-position: -28px -0px; width: 64px; height: 12px; }
-.btn-up-icon {background-position: -94px -0px; width: 64px; height: 12px; }
-.btn-left-icon {background-position: -14px -0px; width: 12px; height: 64px; }
-.btn-right-icon {background-position: -0px -0px; width: 12px; height: 64px; }
-.trend-icon {background-position: -35px -20px; width: 19px; height: 15px; }
-.detail-icon {background-position: -60px -20px; width: 20px; height: 14px; }
-
-
-
-

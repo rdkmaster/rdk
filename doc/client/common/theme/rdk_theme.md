@@ -2,11 +2,9 @@
 
 ##RDK主题控制
 
+
 # 实现方式 #
 通过更换css来实现更换主题。
-
-
-<rdk_title>rdk_theme</rdk_title>
 
 # 简介 #
 对于同一个控件具有多种不同的风格主题，可以通过这个rdk-theme属性选择不同的主题风格。
@@ -77,7 +75,7 @@
 
 事例代码：
 
-	<rdk_panel rdk_theme="rdk-tab-theme-default" ……></rdk_panel>
+	<rdk_panel rdk_theme="rdk-panel-theme-default" ……></rdk_panel>
 	
 效果如右图：
 	<img src="panel-blue.png" alt="rdk-panel-theme-blue主题" title="rdk-panel-theme-blue主题">
