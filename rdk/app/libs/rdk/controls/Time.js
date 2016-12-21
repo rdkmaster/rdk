@@ -54,6 +54,12 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                     var firstWeekDays = 7 - firstDay.getDay() + weekStart;
                     var dayOfYear = (((new Date(year, date.getMonth(), date.getDate())) - firstDay) / 86400000) + 1;
                     return Math.ceil((dayOfYear - firstWeekDays) / 7) + 1;
+                },
+                getDateForStringDate: function(dateStr){
+                    dateStr = dateStr.replace(/-/g,"/");
+                    var arr = dateStr.split('/');//new Date带-参数时
+                    if(arr.length == 2) dateStr = dateStr + '/01';//month时处理
+                    return new Date(dateStr);
                 }
             };
         }]);
@@ -118,7 +124,7 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                         }, 0);
 
                         function _getWeekFormat(date) {
-                            date = new Date(date);
+                            date = TimeUtilService.getDateForStringDate(date);
                             var week = TimeUtilService.getWeekOfYear(date, scope.option.weekStart);
                             if (scope.option.language === 'zh_cn') {
                                 return date.getFullYear() + '第' + (week < 10 ? '0' : '') + week + '周';
@@ -139,9 +145,9 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                         function _init() {
                             if (scope.option.realFormat) {
                                 if (!scope.option.realValue) {
-                                    scope.option.realValue = TimeUtilService.dateFormate(new Date($(element).val()), scope.option.realFormat);
+                                    scope.option.realValue = TimeUtilService.dateFormate(TimeUtilService.getDateForStringDate($(element).val()), scope.option.realFormat);
                                 }
-                                scope.option.realValue = TimeUtilService.dateFormate(new Date(scope.option.realValue), scope.option.realFormat);
+                                scope.option.realValue = TimeUtilService.dateFormate(TimeUtilService.getDateForStringDate(scope.option.realValue), scope.option.realFormat);
                                 $(element).val(scope.option.realValue);
                                 ngModel.$setViewValue(scope.option.realValue);
                                 scope.option.format = scope.option.realFormat.replace(/mm/, "ii");
@@ -236,7 +242,6 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                             scope.setting.value[0] = TimeUtilService.dateFormate(_timeMacroCalculate(initValue[0]), scope.timeFormat);
                                             scope.setting.value[1] = TimeUtilService.dateFormate(_timeMacroCalculate(initValue[1]), scope.timeFormat);
                                         } else {
-
                                             scope.setting.value = TimeUtilService.dateFormate(_timeMacroCalculate(initValue), scope.timeFormat);
                                         }
                                     }
@@ -401,11 +406,12 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                         }
 
                         function _handlerGap(beginTime, gap) {
-                            if (scope.selectedGranularity.value == "week") {
+                            if(scope.selectedGranularity.value == "week"){
                                 var realTime = beginTime.match(/(\d+).+?(\d+)/);
-                                beginTime = TimeUtilService.dateAdd(new Date(realTime[1] + "-01-01"), 'w', realTime[2] - 1);
+                                beginTime = TimeUtilService.dateAdd(TimeUtilService.getDateForStringDate(realTime[1] + "-01-01"), 'w', realTime[2] - 1);
                             }
-                            var endTime = new Date(beginTime);
+
+                            var endTime = TimeUtilService.getDateForStringDate(beginTime.toString());
                             endTime.setHours(23);
                             endTime.setMinutes(59);
                             endTime.setSeconds(59);
@@ -452,9 +458,16 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                     }
                             }
 
-                            if((new Date(scope.condition.endTime) > new Date(beginTime))&&(new Date(scope.condition.endTime) < limitTime)){
-                                limitTime = new Date(scope.condition.endTime);
+
+                            var endTimeCache = scope.condition.endTime;
+                            if(scope.selectedGranularity.value == "week"){
+                                var realTime = endTimeCache.match(/(\d+).+?(\d+)/);
+                                endTimeCache = TimeUtilService.dateAdd(TimeUtilService.getDateForStringDate(realTime[1] + "-01-01"), 'w', realTime[2] - 1);
                             }
+                            if((TimeUtilService.getDateForStringDate(endTimeCache) > TimeUtilService.getDateForStringDate(beginTime))&&(TimeUtilService.getDateForStringDate(endTimeCache) < limitTime)){
+                                limitTime = TimeUtilService.getDateForStringDate(endTimeCache);
+                            }                            
+
                             if (limitTime < endTime) {
                                 endTime = limitTime;
                             }
@@ -546,7 +559,7 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                         return _timeMacroConvert(timeMacro);
                                     }
                                 } else {
-                                    return new Date(timeMacro);
+                                    return TimeUtilService.getDateForStringDate(timeMacro);
                                 }
                             } else {
                                 return timeMacro;
