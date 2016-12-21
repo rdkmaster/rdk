@@ -1,8 +1,7 @@
 define(["app-basic", "mainconfig"], function() {
-    require(["rest!/rdk/app/common/theme.json"] , function(theme) {
+    require(["rest!/rdk/app/common/theme"] , function(theme) {
         var bodyHTML = undefined;
         var hasReady = false;
-        var themeConfig=_parse(theme);
 
         function _onSuccess() {
             if (bodyHTML !== undefined) {
@@ -85,43 +84,6 @@ define(["app-basic", "mainconfig"], function() {
             }
         }
 
-        function _parse(data) {
-            var result;
-            if (typeof data==='string') {
-                try {
-                    result = JSON.parse(data);
-                } catch (e) {
-                    result = data;
-                }
-            } else {
-                result = data;
-            }
-            return result;
-        }
-        // function _mergePaths(paths) {
-        //     if (!paths) {
-        //         return paths;
-        //     }
-        //     try {
-        //         var userPaths = require.s.contexts['_'].config.paths;
-        //     } catch(e) {
-        //         console.log('no original paths found!');
-        //         return paths;
-        //     }
-        //     if (!userPaths) {
-        //         return paths;
-        //     }
-
-        //     for (var path in paths) {
-        //         if (userPaths.hasOwnProperty(path)) {
-        //             console.warn('path config "' + path + '" is overriden, original value="' +
-        //                 paths[path] + '", user value="' + userPaths[path] + '"');
-        //             delete paths[path];
-        //         }
-        //     }
-        //     return paths;
-        // }
-
         function _injectDependency(list) {
             angular.forEach(list, function(dep) {
                 dep = dep.trim();
@@ -170,11 +132,11 @@ define(["app-basic", "mainconfig"], function() {
         //同时r.js会无视重复的依赖，所以最终效果就是 'angular', 'jquery', 'css!../rdk/css/loading'
         //这3个依赖都会被r.js找到，从而达到在压缩环境下有loading，非压缩环境下无loading的目的
         if (window.hasOwnProperty('angular')) {
-            require(['angular', 'jquery', 'css!../rdk/css/loading',themeConfig.theme], _start);
+            require(['angular', 'jquery', 'css!../rdk/css/loading', theme], _start);
         } else {
-            require(['angular', 'jquery',themeConfig.theme], _start);
+            require(['angular', 'jquery', theme], _start);
         }
-        //requirejs-plugins/requirecss/css/theme/zte-blue/zte-blue
+
         window.rdk = {};
         window.rdk.$start = _start;
         // window.rdk.$mergePaths = _mergePaths;
