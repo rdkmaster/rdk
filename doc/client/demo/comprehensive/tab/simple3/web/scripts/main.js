@@ -14,20 +14,19 @@ define('main', ['rd.controls.Table','rd.containers.Panel'], function() {
         }
         var width = parseFloat($('.hao').css('width'));
         var height = parseFloat($('.hao').css('height'));//恨据外围 div的长宽给图标自动定位
-        $('span.images_right').css({
+        $('button.images_right').css({
             'left':(width-1)+"px",
             'top':(height/2-32-100)+"px"
         });
         //左右拉的点击动漫效果
-         $scope.images = function(){
-            if($('.hao').hasClass('images_down')){
-                $('.hao').removeClass('images_down').addClass('images_up');
-                $('span.images_right').addClass('images_left')
-            }else{
-                $('.hao').removeClass('images_up','images_left').addClass('images_down')
-                $('span.images_right').removeClass('images_left')
+        $scope.iconCondition = true;
+            $scope.images = function(){
+                $scope.iconCondition =!$scope.iconCondition;
+                if($('.hao').hasClass('images_down')){
+                    $('.hao').removeClass('images_down').addClass('images_up');
+                }else{
+                    $('.hao').removeClass('images_up').addClass('images_down')
+                }
             }
-        }
-       
     }]);
 });
