@@ -1,7 +1,8 @@
 package com.zte.vmax.rdk.util
 
 
-import java.io.{File, FilenameFilter}
+
+import java.io.{FileOutputStream, File, FilenameFilter}
 import java.lang.reflect.Method
 import java.net.InetAddress
 import java.nio.file._
@@ -24,7 +25,7 @@ import com.zte.vmax.rdk.jsr.FileHelper
 import com.zte.vmax.rdk.service.ServiceConfig
 import jdk.nashorn.api.scripting.ScriptObjectMirror
 import jdk.nashorn.internal.runtime.Undefined
-import spray.http.{IllegalRequestException, StatusCodes}
+import spray.http.{MultipartFormData, IllegalRequestException, StatusCodes}
 import scala.concurrent.{Future, Await}
 import scala.reflect.ClassTag
 import scala.util.Try
@@ -298,6 +299,25 @@ object RdkUtil extends Logger {
       case _ =>None
     }
 
+  def uploadFile(runtime: Runtime, formData: MultipartFormData, fileName: String): Either[Exception, String] = {
+    val file = new File(fileName)
+    runtime.fileHelper.ensureFileExists(file)
+    val out = new FileOutputStream(file)
+    var result: Either[Exception, String] = Right("upload file success!")
+    formData.fields.foreach {
+      field =>
+        try {
+          out.write(field.entity.data.toByteArray)
+        } catch {
+          case e: Throwable =>
+            result = Left(new Exception(e))
+        } finally {
+          out.close()
+        }
+    }
+    result
+  }
+
   def getHostName: String = {
     InetAddress.getLocalHost().getHostName
   }
@@ -362,5 +382,6 @@ object RdkUtil extends Logger {
       case _ =>
         None
     }
+
   }
 }

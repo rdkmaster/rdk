@@ -2,20 +2,21 @@ define(['rd.core'], function() {
     var moduleApp = angular.module("rd.controls.Module", ['rd.core']);
     moduleApp.directive('rdkModule', ['EventService', 'EventTypes', 'Utils', '$compile', '$controller', '$http', '$timeout',
         function(EventService, EventTypes, Utils, $compile, $controller, $http, $timeout) {
+            var scopeDefine={
+                id: '@?',
+                url: '@?',
+                controller: '@?',
+                loadOnReady: '@?',
+                initData: '=?',
+                loadTimeout: '@?',
+
+                loading: '&?',
+                ready: '&?',
+                destroy: '&?',
+            };
             return {
                 restrict: 'E',
-                scope: {
-                    id: '@?',
-                    url: '@?',
-                    controller: '@?',
-                    loadOnReady: '@?',
-                    initData: '=?',
-                    loadTimeout: '@?',
-
-                    loading: '&?',
-                    ready: '&?',
-                    destroy: '&?',
-                },
+                scope: scopeDefine,
                 replace: true,
                 template: '<div></div>',
                 controller: ['$scope', function(scope) {
@@ -55,6 +56,7 @@ define(['rd.core'], function() {
                     });
                 }],
                 link: function(scope, element, attrs) {
+                    Utils.checkEventHandlers(attrs,scopeDefine);
                     scope.url = Utils.getValue(scope.url, attrs.url, '');
                     scope.controller = Utils.getValue(scope.controller, attrs.controller, '');
                     scope.loadOnReady = Utils.isTrue(attrs.loadOnReady, true);

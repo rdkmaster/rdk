@@ -3,6 +3,22 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.TabSelector','rd.controls
 
     var tabSelectorApp = angular.module('rd.controls.TabSelector',['rd.core','rd.controls.BasicSelector',]);
     tabSelectorApp.directive('rdkTabSelector', ['Utils',function (Utils) {
+        var scopeDefine={
+            id: '@?',
+
+            nodeField: '=?',
+
+            labelField: '=?',
+            trackItemBy: '@?',
+            multipleSelect: '=?',
+            searchable: '=?',
+            editable: '=?',
+
+            selectedItems: '=?',
+            data: '=?',
+
+            childChange: '&?',
+        };
         return {
             restrict: 'E',
             template:
@@ -19,26 +35,12 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.TabSelector','rd.controls
                         </rdk_basic_selector>\
                 </div>',
             replace: true,
-            scope: {
-                id: '@?',
-
-                nodeField: '=?',
-
-                labelField: '=?',
-                trackItemBy: '@?',
-                multipleSelect: '=?',
-                searchable: '=?',
-                editable: '=?',
-
-                selectedItems: '=?',
-                data: '=?',
-
-                childChange: '&?',
-            },
+            scope: scopeDefine,
             controller: ['$scope', function(scope){
                 Utils.onChildChange(scope, scope.childChange(scope));
             }],
             compile: function(tEle, tAttrs) {
+                Utils.checkEventHandlers(tAttrs,scopeDefine);
                 Utils.bindDataSource(tAttrs, 'data');
                 return {
                     post: _link

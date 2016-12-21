@@ -4,19 +4,20 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
     comboModule.directive('rdkComboSelect', ['Utils', 'EventService', 'EventTypes', 'RDKConst', '$timeout',
         function(Utils, EventService, EventTypes, RDKConst, $timeout) {
             var zIndex = 0;
+            var scopeDefine={
+                id: '@',
+                caption: '=?',
+                open: '=?',
+                openPolicy:'@?',
+                frozen: '=?',
+                childChange: '&?',
+            };
             return {
                 restrict: 'E',
                 replace: true,
                 transclude: true,
 
-                scope: {
-                    id: '@',
-                    caption: '=?',
-                    open: '=?',
-                    openPolicy:'@?',
-                    frozen: '=?',
-                    childChange: '&?',
-                },
+                scope: scopeDefine,
                 template:'<div class="rdk-combo-select-module" ng-mouseleave="closeShow()">\
                               <div class="combo-content" ng-mouseenter="openShow()">\
                                   <span class="combo-caption" ng-show="!!caption">{{caption}}</span>\
@@ -72,6 +73,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 }],
                 controllerAs:'comboSelectCtrl',
                 compile: function(tEle, tAttrs) {
+                    Utils.checkEventHandlers(tAttrs,scopeDefine);
                     return {
                         post: _link
                     }

@@ -110,7 +110,9 @@
 .datetimepicker-dropdown-bottom-right:after{
     top: 0 ;
 }
-
+.dropdown-toggle {
+    height:30px;
+}
 [class*=" datetimepicker-dropdown"]:before {
   content: none ;
 }

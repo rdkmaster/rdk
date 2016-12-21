@@ -6,6 +6,7 @@ import com.zte.vmax.rdk.env.Runtime
 import com.zte.vmax.rdk.service.ServiceConfig
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 import org.json4s.{DefaultFormats, Formats}
+import spray.http.MultipartFormData
 import spray.httpx.Json4sSupport
 
 
@@ -49,6 +50,12 @@ class WorkRoutee extends Actor with Json4sSupport with Logger {
     case WSCallJSMethod(head, body) =>
       val result = RdkUtil.handleJsRequest(runtime, NoneContext, body.script, body.app, body.param, body.method)
       sender ! WSResponse(head, if (result.isLeft) result.left.get.getMessage else result.right.get)
+
+    case (no: Long, UploadServiceParam(data: MultipartFormData, fileName: String, timeStamp: Long)) =>
+      runtime.setAppName("uploadFile")
+      val result = RdkUtil.uploadFile(runtime, data, fileName)
+      logger.debug(s"<No.${no}> upload ${fileName} (${System.currentTimeMillis() - timeStamp}ms)")
+      sender ! result
 
 
     case (no: Long, ExportParam(source, fileType, fileParam, timeStamp)) =>

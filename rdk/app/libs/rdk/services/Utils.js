@@ -4,6 +4,29 @@
         var _this = this;
 
         var _ready = false;
+        //优先检测属性回调事件是否正确
+        this.checkEventHandlers=function(attrs,scopeDefine){
+            if(attrs['supressWarning'] !== undefined){
+                return;
+            }
+            for(var prop in scopeDefine) {
+                if (!scopeDefine[prop]) {
+                    continue;
+                }
+                if (!scopeDefine[prop].match(/&/)) {
+                    continue;
+                }
+                if (!attrs[prop]) {
+                    continue;
+                }
+                if (!attrs[prop].match(/\(.*\)/)) {
+                    continue;
+                }
+                console.warn('事件属性 %s 的值 %s 不该有圆括号！关于此警告请查看 ' +
+                    'http://10.9.233.35:8080/doc/#client/common/supress_warning.md', prop, attrs[prop]);
+            }
+        };
+
         var _onReadyCallbackList = [];
 
         this.swipeOnReadyCallbacks = function() {

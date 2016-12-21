@@ -2,30 +2,31 @@
     var menuTreeApp = angular.module("rd.controls.Tree", ['rd.core']);
     menuTreeApp.directive('rdkTree', ['EventService', 'EventTypes', 'Utils',
         function(EventService, EventTypes, Utils) {
+            var scopeDefine={
+                id: '@',
+                nodeField: '@?',
+                labelField: '@?',
+                unselectOnBlur: '@?',
+                draggable: '@?',
+
+                setting: '=?',
+                editable: '=?',
+                checkable: '=?',
+                data: '=',
+
+                click: '&?',
+                doubleClick: '&?',
+                check: '&?',
+                rename: '&?',
+                beforeRemove: '&?',
+                beforeRename: '&?',
+                beforeCollapse: '&?',
+                beforeExpand: '&?',
+                beforeEditName: '&?',
+            };
             return {
                 restrict: 'E',
-                scope: {
-                    id: '@',
-                    nodeField: '@?',
-                    labelField: '@?',
-                    unselectOnBlur: '@?',
-                    draggable: '@?',
-
-                    setting: '=?',
-                    editable: '=?',
-                    checkable: '=?',
-                    data: '=',
-
-                    click: '&?',
-                    doubleClick: '&?',
-                    check: '&?',
-                    rename: '&?',
-                    beforeRemove: '&?',
-                    beforeRename: '&?',
-                    beforeCollapse: '&?',
-                    beforeExpand: '&?',
-                    beforeEditName: '&?',
-                },
+                scope: scopeDefine,
                 controller: ['$scope', function(scope) {
                     //把控制器暴露给app
                     Utils.publish(scope, this);
@@ -33,6 +34,7 @@
                 replace: true,
                 template: '<div><ul id="__unique_id__" class="ztree"></ul></div>',
                 compile: function(element, attrs) {
+                    Utils.checkEventHandlers(attrs,scopeDefine);
                     Utils.bindDataSource(attrs, 'data');
                     return {
                         post: function(scope, iElement, iAttrs, controller) {

@@ -17,6 +17,17 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
     }]);
     vmaxGraphApp.directive('rdkGraph', ['EventService', 'EventTypes', 'GraphService', 'Utils', 'RdkGraph', '$timeout',
         function(EventService, EventTypes, GraphService, Utils, RdkGraph, $timeout) {
+            var scopeDefine={
+                id: '@',
+                graphTemplate: '@?',
+                graphDefine: '@?',
+                width: '=?',
+                height: '=?',
+                data: '=?',
+                graphContext: '=?',
+                eventHandler: '&?',
+                graphUpdate: '&?',
+            };
             return {
                 restrict: 'E',
                 replace: true,
@@ -24,17 +35,7 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
                             <div style="width:100%;height:100%" ng-hide="noData"></div> \
                             <div class="no-data" ng-show="noData" ></div> \
                         </div>',
-                scope: {
-                    id: '@',
-                    graphTemplate: '@?',
-                    graphDefine: '@?',
-                    width: '=?',
-                    height: '=?',
-                    data: '=?',
-                    graphContext: '=?',
-                    eventHandler: '&?',
-                    graphUpdate: '&?',
-                },
+                scope: scopeDefine,
                 controller: ['$scope', function(scope) {
                     //将内部控制器暴露给app
                     Utils.publish(scope, this);
@@ -43,6 +44,7 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
             };
 
             function _compile(tElement, tAttributes) {
+                Utils.checkEventHandlers(tAttributes,scopeDefine);
                 if (!tAttributes.hasOwnProperty('graphContext')) {
                     tAttributes.graphContext = 'this';
                 }

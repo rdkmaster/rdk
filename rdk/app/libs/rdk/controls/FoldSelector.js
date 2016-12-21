@@ -3,6 +3,29 @@ define(['angular', 'jquery', 'rd.core','rd.containers.Accordion','rd.controls.Ba
         var foldSelectorApp = angular.module('rd.controls.FoldSelector',['rd.core','rd.containers.Accordion','rd.controls.BasicSelector']);
         foldSelectorApp.directive('rdkFoldSelector', ['Utils','$compile', 'EventService', 'EventTypes', 
             function (Utils, $compile, EventService, EventTypes) {
+            var scopeDefine={
+                foldedIcon: '=?',
+                unfoldedIcon: '=?',
+                caption: '=?',
+                frozen: '=?',
+                open: '=?',
+                captionEditable: '=?',   
+
+                labelField: '=?',
+                multipleSelect: '=?',
+                searchable: '=?',
+                selectorEditable: '=?',
+                least: '=?',
+                selectedItems: '=?',
+                data: '=?',
+
+                id: '@?',
+                trackItemBy: '@?',
+
+                change: '&?',
+                error: '&?',
+                childChange: '&?'
+            };
             return {
                 restrict: 'E',
                 template: 
@@ -22,29 +45,7 @@ define(['angular', 'jquery', 'rd.core','rd.containers.Accordion','rd.controls.Ba
                         </rdk_accordion>\
                     </div>',
                 replace: true,
-                scope:{
-                    foldedIcon: '=?',
-                    unfoldedIcon: '=?',
-                    caption: '=?',
-                    frozen: '=?',
-                    open: '=?',
-                    captionEditable: '=?',   
-
-                    labelField: '=?',
-                    multipleSelect: '=?',
-                    searchable: '=?',
-                    selectorEditable: '=?',
-                    least: '=?',
-                    selectedItems: '=?',
-                    data: '=?',
-
-                    id: '@?',
-                    trackItemBy: '@?',
-
-                    change: '&?',
-                    error: '&?',
-                    childChange: '&?'
-                },
+                scope:scopeDefine,
                 controller: ['$scope', '$attrs', function(scope, iAttrs) {
                     scope.appScope = Utils.findAppScope(scope);
 
@@ -112,7 +113,7 @@ define(['angular', 'jquery', 'rd.core','rd.containers.Accordion','rd.controls.Ba
             };
 
             function _link(scope, iEle, iAttrs, ctrl, transclude){
-
+                Utils.checkEventHandlers(iAttrs,scopeDefine);
             }
         }])
     })

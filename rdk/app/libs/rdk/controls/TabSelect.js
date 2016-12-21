@@ -2,7 +2,22 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.TabSelect','rd.controls.C
     'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function(){
     	var tabSelectApp = angular.module('rd.controls.TabSelect',['rd.core','rd.controls.ComboSelect','rd.controls.TabSelector']);
     	tabSelectApp.directive('rdkTabSelect', ['Utils', 'BasicSelector', function (Utils, BasicSelector) {
-    		return {
+    		var scopeDefine={
+                caption: '=?',
+                open: '=?',
+                nodeField: '=?',
+                labelField: '=?',
+                trackItemBy: '@?',
+                multipleSelect: '=?',
+                searchable: '=?',
+                editable: '=?',
+
+                data: "=?",
+                selectedItems: "=?",
+
+                childChange: "&?"
+            };
+            return {
     			restrict: 'E',
     			template: 
 	    			'<div class="rdk-tabselect-module">\
@@ -12,26 +27,12 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.TabSelect','rd.controls.C
 		    			</rdk_combo_select>\
 	    			</div>',
     			replace: true,
-    			scope:{
-                    caption: '=?',
-                    open: '=?',
-
-                    nodeField: '=?',
-                    labelField: '=?',
-                    trackItemBy: '@?',
-                    multipleSelect: '=?',
-                    searchable: '=?',
-                    editable: '=?',
-
-    				data: "=?",
-                    selectedItems: "=?",
-
-    				childChange: "&?"
-    			},
+    			scope:scopeDefine,
 	            controller: ['$scope', '$attrs', function(scope, attrs) {
                     Utils.onChildChange(scope, scope.childChange(scope));
 	            }],
 	            compile: function(tEle, tAttrs) {
+                    Utils.checkEventHandlers(tAttrs,scopeDefine);
 	                Utils.bindDataSource(tAttrs, 'data');
 	                return {
 	                    post: _link

@@ -2,18 +2,18 @@ define( ['rd.core', 'css!rd.styles.SingleIndicator', 'css!rd.styles.FontAwesome'
 function() {
         var SingleIndicatorApp = angular.module("rd.controls.SingleIndicator", ['rd.core']);
         SingleIndicatorApp.directive('rdkSingleIndicator', ['Utils',function(Utils) {
+            var scopeDefine={
+                value:'=?',
+                pointTo:'=?',
+                label:'=?',
+                labelPosition:'@?',
+                icon : '@?',
+                formatter:'@?'
+            };
             return {
                 restrict: 'E',
                 replace: true,
-                scope:
-                {
-                  value:'=?',
-                  pointTo:'=?',
-                  label:'=?',
-                  labelPosition:'@?',
-                  icon : '@?',
-                  formatter:'@?'
-                },
+                scope:scopeDefine,
                 template: '<div  class="rdk-single-indicator">\
                               <div class="single-indicator-title  position_{{labelPosition}} single-indicator-bc">\
                                   <i class="{{icon}} single-indicator-icon"></i>\
@@ -28,6 +28,7 @@ function() {
                 controller: ['$scope', function(scope) {
                 }],
                 compile: function(tEle, tAttrs) {
+                    Utils.checkEventHandlers(tAttrs,scopeDefine);
                     Utils.bindDataSource(tAttrs, 'value');
                     return {
                         post: _link
@@ -105,37 +106,33 @@ function() {
                     
                     function _changeCssTop(newVal) {
                         if(newVal=='right'){
-                            (iEle.find("div")[2]).style.borderLeft = siBc + '7px solid';
-                            (iEle.find("div")[2]).style.borderTop = 'transparent 3px solid';
-                            (iEle.find("div")[2]).style.borderRight = 'transparent 3px solid';
-                            (iEle.find("div")[2]).style.borderBottom = 'transparent 3px solid';
+                            $(iEle.find("div")[2]).css({"border-color": "transparent transparent transparent "+siBc, 
+                                                        "border-width": "3px 3px 3px 7px",
+                                                        "border-style": "solid"});
                             (iEle.find("div")[2]).style.top = '43%';
                             (iEle.find("div")[2]).style.right = '-9px';
                             (iEle.find("div")[2]).style.bottom = 'auto';
                             (iEle.find("div")[2]).style.left = 'auto';
                         }else if(newVal=='left'){
-                            (iEle.find("div")[2]).style.borderRight = siBc + '7px solid';
-                            (iEle.find("div")[2]).style.borderTop = 'transparent 3px solid';
-                            (iEle.find("div")[2]).style.borderBottom = 'transparent 3px solid';
-                            (iEle.find("div")[2]).style.borderLeft = 'transparent 3px solid';
+                            $(iEle.find("div")[2]).css({"border-color": "transparent "+siBc+" transparent transparent ", 
+                                                        "border-width": "3px 7px 3px 3px",
+                                                        "border-style": "solid"});
                             (iEle.find("div")[2]).style.top = '43%';
                             (iEle.find("div")[2]).style.left = '-9px';
                             (iEle.find("div")[2]).style.bottom = 'auto';
                             (iEle.find("div")[2]).style.right = 'auto';
                         }else if(newVal=='top'){
-                            (iEle.find("div")[2]).style.borderBottom = siBc + '7px solid';
-                            (iEle.find("div")[2]).style.borderRight = 'transparent 3px solid';
-                            (iEle.find("div")[2]).style.borderLeft = 'transparent 3px solid';
-                            (iEle.find("div")[2]).style.borderTop = 'transparent 3px solid';
+                            $(iEle.find("div")[2]).css({"border-color": "transparent transparent "+siBc+" transparent ", 
+                                                        "border-width": "3px 3px 7px 3px",
+                                                        "border-style": "solid"});
                             (iEle.find("div")[2]).style.top = '-9px';
                             (iEle.find("div")[2]).style.right = '43%';
                             (iEle.find("div")[2]).style.left = 'auto';
                             (iEle.find("div")[2]).style.bottom = 'auto';
                         }else if(newVal=='bottom'){
-                            (iEle.find("div")[2]).style.borderTop = siBc + '7px solid';
-                            (iEle.find("div")[2]).style.borderRight = 'transparent 3px solid';
-                            (iEle.find("div")[2]).style.borderLeft = 'transparent 3px solid';
-                            (iEle.find("div")[2]).style.borderBottom = 'transparent 3px solid';
+                            $(iEle.find("div")[2]).css({"border-color": siBc+" transparent transparent transparent ", 
+                                                        "border-width": "7px 3px 3px 3px",
+                                                        "border-style": "solid"});
                             (iEle.find("div")[2]).style.bottom = '-9px';
                             (iEle.find("div")[2]).style.left = '43%';
                             (iEle.find("div")[2]).style.right = 'auto';
@@ -146,37 +143,33 @@ function() {
                     };
                     function _changeCssBottom(newVal) {
                         if(newVal=='right'){
-                            (iEle.find("div")[1]).style.borderLeft = siBc + '7px solid';
-                            (iEle.find("div")[1]).style.borderTop = 'transparent 3px solid';
-                            (iEle.find("div")[1]).style.borderRight = 'transparent 3px solid';
-                            (iEle.find("div")[1]).style.borderBottom = 'transparent 3px solid';
+                            $(iEle.find("div")[1]).css({"border-color": "transparent transparent transparent "+siBc, 
+                                                        "border-width": "3px 3px 3px 7px",
+                                                        "border-style": "solid"});
                             (iEle.find("div")[1]).style.top = '43%';
                             (iEle.find("div")[1]).style.right = '-9px';
                             (iEle.find("div")[1]).style.bottom = 'auto';
                             (iEle.find("div")[1]).style.left = 'auto';
                         }else if(newVal=='left'){
-                            (iEle.find("div")[1]).style.borderRight = siBc + '7px solid';
-                            (iEle.find("div")[1]).style.borderTop = 'transparent 3px solid';
-                            (iEle.find("div")[1]).style.borderBottom = 'transparent 3px solid';
-                            (iEle.find("div")[1]).style.borderLeft = 'transparent 3px solid';
+                            $(iEle.find("div")[1]).css({"border-color": "transparent "+siBc+" transparent transparent ", 
+                                                        "border-width": "3px 7px 3px 3px",
+                                                        "border-style": "solid"});
                             (iEle.find("div")[1]).style.top = '43%';
                             (iEle.find("div")[1]).style.left = '-9px';
                             (iEle.find("div")[1]).style.bottom = 'auto';
                             (iEle.find("div")[1]).style.right = 'auto';
                         }else if(newVal=='top'){
-                            (iEle.find("div")[1]).style.borderBottom = siBc + '7px solid';
-                            (iEle.find("div")[1]).style.borderRight = 'transparent 3px solid';
-                            (iEle.find("div")[1]).style.borderLeft = 'transparent 3px solid';
-                            (iEle.find("div")[1]).style.borderTop = 'transparent 3px solid';
+                            $(iEle.find("div")[1]).css({"border-color": "transparent transparent "+siBc+" transparent ", 
+                                                        "border-width": "3px 3px 7px 3px",
+                                                        "border-style": "solid"});
                             (iEle.find("div")[1]).style.top = '-9px';
                             (iEle.find("div")[1]).style.right = '43%';
                             (iEle.find("div")[1]).style.left = 'auto';
                             (iEle.find("div")[1]).style.bottom = 'auto';
                         }else if(newVal=='bottom'){
-                            (iEle.find("div")[1]).style.borderTop = siBc + '7px solid';
-                            (iEle.find("div")[1]).style.borderRight = 'transparent 3px solid';
-                            (iEle.find("div")[1]).style.borderLeft = 'transparent 3px solid';
-                            (iEle.find("div")[1]).style.borderBottom = 'transparent 3px solid';
+                            $(iEle.find("div")[1]).css({"border-color": siBc+" transparent transparent transparent ", 
+                                                        "border-width": "7px 3px 3px 3px",
+                                                        "border-style": "solid"});
                             (iEle.find("div")[1]).style.bottom = '-9px';
                             (iEle.find("div")[1]).style.left = '43%';
                             (iEle.find("div")[1]).style.right = 'auto';

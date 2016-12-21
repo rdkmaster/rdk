@@ -16,7 +16,7 @@ import com.zte.vmax.rdk.actor.{WebSocketServer, AppRouter, MQRouter}
 import com.zte.vmax.rdk.cache.AgingCache.AgingCacheActor
 import com.zte.vmax.rdk.config.Config
 import com.zte.vmax.rdk.db.DataSource
-import com.zte.vmax.rdk.service.{ExportHandler, RestHandler}
+import com.zte.vmax.rdk.service.{UploadHandler, ExportHandler, RestHandler}
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 
 
@@ -57,7 +57,7 @@ object Run extends App with SimpleRoutingApp with Logger {
     RdkUtil.initApplications
 
     startServer(interface = ip, port = port) {
-      new ExportHandler(system, RdkServer.appRouter).runRoute ~ new RestHandler(system, RdkServer.appRouter).runRoute
+      new ExportHandler(system, RdkServer.appRouter).runRoute ~ new UploadHandler(system, RdkServer.appRouter).runRoute ~ new RestHandler(system, RdkServer.appRouter).runRoute
     } onComplete {
       case Success(x) =>
         logger.info("#" * 50)
