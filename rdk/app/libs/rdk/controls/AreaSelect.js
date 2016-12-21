@@ -10,7 +10,7 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area', 'rd.ser
                     <div class="rdk-area-panel" ng-show="$vm.activeTab == 1">\
                         <ul ng-style="$vm.getWidth()">\
                             <li ng-repeat="province in $vm.dsProvinces.data.data track by $index" on-finish-render="provinceRender">\
-                                <a ng-if="!$vm.isNull(province)" ng-click="$vm.clkProvinceNextLvOpen(province,0)" ng-class="{selected:$vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
+                                <a ng-if="!$vm.isNull(province)" ng-click="$vm.changeSelected(province,0)" ng-class="{selected:$vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
                                 <a ng-if="$vm.isNull(province)" class="area-null">{{province.name}}</a>\
                             </li>\
                         </ul>\
