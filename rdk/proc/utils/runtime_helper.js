@@ -421,11 +421,29 @@ var file = {
 ///////////////////////////////////////////////////////////////////////
 
 var rest = {
-    get: function(url, option) {
-        if(null==option){
-            option=undefined;
+    get: function (url, option) {
+        if (null == option) {
+            option = undefined;
         }
-        return rdk_runtime.restHelper().get(encodeURI(url),option);
+        return rdk_runtime.restHelper().get(encodeURI(url), option);
+    },
+    post: function (url, param, option) {
+        if (_.isUndefined(param)) {
+            param = "";
+        }
+        return rdk_runtime.restHelper().post(url, param, option);
+    },
+    delete: function (url, param, option) {
+        if (_.isUndefined(param)) {
+            param = "";
+        }
+        return rdk_runtime.restHelper().delete(url, param, option);
+    },
+    put: function (url, param, option) {
+        if (_.isUndefined(param)) {
+            param = "";
+        }
+        return rdk_runtime.restHelper().put(url, param, option);
     }
 }
 
