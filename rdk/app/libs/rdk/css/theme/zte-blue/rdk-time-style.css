@@ -107,7 +107,9 @@ input, button, select, textarea {
 .datetimepicker-dropdown-bottom-right:after{
     top: 0 ;
 }
-
+.dropdown-toggle {
+    height:30px;
+}
 [class*=" datetimepicker-dropdown"]:before {
     content: '';
     display: inline-block;
