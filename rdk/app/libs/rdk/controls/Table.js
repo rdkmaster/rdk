@@ -35,7 +35,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 </td>\
                             </tr>\
                              <tr ng-if="noData">\
-                                <td colspan="{{columnDefs.length}}">\
+                                <td colspan="{{addCheckBox?(visibleColumnDefsCount+1):visibleColumnDefsCount}}">\
                                     <div class="no-data"></div>\
                                 </td>\
                             </tr>\
@@ -1022,7 +1022,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             $(element.find("tbody")).touchEvent("swipe", "touch", _move);
                         }
                         _produceColumnDefs();
-
+                        _produceVisibleColumnDefsCount();
                         _pageCtrlShow();
                     }
                     //END RELOADLOCALDATA
@@ -1047,6 +1047,16 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         if (stickyWrapElement.scrollLeft > scrollWidth) {
                             stickyWrapElement.scrollLeft = scrollWidth;
                         }
+                    }
+
+                    function _produceVisibleColumnDefsCount(){
+                        var count = scope.columnDefs.length;
+                        angular.forEach(scope.columnDefs, function(columnDef){
+                            if(columnDef.visible == false){
+                                count--;
+                            }
+                        });
+                        scope.visibleColumnDefsCount = count;
                     }
 
                     function _produceColumnDefs() {
