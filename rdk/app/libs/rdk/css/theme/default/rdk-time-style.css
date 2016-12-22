@@ -51,7 +51,7 @@
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
-    background: url("arrow.png") no-repeat scroll right center transparent !important; 
+    background: url("../../img/arrow.png") no-repeat scroll right center transparent !important;
 }
 
 .rdk-time-module select>option{

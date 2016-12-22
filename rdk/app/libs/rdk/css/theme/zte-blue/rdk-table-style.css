@@ -137,7 +137,7 @@
     width:50%;
 }
 .rdk-table-module .mouseShape{
-  cursor:url("../../../controls/assets/edit.ico"),auto;
+  cursor:url("../../img/edit.ico"),auto;
 }
 .rdk-table-icon{
     display: inline-block;
@@ -146,15 +146,15 @@
     vertical-align: text-bottom;
 }
 .rdk-table-module .rdk-table-sort-down{
-    background: url("../../../controls/assets/sort-down.png") no-repeat;
+    background: url("../../img/sort-down.png") no-repeat;
     background-size:contain;
 }
 .rdk-table-module .rdk-table-sort-up{
-    background: url("../../../controls/assets/sort-up.png") no-repeat;
+    background: url("../../img/sort-up.png") no-repeat;
     background-size:contain;
 }
 .rdk-table-module .rdk-table-sort{
-    background: url("../../../controls/assets/sort.png") no-repeat;
+    background: url("../../img/sort.png") no-repeat;
     background-size:contain;
 }
 /*todo:theme style start*/
@@ -221,7 +221,7 @@
     color: #333;
 }
 .rdk-table-module .no-data{
-    background:url("../../../controls/assets/no_data_bg.png") no-repeat center;
+    background:url("../../img/no_data_bg.png") no-repeat center;
 }
 .sticky-wrap .sticky-intersect th {
     background-color: #666;

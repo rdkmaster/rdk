@@ -1,30 +1,22 @@
 .rdk-buttongroup-module{
 	height:28px;
 	display:inline-block;
-	
-	font-size: 0;  
+	font-size: 0;
     -webkit-text-size-adjust:none;  
 }
 .rdk-buttongroup-module button:hover {
-	
 	background: rgba(0 ,143, 212, 0.18 );
-    
-	
 }
-
 .rdk-buttongroup-separator {
 	border-left: 1px solid #7291b1;
 	position:relative;
 	height: 28px;
 	display:inline-block;
 	vertical-align: bottom;
-
 }
-
 .rdk-buttongroup-module button:active {
 	background:#67b9e0; 
 }
-
 .rdk-buttongroup-module button:active  .fa{
 	color:white; 
 }
@@ -44,7 +36,6 @@
 	font-size:16px;
 	border-left: 0px solid transparent;
 	border-right: 0px solid transparent;
-	/*outline: 1px solid #d9e0e8 ;*/
 	margin-left:-1px;
     background: #fbfbfe;
     background: -moz-linear-gradient(top,  #fbfbfe 0%, #e0f2fa 100%);
@@ -55,6 +46,6 @@
     background: linear-gradient(to bottom,  #fbfbfe 0%,#e0f2fa 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbfbfe', endColorstr='#e0f2fa',GradientType=0 );
 }
-}
+
 
 

@@ -95,7 +95,7 @@ width和height表示graph的宽和高，只支持数字不用加单位，默认�
 
 ##默认主题##
 如果`rdk_graph`控件不手动设置主题文件，则`rdk_graph`控件会使用控件库中的默认样式。
-图形控件的默认的样式会使用rdk控件库中的`chart_theme.js`文件中的样式（app\libs\rdk\controls\assets\chart_theme.js）
+图形控件的默认的样式会使用rdk控件库中的`chart_theme.js`文件中的样式（rdk/app/libs/rdk/css/theme/chart_theme.js）
 
 ##自定义主题##
 `rdk_graph`也提供了自定义主题的使用接口。`rdk_graph`控件可以通过使用`setTheme`函数来引用和使用自己的主题样式文件。
