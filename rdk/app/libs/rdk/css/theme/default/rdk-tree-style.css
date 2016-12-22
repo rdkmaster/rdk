@@ -13,12 +13,12 @@
 }
 
 .ztree li span.button.noline_close{
-	background-image: url(u105.png);
+	background-image: url(../../img/u105.png);
 	background-position: 10px 4px;
 }
 
 .ztree li span.button.noline_open {
-    background-image: url(u106.png);
+    background-image: url(../../img/u106.png);
     background-position: 6px 6px;
 }
 
@@ -27,13 +27,13 @@
     vertical-align: middle; 
 }
 .ztree li span.button.edit{
-	background-image: url(u119.png);
+	background-image: url(../../img/u119.png);
 	width: 15px;
 	height: 12px;
 }
 
 .ztree li span.button.remove{
-	background-image: url(u122.png);
+	background-image: url(../../img/u122.png);
 	width: 10px;
 	height: 12px;
 }
