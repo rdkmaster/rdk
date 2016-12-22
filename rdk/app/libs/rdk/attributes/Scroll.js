@@ -21,7 +21,7 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                 };
             }
         })
-        .directive('rdkScroll', ['ScrollConfig',function (ScrollConfig) {
+        .directive('rdkScroll', ['ScrollConfig','Utils',function (ScrollConfig,Utils) {
             return {
                 restrict: 'A',
                 link: _link
@@ -60,7 +60,7 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                         'childList': true,
                         'attributes':true,
                         'characterData':true,
-                        'subtree': !isIE(),
+                        'subtree': !Utils.isIE(),
                         'attributeOldValue':true
                     };
                     //观察子节点变动,更新滚动条,
@@ -118,12 +118,6 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                         style = node.currentStyle;
                     }
                     return style;
-                }
-                function isIE() {
-                    if (!!window.ActiveXObject || "ActiveXObject" in window)
-                        return true;
-                    else
-                        return false;
                 }
             }
         }]);
