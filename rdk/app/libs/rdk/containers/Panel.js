@@ -72,12 +72,10 @@ function() {
                           var fn = Utils.findFunction($scope, $scope.beforeClose);  
                           if(typeof(fn) == 'function'){
                             fn();
-                                              
                           }
                       }
                     }              
                     var elem = el[0].children[0]; 
-                    console.log(elem);
                     if ($(el[0]).attr("width")){
                        $(elem).css('width',$(el[0]).attr("width"));
 

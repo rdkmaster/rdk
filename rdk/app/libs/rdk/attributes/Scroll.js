@@ -3,8 +3,8 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
         .provider('ScrollConfig', function(){
             var $$options = {
                 wheelSpeed:0.7, //鼠标滚轮移动滚动条的速度
-                minScrollbarLength:null, //滚动条最小长度
-                maxScrollbarLength:null, //滚动条最大长度
+                minScrollbarLength:80, //滚动条最小长度
+                maxScrollbarLength:300, //滚动条最大长度
                 theme:"default" //主题
             };
             //调用ScrollConfigProvider为整个项目配置统一的滚动条风格
@@ -21,7 +21,7 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                 };
             }
         })
-        .directive('rdkScroll', ['ScrollConfig',function (ScrollConfig) {
+        .directive('rdkScroll', ['ScrollConfig','Utils',function (ScrollConfig,Utils) {
             return {
                 restrict: 'A',
                 link: _link
@@ -60,7 +60,7 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                         'childList': true,
                         'attributes':true,
                         'characterData':true,
-                        'subtree': true,
+                        'subtree': !Utils.isIE(),
                         'attributeOldValue':true
                     };
                     //观察子节点变动,更新滚动条,

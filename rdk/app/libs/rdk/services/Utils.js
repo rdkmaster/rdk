@@ -171,7 +171,9 @@
         this.getValue = function(scopeValue, attrValue, defaultValue) {
             return angular.isDefined(scopeValue) ? scopeValue : angular.isDefined(attrValue) ? attrValue : defaultValue;
         }
-
+        this.isIE = function(){
+            return !!window.ActiveXObject || "ActiveXObject" in window
+        }
         this.safeApply = function(scope, fn) {
             var phase = scope.$root.$$phase;
             if (phase == '$apply' || phase == '$digest') {
