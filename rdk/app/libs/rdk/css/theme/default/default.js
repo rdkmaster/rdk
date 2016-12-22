@@ -1,6 +1,4 @@
 require.config({
-    //下载依赖超时时间，0为不超时
-    waitSeconds: 30,
     paths: {
         "rd.styles.Accordion": "../rdk/css/theme/default/rdk-accordion-style",
         "rd.styles.Alert": "../rdk/css/theme/default/rdk-Alert-style",
