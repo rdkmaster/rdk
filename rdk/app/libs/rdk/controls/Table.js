@@ -19,7 +19,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     <table class="rdk-table">\
                         <thead ng-if="!noHeader">\
                             <tr>\
-                                <th ng-if="addCheckBox"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
+                                <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
                                 <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinished" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)">\
                                     {{columnDef.title}}\
                                     <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
@@ -486,6 +486,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             scope.floatableHeader = Utils.isTrue(scope.floatableHeader, true);
                         }, 0);
 
+                        _searchGapClick();//只要有search
+
                         //默认国际化
                         if (typeof(attrs.lang) === 'undefined') { //今后会废弃lang属性
                             scope.lang = 'zh-CN';
@@ -766,7 +768,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                             scope.refreshSingleCurrentPage();
                             _serverSortResponse();//后端排序，刷新后的响应
-                            _searchGapClick();
                             scope.$watch("selectedIndex", function(newVal, oldVal) { //根据selectedIndex高亮显示
                                 if (newVal != undefined) {
                                     if (scope.selectedIndex != undefined) {
