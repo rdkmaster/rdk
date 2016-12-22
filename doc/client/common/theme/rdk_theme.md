@@ -4,19 +4,27 @@
 
 
 # 实现方式 #
-通过更换css来实现更换主题。
+详见 <http://gitlab.zte.com.cn/10045812/rdk/issues/410>
 
-# 简介 #
+# 切换主题 {#change-theme}
+修改 `rdk/app/common/theme` 文件可以实现主题切换，目前可选的主题有：
+
+- rdk.theme.default
+- rdk.theme.zte-blue（默认）
+
+**提示**：可以写一个服务来修改这个文件，在页面上调用这个服务，这样可以很容易实现主题的切换。也可以调用其他的程序修改这个文件，也可以达到一键换肤的目的。
+
+# 例子 #
 对于同一个控件具有多种不同的风格主题，可以通过这个rdk-theme属性选择不同的主题风格。
 
 这是一个简单的 `rdk-theme` 例子：
 
-
 <live_demo example="common/theme/themeTable" width="900"></live_demo>
 
-# 目前可配置rdk-theme属性的控件 #
 
-## tabler 控件可用主题 ##
+# 可用主题 #
+
+## table 控件可用主题 ##
 
 - 默认主题，不使用属性
 - rdk-table-theme-gray
