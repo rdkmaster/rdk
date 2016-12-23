@@ -8,6 +8,7 @@ import jdk.nashorn.internal.runtime.Undefined;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -28,6 +29,22 @@ public class RestHelper extends AbstractAppLoggable {
     private static Pattern URL_PTN = Pattern.compile("^http://.+", Pattern.CASE_INSENSITIVE);
 
     public String get(String url, Object option) {
+        return commonRest(url, null, option, "GET", false);
+    }
+
+    public String post(String url, String param, Object option) {
+        return commonRest(url, param, option, "POST", true);
+    }
+
+    public String delete(String url, String param, Object option) {
+        return commonRest(url, param, option, "DELETE", true);
+    }
+
+    public String put(String url, String param, Object option) {
+        return commonRest(url, param, option, "PUT", true);
+    }
+
+    private String commonRest(String url, String param, Object option, String method, boolean isGet) {
         url = url.trim();
         Matcher m = URL_PTN.matcher(url);
         if (!m.find()) {
@@ -38,7 +55,7 @@ public class RestHelper extends AbstractAppLoggable {
             }
             url = prefix + url;
         }
-        logger.debug("requesting(get) url=" + url);
+        logger.debug("requesting(" + method + ") url=" + url);
 
         //需要请求的restful地址
         URL oUrl = null;
@@ -60,10 +77,34 @@ public class RestHelper extends AbstractAppLoggable {
 
         // 提交模式
         try {
-            conn.setRequestMethod("GET");
+            conn.setRequestMethod(method);
         } catch (ProtocolException e) {
             logger.error("Invalid protocol", e);
             return null;
+        }
+
+        if (isGet) {
+            // 发送POST,PUT,DELETE请求必须设置如下两行
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+
+            //设置请求参数
+            PrintWriter out = null;
+            try {
+                out = new PrintWriter(conn.getOutputStream());
+
+                out.print(param);
+                // flush输出流的缓冲
+                out.flush();
+            } catch (Exception e) {
+                logger.error("write queryString error", e);
+                return null;
+            } finally {
+                if (out != null) {
+                    out.close();
+                }
+            }
+
         }
 
         setRequestProperties(conn, option);
@@ -106,16 +147,16 @@ public class RestHelper extends AbstractAppLoggable {
         }
         return result;
     }
-	
-	private void setRequestProperties(HttpURLConnection conn, Object option) {
+
+    private void setRequestProperties(HttpURLConnection conn, Object option) {
         if (option instanceof Undefined) {
             return;
         }
-		ScriptObjectMirror som = (ScriptObjectMirror) option;
+        ScriptObjectMirror som = (ScriptObjectMirror) option;
         if (!som.hasMember("requestProperty")) {
             return;
         }
-		ScriptObjectMirror properties = (ScriptObjectMirror) som.getMember("requestProperty");
+        ScriptObjectMirror properties = (ScriptObjectMirror) som.getMember("requestProperty");
         String[] keys = properties.getOwnKeys(false);
         for (String key : keys) {
             conn.setRequestProperty(key, properties.getMember(key).toString());
