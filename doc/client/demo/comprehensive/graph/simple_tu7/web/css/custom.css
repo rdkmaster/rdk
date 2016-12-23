@@ -40,5 +40,8 @@ ul,li{
     cursor:pointer;
 }
 .iconfont-shape:before {
+    display: inline-block;
+    margin-top: 1px;
     color: #008fd4;
+
  }
