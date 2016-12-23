@@ -70,7 +70,7 @@ GuiCtrlSetCursor(-1, 0)
 
 GUICtrlCreateLabel('○ 如何开始', 24, 90)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
-Global $lbGetStarted = GUICtrlCreateLabel ('http://10.9.233.35:8080/doc/#best_practise/index.md', 96, 89)
+Global $lbGetStarted = GUICtrlCreateLabel ('www.rdkapp.com/doc/#best_practise/index.md', 96, 89)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
 GuiCtrlSetFont(-1, 9, $FW_NORMAL, $GUI_FONTUNDER)
 GuiCtrlSetColor(-1, 0x0000ff)
@@ -78,7 +78,7 @@ GuiCtrlSetCursor(-1, 0)
 
 GUICtrlCreateLabel('○ RDK 官网', 24, 110)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
-Global $lbSite = GUICtrlCreateLabel ('http://10.9.233.35:8080', 96, 109)
+Global $lbSite = GUICtrlCreateLabel ('www.rdkapp.com', 96, 109)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
 GuiCtrlSetFont(-1, 9, $FW_NORMAL, $GUI_FONTUNDER)
 GuiCtrlSetColor(-1, 0x0000ff)
@@ -127,9 +127,9 @@ While 1
 		Case $GUI_EVENT_CLOSE
 			If MsgBox(292, "RDK Server for Windows", "是否关闭所有的服务进程并退出？", 0, $gui) == 6 Then Exit
 		Case $lbGetStarted
-			_visitWeb('http://10.9.233.35:8080/doc/#best_practise/index.md')
+			_visitWeb('http://www.rdkapp.com/doc/#best_practise/index.md')
 		Case $lbSite
-			_visitWeb('http://10.9.233.35:8080')
+			_visitWeb('http://www.rdkapp.com')
 		Case $lbGitlab
 			_visitWeb('http://gitlab.zte.com.cn/10045812/rdk')
 		Case $lbIssue
@@ -137,7 +137,7 @@ While 1
 		Case $lbBug
 			_visitWeb('http://gitlab.zte.com.cn/10045812/rdk/issues/new')
 		Case $lbDownload
-			_visitWeb('http://10.9.233.35:8080/site/download/index.html')
+			_visitWeb('http://www.rdkapp.com/site/download/index.html')
 		Case $tab
 			If GUICtrlRead($tab) <> 3 Then ContinueLoop
 			If $versionFetched Then ContinueLoop
