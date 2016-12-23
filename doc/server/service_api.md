@@ -578,7 +578,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
     function get(url, option);
 
-说明：在后端代码中调用其他的rest服务并返回其应答数据。
+说明：在后端代码中调用其他的get服务并返回其应答数据。
 
 参数：
 
@@ -601,13 +601,49 @@ option的结构如下：
 
 返回：该服务的返回值。
 #### `rest.put()` ####
-暂未支持
+定义：
+
+    function put(url, param, option);
+
+说明：在后端代码中调用其他的put服务并返回其应答数据。
+
+参数：
+
+- url: 目标服务的url，必选。
+- param: 请求参数字符串，可选。 
+- option: 本次请求的参数，同get请求option，可选。
+
+返回：该服务的返回值。
 
 #### `rest.post()` ####
-暂未支持
+定义：
+
+    function post(url, param, option);
+
+说明：在后端代码中调用其他的post服务并返回其应答数据。
+
+参数：
+
+- url: 目标服务的url，必选。
+- param: 请求参数字符串，可选。 
+- option: 本次请求的参数，同get请求option，可选。
+
+返回：该服务的返回值。
 
 #### `rest.delete()` ####
-暂未支持
+定义：
+
+    function delete(url, param, option);
+
+说明：在后端代码中调用其他的delete服务并返回其应答数据。
+
+参数：
+
+- url: 目标服务的url，必选。
+- param: 请求参数字符串，可选。 
+- option: 本次请求的参数，同get请求option，可选。
+
+返回：该服务的返回值。
 
 ### `Cache` ###
 
