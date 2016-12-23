@@ -39,3 +39,6 @@ ul,li{
 .select_container li.selector .selector_symbol{
     cursor:pointer;
 }
+.iconfont-shape:before {
+    color: #008fd4;
+ }
