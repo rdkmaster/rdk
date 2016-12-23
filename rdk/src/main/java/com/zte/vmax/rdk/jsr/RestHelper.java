@@ -44,7 +44,7 @@ public class RestHelper extends AbstractAppLoggable {
         return commonRest(url, param, option, "PUT", true);
     }
 
-    private String commonRest(String url, String param, Object option, String method, boolean hook) {
+    private String commonRest(String url, String param, Object option, String method, boolean isGet) {
         url = url.trim();
         Matcher m = URL_PTN.matcher(url);
         if (!m.find()) {
@@ -83,7 +83,7 @@ public class RestHelper extends AbstractAppLoggable {
             return null;
         }
 
-        if (hook) {
+        if (isGet) {
             // 发送POST,PUT,DELETE请求必须设置如下两行
             conn.setDoOutput(true);
             conn.setDoInput(true);
@@ -97,7 +97,7 @@ public class RestHelper extends AbstractAppLoggable {
                 // flush输出流的缓冲
                 out.flush();
             } catch (Exception e) {
-                logger.error("get setoutPutStream error", e);
+                logger.error("write queryString error", e);
                 return null;
             } finally {
                 if (out != null) {
