@@ -430,8 +430,7 @@ var rest = {
     post: function (url, param, option) {
         if (_.isUndefined(param)) {
             param = "";
-        }
-        if (_.isObject(param)) {
+        } else if (_.isObject(param)) {
             param = JSON.stringify(param);
         }
         return rdk_runtime.restHelper().post(url, param, option);
@@ -439,8 +438,7 @@ var rest = {
     delete: function (url, param, option) {
         if (_.isUndefined(param)) {
             param = "";
-        }
-        if (_.isObject(param)) {
+        } else if (_.isObject(param)) {
             param = JSON.stringify(param);
         }
         return rdk_runtime.restHelper().delete(url, param, option);
@@ -448,8 +446,7 @@ var rest = {
     put: function (url, param, option) {
         if (_.isUndefined(param)) {
             param = "";
-        }
-        if (_.isObject(param)) {
+        } else if (_.isObject(param)) {
             param = JSON.stringify(param);
         }
         return rdk_runtime.restHelper().put(url, param, option);
