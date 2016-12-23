@@ -8,7 +8,7 @@ define('main', ['rd.controls.Table','rd.containers.Panel'], function() {
             "columnDefs" :[
                 {
                     title : "操作",
-                    render : '<img src="images/tab.png">&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/line.png">'
+                    render : '<i class="iconfont iconfont-tab"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="iconfont iconfont-line"></i>'
                 }
             ]
         }

@@ -6,6 +6,7 @@
     <title>Graph -> Basic</title>
 
     <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/iconFonts/fonts/iconfont.css">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
@@ -25,7 +26,7 @@
 <body ng-controller='rdk_ctrl' class="rdk-loading">
     <p class="title">渠道平均办理时长</p>
     <ul class="select_container">
-        <li class="selector" ng-repeat="item in titles"><i class="selector_symbol" ng-click="check_items($event)"><img src="image/icon-01.png" alt=""></i><span>{{item}}</span></li>
+        <li class="selector" on-finish-render ng-repeat="item in titles"><i class="selector_symbol" ng-click="check_items($event)"></i><span>{{item}}</span></li>
     </ul>
     <rdk_graph id="graph" ds="dsGraph" ds_url="$svr/data" ds_query_if="ready"
         graph_define="scripts/graph_define/simple_line.js"></rdk_graph> 

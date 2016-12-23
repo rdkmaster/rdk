@@ -11,8 +11,7 @@
 	height: 308px;
     margin-right:12px;
 	top:200px;
-	font-family: '微软雅黑'; 
-	position:absolute;
+	font-family: '微软雅黑';
 	padding:8px;
 	border:1px solid #eee;
 	box-shadow: 4px 4px 8px #eee;
@@ -51,6 +50,10 @@ div.hao >span.title{
 	line-height: 30px;
 	color: #008FD4;
 }
-i{
-	font-style: normal;
+i.iconfont {
+	color: #008fd4;
+	font-size: 16px;
+}
+i.iconfont-line {
+	font-size: 20px;
 }

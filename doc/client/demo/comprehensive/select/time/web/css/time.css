@@ -1,8 +1,15 @@
  .combo_select{
-    padding:4px 5px 4px 40px;
+    padding:4px 0 4px 10px;
     height:40px;
-    background-image:url(../images/calendar.png);
-    background-repeat: no-repeat;
-    background-position: 5px 5px;
+    width: 100%;
     background-color: #008fd4;
 }
+ .rdk-time-module {
+     display: inline-block;
+ }
+ .iconfont-calendar:before {
+     display: inline-block;
+     color: #fff;
+     font-size: 26px;
+     vertical-align:middle
+ }

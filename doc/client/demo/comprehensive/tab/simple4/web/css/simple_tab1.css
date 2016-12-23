@@ -17,7 +17,6 @@ ul,li{
     margin-right:12px;
     font-family: '微软雅黑';
 	top:200px;
-	position:absolute;
 	padding:8px;
 	border:1px solid #eee;
 }
@@ -79,7 +78,6 @@ div.hao >div.title>ul>li:first-child {
 }
 .iconfont {
 	font-style: normal;
-	font-size: 16px;
 	color: #008fd4;
 }
 .iconfont-output:before {
