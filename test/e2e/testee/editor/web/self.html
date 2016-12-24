@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Editor 自测</title>
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+
+    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <script data-main="/rdk/app/libs/rdk/rdk"
+        src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="self.js"></script>
+    
+
+    <!-- 应用正式运行的时候，请使用下面这个节点，RDK会使用编译后的代码，代码体积小，下载快 -->
+    <!--
+    <script data-main="main.min.js" src="/rdk_server/app/libs/requirejs/require.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    -->
+    
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/test/module/testee_helper',
+            }
+        });
+    </script>
+</head>
+<style>
+    .editor{
+        width:500px;
+    }
+</style>
+<body ng-controller='rdk_ctrl' class="rdk_main">
+    <!--text-->
+    <div class="editor">
+        <rdk_editor text="myCode" type="JavaScript"></rdk_editor>
+    </div>
+    <!--editable-->
+    <div class="editor editable">
+        <rdk_editor text="myCode" editable="false" type="JavaScript"></rdk_editor>
+    </div>
+    <!--foldable-->
+    <div class="editor foldable">
+        <rdk_editor text="myCode" type="JavaScript" ></rdk_editor>
+    </div>
+
+    <!--type--JavaScript//HTML/CSS/Text-->
+    <div class="editor javascript">
+        <rdk_editor text="myCode" type="JavaScript" ></rdk_editor>
+    </div>
+    <div class="editor html">
+        <rdk_editor text="myCode" type="HTML" ></rdk_editor>
+    </div>
+    <div class="editor css">
+        <rdk_editor text="myCode" type="CSS" ></rdk_editor>
+    </div>
+    <div class="editor text">
+        <rdk_editor text="myCode" type="Text" ></rdk_editor>
+    </div>
+
+    <rdk_loading>
+        <img src="images/loding.gif" alt="loading..."/>
+    </rdk_loading>
+</body>
+
+</html>

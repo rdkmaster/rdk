@@ -79,6 +79,10 @@
             rdk.myModule.child.hello('RDK example');
         }
 
+        scope.myCode = "function sayHello () {\n" +
+          "  alert('1');\n" +
+          "}"
+
 
         //=================== 在这里结束本应用的最后一行代码 ========================
     };

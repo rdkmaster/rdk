@@ -64,6 +64,16 @@
         <li>{{i18n.lang.st(i18n.$locale)}}</li>
     </ul>
 
+    <h3>演示Editor</h3>
+    <ul>
+        <!--
+            i18n是一个全局属性（准确的说是根scope上的一个属性）
+            lang是i18n.js中任意定义的一个词条
+            lang.st() 是rdk在String的prototype上定义的一个函数
+        -->
+        <rdk_editor text="myCode" editable="true" type="JavaScript"></rdk_editor>
+    </ul>
+
     <h3>演示模块化</h3>
     <rdk_module url="template/plain_text.html"></rdk_module>
 

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>绝对位置</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='rdk_ctrl'>
+<div style="width: 500px; height: 500px; text-align: center; vertical-align: middle">
+    <p>
+        hello, rdk!  绝对位置 = {x: 200, y: 90};
+    </p>
+    <button ng-click="load($event)">弹出菜单</button><button ng-click="close()">关闭菜单</button>
+</div>
+
+</body>
+
+</html>
+

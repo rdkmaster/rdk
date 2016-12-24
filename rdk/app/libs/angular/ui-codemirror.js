@@ -1,4 +1,4 @@
-define(['codemirror'], function(CodeMirror) {
+define(['codemirror-core'], function(CodeMirror) {
     'use strict';
     /**
      * Binds a CodeMirror widget to a <textarea> element.
