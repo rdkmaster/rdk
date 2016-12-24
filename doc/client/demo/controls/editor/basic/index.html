@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Editor -> Basic</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='rdk_ctrl'>
+    <rdk_editor id="editor" value="code" change="onchange" mode="javascript"></rdk_editor>
+    <textarea ng-model="code"></textarea>
+    <button ng-click="getValue()">getValue</button>
+    <button ng-click="setValue()">setValue</button>
+</body>
+
+</html>
