@@ -16,20 +16,23 @@ define('main', ['rd.controls.Editor'], function() {
         // 相反的，module1由于通过initData自定义了一个data属性，RDK会优先读取自子控制器中的
         // data属性的值。
         // 这个过程和OOP的继承非常类似。
-        scope.code = 'function func(aa, bb) {\n' +
-            '   console.log(aa, bb);\n' +
-            '}';
+        scope.code = '\
+<html>\n\
+    <head>\n\
+        <link rel="stylesheet" href="mystyle.css">\n\
+        <script src="myscript.js"></script>\n\
+    </head>\n\
+    <type>\n\
+    .body {\n\
+        font-size: 14px;\n\
+    }\n\
+    </type>\n\
+    <script>\n\
+        function func(a, b, c) {\n\
+            alert(a, b, c);\n\
+        }\n\
+    </script>\n\
+</html>';
 
-        scope.getValue = function() {
-            console.log(scope.code);
-        }
-
-        scope.setValue = function() {
-            scope.code = 'fdfdfdfd';
-        }
-
-        scope.onchange = function(event, code) {
-            console.log(code);
-        }
     }]);
 });

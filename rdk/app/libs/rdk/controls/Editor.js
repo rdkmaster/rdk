@@ -27,38 +27,47 @@ function(CodeMirror) {
 
                     this.CodeMirror = CodeMirror;
                 }],
-                link: function(scope, element, attrs) {
-                    Utils.checkEventHandlers(attrs, scopeDefine);
-
-                    var textarea = element.find('textarea')[0];
-                    //初始化文本框中的代码
-                    textarea.value = scope.value;
-
-                    var options = scope.options || {};
-                    options.mode = scope.mode || 'javascript';
-                    if (options.mode == 'html') {
-                        options.mode = 'text/html';
+                compile: function(tEle, tAttrs) {
+                    Utils.checkEventHandlers(tAttrs, scopeDefine);
+                    Utils.bindDataSource(tAttrs, 'value');
+                    return {
+                        post: _link
                     }
-                    if (!options.hasOwnProperty('lineNumbers')) {
-                        options.lineNumbers = true;
-                    }
-                    if (!options.hasOwnProperty('matchBrackets')) {
-                        options.matchBrackets = true;
-                    }
-                    scope.editor = CodeMirror.fromTextArea(textarea, options);
+                },
+            }
 
-                    var appScope = Utils.findAppScope(scope);
-                    //注册codemirror发出的事件
-                    CodeMirror.on(scope.editor, 'change', function() {
-                        var value = scope.editor.doc.getValue();
-                        appScope[attrs.value] = value;
-                        EventService.raiseControlEvent(scope, EventTypes.CHANGE, value);
-                    });
+            function _link(scope, element, attrs) {
+                var textarea = element.find('textarea')[0];
+                //初始化文本框中的代码
+                textarea.value = scope.value;
 
-                    scope.$watch('value', function(newVal, oldVal) {
-                        scope.editor.doc.setValue(newVal);
-                    });
+                var options = scope.options || {};
+                options.mode = scope.mode || 'javascript';
+                if (options.mode == 'html') {
+                    options.mode = 'text/html';
                 }
+                if (!options.hasOwnProperty('lineNumbers')) {
+                    options.lineNumbers = true;
+                }
+                if (!options.hasOwnProperty('matchBrackets')) {
+                    options.matchBrackets = true;
+                }
+                scope.editor = CodeMirror.fromTextArea(textarea, options);
+
+                var appScope = Utils.findAppScope(scope);
+                //注册codemirror发出的事件
+                CodeMirror.on(scope.editor, 'change', function() {
+                    var value = scope.editor.doc.getValue();
+                    appScope[attrs.value] = value;
+                    EventService.raiseControlEvent(scope, EventTypes.CHANGE, value);
+                });
+
+                scope.$watch('value', function(newVal, oldVal) {
+                    if (!angular.isString(newVal)) {
+                        return;
+                    }
+                    scope.editor.doc.setValue(newVal);
+                });
             }
         }
     ]);
