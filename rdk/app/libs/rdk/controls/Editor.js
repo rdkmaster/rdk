@@ -44,6 +44,8 @@ define(['angular', 'rd.core',  'codemirror-core',
           ,foldable =  Utils.isTrue(attrs.foldable, false)
           ,selectable = Utils.isTrue(attrs.selectable, false)
           ,type = !attrs.type ?  'text' : attrs.type;
+
+        readOnly = readOnly? 'nocursor': readOnly
         type = translateType(type);
         scope.editorOptions = {
           lineWrapping : true,
