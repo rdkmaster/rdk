@@ -12,73 +12,29 @@ console.log('-------------------------------------------------');
 var fs = require("fs");
 module.exports = function(app) {
   app.get("/demos/data", _dataService);
-  app.get("/demos/editor", _editorService);
 };
 
 function _dataService(req, res) {
+  var files = listScripts(baseDir + req.query.example);
   _loadFiles(baseDir + req.query.example, function(htmlData, jsData, cssData) {
     res.json([htmlData, jsData, cssData]);
   });
 }
 
-function _editorService(req, res) {
-  _loadFiles(baseDir + req.query.example, function(htmlData, jsData, cssData) {
-    var content = '<html>\
-  <head>\
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\
-  </head>\
-<body>\
-  <fieldset class="editorSet left">\
-    <div class="editor html top">\
-      <span class="quick_tools">\
-        <span>HTML</span>\
-        <img src="img/arrow-out.png" width="14">\
-      </span>\
-      <textarea rows="10" cols="40" id="code_html">';
-       content += _escapeString(htmlData);
-       content += '&nbsp;\
-     </textarea>\
-    </div>\
-    <div class="handler handler_horizontal"></div>\
-    <div class="editor js bottom">\
-      <span class="quick_tools">\
-        <span onclick="runjs.editor.chooseJsType();">JavaScript</span>\
-        <img src="img/arrow-out.png" width="14">\
-      </span>\
-      <textarea rows="10" cols="40" id="code_js">';
-       content += _escapeString(jsData);
-       content += '&nbsp;\
-      </textarea>\
-    </div>\
-  </fieldset>\
-  <div class="handler handler_vertical"></div>\
-  <fieldset class="editorSet right">\
-    <div class="editor css top">\
-      <span class="quick_tools">\
-        <span onclick="runjs.editor.chooseCssType();">CSS</span>\
-        <img src="img/arrow-out.png" width="14">\
-      </span>\
-      <textarea rows="10" cols="40" id="code_css">';
-       content += _escapeString(cssData);
-       content += '&nbsp;\
-      </textarea>\
-    </div>\
-    <div class="handler handler_horizontal"></div>\
-    <div class="editor preview bottom">\
-      <span class="quick_tools">\
-        <span>预览</span>\
-        <img src="img/arrow-out.png" width="14">\
-      </span>\
-      <iframe id="preview" frameborder="0"></iframe>\
-    </div>\
-  </fieldset>\
-</body>\
-</html>'
+function listScripts(dir) {
+  var res = [] , files = fs.readdirSync(dir);
+  files.forEach(function(file) {
+    var pathname = dir + file, stat = fs.lstatSync(pathname);
 
-    res.writeHead(200, { "content-type": "text/html" });
-    res.write(content);
-    res.end();
+    if (stat.isDirectory()) {
+      res = res.concat(listScripts(pathname+'/'));
+    } else {
+      if (pathname.match(/\.js$|\.css$|\.html$/i)) {
+        res.push(pathname);
+      }
+    }
   });
+  return res;
 }
 
 function _loadFiles(dir, callback) {

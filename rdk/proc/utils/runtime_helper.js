@@ -388,17 +388,14 @@ var file = {
         }
         return b;
     },
-    list: function(path, pattern) {
+    list: function(path, pattern, recursive) {
         path = java.FileHelper.fixPath(path, rdk_runtime.application());
-        log('listing dir: ' + path);
-
-        var file = new java.File(path);
-        var javaFileArr = !!pattern ? file.listFiles(new java.RegFileFilter(pattern)) : file.listFiles();
+        log('listing dir: ' + path + ', recursive: ' + (!!recursive));
 
         var files = [];
-        for (var i = 0; i < javaFileArr.length; i++) {
-            files.push(javaFileArr[i].toString());
-        }
+        var ptn = !!pattern ? new java.RegFileFilter(pattern) : null;
+        _listFiles(files, new java.File(path), ptn, !!recursive);
+
         return files;
     },
     get web() {
@@ -417,6 +414,21 @@ var file = {
         }
     }
 };
+
+function _listFiles(files, path, pattern, recursive) {
+    var javaFileArr = !!pattern ? path.listFiles(pattern) : path.listFiles();
+    if (!javaFileArr) {
+        return;
+    }
+    for (var i = 0; i < javaFileArr.length; i++) {
+        var file = javaFileArr[i];
+        if (recursive && file.isDirectory()) {
+            _listFiles(files, file, pattern, recursive);
+        } else {
+            files.push(file.toString());
+        }
+    }
+}
 
 ///////////////////////////////////////////////////////////////////////
 
