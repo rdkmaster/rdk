@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>NumericInput -> Basic</title>
+    <title>NumericInput -> step</title>
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
     -->
@@ -13,8 +13,18 @@
 
 <body ng-controller='myCtrl' >
     <div style="width:600px;" >
-        <rdk_numeric_input ng-model="myValue" step="0.1"></rdk_numeric_input>
+        <div> step: 2</div>
+        <rdk_numeric_input ng-model="myValue" step="2"></rdk_numeric_input>
         您输入的值： {{myValue}}
+        <div> ----------------------------------</div>
+        <div> step: 0.1</div>
+        <rdk_numeric_input ng-model="myFloat" step="0.1"></rdk_numeric_input>
+        您输入的值： {{myFloat}}
+
+        <div> ----------------------------------</div>
+        <div> step: 0.0000000001</div>
+        <rdk_numeric_input ng-model="myFloat2" step="0.0000000001"></rdk_numeric_input>
+        您输入的值： {{myFloat2}}
     </div>
 </body>
 

@@ -1,125 +1,140 @@
-define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectScroll) {
-    angular.module('rd.attributes.Scroll', ['rd.core'])
-        .provider('ScrollConfig', function(){
-            var $$options = {
-                wheelSpeed:0.7, //鼠标滚轮移动滚动条的速度
-                minScrollbarLength:null, //滚动条最小长度
-                maxScrollbarLength:null, //滚动条最大长度
-                theme:"default" //主题
-            };
-            //调用ScrollConfigProvider为整个项目配置统一的滚动条风格
-            this.setOptions = function(options) {
-                angular.extend($$options, options);
-            };
-            this.$get = function() {
-                return {
-                    getOptions:function(){ //返回配置对象的拷贝
-                        var defaultOptions={};
-                        angular.copy($$options,defaultOptions);
-                        return defaultOptions;
-                    }
-                };
-            }
-        })
-        .directive('rdkScroll', ['ScrollConfig',function (ScrollConfig) {
+define(['jquery', 'rd.core', 'css!rd.styles.Bootstrap'], function() {
+    var tooltipModule = angular.module('rd.attributes.Tooltip', ['rd.core']);
+    tooltipModule.constant('PositionTypes', {
+        TOP_LEFT: 'top-left',
+        TOP: 'top',
+        TOP_RIGHT: 'top-right',
+        RIGHT_TOP: 'right-top',
+        RIGHT: 'right',
+        RIGHT_BOTTOM: 'right-bottom',
+        BOTTOM_RIGHT: 'bottom-right',
+        BOTTOM: 'bottom',
+        BOTTOM_LEFT: 'bottom-left',
+        LEFT_BOTTOM: 'left-bottom',
+        LEFT: 'left',
+        LEFT_TOP: 'left-top'
+    });
+    tooltipModule.directive('rdkTooltip', ['PositionTypes', 'Utils', '$compile', '$rootScope',
+        function (PositionTypes, Utils, $compile, $rootScope) {
             return {
                 restrict: 'A',
-                link: _link
+                compile: function(tEle, tAttrs) {
+                    return {
+                        post: _link
+                    }
+                }
             };
-            function _link(scope, iElement,iAttrs)
+            function _link(scope, element, attrs)
             {
-                var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
-                var hlazyResize=null;
-                var container = iElement[0];
-                var scrollOptions = scope.$eval(iAttrs.scrollOption);//解析scroll特性配置
-                var defaultOptions = ScrollConfig.getOptions();//获取默认配置
-                var perfectOptions = angular.extend(defaultOptions, scrollOptions);
-                iElement.css({position: 'relative',overflow: 'hidden'}); //滚动条容器必要的样式
-                perfectScroll.initialize(container,perfectOptions);  //初始化滚动条
-                //获取滚动槽的样式宽度
-                var railOffsetWidth=getCurrentStyle(container.querySelector(".ps-scrollbar-y-rail"))["width"];
-                perfectScroll.lazyResize=function(){  //DOM元素内容不确定是否加载完，滚动条进行延时加载处理
-                    if (hlazyResize) clearTimeout(hlazyResize);
-                    hlazyResize = setTimeout(function(){
-                        perfectScroll.update(container);
-                        if(container.querySelector(".ps-scrollbar-y").offsetHeight==0)
-                        {
-                            container.querySelector(".ps-scrollbar-y-rail").style.width=0;
-                        }else {
-                            container.querySelector(".ps-scrollbar-y-rail").style.width=railOffsetWidth;
-                        }
-                    },50);
+                if( !attrs.rdkTooltip) {
+                    console.error('creating tooltip by DOM: invalid rdk_tooltip!');
+                    return;
+                }
+                var content = Utils.getValue(scope.rdkTooltip, attrs.rdkTooltip, '');
+                var placement = Utils.getValue(scope.rdkTooltipPlacement, attrs.rdkTooltipPlacement, 'top');
+                var trigger = Utils.getValue(scope.rdkTooltipTrigger, attrs.rdkTooltipTrigger, '');
+
+                if(!PositionTypes[placement.replace(/-{1}/g, '_').toUpperCase()]) {
+                    console.error('creating tooltip by DOM: invalid rdk_tooltip_placement:'+placement+'!');
+                    return;
+                }
+
+
+                var tooltipID = Utils.createUniqueId('tooltip_'),
+                  tooltipHtml = '<div class="tooltip fade" role="tooltip" id="'+tooltipID+'"> \
+                  <div class="tooltip-arrow"></div> \
+                  <div class="tooltip-inner">'+content+'</div> \
+                </div>',$tip;
+
+                $(tooltipHtml).insertAfter(element);
+                $tip = $('#'+tooltipID);
+                $compile($tip)($rootScope.$$childHead);
+
+                setPosition(element, $tip, placement);
+                initEvents(trigger, element, $tip);
+            }
+
+            function initEvents(trigger, element, $tip) {
+                var $element = $(element)
+
+                var toggle = function () {
+                    $tip.toggleClass('in');
+                  },enter = function () {
+                    $tip.addClass('in');
+                  }, leave= function () {
+                    $tip.removeClass('in');
                 };
 
-                perfectScroll.lazyResize();
-
-                if(!!MutationObserver)
-                {
-                    //观察配置对象,观察所有子节点(包括子节点和子节点的子节点)
-                    var observerOption={
-                        'childList': true,
-                        'attributes':true,
-                        'characterData':true,
-                        'subtree': true,
-                        'attributeOldValue':true
-                    };
-                    //观察子节点变动,更新滚动条,
-                    perfectScroll.observerList=[];
-                    for(var i= 0 , len=container.children.length ; i<len ; i++){
-                        //过滤滚动条节点的观察
-                        if(!(container.children[i].classList.contains("ps-scrollbar-x-rail") || container.children[i].classList.contains("ps-scrollbar-y-rail")))
-                        {
-                            perfectScroll.observer=new MutationObserver(perfectScroll.lazyResize);
-                            perfectScroll.observer.observe(container.children[i], observerOption);
-                            perfectScroll.observerList.push(perfectScroll.observer);
-                        }
-                    }
-                    //观察自己
-                    perfectScroll.observer=new MutationObserver(perfectScroll.lazyResize);
-                    perfectScroll.observer.observe(container, {
-                        'childList': true,
-                        'attributes':true,
-                        'characterData':true,
-                        'subtree': false
-                    });
-                    perfectScroll.observerList.push(perfectScroll.observer);
-
-                    //dom注销，取消观察对象
-                    perfectScroll.observerRemover = new MutationObserver(
-                        function(mutations) {
-                            mutations.forEach(function(mo) {
-                                if (mo.removedNodes.length > 0) {
-                                    for (var dom in mo.removedNodes) {
-                                        if (mo.removedNodes[dom] == container)
-                                        {
-                                            perfectScroll.observerList.forEach(function(observer){
-                                                observer.disconnect();
-                                            });
-                                            perfectScroll.observer.disconnect();
-                                            perfectScroll.observerList=[];
-                                        }
-                                    }
-                                }
-                            });
-                        });
-                    perfectScroll.observerRemover.observe(container.parentNode, observerOption);
-                }
-                scope.$on('$destroy', function () { // 注册'$destroy'事件来删除任何易于内存泄漏的代码。
-                    if (angular.isDefined(container)) {
-                        perfectScroll.destroy(container);
-                    }
-                });
-
-                function getCurrentStyle(node) {
-                    var style = null;
-                    if(window.getComputedStyle) {
-                        style = window.getComputedStyle(node, null);
-                    }else{
-                        style = node.currentStyle;
-                    }
-                    return style;
+                if (trigger == 'click') {
+                    $element.on('click', toggle)
+                } else if (trigger != 'manual') {
+                    var eventIn  = trigger == 'hover' ? 'mouseenter' : 'focusin'
+                    var eventOut = trigger == 'hover' ? 'mouseleave' : 'focusout'
+                    $element.on(eventIn, enter);
+                    $element.on(eventOut, leave);
                 }
             }
-        }]);
+
+            function getPosition ($element) {
+                var el = $element[0]
+                return $.extend({}, (typeof el.getBoundingClientRect == 'function') ? el.getBoundingClientRect() : {
+                    width: el.offsetWidth,
+                    height: el.offsetHeight
+                }, $element.offset())
+            }
+
+
+            function setPosition($element, $tip, placement) {
+                var $parent  = $element.parent();
+                var ePos     = getPosition($element),
+                tPos         = getPosition($tip),
+                actualWidth  = $tip[0].offsetWidth,
+                actualHeight = $tip[0].offsetHeight,
+                orgPlacement = placement,
+                docScroll    = document.documentElement.scrollTop || document.body.scrollTop,
+                parentWidth  = $parent.outerWidth(),
+                parentHeight = $parent.outerHeight(),
+                parentLeft   = $parent.offset().left;
+
+                //TODO: 判断是否有足够空间,没有则对向替换
+
+                var direct = placement.split('-');
+                $tip.addClass(direct[0]);
+
+                var calculatedOffset = getCalculatedOffset (placement, ePos, tPos, actualWidth, actualHeight);
+                $tip.css(calculatedOffset);
+
+            }
+
+
+            function getCalculatedOffset (placement, ePos, tPos, actualWidth, actualHeight) {
+                var offset = {
+                    top: ePos.top + ePos.height/2 - actualHeight/2,
+                    left: ePos.left + ePos.width/2 - actualWidth/2};
+                var direct = placement.split('-');
+
+                if (direct[0] === 'top') {
+                    offset.top = ePos.top - actualHeight - 10;
+                } else if (direct[0] === 'right') {
+                    offset.left = ePos.left + ePos.width;
+                } else if (direct[0] === 'bottom') {
+                    offset.top = ePos.top + ePos.height;
+                } else if (direct[0] === 'left') {
+                    offset.left = ePos.left - actualWidth - 10;
+                }
+
+                if (direct[1] === 'top') {
+                    offset.top = ePos.top;
+                } else if (direct[1] === 'right') {
+                    offset.left = ePos.left + ePos.width - actualWidth;
+                } else if (direct[1] === 'bottom') {
+                    offset.top = ePos.top + ePos.height - actualHeight;
+                } else if (direct[1] === 'left') {
+                    offset.left = ePos.left;
+                }
+                return offset;
+            }
+        }
+      ]);
 
 });

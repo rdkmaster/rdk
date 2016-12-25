@@ -21,6 +21,11 @@
 传入图片src的例子：
 <live_demo example="controls/icon/image" width="900"></live_demo>
 
+`icon` 图片的base64码
+
+传入图片src的例子：
+<live_demo example="controls/icon/base64" width="900"></live_demo>
+
 ## label ##
 > 支持类型：字符串
 

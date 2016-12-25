@@ -13,14 +13,13 @@ define('main', ['rd.services.MenuService'], function() {
             {label: 'menu item 3', event: 'menu_item_3'},
         ];
 
-
+        scope.position = {
+            x: -30,
+            y: 90
+        };
         scope.load = function(event){
-            var position = {
-                x: 200,
-                y: 90
-            };
 
-            moduleID = MenuService.addMenu(scope.menuConfig, position, event);
+            moduleID = MenuService.addMenu(scope.menuConfig, scope.position, event);
         }
 
         scope.close = function () {

@@ -47,7 +47,8 @@ require.config({
         "rd.attributes.ds": "../rdk/attributes/ds",
         "rd.attributes.modal": "../rdk/attributes/modal",
         "rd.attributes.Scroll": "../rdk/attributes/Scroll",
-        
+        "rd.attributes.Tooltip": "../rdk/attributes/Tooltip",
+
         "rd.containers.Accordion": "../rdk/containers/Accordion",
         "rd.containers.Accordions": "../rdk/containers/Accordions",
         "rd.containers.ButtonGroup": "../rdk/containers/ButtonGroup",

@@ -3,20 +3,12 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>rdk-tooltip</title>
+    <title>rdk-tooltip -> trigger</title>
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
     -->
     <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
     <script src="scripts/main.js"></script>
-    <script type="text/javascript">
-        require.config({
-            paths: {
-                //这里引用了rdk应用的公共助手文件，不要改动
-                "application": '/doc/tools/doc_js/doc_app_helper'
-            }
-        });
-    </script>
     <style>
         label {
             width: 150px;
@@ -24,7 +16,7 @@
         }
 
         .content>div {
-            height: 200px;
+            height: 100px;
             padding: 30px;
         }
         input {
@@ -38,9 +30,18 @@
 <body ng-controller='myCtrl' >
 
     <div class="content" style="width: 500px; margin: 50px;">
+
         <div>
-            <label>默认的placement：top</label>
-            <input type="text" rdk_tooltip="prompt text">
+            <label>默认的trigger：focus，请点击输入框</label>
+            <input type="text" rdk_tooltip="prompt text"  >
+        </div>
+        <div>
+            <label>trigger：hover，请将鼠标移至输入框上方</label>
+            <input type="text" rdk_tooltip="prompt text"  rdk_tooltip_trigger="hover">
+        </div>
+        <div>
+            <label>trigger：click，请点击输入框，需再次点击输入框提示才消失</label>
+            <input type="text" rdk_tooltip="prompt text"  rdk_tooltip_trigger="click">
         </div>
     </div>
 </body>

@@ -1,52 +1,42 @@
-<rdk_editor></rdk_editor>
+<rdk_switch></rdk_switch>
 
 # 简介 #
-`rdk_editor` 是在线编辑器。
+`rdk_switch` 是在线编辑器。
 
 
-这是一个简单的 `rdk_editor` 例子：
+这是一个简单的 `rdk_switch` 例子：
 
-<live_demo example="controls/editor/basic" width="900"></live_demo>
+<live_demo example="controls/switch/basic" width="900"></live_demo>
 
 ---
 # 属性 #
 
-## text ##
-> 编辑器中的文本，可双向绑定自定义的数据源
-
-## editable ##
-> 支持类型：布尔型，true/false，默认为`true`，
-
-`editable` 属性指定编辑器是否可编辑，`true`为可编辑，`false`为只读。
-
-`editable`使用例子:
-<live_demo example="controls/editor/editable" width="900"></live_demo>
-
-## foldable ##
+## checked ##
 > 支持类型：布尔型，true/false，默认为`false`
 
-`foldable` 属性指定编辑器中的文本是否支持折叠，点击行号右侧的三角形可进行折叠，`true`为可折叠，`false`为不可折叠。
+`checked` 开关的状态值，`true`为打开状态，`false`为关闭状态
 
-`foldable`使用例子:
-<live_demo example="controls/editor/foldable" width="900"></live_demo>
+## on_label ##
+> 支持类型：字符串，默认为`on`，
 
-## selectable ##
-> 支持类型：布尔型，true/false，默认为`false`
+`on_label` 属性指定开关状态为打开时的显示文本，例：开。
 
-`selectable` 属性指定编辑器中的文本是否增加选中效果，选中行为浅蓝色背景，默认为`false`，`true`为可显示选中效果，`false`为不显示。
+`on_label`使用例子:
+<live_demo example="controls/switch/label" width="900"></live_demo>
 
-`selectable`使用例子:
-<live_demo example="controls/editor/selectable" width="900"></live_demo>
+## change ##
+> 支持类型：函数
 
+`change` 指定当开关状态发生改变时的处理函数。
 
-## type ##
-> 支持类型：字符串，默认为`text`
+`change`使用例子:
+<live_demo example="controls/switch/change" width="900"></live_demo>
 
-`type` 属性指定编辑器中的文本类型，默认为`text`，还支持`Javascript`，`html`，`xml`, 不区分大小写。
+## enabled ##
+> 支持类型：布尔型，true/false，默认为`true`
 
-`type`使用例子:
-<live_demo example="controls/editor/type" width="900"></live_demo>
+`enabled` 指定开关的使能，`true`为可以操作开关，`false`为不可操作，仅显示当前状态。
 
-
-
+`enabled`使用例子:
+<live_demo example="controls/switch/enabled" width="900"></live_demo>
 

@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>鼠标位置</title>
+    <title>MenuService -> 指定DOM</title>
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
     -->
@@ -14,7 +14,7 @@
 <body ng-controller='rdk_ctrl'>
 <div style="width: 500px; height: 500px; text-align: center; position: absolute; top: 100px; left: 200px; border: 1px solid #999;">
     <p>
-        hello, rdk!
+        点击弹出菜单将在目标DOM的中间位置显示菜单
     </p>
     <button ng-click="load($event)">弹出菜单</button><button ng-click="close()">关闭菜单</button>
     <div id="target" style="width: 50px; height: 50px; border: 1px solid #999;">目标DOM</div>

@@ -22,8 +22,8 @@ define(['angular', 'jquery', 'rd.core',
           return '<div class="input-group numeric_input"> \
             <input type="number" class="form-control" value=0 ng-keydown="changeValue($event)"> \
             <div class="input-group-addon"> \
-              <a href="javascript:;" class="spin-up" ng-click="plus()"><i class="glyphicon glyphicon-chevron-up"></i></a> \
-              <a href="javascript:;" class="spin-down" ng-click="minus()"><i class="glyphicon glyphicon-chevron-down"></i></a> \
+              <a href="javascript:;" class="spin-up" ng-click="plus()"><i class="fa fa-angle-up"></i></a> \
+              <a href="javascript:;" class="spin-down" ng-click="minus()"><i class="fa fa-angle-down"></i></a> \
             </div> \
           </div>';
         },
@@ -51,7 +51,8 @@ define(['angular', 'jquery', 'rd.core',
           UP: 38
         };
 
-        var step = attrs.step? attrs.step: 1,max = attrs.max,min = attrs.min, isFloat = false, bits= 0;
+        var step = typeof(attrs.step) !=='undefined' ? attrs.step: 1,
+          max = attrs.max,min = attrs.min, isFloat = false, bits= 0;
 
         if (/^[+-]{0,1}([0-9]*\.)\d+$/.test(step)) {
           isFloat = true;

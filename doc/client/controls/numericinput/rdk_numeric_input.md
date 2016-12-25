@@ -1,13 +1,13 @@
 <rdk_numeric_input>Numeric_Input</rdk_numeric_input>
 
 # 简介 #
-`rdk_numeric_input` 是带删除功能的输入框。
+`rdk_numeric_input` 是数值输入框
 
-输入框内容非空时，删除按钮可见。单击删除按钮，可以清空输入框内容。
+可支持上下按键改变数值，可支持点击向上、向下按钮增加或减少数值。
 
-这是一个简单的 `rdk_input` 例子：
+这是一个简单的 `rdk_numeric_input` 例子：
 
-<live_demo example="controls/input/basic" width="900"></live_demo>
+<live_demo example="controls/numericinput/basic" width="900"></live_demo>
 
 ---
 # 属性 #
@@ -15,21 +15,39 @@
 ## ng-model ##
 > 支持类型：变量名
 
-`ng-model` 用于实现 `rdk_input` 和变量的双向绑定。
+`ng-model` 用于实现 `rdk_numeric_input` 和变量的双向绑定。
 
-## placeholder ##
-> 支持类型：字符串
+## min ##
+> 支持类型：数值/字符串
 
-`placeholder` 属性提供可描述输入字段预期值的提示信息。该提示会在输入字段为空时显示，并会在字段获得焦点时消失。
+`min` 用于设置输入框的可输入数值的最小值。
 
-## readonly ##
-> 支持类型：布尔型
+## max ##
+> 支持类型：数值/字符串
 
-`readonly`取值`true`时，内容只读，不允许修改。取值`false`时，输入框内容支持修改。
+`max` 用于设置输入框的可输入数值的最大值。
 
-这是`readonly`使用例子:
+这是`min和max`的使用例子:
 
-<live_demo example="controls/input/readonly" width="900"></live_demo>
+<live_demo example="controls/numericinput/minmax" width="900"></live_demo>
+
+## step ##
+> 支持类型：数值/字符串，默认值为1，支持小数点后10位以内的浮点数
+
+`step` 用于设置输入框中。
+
+这是`step`的使用例子:
+
+<live_demo example="controls/numericinput/step" width="900"></live_demo>
+
+## change ##
+> 支持类型：函数
+
+`change` 用于指定数值改变时的响应函数。
+
+这是`change`的使用例子:
+
+<live_demo example="controls/numericinput/change" width="900"></live_demo>
 
 
 

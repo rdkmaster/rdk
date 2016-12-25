@@ -3,60 +3,41 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>rdk-tooltip</title>
+    <title>rdk-tooltip -> basic</title>
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
     -->
     <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
     <script src="scripts/main.js"></script>
-    <script type="text/javascript">
-        require.config({
-            paths: {
-                //这里引用了rdk应用的公共助手文件，不要改动
-                "application": '/doc/tools/doc_js/doc_app_helper'
-            }
-        });
-    </script>
     <style>
-        .content{
-            height: 200px;
-            width: 500px;
-            border: 1px solid #eee;
-            margin:0px auto;
-            padding:0px;
+        label {
+            width: 150px;
+            text-align: left;
         }
-        .content2{
-            height: 500px;
-            width: 600px;
-            margin: 0 auto;
-            border: 1px solid #eee;
 
+        .content>div {
+            height: 200px;
+            padding: 30px;
         }
+        input {
+            display: inline-block;
+            height: 50px;
+        }
+
     </style>
 </head>
 
-<body ng-controller='myCtrl' style="position: relative">
-    <div rdk-scroll class="content2">
-        <h2>test</h2>
-        <h2>test</h2>
-        <div  rdk-scroll class="content">
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
+<body ng-controller='myCtrl' >
+
+    <div class="content" style="width: 500px; margin: 50px;">
+        <p style="color:red;">请点击输入框</p>
+        <p>
+            默认的tooltip触发方式为：focus，点击输入框将显示tooltip，点击输入框外面将隐藏tooltip
+            默认的placement：top
+        </p>
+        <div>
+            <input type="text" rdk_tooltip="prompt text">
         </div>
-        <h2>test</h2>
-        <h2>test</h2>
-        <h2>test</h2>
-        <h2>test</h2>
-        <h2>test</h2>
     </div>
 </body>
 </html>

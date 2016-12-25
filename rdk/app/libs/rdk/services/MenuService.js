@@ -1,4 +1,4 @@
-define(['angular', 'rd.core', 'jquery-ui', 'rd.controls.Module',
+define(['angular', 'rd.core', 'jquery', 'rd.controls.Module',
   'css!rd.styles.FontAwesome',
   'css!rd.styles.Bootstrap',
   'css!rd.styles.MenuService'], function(){
@@ -20,10 +20,10 @@ define(['angular', 'rd.core', 'jquery-ui', 'rd.controls.Module',
     scope.selectItem = function (event, label) {
       event.stopPropagation();
       scope.selectedMenu = label;
+      $('#Rdk_Menu').hide();
     };
     scope.hideSubMenu = function (event) {
       $(event.target).find('ul').hide();
-      console.log('hideSubMenu')
     }
   }]);
   menuModule.service('MenuService', ['$rootScope','EventService',
@@ -72,7 +72,7 @@ define(['angular', 'rd.core', 'jquery-ui', 'rd.controls.Module',
           destroyMenu(menus[i].id);
         }
 
-        var  menuModuleID = Utils.createUniqueId('menuModule_');
+        var  menuModuleID = Utils.createUniqueId('menu');
 
         var menuHTML = '<div class="rdk_menu" >\
         <ul class="list-group" id="Rdk_Menu" > \
@@ -94,9 +94,15 @@ define(['angular', 'rd.core', 'jquery-ui', 'rd.controls.Module',
         moduleHtml.attr('id', menuModuleID);
         $(document.body).append(moduleHtml);
 
+        $('#Rdk_Menu').hide();
+
         $compile($('#'+menuModuleID))($rootScope.$$childHead);
 
         rdk[menuModuleID].loadModule('', menuHTML, 'MenuController');
+
+        $(document.body).on('click', function(){
+          $('#Rdk_Menu').hide();
+        });
 
         setTimeout(function(){
           adjustPosition (position, event);
@@ -116,6 +122,7 @@ define(['angular', 'rd.core', 'jquery-ui', 'rd.controls.Module',
       this.destroyMenu = destroyMenu
 
       function adjustPosition (pos, event) {
+        if (!pos) return;
         var wOffx = 0, wOffy = 0, bodyWidth = $(window).width(), bodyHeight = $(window).height();
         if (pos === 'mouse') {
           pos = {
@@ -143,7 +150,8 @@ define(['angular', 'rd.core', 'jquery-ui', 'rd.controls.Module',
         $('#Rdk_Menu').css({
           position: 'absolute',
           left: pos.x,
-          top: pos.y
+          top: pos.y,
+          display: 'inline-block'
         });
       }
 

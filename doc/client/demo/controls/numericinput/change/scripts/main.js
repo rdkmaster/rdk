@@ -5,8 +5,9 @@ define('main', ['rd.controls.NumericInput'], function() {
   // 创建一个控制器
   app.controller('myCtrl', ['$scope', function(scope) {
     scope.myValue = 0;
+
     scope.handleChanged = function (event, data) {
-      console.log(data);
+      alert('changed: ' + data);
     }
   }
   ]);

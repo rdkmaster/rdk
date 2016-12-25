@@ -7,8 +7,7 @@ define('main', ['rd.controls.Switch'], function() {
     scope.myValue = 0;
     scope.description = ''
     scope.handleChanged = function (event, data) {
-      console.log('hangleChange:' + data);
-      scope.description = '开关的值发生变化：' + data;
+      alert('hangleChange:' + data);
     }
   }
   ]);

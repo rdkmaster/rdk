@@ -18,20 +18,12 @@ define('main', ['rd.services.MenuService'], function() {
 
 
         scope.load = function(event){
-            var position = {
-                x: 200,
-                y: 90
-            };
 
-            moduleID = MenuService.addMenu(scope.menuConfig, position, event);
+            moduleID = MenuService.addMenu(scope.menuConfig, 'mouse', event);
         }
 
         scope.close = function () {
             MenuService.destroyMenu(moduleID);
         }
-        /*scope.destroyHandler = function(){
-            rdk[moduleID].child.destroy();
-            MenuService.removeMenu(moduleID);
-        }*/
     }]);
 });
