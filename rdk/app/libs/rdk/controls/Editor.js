@@ -57,13 +57,12 @@ function(CodeMirror) {
                 var appScope = Utils.findAppScope(scope);
                 //注册codemirror发出的事件
                 CodeMirror.on(scope.editor, 'change', function() {
-                    var value = scope.editor.doc.getValue();
-                    appScope[attrs.value] = value;
-                    EventService.raiseControlEvent(scope, EventTypes.CHANGE, value);
+                    scope.value = scope.editor.doc.getValue();
+                    EventService.raiseControlEvent(scope, EventTypes.CHANGE, scope.value);
                 });
 
                 scope.$watch('value', function(newVal, oldVal) {
-                    if (!angular.isString(newVal)) {
+                    if (!angular.isString(newVal) || newVal == scope.value) {
                         return;
                     }
                     scope.editor.doc.setValue(newVal);
