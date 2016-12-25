@@ -393,7 +393,15 @@ var file = {
         log('listing dir: ' + path + ', recursive: ' + (!!recursive));
 
         var files = [];
-        var ptn = !!pattern ? new java.RegFileFilter(pattern) : null;
+        var ptn = '';
+        if (!!pattern) {
+            try {
+                ptn = eval(pattern);
+            } catch (e) {
+                Log.warn('invalid filter pattern:', pattern, ', try this "/index\\.html/i"');
+                ptn = '';
+            }
+        }
         _listFiles(files, new java.File(path), ptn, !!recursive);
 
         return files;
@@ -416,7 +424,7 @@ var file = {
 };
 
 function _listFiles(files, path, pattern, recursive) {
-    var javaFileArr = !!pattern ? path.listFiles(pattern) : path.listFiles();
+    var javaFileArr = path.listFiles();
     if (!javaFileArr) {
         return;
     }
@@ -424,7 +432,7 @@ function _listFiles(files, path, pattern, recursive) {
         var file = javaFileArr[i];
         if (recursive && file.isDirectory()) {
             _listFiles(files, file, pattern, recursive);
-        } else {
+        } else if (file.toString().match(pattern)) {
             files.push(file.toString());
         }
     }
