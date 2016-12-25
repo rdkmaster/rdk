@@ -31,23 +31,29 @@ define(['angular', 'jquery', 'rd.core',
       function _link(scope, element, attrs) {
         scope.icon = Utils.getValue(scope.icon, attrs.icon, '');
         scope.label = Utils.getValue(scope.label, attrs.label, '');
+        var fromComplete = true;
         function loadImage(url, callback) {
           var img = new Image();
           img.src = url;
 
           if(img.complete) {
-            callback.call(img);
+            callback.call();
             return;
           }
           img.onload = function () {
-            callback.call(img);
+            fromComplete = false;
+            callback.call();
           };
         }
 
         loadImage(scope.icon, function(){
-          scope.$apply( function(){
+          if (fromComplete) {
             scope.isImage = true;
-          });
+          }else {
+            scope.$apply(function () {
+              scope.isImage = true;
+            });
+          }
         })
 
       }
