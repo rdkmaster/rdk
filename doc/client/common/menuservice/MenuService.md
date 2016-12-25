@@ -1,0 +1,61 @@
+# MenuService #
+
+**菜单服务** 用于动态弹出及关闭菜单的服务。
+
+这是使用MenuService的基础实例：
+<live_demo example="common/menuservice/html" ></live_demo>
+<font color=green>提示：</font> 可多次提示
+
+*NotifyService* 提供了两个可调用的方法：
+
+## notify ##
+
+### 基本用法{#a}
+
+        var moduleID = NotifyService.notify(message, option);
+
+### 入参说明
+
+1. message json对象，必选。是需要显示的内容。
+		{
+			title: '',			//提示框的标题
+			message: ''			//提示框的内容，可以是字符串，可以是html字符串，也可以是用户模块url
+		}
+2. option json对象，可选。option的结构为：
+		{
+		    position: '',		//提示框显示的位置，默认为left，显示在页面的左上侧
+		}
+
+
+### 出参说明
+
+返回的是弹出模块的ID，后面用户可以用这个ID销毁弹出框
+
+
+### 相关示例
+1、入参 *option* 中 *type* 是 *html*时的示例如下：
+
+<live_demo example="common/notifyservice/html" ></live_demo>
+
+2、入参 *option* 中 *type* 是 *url*时的示例如下：
+
+<live_demo example="common/notifyservice/url" ></live_demo>
+
+
+## removeNotify ##
+
+分两个场景：
+
+1、如果是在模块外部需要关闭弹出框，直接使用 *notify()* 方法缓存的出参 *moduleID* 销毁即可。
+
+	var mid = NotifyService.popup(...);
+
+	....
+
+	//取popup()返回的id
+	NotifyService.removePopup(mid);
+
+2、如果需要在模块内部关闭弹出框，使用 *scope.$moduleId* 即可。
+
+    NotifyService.removePopup(scope.$moduleId);//模板控制器上这样获取moduleID
+

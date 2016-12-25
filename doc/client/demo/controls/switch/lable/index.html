@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>demo4child</title>
+    <title>Switch -> on_label和off_label</title>
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
     -->
@@ -11,13 +11,11 @@
     <script src="scripts/main.js"></script>
 </head>
 
-<body ng-controller='rdk_ctrl' >
-<div style="text-align: center; width: 500px; height: 500px;">
-    <button ng-click="load1()">弹出提示框1</button>
-    <button ng-click="load2()">弹出提示框2</button>
-</div>
-
+<body ng-controller='myCtrl' >
+    <div style="width:600px;" >
+        <rdk_switch checked="myValue" on_label="开" off_label="关"></rdk_switch>
+        您选择的值： {{myValue}}
+    </div>
 </body>
 
 </html>
-

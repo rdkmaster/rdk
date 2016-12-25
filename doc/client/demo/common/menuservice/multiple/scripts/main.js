@@ -10,7 +10,10 @@ define('main', ['rd.services.MenuService'], function() {
         scope.menuConfig = [
             {label: 'menu item 1', event: 'menu_item_1'},
             {label: 'menu item 2', event: 'menu_item_2'},
-            {label: 'menu item 3', event: 'menu_item_3'},
+            {label: 'memu item 3', list: [
+                {label: 'submenu item 1', event: 'sub_menu_item_1'},
+                {label: 'submenu item 2', event: 'sub_menu_item_2'}
+            ]}
         ];
 
 
@@ -25,10 +28,6 @@ define('main', ['rd.services.MenuService'], function() {
 
         scope.close = function () {
             MenuService.destroyMenu(moduleID);
-        }
-
-        scope.handleSelect = function (event, data) {
-            console.log(data);
         }
         /*scope.destroyHandler = function(){
             rdk[moduleID].child.destroy();
