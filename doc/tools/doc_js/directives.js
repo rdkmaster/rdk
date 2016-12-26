@@ -8,12 +8,7 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
         replace: true,
         template: '\
             <div>\
-            <rdk_tab style="width:100%;height:300px" change="onChange">\
-                <rdk_editor ng-repeat="code in codes" title="{{code.file}}"\
-                    mode="{{code.mode}}" value="code.content"></rdk_editor>\
-                <div title="运行">\
-                    <iframe frameborder="0" style="width:100%;height:300px"></iframe>\
-                </div>\
+            <rdk_tab id="tabid" style="width:100%;height:300px" change="onChange">\
             </rdk_tab>\
             </div>',
         scope: {
@@ -24,8 +19,12 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                 return;
             }
 
+                // <div title="运行">\
+                //     <iframe frameborder="0" style="width:100%;height:300px"></iframe>\
+                // </div>\
             var evaluator = iEle.find('iframe')[0];
             listFiles(scope.example);
+            scope.tabid = Utils.createUniqueId('tabid');
 
             scope.onChange = function(event, tabIndex) {
                 if (tabIndex != scope.codes.length) {
@@ -37,12 +36,13 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                 DSService.create(Utils.createUniqueId('live_demo_ds_'), {
                     url: '/rdk/service/app/ide/server/files',
                     resultHandler: function(data) {
-                        var codes = JSON.parse(data.result);
-                        if (codes.length == 0) {
+                        scope.codes = JSON.parse(data.result);
+                        if (scope.codes.length == 0) {
                             evaluator.src = 'tools/demo-not-found.html?' + scope.example;
                             return;
                         }
-                        angular.forEach(codes, function(item) {
+                        var len = ('../doc/client/' + scope.example).length + 1;
+                        angular.forEach(scope.codes, function(item, index) {
                             var match = item.file.match(/\w+\.(\w*)$/);
                             if (match[1] == 'js') {
                                 item.mode = 'javascript';
@@ -53,8 +53,12 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                             } else {
                                 console.warn('unknown mode: ' + match[1]);
                             }
+                            item.file = item.file.substring(len);
+                            rdk['tabid'].addTab('<div title="' + item.file + '">\
+                                <rdk_editor mode="' + item.mode + '" \
+                                    value="codes[' + index + '].content"></rdk_editor>\
+                                </div>');
                         });
-                        scope.codes = codes;
                     }
                 }).query({
                     p: {
