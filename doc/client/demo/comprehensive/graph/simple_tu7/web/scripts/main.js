@@ -1,7 +1,7 @@
-define('main', ['application', 'rd.services.EventService','rd.controls.Graph','jquery'], function(application,EventService) {
+define('main', ['application', 'rd.services.EventService','rd.controls.Graph','jquery','rd.core'], function(application,EventService) {
 
 // 创建一个RDK的应用
-var app = angular.module("rdk_app", ['rd.controls.Graph']);
+var app = angular.module("rdk_app", ['rd.controls.Graph','rd.core']);
 // 创建一个控制器
 app.controller('rdk_ctrl', ['$scope', 'DataSourceService','EventService', function(scope, DataSourceService, EventService) {
 application.initDataSourceService(DataSourceService);
@@ -15,38 +15,25 @@ function setSize(){
 	//jQuery('#graph').css('width',containerWidth+"px");
 };
 setSize();
-
     EventService.register('dsGraph', 'result', function(event, data) {
     	scope.titles=data.header;
-    	var portData='全部';//初始化输出接口数据
+		$('.selector > .selector_symbol').first().addClass('iconfont iconfont-shape');
     	scope.check_items=function($event){//勾选事件
     		var target=jQuery($event.target);
-    		if(target[0].nodeName=="IMG"){
-    			if(target.css('display')!="none"){
-    				target.css('display','none');
-    				portData=false;
+    		if(target.hasClass('iconfont iconfont-shape')){
+    				target.removeClass('iconfont iconfont-shape');
+					target.parent().siblings().children('i').removeClass('iconfont iconfont-shape')
+    				portData=target.next().html();
+				alert(false)
+				return portData;
+
+    		}else{
+					target.addClass('iconfont iconfont-shape')
+					target.parent().siblings().children('i').removeClass('iconfont iconfont-shape')
+					portData=target.next().html();
     				alert(portData);
     				return portData;
-    			}else{
-    				target.css('display','block');
-    				target.parent().parent().siblings().find('img').css('display','none');
-    				portData=target.parent().siblings().html();
-    				alert(portData);
-    				return portData;
-    			}
-    		}else if(target[0].nodeName=="I"){
-    			if(target.children().css('display')=="block"){
-    				target.children().css('display','none');
-    				portData=false;
-    				alert(portData);
-    				return portData;
-    			}else{
-    				target.children().css('display','block');
-    				target.parent().siblings().find('img').css('display','none');
-    				portData=target.siblings().html();
-    				alert(portData);
-    				return portData;
-    			}
+
     		}
     	}
     });

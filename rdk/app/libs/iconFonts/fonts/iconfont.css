@@ -6,8 +6,10 @@
     url("iconfont.svg#iconfont") format("svg");
 }
 .iconfont{
-    font-family:"iconfont" !important;
-    font-size:16px;font-style:normal;
+    display: inline-block;
+    font: normal normal normal 16px/1 iconfont;
+    font-size: inherit;
+    text-rendering: auto;
     -webkit-font-smoothing: antialiased;
     -webkit-text-stroke-width: 0.2px;
     -moz-osx-font-smoothing: grayscale;
@@ -129,9 +131,9 @@
 .iconfont-e610:before{content:"\e610";}
 .iconfont-e60e:before{content:"\e60e";}
 .iconfont-e60d:before{content:"\e60d";}
-.iconfont-up:before{content:"\e835";}
+.iconfont-left-s:before{content:"\e835";}
 .iconfont-down:before{content:"\e83e";}
-.iconfont-left-s:before{content:"\e840";}
+.iconfont-up:before{content:"\e840";}
 .iconfont-arrow-up:before{content:"\e836";}
 .iconfont-left:before{content:"\e82c";}
 .iconfont-right:before{content:"\e82d";}

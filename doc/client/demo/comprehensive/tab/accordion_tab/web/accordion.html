@@ -5,6 +5,7 @@
     <title>RDK控件Demo : Tabs And Accordion</title>
     <link rel="stylesheet" type="text/css" href="css/accortion.css">
     <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/global.css">
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/font-awesome-4.3.0/css/font-awesome.css">
     <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
     <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
     <script src="scripts/accordion.js"></script>
@@ -79,7 +80,7 @@
         </div>
     </rdk_tab>
     <button class="tab_btn rdk-tab-item" ng-click="changeTabsStatus()">
-        <i class="rdk-icon" ng-class="{true:'tab-down-icon',false:'tab-up-icon'}[btnStatus]"></i>
+        <i class="rdk-icon fa" ng-class="{true:'fa-angle-double-down',false:'fa-angle-double-up'}[btnStatus]"></i>
     </button>
 </div>
 </body>
