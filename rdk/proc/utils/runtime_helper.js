@@ -312,6 +312,15 @@ var file = {
         log("reading property file:",file);
         return rdk_runtime.fileHelper().loadProperty(file);
     },
+    readString: function(path) {
+        if (!path) {
+            log("invalid file path:", path);
+            return undefined;
+        }
+        path = path.toString();
+        log("reading file as string:", path);
+        return rdk_runtime.fileHelper().readString(path);
+    },
     readXml: function (path) {
         if (!path) {
             log("invalid file path:", path);
@@ -398,7 +407,7 @@ var file = {
             try {
                 ptn = eval(pattern);
             } catch (e) {
-                Log.warn('invalid filter pattern:', pattern, ', try this "/index\\.html/i"');
+                Log.warn('invalid filter pattern:', pattern, ', try this "/\\w+\\.html/i"');
                 ptn = '';
             }
         }

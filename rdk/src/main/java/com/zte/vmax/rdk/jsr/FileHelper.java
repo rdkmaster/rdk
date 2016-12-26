@@ -28,8 +28,7 @@ public class FileHelper extends AbstractAppLoggable {
         logger = AppLogger.getLogger("FileHelper", appName);
     }
 
-    public String readXml(String path) {
-
+    public String readString(String path) {
         path = fixPath(path, appName);
 
         BufferedReader in = null;
@@ -43,7 +42,7 @@ public class FileHelper extends AbstractAppLoggable {
         StringBuilder sb = new StringBuilder();
         try {
             while ((s = in.readLine()) != null) {
-                sb.append(s);
+                sb.append(s).append('\n');
             }
         } catch (Exception e) {
             logger.error("read stream error," + e);
@@ -56,14 +55,18 @@ public class FileHelper extends AbstractAppLoggable {
             }
         }
 
+        return sb.toString();
+    }
+
+    public String readXml(String path) {
+        String content = readString(path);
         JSONObject jsonObj = null;
         try {
-            jsonObj = XML.toJSONObject(sb.toString());
+            jsonObj = XML.toJSONObject(content);
         } catch (Exception e) {
             logger.error("transform json object error," + e);
             return "";
         }
-
 
         try {
             return jsonObj.toString();

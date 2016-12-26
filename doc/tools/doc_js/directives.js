@@ -10,7 +10,7 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
             <div>\
             <rdk_tab style="width:100%;height:300px" change="onChange">\
                 <rdk_editor ng-repeat="code in codes" title="{{code.file}}"\
-                    mode="{{code.mode}}" value="code.code"></rdk_editor>\
+                    mode="{{code.mode}}" value="code.content"></rdk_editor>\
                 <div title="运行">\
                     <iframe frameborder="0" style="width:100%;height:300px"></iframe>\
                 </div>\
@@ -24,42 +24,49 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                 return;
             }
 
-            scope.codes = [
-                {
-                    mode: 'html',
-                    file: 'index.html',
-                    code: '<html>\naaaaaaaaaaa\n</html>'
-                },
-                {
-                    mode: 'javascript',
-                    file: 'scripts/main.js',
-                    code: 'var a = 123;'
-                },
-            ]
+            var evaluator = iEle.find('iframe')[0];
+            listFiles(scope.example);
 
             scope.onChange = function(event, tabIndex) {
                 if (tabIndex != scope.codes.length) {
                     return;
                 }
-                var evaluator = iEle.find('iframe')[0].contentDocument;
-                evaluator.open();
-                evaluator.write(scope.codes[0].code);
-                evaluator.close();
             }
 
-            // DSService.create(Utils.createUniqueId('live_demo_ds_'), {
-            //     url: '/demos/data',
-            //     conditionProcessor: function() {
-            //         return {example: scope.example}
-            //     },
-            //     resultHandler: function(data) {
-            //         var ifrmDoc = iEle[0].childNodes[3].contentDocument;
-            //         ifrmDoc.open();
-            //         var src = getCombinedHtml(data[0], data[1], data[2]);
-            //         ifrmDoc.write(src);
-            //         ifrmDoc.close();
-            //     }
-            // }).query();
+            function listFiles(path) {
+                DSService.create(Utils.createUniqueId('live_demo_ds_'), {
+                    url: '/rdk/service/app/ide/server/files',
+                    resultHandler: function(data) {
+                        var codes = JSON.parse(data.result);
+                        if (codes.length == 0) {
+                            evaluator.src = 'tools/demo-not-found.html?' + scope.example;
+                            return;
+                        }
+                        angular.forEach(codes, function(item) {
+                            var match = item.file.match(/\w+\.(\w*)$/);
+                            if (match[1] == 'js') {
+                                item.mode = 'javascript';
+                            } else if (match[1] == 'html') {
+                                item.mode = 'html';
+                            } else if (match[1] == 'css') {
+                                item.mode = 'css';
+                            } else {
+                                console.warn('unknown mode: ' + match[1]);
+                            }
+                        });
+                        scope.codes = codes;
+                    }
+                }).query({
+                    p: {
+                        param: {
+                            path: '../doc/client/' + scope.example,
+                            pattern: '',
+                            recursive: true, needContent: true
+                        }
+                    }
+                });
+            }
+
         }
     };
 }]);
