@@ -1,7 +1,7 @@
 define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echarts) {
     var vmaxGraphApp = angular.module('rd.controls.Graph', ['rd.core']);
     vmaxGraphApp.provider('RdkGraph', [function() {
-        var themeDefine = "../rdk/controls/assets/chart_theme"; //增加默认值
+        var themeDefine = "../rdk/css/theme/chart_theme"; //增加默认值
         this.setTheme = function(theme) {
             themeDefine = theme;
         }

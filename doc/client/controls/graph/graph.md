@@ -184,4 +184,86 @@ return function(data, context, GraphService, attributes) {
   }
 ~~~
 
+#更多示例#
 
+环形图1：
+
+<live_demo example="comprehensive/graph/simple_pie1/web" width="900"></live_demo>
+
+环形图2：
+
+<live_demo example="comprehensive/graph/simple_pie2/web" width="900"></live_demo>
+
+环形图3：
+
+<live_demo example="comprehensive/graph/simple_pie3/web" width="900"></live_demo>
+
+环形图4：
+
+<live_demo example="comprehensive/graph/simple_scorePie/web" width="900"></live_demo>
+
+
+
+折线柱状组合图：
+
+<live_demo example="comprehensive/graph/simple_tu2/web" width="900"></live_demo>
+
+条形图1：
+
+<live_demo example="comprehensive/graph/simple_tu3/web" width="900"></live_demo>
+
+条形图2：
+
+<live_demo example="comprehensive/graph/simple_tu4/web" width="900"></live_demo>
+
+条形图3：
+
+<live_demo example="comprehensive/graph/simple_tu6/web" width="900"></live_demo>
+
+条形图和多选框结合：
+
+<live_demo example="comprehensive/graph/simple_tu7/web" width="900"></live_demo>
+
+堆叠区域图：
+
+<live_demo example="comprehensive/graph/simple_tu5/web" width="900"></live_demo>
+
+散点图：
+
+<live_demo example="comprehensive/graph/bubble_graduent/web" width="900"></live_demo>
+
+雷达图：
+
+<live_demo example="comprehensive/graph/rader/web" width="900"></live_demo>
+
+k线图：
+
+<live_demo example="comprehensive/graph/simple_tu1/web" width="900"></live_demo>
+
+热力图：
+
+<live_demo example="comprehensive/graph/hot/web" width="900"></live_demo>
+
+矩形树图：
+
+<live_demo example="comprehensive/graph/rectangle_tree/web" width="900"></live_demo>
+
+平行坐标：
+
+<live_demo example="comprehensive/graph/parallel/web" width="900"></live_demo>
+
+桑葚图：
+
+<live_demo example="comprehensive/graph/mulberry_figure/web" width="900"></live_demo>
+
+漏斗图：
+
+<live_demo example="comprehensive/graph/funnel_plot/web" width="900"></live_demo>
+
+仪表盘：
+
+<live_demo example="comprehensive/graph/instrument/web" width="900"></live_demo>
+
+综合示例：
+一个数据源画出折线图和饼图
+<live_demo example="comprehensive/graph/twoData/web" width="900"></live_demo>
