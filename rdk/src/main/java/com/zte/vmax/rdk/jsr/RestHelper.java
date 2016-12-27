@@ -133,9 +133,7 @@ public class RestHelper extends AbstractAppLoggable {
                     }
                 } catch (IOException e) {
                     logger.error("ByteArrayOutputStream close error:", e);
-                    return null;
                 }
-
             }
         } catch (IOException e) {
             logger.error("can not get input stream", e);
@@ -147,7 +145,6 @@ public class RestHelper extends AbstractAppLoggable {
                 }
             } catch (IOException e) {
                 logger.error("inStream close error:", e);
-                return null;
             }
         }
 
