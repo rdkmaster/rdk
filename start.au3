@@ -38,19 +38,19 @@ GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKTOP)
 $height -= 20
 
 GUICtrlCreateTabItem("RDK")
-Global $rdkConsole = GUICtrlCreateEdit("", 2, 23, $width, $height, $WS_HSCROLL + $WS_VSCROLL)
+Global $rdkConsole = GUICtrlCreateEdit("", 2, 23, $width, $height, $WS_HSCROLL + $WS_VSCROLL + $ES_WANTRETURN)
 GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 GUICtrlSetFont(-1, 8.5, 0, 0, 'Courier New')
 _GUICtrlEdit_SetLimitText($rdkConsole, 3000000000)
 
 GUICtrlCreateTabItem("HTTP")
-Global $httpConsole = GUICtrlCreateEdit("", 2, 23, $width, $height, $WS_HSCROLL + $WS_VSCROLL)
+Global $httpConsole = GUICtrlCreateEdit("", 2, 23, $width, $height, $WS_HSCROLL + $WS_VSCROLL + $ES_WANTRETURN)
 GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 GUICtrlSetFont(-1, 8.5, 0, 0, 'Courier New')
 _GUICtrlEdit_SetLimitText($httpConsole, 3000000000)
 
 GUICtrlCreateTabItem("Rest")
-Global $restConsole = GUICtrlCreateEdit("", 2, 23, $width, $height, $WS_HSCROLL + $WS_VSCROLL)
+Global $restConsole = GUICtrlCreateEdit("", 2, 23, $width, $height, $WS_HSCROLL + $WS_VSCROLL + $ES_WANTRETURN)
 GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 GUICtrlSetFont(-1, 8.5, 0, 0, 'Courier New')
 _GUICtrlEdit_SetLimitText($restConsole, 3000000000)
