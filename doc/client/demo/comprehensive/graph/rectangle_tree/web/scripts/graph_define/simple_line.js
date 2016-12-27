@@ -7,7 +7,7 @@
 //           ...
 //        });
 
-define([/*  'underscore'   */'echarts'], function() {
+define([/*  'underscore'   */'echarts'], function(echarts) {
 
 // data 是Graph的输入数据。
 // 使用data参数时，请务必保持只读
@@ -21,7 +21,7 @@ define([/*  'underscore'   */'echarts'], function() {
 // GraphService 是一个函数集，主要提供了对二维数组的常用操作
 
 // attributes 是当前Graph所在的html节点的所有属性集。也是一种辅助数据。
-return function(data, context, GraphService, attributes, echarts) {
+return function(data, context, GraphService, attributes) {
     var household_america_2012 = 113616229;
     var obama_budget_2012 = data.obama_budget_2012;
     formatUtil = echarts.format;

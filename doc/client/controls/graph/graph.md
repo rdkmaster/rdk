@@ -240,9 +240,17 @@ k线图：
 
 <live_demo example="comprehensive/graph/simple_tu1/web" width="900"></live_demo>
 
+箱线图：
+
+<live_demo example="comprehensive/graph/box_plots/web" width="900"></live_demo>
+
 热力图：
 
 <live_demo example="comprehensive/graph/hot/web" width="900"></live_demo>
+
+关系图：
+
+<live_demo example="comprehensive/graph/relational_graph/web" width="900"></live_demo>
 
 矩形树图：
 
