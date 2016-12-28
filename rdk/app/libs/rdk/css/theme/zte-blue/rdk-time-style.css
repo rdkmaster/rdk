@@ -234,7 +234,7 @@ div.datetimepicker th.switch {
     border-bottom-color: rgba(0,0,0,0.2);
 }
 .datetimepicker th.switch {
-    color:#333;
+    color:#666;
     line-height: 24px;
 }
 .datetimepicker table tr td.disabled, .datetimepicker table tr td.disabled:hover {
