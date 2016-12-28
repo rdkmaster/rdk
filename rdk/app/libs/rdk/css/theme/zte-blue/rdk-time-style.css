@@ -148,7 +148,7 @@ input, button, select, textarea {
     right: 8px;
 }
 .bootstrap-select.btn-group .btn .filter-option {
-    overflow: inherit;
+    overflow: visible;
     left: 2px;
     right: 25px;
     height: 18px;
