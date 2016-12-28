@@ -14,8 +14,8 @@
 
 <body ng-controller='myCtrl'>
     <form>
-        <rdk_combo_select>
-            <div>
+        <rdk_combo_select open='openSwitch'>
+            <div class="select-main">
                 <div ng-repeat="item in items">
                     {{item.title}}:
                     <rdk_basic_selector searchable="false" child_change="selected2string" class="rdk_selector_style" id="sortid"  multiple_select="false" data="item.content" editable="false" ></rdk_basic_selector>

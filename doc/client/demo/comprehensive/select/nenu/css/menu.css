@@ -1,6 +1,17 @@
-.rdk-selector-module .original-item {
+.rdk-selector-module .original-item,.rdk-selector-module .selected-item  {
     width: 100% ;
+    border: none;
+    margin: 0;
+    padding: 3px 5px;
+    border-radius: initial;
 }
-.rdk-selector-module .selected-item {
-    width: 100% ;
+.rdk-selector-module .original-item:hover,.rdk-selector-module .selected-item:hover {
+    background-color: #0af;
+}
+.select-main {
+    border: 1px solid #eee;
+    box-shadow: rgba(0, 0, 0, 0.172549) 0px 6px 12px;
+}
+.rdk-selector-module {
+    border: none;
 }

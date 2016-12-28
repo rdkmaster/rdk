@@ -6,13 +6,6 @@ define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector
     ]);
 
     myApp.controller('myCtrl', ['$scope', 'RDKConst', 'BasicSelector', function(scope, RDKConst, BasicSelector) {
-        //scope.TOPItems = [{
-        //    label: '10'
-        //}, {
-        //    label: '20'
-        //}, {
-        //    label: '50'
-        //}];
         scope.items=[
             {
                 title:"top",
@@ -35,18 +28,14 @@ define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector
               }]
             }
         ]
-        //scope.SortItems = [{
-        //    label: '升序'
-        //}, {
-        //    label: '降序'
-        //}, {
-        //    label: '非法值'
-        //}];
+        scope.openSwitch = true;
         scope.selected2string = function(selected, context, index) {
-
+            console.log(selected);
+            console.log(context);
+            console.log(index);
+            scope.openSwitch = false;
             return BasicSelector.selected2string(selected, 'label', '');
         }
-
 
     }]);
 });
