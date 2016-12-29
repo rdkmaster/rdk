@@ -51,6 +51,11 @@
     margin-right:8px;
     height: 30px;
 }
+
+.rdk-time-module select::-ms-expand {
+    display: none;
+} 
+
 input, button, select, textarea {
     font-family:"微软雅黑";
 }

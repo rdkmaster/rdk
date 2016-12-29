@@ -54,6 +54,10 @@
     background: url("../../img/arrow.png") no-repeat scroll right center transparent !important;
 }
 
+.rdk-time-module select::-ms-expand {
+    display: none;
+} 
+
 .rdk-time-module select>option{
     color: black;
 }
