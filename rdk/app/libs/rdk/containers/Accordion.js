@@ -234,7 +234,9 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                 }
 
                 function _initialCssHandler(){
-                    $(transcludeDom).css({'height': 'inherit', 'overflow-x': 'hidden'});//100%
+                    //$(transcludeDom).css({'height': 'inherit', 'overflow-x': 'hidden'});//100%
+                    //'overflow-x': 'hidden' ???? 当子元素绝对定位时被此设置给隐藏了，所以需要去掉。
+                    $(transcludeDom).css({'height': 'inherit'});
                     if((direction == PositionTypes.LEFT)||(direction == PositionTypes.RIGHT)){
                         $(transcludeDom).css({'width': 'inherit'});
                     }
