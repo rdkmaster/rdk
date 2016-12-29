@@ -33,7 +33,7 @@ define(['rd.services.DataSourceService'], function() {
             };
         }
     ])
-    .directive('onFinishRender', function($timeout) {
+    .directive('onFinishRender', ['$timeout',function($timeout) {
         return {
             restrict: 'A',
             link: function(scope, element, attr) {
@@ -48,5 +48,20 @@ define(['rd.services.DataSourceService'], function() {
                 }
             }
         }
-    })
+    }])
+    .directive('selectpicker', ['$timeout', function($timeout) {
+        return {
+            restrict: 'A',
+            priority: 1000,
+            link: function(scope, elem, attrs) {
+                $timeout(function() {
+                    var size = attrs.selectpicker && parseInt(attrs.selectpicker) || 5;
+                    $(elem).selectpicker({
+                        style: 'btn',
+                        size:size
+                    });
+                }, 0);
+            }
+        };
+    }])
 });

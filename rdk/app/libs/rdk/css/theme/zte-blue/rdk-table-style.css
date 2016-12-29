@@ -32,7 +32,7 @@
     right: 8px;
     top: 10px;
 }
-.rdk-table-module .search_select{
+.rdk-table-module div.btn-group.search_select{
     width: 250px;
     position: absolute;
     top: 34px;
@@ -239,4 +239,24 @@
 .sticky-wrap .sticky-intersect th {
     background-color: #666;
     color: #eee;
+}
+/*搜索下拉框*/
+.rdk-table-module div.search_select .dropdown-toggle.btn:focus{
+    border-color: #66afe9;
+    outline: 0 !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+}
+.rdk-table-module div.search_select .dropdown-toggle.btn{
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+}
+.rdk-table-module .dropdown-menu>li>a:hover {
+    background: #eee;
+    color: #333;
+}
+.rdk-table-module .dropdown-menu>li>a:focus{
+    background: #3ab1ea;
+    color: #fff;
 }
