@@ -64,21 +64,7 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
             };
         }]);
         //考虑单独拎出来
-        timeApp.directive('selectpicker', ['$timeout', function($timeout) {
-                return {
-                    restrict: 'A',
-                    priority: 1000,
-                    link: function(scope, elem, attrs) {
-                        $timeout(function() {
-                            $(elem).selectpicker({
-                                style: 'btn',
-                                size: 5
-                            });
-                        }, 0);
-                    }
-                };
-            }])
-            .directive('datetimepicker', ['TimeUtilService', '$timeout', function(TimeUtilService, $timeout) {
+        timeApp.directive('datetimepicker', ['TimeUtilService', '$timeout', function(TimeUtilService, $timeout) {
                 return {
                     restrict: 'A',
                     require: '?ngModel',

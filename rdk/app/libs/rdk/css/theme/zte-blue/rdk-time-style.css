@@ -166,7 +166,7 @@ input, button, select, textarea {
 .time-content> span.granularity {
     font-family: "微软雅黑"
 }
-.dropdown-menu>li>a {
+.rdk-time-module .dropdown-menu>li>a {
     width: 80px;
 }
 /* 悬浮状态样式 */

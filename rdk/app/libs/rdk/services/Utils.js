@@ -385,4 +385,37 @@
         //组件上下级交互时，停止传播的标志
         this.STOP_PROPAGATIOIN = '__stop_propagation_145812__'
     }]);
+
+    utilsModule
+        .directive('onFinishRender', ['$timeout',function($timeout) {
+            return {
+                restrict: 'A',
+                link: function(scope, element, attr) {
+                    if (scope.$last === true) {
+                        $timeout(function() {
+                            if(!attr.onFinishRender){ //事件默认为ngRepeatFinished
+                                scope.$emit('ngRepeatFinished');
+                            }else{
+                                scope.$emit(attr.onFinishRender);
+                            }
+                        }, 0);
+                    }
+                }
+            }
+        }])
+        .directive('selectpicker', ['$timeout', function($timeout) {
+            return {
+                restrict: 'A',
+                priority: 1000,
+                link: function(scope, elem, attrs) {
+                    $timeout(function() {
+                        var size = attrs.selectpicker && parseInt(attrs.selectpicker) || 5;
+                        $(elem).selectpicker({
+                            style: 'btn',
+                            size:size
+                        });
+                    }, 0);
+                }
+            };
+        }])
 });
