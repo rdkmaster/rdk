@@ -150,7 +150,7 @@
     width:50%;
 }
 .rdk-table-module .mouseShape{
-  cursor:url("../../img/edit.ico"),auto;
+    cursor:url("/rdk/app/libs/rdk/css/img/edit.cur"),auto;
 }
 .rdk-table-icon{
     display: inline-block;
