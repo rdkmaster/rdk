@@ -2,6 +2,10 @@
 define([ 'rd.core', 'rd.controls.Editor', 'rd.containers.Tab' ], function() {
 var module = angular.module('rd.demo.Directives', [ 'rd.core', 'rd.controls.Editor', 'rd.containers.Tab' ]);
 
+module.controller('EditorController', ['$scope', function(scope) {
+    console.log('======================\n' + scope.code);
+}]);
+
 module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function(DSService, Utils, $timeout) {
     return {
         restrict: 'E',
@@ -23,8 +27,12 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                 //     <iframe frameborder="0" style="width:100%;height:300px"></iframe>\
                 // </div>\
             var evaluator = iEle.find('iframe')[0];
+            scope.tabid = Utils.createUniqueId('live-demo-tab-');
+            var ds = DSService.create(Utils.createUniqueId('live_demo_ds_'), {
+                url: '/rdk/service/app/ide/server/files',
+                resultHandler: handleCodeResult
+            });
             listFiles(scope.example);
-            scope.tabid = Utils.createUniqueId('tabid');
 
             scope.onChange = function(event, tabIndex) {
                 if (tabIndex != scope.codes.length) {
@@ -33,41 +41,41 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
             }
 
             function listFiles(path) {
-                DSService.create(Utils.createUniqueId('live_demo_ds_'), {
-                    url: '/rdk/service/app/ide/server/files',
-                    resultHandler: function(data) {
-                        scope.codes = JSON.parse(data.result);
-                        if (scope.codes.length == 0) {
-                            evaluator.src = 'tools/demo-not-found.html?' + scope.example;
-                            return;
-                        }
-                        var len = ('../doc/client/' + scope.example).length + 1;
-                        angular.forEach(scope.codes, function(item, index) {
-                            var match = item.file.match(/\w+\.(\w*)$/);
-                            if (match[1] == 'js') {
-                                item.mode = 'javascript';
-                            } else if (match[1] == 'html') {
-                                item.mode = 'html';
-                            } else if (match[1] == 'css') {
-                                item.mode = 'css';
-                            } else {
-                                console.warn('unknown mode: ' + match[1]);
-                            }
-                            item.file = item.file.substring(len);
-                            rdk['tabid'].addTab('<div title="' + item.file + '">\
-                                <rdk_editor mode="' + item.mode + '" \
-                                    value="codes[' + index + '].content"></rdk_editor>\
-                                </div>');
-                        });
-                    }
-                }).query({
+                ds.query({
                     p: {
                         param: {
-                            path: '../doc/client/' + scope.example,
+                            path: '../doc/client/' + path,
                             pattern: '',
                             recursive: true, needContent: true
                         }
                     }
+                });
+            }
+
+            function handleCodeResult(data) {
+                scope.codes = JSON.parse(data.result);
+                if (scope.codes.length == 0) {
+                    evaluator.src = 'tools/demo-not-found.html?' + scope.example;
+                    return;
+                }
+                var len = ('../doc/client/' + scope.example).length + 1;
+                angular.forEach(scope.codes, function(item, index) {
+                    var match = item.file.match(/\w+\.(\w*)$/);
+                    if (match[1] == 'js') {
+                        item.mode = 'javascript';
+                    } else if (match[1] == 'html') {
+                        item.mode = 'html';
+                    } else if (match[1] == 'css') {
+                        item.mode = 'css';
+                    } else {
+                        console.warn('unknown mode: ' + match[1]);
+                    }
+                    item.file = item.file.substring(len);
+                    $timeout(function() {
+                        rdk['tabid'].addTab('<div title="' + item.file + '">\
+                            <rdk_editor mode="' + item.mode + '" value="code"></rdk_editor>\
+                            </div>', 'EditorController', {code: item.content});
+                    }, 0)
                 });
             }
 
