@@ -20,14 +20,16 @@
 	
 	function _put(request) {
 		var result = [];
+		if (!request) {
+			return result;
+		}
 		var files = request.files;
 		if (!files) {
 			return result;
 		}
-
-		_.each(files, function(content, filename) {
-			if (file.save(filename, content)) {
-				result.push(filename);
+		_.each(files, function(fileInfo) {
+			if (file.save(fileInfo.file, fileInfo.content)) {
+				result.push(fileInfo.file);
 			}
 		});
 		return result;
