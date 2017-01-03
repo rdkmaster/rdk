@@ -7,7 +7,7 @@
 //           ...
 //        });
 
-define([/*  'underscore'   */'echarts','dataTool'], function(echarts,dataTool) {
+define([/*  'underscore'   */], function() {
 
 // data 是Graph的输入数据。
 // 使用data参数时，请务必保持只读
