@@ -119,26 +119,20 @@ public class RestHelper extends AbstractAppLoggable {
             byte[] buff = new byte[1024 * 4];  //每次读4KB
             baos = new ByteArrayOutputStream();
             int len = -1;
-            try {
-                while ((len = inStream.read(buff)) != -1) {
-                    baos.write(buff, 0, len);
-                }
-            } catch (IOException e) {
-                logger.error("can not read data", e);
-                return null;
-            } finally {
-                try {
-                    if (baos != null) {
-                        baos.close();
-                    }
-                } catch (IOException e) {
-                    logger.error("ByteArrayOutputStream close error:", e);
-                }
+            while ((len = inStream.read(buff)) != -1) {
+                baos.write(buff, 0, len);
             }
         } catch (IOException e) {
-            logger.error("can not get input stream", e);
+            logger.error("get input stream or read data error:", e);
             return null;
         } finally {
+            try {
+                if (baos != null) {
+                    baos.close();
+                }
+            } catch (IOException e) {
+                logger.error("ByteArrayOutputStream close error:", e);
+            }
             try {
                 if (inStream != null) {
                     inStream.close();
