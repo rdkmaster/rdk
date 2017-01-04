@@ -15,6 +15,7 @@ require.config({
         "codemirror-css": "../codemirror/codemirror",
         "codemirror-mode": "../codemirror/mode/javascript",
 
+        "gsap": "../animate/js/TweenMax.min",
         "ztree": "../ztree/jquery.ztree.all-3.5",
         "ztree-exhide": "../ztree/jquery.ztree.exhide-3.5.min",
         "echarts": "../echarts/echarts3.min",
@@ -153,6 +154,10 @@ require.config({
         "ngProgress":{
             deps: ["angular","css!../angular/ngprogress"],
             exports: "ngProgress"
+        },
+        "gsap":{
+            deps: ["jquery"],
+            exports: "gsap"
         }
     },
     map: {
