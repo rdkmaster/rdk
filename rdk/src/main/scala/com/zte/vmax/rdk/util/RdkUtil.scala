@@ -322,6 +322,10 @@ object RdkUtil extends Logger {
     InetAddress.getLocalHost().getHostName
   }
 
+  def getHostIp: String = {
+    InetAddress.getLocalHost().getHostAddress
+  }
+
   private def getFileParam(fileParamMap: StringMap[String], fileType: String): Tuple2[String, String] = {
     fileType.toLowerCase match {
       case param if param.equals("csv") || param.equals("excel") =>
@@ -383,5 +387,30 @@ object RdkUtil extends Logger {
         None
     }
 
+  }
+
+  def getShellOutput(args: ScriptObjectMirror): String = {
+
+    val cmd: String = args.getMember("0").toString
+    val option: String = args.getMember("1").toString
+
+    if (args.size == 2) {
+      option match {
+        case "0" => ShellExecutorFactory.get("shell").getReturnCode(cmd) match {
+          case Left(returnCode) => return returnCode.toString
+          case Right(error) => return error
+        }
+        case "1" => ShellExecutorFactory.get("shell").getOutputLines(cmd).getOrElse("")
+      }
+    } else {
+      val params: List[String] = (for (elem <- 2 to args.size - 1) yield args.getMember(elem.toString).toString).toList
+      option match {
+        case "0" => ShellExecutorFactory.get("shell").getReturnCode(cmd :: params) match {
+          case Left(returnCode) => return returnCode.toString
+          case Right(error) => return error
+        }
+        case "1" => ShellExecutorFactory.get("shell").getOutputLines(cmd :: params).getOrElse("")
+      }
+    }
   }
 }

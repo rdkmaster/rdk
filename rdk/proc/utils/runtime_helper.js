@@ -121,6 +121,26 @@ function getHostName() {
     return rdk_runtime.getHostName()
 }
 
+function getHostIp() {
+    return rdk_runtime.getHostIp()
+}
+/**
+ *
+ * @param cmd  shell命令或者脚本
+ * @param option 0，返回执行码 1，返回脚本执行字符串
+ *
+ */
+function getShellOutput(cmd, option) {
+    if (!_.isDefined(cmd)) {
+        Log.error("param cmd required!");
+        return;
+    } else if (!_.isDefined(option)) {
+        Log.warn("param option miss,set 0!");
+        arguments["1"] = 0;
+    }
+    return rdk_runtime.getShellOutput(arguments);
+}
+
 function getRequestContextHeader() {
     var reqCtxHeaderInfo = rdk_runtime.getReqCtxHeaderInfo()
     if (!reqCtxHeaderInfo) {
