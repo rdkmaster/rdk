@@ -56,32 +56,34 @@ describe('Tab Self test',function(){
         var item=element.all(by.css(".demo3 .rdk-tab-module ul li"));
         item.get(0).click();
         browser.sleep(500);
-        //猜想值应该均为auto,第一个始终为52px,是否是bug待定
-        expect(element(by.css(".demo3 .rdk-tab-module .content div")).getCssValue("height")).toBe("52px");
+        //猜想值应该均为auto,第一个始终不是，是否是bug？
+        expect(element(by.css(".demo3 .rdk-tab-module .content")).getCssValue("height")).toBe("42px");
         item.get(1).click();
-        expect(element(by.css(".demo3 .rdk-tab-module .content div")).getCssValue("height")).toBe("auto");
+        expect(element(by.css(".demo3 .rdk-tab-module .content")).getCssValue("height")).toBe("66px");
         item.get(2).click();
-        expect(element(by.css(".demo3 .rdk-tab-module .content div")).getCssValue("height")).toBe("auto");
+        browser.sleep(500);
+        expect(element(by.css(".demo3 .rdk-tab-module .content")).getCssValue("height")).toBe("90px");
     });
     it('选项卡高度属性设置auto',function(){
         //每个选项卡都是按照最高的选项卡设置高度
         var item=element.all(by.css(".demo4 .rdk-tab-module ul li"));
         item.get(0).click();
-        expect(element(by.css(".demo4 .rdk-tab-module .content")).getCssValue("height")).toBe("100px");
+        expect(element(by.css(".demo4 .rdk-tab-module .content")).getCssValue("height")).toBe("90px");
         item.get(1).click();
-        expect(element(by.css(".demo4 .rdk-tab-module .content")).getCssValue("height")).toBe("100px");
+        expect(element(by.css(".demo4 .rdk-tab-module .content")).getCssValue("height")).toBe("90px");
         item.get(2).click();
-        expect(element(by.css(".demo4 .rdk-tab-module .content")).getCssValue("height")).toBe("100px");
+        expect(element(by.css(".demo4 .rdk-tab-module .content")).getCssValue("height")).toBe("90px");
     });
     it('选项卡高度属性设置fill',function(){
         //整个rdk_tab高度根据标签定义分配，选项卡处为59px,在页面审查得知最终属于该测试块的高度仅为52px
         var item=element.all(by.css(".demo5 .rdk-tab-module ul li"));
         // item.get(0).click();
-        expect(element(by.css(".demo5 .rdk-tab-module .content")).getCssValue("height")).toBe("59px");
+        expect(element(by.css(".demo5 .rdk-tab-module .content")).getCssValue("height")).toBe("42px");
         item.get(1).click();
-        expect(element(by.css(".demo5 .rdk-tab-module .content")).getCssValue("height")).toBe("59px");
+        expect(element(by.css(".demo5 .rdk-tab-module .content")).getCssValue("height")).toBe("42px");
         item.get(2).click();
-        expect(element(by.css(".demo5 .rdk-tab-module .content")).getCssValue("height")).toBe("59px");
+        browser.sleep(500);
+        expect(element(by.css(".demo5 .rdk-tab-module .content")).getCssValue("height")).toBe("42px");
     });
     it('设置可见选项卡 可伸缩',function(){
         expect(element.all(by.css(".demo6 .rdk-tab-module ul li")).count()).toBe(3);

@@ -8,7 +8,7 @@ describe("test area_selector combined",function(){
 		});
 		var input = element(by.css(".scene1 .combo-content .form-control"));//获得combo下input框，也是点击和显示选中值的element
 		//area selector待选择的省列表lis
-		var provinceList=element.all(by.css(".scene1 .rdk-combo-select-module .rdk-area-contain .tab-panel ul li a"));
+		var provinceList=element.all(by.css(".scene1 .rdk-combo-select-module .rdk-area-contain .rdk-area-panel ul li a"));
 		expect(provinceList.count()).toBe(34); // 期望待选择的省数量应该为34个
 		provinceList.each(function(item){
 			input.click().then(function(){
@@ -31,19 +31,19 @@ describe("test area_selector combined",function(){
 		input.click();
 		browser.sleep(1000);
 		//area selector待选择的省列表provinceList
-		var provinceList=element.all(by.css(".scene2 .rdk-combo-select-module .rdk-area-contain div[class$=tab-panel] ul li a"));
+		var provinceList=element.all(by.css(".scene2 .rdk-combo-select-module .rdk-area-contain div[class$=rdk-area-panel] ul li a"));
 		provinceList.count().then(function(provinceCount){
 			var provItemRandom = parseInt(Math.random()*provinceCount);
 			var provinceItem = provinceList.get(provItemRandom);
 			provinceItem.getText().then(function(provinceName){
 				provinceItem.click().then(function(){
-					var cityList=element.all(by.css(".scene2 .rdk-combo-select-module .rdk-area-contain div[class$=tab-panel] ul li a"));
+					var cityList=element.all(by.css(".scene2 .rdk-combo-select-module .rdk-area-contain div[class$=rdk-area-panel] ul li a"));
 					cityList.count().then(function(cityCount){
 						var cityItemRandom = parseInt(Math.random()*(cityCount-1))+1;
 						var cityItem = cityList.get(cityItemRandom);
 						cityItem.getText().then(function(cityName){
 							cityItem.click().then(function(){
-								var areaList=element.all(by.css(".scene2 .rdk-combo-select-module .rdk-area-contain div[class$=tab-panel] ul li a"));
+								var areaList=element.all(by.css(".scene2 .rdk-combo-select-module .rdk-area-contain div[class$=rdk-area-panel] ul li a"));
 								areaList.count().then(function(areaCount){
 									var areaItemRandom = parseInt(Math.random()*(areaCount-1))+1;
 									var areaItem = areaList.get(areaItemRandom);
@@ -78,7 +78,7 @@ describe("test area_selector combined",function(){
 			var provinceItem = provinceList.get(provItemRandom);
 			provinceItem.getText().then(function(provinceName){
 				provinceItem.click().then(function(){
-					var cityList=element.all(by.css(".scene3 .rdk-combo-select-module .rdk-area-contain div[class$=tab-panel] ul li a"));
+					var cityList=element.all(by.css(".scene3 .rdk-combo-select-module .rdk-area-contain div[class$=rdk-area-panel] ul li a"));
 					cityList.count().then(function(cityCount){
 						var cityItemRandom = parseInt(Math.random()*(cityCount-1))+1;
 						var cityItem = cityList.get(cityItemRandom);
@@ -102,7 +102,7 @@ describe("test area_selector combined",function(){
 			});
 		var input = element(by.css(".scene4 .combo-content .form-control"));//获得combo下input框，也是点击和显示选中值的element
 		input.click();
-		var cityList=element.all(by.css(".scene4 .rdk-combo-select-module .rdk-area-contain div[class$=tab-panel] ul li a"));
+		var cityList=element.all(by.css(".scene4 .rdk-combo-select-module .rdk-area-contain div[class$=rdk-area-panel] ul li a"));
 		var cityItem = cityList.get(3);
 		var cityName = cityItem.getText();
 		cityItem.click().then(function(){
@@ -119,11 +119,11 @@ describe("test area_selector combined",function(){
 		});
 		var input = element(by.css(".scene2 .combo-content .form-control"));//获得combo下input框，也是点击和显示选中值的element
 		input.click();
-		var provinceList=element.all(by.css(".scene2 .rdk-combo-select-module .rdk-area-contain div[class$=tab-panel] ul li a"));
+		var provinceList=element.all(by.css(".scene2 .rdk-combo-select-module .rdk-area-contain div[class$=rdk-area-panel] ul li a"));
 		var provinceItem = provinceList.get(3);
 		var provinceName = provinceItem.getText();
 		provinceItem.click().then(function(){
-			var cityList=element.all(by.css(".scene2 .rdk-combo-select-module .rdk-area-contain div[class$=tab-panel] ul li a"));
+			var cityList=element.all(by.css(".scene2 .rdk-combo-select-module .rdk-area-contain div[class$=rdk-area-panel] ul li a"));
 			var cityItem = cityList.get(0);
 			var cityName = cityItem.getText();
 			browser.sleep(1000);
@@ -143,19 +143,19 @@ describe("test area_selector combined",function(){
 		});
 		var input = element(by.css(".scene2 .combo-content .form-control"));//获得combo下input框，也是点击和显示选中值的element
 		input.click();
-		var provinceList=element.all(by.css(".scene2 .rdk-combo-select-module .rdk-area-contain div[class$=tab-panel] ul li a"));
+		var provinceList=element.all(by.css(".scene2 .rdk-combo-select-module .rdk-area-contain div[class$=rdk-area-panel] ul li a"));
 		provinceList.count().then(function(provinceCount){
 			var provItemRandom = parseInt(Math.random()*provinceCount);
 			var provinceItem = provinceList.get(provItemRandom);
 			provinceItem.getText().then(function(provinceName){
 				provinceItem.click().then(function(){
-					var cityList=element.all(by.css(".scene2 .rdk-combo-select-module .rdk-area-contain div[class$=tab-panel] ul li a"));
+					var cityList=element.all(by.css(".scene2 .rdk-combo-select-module .rdk-area-contain div[class$=rdk-area-panel] ul li a"));
 					cityList.count().then(function(cityCount){
 						var cityItemRandom = parseInt(Math.random()*(cityCount-1))+1;
 						var cityItem = cityList.get(cityItemRandom);
 						cityItem.getText().then(function(cityName){
 							cityItem.click().then(function(){
-								var areaList=element.all(by.css(".scene2 .rdk-combo-select-module .rdk-area-contain div[class$=tab-panel] ul li a"));
+								var areaList=element.all(by.css(".scene2 .rdk-combo-select-module .rdk-area-contain div[class$=rdk-area-panel] ul li a"));
 								var areaItem = areaList.get(0);
 								areaItem.getText().then(function(areaName){
 									expect(areaName).toBe("全市");

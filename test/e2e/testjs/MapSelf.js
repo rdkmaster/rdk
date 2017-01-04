@@ -10,15 +10,6 @@ describe('Map demo',function(){
             expect(text).toBe("白城市");
         });
     });
-    
-    it('module click test should show module name 长春市',function(){
-        browser.actions().mouseMove(element(by.css(".jilin canvas")),{x:160,y:120}).click().perform();
-        browser.sleep(1000);
-        var city=element(by.css(".cityname"));
-        city.getText().then(function(text){
-            expect(text).toBe("长春市");
-        });
-    });
     it('module click test should show module name 吉林市',function(){
         browser.actions().mouseMove(element(by.css(".jilin canvas")),{x:209,y:121}).click().perform();
         browser.sleep(1000);
@@ -26,10 +17,20 @@ describe('Map demo',function(){
         city.getText().then(function(text){
             expect(text).toBe("吉林市");
         });
+        browser.sleep(500);
     });
+    it('module click test should show module name 长春市',function(){
+        browser.actions().mouseMove(element(by.css(".jilin canvas")),{x:165,y:120}).click().perform();
+        browser.sleep(5000);
+        var city=element(by.css(".cityname"));
+        city.getText().then(function(text){
+            expect(text).toBe("长春市");
+        });
+    });
+
     it('module click test should show module name 通化市',function(){
         browser.actions().mouseMove(element(by.css(".jilin canvas")),{x:177,y:207}).click().perform();
-        browser.sleep(1000);
+        browser.sleep(500);
         var city=element(by.css(".cityname"));
         city.getText().then(function(text){
             expect(text).toBe("通化市");

@@ -19,7 +19,7 @@ describe('Tab Combined Test',function(){
         expect(element(by.css(".accordion .rdk-accordion-module .content div")).getText()).toBe("content");
     });
     it('与panel的测试',function(){
-        var content=element(by.css(".panel .rdk-panel-module .panel-content-transclude div"));
+        var content=element(by.css(".panel .rdk-panel-module .rdk-panel-content-transclude div"));
         expect(content.getText()).toBe("put what you want");
     });
     it('与combo_select 测试',function(){
