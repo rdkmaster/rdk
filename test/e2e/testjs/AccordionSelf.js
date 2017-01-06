@@ -123,7 +123,7 @@ describe('Accordion Self Test',function(){
         expect(obj_div.get(1).getCssValue("display")).toBe("none");
         obj_div.get(0).click();
         expect(obj_div.get(1).getCssValue("display")).toBe("block");
-        //顶层accodion为relative,展开内容为positive,top bottom自动
+        //顶层accodion为relative,展开内容为positive
         expect(obj_div.get(1).getCssValue('position')).toBe('absolute');
         browser.getCapabilities().then(function (capabilities) {
             // console.log(capabilities.get('browserName'));
@@ -133,8 +133,8 @@ describe('Accordion Self Test',function(){
                 expect(obj_div.get(1).getCssValue('top')).toBe('auto'); 
             }
             if(browserName==='firefox'){
-                expect(obj_div.get(1).getCssValue('bottom')).toBe('-62px');
-                expect(obj_div.get(1).getCssValue('top')).toBe('35px');
+                expect(obj_div.get(1).getCssValue('bottom')).toBe('-47px');
+                expect(obj_div.get(1).getCssValue('top')).toBe('50px');
             }
         });
     });
@@ -149,11 +149,11 @@ describe('Accordion Self Test',function(){
             var browserName=capabilities.get('browserName');
             if(browserName==='chrome'){
                 expect(obj_div.get(1).getCssValue('top')).toBe('auto');
-                expect(obj_div.get(1).getCssValue('bottom')).toBe('36px');
+                expect(obj_div.get(1).getCssValue('bottom')).toBe('44px');
             }
             if(browserName==='firefox'){
-                expect(obj_div.get(1).getCssValue('top')).toBe('-64px');
-                expect(obj_div.get(1).getCssValue('bottom')).toBe('37px');
+                expect(obj_div.get(1).getCssValue('top')).toBe('-42px');
+                expect(obj_div.get(1).getCssValue('bottom')).toBe('45px');
             }
         });
         
@@ -197,7 +197,7 @@ describe('Accordion Self Test',function(){
             }
         });
         accordion.click();
-        expect(accordion.getCssValue("left")).toBe("-39px");
+        expect(accordion.getCssValue("left")).toBe("-27px");
         expect(div.get(1).getCssValue("left")).toBe("22px");
     });
     it('accordion 右覆盖且图标位置随着变化',function(){
@@ -212,7 +212,7 @@ describe('Accordion Self Test',function(){
                 expect(accordion.getCssValue("right")).toBe("auto");
             }
             if(browserName==='firefox'){
-                expect(accordion.getCssValue("right")).toBe("-39px");
+                expect(accordion.getCssValue("right")).toBe("-27px");
             }
         }); 
         expect(div.get(1).getCssValue("right")).toBe("22px");

@@ -19,7 +19,7 @@ require.config({
         "ztree-exhide": "../ztree/jquery.ztree.exhide-3.5.min",
         "echarts": "../echarts/echarts3.min",
         "echarts3": "../echarts/echarts3.min",
-        "jquery": "../jquery/jquery-1.11.3.min",
+        "jquery": "../jquery/jquery-2.2.3.min",
         "jquery-ui": "../jquery-ui/js/jquery-ui.min",
         "bootstrap": "../bootstrap/js/bootstrap",
         "bootstrap-datepicker": "../bootstrap-datepicker/js/bootstrap-datetimepicker",
