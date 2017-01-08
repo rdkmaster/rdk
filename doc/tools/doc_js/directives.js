@@ -4,13 +4,13 @@ var module = angular.module('rd.demo.Directives', ['rd.core', 'rd.controls.Edito
 
 module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function(DSService, Utils, $timeout) {
     var liStyle = 'display: inline-block;\
-                    padding: 0 4px 0 4px;\
-                    background-color: #fff;\
-                    border-radius: 4px 4px 0 0;';
-    var aStyle = 'color:#428bca;\
-                    text-decoration:none;\
-                    font-size:12px;\
-                    font-family:微软雅黑;';
+                   padding: 0 4px 0 4px;\
+                   background-color: #fff;\
+                   border-radius: 4px 4px 0 0;';
+    var aStyle =  'color:#428bca;\
+                   text-decoration:none;\
+                   font-size:12px;\
+                   font-family:微软雅黑;';
     return {
         restrict: 'E',
         replace: true,

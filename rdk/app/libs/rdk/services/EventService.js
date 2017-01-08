@@ -43,6 +43,7 @@
         ADD: "add",
         DESTROY: 'destroy',
         RENAME:"rename",
+        INITIALIZED: 'initialized',
 
         TAB_SELECT: "tab_select",
         ITEM_SELECTED: "item_selected", //tab_select 从里向外抛，捕捉对象

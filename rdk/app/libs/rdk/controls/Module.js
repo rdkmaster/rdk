@@ -10,6 +10,7 @@ define(['rd.core'], function() {
                 initData: '=?',
                 loadTimeout: '@?',
 
+                initialized: '&?',
                 loading: '&?',
                 ready: '&?',
                 destroy: '&?',
@@ -19,7 +20,7 @@ define(['rd.core'], function() {
                 scope: scopeDefine,
                 replace: true,
                 template: '<div></div>',
-                controller: ['$scope', function(scope) {
+                controller: ['$scope', 'EventService', 'EventTypes', function(scope, EventService, EventTypes) {
                     Utils.publish(scope, this);
 
                     this.loadModule = function(initData, url, controller, timeout) {
@@ -69,8 +70,13 @@ define(['rd.core'], function() {
                     var moduleScope;
                     var appScope = Utils.findAppScope(scope);
 
-                    if (scope.loadOnReady) {
+                    if (scope.loadOnReady && scope.url) {
                         _load(scope.url, scope.controller, scope.initData, scope.loadTimeout);
+                    }
+
+                    //发送就绪事件
+                    if (scope.id) {
+                        EventService.raiseControlEvent(scope, EventTypes.INITIALIZED, scope.id);
                     }
 
                     function _load(url, controller, initData, timeout) {
