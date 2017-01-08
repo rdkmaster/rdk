@@ -138,7 +138,6 @@ define(['rd.core'], function() {
 
                         $timeout(function() {
                             EventService.raiseControlEvent(scope, EventTypes.READY, scope.id);
-                            EventService.broadcast('EventService', 'module_ready');
                         }, 0);
                     }
 
