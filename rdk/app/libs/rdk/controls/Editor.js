@@ -12,6 +12,7 @@ function(CodeMirror) {
                 options: '=?',
                 mode: '@?',
                 change: '&?',
+                initialized: '&?',
             };
             return {
                 restrict: 'E',
@@ -67,6 +68,11 @@ function(CodeMirror) {
                     }
                     scope.editor.doc.setValue(newVal);
                 });
+                
+                //发送就绪事件
+                if (scope.id) {
+                    EventService.raiseControlEvent(scope, EventTypes.INITIALIZED, scope.id);
+                }
             }
         }
     ]);

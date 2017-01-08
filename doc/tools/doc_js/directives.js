@@ -33,10 +33,10 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
             </ul>\
             <rdk_editor id="{{editorId}}_{{$index}}" ng-repeat="code in files track by code.file" style="margin-top:-15px"\
                 value="code.content" mode="{{code.mode}}" ng-show="selectedIndex==$index"\
-                change="editorChanged">\
+                change="editorChanged" initialized="editorReadyHandler">\
             </rdk_editor>\
-                <iframe style="border:0;width:100%;height:300px;border:1px solid #ddd;margin-top:-16px;"\
-                     ng-show="selectedIndex==files.length"></iframe>\
+            <iframe style="border:0;width:100%;height:300px;border:1px solid #ddd;margin-top:-16px;"\
+                 ng-show="selectedIndex==files.length"></iframe>\
             </div>'.replace(/\$liStyle/g, liStyle).replace(/\$aStyle/g, aStyle),
         scope: {
             example: '@?',
@@ -82,16 +82,16 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                 });
             })
 
-            var changeFiles = {empty: true};
+            var changedFiles = {empty: true};
             scope.editorChanged = function(event) {
                 if (!scope.initDone()) {
                     return;
                 }
                 var idx = event.dispatcher.substring(scope.editorId.length+1);
                 $(iEle.find('li')[idx]).css('font-weight', 'bold');
-                changeFiles.empty = false;
+                changedFiles.empty = false;
                 var fi = scope.files[idx];
-                changeFiles[fi.file] = fi.content;
+                changedFiles[fi.file] = fi.content;
             }
 
             scope.selectFile = function(selectedIndex) {
@@ -117,11 +117,22 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                 return scope.selectedIndex != -1;
             }
 
+            scope.editorReadyHandler = function(event) {
+                var editor = rdk[event.dispatcher].getEditor();
+                editor.setOption("extraKeys", {
+                    'Ctrl-S': function(cm) {
+                        scope.selectFile(scope.files.length);
+                        scope.$apply();
+                    }
+                });
+            }
+
             function evaluate() {
-                if (!changeFiles.empty) {
+                if (!changedFiles.empty) {
                     // need to make new app...
                     if (!newUrl) {
                         newUrl = '/doc/client/demo/tmp/' + Utils.uuid() + '/';
+                        console.log('new url=%s', newUrl);
                     }
 
                     if (hasCopied) {
@@ -143,23 +154,23 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
             function uploadFiles() {
                 dsUploadFiles.update({
                     param: {
-                        files: makeChangedFiles(changeFiles)
+                        files: makeChangedFiles(changedFiles)
                     }
                 });
-                changeFiles = {empty: true};
+                changedFiles = {empty: true};
             }
 
             function makeChangedFiles(files) {
-                var newFiles = [];
+                var changedFiles = [];
                 angular.forEach(files, function(content, file) {
                     if (file == 'empty') {
                         return;
                     }
-                    newFiles.push({
+                    changedFiles.push({
                         file: '..' + newUrl + file.replace(/\\/g, '/'), content: content
                     });
                 });
-                return newFiles;
+                return changedFiles;
             }
 
             function listFiles(path) {
