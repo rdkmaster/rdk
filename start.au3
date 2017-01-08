@@ -36,19 +36,19 @@ GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKTOP)
 
 $height -= 20
 
-GUICtrlCreateTabItem("RDK")
-Global $rdkConsole = GUICtrlCreateEdit("", 2, 23, $width, $height, $WS_HSCROLL + $WS_VSCROLL)
+GUICtrlCreateTabItem("RDK 服务进程控制台")
+Global $rdkConsole = GUICtrlCreateEdit("", 2, 23, $width, $height, $WS_HSCROLL + $WS_VSCROLL + $ES_WANTRETURN)
 GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 GUICtrlSetFont(-1, 8.5, 0, 0, 'Courier New')
 _GUICtrlEdit_SetLimitText($rdkConsole, 3000000000)
 
-GUICtrlCreateTabItem("HTTP")
-Global $httpConsole = GUICtrlCreateEdit("", 2, 23, $width, $height, $WS_HSCROLL + $WS_VSCROLL)
+GUICtrlCreateTabItem("HTTP 服务进程控制台")
+Global $httpConsole = GUICtrlCreateEdit("", 2, 23, $width, $height, $WS_HSCROLL + $WS_VSCROLL + $ES_WANTRETURN)
 GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 GUICtrlSetFont(-1, 8.5, 0, 0, 'Courier New')
 _GUICtrlEdit_SetLimitText($httpConsole, 3000000000)
 
-GUICtrlCreateTabItem("About")
+GUICtrlCreateTabItem("关于 RDK")
 GUICtrlCreateLabel('欢迎使用 RDK Windows 开发环境', 12, 36, 400)
 GUICtrlSetFont(-1, 12, $FW_BOLD)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)

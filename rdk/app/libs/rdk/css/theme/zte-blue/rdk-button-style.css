@@ -48,7 +48,7 @@
 }
 
 /*todo :theme colors*/
-.rdk-button-btn:active{
+.rdk-button-down{
 	background:rgba(0,0,0,0.15);
 }
 .rdk-button-btn{
@@ -76,4 +76,7 @@
 .rdk-button-enabled {
 	background:#ddd;
 	color :#f3f3f3;
+}
+.rdk-button-down {
+	background:rgba(0,0,0,0.15);
 }

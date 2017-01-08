@@ -24,7 +24,7 @@
 		    modal: true, 		//是否模态，缺省时默认为true
 		    controller: '', 	//模块的控制器
 		    showTitle: true, 	//是否显示标题，缺省时默认为true
-		    effect: '',			//特效，缺省时默认为scale
+		    effect: '',			//特效，缺省时默认为scale，可选为 blind,clip,drop,explode,fold,puff,slide,scale,size,pulsate
 		
 		    //绝对位置
 		    x: 12,				//x,y 属性优先级最高，出现x,y则无视其他位置属性

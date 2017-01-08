@@ -26,14 +26,15 @@
     overflow: hidden;
 }
 /* tabs nav->btn */
-.tab_btn{
-    margin-top: 9px;
-    padding: 6px 7px;
+.tab_btn {
+    margin-top: 0;
+    padding: 0 5px; 
     border: 0;
     outline: none;
     position: absolute;
-    top: 14px;
+    top: 22px;
     left: 425px;
+    font-size: 16px;
 }
 /*table*/
 .rdk-table-module .rdk-table tbody>tr>td
@@ -49,3 +50,4 @@
 {
     text-align: left;
 }
+
