@@ -282,3 +282,10 @@ table tr:nth-child(2n) {
 img {
   max-width: 100%
 }
+
+/* CodeMirror
+=============================================================================*/
+.CodeMirror {
+    font-family: Courier New;
+    font-size: 13px;
+}

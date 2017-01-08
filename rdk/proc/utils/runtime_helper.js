@@ -428,6 +428,13 @@ var File = {
 
         return files;
     },
+    copy: function(cpFrom, cpTo, recursive, force) {
+        if (!_.isString(cpFrom) || !_.isString(cpTo)) {
+            Log.error("copy file, code 1, detail: bad arguments");
+            return 1;
+        }
+        return rdk_runtime.fileHelper().copy(cpFrom, cpTo, !!recursive, !!force);
+    },
     get web() {
         return function(){
             return java.FileHelper.fixPath('$web', rdk_runtime.application());

@@ -18,6 +18,8 @@ git pull                                   >> $basepath/update.log
 
 # remove upload_files
 rm -fr $basepath/../rdk/upload_files
+# remove temp demo files
+rm -fr $basepath/../doc/client/demo/tmp
 
 # restart rdk...
 cd rdk/proc/bin

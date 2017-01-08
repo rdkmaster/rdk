@@ -1,39 +1,43 @@
 
-define([ 'rd.core', 'rd.controls.Editor', 'rd.containers.Tab' ], function() {
-var module = angular.module('rd.demo.Directives', [ 'rd.core', 'rd.controls.Editor', 'rd.containers.Tab' ]);
+define(['rd.core', 'rd.controls.Editor'/*, 'rd.containers.Tab'*/], function() {
+var module = angular.module('rd.demo.Directives', ['rd.core', 'rd.controls.Editor']);
 
 module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function(DSService, Utils, $timeout) {
     var liStyle = 'display: inline-block;\
-                    padding: 0 6px 0 6px;\
+                    padding: 0 4px 0 4px;\
                     background-color: #fff;\
                     border-radius: 4px 4px 0 0;';
+    var aStyle = 'color:#428bca;\
+                    text-decoration:none;\
+                    font-size:12px;\
+                    font-family:微软雅黑;';
     return {
         restrict: 'E',
         replace: true,
         template: '\
             <div>\
-            <ul ng-show="initDone()">\
+            <ul ng-show="initDone()" style="margin-top:2px">\
                 <li ng-repeat="code in files track by code.file" on-finish-render\
                     style="$liStyle">\
-                    <a href="javascript:void(0)" ng-click="selectFile($index)">{{code.file}}</a>\
+                    <a href="javascript:void(0)" style="$aStyle" ng-click="selectFile($index)">{{code.file}}</a>\
                 </li>\
                 <li style="$liStyle">\
-                    <a href="javascript:void(0)" ng-click="selectFile(files.length)">运行</a>\
+                    <a href="javascript:void(0)" ng-click="selectFile(files.length)" style="$aStyle">运行</a>\
                 </li>\
                 <li style="$liStyle">\
-                    <a href="javascript:void(0)" ng-click="openExample()">打开</a>\
+                    <a href="javascript:void(0)" ng-click="openExample()" style="$aStyle;">打开</a>\
                 </li>\
-                <li style="$liStyle">\
-                    <a href="javascript:alert(\'暂未支持\')">下载</a>\
-                </li>\
+                <!--li style="$liStyle">\
+                    <a href="javascript:alert(\'暂未支持\')" style="$aStyle">下载</a>\
+                </li-->\
             </ul>\
-            <rdk_editor id="{{editorId}}_{{$index}}" ng-repeat="code in files track by code.file" style="margin-top:-10px"\
+            <rdk_editor id="{{editorId}}_{{$index}}" ng-repeat="code in files track by code.file" style="margin-top:-15px"\
                 value="code.content" mode="{{code.mode}}" ng-show="selectedIndex==$index"\
                 change="editorChanged">\
             </rdk_editor>\
-                <iframe style="border:0;width:100%;height:300px;border:1px solid #ddd;margin-top:-10px;"\
+                <iframe style="border:0;width:100%;height:300px;border:1px solid #ddd;margin-top:-16px;"\
                      ng-show="selectedIndex==files.length"></iframe>\
-            </div>'.replace(/\$liStyle/g, liStyle),
+            </div>'.replace(/\$liStyle/g, liStyle).replace(/\$aStyle/g, aStyle),
         scope: {
             example: '@?',
         },
@@ -47,6 +51,7 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
             var evaluator = $(iEle.find('iframe')[0]);
             var exampleUrl = makeOriginExampleUrl(scope.example);
             var newUrl = undefined;
+            var hasCopied = false;
 
             var dsListFiles = DSService.create(Utils.createUniqueId('live_demo_ds_'), {
                 url: '/rdk/service/app/ide/server/files',
@@ -54,17 +59,20 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
             });
             var dsUploadFiles = DSService.create(Utils.createUniqueId('live_demo_ds_'), {
                 url: '/rdk/service/app/ide/server/files',
-                resultHandler: handleUploadResult,
-                updateMethod: 'put'
+                resultHandler: handleUploadResult, updateMethod: 'put'
             });
             var dsDeleteFiles = DSService.create(Utils.createUniqueId('live_demo_ds_'), {
                 url: '/rdk/service/app/ide/server/files'
+            });
+            var dsCopyFiles = DSService.create(Utils.createUniqueId(''), {
+                url: '/rdk/service/app/ide/server/app-copy',
+                resultHandler: uploadFiles, addMethod: 'post'
             });
 
             listFiles(exampleUrl);
 
             $(window).bind('beforeunload', function (e) {
-                if (!newUrl) {
+                if (!hasCopied) {
                     return;
                 }
                 dsDeleteFiles.delete({
@@ -74,12 +82,16 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                 });
             })
 
+            var changeFiles = {empty: true};
             scope.editorChanged = function(event) {
                 if (!scope.initDone()) {
                     return;
                 }
                 var idx = event.dispatcher.substring(scope.editorId.length+1);
                 $(iEle.find('li')[idx]).css('font-weight', 'bold');
+                changeFiles.empty = false;
+                var fi = scope.files[idx];
+                changeFiles[fi.file] = fi.content;
             }
 
             scope.selectFile = function(selectedIndex) {
@@ -106,44 +118,48 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
             }
 
             function evaluate() {
-                if (hasChangedCodes()) {
-                    // need to upload...
-                    $timeout(function() {
+                if (!changeFiles.empty) {
+                    // need to make new app...
+                    if (!newUrl) {
+                        newUrl = '/doc/client/demo/tmp/' + Utils.uuid() + '/';
+                    }
+
+                    if (hasCopied) {
                         //等待双绑生效
-                        dsUploadFiles.update({
+                        $timeout(uploadFiles, 0);
+                    } else {
+                        dsCopyFiles.add({
                             param: {
-                                files: makeNewFiles(scope.files)
+                                from: '..' + exampleUrl, to: '..' + newUrl, recursive: true
                             }
                         });
-                    }, 0);
+                        hasCopied = true;
+                    }
                 } else if (!evaluator.attr('src')) {
                     evaluator.attr('src', exampleUrl);
                 }
             }
 
-            function makeNewFiles(files) {
-                if (!newUrl) {
-                    newUrl = '/doc/client/demo/tmp/' + Utils.uuid() + '/';
-                }
+            function uploadFiles() {
+                dsUploadFiles.update({
+                    param: {
+                        files: makeChangedFiles(changeFiles)
+                    }
+                });
+                changeFiles = {empty: true};
+            }
+
+            function makeChangedFiles(files) {
                 var newFiles = [];
-                angular.forEach(files, function(fileInfo) {
+                angular.forEach(files, function(content, file) {
+                    if (file == 'empty') {
+                        return;
+                    }
                     newFiles.push({
-                        file: '..' + newUrl + fileInfo.file.replace(/\\/g, '/'),
-                        content: fileInfo.content
+                        file: '..' + newUrl + file.replace(/\\/g, '/'), content: content
                     });
                 });
                 return newFiles;
-            }
-
-            function hasChangedCodes() {
-                var has = false;
-                angular.forEach(iEle.find('li'), function(li, idx) {
-                    var weight = $(li).css('font-weight');
-                    if (weight == 'bold') {
-                        has = true;
-                    }
-                });
-                return has;
             }
 
             function listFiles(path) {
@@ -215,7 +231,6 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
             scope.$on('ngRepeatFinished', function() {
                 scope.selectFile(0);
             });
-
         }
     };
 }]);
