@@ -302,7 +302,7 @@ function _fixEXCELContent(ctent,exIndexes){
     return excel;
 }
 
-var file = {
+var File = {
     loadProperty:function(file){
         if (!file) {
             log("invalid file path:", file);
@@ -397,7 +397,20 @@ var file = {
         }
         return b;
     },
-    list: function(path, pattern, recursive) {
+    delete: function(path) {
+        var jFile = new java.File(path);
+        if (jFile.isDirectory()) {
+            var files = file.list(path, true);
+            _.each(files.reverse(), function(item) {
+                log('deleting sub file/dir:', item);
+                new java.File(item).delete();
+            });
+        }
+        var result = jFile.delete();
+        log('remove file or dir:', path, 'result:', result);
+        return result;
+    },
+    list: function(path, recursive, pattern) {
         path = java.FileHelper.fixPath(path, rdk_runtime.application());
         log('listing dir: ' + path + ', recursive: ' + (!!recursive));
 
@@ -407,7 +420,7 @@ var file = {
             try {
                 ptn = eval(pattern);
             } catch (e) {
-                Log.warn('invalid filter pattern:', pattern, ', try this "/\\w+\\.html/i"');
+                Log.warn('invalid filter pattern:', pattern, ', try this "/\\\\w+\\\\.html/i"');
                 ptn = '';
             }
         }
@@ -431,6 +444,8 @@ var file = {
         }
     }
 };
+//向下兼容
+var file = File;
 
 function _listFiles(files, path, pattern, recursive) {
     var javaFileArr = path.listFiles();
@@ -439,10 +454,12 @@ function _listFiles(files, path, pattern, recursive) {
     }
     for (var i = 0; i < javaFileArr.length; i++) {
         var file = javaFileArr[i];
+        var fileStr = file.toString();
+        if (fileStr.match(pattern)) {
+            files.push(fileStr);
+        }
         if (recursive && file.isDirectory()) {
             _listFiles(files, file, pattern, recursive);
-        } else if (file.toString().match(pattern)) {
-            files.push(file.toString());
         }
     }
 }

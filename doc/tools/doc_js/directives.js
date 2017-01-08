@@ -3,6 +3,10 @@ define([ 'rd.core', 'rd.controls.Editor', 'rd.containers.Tab' ], function() {
 var module = angular.module('rd.demo.Directives', [ 'rd.core', 'rd.controls.Editor', 'rd.containers.Tab' ]);
 
 module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function(DSService, Utils, $timeout) {
+    var liStyle = 'display: inline-block;\
+                    padding: 0 6px 0 6px;\
+                    background-color: #fff;\
+                    border-radius: 4px 4px 0 0;';
     return {
         restrict: 'E',
         replace: true,
@@ -10,26 +14,26 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
             <div>\
             <ul ng-show="initDone()">\
                 <li ng-repeat="code in files track by code.file" on-finish-render\
-                    style="display: inline-block;\
-                            padding: 0 6px 0 6px;\
-                            background-color: #fff;\
-                            border-radius: 4px 4px 0 0;">\
+                    style="$liStyle">\
                     <a href="javascript:void(0)" ng-click="selectFile($index)">{{code.file}}</a>\
                 </li>\
-                <li style="display: inline-block;\
-                            padding: 0 6px 0 6px;\
-                            background-color: #fff;\
-                            border-radius: 4px 4px 0 0;">\
+                <li style="$liStyle">\
                     <a href="javascript:void(0)" ng-click="selectFile(files.length)">运行</a>\
+                </li>\
+                <li style="$liStyle">\
+                    <a href="javascript:void(0)" ng-click="openExample()">打开</a>\
+                </li>\
+                <li style="$liStyle">\
+                    <a href="javascript:alert(\'暂未支持\')">下载</a>\
                 </li>\
             </ul>\
             <rdk_editor id="{{editorId}}_{{$index}}" ng-repeat="code in files track by code.file" style="margin-top:-10px"\
                 value="code.content" mode="{{code.mode}}" ng-show="selectedIndex==$index"\
                 change="editorChanged">\
             </rdk_editor>\
-            <iframe style="border:1px solid #ddd;margin-top:-10px;width:100%;height:300px;"\
-                ng-show="selectedIndex==files.length"></iframe>\
-            </div>',
+                <iframe style="border:0;width:100%;height:300px;border:1px solid #ddd;margin-top:-10px;"\
+                     ng-show="selectedIndex==files.length"></iframe>\
+            </div>'.replace(/\$liStyle/g, liStyle),
         scope: {
             example: '@?',
         },
@@ -43,7 +47,7 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
             var evaluator = $(iEle.find('iframe')[0]);
             var exampleUrl = makeOriginExampleUrl(scope.example);
             var newUrl = undefined;
-            
+
             var dsListFiles = DSService.create(Utils.createUniqueId('live_demo_ds_'), {
                 url: '/rdk/service/app/ide/server/files',
                 resultHandler: handleCodeResult
@@ -53,8 +57,22 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                 resultHandler: handleUploadResult,
                 updateMethod: 'put'
             });
+            var dsDeleteFiles = DSService.create(Utils.createUniqueId('live_demo_ds_'), {
+                url: '/rdk/service/app/ide/server/files'
+            });
 
             listFiles(exampleUrl);
+
+            $(window).bind('beforeunload', function (e) {
+                if (!newUrl) {
+                    return;
+                }
+                dsDeleteFiles.delete({
+                    param: {
+                        files: ['..' + newUrl]
+                    }
+                });
+            })
 
             scope.editorChanged = function(event) {
                 if (!scope.initDone()) {
@@ -77,6 +95,10 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                     //run evaluate...
                     evaluate();
                 }
+            }
+
+            scope.openExample = function() {
+                window.open(newUrl ? newUrl : exampleUrl, '_blank');
             }
 
             scope.initDone = function() {
@@ -131,7 +153,7 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                             //RDK进程运行的目录是工程所在目录的一级子目录，
                             //因此在web绝对路径前加上“..”就可以转为RDK进程能识别的相对路径
                             path: '..' + path,
-                            pattern: '',
+                            pattern: (/\.js$|\.html$|\.css$/i).toString(),
                             recursive: true, needContent: true
                         }
                     }
@@ -141,7 +163,8 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
             function handleCodeResult(data) {
                 scope.files = JSON.parse(data.result);
                 if (scope.files.length == 0) {
-                    evaluator.src = 'tools/demo-not-found.html?' + exampleUrl;
+                    exampleUrl = 'tools/demo-not-found.html?' + exampleUrl;
+                    scope.selectFile(0);
                     return;
                 }
                 //这里加3是因为exampleUrl前需要加上“..”  -- 具体原因请查阅listFiles()的注释

@@ -28,6 +28,70 @@ public class FileHelper extends AbstractAppLoggable {
         logger = AppLogger.getLogger("FileHelper", appName);
     }
 
+    // return code:
+    // 0: good
+    // 1: source not exist
+    // 2: sub file/dir not exist
+    // 3: unable to create target file
+    // 4: unable to write target file
+    // todo: 文件夹的层次过深，会导致这个函数堆栈溢出
+    public int copy(String cpFrom, String cpTo, boolean recursive, boolean force) {
+        File in = new File(cpFrom);
+        File out = new File(cpTo);
+        if (!in.exists()) {
+            logger.error('copy file, code 1, detail: source not exist');
+            return 1;
+        }
+        if (!out.exists()) {
+            out.mkdirs();
+        }
+
+        File[] files;
+        if (in.isFile()) {
+            files = new File[1];
+            files[0] = in;
+        } else {
+            files = in.listFiles();
+        }
+
+        FileInputStream fin = null;
+        FileOutputStream fout = null;
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].isFile()) {
+                try {
+                    fin = new FileInputStream(files[i]);
+                } catch (FileNotFoundException e) {
+                    logger.error('copy file, code 2, detail: ' + e.toString());
+                    return 2;
+                }
+
+                try {
+                    fout = new FileOutputStream(new File(cpTo + "/" + files[i].getName()));
+                } catch (FileNotFoundException e) {
+                    logger.error('copy file, code 3, detail: ' + e.toString());
+                    return 3;
+                }
+
+                int c;
+                byte[] b = new byte[1024*5];
+                try {
+                    while ((c = fin.read(b)) != -1) {
+                        fout.write(b, 0, c);
+                    }
+                    fin.close();
+                    fout.flush();
+                    fout.close();
+                } catch (IOException e) {
+                    logger.error('copy file, code 4, detail: ' + e.toString());
+                    return 4;
+                }
+                return 0;
+            } else {
+                return copy(cpFrom + "/" + files[i].getName(), cpTo + "/" + files[i].getName());
+            }
+        }
+    }
+
     public String readString(String path) {
         path = fixPath(path, appName);
 

@@ -3,7 +3,7 @@
 		if (!request || !request.path) {
 			return [];
 		}
-		var files = file.list(request.path, request.pattern, request.recursive);
+		var files = file.list(request.path, request.recursive, request.pattern);
 		if (!request.needContent) {
 			return files;
 		}
@@ -40,7 +40,20 @@
 	}
 	
 	function _del(request) {
-
+		var result = [];
+		if (!request) {
+			return result;
+		}
+		var files = request.files;
+		if (!files) {
+			return result;
+		}
+		_.each(files, function(path) {
+			if (file.delete(path)) {
+				result.push(path);
+			}
+		});
+		return result;
 	}
 
 	return {
