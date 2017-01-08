@@ -30,17 +30,19 @@ public class FileHelper extends AbstractAppLoggable {
 
     // return code:
     // 0: good
-    // 1: source not exist
-    // 2: sub file/dir not exist
-    // 3: unable to create target file
-    // 4: unable to write target file
+    // 1: bad arguments
+    // 2: source not exist
+    // 3: sub file/dir not exist
+    // 4: unable to create target file
+    // 5: unable to write target file
     // todo: 文件夹的层次过深，会导致这个函数堆栈溢出
+    // force: 未启用
     public int copy(String cpFrom, String cpTo, boolean recursive, boolean force) {
-        File in = new File(cpFrom);
-        File out = new File(cpTo);
+        File in = new File(fixPath(cpFrom, appName));
+        File out = new File(fixPath(cpTo, appName));
         if (!in.exists()) {
-            logger.error('copy file, code 1, detail: source not exist');
-            return 1;
+            logger.error("copy file, code 2, detail: source not exist");
+            return 2;
         }
         if (!out.exists()) {
             out.mkdirs();
@@ -61,15 +63,20 @@ public class FileHelper extends AbstractAppLoggable {
                 try {
                     fin = new FileInputStream(files[i]);
                 } catch (FileNotFoundException e) {
-                    logger.error('copy file, code 2, detail: ' + e.toString());
-                    return 2;
+                    logger.error("copy file, code 3, detail: " + e.toString());
+                    return 3;
                 }
 
                 try {
                     fout = new FileOutputStream(new File(cpTo + "/" + files[i].getName()));
                 } catch (FileNotFoundException e) {
-                    logger.error('copy file, code 3, detail: ' + e.toString());
-                    return 3;
+                    logger.error("copy file, code 4, detail: " + e.toString());
+                    try {
+                        fin.close();
+                    } catch (Exception ee) {
+                        logger.error("close fin error, detail: " + ee.toString());
+                    }
+                    return 4;
                 }
 
                 int c;
@@ -78,18 +85,31 @@ public class FileHelper extends AbstractAppLoggable {
                     while ((c = fin.read(b)) != -1) {
                         fout.write(b, 0, c);
                     }
-                    fin.close();
+                    
                     fout.flush();
-                    fout.close();
                 } catch (IOException e) {
-                    logger.error('copy file, code 4, detail: ' + e.toString());
-                    return 4;
+                    logger.error("copy file, code 5, detail: " + e.toString());
+                    return 5;
+                } finally {
+                    try {
+                        fin.close();
+                    } catch (Exception e) {
+                        logger.error("close fin error, detail: " + e.toString());
+                    }
+                    try {
+                        fout.close();
+                    } catch (Exception e) {
+                        logger.error("close fout error, detail: " + e.toString());
+                    }
                 }
-                return 0;
-            } else {
-                return copy(cpFrom + "/" + files[i].getName(), cpTo + "/" + files[i].getName());
+            } else if (recursive) {
+                int ret = copy(cpFrom + "/" + files[i].getName(), cpTo + "/" + files[i].getName(), recursive, force);
+                if (ret != 0) {
+                    return ret;
+                }
             }
         }
+        return 0;
     }
 
     public String readString(String path) {
