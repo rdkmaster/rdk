@@ -4,10 +4,11 @@ package com.zte.vmax.rdk.util
 
 import java.io.{FileOutputStream, File, FilenameFilter}
 import java.lang.reflect.Method
-import java.net.InetAddress
+import java.net.{InterfaceAddress, NetworkInterface, InetAddress}
 import java.nio.file._
 import java.nio.file.attribute.BasicFileAttributes
-import java.util.UUID
+import java.util
+import java.util.{Collections, UUID}
 import java.util.regex.{Matcher, Pattern}
 import akka.util.Timeout
 import com.google.gson.internal.StringMap
@@ -30,6 +31,7 @@ import scala.concurrent.{Future, Await}
 import scala.reflect.ClassTag
 import scala.util.Try
 import akka.pattern.ask
+
 
 
 
@@ -322,8 +324,8 @@ object RdkUtil extends Logger {
     InetAddress.getLocalHost().getHostName
   }
 
-  def getHostIp: String = {
-    InetAddress.getLocalHost().getHostAddress
+  def getHostIps: Array[String] = {
+    InetAddress.getAllByName(getHostName).map(_.getHostAddress).filter(!_.contains(":"))
   }
 
   private def getFileParam(fileParamMap: StringMap[String], fileType: String): Tuple2[String, String] = {

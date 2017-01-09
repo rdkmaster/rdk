@@ -121,8 +121,8 @@ function getHostName() {
     return rdk_runtime.getHostName()
 }
 
-function getHostIp() {
-    return rdk_runtime.getHostIp()
+function getHostIps() {
+    return JSON.parse(rdk_runtime.getHostIps())
 }
 /**
  *
