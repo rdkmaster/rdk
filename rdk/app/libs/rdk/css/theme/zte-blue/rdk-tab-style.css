@@ -127,7 +127,7 @@
 /*move icon*/
 .rdk-tab-module .tabs  i.move{
     font-size: 30px;
-    color: #6d6d6d;
+    color: #999;
     cursor: pointer
 }
 .rdk-tab-module .move-wrap{
