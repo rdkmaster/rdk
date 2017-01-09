@@ -4,11 +4,10 @@ package com.zte.vmax.rdk.util
 
 import java.io.{FileOutputStream, File, FilenameFilter}
 import java.lang.reflect.Method
-import java.net.{InterfaceAddress, NetworkInterface, InetAddress}
+import java.net.InetAddress
 import java.nio.file._
 import java.nio.file.attribute.BasicFileAttributes
-import java.util
-import java.util.{Collections, UUID}
+import java.util.UUID
 import java.util.regex.{Matcher, Pattern}
 import akka.util.Timeout
 import com.google.gson.internal.StringMap
