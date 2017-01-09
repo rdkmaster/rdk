@@ -6,7 +6,7 @@
 
 docker_ips=$1
 filepath=$2
-
+echo "updateNginx docker_ips: $docker_ips" >> ./updateNginx_log.txt
 function replace()
 {
    key="upstream\ web_rdk_server_pool"
@@ -37,5 +37,5 @@ if [ "$#" -lt 1 ] ; then
 fi
 
 replace
-nohup /home/tools/nginx-1.4.7/stop.sh;/home/tools/nginx-1.4.7/run.sh &
+nohup /home/tools/nginx/stop.sh;/home/tools/nginx/run.sh &
 

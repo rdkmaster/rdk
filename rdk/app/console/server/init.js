@@ -27,14 +27,14 @@
             iparr.push(msg.body);
             Cache.put("docker_ips",iparr);
             log("docker_ips: "+iparr.join(","));
-            getShellOutput("./app/console/server/updateNginx.sh",0,iparr.join(","),"/home/tools/nginx-1.4.7/conf/nginx.conf");
+            getShellOutput("./app/console/server/updateNginx.sh",0,iparr.join(","),"/home/tools/nginx/conf/nginx.conf");
         }else {
             iparr=Cache.get("docker_ips");
             if(iparr.contains(msg.body)==false){
                 iparr.push(msg.body);
                 Cache.put("docker_ips",iparr);
                 log("docker_ips: "+iparr.join(","));
-            getShellOutput("./app/console/server/updateNginx.sh",0,iparr.join(","),"/home/tools/nginx-1.4.7/conf/nginx.conf");
+            getShellOutput("./app/console/server/updateNginx.sh",0,iparr.join(","),"/home/tools/nginx/conf/nginx.conf");
             }
         }
     }
@@ -51,7 +51,7 @@
                 iparr.removeByValue(msg.body);
                 Cache.put("docker_ips",iparr);
                 log("docker_ips: "+iparr.join(","));
-                getShellOutput("./app/console/server/updateNginx.sh",0,iparr.join(","),"/home/tools/nginx-1.4.7/conf/nginx.conf");
+                getShellOutput("./app/console/server/updateNginx.sh",0,iparr.join(","),"/home/tools/nginx/conf/nginx.conf");
             }
         }
     }
@@ -69,7 +69,8 @@
             mq.subscribe(reducesubject,"reducecallback","init.js");
 
         }else{
-            mq.p2p(increasesubject,getHostIp());
+            log("docker ip:"+getHostIps()[0]);
+            mq.p2p(increasesubject,getHostIps()[0]+":5812");
         }
 
     }

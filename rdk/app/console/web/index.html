@@ -9,14 +9,6 @@
     -->
     <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
     <script src="scripts/main.js"></script>
-    <script type="text/javascript">
-        require.config({
-            paths: {
-                //这里引用了rdk应用的公共助手文件，不要改动
-                "application": '/doc/tools/doc_js/doc_app_helper'
-            }
-        });
-    </script>
 </head>
 <body ng-controller='myCtrl' style="position: relative">
     <input type="file"  id="myfile">

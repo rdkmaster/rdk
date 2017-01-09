@@ -1,4 +1,4 @@
-define('main', ['application','rd.attributes.Scroll'], function (application) {
+define('main', ['rd.attributes.Scroll'], function () {
 // 创建一个RDK的应用
     var app = angular.module("rdk_app", ['rd.attributes.Scroll','rd.core']);
 // 创建一个控制器

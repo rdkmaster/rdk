@@ -4,7 +4,7 @@
 (function() {
 
     return function (request, script) {
-        var cmd = "app/console/server/deploy.sh";
+        var cmd = "./app/console/server/deploy.sh";
         var sourceFile = request.sourceFile;
         log("sourceFile=>"+sourceFile)
         var appName = request.appName;
