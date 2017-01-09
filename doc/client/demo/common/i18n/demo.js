@@ -1,21 +1,22 @@
 (function() {
-    var controllerName = 'SampleModuleController';
-    var downloadDependency = [ ];
-    var requiredComponents = [ ];
-    var ctx = {};
-
+    // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
+    var downloadDependency = [
+        { url: 'base/i18n', alias: 'i18n' }
+    ];
+    var requiredComponents = [ ], ctx = {};
     var controllerDefination = ['$scope', main];
     function main(scope) {
-        console.log('SampleModule controller is running..........');
-        //只有定义在this上的属性才能发布给外部。
-        scope.someData = 'some data defined in the SampleModule controller...';
-        scope.myData = 'sample inter load module manually...';
+        ctx.i18n.$init(scope);
+        scope.time = new Date();
 
-        this.destroy = function() {
-            alert('ready to destroy the dialog...');
-        }
+        //js中获取时间
+        var curTime = ctx.i18n.time.st(scope.time);
+        setTimeout(function() {
+            alert('在JS中使用国际化\n\n' + curTime);
+        }, 0);
     }
 
+    var controllerName = 'DemoController';
     //==========================================================================
     //                 从这里开始的代码、注释请不要随意修改
     //==========================================================================

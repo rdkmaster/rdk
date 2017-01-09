@@ -1,7 +1,4 @@
 define(['rd.modules.i18n'], function(i18n) {
-    //应用的当前语言环境请根据自己的实际情况获取
-    var lang = 'zh_CN';
-
     var labels = {
         "en_US": {
             hello: 'Hello RDK',
@@ -14,6 +11,17 @@ define(['rd.modules.i18n'], function(i18n) {
             time: '当前时间 {0}'
         }
     }
-    
+
+    //应用的当前语言环境从浏览器中取
+    //需要自定义语言，请查看文档 /doc/common/i18n/index.html
+    var lang = getLocalLanguage();
     return i18n.init(labels, lang);
+
+    function getLocalLanguage() {
+        var language = window.navigator.language; 
+        if (!language) {
+            language = window.navigator.browserLanguage; 
+        }
+        return language.replace('-', '_');
+    }
 });
