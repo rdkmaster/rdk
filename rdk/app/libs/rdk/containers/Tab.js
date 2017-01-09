@@ -97,8 +97,6 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 scope.tabs = [];
                 scope.currentSelectedIndex = 0;
 
-                scope.page={index:0, size:3, step:3};
-
                 scope.tabsOffset=0;
                 scope.removeableTabs=false;
                 scope.moveSpeed= Utils.getValue(scope.moveSpeed, attrs.moveSpeed, 3); //移动速度
@@ -106,7 +104,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 var tabsDom = element[0].querySelector(".title");
                 var offsetMax=0; //最大偏移量
                 var offsetBase=100;//偏移基数100px
-
+                var totalOffsetWidth=0;
                 scope.changeTabs =function(direction){
                     if(scope.tabsOffset==0 && direction<0){
                         return
@@ -131,22 +129,28 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                         var closable = tabs[i].getAttribute('show_close_button');
                         _prepareTabs(tabs[i], title, tabid, closable);
                     };
-
                 }, 0);
 
                 function _setTabsWidth(){  //设置tabs容器宽度,判断显示移动按钮
                     var lis =element[0].querySelector(".title").querySelectorAll("li");
-                    var totalOffsetWidth=0;
+                    var total=0;
                     for(var i= 0 , len=lis.length ; i<len ; i++)
                     {
-                        totalOffsetWidth+=lis[i].offsetWidth;
+                        total+=lis[i].offsetWidth;
                     }
+                    totalOffsetWidth=total;
                     tabsDom.style.width=totalOffsetWidth+10+"px"; //10校验误差
-                    offsetMax=totalOffsetWidth+10-element[0].querySelector(".rdk-tabs-wrap").offsetWidth;
+                    offsetMax=totalOffsetWidth+10-tabsDom.parentNode.offsetWidth;
                     if(offsetMax>0){
                         scope.removeableTabs=true;
                     }
                 }
+                //重新计算最大偏移量
+                scope.$watch("removeableTabs", function(newVal, oldVal) {
+                    $timeout(function() {
+                        offsetMax=totalOffsetWidth+10-tabsDom.parentNode.offsetWidth;
+                    },0)
+                });
                 var off = scope.$on('ngRepeatFinished', function(){
                     _appendTab();
                     _updateDraggable();

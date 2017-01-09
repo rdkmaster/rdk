@@ -122,4 +122,16 @@ describe('Tab Self test',function(){
         expect(element.all(by.css(".demo9 .rdk-tab-module ul li")).count()).toBe(3);
         expect(element.all(by.css(".demo9 .rdk-tab-module ul li")).get(2).getCssValue("display")).toBe("none");
     });
+
+    it('move Tab页',function(){
+        var btnLeft = element(by.css(".demo10 .rdk-tab-module .fa-caret-left"));
+        var btnRight = element(by.css(".demo10 .rdk-tab-module .fa-caret-right"));
+        var tabs = element(by.css(".demo10 .rdk-tab-module .title"));
+        btnRight.click();
+        browser.sleep(2000);
+        expect(tabs.getCssValue("left")=="0px").toBe(false);
+        btnLeft.click();
+        browser.sleep(2000);
+        expect(tabs.getCssValue("left")).toBe("0px");
+    });
 });
