@@ -28,7 +28,8 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     showItems: '=',
                     close: '&?',
                     change: '&?',
-                    add: '&?'
+                    add: '&?',
+                    moveSpeed:'@?'
                 },
                 replace: true,
                 controller: ['$scope', function(scope){
@@ -53,17 +54,25 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 template: function(tElement, tAttrs) {
                     return '<div class="rdk-tab-module">\
                                 <div class="tabs">\
-                                    <ul class="title">\
-                                        <li ng-style="getLiStyle($index)" ng-repeat="tab in tabs"  on-finish-render>\
-                                            <a href="#{{tab.tabid}}" ng-click="tabClick($event, $index)" ng-mouseover="tabMouseOver($event)" ng-class="{\'selected\':currentSelectedIndex == $index}" rdk-tabtitle-parser>\
-                                              {{tab.title}}\
-                                            </a>\
-                                            <span style="position: absolute; right: 0" class="ui-icon ui-icon-close" role="presentation" ng-show="{{tab.closable}}" ng-click="$clickHandler($index, $event)"></span>\
-                                            <span class="bottom_line" style="display: block;" ng-show="picShow($index)">\
-                                                <em></em>\
-                                            </span>\
-                                        </li>\
-                                     </ul>\
+                                    <div style="display: flex">\
+                                        <div class="rdk-tabs-wrap">\
+                                            <ul class="title" ng-style="{\'left\':-tabsOffset+\'px\'}">\
+                                                <li ng-style="getLiStyle($index)" ng-repeat="tab in tabs track by $index"  on-finish-render>\
+                                                    <a href="#{{tab.tabid}}" ng-click="tabClick($event, $index)" ng-mouseover="tabMouseOver($event)" ng-class="{\'selected\':currentSelectedIndex == $index}" rdk-tabtitle-parser>\
+                                                      {{tab.title}}\
+                                                    </a>\
+                                                    <span class="ui-icon ui-icon-close" role="presentation" ng-show="{{tab.closable}}" ng-click="$clickHandler($index, $event)"></span>\
+                                                    <span class="bottom_line" ng-show="picShow($index)">\
+                                                        <em></em>\
+                                                    </span>\
+                                                </li>\
+                                             </ul>\
+                                         </div>\
+                                        <div ng-show="removeableTabs" class="move-wrap">\
+                                            <i ng-click="changeTabs(-1)" class="move fa fa-caret-left"></i>\
+                                            <i ng-click="changeTabs(+1)"  class="move fa fa-caret-right"></i>\
+                                        </div>\
+                                    </div>\
                                     <div ng-transclude class="content"> </div>\
                                 </div>\
                         </div>';
@@ -88,6 +97,31 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 scope.tabs = [];
                 scope.currentSelectedIndex = 0;
 
+                scope.page={index:0, size:3, step:3};
+
+                scope.tabsOffset=0;
+                scope.removeableTabs=false;
+                scope.moveSpeed= Utils.getValue(scope.moveSpeed, attrs.moveSpeed, 3); //移动速度
+
+                var tabsDom = element[0].querySelector(".title");
+                var offsetMax=0; //最大偏移量
+                var offsetBase=100;//偏移基数100px
+
+                scope.changeTabs =function(direction){
+                    if(scope.tabsOffset==0 && direction<0){
+                        return
+                    }else if(scope.tabsOffset==offsetMax && direction>0){
+                        return
+                    }
+                    scope.tabsOffset += offsetBase*scope.moveSpeed*direction;
+                    if(scope.tabsOffset>offsetMax){
+                        scope.tabsOffset=offsetMax
+                    }
+                    else if(scope.tabsOffset<0){
+                        scope.tabsOffset=0
+                    }
+                };
+
                 $timeout(function() {
                     var tabs = $(element[0].querySelector(".content")).children("div");
                     for (var i = 0; i < tabs.length; i++) {
@@ -100,11 +134,24 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
 
                 }, 0);
 
+                function _setTabsWidth(){  //设置tabs容器宽度,判断显示移动按钮
+                    var lis =element[0].querySelector(".title").querySelectorAll("li");
+                    var totalOffsetWidth=0;
+                    for(var i= 0 , len=lis.length ; i<len ; i++)
+                    {
+                        totalOffsetWidth+=lis[i].offsetWidth;
+                    }
+                    tabsDom.style.width=totalOffsetWidth+10+"px"; //10校验误差
+                    offsetMax=totalOffsetWidth+10-element[0].querySelector(".rdk-tabs-wrap").offsetWidth;
+                    if(offsetMax>0){
+                        scope.removeableTabs=true;
+                    }
+                }
                 var off = scope.$on('ngRepeatFinished', function(){
                     _appendTab();
                     _updateDraggable();
                     _addFeature();
-
+                    _setTabsWidth();
                     scope.$watch("selectedTab", function(newVal, oldVal) {
                         _activeTabByIndex(newVal);
                         var tabs = $(dom).tabs();

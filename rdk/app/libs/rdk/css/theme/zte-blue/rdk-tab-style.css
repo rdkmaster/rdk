@@ -12,7 +12,7 @@
     margin: 0 .2em;
 }
 .ui-tabs .ui-tabs-nav li {
-    margin: 1px .1em 0 0;
+    margin: 1px 0 0 0;
 }
 /*rdk-tab-item 样式类：为外部额外增加页签项到到tab里提供统一的样式*/
 .ui-tabs .ui-tabs-nav li a.ui-tabs-anchor,.rdk-tab-item{
@@ -42,6 +42,7 @@
 .rdk-tab-module .bottom_line {
     width: 100%;
     height: 4px;
+    display: block;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -100,4 +101,39 @@
 }
 .rdk-tab-theme-blue .rdk-tab-module .ui-widget-header {
     border-bottom: none;
+}
+
+/*tabs wrap*/
+.rdk-tab-module .rdk-tabs-wrap{
+    width: 100%;
+    height: 42px;
+    overflow: hidden;
+    position: relative;
+}
+.rdk-tab-module .rdk-tabs-wrap .title{
+    position: absolute;
+    transition: left 1s ease-in-out;
+}
+/*close icon*/
+.rdk-tab-module .ui-icon{
+    position: absolute;
+    right: 0;
+    top:8px;
+}
+.rdk-tab-module .ui-icon-close{
+    transform: scale(1.2);
+    color: #9d9d9d;
+}
+/*move icon*/
+.rdk-tab-module .tabs  i.move{
+    font-size: 30px;
+    color: #6d6d6d;
+    cursor: pointer
+}
+.rdk-tab-module .move-wrap{
+    width: 35px;
+    margin: 5px;
+}
+.rdk-tab-module .move-wrap i.move:hover{
+    color: #008FD4;
 }

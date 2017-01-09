@@ -67,6 +67,15 @@
 
 <live_demo example="containers/tab/tab_draggable" width="800"></live_demo>
 
+## moveSpeed ##
+>支持类型：字符串
+
+此属性设置tab页签左右移动时的速度。
+
+    <rdk-tab move-speed="4"></rdk-tab>
+
+<live_demo example="containers/tab/tab_move" width="800"></live_demo>
+
 ## id ##
 >支持类型：字符串
 
