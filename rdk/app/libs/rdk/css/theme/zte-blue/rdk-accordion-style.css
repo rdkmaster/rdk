@@ -44,12 +44,10 @@
     height: 15px;
     margin: auto;
 }
-
 /*icon ^ 大小*/
 .rdk-accordion-module .fa-angle-down:before,.rdk-accordion-module .fa-angle-up:before {
     font-size: 18px;
 }
-
 /*todo:theme colors*/
 .rdk-accordion-module .theme{
     background-color: #beddfa;

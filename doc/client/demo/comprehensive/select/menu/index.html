@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>ComboSelect -> ChildChange</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <link rel="stylesheet" href="css/menu.css">
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='myCtrl'>
+<div style="margin-left: 100px;display:inline-block;margin-top: 100px;position:relative">
+
+    <rdk_combo_select frozen="false" id="comboID" open="combOpen" dclear="true">
+        <div class="main"  >
+            <div class="main-border">
+                <div class="main-search" ng-show="true" id="name">
+                    <input id="input" type="text" ng-model="searchVal" ng-change="myFunc(searchVal)" >
+                    <i class="fa fa-search search-icon" tt="fun"></i>
+                </div>
+                <div rdk-scroll style="height: 300px">
+                    <div>
+                        <rdk_accordion  change="changeHandler()"  open="Open" caption="item.topic" ng-repeat="item in items track by $index" on-finish-render>
+                            <rdk_basic_selector  selected-items="item.highLight" editable="false" searchable="false" child_change="selected2string" change="selectorChanged" class="rdk_selector_style"  multiple_select="basicMultiple"  data="item.subTopic" ></rdk_basic_selector>
+                        </rdk_accordion>
+                    </div>
+                </div>
+        </div>
+    </rdk_combo_select>
+</div>
+</body>
+
+</html>

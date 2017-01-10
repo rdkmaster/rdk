@@ -1,0 +1,103 @@
+.rdk-combo-select-module .combo-content .combo-content-theme {
+    background-color: #fff;
+    color: #434343;
+    padding-left: 15px;
+}
+.main {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 2px;
+    box-shadow: rgba(0, 0, 0, 0.172549) 0px 6px 16px;
+    font-family: "微软雅黑", Helvetica, Arial, sans-serif;
+}
+.select-state{
+    border:0
+}
+.rdk-selector-module {
+    border: none;
+    margin-bottom: -5px;
+    overflow: visible;
+}
+.rdk-accordion-module {
+    margin-bottom: 2px;
+}
+.main-search input {
+    display: block;
+    width: 100%;
+    height: 30px;
+    padding-left: 10px;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    outline: 0;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #555;
+}
+.main-search {
+    padding:4px 10px;
+    position: relative;
+}
+.main-search input:focus {
+    border-color: #66afe9;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 4px rgba(102,175,233,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 4px rgba(102,175,233,0.6);
+}
+.rdk-accordion-module .content {
+    padding: 0;
+    margin: 0;
+}
+.rdk-accordion-module .theme {
+    height: 30px;
+    padding: 5px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    padding-left: 12px;
+    margin: 0;
+    background-color: #eee;
+    font-size: 12px;
+    color: #666
+}
+.rdk-accordion-module .theme .fa-angle-down:before,.rdk-accordion-module .theme .fa-angle-up:before {
+    position: relative;
+    top:-2px;
+}
+.search-icon {
+    position: absolute;
+    right: 20px;
+    top: 12px;
+}
+.rdk-selector-module .original-item:hover, .rdk-selector-module .selected-item:hover {
+    background-color: #e2eef9;
+}
+.rdk-selector-module .selector li {
+    float: left;
+    width: 100%;
+    border:none;
+    border-radius: 0;
+    margin: 2px 0;
+    padding: 3px;
+    padding-left: 20px;
+}
+.rdk-selector-module .selected-item {
+    background-color: #cde4fa !important;
+}
+.rdk-selector-module .selector {
+    padding: 0;
+}
+.rdk-selector-module .selector li:last-child {
+    margin-bottom: 0;
+}
+.ps-active-x.ps-container > .ps-scrollbar-x-rail {
+    display: none;
+}
+
+.fa-times-circle:before {
+    color: #ccc;
+    cursor:pointer
+}
+.fa-search:before {
+    color:gray;
+}
+
+

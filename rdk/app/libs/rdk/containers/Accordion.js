@@ -514,7 +514,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Accordion',
                     if (scope.id){
                         EventService.broadcast(scope.id, EventTypes.CHANGE, scope.open); //事件
                     }
-                }              
+                }
 
                 function _clickHandler(callback, button, htmlID, event){
                     callback(button, htmlID);

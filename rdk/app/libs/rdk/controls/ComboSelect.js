@@ -8,6 +8,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 id: '@',
                 caption: '=?',
                 open: '=?',
+                dclear: '=?',
                 openPolicy:'@?',
                 frozen: '=?',
                 childChange: '&?',
@@ -21,9 +22,10 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 template:'<div class="rdk-combo-select-module" ng-mouseleave="closeShow()">\
                               <div class="combo-content" ng-mouseenter="openShow()">\
                                   <span class="combo-caption" ng-show="!!caption">{{caption}}</span>\
-                                  <input class="form-control combo-content-theme" title="{{inputStr}}" \
-                                  readonly="true" unselectable="on" ng-model="inputStr" ng-click="toggle()" type="text"/>\
+                                  <p class="form-control combo-content-theme" title="{{inputStr}}" \
+                                  unselectable="on" ng-model="inputStr" ng-click="toggle()">{{inputStr}}</p>\
                                   <i class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
+                                  <i ng-if="clearShow" class="fa fa-times-circle fa-1 combo-content-close" ng-click="clear($event)" title="清除"></i>\
                               </div>\
                               <div class="combo-content-transclude">\
                                   <div ng-transclude ng-show="open"></div>\
@@ -48,7 +50,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                         scope.inputStr = data;
                     });
                     Utils.publish(scope, this);
-
                     this.changeOpenStatus = function(){
                         scope.open =! scope.open;
                         scope.isSelect=false;
@@ -82,21 +83,33 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
 
             function _link(scope, iEle, iAttrs, ctrl, transclude) {
                 var hasOpen = scope.open = Utils.isTrue(scope.open, false);
-                scope.frozen = Utils.isTrue(scope.frozen, false);
+                scope.frozen = Utils.isTrue(scope.frozen, true);
+                scope.dclear = Utils.isTrue(scope.dclear, false);
+                scope.inputStr = Utils.getValue(scope.inputStr, iAttrs.inputStr, '');
                 scope.unfoldedIcon = "fa fa-angle-up";
                 scope.foldedIcon = "fa fa-angle-down";
                 scope.openPolicy = scope.openPolicy || "click";
                 scope.toggle = _toggle;
                 scope.closeShow = _closeShow;
                 scope.openShow = _openShow;
+                scope.clearShow =false;
                 scope.isSelect = false;
-
+                scope.appScope=Utils.findAppScope(scope);
+                scope.clear=function(){
+                    scope.inputStr='';
+                    scope.clearShow = false;
+                    EventService.broadcast('dataClear','click');
+                };
                 if(scope.id) {
                     EventService.register(scope.id, EventTypes.CHANGE, function(event, data) {
                         scope.inputStr = data;
+                        if(scope.dclear==true && data==""){
+                            scope.clearShow = false;
+                        }else if(scope.dclear==true && data!=""){
+                            scope.clearShow = true;
+                        }
                     });
                 }
-
                 $(document).mouseup(function(e){
                     if(!$(iEle).is(e.target) && $(iEle).has(e.target).length === 0){
                         $timeout(function(){
