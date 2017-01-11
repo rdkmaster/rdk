@@ -3,6 +3,9 @@
     color: #434343;
     padding-left: 15px;
 }
+.rdk-combo-select-module .combo-content {
+    border: 1px solid #ccc;
+}
 .main {
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -91,7 +94,6 @@
 .ps-active-x.ps-container > .ps-scrollbar-x-rail {
     display: none;
 }
-
 .fa-times-circle:before {
     color: #ccc;
     cursor:pointer
@@ -99,5 +101,9 @@
 .fa-search:before {
     color:gray;
 }
+.rdk-combo-select-module .combo-content-icon {
+    right:8px;
+}
+
 
 
