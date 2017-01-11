@@ -60,8 +60,8 @@ class Runtime(engine: ScriptEngine) extends Logger {
   def getHostIps: String = RdkUtil.toJsonString(RdkUtil.getHostIps)
 
   //shell脚本调用
-  def getShellOutput(args: ScriptObjectMirror) = {
-    RdkUtil.getShellOutput(args)
+  def getShellOutput(cmd: String, option: String, args: ScriptObjectMirror) = {
+    RdkUtil.getShellOutput(cmd, option, args)
   }
 
   //当前数据源

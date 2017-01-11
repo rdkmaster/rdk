@@ -390,28 +390,18 @@ object RdkUtil extends Logger {
 
   }
 
-  def getShellOutput(args: ScriptObjectMirror): String = {
-
-    val cmd: String = args.getMember("0").toString
-    val option: String = args.getMember("1").toString
-
-    if (args.size == 2) {
-      option match {
-        case "0" => ShellExecutorFactory.get("shell").getReturnCode(cmd) match {
-          case Left(returnCode) => return returnCode.toString
-          case Right(error) => return error
-        }
-        case "1" => ShellExecutorFactory.get("shell").getOutputLines(cmd).getOrElse("")
-      }
-    } else {
-      val params: List[String] = (for (elem <- 2 to args.size - 1) yield args.getMember(elem.toString).toString).toList
-      option match {
-        case "0" => ShellExecutorFactory.get("shell").getReturnCode(cmd :: params) match {
-          case Left(returnCode) => return returnCode.toString
-          case Right(error) => return error
-        }
-        case "1" => ShellExecutorFactory.get("shell").getOutputLines(cmd :: params).getOrElse("")
-      }
+  def getShellOutput(cmd: String, option: String, args: ScriptObjectMirror): String = {
+    var params: List[String] = Nil
+    if (args.size > 2) {
+      params = (for (elem <- 2 to args.size - 1) yield args.getMember(elem.toString).toString).toList
     }
+    option match {
+      case "0" => ShellExecutorFactory.get("shell").getReturnCode(cmd :: params) match {
+        case Left(returnCode) => returnCode.toString
+        case Right(error) => error
+      }
+      case "1" => ShellExecutorFactory.get("shell").getOutputLines(cmd :: params).getOrElse("")
+    }
+
   }
 }

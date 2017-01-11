@@ -42,29 +42,29 @@ var java = {
 
 };
 
-var mq={
+var mq = {
     p2p: function (subject, message) {
         return rdk_runtime.p2p(subject, message);
     },
     //默认120秒
     rpc: function (subject, replySubject, message, timeout) {
-        if(!_.isDefined(timeout)){
-            timeout=120
+        if (!_.isDefined(timeout)) {
+            timeout = 120
         }
         return rdk_runtime.rpc(subject, replySubject, message, timeout);
     },
     broadcast: function (subject, message) {
         return rdk_runtime.broadcast(subject, message);
     },
-    subscribe: function (topic,callback_function_name, jsfile){
-        return rdk_runtime.subscribe(topic,callback_function_name, jsfile);
+    subscribe: function (topic, callback_function_name, jsfile) {
+        return rdk_runtime.subscribe(topic, callback_function_name, jsfile);
     },
-    unsubscribe: function (topic,callback_function_name, jsfile){
-        return rdk_runtime.unSubscribe(topic,callback_function_name, jsfile);
+    unsubscribe: function (topic, callback_function_name, jsfile) {
+        return rdk_runtime.unSubscribe(topic, callback_function_name, jsfile);
     }
 };
 
-var websock ={
+var websock = {
     broadcast: function (subject, message) {
         return rdk_runtime.webSocketBroadcast(subject, message);
     }
@@ -138,7 +138,7 @@ function getShellOutput(cmd, option) {
         Log.warn("param option miss,set 0!");
         arguments["1"] = 0;
     }
-    return rdk_runtime.getShellOutput(arguments);
+    return rdk_runtime.getShellOutput(cmd, option.toString(), arguments);
 }
 
 function getRequestContextHeader() {
@@ -230,13 +230,13 @@ var JSON1 = {
 
 //动态类加载
 var JVM = {
-    load_class: function loadClass(jar,className) {
-        var loadclazz=rdk_runtime.jarHelper().loadClass(jar, className);
-            if (loadclazz==null){
-                return undefined;
-            }
-          return loadclazz;
+    load_class: function loadClass(jar, className) {
+        var loadclazz = rdk_runtime.jarHelper().loadClass(jar, className);
+        if (loadclazz == null) {
+            return undefined;
         }
+        return loadclazz;
+    }
 }
 
 //国际化
@@ -297,24 +297,24 @@ function _fixContent(content, excludeIndexes) {
     return csv;
 }
 
-function _fixEXCELContent(ctent,exIndexes){
-    var excel={};
-    excel.data={};
-    excel.excludeIndexes={};
-    for(var sheet in ctent){
-        if(_.isDataTable(ctent[sheet])){
+function _fixEXCELContent(ctent, exIndexes) {
+    var excel = {};
+    excel.data = {};
+    excel.excludeIndexes = {};
+    for (var sheet in ctent) {
+        if (_.isDataTable(ctent[sheet])) {
             ctent[sheet].data.unshift(ctent[sheet].header);
-            excel.data[sheet]=ctent[sheet].data;
-            excel.excludeIndexes[sheet]=[];
-            if(_.isDefined(exIndexes)){
+            excel.data[sheet] = ctent[sheet].data;
+            excel.excludeIndexes[sheet] = [];
+            if (_.isDefined(exIndexes)) {
                 each(exIndexes[sheet], function (value) {
                     excel.excludeIndexes[sheet].push(_.isString(value) ? ctent[sheet].field.indexOf(value) : value);
                 });
             }
 
-        }else{
-            excel.data[sheet]=ctent[sheet];
-            if(_.isDefined(exIndexes)) {
+        } else {
+            excel.data[sheet] = ctent[sheet];
+            if (_.isDefined(exIndexes)) {
                 excel.excludeIndexes[sheet] = exIndexes[sheet];
             }
         }
@@ -323,13 +323,13 @@ function _fixEXCELContent(ctent,exIndexes){
 }
 
 var file = {
-    loadProperty:function(file){
+    loadProperty: function (file) {
         if (!file) {
             log("invalid file path:", file);
             return false;
         }
         file = file.toString();
-        log("reading property file:",file);
+        log("reading property file:", file);
         return rdk_runtime.fileHelper().loadProperty(file);
     },
     readXml: function (path) {
@@ -380,14 +380,14 @@ var file = {
         csv.data.shift();
         return b;
     },
-    saveAsEXCEL:function(file,content,excludeIndexes,option){
-        if(!_.isDefined(file)){
+    saveAsEXCEL: function (file, content, excludeIndexes, option) {
+        if (!_.isDefined(file)) {
             Log.error("please input extract file!");
             return;
         }
         file = file.toString();
         log("saving to Excel:", file);
-        if(!_.isDefined(content)){
+        if (!_.isDefined(content)) {
             Log.error("please input extract content!");
             return;
         }
@@ -399,16 +399,16 @@ var file = {
         }
         var excel = _fixEXCELContent(content, excludeIndexes);
 
-        var b = rdk_runtime.fileHelper().saveAsEXCEL(file, excel.data, excel.excludeIndexes,option);
+        var b = rdk_runtime.fileHelper().saveAsEXCEL(file, excel.data, excel.excludeIndexes, option);
         //_fixExcelContent中修改了content，这里还原
-        for(var sheet in content) {
+        for (var sheet in content) {
             if (_.isDataTable(content[sheet])) {
                 content[sheet].data.shift(content[sheet].header);
             }
         }
         return b;
     },
-    list: function(path, pattern) {
+    list: function (path, pattern) {
         path = java.FileHelper.fixPath(path, rdk_runtime.application());
         log('listing dir: ' + path);
 
@@ -422,17 +422,17 @@ var file = {
         return files;
     },
     get web() {
-        return function(){
+        return function () {
             return java.FileHelper.fixPath('$web', rdk_runtime.application());
         }
     },
     get base() {
-        return function(){
+        return function () {
             return java.FileHelper.fixPath('$base', rdk_runtime.application());
         }
     },
     get svr() {
-        return function(){
+        return function () {
             return java.FileHelper.fixPath('$svr', rdk_runtime.application());
         }
     }
@@ -522,18 +522,18 @@ function forEach(obj, iteratee, context, extra) {
 
 function require(script) {
     script = java.FileHelper.fixPath(script, rdk_runtime.application());
-  //  log("loading script in js: " + script);
+    //  log("loading script in js: " + script);
     return load(script);
 }
 
 function sql(sql) {
     log("exec sql: " + sql);
-    return rdk_runtime.dbHelper().sql(rdk_runtime.useDbSession(),sql);
+    return rdk_runtime.dbHelper().sql(rdk_runtime.useDbSession(), sql);
 }
 
 function clear(resultSet) {
     info("clearing the resultSet and every resource else.");
-    rdk_runtime.dbHelper().clear(rdk_runtime.useDbSession(),resultSet);
+    rdk_runtime.dbHelper().clear(rdk_runtime.useDbSession(), resultSet);
 }
 
 function mapper(resultSet, key, value, keepResultSet) {
@@ -619,10 +619,10 @@ var Data = {
         if (classDef != undefined) {
             var methodCall = classDef.getMethod(methodName, java.String.class);
             var fixDsName = dsName;
-            if(dsName.indexOf("db.") != 0){
+            if (dsName.indexOf("db.") != 0) {
                 fixDsName = "db." + dsName;
             }
-            Cache.put(Data.VSqlProcessorKey+fixDsName, methodCall);
+            Cache.put(Data.VSqlProcessorKey + fixDsName, methodCall);
             Log.info("registerVSqlProcessor for " + fixDsName);
         } else {
             Log.error('Failed to load ' + jar + ":" + className);
@@ -631,26 +631,26 @@ var Data = {
     },
 
     //数据源选择器标识
-    DataSourceSelector:"#_#DataSourceSelector#_#",
+    DataSourceSelector: "#_#DataSourceSelector#_#",
 
     //设置数据源选择器
-    setDataSourceSelector:function(selector){
-        Cache.put(Data.DataSourceSelector,selector)
+    setDataSourceSelector: function (selector) {
+        Cache.put(Data.DataSourceSelector, selector)
     },
     //启用数据源
-    useDataSource : function() {
-        var selector  = Cache.get(Data.DataSourceSelector);
-        if(selector != null){
+    useDataSource: function () {
+        var selector = Cache.get(Data.DataSourceSelector);
+        if (selector != null) {
             rdk_runtime.useDataSource(selector(arguments))
-        }else {
+        } else {
             rdk_runtime.useDataSource("")
         }
     },
 
     fetch: function (sql, maxLine) {
-        if (!maxLine || !_.isDefined(maxLine)){
+        if (!maxLine || !_.isDefined(maxLine)) {
             Log.warn("param maxLine empty,set maxLine=4000");
-            maxLine=4000;
+            maxLine = 4000;
         }
 
         if (!_.isNumber(maxLine)) {
@@ -665,7 +665,7 @@ var Data = {
     fetch_first_cell: function (sql) {
         return rdk_runtime.fetch_first_cell(sql);
     },
-    batch_fetch: function (sqlArray, maxLine,timeout) {  //并发实现
+    batch_fetch: function (sqlArray, maxLine, timeout) {  //并发实现
 
         if (!sqlArray || !_.isArray(sqlArray)) {
             Log.error("Array param required! " + sqlArray);
@@ -675,19 +675,19 @@ var Data = {
             maxLine = 4000;
         }
         var dataTableArray = [];
-        var dataObj = JSON.parse(rdk_runtime.batchFetch(sqlArray, maxLine,timeout));
-        for(idx in dataObj){
-           dataTableArray.push(new DataTable(i18n(dataObj[idx].fieldNames), dataObj[idx].fieldNames, dataObj[idx].data))
+        var dataObj = JSON.parse(rdk_runtime.batchFetch(sqlArray, maxLine, timeout));
+        for (idx in dataObj) {
+            dataTableArray.push(new DataTable(i18n(dataObj[idx].fieldNames), dataObj[idx].fieldNames, dataObj[idx].data))
         }
         return dataTableArray;
     },
     executeUpdate: function (sql) {
         if (_.isString(sql)) {
-            return rdk_runtime.executeUpdate(rdk_runtime.application(),sql);
+            return rdk_runtime.executeUpdate(rdk_runtime.application(), sql);
         }
 
         if (_.isArray(sql)) {
-            return JSON.parse(rdk_runtime.batchExecuteUpdate(rdk_runtime.application(),sql));
+            return JSON.parse(rdk_runtime.batchExecuteUpdate(rdk_runtime.application(), sql));
         }
 
         Log.error("String or Array[String] param required!");
@@ -699,7 +699,7 @@ function DataTable(header, field, data, paging) {
     this.header = header;
     this.field = field;
     this.data = data;
-    this.paging=paging;
+    this.paging = paging;
 
     this.transform = function (trans_object_conf) {
         for (field in trans_object_conf) {
@@ -715,7 +715,7 @@ function DataTable(header, field, data, paging) {
             }
             for (var row = 0; row < this.data.length; row++) {
                 try {
-                    this.data[row][fieldIndex] = func(this.data[row][fieldIndex],this.data[row],this.field);
+                    this.data[row][fieldIndex] = func(this.data[row][fieldIndex], this.data[row], this.field);
                 } catch (error) {
                     Log.warn("function call error");
                 }
@@ -724,66 +724,66 @@ function DataTable(header, field, data, paging) {
         return this;
     },
 
-    this.filter = function (func) {
-        if (!_.isFunction(func)) {
-            Log.error("function required!param value:" + func);
-            return this;
-        }
-        var data = [];
-        try {                            //try catch
-            if (func(this.data[row])) {
-                data.push(this.data[row]);
+        this.filter = function (func) {
+            if (!_.isFunction(func)) {
+                Log.error("function required!param value:" + func);
+                return this;
             }
-        } catch (error) {
-            Log.warn("function call error");
-        }
-        return this;
-    },
+            var data = [];
+            try {                            //try catch
+                if (func(this.data[row])) {
+                    data.push(this.data[row]);
+                }
+            } catch (error) {
+                Log.warn("function call error");
+            }
+            return this;
+        },
 
-    this.select = function (colNameArray) {
-        if (!colNameArray || !_.isArray(colNameArray)) {
+        this.select = function (colNameArray) {
+            if (!colNameArray || !_.isArray(colNameArray)) {
                 Log.error("field Array required! field param:" + colNameArray);
                 return this;
             }
-        var field = [];
-        var header = [];  //delete
-        var data = [];    //转置？
-        var paging={};
-        var index = 0;
-        for (var i = 0; i < colNameArray.length; i++) {
-            var colName = colNameArray[i];
-            index = this.field.indexOf(colName)
-            if (index == -1) {
-                Log.warn("field not exist! " + colName);
-                continue;
+            var field = [];
+            var header = [];  //delete
+            var data = [];    //转置？
+            var paging = {};
+            var index = 0;
+            for (var i = 0; i < colNameArray.length; i++) {
+                var colName = colNameArray[i];
+                index = this.field.indexOf(colName)
+                if (index == -1) {
+                    Log.warn("field not exist! " + colName);
+                    continue;
+                }
+                field.push(colName);
+                header.push(this.header[index]);
+                for (row = 0; row < this.data.length; row++) {
+                    var rowArray = [];
+                    rowArray.push(this.data[row][index]);
+                    data.push(rowArray);
+                }
             }
-        field.push(colName);
-        header.push(this.header[index]);
-           for (row = 0; row < this.data.length; row++) {
-                var rowArray = [];
-                rowArray.push(this.data[row][index]);
-               data.push(rowArray);
-            }
-        }
-        this.header = header;
-        this.field = field;
-        this.data = data;
-        this.paging=paging;
-        return this;
-    },
+            this.header = header;
+            this.field = field;
+            this.data = data;
+            this.paging = paging;
+            return this;
+        },
 
-    this.map = function (func) {  //log error
-        Log.error("map funciton is not supported yet!");
+        this.map = function (func) {  //log error
+            Log.error("map funciton is not supported yet!");
             //if(!_.isFunction(func)){
             //    Log.error("function required! parm:"+func);
             //}
             //each(this.data,func);
-        return this;
-    },
+            return this;
+        },
 
-    this.clone = function () {
-        return new DataTable(this.header, this.field, this.data, this.paging);
-    }
+        this.clone = function () {
+            return new DataTable(this.header, this.field, this.data, this.paging);
+        }
 }
 
 function json(data, indent) {
