@@ -16,7 +16,7 @@
 	box-sizing: content-box;
 	border:none;
 	position: relative;
-	z-index: 500;
+	z-index: 50;
 	height: 30px;
 	border-radius: 4px;
 	font-size:14px;
@@ -38,7 +38,7 @@
     position:absolute;
     top: 0px;
     left:0px;
-    z-index: 100;
+    z-index: 30;
 }
 .rdk-button-enabled{
 	cursor:default;
