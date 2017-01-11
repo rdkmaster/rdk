@@ -32,7 +32,7 @@
     right: 8px;
     top: 10px;
 }
-.rdk-table-module div.btn-group.search_select{
+.rdk-table-module .search_select{
     width: 250px;
     position: absolute;
     top: 34px;
@@ -75,19 +75,6 @@
 }
 .rdk-table-module .pagination {
     margin: 0;
-}
-.rdk-table-module .pagination > li > a, .rdk-table-module .pagination > li > span{
-    padding: 0 5px;
-    margin: 10px 0 0;
-    border: none;
-}
-.rdk-table-module .pagination>li>a:hover,.rdk-table-module .pagination>li>span:hover,.rdk-table-module .pagination>li>a:focus,
-.rdk-table-module .pagination>li>span:focus {
-    background: none;
-}
-.rdk-table-module .spanRecords{
-    float:left;
-    margin: 10px 10px 1px 10px;
 }
 .rdk-table-module .count {
     font-size: 14px;
@@ -150,7 +137,7 @@
     width:50%;
 }
 .rdk-table-module .mouseShape{
-    cursor:url("/rdk/app/libs/rdk/css/img/edit.cur"),auto;
+  cursor:url("../../img/edit.ico"),auto;
 }
 .rdk-table-icon{
     display: inline-block;
@@ -240,23 +227,61 @@
     background-color: #666;
     color: #eee;
 }
-/*搜索下拉框*/
-.rdk-table-module div.search_select .dropdown-toggle.btn:focus{
-    border-color: #66afe9;
-    outline: 0 !important;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+
+/*翻页共有*/
+i{
+    font-style: normal;
 }
-.rdk-table-module div.search_select .dropdown-toggle.btn{
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background: #fff;
+i.regular_right{
+    color:#666;
 }
-.rdk-table-module .dropdown-menu>li>a:hover {
-    background: #eee;
-    color: #333;
+i.regular_left{
+    color:#333;
 }
-.rdk-table-module .dropdown-menu>li>a:focus{
-    background: #3ab1ea;
-    color: #fff;
+.pagination>li>a:hover, .pagination>li>span:hover, .pagination>li>a:focus,
+.pagination>li>span:focus {
+    background: none;
 }
+i.regular_right,i.regular_left{
+    line-height: 17px;
+}
+.rdk-table-module .pagination > li > a, .rdk-table-module .pagination > li > span {
+    border:none;
+    margin: 10px 0 0px;
+}
+.rdk-table-module .spanRecords {
+    float: left;
+    margin: 10px 10px 1px 10px;
+}
+.rdk-table-module .pagination {
+    margin: 0;
+}
+.rdk-table-module .disabledRecords{
+    font-size:12px;
+}
+
+/*翻页1*/
+
+.rdk-page-theme-short .rdk-table-module .pagination > li > span{
+    padding: 0 15px;
+}
+.rdk-page-theme-short .rdk-table-module .pagination > li > a{
+    padding: 0 5px;
+    font-size:12px;
+}
+
+/*翻页2*/
+
+
+/*********** 翻页样式 ***********/
+.rdk-page-theme-long .rdk-table-module .pagination > li > a{
+    padding: 0 6px;
+    font-size:12px;
+}
+.rdk-page-theme-long .rdk-table-module .pagination > li:nth-child(2) >a{
+    padding: 0 18px 0 4px;
+}
+.rdk-page-theme-long .rdk-table-module .pagination > li:nth-last-child(2) >a{
+    padding: 0 4px 0 18px;
+}
+

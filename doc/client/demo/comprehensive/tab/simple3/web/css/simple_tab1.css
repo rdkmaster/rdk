@@ -30,6 +30,11 @@ button.images_right{
 	background-color: #fff;
 	color: #008fd4;
 }
+.rdk-table-module .pagingLine {
+	position: absolute;
+	width: 100%;
+	top: 268px;
+}
 /*进去时换的图标*/
 .images_up{
 	left:-740px;

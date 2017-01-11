@@ -50,6 +50,11 @@ div.hao >span.title{
 	line-height: 30px;
 	color: #008FD4;
 }
+.rdk-table-module .pagingLine {
+	position: absolute;
+	width: 100%;
+	top: 268px;
+}
 i.iconfont {
 	color: #008fd4;
 	font-size: 16px;
