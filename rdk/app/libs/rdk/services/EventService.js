@@ -243,6 +243,10 @@
                 }
                 var fn = scope[Utils.snake2camel(eventType)](scope);
                 if (!fn) {
+                    if(typeof(defaultReturnValue) == 'function'){
+                        defaultReturnValue();
+                        return;
+                    }
                     return defaultReturnValue;
                 }
                 try {
