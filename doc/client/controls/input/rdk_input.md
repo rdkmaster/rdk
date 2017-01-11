@@ -31,5 +31,14 @@
 
 <live_demo example="controls/input/readonly" width="900"></live_demo>
 
+## icon ##
+支持右侧图标自定义。目前只支持 *Font Awesome Icons*。
+缺省 *icon* 属性时，右侧默认为 关闭 按钮。作用是清空 *input* 输入框内容。
 
+## click ##
+单击输入框右侧图标后，如果定义了 *click* 函数，就会调用应用自定义的 *click* 方法。该属性可绕开事件机制。
+
+这是 *click* 使用例子:
+
+<live_demo example="controls/input/demo4click" width="900"></live_demo>
 
