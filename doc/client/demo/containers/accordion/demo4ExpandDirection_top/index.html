@@ -13,25 +13,13 @@
 
 <body ng-controller='myCtrl'>
 
-    <rdk_accordion id='accordionID' expand_direction='top' style='width: 400px; margin-left: 150px' open='localOpen'>
+    <rdk_accordion min_height='30' id='accordionID' expand_direction='top' style='width: 400px; margin-left: 150px;' open='localOpen'>
         <rdk_basic_selector style='width: 300px' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
     </rdk_accordion>
 
-    <div style='width: 700px; height: 50px; background-color: #BEEAFF; text-align: center; display: inline-block;'>
+    <div style='height: 50px; background-color: #BEEAFF; text-align: center;'>
         <button style="float: right; margin: 10px" ng-click="open()">展开容器</button>
         <button style="float: right; margin: 10px" ng-click="close()">缩小容器</button>容器展开后该色块会被挤开</div>
-
-<!--     <rdk_accordion id='accordionID' style='margin-left: 500px' expand_direction='top' >
-        <rdk_basic_selector style='width: 500px;' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-    </rdk_accordion>
-
-    <rdk_accordion id='accordionID' caption="'有标题有默认宽度'" expand_direction='top' >
-        <rdk_basic_selector style='width: 500px;' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-    </rdk_accordion>
-
-    <rdk_accordion id='accordionID' style='width: 600px;' caption="'有标题自定义宽度'" expand_direction='top' >
-        <rdk_basic_selector style='width: 500px;' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-    </rdk_accordion> -->
 
 </body>
 

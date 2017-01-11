@@ -16,7 +16,7 @@
     border: 0;
 }
 .rdk-accordion-module .theme .fa{
-    float: right;
+    /*float: right;*/
     margin: 3px 6px;
     vertical-align: middle;
 }
@@ -36,7 +36,8 @@
 
 .rdk-accordion-module .content{
     width: 100%;
-    height: inherit;
+/*    height: inherit;*/
+    overflow: hidden;
     margin:0;
     border-radius: 0;
     padding: 0;
