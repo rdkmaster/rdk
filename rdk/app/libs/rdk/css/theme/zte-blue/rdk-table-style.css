@@ -145,14 +145,6 @@
     height: 14px;
     vertical-align: text-bottom;
 }
-.rdk-table-module .rdk-table-sort-down{
-    background: url("../../img/sort-down.png") no-repeat;
-    background-size:contain;
-}
-.rdk-table-module .rdk-table-sort-up{
-    background: url("../../img/sort-up.png") no-repeat;
-    background-size:contain;
-}
 .rdk-table-module .rdk-table-sort{
     background: url("../../img/sort.png") no-repeat;
     background-size:contain;
@@ -238,9 +230,10 @@ i.regular_right{
 i.regular_left{
     color:#333;
 }
-.pagination>li>a:hover, .pagination>li>span:hover, .pagination>li>a:focus,
-.pagination>li>span:focus {
-    background: none;
+.rdk-table-module .pagination>li>a:hover, .rdk-table-module .pagination>li>span:hover, .rdk-table-module .pagination>li>a:focus,
+.rdk-table-module .pagination>li>span:focus {
+    background-color: #fff;
+    outline: none;
 }
 i.regular_right,i.regular_left{
     line-height: 17px;
