@@ -390,18 +390,26 @@ object RdkUtil extends Logger {
 
   }
 
-  def getShellOutput(cmd: String, option: String, args: ScriptObjectMirror): String = {
-    var params: List[String] = Nil
+  def executeShell(cmd: String, option: String, args: ScriptObjectMirror): String = {
     if (args.size > 2) {
-      params = (for (elem <- 2 to args.size - 1) yield args.getMember(elem.toString).toString).toList
-    }
-    option match {
-      case "0" => ShellExecutorFactory.get("shell").getReturnCode(cmd :: params) match {
-        case Left(returnCode) => returnCode.toString
-        case Right(error) => error
+      var params: List[String] = (for (elem <- 2 to args.size - 1) yield args.getMember(elem.toString).toString).toList
+      option match {
+        case "0" => ShellExecutorImp.getReturnCode(cmd :: params) match {
+          case Left(returnCode) => returnCode.toString
+          case Right(error) => error
+        }
+        case "1" => ShellExecutorImp.getOutputLines(cmd :: params).getOrElse("")
+        case _ => s"unexpected option ${option}"
       }
-      case "1" => ShellExecutorFactory.get("shell").getOutputLines(cmd :: params).getOrElse("")
+    } else {
+      option match {
+        case "0" => ShellExecutorImp.getReturnCode(cmd) match {
+          case Left(returnCode) => returnCode.toString
+          case Right(error) => error
+        }
+        case "1" => ShellExecutorImp.getOutputLines(cmd).getOrElse("")
+        case _ => s"unexpected option: ${option}"
+      }
     }
-
   }
 }

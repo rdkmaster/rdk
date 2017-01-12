@@ -11,7 +11,7 @@ import com.zte.vmax.rdk.db.DataBaseHelper
 import com.zte.vmax.rdk.jsr._
 import com.zte.vmax.rdk.mq.MqHelper
 import com.zte.vmax.rdk.proxy.ProxyManager
-import com.zte.vmax.rdk.util.{ShellExecutorFactory, RdkUtil, Logger}
+import com.zte.vmax.rdk.util.{RdkUtil, Logger}
 import jdk.nashorn.api.scripting.ScriptObjectMirror
 import com.zte.vmax.rdk.actor.Messages._
 
@@ -60,8 +60,8 @@ class Runtime(engine: ScriptEngine) extends Logger {
   def getHostIps: String = RdkUtil.toJsonString(RdkUtil.getHostIps)
 
   //shell脚本调用
-  def getShellOutput(cmd: String, option: String, args: ScriptObjectMirror) = {
-    RdkUtil.getShellOutput(cmd, option, args)
+  def executeShell(cmd: String, option: String, args: ScriptObjectMirror) = {
+    RdkUtil.executeShell(cmd, option, args)
   }
 
   //当前数据源
