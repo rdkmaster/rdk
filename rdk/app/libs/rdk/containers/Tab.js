@@ -137,7 +137,6 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                         _hasDirecChanged=false;
                         _pageIndex=0;
                     }
-                    debugger;
                     scope.tabsOffset += _calculOffset(_pageIndex,_step,_hasDirecChanged)*direction;
                     if((direction>0 && !_hasDirecChanged) || (direction<0 && _hasDirecChanged)){
                         _pageIndex++;
