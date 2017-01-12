@@ -98,7 +98,6 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 scope.currentSelectedIndex = 0;
 
                 scope.tabsOffset=0;
-                scope.tabsPading=0;
                 scope.removeableTabs=false;
                 scope.moveStep= Utils.getValue(scope.moveStep, attrs.moveStep, 3); //移动个数
 
@@ -155,18 +154,15 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 function _calculOffset(page,step,flag){
                     var offsetRange = page*step;
                     var offsetLeft=0;
-
                     for(var i= 0 , len=tabItems.length ; i<len ; i++)
                     {
                         //左边计算偏移量
                         if(i>=offsetRange && i<offsetRange+step && !flag)
                         {
-                            console.log(888);
                             offsetLeft+=tabItems[i].offsetWidth;
                         }
                         //右边计算偏移量
                         else if(i > (tabItems.length-1) - (offsetRange + step) && i <= tabItems.length-1 - offsetRange && flag){
-                            console.log(999);
                             offsetLeft+=tabItems[i].offsetWidth;
                         }
                     }
