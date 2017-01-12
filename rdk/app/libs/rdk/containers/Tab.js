@@ -29,7 +29,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     close: '&?',
                     change: '&?',
                     add: '&?',
-                    moveSpeed:'@?'
+                    moveStep:'@?'
                 },
                 replace: true,
                 controller: ['$scope', function(scope){
@@ -100,14 +100,15 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 scope.tabsOffset=0;
                 scope.tabsPading=0;
                 scope.removeableTabs=false;
-                scope.moveStep= Utils.getValue(scope.moveStep, attrs.moveStep, 3); //移动速度
+                scope.moveStep= Utils.getValue(scope.moveStep, attrs.moveStep, 3); //移动个数
 
                 var tabsDom = element[0].querySelector(".title");
                 var tabItems=null;
                 var offsetMax=0; //最大偏移量
                 var totalOffsetWidth=0;
-
-                scope.page={index:0,step:3};
+                var _hasDirecChanged=false; //到最大偏移量时移动方向是否变化
+                var _pageIndex=0;
+                var _step=parseInt(scope.moveStep);
 
                 scope.isMove = function(type){
                     if(type==-1){
@@ -116,19 +117,33 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                         return scope.tabsOffset==offsetMax
                     }
                 };
+
                 scope.changeTabs =function(direction){
                     if(scope.tabsOffset==0 && direction<0){
                         return
                     }else if(scope.tabsOffset==offsetMax && direction>0){
                         return
                     }
-                    if(direction<0){
-                        scope.page.index--;
+                    //方向变化
+                    if((direction<0 && !_hasDirecChanged) || (direction>0 && _hasDirecChanged)){
+                        _pageIndex--;
                     }
-                    scope.tabsOffset += _calculOffset(scope.page.index,scope.page.step)*direction;
-                    if(direction>0){
-                        scope.page.index++;
+                    if(scope.tabsOffset==offsetMax && direction<0)
+                    {
+                        _hasDirecChanged=true;
+                        _pageIndex=0;
                     }
+                    if(scope.tabsOffset==0 && direction>0)
+                    {
+                        _hasDirecChanged=false;
+                        _pageIndex=0;
+                    }
+                    debugger;
+                    scope.tabsOffset += _calculOffset(_pageIndex,_step,_hasDirecChanged)*direction;
+                    if((direction>0 && !_hasDirecChanged) || (direction<0 && _hasDirecChanged)){
+                        _pageIndex++;
+                    }
+                    //边界
                     if(scope.tabsOffset>=offsetMax){
                         scope.tabsOffset=offsetMax
                     }
@@ -137,13 +152,21 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     }
                 };
 
-                function _calculOffset(page,step){
+                function _calculOffset(page,step,flag){
                     var offsetRange = page*step;
                     var offsetLeft=0;
+
                     for(var i= 0 , len=tabItems.length ; i<len ; i++)
                     {
-                        if(i>=offsetRange && i<offsetRange+step)
+                        //左边计算偏移量
+                        if(i>=offsetRange && i<offsetRange+step && !flag)
                         {
+                            console.log(888);
+                            offsetLeft+=tabItems[i].offsetWidth;
+                        }
+                        //右边计算偏移量
+                        else if(i > (tabItems.length-1) - (offsetRange + step) && i <= tabItems.length-1 - offsetRange && flag){
+                            console.log(999);
                             offsetLeft+=tabItems[i].offsetWidth;
                         }
                     }
@@ -388,16 +411,6 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
 
                 function _callLater(fn, delay) {
                     setTimeout(fn, delay ? delay : 0);
-                }
-
-                function getCurrentStyle(node) {
-                    var style = null;
-                    if(window.getComputedStyle) {
-                        style = window.getComputedStyle(node, null);
-                    }else{
-                        style = node.currentStyle;
-                    }
-                    return style;
                 }
             }
         }
