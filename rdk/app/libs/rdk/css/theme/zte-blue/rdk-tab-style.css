@@ -126,14 +126,15 @@
 }
 /*move icon*/
 .rdk-tab-module .tabs  i.move{
-    font-size: 30px;
-    color: #999;
+    font-size: 24px;
+    color: #008FD4;
     cursor: pointer
 }
 .rdk-tab-module .move-wrap{
-    width: 35px;
-    margin: 5px;
+    width: 25px;
+    margin: 9px 3px;
 }
-.rdk-tab-module .move-wrap i.move:hover{
-    color: #008FD4;
+.rdk-tab-module .tabs i.move.disabled{
+    color: #cdcdcd;
+    cursor: default;
 }

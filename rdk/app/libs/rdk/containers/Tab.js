@@ -69,8 +69,8 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                                              </ul>\
                                          </div>\
                                         <div ng-show="removeableTabs" class="move-wrap">\
-                                            <i ng-click="changeTabs(-1)" class="move fa fa-caret-left"></i>\
-                                            <i ng-click="changeTabs(+1)"  class="move fa fa-caret-right"></i>\
+                                            <i ng-class="{\'disabled\':isMove(-1)}" ng-click="changeTabs(-1)" class="move fa fa-caret-left"></i>\
+                                            <i ng-class="{\'disabled\':isMove(+1)}" ng-click="changeTabs(+1)"  class="move fa fa-caret-right"></i>\
                                         </div>\
                                     </div>\
                                     <div ng-transclude class="content"> </div>\
@@ -98,27 +98,57 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 scope.currentSelectedIndex = 0;
 
                 scope.tabsOffset=0;
+                scope.tabsPading=0;
                 scope.removeableTabs=false;
-                scope.moveSpeed= Utils.getValue(scope.moveSpeed, attrs.moveSpeed, 3); //移动速度
+                scope.moveStep= Utils.getValue(scope.moveStep, attrs.moveStep, 3); //移动速度
 
                 var tabsDom = element[0].querySelector(".title");
+                var tabItems=null;
                 var offsetMax=0; //最大偏移量
-                var offsetBase=100;//偏移基数100px
                 var totalOffsetWidth=0;
+
+                scope.page={index:0,step:3};
+
+                scope.isMove = function(type){
+                    if(type==-1){
+                        return scope.tabsOffset==0
+                    }else{
+                        return scope.tabsOffset==offsetMax
+                    }
+                };
                 scope.changeTabs =function(direction){
                     if(scope.tabsOffset==0 && direction<0){
                         return
                     }else if(scope.tabsOffset==offsetMax && direction>0){
                         return
                     }
-                    scope.tabsOffset += offsetBase*scope.moveSpeed*direction;
-                    if(scope.tabsOffset>offsetMax){
+                    if(direction<0){
+                        scope.page.index--;
+                    }
+                    scope.tabsOffset += _calculOffset(scope.page.index,scope.page.step)*direction;
+                    if(direction>0){
+                        scope.page.index++;
+                    }
+                    if(scope.tabsOffset>=offsetMax){
                         scope.tabsOffset=offsetMax
                     }
-                    else if(scope.tabsOffset<0){
+                    else if(scope.tabsOffset<=0){
                         scope.tabsOffset=0
                     }
                 };
+
+                function _calculOffset(page,step){
+                    var offsetRange = page*step;
+                    var offsetLeft=0;
+                    for(var i= 0 , len=tabItems.length ; i<len ; i++)
+                    {
+                        if(i>=offsetRange && i<offsetRange+step)
+                        {
+                            offsetLeft+=tabItems[i].offsetWidth;
+                        }
+                    }
+                    return offsetLeft;
+                }
 
                 $timeout(function() {
                     var tabs = $(element[0].querySelector(".content")).children("div");
@@ -132,11 +162,11 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 }, 0);
 
                 function _setTabsWidth(){  //设置tabs容器宽度,判断显示移动按钮
-                    var lis =element[0].querySelector(".title").querySelectorAll("li");
+                    tabItems =element[0].querySelector(".title").querySelectorAll("li");
                     var total=0;
-                    for(var i= 0 , len=lis.length ; i<len ; i++)
+                    for(var i= 0 , len=tabItems.length ; i<len ; i++)
                     {
-                        total+=lis[i].offsetWidth;
+                        total+=tabItems[i].offsetWidth;
                     }
                     totalOffsetWidth=total;
                     tabsDom.style.width=totalOffsetWidth+10+"px"; //10校验误差
@@ -358,6 +388,16 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
 
                 function _callLater(fn, delay) {
                     setTimeout(fn, delay ? delay : 0);
+                }
+
+                function getCurrentStyle(node) {
+                    var style = null;
+                    if(window.getComputedStyle) {
+                        style = window.getComputedStyle(node, null);
+                    }else{
+                        style = node.currentStyle;
+                    }
+                    return style;
                 }
             }
         }
