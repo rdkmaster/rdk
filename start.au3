@@ -19,7 +19,6 @@ EndIf
 
 Global $java
 Global $httpPid = 0
-Global $restPid = 0
 Global $rdkPid = 0
 
 Global $versionFetched = False
@@ -37,25 +36,19 @@ GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKTOP)
 
 $height -= 20
 
-GUICtrlCreateTabItem("RDK")
+GUICtrlCreateTabItem("RDK 服务进程控制台")
 Global $rdkConsole = GUICtrlCreateEdit("", 2, 23, $width, $height, $WS_HSCROLL + $WS_VSCROLL + $ES_WANTRETURN)
 GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 GUICtrlSetFont(-1, 8.5, 0, 0, 'Courier New')
 _GUICtrlEdit_SetLimitText($rdkConsole, 3000000000)
 
-GUICtrlCreateTabItem("HTTP")
+GUICtrlCreateTabItem("HTTP 服务进程控制台")
 Global $httpConsole = GUICtrlCreateEdit("", 2, 23, $width, $height, $WS_HSCROLL + $WS_VSCROLL + $ES_WANTRETURN)
 GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 GUICtrlSetFont(-1, 8.5, 0, 0, 'Courier New')
 _GUICtrlEdit_SetLimitText($httpConsole, 3000000000)
 
-GUICtrlCreateTabItem("Rest")
-Global $restConsole = GUICtrlCreateEdit("", 2, 23, $width, $height, $WS_HSCROLL + $WS_VSCROLL + $ES_WANTRETURN)
-GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
-GUICtrlSetFont(-1, 8.5, 0, 0, 'Courier New')
-_GUICtrlEdit_SetLimitText($restConsole, 3000000000)
-
-GUICtrlCreateTabItem("About")
+GUICtrlCreateTabItem("关于 RDK")
 GUICtrlCreateLabel('欢迎使用 RDK Windows 开发环境', 12, 36, 400)
 GUICtrlSetFont(-1, 12, $FW_BOLD)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
@@ -117,7 +110,6 @@ GUISetState(@SW_SHOW)
 
 _startRDK()
 _startHTTP()
-_startRest()
 
 AdlibRegister('_updateConsole', 100)
 OnAutoItExitRegister('_beforeExit')
@@ -150,7 +142,6 @@ WEnd
 Func _updateConsole()
 	_updateConsoleDo($rdkPid, $rdkConsole)
 	_updateConsoleDo($httpPid, $httpConsole)
-	_updateConsoleDo($restPid, $restConsole)
 EndFunc
 
 Func _updateConsoleDo($pid, $console)
@@ -168,11 +159,6 @@ EndFunc
 Func _startHTTP()
 	FileChangeDir(@ScriptDir & '\tools\http_server\')
 	$httpPid = Run("node server.js", "", @SW_HIDE, $STDERR_MERGED)
-EndFunc
-
-Func _startRest()
-	FileChangeDir(@ScriptDir & '\doc\tools\live_demo\mock_rest\')
-	$restPid = Run("node rest_service.js", "", @SW_HIDE, $STDERR_MERGED)
 EndFunc
 
 Func _startRDK()
@@ -227,9 +213,13 @@ EndFunc
 Func _beforeExit()
 	ToolTip('正在关闭后台进程，请稍候。。。', @DesktopWidth/2, @DesktopHeight/2-50, '', 0, 2)
 	If $httpPid <> 0 Then ProcessClose($httpPid)
-	If $restPid <> 0 Then ProcessClose($restPid)
 	If $rdkPid <> 0 Then ProcessClose($rdkPid)
 	ToolTip('')
+
+	; 删除demo的临时文件
+	DirRemove(@ScriptDir & '\doc\client\demo\tmp', True)
+	; 删除上传的文件
+	DirRemove(@ScriptDir & '\rdk\upload_files', True)
 EndFunc
 
 Func _visitWeb($url)

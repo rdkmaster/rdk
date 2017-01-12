@@ -19,7 +19,6 @@
         RESIZE: "resize",
 
         READY: "ready",
-        MODULE_READY: "module_ready",
         TABLE_READY: "table_ready",
         GRAPH_READY: "graph_ready",
         GRAPH_UPDATE: "graph_update",
@@ -43,6 +42,7 @@
         ADD: "add",
         DESTROY: 'destroy',
         RENAME:"rename",
+        INITIALIZED: 'initialized',
 
         TAB_SELECT: "tab_select",
         ITEM_SELECTED: "item_selected", //tab_select 从里向外抛，捕捉对象
@@ -103,9 +103,15 @@
             }
 
             this.register = function(dispatcher, eventType, callback, supressWarn) {
+                var hasReady = _hasReady();
+                if (dispatcher == 'EventService' && eventType == EventTypes.READY && hasReady) {
+                    _invokeLater(callback, {name: EventTypes.READY, dispatcher: 'EventService'});
+                    return;
+                }
+
                 if (!_eventMap.hasOwnProperty(eventType)) {
                     _eventMap[eventType] = {};
-                    if (_hasReady()) {
+                    if (hasReady) {
                         //这部分在初始化之前就注册的事件会在_registerAgain中再次注册
                         _appScope.$on(eventType, _handler);
                     } else {
@@ -159,13 +165,23 @@
                         if (angular.isString(callback)) {
                             cbs.splice(key, 1, fn);
                         }
-                        //需要强制将fn调用延迟到下一个调用堆栈中
-                        //否则如果fn的内部逻辑包含删除事件操作，会对此函数的执行造成影响
-                        $timeout(function() { fn(event, data); }, 0);
+                        _invokeLater(fn, event, data);
                     } else {
                         console.error("callback function [ " + callback + " ] not found!");
                     }
                 });
+            }
+
+            function _invokeLater(callback, event, data) {
+                //需要强制将callback调用延迟到下一个调用堆栈中
+                //否则如果callback的内部逻辑包含删除事件操作，会对此函数的执行造成影响
+                $timeout(function() {
+                    try {
+                        callback(event, data);
+                    } catch (e) {
+                        console.error('invoke event handler error: %s', e.stack);
+                    }
+                }, 0);
             }
 
             this.onEvents = function(eventInfos, callback, supressWarn) {
@@ -252,7 +268,7 @@
                 try {
                     return fn({name: eventType, dispatcher: scope.id}, data);
                 } catch (e) {
-                    console.error('call "' + eventType + '" handler failed! msg=' + e.message);
+                    console.error('invoke handler of event "%s" error: %s', eventType, e.stack);
                 }
                 return defaultReturnValue;
             }
@@ -276,122 +292,6 @@
                 }
             }
             _checkAppScope();
-
-            // function _walkDomNode(dom) {
-            //     //自动找出所有的dom节点上的“on.”开头的属性，并注册为事件
-            //     try {
-            //         var nodes = dom.childNodes;
-            //     } catch (e) {
-            //         return;
-            //     }
-            //     angular.forEach(nodes, function(subDom, key) {
-            //         var attrs
-            //         try {
-            //             attrs = subDom.attributes;
-            //         } catch (e) {
-            //             return;
-            //         }
-            //         angular.forEach(attrs, function(attr, idx) {
-            //             var key = attr.name;
-            //             var value = attr.value;
-            //             if (!value || !Utils.stringStartWith(key, 'on.')) {
-            //                 return;
-            //             }
-            //             var keys = key.split(".");
-            //             var type;
-            //             var name;
-            //             if (keys.length == 2) {
-            //                 //不区分发出事件发出者的情况
-            //                 type = Utils.camel2snake(keys[1]);
-            //                 _this.register('', type, value);
-            //             } else if (keys.length == 3) {
-            //                 //区分发出事件发出者的情况
-            //                 type = Utils.camel2snake(keys[2]);
-            //                 name = Utils.camel2snake(keys[1]);
-            //                 _this.register(name, type, value);
-            //             } else {
-            //                 console.log("invalid event config: " + key);
-            //             }
-            //             name = name || '<IGNORED>'
-            //             console.log('REGISTER EVENT: eventType=' + type + ', handler=' + value + ', tarngetName=' + name);
-            //         });
-            //         _walkDomNode(subDom);
-            //     });
-            // }
         }
     ]);
-
-    event.service('GroupEventService', ['EventService', function(EventService) {
-        var eventGroups = {};
-        this.config = function(groupConf) {
-            if (!groupConf || !groupConf.hasOwnProperty('groupDispatcher') || !groupConf.hasOwnProperty('max') || groupConf.max <= 0) {
-                console.error('无效的事件组配置。请使用类似这样的结构 ' +
-                    '\n{\n\tgroupDispatcher: "my_grp_disp",  //必选' +
-                    '\n\tpattern:         "_{{$index}}", //可选，默认值为 "_{{$index}}"' +
-                    '\n\tmin: 0, //可选，默认值为 0' +
-                    '\n\tmax: 10 //必选，且大于0\n}');
-                return;
-            }
-
-            var conf = {};
-            conf.groupDispatcher = groupConf.groupDispatcher;
-            conf.pattern = groupConf.hasOwnProperty('pattern') ? groupConf.pattern : '_{{$index}}';
-            conf.min = groupConf.hasOwnProperty('min') ? groupConf.max : 0;
-            conf.max = groupConf.max;
-            eventGroups[groupConf.groupDispatcher] = conf;
-        }
-
-        this.register = function(groupDispatcher, eventType, callback, index) {
-            _do('register', groupDispatcher, eventType, callback, index);
-        }
-
-        this.broadcast = function(groupDispatcher, eventType, data, index) {
-            _do('broadcast', groupDispatcher, eventType, data, index);
-        }
-
-        function _do(action, dispatcher, eventType, value, index) {
-            if (!eventGroups[dispatcher]) {
-                return _error();
-            }
-            index = index || [];
-            if (angular.isObject(index)) {
-                if (index.hasOwnProperty('except')) {
-                    _doExcept(action, dispatcher, eventType, value, index.except);
-                } else if (index.hasOwnProperty('with')) {
-                    _doWith(action, dispatcher, eventType, value, index.with);
-                }
-            } else {
-                _doExcept(action, dispatcher, eventType, value, index);
-            }
-        }
-
-        function _doExcept(action, dispatcher, eventType, value, exceptIndex) {
-            var conf = eventGroups[dispatcher];
-            exceptIndex = exceptIndex || [];
-            exceptIndex = angular.isArray(exceptIndex) ? exceptIndex : [exceptIndex];
-            for (var i = conf.min; i < conf.max; i++) {
-                if (exceptIndex.indexOf(i) != -1) {
-                    continue;
-                }
-                var disp = dispatcher + conf.pattern.replace('{{$index}}', i);
-                console.log(action + ' groupDispatcher=' + disp + ', eventType=' + eventType);
-                EventService[action](disp, eventType, value);
-            }
-        }
-
-        function _doWith(action, dispatcher, eventType, value, withIndex) {
-            var conf = eventGroups[dispatcher];
-            withIndex = withIndex || [];
-            withIndex = angular.isArray(withIndex) ? withIndex : [withIndex];
-            angular.forEach(withIndex, function(i, key) {
-                var disp = dispatcher + conf.pattern.replace('{{$index}}', i);
-                console.log(action + ' groupDispatcher=' + disp + ', eventType=' + eventType);
-                EventService[action](disp, eventType, value);
-            });
-        }
-
-        function _error() {
-            return console.error("未配置的 groupDispatcher，请先执行 GroupEventService.config 进行配置");
-        }
-    }]);
 });
