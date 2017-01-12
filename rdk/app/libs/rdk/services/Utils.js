@@ -185,6 +185,20 @@
             }
         };
 
+        this.container = function(arr, data) {
+            if(typeof data ==="object"){
+                for(var i=0,len=arr.length ; i<len ; i++)
+                {
+                    if(angular.equals(arr[i],data)){
+                        return i
+                    }
+                }
+                return -1
+            }else{
+                return arr.indexOf(data);
+            }
+        };
+
         this.stringStartWith = function(str, prefix) {
             if (prefix == null || prefix == "" || str.length == 0 || prefix.length > str.length) {
                 return false;
