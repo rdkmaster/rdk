@@ -42,7 +42,7 @@
 .rdk-table-module .search_icon.separate {
     left: 15px;
     top: 20px;
-    font-size: 10px;
+    font-size: 12px;
     width: 10px
 }
 .rdk-table-module .rdk-table {
@@ -84,7 +84,7 @@
 }
 .rdk-table-module .pagingLine .pagination{
     font-family: microsoft yahei regular;
-    font-size: 10px;
+    font-size: 12px;
 }
 .rdk-table-module .no-data{
     border-radius: 4px;
@@ -137,7 +137,7 @@
     width:50%;
 }
 .rdk-table-module .mouseShape{
-  cursor:url("../../img/edit.ico"),auto;
+    cursor:url("/rdk/app/libs/rdk/css/img/edit.cur"),auto;
 }
 .rdk-table-icon{
     display: inline-block;
