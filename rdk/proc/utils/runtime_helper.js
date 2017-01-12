@@ -126,7 +126,7 @@ var Host = {
     getIp: function () {
         return JSON.parse(rdk_runtime.getHostIps())
     },
-    getHostName:function () {
+    getHostName: function () {
         return rdk_runtime.getHostName()
     }
 }

@@ -56,6 +56,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   //获取主机名
   def getHostName: String = RdkUtil.getHostName
+
   //获取主机ips
   def getHostIps: String = RdkUtil.toJsonString(RdkUtil.getHostIps)
 
