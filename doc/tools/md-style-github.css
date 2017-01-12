@@ -288,4 +288,5 @@ img {
 .CodeMirror {
     font-family: Courier New;
     font-size: 13px;
+    height: 100%;
 }

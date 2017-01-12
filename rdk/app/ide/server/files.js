@@ -13,7 +13,7 @@
 			result.push({
 				file: filename,
 				content: file.readString(filename)
-			})
+			});
 		});
 		return result;
 	}

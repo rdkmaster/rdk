@@ -3,6 +3,7 @@ define(['rd.core', 'rd.controls.Editor'/*, 'rd.containers.Tab'*/], function() {
 var module = angular.module('rd.demo.Directives', ['rd.core', 'rd.controls.Editor']);
 
 module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function(DSService, Utils, $timeout) {
+    var defaultHeight = 300;
     var liStyle = 'display: inline-block;\
                    padding: 0 4px 0 4px;\
                    background-color: #fff;\
@@ -14,30 +15,32 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
     return {
         restrict: 'E',
         replace: true,
-        template: '\
-            <div>\
-            <ul ng-show="initDone()" style="margin-top:2px">\
-                <li ng-repeat="code in files track by code.file" on-finish-render\
-                    style="$liStyle">\
-                    <a href="javascript:void(0)" style="$aStyle" ng-click="selectFile($index)">{{code.file}}</a>\
-                </li>\
-                <li style="$liStyle">\
-                    <a href="javascript:void(0)" ng-click="selectFile(files.length)" style="$aStyle">运行</a>\
-                </li>\
-                <li style="$liStyle">\
-                    <a href="javascript:void(0)" ng-click="openExample()" style="$aStyle;">打开</a>\
-                </li>\
-                <!--li style="$liStyle">\
-                    <a href="javascript:alert(\'暂未支持\')" style="$aStyle">下载</a>\
-                </li-->\
-            </ul>\
-            <rdk_editor id="{{editorId}}_{{$index}}" ng-repeat="code in files track by code.file" style="margin-top:-15px"\
-                value="code.content" mode="{{code.mode}}" ng-show="selectedIndex==$index"\
-                change="editorChanged" initialized="editorReadyHandler">\
-            </rdk_editor>\
-            <iframe style="border:0;width:100%;height:300px;border:1px solid #ddd;margin-top:-16px;"\
-                 ng-show="selectedIndex==files.length"></iframe>\
-            </div>'.replace(/\$liStyle/g, liStyle).replace(/\$aStyle/g, aStyle),
+        template: ('\
+<div>\
+    <ul ng-show="initDone" style="margin-top:2px">\
+        <li ng-repeat="code in files track by code.file" on-finish-render style="$liStyle">\
+            <a href="javascript:void(0)" style="$aStyle" ng-click="selectFile($index)">{{code.file}}</a>\
+        </li>\
+        <li style="$liStyle">\
+            <a href="javascript:void(0)" ng-click="selectFile(files.length)" style="$aStyle">运行</a>\
+        </li>\
+        <li style="$liStyle">\
+            <a href="javascript:void(0)" ng-click="openExample()" style="$aStyle;">打开</a>\
+        </li>\
+        <!--li style="$liStyle">\
+            <a href="javascript:alert(\'暂未支持\')" style="$aStyle">下载</a>\
+        </li-->\
+    </ul>\
+    <rdk_editor id="{{editorId}}_{{$index}}" ng-repeat="code in files track by code.file" \
+        style="margin-top:-15px;height:' + defaultHeight + 'px"\
+        value="code.content" mode="{{code.mode}}" ng-show="selectedIndex==$index"\
+        change="editorChanged" initialized="editorReadyHandler">\
+    </rdk_editor>\
+    <iframe style="border:0;width:100%;height:' + defaultHeight + 'px;border:1px solid #ddd;margin-top:-16px;"\
+         ng-show="(selectedIndex==files.length || selectedIndex==-1) && initDone"></iframe>\
+    <span ng-if="!initDone">loading...</span>\
+</div>').replace(/\$liStyle/g, liStyle).replace(/\$aStyle/g, aStyle),
+
         scope: {
             example: '@?',
         },
@@ -48,14 +51,14 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
 
             scope.editorId = Utils.createUniqueId('editor_');
             scope.selectedIndex = -1;
+            scope.initDone = false;
             var evaluator = $(iEle.find('iframe')[0]);
             var exampleUrl = makeOriginExampleUrl(scope.example);
             var newUrl = undefined;
             var hasCopied = false;
 
             var dsListFiles = DSService.create(Utils.createUniqueId('live_demo_ds_'), {
-                url: '/rdk/service/app/ide/server/files',
-                resultHandler: handleCodeResult
+                url: '/rdk/service/app/ide/server/files'
             });
             var dsUploadFiles = DSService.create(Utils.createUniqueId('live_demo_ds_'), {
                 url: '/rdk/service/app/ide/server/files',
@@ -80,17 +83,53 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                         files: ['..' + newUrl]
                     }
                 });
-            })
+            });
+
+            $(window).bind('scroll', scrollHandler);
+
+            var timer;
+            function scrollHandler() {
+                if (!!timer || !visible()) {
+                    return;
+                }
+                timer = $timeout(function() {
+                    //如果在视线内抄过100ms，就去加载
+                    if (!visible()) {
+                        timer = undefined;
+                        return;
+                    }
+                    scope.selectFile(scope.files.length);
+                    timer = true;
+                    $(window).unbind('scroll', scrollHandler);
+                }, 100);
+            }
+
+            function visible() {
+                var top = $(iEle).offset().top;
+                var bottom = top + defaultHeight;
+
+                var viewportHeight = $(window).height();
+                var scrollTop = $(document).scrollTop();
+                var offset = 10;
+                var upLimit = scrollTop - offset;
+                var downLimit = scrollTop + viewportHeight + offset;
+                return (top >= upLimit && top <= downLimit) || (bottom >= upLimit && bottom <= downLimit);
+            }
 
             var changedFiles = {empty: true};
             scope.editorChanged = function(event) {
-                if (!scope.initDone()) {
+                var idx = event.dispatcher.substring(scope.editorId.length+1);
+                var fi = scope.files[idx];
+                if (!fi.status) {
                     return;
                 }
-                var idx = event.dispatcher.substring(scope.editorId.length+1);
+                if (fi.status == 'not_real_edit') {
+                    fi.status = 'real_edit';
+                    return;
+                }
+
                 $(iEle.find('li')[idx]).css('font-weight', 'bold');
                 changedFiles.empty = false;
-                var fi = scope.files[idx];
                 changedFiles[fi.file] = fi.content;
             }
 
@@ -106,15 +145,16 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                     $timeout(resetFontWeight, 0);
                     //run evaluate...
                     evaluate();
+                } else {
+                    var fi = scope.files[selectedIndex];
+                    if (!fi.status) {
+                        loadFileContent(fi.file);
+                    }
                 }
             }
 
             scope.openExample = function() {
                 window.open(newUrl ? newUrl : exampleUrl, '_blank');
-            }
-
-            scope.initDone = function() {
-                return scope.selectedIndex != -1;
             }
 
             scope.editorReadyHandler = function(event) {
@@ -174,42 +214,74 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
             }
 
             function listFiles(path) {
+                dsListFiles.resultHandler = handleListFilesResult;
                 dsListFiles.query({
                     p: {
                         param: {
                             //RDK进程运行的目录是工程所在目录的一级子目录，
                             //因此在web绝对路径前加上“..”就可以转为RDK进程能识别的相对路径
                             path: '..' + path,
-                            pattern: (/\.js$|\.html$|\.css$/i).toString(),
-                            recursive: true, needContent: true
+                            pattern: (/\.js$|\.html$|\.css$|\.json$/i).toString(),
+                            recursive: true, needContent: false
                         }
                     }
                 });
             }
 
-            function handleCodeResult(data) {
-                scope.files = JSON.parse(data.result);
-                if (scope.files.length == 0) {
+            function handleListFilesResult(data) {
+                var files = JSON.parse(data.result);
+                if (files.length == 0) {
                     exampleUrl = 'tools/demo-not-found.html?' + exampleUrl;
                     scope.selectFile(0);
                     return;
                 }
+
+                scope.files = [];
                 //这里加3是因为exampleUrl前需要加上“..”  -- 具体原因请查阅listFiles()的注释
                 //再去掉最后的斜杠，一共去掉3个字符
                 var len = exampleUrl.length + 2;
-                angular.forEach(scope.files, function(item, index) {
-                    var match = item.file.match(/\w+\.(\w*)$/);
+                angular.forEach(files, function(file) {
+                    var match = file.match(/\w+\.(\w*)$/);
+                    var fi = {content: 'loading...'};
                     if (match[1] == 'js') {
-                        item.mode = 'javascript';
+                        fi.mode = 'javascript';
                     } else if (match[1] == 'html') {
-                        item.mode = 'html';
+                        fi.mode = 'html';
                     } else if (match[1] == 'css') {
-                        item.mode = 'css';
+                        fi.mode = 'css';
+                    } else if (match[1] == 'json') {
+                        fi.mode = 'json';
                     } else {
                         console.warn('unknown mode: ' + match[1]);
                     }
-                    item.file = item.file.substring(len);
+                    fi.file = file.substring(len);
+                    scope.files.push(fi);
                 });
+            }
+
+            function loadFileContent(file) {
+                dsListFiles.resultHandler = handleContentResult;
+                dsListFiles.query({
+                    p: {
+                        param: {
+                            //RDK进程运行的目录是工程所在目录的一级子目录，
+                            //因此在web绝对路径前加上“..”就可以转为RDK进程能识别的相对路径
+                            path: '..' + exampleUrl + file,
+                            pattern: '', recursive: false, needContent: true
+                        }
+                    }
+                });
+            }
+
+            function handleContentResult(data) {
+                var fi = scope.files[scope.selectedIndex];
+                try {
+                    var data = JSON.parse(data.result);
+                    fi.content = data[0].content;
+                    fi.status = 'not_real_edit';
+                } catch(e) {
+                    fi.content = e.stack;
+                }
             }
 
             function handleUploadResult(data) {
@@ -240,7 +312,8 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
             }
 
             scope.$on('ngRepeatFinished', function() {
-                scope.selectFile(0);
+                scope.initDone = true;
+                scrollHandler();
             });
         }
     };

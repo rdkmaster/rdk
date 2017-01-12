@@ -455,6 +455,10 @@ var File = {
 var file = File;
 
 function _listFiles(files, path, pattern, recursive) {
+    if (path.isFile()) {
+        files.push(path.toString());
+        return;
+    }
     var javaFileArr = path.listFiles();
     if (!javaFileArr) {
         return;
