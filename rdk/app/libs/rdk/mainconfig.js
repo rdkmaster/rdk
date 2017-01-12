@@ -140,19 +140,10 @@ require.config({
             deps: ["angular","css!../angular/ngprogress"],
             exports: "ngProgress"
         },
-<<<<<<< HEAD
         "gsap":{
             deps: ["jquery"],
             exports: "gsap"
         }
-=======
-        // "codemirror": {
-        //     deps: ['../codemirror/lib/codemirror', 'css!../codemirror/lib/codemirror', '../codemirror/addon/edit/matchbrackets',
-        //             '../codemirror/mode/css/css', '../codemirror/mode/htmlmixed/htmlmixed',
-        //             '../codemirror/mode/javascript/javascript', '../codemirror/mode/xml/xml'],
-        //     exports: "codemirror"
-        // }
->>>>>>> simple-ide
     },
     map: {
         '*': {
