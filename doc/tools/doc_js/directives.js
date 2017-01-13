@@ -17,7 +17,7 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
         replace: true,
         template: ('\
 <div>\
-    <ul ng-show="initDone" style="margin-top:2px">\
+    <ul style="margin-top:2px">\
         <li ng-repeat="code in files track by code.file" on-finish-render style="$liStyle">\
             <a href="javascript:void(0)" style="$aStyle" ng-click="selectFile($index)">{{code.file}}</a>\
         </li>\
@@ -37,8 +37,7 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
         change="editorChanged" initialized="editorReadyHandler">\
     </rdk_editor>\
     <iframe style="border:0;width:100%;height:' + defaultHeight + 'px;border:1px solid #ddd;margin-top:-16px;"\
-         ng-show="(selectedIndex==files.length || selectedIndex==-1) && initDone"></iframe>\
-    <span ng-if="!initDone">loading...</span>\
+         ng-show="selectedIndex==files.length || selectedIndex==-1"></iframe>\
 </div>').replace(/\$liStyle/g, liStyle).replace(/\$aStyle/g, aStyle),
 
         scope: {
@@ -72,8 +71,6 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                 resultHandler: uploadFiles, addMethod: 'post'
             });
 
-            listFiles(exampleUrl);
-
             $(window).bind('beforeunload', function (e) {
                 if (!hasCopied) {
                     return;
@@ -85,7 +82,12 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                 });
             });
 
+            scrollHandler();
             $(window).bind('scroll', scrollHandler);
+
+            scope.$on('ngRepeatFinished', function() {
+                scope.initDone = true;
+            });
 
             var timer;
             function scrollHandler() {
@@ -98,9 +100,10 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                         timer = undefined;
                         return;
                     }
-                    scope.selectFile(scope.files.length);
                     timer = true;
                     $(window).unbind('scroll', scrollHandler);
+
+                    listFiles(exampleUrl);
                 }, 100);
             }
 
@@ -257,6 +260,10 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                     fi.file = file.substring(len);
                     scope.files.push(fi);
                 });
+
+                $timeout(function() {
+                    scope.selectFile(scope.files.length);
+                }, 1);
             }
 
             function loadFileContent(file) {
@@ -310,11 +317,6 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                 }
                 return url;
             }
-
-            scope.$on('ngRepeatFinished', function() {
-                scope.initDone = true;
-                scrollHandler();
-            });
         }
     };
 }]);
