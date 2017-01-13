@@ -3,22 +3,17 @@ require.config({
     waitSeconds: 30,
     paths: {
         "angular": "../angular/angular",
-        "angualr-translate": "../angular/angular-translate.min",
-        "angular-translate-static": "../angular/angular-translate-loader-static-files.min",
-        "ui.codemirror": "../angular/ui-codemirror",
         "ui.router": "../angular/angular-ui-router",
         "blockUI": "../angular/angular-block-ui.min",
         "angular-bootstrap-progressbar":"../angular/angular.bootstap.progressbar",
         "ngProgress":"../angular/ngprogress",
 
-        "codemirror-core": "../codemirror/codemirror",
-        "codemirror-css": "../codemirror/codemirror",
-        "codemirror-mode": "../codemirror/mode/javascript",
-
+        "gsap": "../animate/js/TweenMax.min",
         "ztree": "../ztree/jquery.ztree.all-3.5",
         "ztree-exhide": "../ztree/jquery.ztree.exhide-3.5.min",
         "echarts": "../echarts/echarts3.min",
         "echarts3": "../echarts/echarts3.min",
+        "echarts.dataTool": "../echarts/dataTool",
         "jquery": "../jquery/jquery-1.11.3.min",
         "jquery-ui": "../jquery-ui/js/jquery-ui.min",
         "bootstrap": "../bootstrap/js/bootstrap",
@@ -50,6 +45,7 @@ require.config({
         "rd.controls.Bullet": "../rdk/controls/Bullet",
         "rd.controls.Button":"../rdk/controls/Button",
         "rd.controls.ComboSelect": "../rdk/controls/ComboSelect",
+        "rd.controls.Editor": "../rdk/controls/Editor",
         "rd.controls.FoldSelector": "../rdk/controls/FoldSelector",
         "rd.controls.Graph": "../rdk/controls/Graph",
         "rd.controls.Input": "../rdk/controls/Input",
@@ -88,27 +84,17 @@ require.config({
         "angular": {
             exports: "angular"
         },
-
-        "angualr-translate" :{
-            deps : ['angular'],
-            exports: "angualr-translate"
-        },
-
-        "angular-translate-static":{
-            deps : ['angular','angualr-translate'],
-            exports: "angular-translate-static"
-        },
         "blockUI" :{
             deps : ['angular','css!../angular/angular-block-ui','jquery'],
             exports: "blockUI"
         },
-        "jquery-gesture":{
-            deps : ['jquery'],
-            exports: "jquery-gesture"
-        },
         "throttle-debounce":{
             deps : ['jquery'],
             exports: "throttle-debounce"
+        },
+        "jquery-gesture":{
+            deps : ['jquery'],
+            exports: "jquery-gesture"
         },
         "jquery-headfix" :{
             deps : ['throttle-debounce'],
@@ -118,6 +104,10 @@ require.config({
             deps : ['jquery'],
             exports: "jquery-freezeheader"
         },
+        "jquery-ui": {
+            deps: ["css!../jquery-ui/css/jquery-ui.min"],
+            exports: "jquery-ui"
+        },
         "ztree": {
             deps: ['css!../ztree/css/zTreeStyle/zTreeStyle'],
             exports: "ztree",
@@ -125,10 +115,6 @@ require.config({
         "ztree-exhide": {
             deps: ['css!../ztree/css/zTreeStyle/zTreeStyle','ztree'],
             exports: "ztree",
-        },
-        "jquery-ui": {
-            deps: ["css!../jquery-ui/css/jquery-ui.min"],
-            exports: "jquery-ui"
         },
         "bootstrap-datepicker": {
             deps: ["css!../bootstrap-datepicker/css/bootstrap-datetimepicker.min"],
@@ -153,6 +139,10 @@ require.config({
         "ngProgress":{
             deps: ["angular","css!../angular/ngprogress"],
             exports: "ngProgress"
+        },
+        "gsap":{
+            deps: ["jquery"],
+            exports: "gsap"
         }
     },
     map: {

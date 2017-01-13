@@ -1,0 +1,15 @@
+define('main', ['rd.controls.Input'], function() {
+
+    // 创建一个RDK的应用
+    var app = angular.module("rdk_app", ['rd.controls.Input']);
+    // 创建一个控制器
+    app.controller('myCtrl', ['$scope', function(scope) {
+            scope.age = 11;
+
+            scope.clickHandler = function(event, data){
+            	alert('填写的内容是 '+ data);
+            }
+        }
+
+    ]);
+});

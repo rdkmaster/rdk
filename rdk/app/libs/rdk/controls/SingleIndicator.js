@@ -66,7 +66,7 @@ function() {
                         (iEle.find("div")[1]).style.position = "relative";
                         (iEle.find("div")[1]).style.textAlign = "center";
                         (iEle.find("div")[0]).style.display = "table";
-                        (iEle.find("div")[0]).style.padding = " 10px ";
+                        (iEle.find("div")[0]).style.padding = " 10px 10px 10px 10px";
                         (iEle.find("div")[0]).style.textAlign = "center";
                         (iEle.find("div")[0]).style.margin = "0 auto";
                         (iEle.find("div")[2]).style.display = "black";
@@ -90,7 +90,7 @@ function() {
                         (iEle.find("div")[1]).style.height = "0";
                         (iEle.find("div")[1]).style.position = "absolute";
                         (iEle.find("div")[2]).style.display = "table";
-                        (iEle.find("div")[2]).style.padding = " 10px ";
+                        (iEle.find("div")[2]).style.padding = " 10px 10px 10px 10px";
                         (iEle.find("div")[2]).style.textAlign = "center";
                         (iEle.find("div")[2]).style.margin = "0 auto";
                         scope.$watch('pointTo', function(newVal, oldVal) {

@@ -1,9 +1,11 @@
 define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
     var inputApp = angular.module("rd.controls.Input", ['rd.core']);
-    inputApp.directive('rdkInput', ['Utils',function(Utils) {
+    inputApp.directive('rdkInput', ['Utils', 'EventService', 'EventTypes', function(Utils, EventService, EventTypes) {
         var scopeDefine={
             placeholder : "@?", 
-            readonly: "@?"
+            readonly: "@?",
+            icon: "=?",
+            click: "&?"
         };
         return {
             restrict: 'EA',
@@ -12,9 +14,9 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
             scope:scopeDefine,
             template: '<div>\
                      <input type="text" class="form-control" placeholder="{{placeholder}}">\
-                 <span class="glyphicon glyphicon-remove" \
+                 <i class="{{icon}}" \
                    style="position:absolute;right:10px;color:gray;font-size:14px"\
-                   ng-show="showDelete"></span>\
+                   ng-show="showDelete"></i>\
                  <div style="clear:both"></div>\
                 </div>',
             compile: function(tElement, tAttrs, transclude) {
@@ -23,6 +25,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
                     if (!ngModel) return;
                     var inputElement = iElement[0].children[0];
                     var iconElement = iElement[0].children[1];
+                    scope.icon = Utils.getValue(scope.icon, iAttrs.icon, "glyphicon glyphicon-remove");
 
                     //处理STYLE
                     $(inputElement).addClass($(iElement[0]).attr("class"));
@@ -67,7 +70,11 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
                         else scope.showDelete = false;
                     }
 
-                    iconElement.onclick = function() {
+                    iconElement.onclick = function(event) {
+                        EventService.raiseControlEvent(scope, EventTypes.CLICK, inputElement.value, defaultHandler);
+                    }
+
+                    function defaultHandler(){
                         inputElement.value = '';
                         updateModel('');
                     }

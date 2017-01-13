@@ -47,10 +47,15 @@
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
-    background: url("arrow.png") no-repeat scroll right center transparent !important; 
+    background: url("") no-repeat scroll right center transparent !important;
     margin-right:8px;
     height: 30px;
 }
+
+.rdk-time-module select::-ms-expand {
+    display: none;
+} 
+
 input, button, select, textarea {
     font-family:"微软雅黑";
 }
@@ -161,7 +166,7 @@ input, button, select, textarea {
 .time-content> span.granularity {
     font-family: "微软雅黑"
 }
-.dropdown-menu>li>a {
+.rdk-time-module .dropdown-menu>li>a {
     width: 80px;
 }
 /* 悬浮状态样式 */
@@ -234,7 +239,7 @@ div.datetimepicker th.switch {
     border-bottom-color: rgba(0,0,0,0.2);
 }
 .datetimepicker th.switch {
-    color:#333;
+    color:#666;
     line-height: 24px;
 }
 .datetimepicker table tr td.disabled, .datetimepicker table tr td.disabled:hover {

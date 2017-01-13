@@ -206,9 +206,6 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     $compile($('#'+scope.tabid))(scope.compileScope);
                     scope.contentDomStr = undefined;//一次新增后重置
                     EventService.raiseControlEvent(scope, EventTypes.ADD);
-                    $timeout(function(){
-                        EventService.broadcast('EventService', 'module_ready');
-                    }, 0);                   
                 }
 
                 function _getTabIndex(tabId) {
