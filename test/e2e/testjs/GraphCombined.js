@@ -17,6 +17,15 @@ describe('Graph combined',function(){
 		expect(info.get(1).getText()).toBe('最高气温');
 		expect(info.get(2).getText()).toBe('11');
 	});
+	
+	it('tab-graph tab1',function(){
+		//周三 平均气温 10.5
+		browser.actions().mouseMove(element(by.css(".tab canvas")),{x:275,y:135}).click().perform();
+		var info=element.all(by.css(".infos span"));
+		expect(info.get(0).getText()).toBe('周三');
+		expect(info.get(1).getText()).toBe('平均气温');
+		expect(info.get(2).getText()).toBe('10.5');
+	});
 	it('combo-graph',function(){
 		//打开combo 面板
 		element(by.css(".combo .form-control")).click();
@@ -27,14 +36,6 @@ describe('Graph combined',function(){
 		expect(info.get(1).getText()).toBe('最低气温');
 		expect(info.get(2).getText()).toBe('4');
 		element(by.css(".combo .form-control")).click();//关闭
-	});
-	it('tab-graph tab1',function(){
-		//周三 平均气温 10.5
-		browser.actions().mouseMove(element(by.css(".tab canvas")),{x:278,y:135}).click().perform();
-		var info=element.all(by.css(".infos span"));
-		expect(info.get(0).getText()).toBe('周三');
-		expect(info.get(1).getText()).toBe('平均气温');
-		expect(info.get(2).getText()).toBe('10.5');
 	});
 	it('panel-graph',function(){
 		//周四最高气温 18°

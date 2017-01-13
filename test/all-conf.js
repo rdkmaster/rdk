@@ -9,9 +9,9 @@ exports.config = {
         {
             browserName: 'firefox'
         }, 
-        {
-            browserName: 'chrome'
-        }
+        // {
+        //     browserName: 'chrome'
+        // }
     ],
 
     baseUrl: 'http://localhost:8080/',

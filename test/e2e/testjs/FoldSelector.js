@@ -1,5 +1,5 @@
 'use strict';
-describe("FoldSelector Test",function(){
+xdescribe("FoldSelector Test",function(){
     it("open test page",function(){
         browser.get('test/e2e/testee/foldselect/web/self.html');
         browser.sleep(2000);
