@@ -118,7 +118,7 @@ var Log = {
 }
 
 function getHostName() {
-    Log.warn("function deprecated,please use Host.getHostName()");
+    Log.warn("function deprecated,please use Host.getName()");
     return rdk_runtime.getHostName()
 }
 
@@ -126,7 +126,7 @@ var Host = {
     getIp: function () {
         return JSON.parse(rdk_runtime.getHostIps())
     },
-    getHostName: function () {
+    getName: function () {
         return rdk_runtime.getHostName()
     }
 }

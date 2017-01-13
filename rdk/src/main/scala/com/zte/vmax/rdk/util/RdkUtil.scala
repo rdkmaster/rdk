@@ -28,6 +28,7 @@ import jdk.nashorn.internal.runtime.Undefined
 import spray.http.{MultipartFormData, IllegalRequestException, StatusCodes}
 import scala.concurrent.{Future, Await}
 import scala.reflect.ClassTag
+import scala.sys.process.ProcessBuilder
 import scala.util.Try
 import akka.pattern.ask
 
@@ -391,25 +392,15 @@ object RdkUtil extends Logger {
   }
 
   def executeShell(cmd: String, option: String, args: ScriptObjectMirror): String = {
-    if (args.size > 2) {
-      var params: List[String] = (for (elem <- 2 to args.size - 1) yield args.getMember(elem.toString).toString).toList
-      option match {
-        case "0" => ShellExecutorImp.getReturnCode(cmd :: params) match {
-          case Left(returnCode) => returnCode.toString
-          case Right(error) => error
-        }
-        case "1" => ShellExecutorImp.getOutputLines(cmd :: params).getOrElse("")
-        case _ => s"unexpected option ${option}"
+    val params: List[String] = (for (elem <- 2 to args.size - 1) yield args.getMember(elem.toString).toString).toList
+    val pb: ProcessBuilder = if (params.isEmpty) cmd else cmd :: params
+    option match {
+      case "0" => ShellExecutorImp.getReturnCode(pb) match {
+        case Left(returnCode) => returnCode.toString
+        case Right(error) => error
       }
-    } else {
-      option match {
-        case "0" => ShellExecutorImp.getReturnCode(cmd) match {
-          case Left(returnCode) => returnCode.toString
-          case Right(error) => error
-        }
-        case "1" => ShellExecutorImp.getOutputLines(cmd).getOrElse("")
-        case _ => s"unexpected option: ${option}"
-      }
+      case "1" => ShellExecutorImp.getOutputLines(pb).getOrElse("")
+      case _ => s"unexpected option ${option}"
     }
   }
 }
