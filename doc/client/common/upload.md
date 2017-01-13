@@ -30,11 +30,11 @@ rdk 提供了可支持客户端文件上传的服务
 
 ## 上传文件例子
 这是一个简单的上传文件的例子：
-<live_demo example="/common/upload/basic" width="405"></live_demo>
+<live_demo example="common/upload/basic" width="405"></live_demo>
 
 ## 上传字符串例子
 这是一个简单的上传字符串的例子：
-<live_demo example="/common/upload/str" width="405"></live_demo>  
+<live_demo example="common/upload/str" width="405"></live_demo>  
 
 
     
