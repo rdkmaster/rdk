@@ -331,7 +331,7 @@ function _fixEXCELContent(ctent, exIndexes) {
     return excel;
 }
 
-var file = {
+var File = {
     loadProperty: function (file) {
         if (!file) {
             log("invalid file path:", file);
