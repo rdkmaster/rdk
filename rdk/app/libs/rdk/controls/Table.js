@@ -5,7 +5,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
     tableModule.run(["$templateCache", function($templateCache) {
         $templateCache.put("/src/templates/common.html",
             '<div class="rdk-table-module">\
-                <div ng-if="search && (noData!=undefined)" class="searchWapper" style="left:;top:">\
+                <div ng-if="search && (noData!=undefined)" class="searchWapper">\
                     <input type="text" class="form-control search" placeholder="{{searchPrompt}}" ng-focus="searchFocusHandler()"\
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
                     <i class="glyphicon glyphicon-search search_icon" ng-click="serverSearchHandler()" style="cursor:{{pagingType==\'server\' ? \'pointer\' : \'default\'}}"></i>\
