@@ -32,7 +32,7 @@
     right: 8px;
     top: 10px;
 }
-.rdk-table-module div.btn-group.search_select{
+.rdk-table-module .search_select{
     width: 250px;
     position: absolute;
     top: 34px;
@@ -42,7 +42,7 @@
 .rdk-table-module .search_icon.separate {
     left: 15px;
     top: 20px;
-    font-size: 10px;
+    font-size: 12px;
     width: 10px
 }
 .rdk-table-module .rdk-table {
@@ -76,19 +76,6 @@
 .rdk-table-module .pagination {
     margin: 0;
 }
-.rdk-table-module .pagination > li > a, .rdk-table-module .pagination > li > span{
-    padding: 0 5px;
-    margin: 10px 0 0;
-    border: none;
-}
-.rdk-table-module .pagination>li>a:hover,.rdk-table-module .pagination>li>span:hover,.rdk-table-module .pagination>li>a:focus,
-.rdk-table-module .pagination>li>span:focus {
-    background: none;
-}
-.rdk-table-module .spanRecords{
-    float:left;
-    margin: 10px 10px 1px 10px;
-}
 .rdk-table-module .count {
     font-size: 14px;
     float: right;
@@ -97,7 +84,7 @@
 }
 .rdk-table-module .pagingLine .pagination{
     font-family: microsoft yahei regular;
-    font-size: 10px;
+    font-size: 12px;
 }
 .rdk-table-module .no-data{
     border-radius: 4px;
@@ -157,14 +144,6 @@
     width: 8px;
     height: 14px;
     vertical-align: text-bottom;
-}
-.rdk-table-module .rdk-table-sort-down{
-    background: url("../../img/sort-down.png") no-repeat;
-    background-size:contain;
-}
-.rdk-table-module .rdk-table-sort-up{
-    background: url("../../img/sort-up.png") no-repeat;
-    background-size:contain;
 }
 .rdk-table-module .rdk-table-sort{
     background: url("../../img/sort.png") no-repeat;
@@ -240,23 +219,62 @@
     background-color: #666;
     color: #eee;
 }
-/*搜索下拉框*/
-.rdk-table-module div.search_select .dropdown-toggle.btn:focus{
-    border-color: #66afe9;
-    outline: 0 !important;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+
+/*翻页共有*/
+i{
+    font-style: normal;
 }
-.rdk-table-module div.search_select .dropdown-toggle.btn{
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background: #fff;
+i.regular_right{
+    color:#666;
 }
-.rdk-table-module .dropdown-menu>li>a:hover {
-    background: #eee;
-    color: #333;
+i.regular_left{
+    color:#333;
 }
-.rdk-table-module .dropdown-menu>li>a:focus{
-    background: #3ab1ea;
-    color: #fff;
+.rdk-table-module .pagination>li>a:hover, .rdk-table-module .pagination>li>span:hover, .rdk-table-module .pagination>li>a:focus,
+.rdk-table-module .pagination>li>span:focus {
+    background-color: #fff;
+    outline: none;
 }
+i.regular_right,i.regular_left{
+    line-height: 17px;
+}
+.rdk-table-module .pagination > li > a, .rdk-table-module .pagination > li > span {
+    border:none;
+    margin: 10px 0 0px;
+}
+.rdk-table-module .spanRecords {
+    float: left;
+    margin: 10px 10px 1px 10px;
+}
+.rdk-table-module .pagination {
+    margin: 0;
+}
+.rdk-table-module .disabledRecords{
+    font-size:12px;
+}
+
+/*翻页1*/
+
+.rdk-page-theme-short .rdk-table-module .pagination > li > span{
+    padding: 0 15px;
+}
+.rdk-page-theme-short .rdk-table-module .pagination > li > a{
+    padding: 0 5px;
+    font-size:12px;
+}
+
+/*翻页2*/
+
+
+/*********** 翻页样式 ***********/
+.rdk-page-theme-long .rdk-table-module .pagination > li > a{
+    padding: 0 6px;
+    font-size:12px;
+}
+.rdk-page-theme-long .rdk-table-module .pagination > li:nth-child(2) >a{
+    padding: 0 18px 0 4px;
+}
+.rdk-page-theme-long .rdk-table-module .pagination > li:nth-last-child(2) >a{
+    padding: 0 4px 0 18px;
+}
+
