@@ -32,7 +32,7 @@
     box-shadow: none;
     border: none;
     padding: 4px 22px 4px 8px;
-    width: 400px;
+    width: auto;
 }
 
 .rdk-combo-select-module .combo-content-icon{

@@ -353,7 +353,6 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area', 'rd.ser
             }
 
             function _provincesResultHandler(){
-                _convertToObject($vm.dsProvinces.data);
                 for(var i=_areaCount , len = $vm.dsProvinces.data.data.length ; i>len ; i--)
                 {
                     $vm.dsProvinces.data.data.push(_areaNull);

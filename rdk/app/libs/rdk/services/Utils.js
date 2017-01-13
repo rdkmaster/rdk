@@ -186,16 +186,15 @@
         };
 
         this.container = function(arr, data) {
-            if(typeof data ==="object"){
+            if(typeof data ==="object" && angular.isArray(arr)){
                 for(var i=0,len=arr.length ; i<len ; i++)
                 {
                     if(angular.equals(arr[i],data)){
                         return i
                     }
                 }
-                return -1
             }else{
-                return arr.indexOf(data);
+                return -1;
             }
         };
 
