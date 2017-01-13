@@ -7,7 +7,7 @@ require.config({
         "blockUI": "../angular/angular-block-ui.min",
         "angular-bootstrap-progressbar":"../angular/angular.bootstap.progressbar",
         "ngProgress":"../angular/ngprogress",
-        "adminlte":"../AdminLTE-2.3.7/js/app",
+        "adminlte":"../AdminLTE-2.3.7/js/app.min",
         "gsap": "../animate/js/TweenMax.min",
         "ztree": "../ztree/jquery.ztree.all-3.5",
         "ztree-exhide": "../ztree/jquery.ztree.exhide-3.5.min",
