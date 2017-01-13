@@ -4,16 +4,18 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
     tableModule.run(["$templateCache", function($templateCache) {
         $templateCache.put("/src/templates/common.html",
-            '<div class="rdk-table-module" ng-click="stopPropagation()">\
-                <div ng-if="search && (noData!=undefined)" class="searchWapper">\
+            '<div class="rdk-table-module">\
+                <div ng-if="search && (noData!=undefined)" class="searchWapper" style="left:;top:">\
                     <input type="text" class="form-control search" placeholder="{{searchPrompt}}" ng-focus="searchFocusHandler()"\
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
                     <i class="glyphicon glyphicon-search search_icon" ng-click="serverSearchHandler()" style="cursor:{{pagingType==\'server\' ? \'pointer\' : \'default\'}}"></i>\
-                    <select ng-show="($parent.globalSearch && searchFocus)?true:false" ng-model="val" ng-change="selectChangeHandler(val)"\
-                            ng-options="columnDef.data as columnDef.name for columnDef in columnDefs | realoption"\
-                            class="form-control search_select">\
-                        <option value="">{{i18n.searchAll}}</option>\
-                    </select>\
+                    <div ng-show="($parent.globalSearch && searchFocus)?true:false">\
+                        <select selectpicker="{{columnDefs.length}}" ng-model="val" ng-change="selectChangeHandler(val)"\
+                                ng-options="columnDef.data as columnDef.name for columnDef in columnDefs | realoption"\
+                                class="form-control search_select">\
+                            <option value="">{{i18n.searchAll}}</option>\
+                        </select>\
+                    </div>\
                </div>\
                <div class="wrapper" style="{{scrollStyle}}">\
                     <table class="rdk-table">\
@@ -509,7 +511,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         scope.searchFocusHandler = function(){
                             scope.searchFocus = true;
                         }
-
                         scope.$watch("data", function(newVal, oldVal) {
                             if($.isEmptyObject(newVal)) return;
                             scope.currentPage = 0;
@@ -824,6 +825,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             if(!$(searchWrapper).is(e.target) && $(searchWrapper).has(e.target).length === 0){
                                 scope.searchFocus = false;
                             }
+                            Utils.safeApply(scope);
                         })
                     }
 

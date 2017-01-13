@@ -72,7 +72,7 @@ define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector
         scope.Open=false;
         scope.dataClear = false;
         var selectedLists=[];
-        scope.myFunc = function(searchVal) {
+        scope.myFunc = function(searchVal) {//过滤
             var len = Data.data.length;
                 var rateArrs=[];
                 for(var i=0;i<len;i++){
@@ -99,7 +99,7 @@ define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector
             console.log(selected, context);
             var label='';
             var len = scope.items.length;
-            if(scope.basicMultiple===true) {
+            if(scope.basicMultiple===true) {//多选
                 selectedLists=[];
                 for(var j=0;j<len;j++){
                     selectedLists=selectedLists.concat(scope.items[j].highLight)
@@ -111,7 +111,7 @@ define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector
                         label += ',' + labelVal.label;
                     }
                 })
-            }else{
+            }else{//单选
                 label=selected[0].label;
                 selectedLists=[];
                 selectedLists.push(selected[0]);
@@ -125,6 +125,13 @@ define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector
             EventService.broadcast('comboID', EventTypes.CHANGE, label);
 
         };
+        EventService.register('comboID','clear', function(){
+            var len=scope.items.length;
+            selectedLists=[];
+            for(var i=0;i<len;i++){
+                scope.items[i].highLight=[];
+            }
+        });
         scope.$watch('combOpen',  function(newValue) {
             if(newValue===true){
                 $timeout(function(){

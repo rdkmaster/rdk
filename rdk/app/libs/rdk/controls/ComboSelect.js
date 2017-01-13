@@ -96,9 +96,9 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 scope.isSelect = false;
                 scope.appScope=Utils.findAppScope(scope);
                 scope.clear=function(){
-                    scope.inputStr='';
                     scope.clearShow = false;
-                    EventService.broadcast('dataClear','click');
+                    EventService.broadcast(scope.id,'clear',scope.inputStr);
+                    scope.inputStr='';
                 };
                 if(scope.id) {
                     EventService.register(scope.id, EventTypes.CHANGE, function(event, data) {
