@@ -7,7 +7,7 @@ require.config({
         "blockUI": "../angular/angular-block-ui.min",
         "angular-bootstrap-progressbar":"../angular/angular.bootstap.progressbar",
         "ngProgress":"../angular/ngprogress",
-
+        "adminlte":"../AdminLTE-2.3.7/js/app.min",
         "gsap": "../animate/js/TweenMax.min",
         "ztree": "../ztree/jquery.ztree.all-3.5",
         "ztree-exhide": "../ztree/jquery.ztree.exhide-3.5.min",
@@ -83,6 +83,10 @@ require.config({
     shim: {
         "angular": {
             exports: "angular"
+        },
+		"adminlte": {
+            deps: ["css!../AdminLTE-2.3.7/css/AdminLTE.min","css!../AdminLTE-2.3.7/css/skins/_all-skins.min","jquery"],
+            exports: "adminlte"
         },
         "blockUI" :{
             deps : ['angular','css!../angular/angular-block-ui','jquery'],
