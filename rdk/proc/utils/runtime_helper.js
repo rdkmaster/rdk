@@ -141,7 +141,7 @@ var Shell = {
     execute: function (cmd, option) {
         if (!_.isDefined(cmd)) {
             Log.error("param cmd required!");
-            return;
+            return undefined;
         } else if (!_.isDefined(option)) {
             Log.warn("param option miss,set 0!");
             arguments["1"] = 0;

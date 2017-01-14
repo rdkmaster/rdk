@@ -397,9 +397,9 @@ object RdkUtil extends Logger {
     option match {
       case "0" => ShellExecutorImp.getReturnCode(pb) match {
         case Left(returnCode) => returnCode.toString
-        case Right(error) => error
+        case Right(error) => "-1"
       }
-      case "1" => ShellExecutorImp.getOutputLines(pb).getOrElse("")
+      case "1" => ShellExecutorImp.getOutputLines(pb).getOrElse("null")
       case _ => s"unexpected option ${option}"
     }
   }
