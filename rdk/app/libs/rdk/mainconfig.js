@@ -93,6 +93,7 @@ require.config({
         "rd.services.NotifyService": "../rdk/services/NotifyService",
         "rd.services.MenuService": "../rdk/services/MenuService",
 
+        "rd.styles.IconFonts": "../iconFonts/fonts/iconfont",
         "rd.styles.Input": "../rdk/controls/assets/rdk-input-style",
         "rd.styles.PopupService": "../rdk/services/assets/rdk-PopupService-style",
         "rd.styles.Accordion": "../rdk/containers/assets/rdk-accordion-style",

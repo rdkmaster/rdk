@@ -1,7 +1,7 @@
 /**
  * Created by 00100630 on 2016/12/23.
  */
-define(['angular', 'jquery', 'rd.core',
+define(['angular', 'jquery', 'rd.core', 'css!rd.styles.IconFonts', 
   'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
   var nInputApp = angular.module("rd.controls.Icon", ['rd.core']);
   nInputApp.directive('rdkIcon', ['Utils', '$timeout','$compile', '$controller',
