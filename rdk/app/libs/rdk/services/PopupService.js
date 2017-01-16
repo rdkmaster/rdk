@@ -26,11 +26,12 @@
                 var myModal = Utils.isTrue(option.modal, true);
                 var myEffect = option.effect || 'scale';
                 var myShowTitle = Utils.isTrue(option.showTitle, true);
+                var myWidth = option.width || 500;
 
-                var myLeft = option.x ? ('left+'+option.x) : (option.left ? ('left+'+option.left) : undefined);
-                var myRight = option.right ? ('right-'+option.right) : undefined;
-                var myTop = option.y ? ('top+'+option.y) : (option.top ? ('top+'+option.top) : undefined);
-                var myBottom = option.bottom ? ('bottom-'+option.bottom) : undefined;
+                var myLeft = (option.x || (option.x ==0)) ? ('left+'+option.x) : (option.left ? ('left+'+option.left) : undefined);
+                var myRight = (option.right || (option.right ==0)) ? ('right-'+option.right) : undefined;
+                var myTop = (option.y || (option.y ==0)) ? ('top+'+option.y) : (option.top ? ('top+'+option.top) : undefined);
+                var myBottom = (option.bottom || (option.bottom ==0)) ? ('bottom-'+option.bottom) : undefined;
                 var positionX = (myLeft ? myLeft : myRight) || 'center';
                 var positionY = (myTop ? myTop : myBottom) || 'center';
                 var myX = myLeft ? 'left' : (myRight ? 'right' : undefined);
@@ -43,7 +44,7 @@
                     show: {effect: myEffect},  //blind,clip,drop,explode,fold,puff,slide,scale,size,pulsate
                     hide: {effect: myEffect},  
                     title: myTitle,
-                    width: 500,
+                    width: myWidth,
                     position: {
                         my: positionX+' '+positionY,
                         at: atX+' '+atY,
@@ -56,7 +57,13 @@
                     open: function(){
                         var $myIcon = $("<i></i>");
                         $myIcon.addClass(myIcon);
-                        myShowTitle ? ($(this).parent().children(".ui-dialog-titlebar").prepend($myIcon)) : ($(this).parent().children(".ui-dialog-titlebar").addClass('rdk-popupservice-hidetitlebar'));
+                        if(myShowTitle){
+                            ($(this).parent().children(".ui-dialog-titlebar").prepend($myIcon));
+                        }
+                        else{
+                            $(this).parent().children(".ui-dialog-titlebar-close").remove();
+                            $(this).parent().children(".ui-dialog-titlebar").addClass('rdk-popupservice-hidetitlebar');
+                        }                       
                     }
                 });
 

@@ -86,7 +86,7 @@ define(['rd.core'], function() {
 
                         scope.loadContext = {controller: controller, initData: initData};
 
-                        var reg = /^\s*<div\s+.*<\/div>\s*$/im;
+                        var reg = /<([a-z]+)(\s*\w*?\s*=\s*".+?")*(\s*?>[\s\S]*?(<\/\1>)+|\s*\/>)/i;
                         reg.test(url) ? _compileModule(url) : ($http.get(url, {timeout: timeout}).success(_compileModule).error(_loadError));
                     }
 

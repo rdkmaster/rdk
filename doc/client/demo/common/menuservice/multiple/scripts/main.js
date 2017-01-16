@@ -6,6 +6,8 @@ define('main', ['rd.services.MenuService'], function() {
 
     rdk.$ngModule.controller('rdk_ctrl', ['$scope', 'Utils', '$compile', 'MenuService', function(scope, Utils, $compile, MenuService) {
 
+        require(['css!/doc/client/demo/common/menuservice/multiple/scripts/css/main']);
+
         var moduleID;
         scope.menuConfig = [
             {label: 'menu item 1', event: 'menu_item_1'},
@@ -15,7 +17,6 @@ define('main', ['rd.services.MenuService'], function() {
                 {label: 'submenu item 2', event: 'sub_menu_item_2'}
             ]}
         ];
-
 
         scope.load = function(event){
 

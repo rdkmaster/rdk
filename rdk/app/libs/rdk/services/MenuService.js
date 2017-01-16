@@ -1,34 +1,39 @@
-define(['angular', 'rd.core', 'jquery', 'rd.controls.Module',
-  'css!rd.styles.FontAwesome',
-  'css!rd.styles.Bootstrap',
-  'css!rd.styles.MenuService'], function(){
-  var menuModule = angular.module('rd.services.MenuService', ['rd.controls.Module']);
-  rdk.$ngModule.controller('MenuController', ['$scope', function (scope){
-    scope.selectedMenu = ''
-    scope.showSubMenu = function (event) {
-      var $target = $(event.target);
-      var subMenu = $target.find('ul');
-      var tWidth = $target.outerWidth();
-      if(subMenu.length>0){
-        subMenu.css({
-          position: 'absolute',
-          left: tWidth,
-          top: 0
-        }).show();
+define(['angular', 'rd.core', 'jquery', 'rd.controls.Module', 'rd.services.PopupService', 'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap', 'css!rd.styles.MenuService'], 
+  function(){
+    var menuModule = angular.module('rd.services.MenuService', ['rd.controls.Module', 'rd.services.PopupService']);
+    menuModule.controller('MenuController', ['$scope', 'MenuService', 'PopupService', function (scope, MenuService, PopupService){    
+      
+      scope.selectedMenu = '';
+
+      scope.showSubMenu = function(event){
+        var $target = $(event.target);
+        var subMenu = $target.find('ul');     
+        var tWidth = $target.outerWidth();
+        if(subMenu.length>0){
+          $('.rdk_menu').parents('.ui-dialog-content').css({'overflow': 'visible'});
+          $('.rdk_menu').parents('.ui-dialog').css({'overflow': 'visible'});
+          subMenu.css({
+            'position': 'absolute',
+            'left': tWidth,
+            'top': 0,
+            'width': 150
+          }).show();
+        }
+      };
+
+      scope.selectItem = function(event, label){
+        event.stopPropagation();
+        scope.selectedMenu = label;
+        MenuService.destroyMenu();
+      };
+
+      scope.hideSubMenu = function(event){
+        $(event.target).find('ul').hide();
       }
-    };
-    scope.selectItem = function (event, label) {
-      event.stopPropagation();
-      scope.selectedMenu = label;
-      $('#Rdk_Menu').hide();
-    };
-    scope.hideSubMenu = function (event) {
-      $(event.target).find('ul').hide();
-    }
   }]);
-  menuModule.service('MenuService', ['$rootScope','EventService',
-    'EventTypes', 'Utils', '$compile', '$timeout',
-    function($rootScope, EventService, EventTypes, Utils, $compile, $timeout) {
+
+  menuModule.service('MenuService', ['$rootScope','EventService', 'EventTypes', 'Utils', '$compile', 'PopupService', '$timeout', 
+    function($rootScope, EventService, EventTypes, Utils, $compile, PopupService, $timeout) {
 
       /**
        *
@@ -46,80 +51,84 @@ define(['angular', 'rd.core', 'jquery', 'rd.controls.Module',
        一个dom节点/dom id：在给定的dom节点中心弹出菜单   ---> {relateTo: dom对象, hoffset: 1212, voffset: 1212}
        字符串常量mouse：在鼠标所在位置弹出菜单
        */
-      this.addMenu = function (menuConfig, position, event) {
 
+      this.destroyMenu = destroyMenu;
+
+      this.addMenu = function (menuConfig, position, event){
         if (position === 'mouse') {
-            if (!event) {
-              console.warn('您需要添加$event参数，否则将无法得到鼠标位置');
-              return;
-            }
-          } else if(typeof position === 'string'){
-            if (!document.getElementById(position)) {
-              console.warn('您的网页中没有该节点（节点id：'+position+'）');
-              return;
-            }
-          } else if(typeof position === 'object'){
-            if (position.relateTo &&
-              typeof position.hoffset !== 'undefined'&&
-              typeof position.voffset !== 'undefined' &&
-              !document.getElementById(position.relateTo)) {
+          if (!event) {
+            console.warn('您需要添加$event参数，否则将无法得到鼠标位置');
+            return;
+          }
+        } 
+        else if(typeof position === 'string'){
+          if (!document.getElementById(position)) {
+            console.warn('您的网页中没有该节点（节点id：'+position+'）');
+            return;
+          }
+        } 
+        else if(typeof position === 'object'){
+          if (position.relateTo &&
+            typeof position.hoffset !== 'undefined'&&
+            typeof position.voffset !== 'undefined' &&
+            !document.getElementById(position.relateTo)){
               console.warn('您的网页中没有该节点（节点id：'+position.relateTo+'）');
               return;
             }
           }
-        var menus = $('.rdk-module_menu'),i= 0;
-        for(i,mLen=menus.length; i< mLen; i++) {
-          destroyMenu(menus[i].id);
-        }
 
-        var  menuModuleID = Utils.createUniqueId('menu');
+        /*已有则destroy*/
+        destroyMenu();
 
-        var menuHTML = '<div class="rdk_menu" >\
+        /*弹出menu*/
+        position = adjustPosition(position, event);
+        var menuOption = {
+          'showTitle': false, 
+          'width': 150, 
+          'modal': false, 
+          'x': position.x, 
+          'y': position.y,
+          'controller': 'MenuController',
+          'id': 'menuID'
+        };
+        var menuHTML = 
+        '<div class="rdk_menu" >\
         <ul class="list-group" id="Rdk_Menu" > \
-          <li  class="list-group-item" ng-repeat="item in menuConfig" ng-mouseover="showSubMenu($event)" \
-          ng-mouseleave="hideSubMenu($event)" ng-click="selectItem($event, item.label)"\
-          ng-class="{true:\'active\', false:\'\'}[item.label === selectedMenu]">\
-            <span>{{item.label}}</span><i class="icon fa fa-chevron-right" ng-if="item.list !== undefined"></i>\
-            <ul ng-if="item.list !== undefined" class="rdk_sub_menu" >\
-            <li class="list-group-item" ng-click="selectItem($event, subItem.label)"\
-            ng-class="{true:\'active\', false:\'\'}[subItem.label === selectedMenu]"\
-            ng-repeat="subItem in item.list" ><span>{{subItem.label}}</span></li>\
-            </ul>\
-          </li> \
-          </ul></div>';
+        <li  class="list-group-item" ng-repeat="item in menuConfig" ng-mouseover="showSubMenu($event)" \
+        ng-mouseleave="hideSubMenu($event)" ng-click="selectItem($event, item.label)"\
+        ng-class="{true:\'active\', false:\'\'}[item.label === selectedMenu]">\
+        <span>{{item.label}}</span><i class="icon fa fa-chevron-right" ng-if="item.list !== undefined"></i>\
+        <ul ng-if="item.list !== undefined" class="rdk_sub_menu" >\
+        <li class="list-group-item" ng-click="selectItem($event, subItem.label)"\
+        ng-class="{true:\'active\', false:\'\'}[subItem.label === selectedMenu]"\
+        ng-repeat="subItem in item.list" ><span>{{subItem.label}}</span></li>\
+        </ul>\
+        </li> \
+        </ul>\
+        </div>';
+        menuModuleID = PopupService.popup(menuHTML, undefined, menuOption);
 
-        var moduleFractionStr = '<rdk_module class="rdk-module_menu"></rdk_module>';
-        var moduleHtml = $(moduleFractionStr);
+        /*空白处单击*/
+        $(document).mouseup(function(e){
+          var myMenu = document.querySelector('.rdk_menu');
+          if(!$(myMenu).is(e.target) && $(myMenu).has(e.target).length === 0){
+            destroyMenu();
+          }
+        })
 
-        moduleHtml.attr('id', menuModuleID);
-        $(document.body).append(moduleHtml);
-
-        $('#Rdk_Menu').hide();
-
-        $compile($('#'+menuModuleID))($rootScope.$$childHead);
-
-        rdk[menuModuleID].loadModule('', menuHTML, 'MenuController');
-
-        $(document.body).on('click', function(){
-          $('#Rdk_Menu').hide();
-        });
-
-        setTimeout(function(){
-          adjustPosition (position, event);
-        }, 200);
+        $timeout(function(){
+          $('.rdk_menu').parents('.ui-dialog').css({'border': 'none'});
+        }, 200)
 
         return menuModuleID;
-     }
-
-      function destroyMenu(menuModuleID) {
-        if (document.getElementById(menuModuleID)) {
-          $('#'+menuModuleID).remove();
-          rdk[menuModuleID].destroyModule();
-          delete rdk[menuModuleID];
-        }
       }
 
-      this.destroyMenu = destroyMenu
+      function destroyMenu(menuModuleID){
+        if(!menuModuleID){
+          menuModuleID = $('.rdk_menu').parents('.ui-dialog-content').attr('id');
+        }
+        PopupService.removePopup(menuModuleID);
+      }
 
       function adjustPosition (pos, event) {
         if (!pos) return;
@@ -147,14 +156,8 @@ define(['angular', 'rd.core', 'jquery', 'rd.controls.Module',
         if ((wOffy = bodyHeight - (pos.y + $('#Rdk_Menu').outerHeight())) < 0) {
           pos.y = bodyHeight - $('#Rdk_Menu').outerHeight();
         }
-        $('#Rdk_Menu').css({
-          position: 'absolute',
-          left: pos.x,
-          top: pos.y,
-          display: 'inline-block'
-        });
+        return pos;
       }
-
     }
   ]);
 });
