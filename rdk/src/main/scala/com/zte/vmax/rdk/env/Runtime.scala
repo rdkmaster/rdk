@@ -162,6 +162,10 @@ class Runtime(engine: ScriptEngine) extends Logger {
     CacheHelper.getAppCache.remove(key)
   }
 
+  def clearAppCache(key: String): Unit = {
+    CacheHelper.clearAppCache(key)
+  }
+
   def cachePut(key: String, data: AnyRef) = buffer(key, data)
 
   def cacheGet(key: String) = buffer(key)

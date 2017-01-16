@@ -46,4 +46,8 @@ object CacheHelper {
     }
   }
 
+  def clearAppCache(implicit appName: String): AppCache = {
+    map.remove(appName)
+  }
+
 }
