@@ -1,5 +1,5 @@
-define(['jquery', 'rd.core', 'css!rd.styles.Bootstrap'], function() {
-    var tooltipModule = angular.module('rd.attributes.Tooltip', ['rd.core']);
+define(['jquery', 'rd.core', 'css!rd.styles.Bootstrap', 'rd.controls.Module'], function() {
+    var tooltipModule = angular.module('rd.attributes.Tooltip', ['rd.core', 'rd.controls.Module']);
     tooltipModule.constant('PositionTypes', {
         TOP_LEFT: 'top-left',
         TOP: 'top',
@@ -39,18 +39,29 @@ define(['jquery', 'rd.core', 'css!rd.styles.Bootstrap'], function() {
                     return;
                 }
 
-
                 var tooltipID = Utils.createUniqueId('tooltip_'),
+                    contentID ='content-'+tooltipID,
+
                   tooltipHtml = '<div class="tooltip fade" role="tooltip" id="'+tooltipID+'"> \
                   <div class="tooltip-arrow"></div> \
-                  <div class="tooltip-inner">'+content+'</div> \
+                  <div class="tooltip-inner">\
+                    <rdk_module id="'+contentID+'" url="'+content+'" ready="moduleReady"></rdk_module>\
+                  </div> \
                 </div>',$tip;
 
                 $(tooltipHtml).insertAfter(element);
                 $tip = $('#'+tooltipID);
+                element.attr('id', 'element-'+tooltipID);
+
                 $compile($tip)($rootScope.$$childHead);
 
-                setPosition(element, $tip, placement);
+                scope.moduleReady = function(event, data){
+                    $tip = $('#'+data.split('-')[1]);
+                    element = $('#element-'+data.split('-')[1]);
+                    placement = element.attr('rdk_tooltip_placement');
+                    setPosition(element, $tip, placement);
+                }
+
                 initEvents(trigger, element, $tip);
             }
 

@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>rdk-tooltip -> basic</title>
+    <title>rdk-tooltip -> 富文本</title>
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
     -->
@@ -31,13 +31,10 @@
 
     <div class="content" style="width: 500px; margin: 50px;">
         <p style="color:red;">请点击输入框</p>
-        <p>
-            默认的tooltip触发方式为：focus，点击输入框将显示tooltip，点击输入框外面将隐藏tooltip
-            默认的placement：top
-        </p>
+        <p>富文本，提示内容中分别包含了一个h1、h2、h3</p>
         <div>
-            <input type="text" rdk_tooltip="{{content}}">
-        </div>
+            <label>富文本</label>
+            <input type="text" rdk_tooltip="{{content}}" rdk_tooltip_placement="right"></div>
     </div>
 </body>
 </html>
