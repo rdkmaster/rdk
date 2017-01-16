@@ -131,7 +131,7 @@ While 1
 		Case $lbDownload
 			_visitWeb('http://www.rdkapp.com/site/download/index.html')
 		Case $tab
-			If GUICtrlRead($tab) <> 3 Then ContinueLoop
+			If GUICtrlRead($tab) <> 2 Then ContinueLoop
 			If $versionFetched Then ContinueLoop
 			$versionFetched = True
 			GUICtrlSetData($lbVersion, '¡ð µ±Ç°°æ±¾ ' & _getVersion())
