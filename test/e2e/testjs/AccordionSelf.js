@@ -148,7 +148,7 @@ describe('Accordion Self Test',function(){
         browser.getCapabilities().then(function(capabilities){
             var browserName=capabilities.get('browserName');
             if(browserName==='chrome'){
-                expect(obj_div.get(1).getCssValue('top')).toBe('-41px');
+                expect(obj_div.get(1).getCssValue('top')).toBe('auto');
                 expect(obj_div.get(1).getCssValue('bottom')).toBe('44px');
             }
             if(browserName==='firefox'){
