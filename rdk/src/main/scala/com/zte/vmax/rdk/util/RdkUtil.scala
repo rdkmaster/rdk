@@ -395,11 +395,11 @@ object RdkUtil extends Logger {
     val params: List[String] = (for (elem <- 2 to args.size - 1) yield args.getMember(elem.toString).toString).toList
     val pb: ProcessBuilder = if (params.isEmpty) cmd else cmd :: params
     option match {
-      case "0" => ShellExecutorImp.getReturnCode(pb) match {
+      case "0" => ShellExecutor.getReturnCode(pb) match {
         case Left(returnCode) => returnCode.toString
         case Right(error) => "-1"
       }
-      case "1" => ShellExecutorImp.getOutputLines(pb).getOrElse("null")
+      case "1" => ShellExecutor.getOutputLines(pb).getOrElse("null")
       case _ => s"unexpected option ${option}"
     }
   }
