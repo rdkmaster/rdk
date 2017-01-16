@@ -11,6 +11,7 @@
 
 .notify .notify-header {
     color: #666;
+    height: 25px;
 }
 
 .notify .notify-header>h4{

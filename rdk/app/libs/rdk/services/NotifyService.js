@@ -107,9 +107,9 @@
                     temp = $(brothers[i]).css(pos);
                     if (temp) {
                         temp = getNumFromStr(temp);
-                        location[pos] = temp + 10;
+                        // location[pos] = temp + 10;
                         temp = getNumFromStr($(brothers[i]).css('top'));
-                        location.top = temp + 10;
+                        location.top = temp + 40;
                         break;
                     }
                 }
