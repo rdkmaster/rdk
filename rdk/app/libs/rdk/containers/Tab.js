@@ -57,7 +57,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                                     <div style="display: flex">\
                                         <div class="rdk-tabs-wrap">\
                                             <ul class="title" ng-style="{\'left\':-tabsOffset+\'px\'}">\
-                                                <li ng-style="getLiStyle($index)" ng-repeat="tab in tabs track by $index"  on-finish-render>\
+                                                <li ng-style="getLiStyle($index)" ng-repeat="tab in tabs"  on-finish-render>\
                                                     <a href="#{{tab.tabid}}" ng-click="tabClick($event, $index)" ng-mouseover="tabMouseOver($event)" ng-class="{\'selected\':currentSelectedIndex == $index}" rdk-tabtitle-parser>\
                                                       {{tab.title}}\
                                                     </a>\
@@ -104,6 +104,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 var tabsDom = element[0].querySelector(".title");
                 var tabItems=null;
                 var offsetMax=0; //最大偏移量
+                var pageIndexMax=0;
                 var totalOffsetWidth=0;
                 var _hasDirecChanged=false; //到最大偏移量时移动方向是否变化
                 var _pageIndex=0;
@@ -114,6 +115,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                         return scope.tabsOffset==0
                     }else{
                         return scope.tabsOffset==offsetMax
+                            || (offsetMax >= scope.tabsOffset-3 && offsetMax <=  scope.tabsOffset+3);
                     }
                 };
 
@@ -140,6 +142,9 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     scope.tabsOffset += _calculOffset(_pageIndex,_step,_hasDirecChanged)*direction;
                     if((direction>0 && !_hasDirecChanged) || (direction<0 && _hasDirecChanged)){
                         _pageIndex++;
+                        if(_pageIndex >= pageIndexMax){
+                            _pageIndex = pageIndexMax-1
+                        }
                     }
                     //边界
                     if(scope.tabsOffset>=offsetMax){
@@ -168,6 +173,29 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     return offsetLeft;
                 }
 
+                function _calculRemoveOffset(index){
+                    var offsetLeft=0;
+                    for(var i= 0 , len=tabItems.length ; i<len ; i++)
+                    {
+                        if(index === i)
+                        {
+                            offsetLeft=tabItems[i].offsetWidth;
+                        }
+                    }
+                    return -offsetLeft;
+                }
+                function _destroyTabChangeOffset(index){
+                    if(scope.tabsOffset>0){
+                        scope.tabsOffset +=_calculRemoveOffset(index);
+                    }
+                    if(scope.tabsOffset>=offsetMax){
+                        scope.tabsOffset=offsetMax
+                    }
+                    else if(scope.tabsOffset<=0){
+                        scope.tabsOffset=0
+                    }
+                }
+
                 $timeout(function() {
                     var tabs = $(element[0].querySelector(".content")).children("div");
                     for (var i = 0; i < tabs.length; i++) {
@@ -176,7 +204,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                         var title = tabs[i].getAttribute('title');
                         var closable = tabs[i].getAttribute('show_close_button');
                         _prepareTabs(tabs[i], title, tabid, closable);
-                    };
+                    }
                 }, 0);
 
                 function _setTabsWidth(){  //设置tabs容器宽度,判断显示移动按钮
@@ -187,10 +215,14 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                         total+=tabItems[i].offsetWidth;
                     }
                     totalOffsetWidth=total;
-                    tabsDom.style.width=totalOffsetWidth+10+"px"; //10校验误差
-                    offsetMax=totalOffsetWidth+10-tabsDom.parentNode.offsetWidth;
-                    if(offsetMax>0){
+                    tabsDom.style.width = totalOffsetWidth+10+"px"; //10校验误差
+                    offsetMax = totalOffsetWidth+10-tabsDom.parentNode.offsetWidth;
+                    pageIndexMax = Math.ceil(len/_step);
+                    if(offsetMax > 0){
                         scope.removeableTabs=true;
+                    }else{
+                        scope.tabsOffset=0;
+                        scope.removeableTabs=false;
                     }
                 }
                 //重新计算最大偏移量
@@ -199,6 +231,9 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                         offsetMax=totalOffsetWidth+10-tabsDom.parentNode.offsetWidth;
                     },0)
                 });
+                scope.$watch("tabs", function(newVal, oldVal) {
+                    _setTabsWidth();
+                },true);
                 var off = scope.$on('ngRepeatFinished', function(){
                     _appendTab();
                     _updateDraggable();
@@ -209,7 +244,6 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                         var tabs = $(dom).tabs();
                         tabs.tabs("refresh"); 
                     }, true);
-
                 });
 
                 scope.getLiStyle = function(index){
@@ -346,9 +380,9 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     _destroy4ControllerScope(index);
                     var panelId = scope.tabs[index].tabid;
                     scope.tabs.splice(index, 1);
+                    scope.removeableTabs && _destroyTabChangeOffset(index);
                     $("#" + panelId).remove();
                     _activeTab(index);
-
                 }
 
                 scope.closeTab = function(index){
