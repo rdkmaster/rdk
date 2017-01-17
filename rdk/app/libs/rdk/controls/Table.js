@@ -793,7 +793,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                     function _beforeFixHeader(){
                         if($(element).has($('.sticky-wrap')).length != 0){
-                            $(element[0].querySelector('.sticky-enabled')).unwrap();
+                             $(element[0].querySelector('.sticky-enabled')).unwrap();
                         }
                         if($(element).has($('.sticky-thead')).length != 0){
                             $(element[0].querySelector('.sticky-thead')).remove();
