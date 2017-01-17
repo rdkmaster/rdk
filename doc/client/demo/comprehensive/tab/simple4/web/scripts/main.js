@@ -8,11 +8,11 @@ define('main', ['rd.controls.Table','rd.controls.Button'], function() {
             "columnDefs" :[
                 {
                     title : "详单",
-                    render : '<img src="images/tab.png">'
+                    render : '<i class="iconfont iconfont-tab"></i>'
                 },
                 {
                     title : "得分趋势",
-                    render : '<img src="images/line.png">'
+                    render : '<i class="iconfont iconfont-line"></i>'
                 }
             ]
         }

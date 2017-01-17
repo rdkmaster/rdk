@@ -15,7 +15,7 @@ describe('Accordion Combined Test',function(){
     });
     it('展开accordion能够展现panel 并且获取内容',function(){
         element(by.css(".panel .rdk-accordion-module .theme")).click();
-        var panel_content=element(by.css(".panel .rdk-accordion-module .panel-content p"));
+        var panel_content=element(by.css(".panel .rdk-accordion-module .rdk-panel-content p"));
         expect(panel_content.getText()).toBe("这是一段文字");
     });
     it("展开accordion可以展现scroller内部图片点击播放",function(){

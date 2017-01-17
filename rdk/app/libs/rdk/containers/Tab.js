@@ -150,7 +150,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 }
 
                 function _domFractionHandler(source){
-                    var reg = /^\s*<div\s+.*<\/div>\s*$/im;
+                    var reg = /<([a-z]+)(\s*\w*?\s*=\s*".+?")*(\s*?>[\s\S]*?(<\/\1>)+|\s*\/>)/i;
                     var domFractionStr;
                     reg.test(source) ? (domFractionStr = source) : (domFractionStr = Utils.getHtmlFraction(source));
 
@@ -206,9 +206,6 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     $compile($('#'+scope.tabid))(scope.compileScope);
                     scope.contentDomStr = undefined;//一次新增后重置
                     EventService.raiseControlEvent(scope, EventTypes.ADD);
-                    $timeout(function(){
-                        EventService.broadcast('EventService', 'module_ready');
-                    }, 0);                   
                 }
 
                 function _getTabIndex(tabId) {

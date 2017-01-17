@@ -1,15 +1,12 @@
 'use strict';
 describe('Table Self Test',function(){
-    it('open the page should be tested',function(){
-        //make sure the page open
+    // 搜索框输入
+    it('只显示一条结果HZ',function(){
         browser.get('test/e2e/testee/table/web/self.html')
         .then(function(){
             browser.sleep(3000);
         });
-    });
-    // 搜索框输入
-    it('只显示一条结果HZ',function(){
-        //直接输入搜索显示结果
+        // 直接输入搜索显示结果
         var lines=element.all(by.css(".demo1 .sticky-wrap .sticky-enabled tbody tr"));
         var showPage=element(by.css(".demo1 .pagingLine>ul li .regularRecords"));
         expect(lines.count()).toBe(4);
@@ -18,6 +15,15 @@ describe('Table Self Test',function(){
         expect(showPage.getText()).toBe("1/1");
         //搜索去掉
         element(by.css(".demo1 .searchWapper input")).clear();
+    });
+    //逐行点击
+    it('表格逐行点击获取数据',function(){
+    	var lines=element.all(by.css(".demo1 .sticky-wrap .sticky-enabled tbody tr"));
+    	expect(lines.count()).toBe(4);
+    	lines.each(function(item,index){
+    		item.click();
+            browser.sleep(200);
+    	});
     });
     it('先翻页，再输入hz结果还是显示一条在当前页HZ',function(){
         //先翻页在搜索结果显示
@@ -96,15 +102,6 @@ describe('Table Self Test',function(){
         firstPage.click();
         expect(showPage.getText()).toBe("1/3");
         expect(lines.count()).toBe(4);
-    });
-    //逐行点击
-    it('表格逐行点击获取数据',function(){
-    	var lines=element.all(by.css(".demo1 .sticky-wrap .sticky-enabled tbody tr"));
-    	expect(lines.count()).toBe(4);
-        var showInfo=element.all(by.css(".section_2 span")).get(0);
-    	lines.each(function(item,index){
-    		item.click();
-    	});
     });
    
     it('设置页面显示条数4条变10条',function(){

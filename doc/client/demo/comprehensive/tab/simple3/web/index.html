@@ -7,6 +7,7 @@
     <!--
       这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
     -->
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/iconFonts/fonts/iconfont.css">
     <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
     <script src="scripts/main.js"></script>
     <link rel="stylesheet" type="text/css" href="css/simple_tab1.css">
@@ -21,11 +22,11 @@
 </head>
 
 <body ng-controller='myCtrl'>
-    <div class="hao images_down">
+    <div class="hao images_down rdk-page-theme-long">
         <span class="title">全城通信</span>
-        <span class='images_right' ng-click="images()" ></span>
         <rdk_table ds="ds_table" ds-url="/doc/client/demo/controls/table/mockdata/table_paging" ds_query_if="ready" page-size="6" setting="setting" page_number ="4" search="true" searchprompt="搜索一下">
         </rdk_table>
+        <button class='images_right iconfont' ng-click="images()" ng-class="{true:'iconfont-left',false:'iconfont-right'}[iconCondition]"></button>
     </div>
 </body>
 </html>

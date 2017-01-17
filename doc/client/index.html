@@ -30,6 +30,11 @@
                     icon: "../img/manual.png",
                 },
                 {
+                    label: "弹出功能",
+                    doc: "client/common/popupservice/PopupService.md",
+                    icon: "../img/manual.png",
+                }, 
+                {
                     label: "对话框&模态框",
                     doc: "client/common/modal/rdk_modal.md",
                     icon: "../img/manual.png",
@@ -40,10 +45,20 @@
                     icon: "../img/manual.png",
                 },
                 {
-                    label: "弹出服务",
-                    doc: "client/common/popupservice/PopupService.md",
+                    label: "上传文件",
+                    doc: "client/common/upload.md",
                     icon: "../img/manual.png",
-                },               
+                },
+                {
+                    label: "主题",
+                    doc: "client/common/theme/rdk_theme.md",
+                    icon: "../img/manual.png",
+                },
+                {
+                    label: "自研符号图标",
+                    url: "/rdk/app/libs/iconFonts/fonts/iconfont.html",
+                    icon: "../img/link.png",
+                },
                 {
                     label: "其他",
                     doc: "client/common/other.md",
@@ -400,23 +415,26 @@ iframe {
     position:fixed;
     left:0px; 
     top:0px;
-    padding-top: 40px;
+    padding-top: 20px;
     overflow-y: auto;
     overflow-x: hidden;
 }
 .location {
     font-size: 16px;
     color: #000;
-    padding: 12px 0 8px 18px;
+    padding: 12px 12px 6px 12px;
+    margin-top: -8px;
     position: fixed;
     text-decoration: none;
+    background-color: #fff;
+    width: 175px;
 }
 .location:hover {
     text-decoration: underline;
 }
 </style>
 
-<body ng-controller="rdk_ctrl" class="rdk_main">
+<body ng-controller="rdk_ctrl" class="rdk-loading">
     <div id="tree">
         <rdk_tree data="menuCfg" node_field="module" click="clickHandler">
         </rdk_tree>

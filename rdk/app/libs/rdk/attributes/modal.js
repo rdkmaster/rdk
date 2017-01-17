@@ -146,7 +146,7 @@ define(['rd.services.EventService', 'jquery','jquery-ui'], function() {
             /*计算真正的绝对位置*/
             var topSize = relaTopSize + coordinateY;
             var leftSize = relaLeftSize + coordinateX;
-            var zIndex = coordinateZ || (10000 + $(".ui-dialog").length);//多级弹出
+            var zIndex = coordinateZ || (9000 + $(".ui-dialog").length);//多级弹出
 
             jqDom.parent().css({ 
                         'position': 'fixed',

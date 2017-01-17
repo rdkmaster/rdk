@@ -28,8 +28,91 @@ public class FileHelper extends AbstractAppLoggable {
         logger = AppLogger.getLogger("FileHelper", appName);
     }
 
-    public String readXml(String path) {
+    // return code:
+    // 0: good
+    // 1: bad arguments
+    // 2: source not exist
+    // 3: sub file/dir not exist
+    // 4: unable to create target file
+    // 5: unable to write target file
+    // todo: 文件夹的层次过深，会导致这个函数堆栈溢出
+    // force: 未启用
+    public int copy(String cpFrom, String cpTo, boolean recursive, boolean force) {
+        File in = new File(fixPath(cpFrom, appName));
+        File out = new File(fixPath(cpTo, appName));
+        if (!in.exists()) {
+            logger.error("copy file, code 2, detail: source not exist");
+            return 2;
+        }
+        if (!out.exists()) {
+            out.mkdirs();
+        }
 
+        File[] files;
+        if (in.isFile()) {
+            files = new File[1];
+            files[0] = in;
+        } else {
+            files = in.listFiles();
+        }
+
+        FileInputStream fin = null;
+        FileOutputStream fout = null;
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].isFile()) {
+                try {
+                    fin = new FileInputStream(files[i]);
+                } catch (FileNotFoundException e) {
+                    logger.error("copy file, code 3, detail: " + e.toString());
+                    return 3;
+                }
+
+                try {
+                    fout = new FileOutputStream(new File(cpTo + "/" + files[i].getName()));
+                } catch (FileNotFoundException e) {
+                    logger.error("copy file, code 4, detail: " + e.toString());
+                    try {
+                        fin.close();
+                    } catch (Exception ee) {
+                        logger.error("close fin error, detail: " + ee.toString());
+                    }
+                    return 4;
+                }
+
+                int c;
+                byte[] b = new byte[1024*5];
+                try {
+                    while ((c = fin.read(b)) != -1) {
+                        fout.write(b, 0, c);
+                    }
+                    
+                    fout.flush();
+                } catch (IOException e) {
+                    logger.error("copy file, code 5, detail: " + e.toString());
+                    return 5;
+                } finally {
+                    try {
+                        fin.close();
+                    } catch (Exception e) {
+                        logger.error("close fin error, detail: " + e.toString());
+                    }
+                    try {
+                        fout.close();
+                    } catch (Exception e) {
+                        logger.error("close fout error, detail: " + e.toString());
+                    }
+                }
+            } else if (recursive) {
+                int ret = copy(cpFrom + "/" + files[i].getName(), cpTo + "/" + files[i].getName(), recursive, force);
+                if (ret != 0) {
+                    return ret;
+                }
+            }
+        }
+        return 0;
+    }
+
+    public String readString(String path) {
         path = fixPath(path, appName);
 
         BufferedReader in = null;
@@ -43,7 +126,7 @@ public class FileHelper extends AbstractAppLoggable {
         StringBuilder sb = new StringBuilder();
         try {
             while ((s = in.readLine()) != null) {
-                sb.append(s);
+                sb.append(s).append('\n');
             }
         } catch (Exception e) {
             logger.error("read stream error," + e);
@@ -56,14 +139,18 @@ public class FileHelper extends AbstractAppLoggable {
             }
         }
 
+        return sb.toString();
+    }
+
+    public String readXml(String path) {
+        String content = readString(path);
         JSONObject jsonObj = null;
         try {
-            jsonObj = XML.toJSONObject(sb.toString());
+            jsonObj = XML.toJSONObject(content);
         } catch (Exception e) {
             logger.error("transform json object error," + e);
             return "";
         }
-
 
         try {
             return jsonObj.toString();

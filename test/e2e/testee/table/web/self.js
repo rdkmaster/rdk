@@ -163,7 +163,7 @@ scope.setting={
       {
         targets:3,
         class:"red",
-        editable:true
+        editable:false
       }
   ]
 };

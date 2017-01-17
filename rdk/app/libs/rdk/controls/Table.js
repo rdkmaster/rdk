@@ -4,22 +4,24 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
     tableModule.run(["$templateCache", function($templateCache) {
         $templateCache.put("/src/templates/common.html",
-            '<div class="rdk-table-module" ng-click="stopPropagation()">\
+            '<div class="rdk-table-module">\
                 <div ng-if="search && (noData!=undefined)" class="searchWapper">\
                     <input type="text" class="form-control search" placeholder="{{searchPrompt}}" ng-focus="searchFocusHandler()"\
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
                     <i class="glyphicon glyphicon-search search_icon" ng-click="serverSearchHandler()" style="cursor:{{pagingType==\'server\' ? \'pointer\' : \'default\'}}"></i>\
-                    <select ng-show="($parent.globalSearch && searchFocus)?true:false" ng-model="val" ng-change="selectChangeHandler(val)"\
-                            ng-options="columnDef.data as columnDef.name for columnDef in columnDefs | realoption"\
-                            class="form-control search_select">\
-                        <option value="">{{i18n.searchAll}}</option>\
-                    </select>\
+                    <div ng-show="($parent.globalSearch && searchFocus)?true:false">\
+                        <select selectpicker="{{columnDefs.length}}" ng-model="val" ng-change="selectChangeHandler(val)"\
+                                ng-options="columnDef.data as columnDef.name for columnDef in columnDefs | realoption"\
+                                class="form-control search_select">\
+                            <option value="">{{i18n.searchAll}}</option>\
+                        </select>\
+                    </div>\
                </div>\
                <div class="wrapper" style="{{scrollStyle}}">\
                     <table class="rdk-table">\
                         <thead ng-if="!noHeader">\
                             <tr>\
-                                <th ng-if="addCheckBox"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
+                                <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
                                 <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinished" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)">\
                                     {{columnDef.title}}\
                                     <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
@@ -35,7 +37,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 </td>\
                             </tr>\
                              <tr ng-if="noData">\
-                                <td colspan="{{columnDefs.length}}">\
+                                <td colspan="{{addCheckBox?(visibleColumnDefsCount+1):visibleColumnDefsCount}}">\
                                     <div class="no-data"></div>\
                                 </td>\
                             </tr>\
@@ -248,6 +250,27 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
         });
 
     tableModule.directive('rdkTable', ['DataSourceService', 'EventService', 'EventTypes', 'Utils', '$timeout', '$compile',function(DataSourceService, EventService, EventTypes, Utils, $timeout,$compile) {
+        var scopeDefine={
+            id: '@',
+            setting: '=?',
+            data: '=?',
+            selectedIndex: '=?',
+            pageSize: "@?",
+            pagingType: "@?",
+            pagingVisible: "@?",
+            lang: "@?",
+            searchPrompt: "@?",
+            searchPattern: '@?',
+            proxyDs: "@?",
+            pageNumber: "@?",
+            addCheckBox: "=?",
+            defaultConditionProcessor: "&?",
+            floatableHeader: "@?",
+            change: "&?",
+            select: "&?",
+            doubleClick: "&?",
+            check: "&?",
+        };
         return {
             restrict: 'EA',
             replace: true,
@@ -361,29 +384,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     ds.query(finallyCondition, { "directQuery": true, "supressEvent": false });
                 }
             }],
-            scope: {
-                id: '@',
-                setting: '=?',
-                data: '=?',
-                selectedIndex: '=?',
-                pageSize: "@?",
-                pagingType: "@?",
-                pagingVisible: "@?",
-                lang: "@?",
-                searchPrompt: "@?",
-                searchPattern: '@?',
-                proxyDs: "@?",
-                pageNumber: "@?",
-                addCheckBox: "=?",
-                defaultConditionProcessor: "&?",
-                floatableHeader: "@?",
-                change: "&?",
-                select: "&?",
-                doubleClick: "&?",
-                check: "&?",
-            },
+            scope: scopeDefine,
             compile: function(tElement, tAttributes) {
-
+                Utils.checkEventHandlers(tAttributes,scopeDefine);
                 if (!tAttributes.hasOwnProperty('proxyDs')) {
                     tAttributes.proxyDs = tAttributes.ds;
                 }
@@ -485,6 +488,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             scope.floatableHeader = Utils.isTrue(scope.floatableHeader, true);
                         }, 0);
 
+                        _searchGapClick();//只要有search
+
                         //默认国际化
                         if (typeof(attrs.lang) === 'undefined') { //今后会废弃lang属性
                             scope.lang = 'zh-CN';
@@ -506,7 +511,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         scope.searchFocusHandler = function(){
                             scope.searchFocus = true;
                         }
-
                         scope.$watch("data", function(newVal, oldVal) {
                             if($.isEmptyObject(newVal)) return;
                             scope.currentPage = 0;
@@ -765,7 +769,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                             scope.refreshSingleCurrentPage();
                             _serverSortResponse();//后端排序，刷新后的响应
-                            _searchGapClick();
                             scope.$watch("selectedIndex", function(newVal, oldVal) { //根据selectedIndex高亮显示
                                 if (newVal != undefined) {
                                     if (scope.selectedIndex != undefined) {
@@ -822,6 +825,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             if(!$(searchWrapper).is(e.target) && $(searchWrapper).has(e.target).length === 0){
                                 scope.searchFocus = false;
                             }
+                            Utils.safeApply(scope);
                         })
                     }
 
@@ -1021,7 +1025,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             $(element.find("tbody")).touchEvent("swipe", "touch", _move);
                         }
                         _produceColumnDefs();
-
+                        _produceVisibleColumnDefsCount();
                         _pageCtrlShow();
                     }
                     //END RELOADLOCALDATA
@@ -1046,6 +1050,16 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         if (stickyWrapElement.scrollLeft > scrollWidth) {
                             stickyWrapElement.scrollLeft = scrollWidth;
                         }
+                    }
+
+                    function _produceVisibleColumnDefsCount(){
+                        var count = scope.columnDefs.length;
+                        angular.forEach(scope.columnDefs, function(columnDef){
+                            if(columnDef.visible == false){
+                                count--;
+                            }
+                        });
+                        scope.visibleColumnDefsCount = count;
                     }
 
                     function _produceColumnDefs() {

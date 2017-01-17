@@ -4,6 +4,29 @@
         var _this = this;
 
         var _ready = false;
+        //优先检测属性回调事件是否正确
+        this.checkEventHandlers=function(attrs,scopeDefine){
+            if(attrs['supressWarning'] !== undefined){
+                return;
+            }
+            for(var prop in scopeDefine) {
+                if (!scopeDefine[prop]) {
+                    continue;
+                }
+                if (!scopeDefine[prop].match(/&/)) {
+                    continue;
+                }
+                if (!attrs[prop]) {
+                    continue;
+                }
+                if (!attrs[prop].match(/\(.*\)/)) {
+                    continue;
+                }
+                console.warn('事件属性 %s 的值 %s 不该有圆括号！关于此警告请查看 ' +
+                    'http://10.9.233.35:8080/doc/#client/common/supress_warning.md', prop, attrs[prop]);
+            }
+        };
+
         var _onReadyCallbackList = [];
 
         this.swipeOnReadyCallbacks = function() {
@@ -148,7 +171,9 @@
         this.getValue = function(scopeValue, attrValue, defaultValue) {
             return angular.isDefined(scopeValue) ? scopeValue : angular.isDefined(attrValue) ? attrValue : defaultValue;
         }
-
+        this.isIE = function(){
+            return !!window.ActiveXObject || "ActiveXObject" in window
+        }
         this.safeApply = function(scope, fn) {
             var phase = scope.$root.$$phase;
             if (phase == '$apply' || phase == '$digest') {
@@ -360,4 +385,37 @@
         //组件上下级交互时，停止传播的标志
         this.STOP_PROPAGATIOIN = '__stop_propagation_145812__'
     }]);
+
+    utilsModule
+        .directive('onFinishRender', ['$timeout',function($timeout) {
+            return {
+                restrict: 'A',
+                link: function(scope, element, attr) {
+                    if (scope.$last === true) {
+                        $timeout(function() {
+                            if(!attr.onFinishRender){ //事件默认为ngRepeatFinished
+                                scope.$emit('ngRepeatFinished');
+                            }else{
+                                scope.$emit(attr.onFinishRender);
+                            }
+                        }, 0);
+                    }
+                }
+            }
+        }])
+        .directive('selectpicker', ['$timeout', function($timeout) {
+            return {
+                restrict: 'A',
+                priority: 1000,
+                link: function(scope, elem, attrs) {
+                    $timeout(function() {
+                        var size = attrs.selectpicker && parseInt(attrs.selectpicker) || 5;
+                        $(elem).selectpicker({
+                            style: 'btn',
+                            size:size
+                        });
+                    }, 0);
+                }
+            };
+        }])
 });

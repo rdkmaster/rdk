@@ -302,7 +302,7 @@ function _fixEXCELContent(ctent,exIndexes){
     return excel;
 }
 
-var file = {
+var File = {
     loadProperty:function(file){
         if (!file) {
             log("invalid file path:", file);
@@ -311,6 +311,15 @@ var file = {
         file = file.toString();
         log("reading property file:",file);
         return rdk_runtime.fileHelper().loadProperty(file);
+    },
+    readString: function(path) {
+        if (!path) {
+            log("invalid file path:", path);
+            return undefined;
+        }
+        path = path.toString();
+        log("reading file as string:", path);
+        return rdk_runtime.fileHelper().readString(path);
     },
     readXml: function (path) {
         if (!path) {
@@ -388,18 +397,43 @@ var file = {
         }
         return b;
     },
-    list: function(path, pattern) {
+    delete: function(path) {
+        var jFile = new java.File(path);
+        if (jFile.isDirectory()) {
+            var files = file.list(path, true);
+            _.each(files.reverse(), function(item) {
+                log('deleting sub file/dir:', item);
+                new java.File(item).delete();
+            });
+        }
+        var result = jFile.delete();
+        log('remove file or dir:', path, 'result:', result);
+        return result;
+    },
+    list: function(path, recursive, pattern) {
         path = java.FileHelper.fixPath(path, rdk_runtime.application());
-        log('listing dir: ' + path);
-
-        var file = new java.File(path);
-        var javaFileArr = !!pattern ? file.listFiles(new java.RegFileFilter(pattern)) : file.listFiles();
+        log('listing dir: ' + path + ', recursive: ' + (!!recursive));
 
         var files = [];
-        for (var i = 0; i < javaFileArr.length; i++) {
-            files.push(javaFileArr[i].toString());
+        var ptn = '';
+        if (!!pattern) {
+            try {
+                ptn = eval(pattern);
+            } catch (e) {
+                Log.warn('invalid filter pattern:', pattern, ', try this "/\\\\w+\\\\.html/i"');
+                ptn = '';
+            }
         }
+        _listFiles(files, new java.File(path), ptn, !!recursive);
+
         return files;
+    },
+    copy: function(cpFrom, cpTo, recursive, force) {
+        if (!_.isString(cpFrom) || !_.isString(cpTo)) {
+            Log.error("copy file, code 1, detail: bad arguments");
+            return 1;
+        }
+        return rdk_runtime.fileHelper().copy(cpFrom, cpTo, !!recursive, !!force);
     },
     get web() {
         return function(){
@@ -417,15 +451,62 @@ var file = {
         }
     }
 };
+//向下兼容
+var file = File;
+
+function _listFiles(files, path, pattern, recursive) {
+    if (path.isFile()) {
+        files.push(path.toString());
+        return;
+    }
+    var javaFileArr = path.listFiles();
+    if (!javaFileArr) {
+        return;
+    }
+    for (var i = 0; i < javaFileArr.length; i++) {
+        var file = javaFileArr[i];
+        var fileStr = file.toString();
+        if (fileStr.match(pattern)) {
+            files.push(fileStr);
+        }
+        if (recursive && file.isDirectory()) {
+            _listFiles(files, file, pattern, recursive);
+        }
+    }
+}
 
 ///////////////////////////////////////////////////////////////////////
 
 var rest = {
-    get: function(url, option) {
-        if(null==option){
-            option=undefined;
+    get: function (url, option) {
+        if (null == option) {
+            option = undefined;
         }
-        return rdk_runtime.restHelper().get(encodeURI(url),option);
+        return rdk_runtime.restHelper().get(encodeURI(url), option);
+    },
+    post: function (url, param, option) {
+        if (_.isUndefined(param)) {
+            param = "";
+        } else if (_.isObject(param)) {
+            param = JSON.stringify(param);
+        }
+        return rdk_runtime.restHelper().post(url, param, option);
+    },
+    delete: function (url, param, option) {
+        if (_.isUndefined(param)) {
+            param = "";
+        } else if (_.isObject(param)) {
+            param = JSON.stringify(param);
+        }
+        return rdk_runtime.restHelper().delete(url, param, option);
+    },
+    put: function (url, param, option) {
+        if (_.isUndefined(param)) {
+            param = "";
+        } else if (_.isObject(param)) {
+            param = JSON.stringify(param);
+        }
+        return rdk_runtime.restHelper().put(url, param, option);
     }
 }
 

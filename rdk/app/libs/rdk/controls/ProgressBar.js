@@ -1,15 +1,16 @@
 define(['angular','rd.core', 'ngProgress', 'rd.services.Utils', 'jquery', 'angular-bootstrap-progressbar', 'css!rd.styles.ProgressBar', 'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
     var progressApp = angular.module("rd.controls.ProgressBar", ['rd.core', 'ui.bootstrap.progressbar', 'ngProgress']);
     progressApp.directive('rdkProgressbar', ['Utils', '$compile', function(Utils, $compile) {
+        var scopeDefine={
+            value: "=",
+            max: "=?",
+            type: "=?",
+            animate: "@?",
+        };
         return {
             restrict: 'E',
             replace: true,
-            scope: {
-                value: "=",
-                max: "=?",
-                type: "=?",
-                animate: "@?",
-            },
+            scope: scopeDefine,
             transclude: true,
             terminal: true,
             template: '<div class="rdk-progressbar-module">\
@@ -18,6 +19,7 @@ define(['angular','rd.core', 'ngProgress', 'rd.services.Utils', 'jquery', 'angul
                          </uib-progressbar>\
                       </div>',
             compile: function(tElement, tAttrs, transclude) {
+                Utils.checkEventHandlers(tAttrs,scopeDefine);
                 return function(scope, element, attrs, ctrl, transclude) {
                     scope.max = Utils.getValue(scope.max, tAttrs.max, 100);
                     scope.type = Utils.getValue(scope.type, tAttrs.type, "success");

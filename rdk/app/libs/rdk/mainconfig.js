@@ -3,35 +3,18 @@ require.config({
     waitSeconds: 30,
     paths: {
         "angular": "../angular/angular",
-        "angualr-translate": "../angular/angular-translate.min",
-        "angular-translate-static": "../angular/angular-translate-loader-static-files.min",
-        "ui.codemirror": "../angular/ui-codemirror",
         "ui.router": "../angular/angular-ui-router",
         "blockUI": "../angular/angular-block-ui.min",
         "angular-bootstrap-progressbar":"../angular/angular.bootstap.progressbar",
         "ngProgress":"../angular/ngprogress",
-
-        "codemirror-core": "../codemirror/codemirror",
-        "codemirror-css": "../codemirror/codemirror",
-        "codemirror-mode": "../codemirror/mode/config",
-        "codemirror-mode-javascript": "../codemirror/mode/javascript",
-        "codemirror-mode-xml": "../codemirror/mode/xml",
-        "codemirror-fold": "../codemirror/fold/config",
-        "codemirror-fold-code": "../codemirror/fold/foldcode",
-        "codemirror-fold-gutter": "../codemirror/fold/foldgutter",
-        "codemirror-fold-css": "../codemirror/fold/foldgutter",
-        "codemirror-fold-brace": "../codemirror/fold/brace-fold",
-        "codemirror-fold-comment": "../codemirror/fold/comment-fold",
-        "codemirror-fold-indent": "../codemirror/fold/indent-fold",
-        "codemirror-fold-xml": "../codemirror/fold/xml-fold",
-        "codemirror-fold-markdown": "../codemirror/fold/markdown-fold",
-        "codemirror-selection-line": "../codemirror/selection/active-line",
-
+        "adminlte":"../AdminLTE-2.3.7/js/app.min",
+        "gsap": "../animate/js/TweenMax.min",
         "ztree": "../ztree/jquery.ztree.all-3.5",
         "ztree-exhide": "../ztree/jquery.ztree.exhide-3.5.min",
         "echarts": "../echarts/echarts3.min",
         "echarts3": "../echarts/echarts3.min",
-        "jquery": "../jquery/jquery-1.11.3.min",
+        "echarts.dataTool": "../echarts/dataTool",
+        "jquery": "../jquery/jquery-2.2.3.min",
         "jquery-ui": "../jquery-ui/js/jquery-ui.min",
         "bootstrap": "../bootstrap/js/bootstrap",
         "bootstrap-datepicker": "../bootstrap-datepicker/js/bootstrap-datetimepicker",
@@ -48,6 +31,7 @@ require.config({
         "rd.attributes.modal": "../rdk/attributes/modal",
         "rd.attributes.Scroll": "../rdk/attributes/Scroll",
         "rd.attributes.Tooltip": "../rdk/attributes/Tooltip",
+        "rd.attributes.theme": "../rdk/attributes/theme",
 
         "rd.containers.Accordion": "../rdk/containers/Accordion",
         "rd.containers.Accordions": "../rdk/containers/Accordions",
@@ -62,6 +46,7 @@ require.config({
         "rd.controls.Bullet": "../rdk/controls/Bullet",
         "rd.controls.Button":"../rdk/controls/Button",
         "rd.controls.ComboSelect": "../rdk/controls/ComboSelect",
+        "rd.controls.Editor": "../rdk/controls/Editor",
         "rd.controls.FoldSelector": "../rdk/controls/FoldSelector",
         "rd.controls.Graph": "../rdk/controls/Graph",
         "rd.controls.Input": "../rdk/controls/Input",
@@ -69,7 +54,7 @@ require.config({
         "rd.controls.Module": "../rdk/controls/Module",
         "rd.controls.PieGraph": "../rdk/controls/PieGraph",
         "rd.controls.ProgressBar": "../rdk/controls/ProgressBar",
-        "rd.controls.ScoreIndicator": "../rdk/controls/ScoreIndicator", 
+        "rd.controls.ScoreIndicator": "../rdk/controls/ScoreIndicator",
         "rd.controls.Scroller": "../rdk/controls/Scroller",
         "rd.controls.Selector": "../rdk/controls/Selector",
         "rd.controls.SingleIndicator": "../rdk/controls/SingleIndicator",
@@ -78,7 +63,6 @@ require.config({
         "rd.controls.TabSelector": "../rdk/controls/TabSelector",
         "rd.controls.Time": "../rdk/controls/Time",
         "rd.controls.Tree": "../rdk/controls/Tree",
-        "rd.controls.Editor": "../rdk/controls/Editor",
         "rd.controls.NumericInput": "../rdk/controls/NumericInput",
         "rd.controls.Switch": "../rdk/controls/Switch",
         "rd.controls.Icon": "../rdk/controls/Icon",
@@ -94,35 +78,16 @@ require.config({
         "rd.services.MenuService": "../rdk/services/MenuService",
 
         "rd.styles.IconFonts": "../iconFonts/fonts/iconfont",
-        "rd.styles.Input": "../rdk/controls/assets/rdk-input-style",
-        "rd.styles.PopupService": "../rdk/services/assets/rdk-PopupService-style",
-        "rd.styles.Accordion": "../rdk/containers/assets/rdk-accordion-style",
-        "rd.styles.Alert": "../rdk/services/assets/rdk-Alert-style",
-        "rd.styles.Area": "../rdk/controls/assets/rdk-area-style",
-        "rd.styles.BasicSelector": "../rdk/controls/assets/rdk-basicselector-style",
         "rd.styles.Bootstrap": "../bootstrap/css/bootstrap.min",
-        "rd.styles.Bullet": "../rdk/controls/assets/rdk-bullet-style",
-        "rd.styles.Button": "../rdk/controls/assets/rdk-button-style",
-        "rd.styles.ButtonGroup": "../rdk/containers/assets/rdk-buttongroup-separator-style",
-        "rd.styles.ComboSelect": "../rdk/controls/assets/rdk-comboselect-style",
         "rd.styles.FontAwesome": "../font-awesome-4.3.0/css/font-awesome",
-        "rd.styles.Graph": "../rdk/controls/assets/rdk-graph-style",
-        "rd.styles.Panel": "../rdk/containers/assets/rdk-panel-style",
-        "rd.styles.ProgressBar": "../rdk/controls/assets/rdk-progressbar-style",
-        "rd.styles.ScoreIndicator": "../rdk/controls/assets/rdk-scoreindicator-style",
-        "rd.styles.Scroller": "../rdk/controls/assets/rdk-scroller-style",
-        "rd.styles.Scroll": "../rdk/attributes/assets/perfect-scrollbar-style",
-        "rd.styles.SingleIndicator": "../rdk/controls/assets/rdk-singleindicator-style",
-        "rd.styles.Tab": "../rdk/containers/assets/rdk-tab-style",
-        "rd.styles.Table": "../rdk/controls/assets/rdk-table-style",
-        "rd.styles.TabSelect": "../rdk/controls/assets/rdk-tabselect-style",
-        "rd.styles.TabSelector": "../rdk/controls/assets/rdk-tabselector-style",
-        "rd.styles.Time": "../rdk/controls/assets/rdk-time-style",
-        "rd.styles.Tree": "../rdk/controls/assets/rdk-tree-style",
+
         "rd.styles.Switch": "../rdk/controls/assets/rdk-switch-style",
         "rd.styles.NumericInput": "../rdk/controls/assets/rdk-numericinput-style",
         "rd.styles.NotifyService": "../rdk/services/assets/rd-NotifyService-style",
         "rd.styles.MenuService": "../rdk/services/assets/rd-MenuService-style",
+
+        "rdk.theme.zte-blue":"css/theme/zte-blue/zte-blue",
+        "rdk.theme.default":"css/theme/default/default",
 
         "rd.modules.i18n": "../rdk/modules/I18nModule",
     },
@@ -131,36 +96,34 @@ require.config({
         "angular": {
             exports: "angular"
         },
-
-        "angualr-translate" :{
-            deps : ['angular'],
-            exports: "angualr-translate"
-        },
-
-        "angular-translate-static":{
-           deps : ['angular','angualr-translate'],
-            exports: "angular-translate-static" 
+		"adminlte": {
+            deps: ["css!../AdminLTE-2.3.7/css/AdminLTE.min","css!../AdminLTE-2.3.7/css/skins/_all-skins.min","jquery"],
+            exports: "adminlte"
         },
         "blockUI" :{
             deps : ['angular','css!../angular/angular-block-ui','jquery'],
             exports: "blockUI"
         },
-        "jquery-gesture":{
-            deps : ['jquery'],
-            exports: "jquery-gesture"
-        },
         "throttle-debounce":{
             deps : ['jquery'],
             exports: "throttle-debounce"
         },
-       "jquery-headfix" :{
+        "jquery-gesture":{
+            deps : ['jquery'],
+            exports: "jquery-gesture"
+        },
+        "jquery-headfix" :{
             deps : ['throttle-debounce'],
             exports: "jquery-headfix"
-       },
-       "jquery-freezeheader" :{
+        },
+        "jquery-freezeheader" :{
             deps : ['jquery'],
             exports: "jquery-freezeheader"
-       },
+        },
+        "jquery-ui": {
+            deps: ["css!../jquery-ui/css/jquery-ui.min"],
+            exports: "jquery-ui"
+        },
         "ztree": {
             deps: ['css!../ztree/css/zTreeStyle/zTreeStyle'],
             exports: "ztree",
@@ -168,10 +131,6 @@ require.config({
         "ztree-exhide": {
             deps: ['css!../ztree/css/zTreeStyle/zTreeStyle','ztree'],
             exports: "ztree",
-        },
-        "jquery-ui": {
-            deps: ["css!../jquery-ui/css/jquery-ui.min"],
-            exports: "jquery-ui"
         },
         "bootstrap-datepicker": {
             deps: ["css!../bootstrap-datepicker/css/bootstrap-datetimepicker.min"],
@@ -190,12 +149,16 @@ require.config({
             exports: "bootstrap"
         },
         "angular-bootstrap-progressbar":{
-             deps: ["angular"],
-             exports: "angular-bootstrap-progressbar"
+            deps: ["angular"],
+            exports: "angular-bootstrap-progressbar"
         },
         "ngProgress":{
             deps: ["angular","css!../angular/ngprogress"],
             exports: "ngProgress"
+        },
+        "gsap":{
+            deps: ["jquery"],
+            exports: "gsap"
         }
     },
     map: {
@@ -205,4 +168,3 @@ require.config({
         }
     }
 });
-

@@ -2,18 +2,18 @@ define( ['rd.core', 'css!rd.styles.SingleIndicator', 'css!rd.styles.FontAwesome'
 function() {
         var SingleIndicatorApp = angular.module("rd.controls.SingleIndicator", ['rd.core']);
         SingleIndicatorApp.directive('rdkSingleIndicator', ['Utils',function(Utils) {
+            var scopeDefine={
+                value:'=?',
+                pointTo:'=?',
+                label:'=?',
+                labelPosition:'@?',
+                icon : '@?',
+                formatter:'@?'
+            };
             return {
                 restrict: 'E',
                 replace: true,
-                scope:
-                {
-                  value:'=?',
-                  pointTo:'=?',
-                  label:'=?',
-                  labelPosition:'@?',
-                  icon : '@?',
-                  formatter:'@?'
-                },
+                scope:scopeDefine,
                 template: '<div  class="rdk-single-indicator">\
                               <div class="single-indicator-title  position_{{labelPosition}} single-indicator-bc">\
                                   <i class="{{icon}} single-indicator-icon"></i>\
@@ -28,6 +28,7 @@ function() {
                 controller: ['$scope', function(scope) {
                 }],
                 compile: function(tEle, tAttrs) {
+                    Utils.checkEventHandlers(tAttrs,scopeDefine);
                     Utils.bindDataSource(tAttrs, 'value');
                     return {
                         post: _link
@@ -65,7 +66,7 @@ function() {
                         (iEle.find("div")[1]).style.position = "relative";
                         (iEle.find("div")[1]).style.textAlign = "center";
                         (iEle.find("div")[0]).style.display = "table";
-                        (iEle.find("div")[0]).style.padding = " 10px ";
+                        (iEle.find("div")[0]).style.padding = " 10px 10px 10px 10px";
                         (iEle.find("div")[0]).style.textAlign = "center";
                         (iEle.find("div")[0]).style.margin = "0 auto";
                         (iEle.find("div")[2]).style.display = "black";
@@ -89,7 +90,7 @@ function() {
                         (iEle.find("div")[1]).style.height = "0";
                         (iEle.find("div")[1]).style.position = "absolute";
                         (iEle.find("div")[2]).style.display = "table";
-                        (iEle.find("div")[2]).style.padding = " 10px ";
+                        (iEle.find("div")[2]).style.padding = " 10px 10px 10px 10px";
                         (iEle.find("div")[2]).style.textAlign = "center";
                         (iEle.find("div")[2]).style.margin = "0 auto";
                         scope.$watch('pointTo', function(newVal, oldVal) {

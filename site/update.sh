@@ -11,23 +11,23 @@ nodePid=`ps gaux | grep tools/node-linux-x64 | grep -v grep | awk '{print $2}'`
 if [ ! "$nodePid" = "" ]; then
 	kill -9 $nodePid
 fi
-git checkout -- ../rdk/proc/conf/rdk.cfg >> $basepath/update.log
-git checkout -- ../tools/http_server/config.json >> $basepath/update.log
-git checkout master >> $basepath/update.log
-git pull >> $basepath/update.log
+git checkout rdk/proc/conf/rdk.cfg         >> $basepath/update.log
+git checkout tools/http_server/config.json >> $basepath/update.log
+git checkout master                        >> $basepath/update.log
+git pull                                   >> $basepath/update.log
+
+# remove upload_files
+rm -fr $basepath/../rdk/upload_files
+# remove temp demo files
+rm -fr $basepath/../doc/client/demo/tmp
 
 # restart rdk...
 cd rdk/proc/bin
 sh ./shutdown.sh > /dev/null
 
 cd $basepath/..
-# 换一个新的RDK进程监听端口，避免与已有端口冲突
-#sed -i 's/5812/5813/g' rdk/proc/conf/rdk.cfg
-#sed -i 's/5888/5889/g' rdk/proc/conf/rdk.cfg
-#sed -i 's/5812/5813/g' tools/http_server/config.json
-
-# web服务器端口改为默认80端口
-#sed -i 's/8080/80/g' tools/http_server/config.json
+# web listen 80 port
+sed -i 's/8080/80/g' tools/http_server/config.json
 
 sh start.sh > /dev/null
 

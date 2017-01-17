@@ -8,15 +8,15 @@ describe("test area_selector self test",function(){
                 browser.waitForAngular();
                 browser.sleep(2000);
             });
-        var provinceList=element.all(by.css(".test-show-all .rdk-area-contain div[class$=tab-panel] ul li a"));
+        var provinceList=element.all(by.css(".test-show-all .rdk-area-contain div[class$=rdk-area-panel] ul li a"));
         expect(provinceList.count()).toBe(34); // 期望待选择的省数量应该为34个
         var provinceItem = provinceList.get(0);
         provinceItem.click().then(function(){
-            var cityList = element.all(by.css(".test-show-all .rdk-area-contain div[class$=tab-panel] ul li a"));
+            var cityList = element.all(by.css(".test-show-all .rdk-area-contain div[class$=rdk-area-panel] ul li a"));
             var cityItem = cityList.get(0);
             var cityName = cityItem.getText();
             cityItem.click().then(function(){
-                var areaList = element.all(by.css(".test-show-all .rdk-area-contain div[class$=tab-panel] ul li a"));
+                var areaList = element.all(by.css(".test-show-all .rdk-area-contain div[class$=rdk-area-panel] ul li a"));
                 var areaItem = areaList.get(0);
                 var areaName = areaItem.getText();
                // expect(cityName).toNotBe("全省"); //不显示全省，全市特殊标签
@@ -40,11 +40,11 @@ describe("test area_selector self test",function(){
         var cityLabel = areaElement.getAttribute("city-label");
         var areaLabel = areaElement.getAttribute("area-label");
         expect(tabList.get(0).getText()).toBe(provinceLabel);
-        var provinceList=element.all(by.css(".test-label .rdk-area-contain div[class$=tab-panel] ul li a"));
+        var provinceList=element.all(by.css(".test-label .rdk-area-contain div[class$=rdk-area-panel] ul li a"));
         var provinceItem = provinceList.get(1);
         provinceItem.click().then(function(){
             expect(tabList.get(1).getText()).toBe(cityLabel);
-            var cityList=element.all(by.css(".test-label .rdk-area-contain div[class$=tab-panel] ul li a"));
+            var cityList=element.all(by.css(".test-label .rdk-area-contain div[class$=rdk-area-panel] ul li a"));
             var cityItem = cityList.get(1);
             cityItem.click().then(function(){
                 expect(tabList.get(2).getText()).toBe(areaLabel);
@@ -59,7 +59,7 @@ describe("test area_selector self test",function(){
             browser.waitForAngular();
             browser.sleep(2000);
         });
-        var lists=element.all(by.css(".test-freezeProv .rdk-area-contain div[class$=tab-panel] ul li a"));
+        var lists=element.all(by.css(".test-freezeProv .rdk-area-contain div[class$=rdk-area-panel] ul li a"));
         expect(lists.get(0).getText()).toBe("全省");
     });
 
@@ -74,7 +74,7 @@ describe("test area_selector self test",function(){
         var provinceList=element.all(by.css(".test-change .rdk-area-contain div[class$=ng-scope] ul li a"));
         var provinceItem = provinceList.get(1);
         provinceItem.click().then(function(){
-            var cityList=element.all(by.css(".test-change .rdk-area-contain div[class$=tab-panel] ul li a"));
+            var cityList=element.all(by.css(".test-change .rdk-area-contain div[class$=rdk-area-panel] ul li a"));
             var cityItem = cityList.get(1);
             cityItem.click().then(function()
             {

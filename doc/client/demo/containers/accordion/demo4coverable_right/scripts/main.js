@@ -40,6 +40,9 @@ define('main',['angular', 'rd.containers.Accordion', 'rd.controls.BasicSelector'
         scope.localOpen_1 = false;
         scope.localOpen_2 = false;
 
+        scope.minWidth_1 = 0;
+        scope.minWidth_2 = 100;
+
         scope.close = function(){
             scope.localOpen_1 = false;
             scope.localOpen_2 = false;
@@ -49,14 +52,5 @@ define('main',['angular', 'rd.containers.Accordion', 'rd.controls.BasicSelector'
             scope.localOpen_1 = true;
             scope.localOpen_2 = true;
         }
-
-        // scope.close = function(){
-        //     EventService.broadcast('accordionID', EventTypes.CLOSE);
-        // }
-
-        // scope.open = function(){
-        //     EventService.broadcast('accordionID', EventTypes.OPEN);
-        // }
-
     }]);
 });

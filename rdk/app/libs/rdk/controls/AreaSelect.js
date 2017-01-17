@@ -1,4 +1,4 @@
-define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.styles.Bootstrap', 'rd.services.EventService'], function () {
+define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area', 'rd.services.EventService'], function () {
     var areaModule = angular.module('rd.controls.AreaSelect', ['rd.core']);
     areaModule.run(["$templateCache", function($templateCache) {
         $templateCache.put("province.html",
@@ -6,11 +6,11 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                 <ul class="nav nav-tabs">\
                     <li ng-class="{active: $vm.activeTab == 1}"><a ng-click="$vm.activeTab = 1">{{$vm.userArr[0].name || provinceLabel || "省"}}</a></li>\
                 </ul>\
-                <div class="tab-content tab-bordered">\
-                    <div class="tab-panel" ng-show="$vm.activeTab == 1">\
+                <div class="rdk-area-content">\
+                    <div class="rdk-area-panel" ng-show="$vm.activeTab == 1">\
                         <ul ng-style="$vm.getWidth()">\
                             <li ng-repeat="province in $vm.dsProvinces.data.data track by $index" on-finish-render="provinceRender">\
-                                <a ng-if="!$vm.isNull(province)" ng-click="$vm.clkProvinceNextLvOpen(province,0)" ng-class="{selected:$vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
+                                <a ng-if="!$vm.isNull(province)" ng-click="$vm.changeSelected(province,0)" ng-class="{selected:$vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
                                 <a ng-if="$vm.isNull(province)" class="area-null">{{province.name}}</a>\
                             </li>\
                         </ul>\
@@ -24,8 +24,8 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                     <li ng-if="!freezeProvince" ng-class="{active: $vm.activeTab == 1}"><a ng-click="$vm.activeTab = 1">{{$vm.userArr[0].name || provinceLabel || "省"}}</a></li>\
                     <li ng-show="!!$vm.dsCitys.data.data.length" ng-class="{active: $vm.activeTab == 2}"><a ng-click="$vm.activeTab = 2">{{$vm.userArr[1].name || cityLabel || "市"}}</a></li>\
                 </ul>\
-                <div class="tab-content tab-bordered">\
-                    <div class="tab-panel" ng-show="$vm.activeTab == 1" ng-if="!freezeProvince">\
+                <div class="rdk-area-content">\
+                    <div class="rdk-area-panel" ng-show="$vm.activeTab == 1" ng-if="!freezeProvince">\
                         <ul ng-style="$vm.getWidth()">\
                             <li ng-repeat="province in $vm.dsProvinces.data.data track by $index" on-finish-render="provinceRender">\
                                 <a ng-if="!$vm.isNull(province)" ng-click="$vm.clkProvinceNextLvOpen(province,0)" ng-class="{selected:$vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
@@ -33,9 +33,9 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                             </li>\
                         </ul>\
                     </div>\
-                    <div class="tab-panel" ng-show="$vm.activeTab == 2">\
+                    <div class="rdk-area-panel" ng-show="$vm.activeTab == 2">\
                         <ul>\
-                            <li ng-if="showAll" ng-click="$vm.selectAllProOrCity(\'全省\',\'lockCity\')" class="test-all"><a>全省</a></li>\
+                            <li ng-if="showAll" ng-click="$vm.selectAllProOrCity(\'全省\',\'lockCity\')" class="all-label"><a>全省</a></li>\
                             <li ng-repeat="city in $vm.dsCitys.data.data">\
                                 <a ng-click="$vm.changeSelected(city,1)" ng-class="{selected:$vm.activeCurItemClass(city,1)}">{{city.name}}</a>\
                             </li>\
@@ -51,8 +51,8 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                     <li ng-show="!!$vm.dsCitys.data.data.length" ng-class="{active: $vm.activeTab == 2}"><a ng-click="$vm.activeTab = 2">{{$vm.userArr[1].name || cityLabel || "市"}}</a></li>\
                     <li ng-show="!!$vm.dsAreas.data.data.length" ng-class="{active: $vm.activeTab == 3}"><a ng-click="$vm.activeTab = 3">{{$vm.userArr[2].name || areaLabel || "区"}}</a></li>\
                 </ul>\
-                <div class="tab-content tab-bordered">\
-                    <div class="tab-panel" ng-show="$vm.activeTab == 1">\
+                <div class="rdk-area-content">\
+                    <div class="rdk-area-panel" ng-show="$vm.activeTab == 1">\
                         <ul ng-style="$vm.getWidth()">\
                             <li ng-repeat="province in $vm.dsProvinces.data.data track by $index" on-finish-render="provinceRender">\
                                 <a ng-if="!$vm.isNull(province)" ng-click="$vm.clkProvinceNextLvOpen(province,0)" ng-class="{selected:$vm.activeCurItemClass(province,0)}">{{province.name}}</a>\
@@ -60,17 +60,17 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                             </li>\
                         </ul>\
                     </div>\
-                    <div class="tab-panel" ng-show="$vm.activeTab == 2">\
+                    <div class="rdk-area-panel" ng-show="$vm.activeTab == 2">\
                         <ul>\
-                            <li ng-if="showAll" ng-click="$vm.selectAllProOrCity(\'全省\')" class="test-all"><a>全省</a></li>\
+                            <li ng-if="showAll" ng-click="$vm.selectAllProOrCity(\'全省\')" class="all-label"><a>全省</a></li>\
                             <li ng-repeat="city in $vm.dsCitys.data.data">\
                                 <a ng-click="$vm.clkCityNextLvOpen(city,1)" ng-class="{selected:$vm.activeCurItemClass(city,1)}">{{city.name}}</a>\
                             </li>\
                         </ul>\
                     </div>\
-                    <div class="tab-panel" ng-show="$vm.activeTab == 3">\
+                    <div class="rdk-area-panel" ng-show="$vm.activeTab == 3">\
                         <ul>\
-                            <li ng-if="showAll" ng-click="$vm.selectAllProOrCity(\'全市\')" class="test-all"><a>全市</a></li>\
+                            <li ng-if="showAll" ng-click="$vm.selectAllProOrCity(\'全市\')" class="all-label"><a>全市</a></li>\
                             <li ng-repeat="area in $vm.dsAreas.data.data">\
                                 <a ng-click="$vm.changeSelected(area,2)" ng-class="{selected:$vm.activeCurItemClass(area,2)}">{{area.name}}</a>\
                             </li>\
@@ -85,6 +85,16 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
             "province":"province.html",
             "city":"city.html"
         };
+        var scopeDefine={
+            id: '@?',
+            areaData:'=?',
+            change:'&?',
+            provinceLabel:'@?',
+            cityLabel:'@?',
+            areaLabel:'@?',
+            freezeProvince:"=?",
+            showAll:"=?"
+        };
         return {
             restrict: 'E',
             templateUrl: function(elem, attr){
@@ -95,16 +105,7 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                 }
             },
             replace: true,
-            scope: {
-                id: '@?',
-                areaData:'=?',
-                change:'&?',
-                provinceLabel:'@?',
-                cityLabel:'@?',
-                areaLabel:'@?',
-                freezeProvince:"=?",
-                showAll:"=?"
-            },
+            scope: scopeDefine,
             require:'^?rdkComboSelect',
             controller: ['$scope', function(scope){
                 Utils.publish(scope, this);
@@ -121,6 +122,7 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
         };
 
         function _link(scope,tElement,tAttrs,comboSelectCtrl) {
+            Utils.checkEventHandlers(tAttrs,scopeDefine);
             //TODO:处理控件内部数据的国际化:省市区标签
             var $vm = scope.$vm = {
                 resultData:"", //返回结果，字符串
@@ -255,12 +257,18 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                     if(tAttrs.granularity=="province"){
                         areaDataHandle();
                         $vm.activeTab=1;
-                    }else if(tAttrs.granularity=="city")
-                    {
-                        if(scope.freezeProvince)
-                        {
+                    }else if(!scope.areaData.city){
+                        if(tAttrs.granularity=="city"){
+                            allProvinceTip="全省";
                             defaultProvince.freezeProvince=scope.freezeProvince;
                         }
+                        areaDataHandle();
+                        _queryCityByProvince(defaultProvince);
+                        $vm.activeTab=2;
+                    }
+                    else if(tAttrs.granularity=="city")
+                    {
+                        defaultProvince.freezeProvince=scope.freezeProvince;
                         _queryCityByProvince(defaultProvince);
                         $vm.activeTab=2;
                     }else{
@@ -336,8 +344,8 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area','css!rd.
                 if($vm.dsAreas.data && scope.areaData.area) {
                     defaultArea = _queryDataByName($vm.dsAreas.data.data, scope.areaData.area);
                     $vm.userArr[2] = defaultArea;
-                    areaDataHandle();
                 }
+                areaDataHandle();
             }
             function _queryDataByName(dataArr,initObj){
                 var result;

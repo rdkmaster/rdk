@@ -1,0 +1,127 @@
+div,p,button {
+	margin:0; 
+	padding:0;
+}
+.rdk-popupservice-dialog {
+	font-family: '微软雅黑';
+	font-size: 14px;
+}
+.rdk-alert-tableMsg{
+	padding: 20px 60px;
+	margin: 0;
+	line-height: 26px;
+	text-align:center;
+}
+.rdk-alert-tableMsg>span {
+	text-align: left;
+    display: inline-block;
+}
+div.rdk-popupservice-dialog .ui-widget-header {
+	height: 34px;
+	padding: 0px 5px 0px 7px;
+	border-radius: 0;
+	border: none;
+}
+div.rdk-popupservice-dialog .ui-widget-header .ui-dialog-title {
+	line-height: 30px;
+	padding: 0;
+}
+.rdk-popupservice-dialog  .ui-button-text {
+	display: none;
+}
+.rdk-popupservice-dialog  .ui-dialog .ui-dialog-titlebar-close {
+	width: 18px;
+	height: 18px;
+}
+.rdk-popupservice-dialog.ui-dialog{
+	padding: 0;
+	background-color: #eaeaea
+}
+.rdk-popupservice-dialog .ui-dialog-titlebar-close:focus {
+	outline: none;
+}
+.rdk-popupservice-dialog .ui-state-hover .ui-icon,
+.rdk-popupservice-dialog .ui-state-focus .ui-icon,
+.rdk-popupservice-dialog .ui-state-default .ui-icon {
+    background-image: url("../../../../jquery-ui/css/images/ui-icons_222222_256x240.png");
+    height: 18px;
+    width: 18px;
+    margin-top: -9px;
+    margin-left: -9px;
+}
+div.ui-dialog .ui-dialog-content{
+	padding: 0;
+	background-color: #f6f6f6
+}
+.rdk-alert-left {
+	text-align: left;
+}
+.rdk-alert-btnLine{
+	text-align: center;
+}
+.rdk-alert-svrMsgBox .rdk-alert-svrMsgBtn{
+	min-width: 80px;
+	height: 30px;
+	line-height: 26px;
+	outline: none;
+	border-radius: 5px;
+	margin: 0 13px 20px 13px;
+}
+.rdk-alert-tableImg >img {
+	height:42px;
+	width:42px;
+	border:none;
+	display: block;
+	margin:0 auto;
+	margin-top: 20px;
+}
+
+/*  todo  */
+
+.rdk-popupservice-dialog .ui-widget-content{
+	background-color: #f6f6f6;
+}
+.rdk-popupservice-dialog .ui-widget-header {
+	color:#008fd4;
+	background-color: #eaeaea;
+}
+.rdk-popupservice-dialog  .ui-state-default, .rdk-popupservice-dialog  .ui-widget-content .ui-state-default,
+.rdk-popupservice-dialog  .ui-widget-header .ui-state-default {
+	border: 1px solid #eaeaea;
+}
+.rdk-popupservice-dialog  .ui-button-icon-primary {
+	background-color:  #eaeaea;
+}
+.rdk-alert-yes ,.rdk-alert-ok{
+	background: #85c56c;
+}
+
+.rdk-alert-yes:hover ,.rdk-alert-ok:hover{
+	background: #7bb664;
+}
+
+.rdk-alert-yes:active ,.rdk-alert-ok:active{
+	background: #71a85c;
+}
+
+.rdk-alert-no ,.rdk-alert-cancel{
+	background: #5395d8;
+}
+
+.rdk-alert-no:hover ,.rdk-alert-cancel:hover {
+	background: #4c89c7;
+}
+
+.rdk-alert-no:active ,.rdk-alert-cancel:active {
+	background: #477fb8
+}
+.rdk-alert-svrMsgBtn {
+	border: 1px solid #E3E3E3;
+	color: #fff;
+}
+.rdk-alert-tableImg >img {
+	background:#f6f6f6;
+}
+.rdk-alert-svrMsgBtn:focus{
+	border:1px solid #fff;
+}

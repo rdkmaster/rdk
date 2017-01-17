@@ -25,10 +25,6 @@ fi
 cd $cur_dir/tools/http_server
 nohup $node server.js &
 
-## start rest server
-cd $cur_dir/doc/tools/live_demo/mock_rest
-nohup $node rest_service.js &
-
 ## start rdk server
 cd $cur_dir/rdk/proc/bin/
 sh run.sh

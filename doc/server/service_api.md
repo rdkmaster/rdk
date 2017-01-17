@@ -1,4 +1,4 @@
-
+﻿
 <rdk_title>后端服务API</rdk_title>
 
 
@@ -15,10 +15,6 @@
 ## 公共导出服务 ##
 
 [查看公共导出服务](common_export.md)
-
-## 文件上传服务 ##
-
-[查看文件上传服务](common_upload.md)
 
 ## 消息队列 ##
 
@@ -573,6 +569,84 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 	var lib = require('mylib.js');
 	lib.hello('rdk');
+
+
+### `rest` ###
+#### `rest.get()` ####
+
+定义：
+
+    function get(url, option);
+
+说明：在后端代码中调用其他的rest服务并返回其应答数据。
+
+参数：
+
+- url: 目标服务的url。
+- option: 本次请求的参数
+
+option的结构如下：
+
+	{
+		// 对应http请求头中的requestProperty字段，
+		// 此对象中的所有属性都会被拷贝到http请求的RequestProperty中去
+		requestProperty: {
+			content-type: 'application/json'
+		},
+		connectTimeout: 60000,
+		readTimeout: 20000
+	}
+
+
+
+返回：该服务的返回值。
+#### `rest.put()` ####
+
+定义：
+
+    function put(url, param, option);
+
+说明：在后端代码中调用其他的put服务并返回其应答数据。
+
+参数：
+
+- url: 目标服务的url，必选。
+- param: 目标服务的请求参数字符串或者json对象，可选。
+- option: 本次请求的参数，同get参数option，可选。
+
+返回：该服务的返回值。    
+
+#### `rest.post()` ####
+
+定义：
+
+    function post(url, param, option);
+
+说明：在后端代码中调用其他的post服务并返回其应答数据。
+
+参数：
+
+- url: 目标服务的url，必选。
+- param: 目标服务的请求参数字符串或者json对象，可选。
+- option: 本次请求的参数，同get参数option，可选。
+
+返回：该服务的返回值。
+
+#### `rest.delete()` ####
+
+定义：
+
+    function delete(url, param, option);
+
+说明：在后端代码中调用其他的delete服务并返回其应答数据。
+
+参数：
+
+- url: 目标服务的url，必选。
+- param: 目标服务的请求参数字符串或者json对象，可选。
+- option: 本次请求的参数，同get参数option，可选。
+
+返回：该服务的返回值。
 
 ### `Cache` ###
 

@@ -1,63 +1,79 @@
-/**
- * Created by 00100630 on 2016/12/17.
- */
-define(['angular', 'rd.core',  'codemirror-core',
-  'codemirror-mode',
-  'codemirror-fold',
-  'codemirror-selection-line',
-  'css!codemirror-css',
-  'ui.codemirror',
-  'css!rd.styles.Bootstrap'
-], function() {
-  var editorApp = angular.module("rd.controls.Editor", ['rd.core', 'ui.codemirror']);
-  editorApp.directive('rdkEditor', ['Utils', '$timeout','$compile', '$controller',
-    function(Utils, $timeout, $compile, $controller) {
-      return {
-        restrict: 'E',
-        replace: true,
-        scope: {
-          text: '='
-        },
-        controller: ['$scope', function(scope){
-          Utils.publish(scope, this);
-          /* ◊Èº˛∂‘Õ‚ø™∑≈∫Ø ˝ */
-        }],
-        template: function(tElement, tAttrs) {
-          return '<textarea ui-codemirror ui-codemirror-opts="editorOptions" ng-model="text"></textarea>';
-        },
-        compile: function(tEle, tAttrs) {
-          return {
-            pre: _link
-          }
-        }
-      }
-      function translateType(type) {
-        type = type.toLowerCase();
-        if(type === 'html') {
-          type =  'text/html';
-        }
-        return type;
-      }
-      function _link(scope, element, attrs) {
-        console.log('editor post link');
-        var readOnly = !Utils.isTrue(attrs.editable, true)
-          ,foldable =  Utils.isTrue(attrs.foldable, false)
-          ,selectable = Utils.isTrue(attrs.selectable, false)
-          ,type = !attrs.type ?  'text' : attrs.type;
+define(['../codemirror/lib/codemirror', 'css!../codemirror/lib/codemirror',
+        '../codemirror/addon/edit/matchbrackets', '../codemirror/mode/css/css',
+        '../codemirror/mode/htmlmixed/htmlmixed', '../codemirror/mode/javascript/javascript',
+        '../codemirror/mode/xml/xml', 'rd.core'],
+function(CodeMirror) {
+    var moduleApp = angular.module("rd.controls.Editor", ['rd.core']);
+    moduleApp.directive('rdkEditor', ['EventService', 'EventTypes', 'Utils',
+        function(EventService, EventTypes, Utils) {
+            var scopeDefine={
+                id: '@?',
+                value: '=?',
+                options: '=?',
+                mode: '@?',
+                change: '&?',
+                initialized: '&?',
+            };
+            return {
+                restrict: 'E',
+                scope: scopeDefine,
+                replace: true,
+                template: '<div style="border:1px solid #aaa"><textarea></textarea></div>',
+                controller: ['$scope', function(scope) {
+                    Utils.publish(scope, this);
 
-        readOnly = readOnly? 'nocursor': readOnly
-        type = translateType(type);
-        scope.editorOptions = {
-          lineWrapping : true,
-          lineNumbers: true,
-          readOnly: readOnly, // «∑Ò¥Úø™¥˙¬Î’πø™π¶ƒ‹£¨ƒ¨»œŒ™false
-          foldGutter: foldable, // «∑Ò¥Úø™¥˙¬Î’πø™π¶ƒ‹£¨ƒ¨»œŒ™false
-          mode: type,
-          styleActiveLine: selectable, // «∑Òœ‘ æ—°÷–––—˘ Ω£¨ƒ¨»œŒ™false
-          gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+                    this.getEditor = function() {
+                        return scope.editor;
+                    }
+
+                    this.CodeMirror = CodeMirror;
+                }],
+                compile: function(tEle, tAttrs) {
+                    Utils.checkEventHandlers(tAttrs, scopeDefine);
+                    Utils.bindDataSource(tAttrs, 'value');
+                    return {
+                        post: _link
+                    }
+                },
+            }
+
+            function _link(scope, element, attrs) {
+                var textarea = element.find('textarea')[0];
+                //ÂàùÂßãÂåñÊñáÊú¨Ê°Ü‰∏≠ÁöÑ‰ª£Á†Å
+                textarea.value = scope.value;
+
+                var options = scope.options || {};
+                options.mode = scope.mode || 'javascript';
+                if (options.mode == 'html') {
+                    options.mode = 'text/html';
+                }
+                if (!options.hasOwnProperty('lineNumbers')) {
+                    options.lineNumbers = true;
+                }
+                if (!options.hasOwnProperty('matchBrackets')) {
+                    options.matchBrackets = true;
+                }
+                scope.editor = CodeMirror.fromTextArea(textarea, options);
+
+                var appScope = Utils.findAppScope(scope);
+                //Ê≥®ÂÜåcodemirrorÂèëÂá∫ÁöÑ‰∫ã‰ª∂
+                CodeMirror.on(scope.editor, 'change', function() {
+                    scope.value = scope.editor.doc.getValue();
+                    EventService.raiseControlEvent(scope, EventTypes.CHANGE, scope.value);
+                });
+
+                scope.$watch('value', function(newVal, oldVal) {
+                    if (!angular.isString(newVal) /*|| newVal == scope.value*/) {
+                        return;
+                    }
+                    scope.editor.doc.setValue(newVal);
+                });
+                
+                //ÂèëÈÄÅÂ∞±Áª™‰∫ã‰ª∂
+                if (scope.id) {
+                    EventService.raiseControlEvent(scope, EventTypes.INITIALIZED, scope.id);
+                }
+            }
         }
-        console.info(scope.editorOptions)
-      }
-    }
-  ]);
+    ]);
 });

@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
     <title>地区控件</title>
     <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/iconFonts/fonts/iconfont.css">
     <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
     <script src="scripts/main.js"></script>
     <script type="text/javascript">
@@ -17,8 +18,13 @@
     </script>
     <style>
         .area-wrap{
-            padding:5px 5px 5px 40px;
-            background:#008fd4 url(img/positioning.png) no-repeat 5px 5px;
+            padding:5px;
+            width: 100%;
+            background:#008fd4 no-repeat 5px 5px;
+        }
+        .iconfont-positioning {
+            font-size: 26px;
+            color: #fff;
         }
         .rdk-combo-select-module .combo-caption{
             color: #666;
@@ -47,19 +53,19 @@
     <ds id="dsProv3" url="../doc/client/demo/common/datasource/server/areaServiceProv.js"></ds>
     <ds id="dsCity3" url="../doc/client/demo/common/datasource/server/areaServiceCity.js"></ds>
     <h3>省</h3>
-    <div class="area-wrap area-wrap1">
+    <div class="area-wrap area-wrap1 iconfont iconfont-positioning">
         <rdk_combo_select open-policy="hover">
             <rdk-area-select ds_province="dsProv1"  area-data="resultData1"  granularity="province" show-all="false"></rdk-area-select>
         </rdk_combo_select>
     </div>
     <h3>省-市-区</h3>
-    <div class="area-wrap area-wrap2">
+    <div class="area-wrap area-wrap2 iconfont iconfont-positioning">
         <rdk_combo_select open-policy="hover">
             <rdk-area-select ds_province="dsProv2"  ds_city="dsCity2"  ds_area="dsArea2" area-data="resultData2" ></rdk-area-select>
         </rdk_combo_select>
     </div>
     <h3>省-市</h3>
-    <div class="area-wrap area-wrap3">
+    <div class="area-wrap area-wrap3 iconfont iconfont-positioning">
         <rdk_combo_select open-policy="hover">
             <rdk-area-select ds_province="dsProv3" ds_city="dsCity3"  change-handler="alert(d)" area-data="resultData3"   granularity="city" setting="setting"  show-all="false" ></rdk-area-select>
         </rdk_combo_select>

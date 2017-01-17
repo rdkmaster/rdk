@@ -1,17 +1,15 @@
 'use strict';
 describe('Alert Self Test',function(){
-    it('open page',function(){
+    it('confirm 缺省',function(){
         browser.get('test/e2e/testee/alert/web/self.html');
         browser.sleep(1000);
-    });
-    it('confirm 缺省',function(){
         var locator=element(by.css(".demo1 p"));
         locator.click();
         browser.sleep(300);
         //产生窗口、模态框
-        var alert=element.all(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
+        var alert=element.all(by.css(".rdk-alert-svrMsgBox .rdk-alert-btnLine input"));
         expect(alert.count()).toBe(3);
-        var array=['YES','NO','CANCEL'];
+        var array=['是','否','取消'];
         alert.each(function(item,index){
             expect(item.getAttribute('value')).toBe(array[index]);
         })
@@ -22,27 +20,27 @@ describe('Alert Self Test',function(){
         var locator=element(by.css(".demo7 p"));
         locator.click();
         browser.sleep(300);
-        var alert=element.all(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
+        var alert=element.all(by.css(".rdk-alert-svrMsgBox .rdk-alert-btnLine input"));
         expect(alert.count()).toBe(1);
-        expect(alert.get(0).getAttribute('value')).toBe('OK');
+        expect(alert.get(0).getAttribute('value')).toBe('确定');
         alert.get(0).click();
     });
     it('添加message',function(){
         var btn=element(by.css(".demo1 button[ng-click='addMessage()']"));
         btn.click();
         browser.sleep(300);
-        var message=element(by.css(".rdk-alert-wrapBox .rdk-alert-tableMsg"));
+        var message=element(by.css(".rdk-alert-svrMsgBox .rdk-alert-tableMsg"));
         expect(message.getText()).toBe('message');
-        var alert=element.all(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
+        var alert=element.all(by.css(".rdk-alert-svrMsgBox .rdk-alert-btnLine input"));
         alert.get(0).click();
     });
     it('添加title',function(){
         var btn=element(by.css(".demo1 button[ng-click='addTitle()']"));
         btn.click();
         browser.sleep(300);
-        var message=element(by.css(".rdk-alert-wrapBox .rdk-alert-titleLine"));
+        var message=element(by.css(".ui-dialog-title"));
         expect(message.getText()).toBe('我是窗口');
-        var alert=element.all(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
+        var alert=element.all(by.css(".rdk-alert-svrMsgBox .rdk-alert-btnLine input"));
         alert.get(0).click();
     });
     // 1 2 4 8对应 YES NO OK CANCEL按钮
@@ -50,32 +48,32 @@ describe('Alert Self Test',function(){
         var btn=element(by.css(".demo1 button[ng-click='addBtn1()']"));
         btn.click();
         browser.sleep(300);
-        var alert=element(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
-        expect(alert.getAttribute('value')).toBe("YES");
+        var alert=element(by.css(".rdk-alert-svrMsgBox .rdk-alert-btnLine input"));
+        expect(alert.getAttribute('value')).toBe("是");
         alert.click();
     });
     it('添加按钮2类型',function(){
         var btn=element(by.css(".demo1 button[ng-click='addBtn2()']"));
         btn.click();
         browser.sleep(300);
-        var alert=element(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
-        expect(alert.getAttribute('value')).toBe("NO");
+        var alert=element(by.css(".rdk-alert-svrMsgBox .rdk-alert-btnLine input"));
+        expect(alert.getAttribute('value')).toBe("否");
         alert.click();
     });
     it('添加按钮4类型',function(){
         var btn=element(by.css(".demo1 button[ng-click='addBtn4()']"));
         btn.click();
         browser.sleep(300);
-        var alert=element(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
-        expect(alert.getAttribute('value')).toBe("OK");
+        var alert=element(by.css(".rdk-alert-svrMsgBox .rdk-alert-btnLine input"));
+        expect(alert.getAttribute('value')).toBe("确定");
         alert.click();
     });
     it('添加按钮8类型',function(){
         var btn=element(by.css(".demo1 button[ng-click='addBtn8()']"));
         btn.click();
         browser.sleep(300);
-        var alert=element(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
-        expect(alert.getAttribute('value')).toBe("CANCEL");
+        var alert=element(by.css(".rdk-alert-svrMsgBox .rdk-alert-btnLine input"));
+        expect(alert.getAttribute('value')).toBe("取消");
         alert.click();
     });
     //组合类型 比如9=8+1 就YES说按钮存在 YES 和 CANCEL 两种;10=8+2 以此类推
@@ -83,27 +81,27 @@ describe('Alert Self Test',function(){
         var btn=element(by.css(".demo1 button[ng-click='addBtn9()']"));
         btn.click();
         browser.sleep(300);
-        var alert=element.all(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
-        expect(alert.get(0).getAttribute('value')).toBe("YES");
-        expect(alert.get(1).getAttribute('value')).toBe('CANCEL');
+        var alert=element.all(by.css(".rdk-alert-svrMsgBox .rdk-alert-btnLine input"));
+        expect(alert.get(0).getAttribute('value')).toBe("是");
+        expect(alert.get(1).getAttribute('value')).toBe('取消');
         alert.get(0).click();
     });
     it('添加按钮10类型',function(){
         var btn=element(by.css(".demo1 button[ng-click='addBtn10()']"));
         btn.click();
         browser.sleep(300);
-        var alert=element.all(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
-        expect(alert.get(0).getAttribute('value')).toBe("NO");
-        expect(alert.get(1).getAttribute('value')).toBe('CANCEL');
+        var alert=element.all(by.css(".rdk-alert-svrMsgBox .rdk-alert-btnLine input"));
+        expect(alert.get(0).getAttribute('value')).toBe("否");
+        expect(alert.get(1).getAttribute('value')).toBe('取消');
         alert.get(0).click();
     });
     it('添加按钮12类型',function(){
         var btn=element(by.css(".demo1 button[ng-click='addBtn12()']"));
         btn.click();
         browser.sleep(300);
-        var alert=element.all(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
-        expect(alert.get(0).getAttribute('value')).toBe("CANCEL");
-        expect(alert.get(1).getAttribute('value')).toBe('OK');
+        var alert=element.all(by.css(".rdk-alert-svrMsgBox .rdk-alert-btnLine input"));
+        expect(alert.get(0).getAttribute('value')).toBe("确定");
+        expect(alert.get(1).getAttribute('value')).toBe('取消');
         alert.get(0).click();
     });
     
@@ -112,21 +110,21 @@ describe('Alert Self Test',function(){
         locator.click();
         browser.sleep(500);
         //产生窗口、模态框
-        var alert=element.all(by.css(".rdk-alert-wrapBox .rdk-alert-btnLine input"));
+        var alert=element.all(by.css(".rdk-alert-svrMsgBox .rdk-alert-btnLine input"));
         expect(alert.count()).toBe(2);
-        var array=['CANCEL','OK'];
+        var array=['确定','取消'];
         alert.each(function(item,index){
             expect(item.getAttribute('value')).toBe(array[index]);
         })
         var message=element(by.css(".demo5>span"));
         alert.get(0).click();
         browser.sleep(300);
-        expect(message.getText()).toBe('取消');
+        expect(message.getText()).toBe('确定');
         locator.click();
         browser.sleep(300);
         alert.get(1).click();
         browser.sleep(300);
-        expect(message.getText()).toBe('确定');
+        expect(message.getText()).toBe('取消');
     });
     it('非模态框',function(){
         var locator=element(by.css(".demo6 p"));

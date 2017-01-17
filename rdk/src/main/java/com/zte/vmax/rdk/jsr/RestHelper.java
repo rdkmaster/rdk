@@ -6,9 +6,7 @@ import com.zte.vmax.rdk.config.Config;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import jdk.nashorn.internal.runtime.Undefined;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -28,6 +26,22 @@ public class RestHelper extends AbstractAppLoggable {
     private static Pattern URL_PTN = Pattern.compile("^http://.+", Pattern.CASE_INSENSITIVE);
 
     public String get(String url, Object option) {
+        return commonRest(url, null, option, "GET", false);
+    }
+
+    public String post(String url, String param, Object option) {
+        return commonRest(url, param, option, "POST", true);
+    }
+
+    public String delete(String url, String param, Object option) {
+        return commonRest(url, param, option, "DELETE", true);
+    }
+
+    public String put(String url, String param, Object option) {
+        return commonRest(url, param, option, "PUT", true);
+    }
+
+    private String commonRest(String url, String param, Object option, String method, boolean isGet) {
         url = url.trim();
         Matcher m = URL_PTN.matcher(url);
         if (!m.find()) {
@@ -38,7 +52,7 @@ public class RestHelper extends AbstractAppLoggable {
             }
             url = prefix + url;
         }
-        logger.debug("requesting(get) url=" + url);
+        logger.debug("requesting(" + method + ") url=" + url);
 
         //需要请求的restful地址
         URL oUrl = null;
@@ -60,10 +74,34 @@ public class RestHelper extends AbstractAppLoggable {
 
         // 提交模式
         try {
-            conn.setRequestMethod("GET");
+            conn.setRequestMethod(method);
         } catch (ProtocolException e) {
             logger.error("Invalid protocol", e);
             return null;
+        }
+
+        if (isGet) {
+            // 发送POST,PUT,DELETE请求必须设置如下两行
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+
+            //设置请求参数
+            PrintWriter out = null;
+            try {
+                out = new PrintWriter(conn.getOutputStream());
+
+                out.print(param);
+                // flush输出流的缓冲
+                out.flush();
+            } catch (Exception e) {
+                logger.error("write queryString error", e);
+                return null;
+            } finally {
+                if (out != null) {
+                    out.close();
+                }
+            }
+
         }
 
         setRequestProperties(conn, option);
@@ -75,26 +113,36 @@ public class RestHelper extends AbstractAppLoggable {
 
         //读取请求返回值
         InputStream inStream = null;
+        ByteArrayOutputStream baos = null;
         try {
             inStream = conn.getInputStream();
+            byte[] buff = new byte[1024 * 4];  //每次读4KB
+            baos = new ByteArrayOutputStream();
+            int len = -1;
+            while ((len = inStream.read(buff)) != -1) {
+                baos.write(buff, 0, len);
+            }
         } catch (IOException e) {
-            logger.error("can not get input stream", e);
+            logger.error("get input stream or read data error:", e);
             return null;
+        } finally {
+            try {
+                if (baos != null) {
+                    baos.close();
+                }
+            } catch (IOException e) {
+                logger.error("ByteArrayOutputStream close error:", e);
+            }
+            try {
+                if (inStream != null) {
+                    inStream.close();
+                }
+            } catch (IOException e) {
+                logger.error("inStream close error:", e);
+            }
         }
-        int len = 0;
-        try {
-            len = inStream.available();
-        } catch (IOException e) {
-            logger.error("can not read length", e);
-            return null;
-        }
-        byte[] bytes = new byte[len];
-        try {
-            inStream.read(bytes, 0, len);
-        } catch (IOException e) {
-            logger.error("can not read data", e);
-            return null;
-        }
+
+        byte[] bytes = baos.toByteArray();
 
         String encoding = getProperty(option, "encoding", "utf-8");
         String result;
@@ -106,16 +154,16 @@ public class RestHelper extends AbstractAppLoggable {
         }
         return result;
     }
-	
-	private void setRequestProperties(HttpURLConnection conn, Object option) {
+
+    private void setRequestProperties(HttpURLConnection conn, Object option) {
         if (option instanceof Undefined) {
             return;
         }
-		ScriptObjectMirror som = (ScriptObjectMirror) option;
+        ScriptObjectMirror som = (ScriptObjectMirror) option;
         if (!som.hasMember("requestProperty")) {
             return;
         }
-		ScriptObjectMirror properties = (ScriptObjectMirror) som.getMember("requestProperty");
+        ScriptObjectMirror properties = (ScriptObjectMirror) som.getMember("requestProperty");
         String[] keys = properties.getOwnKeys(false);
         for (String key : keys) {
             conn.setRequestProperty(key, properties.getMember(key).toString());

@@ -1,0 +1,137 @@
+.rdk-bullet-vertical-module {
+    display: inline-block;
+    text-align: center;
+}
+
+.rdk-bullet-vertical-module .title {
+    margin: 5px 10px 5px;
+}
+
+.rdk-bullet-vertical-module .legend {
+    height: 25px;
+}
+
+.rdk-bullet-vertical-module .legend span {
+    margin: 5px 10px 5px;
+}
+
+.rdk-bullet-vertical-module .progress {
+    padding: 0 43px;
+    position: relative;
+    display: inline-block;
+    width: 100px;
+    height: 100%;
+    background-color: transparent;
+    box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar{
+    -webkit-transition: none !important;
+    transition: none !important;
+}
+
+.rdk-bullet-vertical-module .progress .progress-bar {
+    width: 10px;
+    height: 100%;
+}
+
+.rdk-bullet-vertical-module .progress .slider {
+    width: 44px;
+    position: absolute;
+    cursor: move;
+    font-size: 14px;
+    line-height: 14px;
+    text-align: center;
+    top: 7px;
+    left: 4px;
+}
+
+.rdk-bullet-vertical-module .progress .slider-up {
+    left: 4px;
+}
+
+.rdk-bullet-vertical-module .progress .slider-down {
+    left: 49px;
+}
+
+.rdk-bullet-vertical-module .progress .slider .icon {
+    font-size: 18px;
+    display: inline-block;
+    -moz-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+.rdk-bullet-vertical-module .progress .slider::selection,
+.rdk-bullet-vertical-module .progress .slider .icon::selection,
+.rdk-bullet-vertical-module .progress .slider .num::selection {
+    background: transparent;
+}
+
+.rdk-bullet-horizontal-module .title {
+    margin: 5px 10px 5px;
+}
+
+.rdk-bullet-horizontal-module .legend {
+    height: 25px;
+}
+
+.rdk-bullet-horizontal-module .legend span {
+    margin: 5px 10px 5px;
+}
+
+.rdk-bullet-horizontal-module .progress {
+    padding: 35px 10px 40px 0;
+    margin: 0 20px;
+    position: relative;
+    height: 60px;
+    background-color: transparent;
+    box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.1);
+    box-sizing: content-box;
+
+}
+
+.rdk-bullet-horizontal-module .progress .progress-bar {
+    width: 100%;
+    height: 10px;
+}
+
+.rdk-bullet-horizontal-module .progress .slider {
+    width: 20px;
+    height: 28px;
+    position: absolute;
+    cursor: move;
+    font-size: 14px;
+    line-height: 14px;
+    text-align: center;
+    top: 7px;
+    left: 18px;
+}
+
+.rdk-bullet-horizontal-module .progress .slider-up {
+    top: 7px;
+}
+
+.rdk-bullet-horizontal-module .progress .slider-down {
+    top: 45px;
+}
+
+.rdk-bullet-horizontal-module .progress .slider .icon {
+    font-size: 18px;
+}
+
+.rdk-bullet-horizontal-module .progress .slider::selection,
+.rdk-bullet-horizontal-module .progress .slider .icon::selection,
+.rdk-bullet-horizontal-module .progress .slider .num::selection {
+    background: transparent;
+}
+
+/*todo:theme colors*/
+.rdk-bullet-vertical-module .progress .progress-bar {
+    background-color: #577780;
+}
+.rdk-bullet-horizontal-module .progress .progress-bar {
+    background-color: #577780;
+}

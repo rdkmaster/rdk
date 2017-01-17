@@ -8,6 +8,7 @@ start.cfg
 **/rdk/target
 **/rdk/project/project
 **/rdk/project/target
+**/upload_files
 
 #忽略运行环境信息
 **/rdk/proc/bin/jre

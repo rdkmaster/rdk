@@ -1,0 +1,12 @@
+<div>
+    <button ng-click="broadcast('disp1', 'type1')">发出 disp1.type1 事件</button>
+    <button ng-click="broadcast('disp2', 'type2')">发出 disp2.type2 事件</button>
+    <button ng-click="broadcast('disp3', 'type3')">发出 disp3.type3 事件</button>
+    <br>
+    <p>
+        <span ng-show="shownEvents.type1">disp1.type1 已经发出！</span>
+        <span ng-show="shownEvents.type2">disp2.type1 已经发出！</span>
+        <span ng-show="shownEvents.type3">disp3.type1 已经发出！</span>
+    </p>
+    <p ng-show="shownEvents.type1 && shownEvents.type2 && shownEvents.type3">onEvents成功！</p>
+</div>

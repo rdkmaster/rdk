@@ -1,0 +1,27 @@
+.rdk-popupservice-dialog{
+	padding: 0;
+	margin: 0;
+}
+
+.rdk-popupservice-dialog .rdk-popupservice-titlebar{
+	padding: 6px 2px;
+}
+
+.rdk-popupservice-dialog .rdk-popupservice-content{
+	margin: 0;
+	padding: 0;
+}
+
+.rdk-popupservice-dialog .rdk-popupservice-titlebar i{
+	float: left;
+	margin: 5px;
+}
+
+.rdk-popupservice-dialog .rdk-popupservice-hidetitlebar{
+	position: absolute;
+	opacity: 0;
+	width: 100%;
+	height: 5px;
+	padding: 0;
+	z-index: 9999;
+}

@@ -22,15 +22,15 @@ function() {
                 },
                 template:'<div>\
                               <div class="rdk-panel-module" ng-show="panelShow">\
-                                   <div class="panel-title" ng-show="{{showTitle}}" >\
-                                        <span class="panel-caption">\
-                                          <i class="{{icon}}" >&nbsp;&nbsp;{{title}} </i></span>\
-                                        <div class="panel-close"  ng-show="{{showClose}}">\
+                                   <div class="rdk-panel-title" ng-show="{{showTitle}}" >\
+                                        <span class="rdk-panel-caption">\
+                                          <i class="{{icon}}"></i>{{title}}</span>\
+                                        <div class="rdk-panel-close"  ng-show="{{showClose}}">\
                                             <i class="fa fa-close" ng-click="close()"></i>\
                                         </div>\
                                    </div>\
-                                   <div class="panel-content" >\
-                                       <div ng-transclude class="panel-content-transclude">\
+                                   <div class="rdk-panel-content" >\
+                                       <div ng-transclude class="rdk-panel-content-transclude">\
                                        </div>\
                                    </div>\
                               </div>\
@@ -72,12 +72,10 @@ function() {
                           var fn = Utils.findFunction($scope, $scope.beforeClose);  
                           if(typeof(fn) == 'function'){
                             fn();
-                                              
                           }
                       }
                     }              
                     var elem = el[0].children[0]; 
-                    console.log(elem);
                     if ($(el[0]).attr("width")){
                        $(elem).css('width',$(el[0]).attr("width"));
 
