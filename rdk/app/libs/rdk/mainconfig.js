@@ -81,11 +81,6 @@ require.config({
         "rd.styles.Bootstrap": "../bootstrap/css/bootstrap.min",
         "rd.styles.FontAwesome": "../font-awesome-4.3.0/css/font-awesome",
 
-        "rd.styles.Switch": "../rdk/controls/assets/rdk-switch-style",
-        "rd.styles.NumericInput": "../rdk/controls/assets/rdk-numericinput-style",
-        "rd.styles.NotifyService": "../rdk/services/assets/rd-NotifyService-style",
-        "rd.styles.MenuService": "../rdk/services/assets/rd-MenuService-style",
-
         "rdk.theme.zte-blue":"css/theme/zte-blue/zte-blue",
         "rdk.theme.default":"css/theme/default/default",
 

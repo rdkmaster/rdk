@@ -24,6 +24,9 @@ require.config({
         "rd.styles.Theme": "../rdk/css/theme/zte-blue/rdk-theme-style",
         "rd.styles.Time": "../rdk/css/theme/zte-blue/rdk-time-style",
         "rd.styles.Tree": "../rdk/css/theme/zte-blue/rdk-tree-style",
-
+        "rd.styles.Switch": "../rdk/controls/assets/rdk-switch-style",
+        "rd.styles.NumericInput": "../rdk/controls/assets/rdk-numericinput-style",
+        "rd.styles.NotifyService": "../rdk/services/assets/rd-NotifyService-style",
+        "rd.styles.MenuService": "../rdk/services/assets/rd-MenuService-style",
     }
 });
