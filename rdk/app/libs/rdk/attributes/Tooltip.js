@@ -58,7 +58,7 @@ define(['jquery', 'rd.core', 'css!rd.styles.Bootstrap', 'rd.controls.Module'], f
                 scope.moduleReady = function(event, data){
                     $tip = $('#'+data.split('-')[1]);
                     element = $('#element-'+data.split('-')[1]);
-                    placement = element.attr('rdk_tooltip_placement');
+                    placement = element.attr('rdk_tooltip_placement') || 'top';
                     setPosition(element, $tip, placement);
                 }
 
