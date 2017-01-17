@@ -14,15 +14,33 @@ define('main', ['rd.controls.Table', 'rd.controls.ChartIcon'], function () {
                     targets: 0,
                     override: false,
                     render: function (item) {
-                        return '<rdk-chart-icon chart-type="pie" chart-option="{fill: [\'#19B293\', \'#D6D6D6\']}" data="item.FailureRatio"></rdk-chart-icon>'
+                        return '<rdk-chart-icon chart-type="pie"  data="item.FailureRatio"></rdk-chart-icon>'
                     }
                 }
                 , {
-                    title: "Bar",
+                    title: "line",
                     targets: 1,
                     override: false,
-                    render: function (item, a) {
-                        return '<rdk-chart-icon chart-type="bar" data="item.FailureNumber.toString().split(\'\')"></rdk-chart-icon>'
+                    render: function (item) {
+                        item.chartData=item.FailureNumber.toString().split('');
+                        return '<rdk-chart-icon chart-type="line"  data="item.chartData"></rdk-chart-icon>'
+                    }
+                }
+                , {
+                    title: "bar",
+                    targets: 2,
+                    override: false,
+                    render: function (item) {
+                        item.chartData=item.FailureNumber.toString().split('');
+                        return '<rdk-chart-icon chart-type="bar"  data="item.chartData"></rdk-chart-icon>'
+                    }
+                }
+                , {
+                    title: "All Frequency",
+                    targets: 3,
+                    override: true,
+                    render: function (item) {
+                        return '<a class="frequency" ng-click="appScope.click(item)">{{item.TargetFrequency}}</a>'
                     }
                 }
             ]
@@ -30,12 +48,12 @@ define('main', ['rd.controls.Table', 'rd.controls.ChartIcon'], function () {
 
         $scope.click = function (item) {
             $scope.data.data = [
-                ["All Frequency", "2654", "100%"],
-                ["Frequency 1", "265", "35%"],
-                ["Frequency 2", "64", "75%"],
-                ["Frequency 3", "789", "25%"],
-                ["Frequency 4", "981", "65%"],
-                ["Frequency 5", "333", "95%"]
+                ["All Frequency", "3454", "100%"],
+                ["Frequency 1", "565", "35%"],
+                ["Frequency 2", "614", "75%"],
+                ["Frequency 3", "289", "25%"],
+                ["Frequency 4", "651", "65%"],
+                ["Frequency 5", "344", "95%"]
             ]
         }
         $scope.option = {
@@ -74,7 +92,7 @@ define('main', ['rd.controls.Table', 'rd.controls.ChartIcon'], function () {
                 ],
                 [
                     "Frequency 3",
-                    "789",
+                    "891",
                     "35%"
                 ],
                 [

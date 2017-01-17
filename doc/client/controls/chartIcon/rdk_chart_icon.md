@@ -39,10 +39,10 @@
 RDK对于rdk-chart-icon控件的默认配置如下：
 
     var $$options = {
-        pie:{delimiter: null, fill: ["#19B293", "#D6D6D6"], height: null, radius: 8, width: null},
-        donut:{delimiter: null, fill: ["#ff9900", "#fff4dd", "#ffd592"], height: null, innerRadius: null, radius: 8, width: null},
-        line:{delimiter: ",", fill: "#c6d9fd", height: 16, max: null, min: 0, stroke: "#4d89f9", strokeWidth: 1, width: 32},
-        bar: {delimiter: ",", fill: ["#4d89f9"], height: 16, max: null, min: 0, padding: 0.1, width: 32}
+        pie:{delimiter: null, fill: ["#8ed173", "#edffe5"], height: null, radius: 10, width: null},
+        donut:{delimiter: null, fill: ["#ff9900", "#8ed173", "#ffd592"], height: null, innerRadius: null, radius: 8, width: null},
+        line:{delimiter: ",", fill: "#edffe5", height: 20, max: null, min: 0, stroke: "#8ed173", strokeWidth: 1.5, width: 32},
+        bar: {delimiter: ",", fill: ["#8ed173"], height: 20, max: null, min: 0, padding: 0.1, width: 32}
     }
 
 这是一个简单的 `ScrollConfigProvider` 例子：
