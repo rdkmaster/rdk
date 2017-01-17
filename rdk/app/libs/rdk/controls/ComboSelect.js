@@ -22,7 +22,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 template:'<div class="rdk-combo-select-module" ng-mouseleave="closeShow()">\
                               <div class="combo-content" ng-mouseenter="openShow()" >\
                                   <span class="combo-caption" ng-show="!!caption">{{caption}}</span>\
-                                  <p class="form-control combo-content-theme" ng-class="{\'padding-right\':!clear}" title="{{inputStr}}" \
+                                  <p class="form-control combo-content-theme" ng-class="{\'margin-show\':!clear,\'margin-hide\':!!clear}" title="{{inputStr}}" \
                                   unselectable="on" ng-model="inputStr" ng-click="toggle()">{{inputStr}}</p>\
                                   <i class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
                                   <i ng-if="!!clear" class="fa fa-times-circle fa-1 combo-content-close" ng-click="dataClear($event)" title="清除"></i>\

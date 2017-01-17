@@ -31,7 +31,7 @@
     height: 30px;
     box-shadow: none;
     border: none;
-    margin: 0px 38px 4px 4px;
+    margin: 0px 36px 4px 4px;
     width: auto;
 }
 .rdk-combo-select-module .combo-content-theme.padding-right {
@@ -61,11 +61,17 @@
     right: 22px;
 }
 .rdk-combo-select-module p.combo-content-theme  {
-    width: 166px;
+    width: 158px;
     overflow: hidden;
     white-space:nowrap;
 }
-
+.rdk-combo-select-module p.combo-content-theme.margin-show {
+    margin-right: 24px;
+    width:170px;
+}
+.rdk-combo-select-module p.combo-content-theme.margin-hide {
+    margin-right:36px;
+}
 /*todo:theme colors*/
 .rdk-combo-select-module .combo-content{
     border: 1px solid #d9d9d9;
