@@ -1,6 +1,6 @@
 <rdk_title>Rest服务中的文件操作API</rdk_title>
 
-### `file.loadProperty()` ###
+### `File.loadProperty()` {#loadProperty}###
 
 定义：
 
@@ -16,11 +16,31 @@
 
 示例： 从配置属性文件中读取uump对应的属性值
 
-       var properties=file.loadProperty("conf/test.properties");
+       var properties=File.loadProperty("conf/test.properties");
   
        var uump=properties.getProperty("uump");
 	   
-### `file.readXml()` ###
+### `File.readString()` {#readString}###
+
+定义：
+
+    function readString(path);
+
+参数：
+
+- path 字符串,必选。需要读取的文件路径。可使用[路径宏](relative_path_rule.md)简化路径。
+
+返回：返回文件内容字符串。
+
+说明：读取失败返回空字符串。
+
+示例： 读取当前应用（以example为例）server目录下文件readme.txt内容。
+		//使用宏路径
+       File.readString("$svr/readme.txt")
+        //普通路径
+	   File.readString("app/example/server/readme.txt")	
+        
+### `File.readXml()` {#readXml}###
 
 定义：
 
@@ -36,12 +56,11 @@
 
 示例： 解析xml文件并返回对应json对象。
 		//使用宏路径
-       file.readXml("$svr/dialog_settings.xml")
+       File.readXml("$svr/dialog_settings.xml")
         //普通路径
-	   file.readXml("app/example/server/dialog_settings.xml")	
-        
-	   
-### `file.save()` {#save}###
+	   File.readXml("app/example/server/dialog_settings.xml")	
+
+### `File.save()` {#save}###
 
 定义：
 
@@ -58,7 +77,22 @@
 
 说明：无
 
-### `file.saveAsCSV()` {#saveAsCSV}###
+### `File.delete()` {#delete}###
+
+定义：
+
+	function delete(path);
+
+参数：
+
+- path 字符串，必选。需要删除的文件或者文件夹路径。
+
+返回：true/false对应删除成功/失败。
+
+说明：若参数为文件夹路径，则会删除其所有子目录及子文件。
+
+
+### `File.saveAsCSV()` {#saveAsCSV}###
 
 定义：
 
@@ -81,7 +115,7 @@
 
 示例1：将一个二维数组写入到csv文件中，并排除第二列（序号为1）
 
-	var b = file.saveAsCSV("data/mydata.csv", [
+	var b = File.saveAsCSV("data/mydata.csv", [
 			[1, 2, 3],
 			[2, 4, 5]
 		], [1]);
@@ -90,19 +124,19 @@
 示例2：将一个 `matrix()` 的返回值写入到csv文件中，并排除 id和type 这2列
 
 	var mtx = matrix('select id,type,name,xx,yy from my_table_name');
-	var b = file.saveAsCSV("data/mydata.csv", mtx, ['id', 'type']);
+	var b = File.saveAsCSV("data/mydata.csv", mtx, ['id', 'type']);
 	log("file save success:", b);
 
 示例3：将一些数字写入csv，并且不要使用双引号包围：
 
-	var b = file.saveAsCSV("data/mydata.csv", [
+	var b = File.saveAsCSV("data/mydata.csv", [
 			[1, 2, 3],
 			[2, 4, 5]
 		], []， { quoteChar： ' ' });
 	log("file save success:", b);
 
 
-### `file.saveAsEXCEL()` {#saveAsEXCEL}###
+### `File.saveAsEXCEL()` {#saveAsEXCEL}###
 
 该方法提供了一个可以同时写多张excel sheet页的简便方法。
 
@@ -136,7 +170,7 @@
         
         var option={'append':false};  //可选，不写为false；true为追加  false为复写
 
-        var b = file.saveAsEXCEL(filestr,content,excludeindexes,option);	
+        var b = File.saveAsEXCEL(filestr,content,excludeindexes,option);	
 
 
 
