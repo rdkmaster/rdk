@@ -31,10 +31,12 @@
     height: 30px;
     box-shadow: none;
     border: none;
-    padding: 4px 22px 4px 8px;
+    margin: 0px 38px 4px 4px;
     width: auto;
 }
-
+.rdk-combo-select-module .combo-content-theme.padding-right {
+    margin-right:26px;
+}
 .rdk-combo-select-module .combo-content-icon{
     right: 5px;
     position: absolute;
@@ -59,7 +61,7 @@
     right: 22px;
 }
 .rdk-combo-select-module p.combo-content-theme  {
-    width: 185px;
+    width: 166px;
     overflow: hidden;
     white-space:nowrap;
 }
