@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Table -> New Column</title>
+
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+    <style>
+        /* td 第1,2,3列右对齐*/
+        .rdk-table-module .rdk-table tbody>tr>td:nth-of-type(3){
+            color: #008fd4;
+        }
+        .rdk-table-module .rdk-table tbody>tr>td:nth-of-type(4)
+         {
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body ng-controller='myCtrl' style="margin-top:20px">
+    <div style="width: 500px">
+        <rdk_table data="data" setting="setting">
+        </rdk_table>
+    </div>
+</body>
+
+</html>
+
+
+
