@@ -27,6 +27,12 @@ class CacheTest extends FunSpec with Matchers {
       CacheHelper.getAppCache(app).put(key, value)
       CacheHelper.getAppCache(app).size() should ===(1)
     }
+
+    it("clear ok"){
+      CacheHelper.getAppCache(app).put(key, value)
+      CacheHelper.clearAppCache(app)
+      CacheHelper.getAppCache(app).size() should ===(0)
+    }
   }
 
   describe("Aging Cache Test") {

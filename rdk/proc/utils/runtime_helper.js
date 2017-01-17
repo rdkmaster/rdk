@@ -187,8 +187,8 @@ var Cache = {
     del: function (k) {
         return rdk_runtime.cacheDel(k)
     },
-    clearApp: function (k) {
-        return rdk_runtime.clearAppCache(k)
+    clear: function () {
+        return rdk_runtime.clearAppCache(rdk_runtime.application())
     },
     global_put: function (k, v) {
         Log.warn("function deprecated,please use Cache.global.put()");
