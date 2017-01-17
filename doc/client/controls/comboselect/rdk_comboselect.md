@@ -41,6 +41,12 @@
 详细示例：
 <live_demo example="controls/comboselect/frozen" width="605"></live_demo>
 
+## clear <binding></binding>##
+>支持类型：布尔型
+
+`clear` 缺省时默认值为`false`，不会显示全删按钮
+
+`clear` 设置成 `true` 时，表示显示栏有内容时，全删按钮会出显，点击会删除其全部内容。
 >## id ##
 >支持类型：字符串
 
