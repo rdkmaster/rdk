@@ -551,7 +551,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             var result = scope.getRowStyle(itemRowSpan,columnDef);
                             angular.forEach(result, function(value, key) {
                                 destObj[key] = value;
-                            });
+                            });                          
                             destObj.width = columnDef.width;
                             destObj.cursor = 'move';
                             return destObj;
