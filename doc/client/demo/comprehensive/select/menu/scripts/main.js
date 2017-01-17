@@ -126,6 +126,8 @@ define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector
 
         };
         EventService.register('comboID','clear', function(){
+            console.log(1111);
+            scope.dataClear=false;
             var len=scope.items.length;
             selectedLists=[];
             for(var i=0;i<len;i++){

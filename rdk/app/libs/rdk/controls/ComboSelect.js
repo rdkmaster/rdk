@@ -25,7 +25,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                                   <p class="form-control combo-content-theme" ng-class="{\'padding-right\':!clear}" title="{{inputStr}}" \
                                   unselectable="on" ng-model="inputStr" ng-click="toggle()">{{inputStr}}</p>\
                                   <i class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
-                                  <i ng-if="clearShow" class="fa fa-times-circle fa-1 combo-content-close" ng-click="dataClear($event)" title="清除"></i>\
+                                  <i ng-if="!!clear" class="fa fa-times-circle fa-1 combo-content-close" ng-click="dataClear($event)" title="清除"></i>\
                               </div>\
                               <div class="combo-content-transclude">\
                                   <div ng-transclude ng-show="open"></div>\
@@ -84,7 +84,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
             function _link(scope, iEle, iAttrs, ctrl, transclude) {
                 var hasOpen = scope.open = Utils.isTrue(scope.open, false);
                 scope.frozen = Utils.isTrue(scope.frozen, true);
-                scope.clear = Utils.isTrue(scope.clear, false);
+                scope.clear = Utils.isTrue(scope.clear, true);
                 scope.inputStr = Utils.getValue(scope.inputStr, iAttrs.inputStr, '');
                 scope.unfoldedIcon = "fa fa-angle-up";
                 scope.foldedIcon = "fa fa-angle-down";
@@ -92,13 +92,11 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 scope.toggle = _toggle;
                 scope.closeShow = _closeShow;
                 scope.openShow = _openShow;
-                scope.clearShow =false;
                 scope.isSelect = false;
                 scope.appScope=Utils.findAppScope(scope);
                 scope.dataClear=function(){
-                    scope.clearShow = false;
-                    EventService.broadcast(scope.id,'clear',scope.inputStr);
-                    scope.inputStr='';
+                        EventService.broadcast(scope.id,'clear',scope.inputStr);
+                        scope.inputStr='';
                 };
                 if(scope.id) {
                     EventService.register(scope.id, EventTypes.CHANGE, function(event, data) {
