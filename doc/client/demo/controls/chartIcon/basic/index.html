@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>BasicSelector -> Basic</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                //这里引用了rdk应用的公共助手文件，不要改动
+                "application": '/doc/tools/doc_js/doc_app_helper'
+            }
+        });
+    </script>
+</head>
+
+<body ng-controller='myCtrl'>
+    <rdk-chart-icon chart-type="pie" data="'35%'" ></rdk-chart-icon>
+    <rdk-chart-icon chart-type="donut" data="[5,2,3,1]"></rdk-chart-icon>
+    <rdk-chart-icon chart-type="line" data="[1,2,3,4]"></rdk-chart-icon>
+    <rdk-chart-icon chart-type="bar" data="[2,2,3,3]" ></rdk-chart-icon>
+</body>
+
+</html>
