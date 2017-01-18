@@ -25,7 +25,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                                   <p class="form-control combo-content-theme" ng-class="{\'margin-show\':!clear,\'margin-hide\':!!clear}" title="{{inputStr}}" \
                                   unselectable="on" ng-model="inputStr" ng-click="toggle()">{{inputStr}}</p>\
                                   <i class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
-                                  <i ng-if="!!clear" class="fa fa-times-circle fa-1 combo-content-close" ng-click="dataClear()" title="清除"></i>\
+                                  <i ng-if="!!clear" class="fa fa-times-circle fa-1 combo-content-close" ng-click="dataClear()"></i>\
                               </div>\
                               <div class="combo-content-transclude">\
                                   <div ng-transclude ng-show="open"></div>\
