@@ -67,6 +67,15 @@
 
 <live_demo example="containers/tab/tab_draggable" width="800"></live_demo>
 
+## moveStep ##
+>支持类型：字符串
+
+此属性设置tab页签左右移动的个数。
+
+    <rdk-tab move-step="4"></rdk-tab>
+
+<live_demo example="containers/tab/tab_move" width="800"></live_demo>
+
 ## id ##
 >支持类型：字符串
 

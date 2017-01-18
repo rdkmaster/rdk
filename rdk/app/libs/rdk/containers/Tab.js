@@ -28,7 +28,8 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     showItems: '=',
                     close: '&?',
                     change: '&?',
-                    add: '&?'
+                    add: '&?',
+                    moveStep:'@?'
                 },
                 replace: true,
                 controller: ['$scope', function(scope){
@@ -53,17 +54,25 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 template: function(tElement, tAttrs) {
                     return '<div class="rdk-tab-module">\
                                 <div class="tabs">\
-                                    <ul class="title">\
-                                        <li ng-style="getLiStyle($index)" ng-repeat="tab in tabs"  on-finish-render>\
-                                            <a href="#{{tab.tabid}}" ng-click="tabClick($event, $index)" ng-mouseover="tabMouseOver($event)" ng-class="{\'selected\':currentSelectedIndex == $index}" rdk-tabtitle-parser>\
-                                              {{tab.title}}\
-                                            </a>\
-                                            <span style="position: absolute; right: 0" class="ui-icon ui-icon-close" role="presentation" ng-show="{{tab.closable}}" ng-click="$clickHandler($index, $event)"></span>\
-                                            <span class="bottom_line" style="display: block;" ng-show="picShow($index)">\
-                                                <em></em>\
-                                            </span>\
-                                        </li>\
-                                     </ul>\
+                                    <div style="display: flex">\
+                                        <div class="rdk-tabs-wrap">\
+                                            <ul class="title" ng-style="{\'left\':-tabsOffset+\'px\'}">\
+                                                <li ng-style="getLiStyle($index)" ng-repeat="tab in tabs"  on-finish-render>\
+                                                    <a href="#{{tab.tabid}}" ng-click="tabClick($event, $index)" ng-mouseover="tabMouseOver($event)" ng-class="{\'selected\':currentSelectedIndex == $index}" rdk-tabtitle-parser>\
+                                                      {{tab.title}}\
+                                                    </a>\
+                                                    <span class="ui-icon ui-icon-close" role="presentation" ng-show="{{tab.closable}}" ng-click="$clickHandler($index, $event)"></span>\
+                                                    <span class="bottom_line" ng-show="picShow($index)">\
+                                                        <em></em>\
+                                                    </span>\
+                                                </li>\
+                                             </ul>\
+                                         </div>\
+                                        <div ng-show="removeableTabs" class="move-wrap">\
+                                            <i ng-class="{\'disabled\':isMove(-1)}" ng-click="changeTabs(-1)" class="move fa fa-caret-left"></i>\
+                                            <i ng-class="{\'disabled\':isMove(+1)}" ng-click="changeTabs(+1)"  class="move fa fa-caret-right"></i>\
+                                        </div>\
+                                    </div>\
                                     <div ng-transclude class="content"> </div>\
                                 </div>\
                         </div>';
@@ -88,6 +97,105 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 scope.tabs = [];
                 scope.currentSelectedIndex = 0;
 
+                scope.tabsOffset=0;
+                scope.removeableTabs=false;
+                scope.moveStep= Utils.getValue(scope.moveStep, attrs.moveStep, 3); //移动个数
+
+                var tabsDom = element[0].querySelector(".title");
+                var tabItems=null;
+                var offsetMax=0; //最大偏移量
+                var pageIndexMax=0;
+                var totalOffsetWidth=0;
+                var _hasDirecChanged=false; //到最大偏移量时移动方向是否变化
+                var _pageIndex=0;
+                var _step=parseInt(scope.moveStep);
+
+                scope.isMove = function(type){
+                    if(type==-1){
+                        return scope.tabsOffset==0
+                    }else{
+                        return scope.tabsOffset==offsetMax
+                            || (offsetMax >= scope.tabsOffset-3 && offsetMax <=  scope.tabsOffset+3);
+                    }
+                };
+
+                scope.changeTabs =function(direction){
+                    if(scope.tabsOffset==0 && direction<0){
+                        return
+                    }else if(scope.tabsOffset==offsetMax && direction>0){
+                        return
+                    }
+                    //方向变化
+                    if((direction<0 && !_hasDirecChanged) || (direction>0 && _hasDirecChanged)){
+                        _pageIndex--;
+                    }
+                    if(scope.tabsOffset==offsetMax && direction<0)
+                    {
+                        _hasDirecChanged=true;
+                        _pageIndex=0;
+                    }
+                    if(scope.tabsOffset==0 && direction>0)
+                    {
+                        _hasDirecChanged=false;
+                        _pageIndex=0;
+                    }
+                    scope.tabsOffset += _calculOffset(_pageIndex,_step,_hasDirecChanged)*direction;
+                    if((direction>0 && !_hasDirecChanged) || (direction<0 && _hasDirecChanged)){
+                        _pageIndex++;
+                        if(_pageIndex >= pageIndexMax){
+                            _pageIndex = pageIndexMax-1
+                        }
+                    }
+                    //边界
+                    if(scope.tabsOffset>=offsetMax){
+                        scope.tabsOffset=offsetMax
+                    }
+                    else if(scope.tabsOffset<=0){
+                        scope.tabsOffset=0
+                    }
+                };
+
+                function _calculOffset(page,step,flag){
+                    var offsetRange = page*step;
+                    var offsetLeft=0;
+                    for(var i= 0 , len=tabItems.length ; i<len ; i++)
+                    {
+                        //左边计算偏移量
+                        if(i>=offsetRange && i<offsetRange+step && !flag)
+                        {
+                            offsetLeft+=tabItems[i].offsetWidth;
+                        }
+                        //右边计算偏移量
+                        else if(i > (tabItems.length-1) - (offsetRange + step) && i <= tabItems.length-1 - offsetRange && flag){
+                            offsetLeft+=tabItems[i].offsetWidth;
+                        }
+                    }
+                    return offsetLeft;
+                }
+
+                function _calculRemoveOffset(index){
+                    var offsetLeft=0;
+                    for(var i= 0 , len=tabItems.length ; i<len ; i++)
+                    {
+                        if(index === i)
+                        {
+                            offsetLeft=tabItems[i].offsetWidth;
+                        }
+                    }
+                    return -offsetLeft;
+                }
+                function _destroyTabChangeOffset(index){
+                    if(scope.tabsOffset>0){
+                        scope.tabsOffset +=_calculRemoveOffset(index);
+                    }
+                    if(scope.tabsOffset>=offsetMax){
+                        scope.tabsOffset=offsetMax
+                    }
+                    else if(scope.tabsOffset<=0){
+                        scope.tabsOffset=0
+                    }
+                }
+
                 $timeout(function() {
                     var tabs = $(element[0].querySelector(".content")).children("div");
                     for (var i = 0; i < tabs.length; i++) {
@@ -96,21 +204,46 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                         var title = tabs[i].getAttribute('title');
                         var closable = tabs[i].getAttribute('show_close_button');
                         _prepareTabs(tabs[i], title, tabid, closable);
-                    };
-
+                    }
                 }, 0);
 
+                function _setTabsWidth(){  //设置tabs容器宽度,判断显示移动按钮
+                    tabItems =element[0].querySelector(".title").querySelectorAll("li");
+                    var total=0;
+                    for(var i= 0 , len=tabItems.length ; i<len ; i++)
+                    {
+                        total+=tabItems[i].offsetWidth;
+                    }
+                    totalOffsetWidth=total;
+                    tabsDom.style.width = totalOffsetWidth+10+"px"; //10校验误差
+                    offsetMax = totalOffsetWidth+10-tabsDom.parentNode.offsetWidth;
+                    pageIndexMax = Math.ceil(len/_step);
+                    if(offsetMax > 0){
+                        scope.removeableTabs=true;
+                    }else{
+                        scope.tabsOffset=0;
+                        scope.removeableTabs=false;
+                    }
+                }
+                //重新计算最大偏移量
+                scope.$watch("removeableTabs", function(newVal, oldVal) {
+                    $timeout(function() {
+                        offsetMax=totalOffsetWidth+10-tabsDom.parentNode.offsetWidth;
+                    },0)
+                });
+                scope.$watch("tabs", function(newVal, oldVal) {
+                    _setTabsWidth();
+                },true);
                 var off = scope.$on('ngRepeatFinished', function(){
                     _appendTab();
                     _updateDraggable();
                     _addFeature();
-
+                    _setTabsWidth();
                     scope.$watch("selectedTab", function(newVal, oldVal) {
                         _activeTabByIndex(newVal);
                         var tabs = $(dom).tabs();
                         tabs.tabs("refresh"); 
                     }, true);
-
                 });
 
                 scope.getLiStyle = function(index){
@@ -244,9 +377,9 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     _destroy4ControllerScope(index);
                     var panelId = scope.tabs[index].tabid;
                     scope.tabs.splice(index, 1);
+                    scope.removeableTabs && _destroyTabChangeOffset(index);
                     $("#" + panelId).remove();
                     _activeTab(index);
-
                 }
 
                 scope.closeTab = function(index){
