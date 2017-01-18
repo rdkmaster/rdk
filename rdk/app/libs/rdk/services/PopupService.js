@@ -24,7 +24,7 @@
                 var myTitle = sampleHtml.attr('caption') || '';
                 var myIcon = sampleHtml.attr('icon') || '';
                 var myModal = Utils.isTrue(option.modal, true);
-                var myEffect = option.effect || 'scale';
+                var myEffect = option.effect || 'fade';
                 var myShowTitle = Utils.isTrue(option.showTitle, true);
                 var myWidth = option.width || 500;
 
@@ -45,6 +45,7 @@
                     hide: {effect: myEffect},  
                     title: myTitle,
                     width: myWidth,
+                    resizable: false,
                     position: {
                         my: positionX+' '+positionY,
                         at: atX+' '+atY,
@@ -61,8 +62,7 @@
                             ($(this).parent().children(".ui-dialog-titlebar").prepend($myIcon));
                         }
                         else{
-                            $(this).parent().children(".ui-dialog-titlebar-close").remove();
-                            $(this).parent().children(".ui-dialog-titlebar").addClass('rdk-popupservice-hidetitlebar');
+                            $(this).parent().children(".ui-dialog-titlebar").hide();
                         }                       
                     }
                 });
@@ -105,12 +105,12 @@
         function _positionHandler(popupModuleID, option){
             var dialogWidth = $('#'+popupModuleID).parent('.ui-dialog').width();
             var dialogHeight = $('#'+popupModuleID).parent('.ui-dialog').height();
-            var myLeft = option.x ? (option.x) : (option.left ? (option.left) : undefined);
-            var myRight = option.right ? (option.right) : undefined;
-            var myTop = option.y ? (option.y) : (option.top ? (option.top) : undefined);
-            var myBottom = option.bottom ? (option.bottom) : undefined;
-            var positionX = myLeft ? myLeft : (myRight ? ($(window).width()-myRight-dialogWidth) : ($(window).width()-dialogWidth)/2);
-            var positionY = myTop ? myTop : (myBottom ? ($(window).height()-myBottom-dialogHeight) : ($(window).height()-dialogHeight)/2);
+            var myLeft = (option.x || (option.x ==0)) ? (option.x) : (option.left ? (option.left) : undefined);
+            var myRight = (option.right || (option.right ==0)) ? (option.right) : undefined;
+            var myTop = (option.y || (option.y ==0)) ? (option.y) : (option.top ? (option.top) : undefined);
+            var myBottom = (option.bottom || (option.bottom ==0)) ? (option.bottom) : undefined;
+            var positionX = (myLeft || (myLeft ==0)) ? myLeft : (myRight ? ($(window).width()-myRight-dialogWidth) : ($(window).width()-dialogWidth)/2);
+            var positionY = (myTop || (myTop ==0)) ? myTop : (myBottom ? ($(window).height()-myBottom-dialogHeight) : ($(window).height()-dialogHeight)/2);
             $('#'+popupModuleID).parent('.ui-dialog').css({left: positionX, top: positionY});
         }
     }])

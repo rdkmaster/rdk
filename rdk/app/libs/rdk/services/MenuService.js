@@ -7,6 +7,7 @@ define(['angular', 'rd.core', 'jquery', 'rd.controls.Module', 'rd.services.Popup
 
       scope.showSubMenu = function(event){
         var $target = $(event.target);
+        $target.css({ 'cursor': 'pointer' });
         var subMenu = $target.find('ul');     
         var tWidth = $target.outerWidth();
         if(subMenu.length>0){
