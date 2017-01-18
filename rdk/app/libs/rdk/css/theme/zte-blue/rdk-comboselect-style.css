@@ -59,6 +59,7 @@
     position: absolute;
     top:7px;
     right: 22px;
+    cursor: pointer;
 }
 .rdk-combo-select-module p.combo-content-theme  {
     width: 158px;
