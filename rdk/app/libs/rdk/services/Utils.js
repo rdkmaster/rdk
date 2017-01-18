@@ -276,6 +276,21 @@
             return dest;
         }
 
+        this.contains = function(arr, object ,isHash) {
+            if(typeof object ==="object" && angular.isArray(arr)){
+                for(var i=0,len=arr.length ; i<len ; i++)
+                {
+                    if(!isHash && angular.equals(arr[i],object)){
+                        return i
+                    }else if( isHash && arr[i].$$hashKey === object.$$hashKey){
+                        return i
+                    }
+                }
+                return -1;
+            }else {
+                return -1;
+            }
+        };
         // 下面这几个函数提供了子级控件和父级控件之间的交互通道
         // 子级控件在自身数据有了变化之后，调用 callUpdater 通知父级
         // 通过控件的require属性无法做到任意父子级，因此通过这个方式实现
