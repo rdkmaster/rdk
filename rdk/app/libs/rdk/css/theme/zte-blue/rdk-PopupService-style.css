@@ -1,6 +1,8 @@
 .rdk-popupservice-dialog{
 	padding: 0;
 	margin: 0;
+    border-radius: 5px;
+    box-shadow: black 1px 1px 10px;
 }
 
 .rdk-popupservice-dialog .rdk-popupservice-titlebar{

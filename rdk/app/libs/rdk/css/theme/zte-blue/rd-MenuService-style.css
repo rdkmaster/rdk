@@ -6,6 +6,11 @@
     display:none;
     margin:0;
     padding:0;
+    position: absolute;
+    top: 0;
+    width: 150px;
+    border-radius: 5px;
+    box-shadow: black 1px 1px 10px;
 }
 
 .rdk_menu .list-group-item {
@@ -18,6 +23,7 @@
     right: 0;
     padding-top: 3px;
 }
+
 .rdk_menu .list-group-item:hover>ul.rdk_sub_menu,
 .rdk_menu .list-group-item:active>ul.rdk_sub_menu,
 .rdk_menu .list-group-item.active>ul.rdk_sub_menu{
@@ -26,7 +32,7 @@
 }
 .rdk_menu .list-group-item:hover,
 .rdk_menu .list-group-item:active,
-.rdk_menu .list-group-item.active  {
+.rdk_menu .list-group-item.active{
     background-color: #008fd5;
     color: #fff;
 }

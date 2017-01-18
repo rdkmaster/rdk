@@ -1,7 +1,7 @@
 define(['angular', 'rd.core', 'jquery', 'rd.controls.Module', 'rd.services.PopupService', 'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap', 'css!rd.styles.MenuService'], 
   function(){
     var menuModule = angular.module('rd.services.MenuService', ['rd.controls.Module', 'rd.services.PopupService']);
-    menuModule.controller('MenuController', ['$scope', 'MenuService', 'PopupService', function (scope, MenuService, PopupService){    
+    menuModule.controller('MenuController', ['$scope', 'MenuService', 'PopupService', 'EventService', 'EventTypes', function (scope, MenuService, PopupService, EventService, EventTypes){    
       
       scope.selectedMenu = '';
 
@@ -14,10 +14,7 @@ define(['angular', 'rd.core', 'jquery', 'rd.controls.Module', 'rd.services.Popup
           $('.rdk_menu').parents('.ui-dialog-content').css({'overflow': 'visible'});
           $('.rdk_menu').parents('.ui-dialog').css({'overflow': 'visible'});
           subMenu.css({
-            'position': 'absolute',
-            'left': tWidth,
-            'top': 0,
-            'width': 150
+            'left': tWidth+2,
           }).show();
         }
       };
@@ -25,6 +22,8 @@ define(['angular', 'rd.core', 'jquery', 'rd.controls.Module', 'rd.services.Popup
       scope.selectItem = function(event, label){
         event.stopPropagation();
         scope.selectedMenu = label;
+        var retMenuModuleID = $('#menuID').find('.ui-dialog-content').attr('id');//界面弹出菜单永远只有一个menuID
+        EventService.broadcast(retMenuModuleID, EventTypes.SELECT, label);
         MenuService.destroyMenu();
       };
 
@@ -95,7 +94,7 @@ define(['angular', 'rd.core', 'jquery', 'rd.controls.Module', 'rd.services.Popup
         var menuHTML = 
         '<div class="rdk_menu" >\
         <ul class="list-group" id="Rdk_Menu" > \
-        <li  class="list-group-item" ng-repeat="item in menuConfig" ng-mouseover="showSubMenu($event)" \
+        <li class="list-group-item" ng-repeat="item in menuConfig" ng-mouseover="showSubMenu($event)" \
         ng-mouseleave="hideSubMenu($event)" ng-click="selectItem($event, item.label)"\
         ng-class="{true:\'active\', false:\'\'}[item.label === selectedMenu]">\
         <span>{{item.label}}</span><i class="icon fa fa-chevron-right" ng-if="item.list !== undefined"></i>\
