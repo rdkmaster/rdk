@@ -8,7 +8,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 id: '@',
                 caption: '=?',
                 open: '=?',
-                clear: '=?',
+                showClear: '=?',
                 openPolicy:'@?',
                 frozen: '=?',
                 childChange: '&?',
@@ -22,10 +22,10 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 template:'<div class="rdk-combo-select-module" ng-mouseleave="closeShow()">\
                               <div class="combo-content" ng-mouseenter="openShow()" >\
                                   <span class="combo-caption" ng-show="!!caption">{{caption}}</span>\
-                                  <p class="form-control combo-content-theme" ng-class="{\'margin-show\':!clear,\'margin-hide\':!!clear}" title="{{inputStr}}" \
+                                  <p class="form-control combo-content-theme" ng-class="{\'margin-show\':!showClear,\'margin-hide\':!!showClear}" title="{{inputStr}}" \
                                   unselectable="on" ng-model="inputStr" ng-click="toggle()">{{inputStr}}</p>\
                                   <i class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
-                                  <i ng-if="!!clear" class="fa fa-times-circle fa-1 combo-content-close" ng-click="dataClear()"></i>\
+                                  <i ng-if="!!showClear" class="fa fa-times-circle fa-1 combo-content-close" ng-click="dataClear()"></i>\
                               </div>\
                               <div class="combo-content-transclude">\
                                   <div ng-transclude ng-show="open"></div>\
@@ -84,7 +84,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
             function _link(scope, iEle, iAttrs, ctrl, transclude) {
                 var hasOpen = scope.open = Utils.isTrue(scope.open, false);
                 scope.frozen = Utils.isTrue(scope.frozen, false);
-                scope.clear = Utils.isTrue(scope.clear, false);
+                scope.showClear = Utils.isTrue(scope.showClear, false);
                 scope.inputStr = Utils.getValue(scope.inputStr, iAttrs.inputStr, '');
                 scope.unfoldedIcon = "fa fa-angle-up";
                 scope.foldedIcon = "fa fa-angle-down";
@@ -101,11 +101,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 if(scope.id) {
                     EventService.register(scope.id, EventTypes.CHANGE, function(event, data) {
                         scope.inputStr = data;
-                        if(scope.clear==true && data==""){
-                            scope.clearShow = false;
-                        }else if(scope.clear==true && data!=""){
-                            scope.clearShow = true;
-                        }
                     });
                 }
                 $(document).mouseup(function(e){
