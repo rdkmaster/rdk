@@ -65,12 +65,10 @@ define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector
         }
     });
     myApp.controller('myCtrl', ['DataSourceService','$scope', 'RDKConst', 'BasicSelector','EventService','EventTypes','Data','$timeout',function(DataSourceService,scope, RDKConst, BasicSelector,EventService,EventTypes,Data,$timeout) {
-        debugger;
         scope.combOpen = false;
         scope.items = Data.data;
         scope.basicMultiple = true;
         scope.Open=false;
-        scope.dataClear = false;
         var selectedLists=[];
         scope.myFunc = function(searchVal) {//过滤
             var len = Data.data.length;
@@ -121,13 +119,9 @@ define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector
                     scope.items[i].highLight=selectedLists
                 }
             }
-            scope.dataClear = label =='' ?false:true;
             EventService.broadcast('comboID', EventTypes.CHANGE, label);
-
         };
-        EventService.register('comboID','clear', function(){
-            console.log(1111);
-            scope.dataClear=false;
+        EventService.register('comboID',EventTypes.CLEAR, function(){
             var len=scope.items.length;
             selectedLists=[];
             for(var i=0;i<len;i++){

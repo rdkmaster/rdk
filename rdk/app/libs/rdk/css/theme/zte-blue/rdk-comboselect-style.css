@@ -73,6 +73,10 @@
 .rdk-combo-select-module p.combo-content-theme.margin-hide {
     margin-right:36px;
 }
+.rdk-combo-select-module .fa-times-circle:before {
+    color: #ccc;
+    cursor: pointer;
+}
 /*todo:theme colors*/
 .rdk-combo-select-module .combo-content{
     border: 1px solid #d9d9d9;

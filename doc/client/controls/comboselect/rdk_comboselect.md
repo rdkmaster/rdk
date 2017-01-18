@@ -46,7 +46,7 @@
 
 `show_clear` 缺省时默认值为`false`，不会显示全删按钮
 
-`show_clear` 设置成 `true` 时，全删按钮会出显，点击会删除其全部内容。
+`show_clear` 设置成 `true` 时，有内容时显示删除按钮，没有内容时会隐藏，点击会删除其全部内容。
 
 详细示例：
 <live_demo example="controls/comboselect/clear" width="605"></live_demo>

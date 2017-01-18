@@ -1,7 +1,7 @@
 define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
     'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
     var comboModule = angular.module('rd.controls.ComboSelect', ['rd.core']);
-    comboModule.directive('rdkComboSelect', ['Utils', 'EventService', 'EventTypes', 'RDKConst', '$timeout',
+    comboModule.directive('rdkComboSelect', ['Utils','EventService', 'EventTypes', 'RDKConst', '$timeout',
         function(Utils, EventService, EventTypes, RDKConst, $timeout) {
             var zIndex = 0;
             var scopeDefine={
@@ -22,10 +22,10 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 template:'<div class="rdk-combo-select-module" ng-mouseleave="closeShow()">\
                               <div class="combo-content" ng-mouseenter="openShow()" >\
                                   <span class="combo-caption" ng-show="!!caption">{{caption}}</span>\
-                                  <p class="form-control combo-content-theme" ng-class="{\'margin-show\':!showClear,\'margin-hide\':!!showClear}" title="{{inputStr}}" \
+                                  <p class="form-control combo-content-theme" ng-class="{\'margin-show\':!clearStatus,\'margin-hide\':!!clearStatus}" title="{{inputStr}}" \
                                   unselectable="on" ng-model="inputStr" ng-click="toggle()">{{inputStr}}</p>\
                                   <i class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
-                                  <i ng-if="!!showClear" class="fa fa-times-circle fa-1 combo-content-close" ng-click="dataClear()"></i>\
+                                  <i ng-if="!!clearStatus" class="fa fa-times-circle fa-1 combo-content-close" ng-click="dataClear()"></i>\
                               </div>\
                               <div class="combo-content-transclude">\
                                   <div ng-transclude ng-show="open"></div>\
@@ -83,6 +83,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
 
             function _link(scope, iEle, iAttrs, ctrl, transclude) {
                 var hasOpen = scope.open = Utils.isTrue(scope.open, false);
+                scope.clearStatus=false;
                 scope.frozen = Utils.isTrue(scope.frozen, false);
                 scope.showClear = Utils.isTrue(scope.showClear, false);
                 scope.inputStr = Utils.getValue(scope.inputStr, iAttrs.inputStr, '');
@@ -95,12 +96,17 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 scope.isSelect = false;
                 scope.appScope=Utils.findAppScope(scope);
                 scope.dataClear=function(){
-                        EventService.broadcast(scope.id,'clear',scope.inputStr);
-                        scope.inputStr='';
+                    EventService.raiseControlEvent(scope, EventTypes.CLEAR,scope.inputStr);
+                    scope.inputStr='';
                 };
                 if(scope.id) {
                     EventService.register(scope.id, EventTypes.CHANGE, function(event, data) {
                         scope.inputStr = data;
+                    });
+                }
+                if(scope.showClear==true){
+                    scope.$watch('inputStr', function(newVal, oldVal) {
+                        scope.clearStatus = newVal==""?false:true;
                     });
                 }
                 $(document).mouseup(function(e){
