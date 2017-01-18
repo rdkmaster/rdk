@@ -171,7 +171,7 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area', 'rd.ser
                     if(!$vm.userArr[index]){
                         $vm.userArr[index]=[];
                     }
-                    containerIndex = Utils.container($vm.userArr[index],item);
+                    containerIndex = Utils.contains($vm.userArr[index],item);
                     if(containerIndex==-1){
                         $vm.userArr[index].push(item);
                     }else{
@@ -233,7 +233,7 @@ define(['angular', 'rd.services.DataSourceService','css!rd.styles.Area', 'rd.ser
                     if(!angular.isArray($vm.userArr[index])){
                         return angular.equals($vm.userArr[index],item);
                     }else if(angular.isArray($vm.userArr[index])){
-                        return Utils.container($vm.userArr[index],item)!=-1;
+                        return Utils.contains($vm.userArr[index],item)!=-1;
                     }
                 }
                 else{
