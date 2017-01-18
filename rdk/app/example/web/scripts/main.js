@@ -2,7 +2,7 @@
     // 在这里配置所有需要下载的文件，只有这个列表中的项目才会被浏览器下载
     // 隆重推荐把需要下载的文件一一配置在这里，这样RDK才可以完成自动压缩和合并
     // 写在页面的head中的文件无法被自动压缩和合并，从而导致页面打开变慢
-    var downloadDependency = [
+    var imports = [
         // 所有路径中的 base 都会被替换成本页面html文件所在路径
         // 注意：所有的url都不能加 .js 扩展名
         'base/template/sample_module',
@@ -23,7 +23,7 @@
     // 如果你没有用到第三方的 Angular module，那这里留空就好
     var requiredComponents = [ ];
 
-    // downloadDependency 中带有 alias 的条目的返回值会被保存在这个对象中
+    // imports 中带有 alias 的条目的返回值会被保存在这个对象中
     // 可通过 ctx.alias 的方式引用到这些下载项的返回值
     var ctx = {};
 
@@ -88,12 +88,12 @@
     //==========================================================================
     
     require.config({paths:{helper: '/rdk/app/modules/rdk_app_helpers'}});
-    downloadDependency.push({ url: 'blockUI', alias: 'blockUI' });
-    downloadDependency.push({ url: 'helper', alias: 'helper' });
-    define(/*fix-from*/application.getDownloads(downloadDependency)/*fix-to*/, start);
+    imports.push({ url: 'blockUI', alias: 'blockUI' });
+    imports.push({ url: 'helper', alias: 'helper' });
+    define(/*fix-from*/application.getDownloads(imports)/*fix-to*/, start);
     function start() {
-        application.initContext(ctx, arguments, downloadDependency);
-        rdk.$injectDependency(application.getComponents(requiredComponents, downloadDependency));
+        application.initContext(ctx, arguments, imports);
+        rdk.$injectDependency(application.getComponents(requiredComponents, imports));
         rdk.$ngModule.controller('RootController', controllerDefination);
         rdk.$ngModule.config(['blockUIConfig', function(blockUIConfig) {
             // blockUI默认只要有ajax请求在进行，就会自动启动，阻止页面响应鼠标事件
