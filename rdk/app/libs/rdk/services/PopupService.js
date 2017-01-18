@@ -78,6 +78,7 @@
 
         this.removePopup = function(id) {
             var popupModuleID = id;
+            if(popupModuleID == undefined) return;
             if(!document.getElementById(popupModuleID)) {
                 console.warn("弹出框[id=%s]不存在！", popupModuleID);
                 return;

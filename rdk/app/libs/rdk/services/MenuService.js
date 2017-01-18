@@ -113,6 +113,7 @@ define(['angular', 'rd.core', 'jquery', 'rd.controls.Module', 'rd.services.Popup
         $(document).mouseup(function(e){
           var myMenu = document.querySelector('.rdk_menu');
           if(!$(myMenu).is(e.target) && $(myMenu).has(e.target).length === 0){
+            $(document).off("mouseup");
             destroyMenu();
           }
         })
