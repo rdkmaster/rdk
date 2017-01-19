@@ -241,7 +241,7 @@
             if (angular.isUndefined(scope.id)) {
                 return;
             }
-            
+
             if (angular.isDefined(rdk[scope.id]) && rdk[scope.id] !== scope) {
                 console.warn('conflict dom node id: ' + scope.id);
             } else {
