@@ -23,11 +23,13 @@ define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector
             return BasicSelector.selected2string(selected, 'label', '...');
         }
 
-        scope.frBln = true;
+        scope.toggleFrozen = function() {
+            scope.frBln = !scope.frBln;
+            scope.btnLabel = scope.frBln ? '已冻结，单击解冻' : '已解冻，单击冻结';
+        }
 
-        $timeout(function() {
-            scope.frBln = false;
-        }, 5000);
+        scope.frBln = false;
+        scope.toggleFrozen();
 
     }]);
 });
