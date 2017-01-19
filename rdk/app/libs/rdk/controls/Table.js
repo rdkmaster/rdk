@@ -29,11 +29,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 </th>\
                             </tr>\
                         </thead>\
-                        <tbody>\
+                        <tbody ng-mouseleave="clearHovered()">\
                             <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
-                                ng-class="{\'selected-row\':ifSelected(item)}" ng-dblclick="dbClickHandler(item,$index)">\
+                                ng-class="{\'selected-row\':ifRowHighLight(item,\'click\'),\'selected-row-hover\':ifRowHighLight(item,\'hover\')}" ng-dblclick="dbClickHandler(item,$index)">\
                                 <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="currentPageData[$index].checked"></td>\
-                                <td rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" ng-style="getCellStyle(itemRowSpan,columnDef)">\
+                                <td ng-class="{\'selected-row-td\':ifRowHighLight(item,\'click\',columnDef),\'selected-row-hover-td\':ifRowHighLight(item,\'hover\',columnDef)}" ng-mouseenter="setHovered(item,$event)" rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" ng-style="getCellStyle(itemRowSpan,columnDef)">\
                                 </td>\
                             </tr>\
                              <tr ng-if="noData">\
@@ -419,13 +419,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         return itemRowSpan && itemRowSpan[item["targets"]] ? itemRowSpan[item["targets"]] : 1;
                     }
 
-                    scope.getRowStyle = function(itemRowSpan, item) {
-                        var result = "";
-                        if (itemRowSpan && itemRowSpan[item["targets"]] == 0) {
-                            result = "display:none";
-                        }
-                        return result;
-                    }
                     _init();
                     scope.searchPrompt="Search";
                     var curSortIndex;
@@ -465,8 +458,15 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         //控制分页的显示
                         scope.pageCtrl = angular.isDefined(scope.pageCtrl) ? scope.pageCtrl : true;
 
-                        //选中行
-                        scope.selectedModel = {};
+                        //选中行高亮
+                        scope.selectedModel = {
+                            rows:[],
+                            cols:[]
+                        };
+                        scope.hoveredModel = {
+                            rows:[],
+                            cols:[]
+                        };
 
                         //启用搜索功能
                         scope.search = (attrs.search == "true") ? true : ((attrs.searchable == "true") ? true : false); //优先attrs.search
@@ -549,10 +549,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                         scope.getCellStyle = function(itemRowSpan,columnDef){
                             var destObj = {};
-                            var result = scope.getRowStyle(itemRowSpan,columnDef);
-                            angular.forEach(result, function(value, key) {
-                                destObj[key] = value;
-                            });                          
+                            if (itemRowSpan && itemRowSpan[columnDef["targets"]] == 0) {
+                                destObj.display="none";
+                            }
                             destObj.width = columnDef.width;
                             destObj.cursor = 'move';
                             return destObj;
@@ -703,18 +702,67 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             return curSortIndex===index &&  sortIconStatus;
                         };
 
-                        scope.ifSelected = function(item) {
-                            return item.$$hashKey == scope.selectedModel.$$hashKey;
-                        };
-
-                        scope.setSelected = function(item, event) {
-                            if (item.$$hashKey == scope.selectedModel.$$hashKey) {
-                                // scope.selectedModel = {};
-                            } else {
-                                scope.selectedModel = item;
+                        scope.ifRowHighLight = function(item,type,columnDef){
+                            if(type==="click"){
+                                if(!columnDef){
+                                    return Utils.contains(scope.selectedModel.rows,item,true)!=-1 && scope.selectedModel.cols.length==0;
+                                }else{
+                                    return Utils.contains(scope.selectedModel.rows,item,true)!=-1 && scope.selectedModel.cols.indexOf(columnDef.targets)!=-1;
+                                }
+                            }else if(type==="hover"){
+                                if(!columnDef){
+                                    return  Utils.contains(scope.hoveredModel.rows,item,true)!=-1 && scope.hoveredModel.cols.length==0;
+                                }else{
+                                    return Utils.contains(scope.hoveredModel.rows,item,true)!=-1 && scope.hoveredModel.cols.indexOf(columnDef.targets)!=-1;
+                                }
                             }
+                        };
+                        scope.setSelected = function(item, event) {
+                            scope.selectedModel = _setRowHighLight(item,event.target);
                             EventService.raiseControlEvent(scope, 'select', item);
                         };
+                        scope.setHovered = function(item, event) {
+                            scope.hoveredModel = _setRowHighLight(item,event.target);
+                        };
+                        scope.clearHovered = function() {
+                            scope.hoveredModel = {
+                                rows:[],
+                                cols:[]
+                            };
+                        };
+                        function _setRowHighLight(rowItem,targetNode){
+                            var highLight = {
+                                rows:[],
+                                cols:[]
+                            };
+                            var tdDom=_findParentTdByChild(targetNode);
+                            var rowSpanCount = parseInt(tdDom.getAttribute("rowSpan"));
+                            if(rowSpanCount!=1)
+                            {
+                                for(var i=0 ; i<rowSpanCount ; i++)
+                                {
+                                    highLight.rows.push(scope.$filtered[rowItem.$index+i]);
+                                }
+                            }
+                            else{
+                                var tds = tdDom.parentNode.querySelectorAll("td[rowSpan]");
+                                for(var k= 0,len=tds.length ; k<len ; k++)
+                                {
+                                    if(tds[k].getAttribute("rowSpan") == "1"){
+                                        highLight.cols.push(k);
+                                    }
+                                }
+                                highLight.rows.push(rowItem);
+                            }
+                            return highLight;
+                        }
+
+                        function _findParentTdByChild(node){
+                            while (node.nodeName!="TD"){
+                                node=node.parentNode;
+                            }
+                            return node;
+                        }
 
                         scope.singleCheck = function(){
                             scope.refreshSingleCurrentPage();
