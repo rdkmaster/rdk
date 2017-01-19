@@ -22,10 +22,10 @@ define(['angular', 'jquery', 'rd.core',
         }],
         template: function() {
           return '<div class="switcher"> \
-            <div ng-class="{true:\'switch-on\', false:\'switch-off\'}[checked]">\
+            <div ng-class="{true:\'switch-on\', false:\'switch-off\'}[checked]" ng-click="checked=!checked">\
               <input type="checkbox" checked={{checked}}>\
               <span class="switch-left" ng-show="checked">{{onLabel}}</span>\
-              <button ng-click="checked=!checked" ng-disabled="!enabled" >&nbsp;</button>\
+              <button ng-disabled="!enabled" >&nbsp;</button>\
               <span class="switch-right" ng-show="!checked">{{offLabel}}</span>\
             </div>\
           </div>';

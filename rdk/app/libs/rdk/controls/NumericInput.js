@@ -20,7 +20,7 @@ define(['angular', 'jquery', 'rd.core',
         }],
         template: function(tElement, tAttrs) {
           return '<div class="input-group numeric_input"> \
-            <input type="number" class="form-control" value=0 ng-keydown="changeValue($event)"> \
+            <input type="number" class="form-control" value=0 ng-keyup="changeValue($event)"> \
             <div class="input-group-addon"> \
               <a href="javascript:;" class="spin-up" ng-click="plus()"><i class="fa fa-angle-up"></i></a> \
               <a href="javascript:;" class="spin-down" ng-click="minus()"><i class="fa fa-angle-down"></i></a> \
@@ -56,13 +56,13 @@ define(['angular', 'jquery', 'rd.core',
 
         if (/^[+-]{0,1}([0-9]*\.)\d+$/.test(step)) {
           isFloat = true;
-          bits = step.split('.')[1].length
+          bits = step.split('.')[1].length;
         }
         //纠错
         try{
-          step = isFloat? parseFloat(step): parseInt(step);
-          min = isFloat? parseFloat(min): parseInt(min);
-          max = isFloat? parseFloat(max): parseInt(max);
+          step = parseFloat(step);//isFloat? parseFloat(step): parseInt(step);
+          min = parseFloat(min);//isFloat? parseFloat(min): parseInt(min);
+          max = parseFloat(max);//isFloat? parseFloat(max): parseInt(max);
         }catch(e) {
           console.error('step、min和max属性必须为数值');
           return;
@@ -73,9 +73,11 @@ define(['angular', 'jquery', 'rd.core',
         }
 
         scope.plus = function() {
-          var value = inputElement.value
-          value = isFloat? parseFloat(value): parseInt(value)
-          value = (value + step).toFixed(bits)
+          // var value = inputElement.value;
+          //value = isFloat? parseFloat(value): parseInt(value);
+          _refreshBits(inputElement.value);
+          var value = parseFloat(inputElement.value);
+          value = parseFloat((value + step).toFixed(bits));
           if (value > max) {
             value = max;
           }
@@ -85,9 +87,11 @@ define(['angular', 'jquery', 'rd.core',
         };
 
         scope.minus = function() {
-          var value = inputElement.value
-          value = isFloat? parseFloat(value): parseInt(value)
-          value = (value - step).toFixed(bits)
+          // var value = inputElement.value;
+          //value = isFloat? parseFloat(value): parseInt(value);
+          _refreshBits(inputElement.value);
+          var value = parseFloat(inputElement.value);
+          value = parseFloat((value - step).toFixed(bits));
           if (value < min) {
             value = min;
           }
@@ -103,7 +107,28 @@ define(['angular', 'jquery', 'rd.core',
           } else if (event.keyCode === KEY_CODE.DOWN) {
             scope.minus();
           }
+          else{
+            _refreshValue();
+          }
         };
+
+        function _refreshBits(valueStr){
+          if (/^[+-]{0,1}([0-9]*\.)\d+$/.test(valueStr)){
+            bits = Math.max(valueStr.split('.')[1].length, bits);
+          }
+        }
+
+        function _refreshValue(){
+          var value = parseFloat(inputElement.value);
+          if(value < min){
+            value = min;
+          }
+          if(value > max){
+            value = max;
+          }
+          inputElement.value = value;
+          ngModel.$setViewValue(value);
+        }
 
         ngModel.$render = function() {
           inputElement.value = ngModel.$viewValue || 0;

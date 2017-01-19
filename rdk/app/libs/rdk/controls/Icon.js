@@ -4,20 +4,20 @@
 define(['angular', 'jquery', 'rd.core', 'css!rd.styles.IconFonts', 
   'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
   var nInputApp = angular.module("rd.controls.Icon", ['rd.core']);
-  nInputApp.directive('rdkIcon', ['Utils', '$timeout','$compile', '$controller',
-    function(Utils) {
+  nInputApp.directive('rdkIcon', ['Utils', 'EventService', function(Utils, EventService) {
       return {
         restrict: 'E',
         scope: {
           icon: '@',
-          label: '@?'
+          label: '@?',
+          click: '&?'
         },
         controller: ['$scope', function(scope){
           Utils.publish(scope, this);
           /* 组件对外开放函数 */
         }],
         template: function() {
-          return '<span> \
+          return '<span style="cursor:{{click(scope) ? \'pointer\' : \'default\'}}" ng-click="click(scope)($event)"> \
             <i ng-if="!isImage" class="{{icon}}"></i>\
             <img ng-show="isImage" src="{{icon}}" style="width:1em; height: 1em;">{{label}}</span>';
         },
@@ -31,6 +31,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.IconFonts',
       function _link(scope, element, attrs) {
         scope.icon = Utils.getValue(scope.icon, attrs.icon, '');
         scope.label = Utils.getValue(scope.label, attrs.label, '');
+
         var fromComplete = true;
         function loadImage(url, callback) {
           var img = new Image();
@@ -55,7 +56,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.IconFonts',
             });
           }
         })
-
       }
     }
   ]);

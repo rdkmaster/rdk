@@ -31,6 +31,11 @@
 
 `label` 属性为图标后面的描述文本。
 
+## click ##
+单击 *icon* 后，如果定义了 *click* 函数，就会调用应用自定义的 *click* 方法。该属性可绕开事件机制。
+
+ *click* 实例如下：
+<live_demo example="controls/icon/demo4click" width="900"></live_demo>
 
 
 
