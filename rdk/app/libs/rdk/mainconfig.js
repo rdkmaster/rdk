@@ -24,6 +24,7 @@ require.config({
         "jquery-headfix":"../jquery-headfix/jquery.stickyheader",
         "jquery-freezeheader":"../jquery-freezeheader/jquery.freezeheader",
         "jquery-gesture":"../jquery-ext/jquery.gesture",
+        "jquery-peity":"../jquery-peity/jquery.peity",
         "throttle-debounce" : '../jquery-headfix/jquery.ba-throttle-debounce.min',
         "perfect-scrollbar" : '../perfect-scrollbar/perfect-scrollbar',
 
@@ -46,6 +47,7 @@ require.config({
         "rd.controls.Bullet": "../rdk/controls/Bullet",
         "rd.controls.Button":"../rdk/controls/Button",
         "rd.controls.ComboSelect": "../rdk/controls/ComboSelect",
+        "rd.controls.ChartIcon": "../rdk/controls/ChartIcon",
         "rd.controls.Editor": "../rdk/controls/Editor",
         "rd.controls.FoldSelector": "../rdk/controls/FoldSelector",
         "rd.controls.Graph": "../rdk/controls/Graph",

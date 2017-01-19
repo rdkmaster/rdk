@@ -30,6 +30,7 @@
         SELECT: "select",
         UNSELECT:"unselect",
         CHANGE: "change",
+        CLEAR: "clear",
         ENTER: "enter",
         RESTORE: "restore",
         ERROR: "error",
@@ -257,7 +258,9 @@
                 if (scope.id) {
                     this.broadcast(scope.id, eventType, data);
                 }
+
                 var fn = scope[Utils.snake2camel(eventType)](scope);
+
                 if (!fn) {
                     if(typeof(defaultReturnValue) == 'function'){
                         defaultReturnValue();

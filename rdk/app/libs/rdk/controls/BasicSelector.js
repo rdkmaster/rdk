@@ -78,7 +78,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.BasicSelector',
                 _bindData();//组件嵌套时，必须这样做双向绑定才生效
                 _init();
                 _refreshSelectedItems();
-
                 if (scope.id) {
                     EventService.register(scope.id, EventTypes.SELECT, function(event, data) {
                         scope.selectedItems = [];

@@ -57,6 +57,24 @@
 详细示例如下：
 <live_demo example="controls/area/granularity" width="600"></live_demo>
 
+## multiple_select <binding></binding> ##
+>支持类型：字符串
+
+判断是否支持多选。为true则支持多选，为false则不支持。默认值为false
+
+    <rdk_area multiple_select="true"></rdk_basic_selector>
+
+<live_demo example="controls/area/multiple" width="405"></live_demo>
+
+## multiple_area <binding></binding> ##
+>支持类型：字符串
+
+multiple_select设置为true多选时可以设置此属性，为true则可以跨省市选择区域。默认值为false
+
+    <rdk_area multiple_select="true" multiple_area="true"></rdk_basic_selector>
+
+<live_demo example="controls/area/multipleAreaSelf" width="405"></live_demo>
+
 ## province-label ##
 
 配置第一级选择项页签名称,缺省时默认值为"省"。
