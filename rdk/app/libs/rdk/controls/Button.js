@@ -4,6 +4,7 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
     btnSearchApp.directive('rdkButton', ['EventService', 'Utils', 'EventTypes', '$compile', '$timeout', 
         function(EventService, Utils, EventTypes, $compile, $timeout) {
             var scopeDefine={
+                id: '@?',
                 click: '&?',
                 icon:'@?',
                 label:'@?',
@@ -42,10 +43,7 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                             if(scope.toggle==true){
                                 scope.selected=!scope.selected
                             }
-                            var fn=scope.click(scope);
-                            if (!!fn) {
-                                fn();
-                            }
+                            EventService.raiseControlEvent(scope, EventTypes.CLICK, scope.id);
                         }, 0);
                     }
                     scope.$stopPro=function($event){
