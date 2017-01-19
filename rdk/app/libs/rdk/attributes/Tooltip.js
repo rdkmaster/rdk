@@ -39,6 +39,13 @@ define(['jquery', 'rd.core', 'css!rd.styles.Bootstrap', 'rd.controls.Module'], f
                     return;
                 }
 
+                var closeTagReg = /<([a-z]+)(\s*\w*?\s*=\s*".+?")*(\s*?>[\s\S]*?(<\/\1>)+|\s*\/>)/i;
+                var fileReg = /\.\w+$/;
+                if((!closeTagReg.test(content)) && (!fileReg.test(content))){
+                    var contentStr = "<div></div>";
+                    content = $(contentStr).text(content)[0].outerHTML;
+                }
+
                 var tooltipID = Utils.createUniqueId('tooltip_'),
                     contentID ='content-'+tooltipID,
 
