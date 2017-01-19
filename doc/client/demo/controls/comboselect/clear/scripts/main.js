@@ -18,18 +18,14 @@ define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector
             id: 3,
             label: "湖北省"
         }];
+
         scope.highLight=[];
+        scope.clearSelected = function() {
+            scope.highLight=[];
+        }
+
         scope.selected2string = function(selected, context, index) {
             return BasicSelector.selected2string(selected, 'label', '...');
         }
-        EventService.register('comboID',EventTypes.CLEAR, function(scope,data){
-            scope.highLight=[];
-        });
-        scope.frBln = true;
-
-        $timeout(function() {
-            scope.frBln = false;
-        }, 5000);
-
     }]);
 });

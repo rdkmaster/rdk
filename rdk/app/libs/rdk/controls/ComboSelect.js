@@ -11,6 +11,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 showClear: '=?',
                 openPolicy:'@?',
                 frozen: '=?',
+                clear: '&?',
                 childChange: '&?',
             };
             return {
@@ -25,7 +26,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                                   <p class="form-control combo-content-theme" ng-class="{\'margin-hide\':!!showClear}" title="{{inputStr}}" \
                                   unselectable="on" ng-model="inputStr" ng-click="toggle()">{{inputStr}}</p>\
                                   <i class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
-                                  <i ng-if="!!clearStatus" class="fa fa-times-circle fa-1 combo-content-close" ng-click="dataClear()"></i>\
+                                  <i ng-if="!!inputStr" class="fa fa-times-circle fa-1 combo-content-close" ng-click="clearData()"></i>\
                               </div>\
                               <div class="combo-content-transclude">\
                                   <div ng-transclude ng-show="open"></div>\
@@ -83,7 +84,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
 
             function _link(scope, iEle, iAttrs, ctrl, transclude) {
                 var hasOpen = scope.open = Utils.isTrue(scope.open, false);
-                scope.clearStatus=false;
                 scope.frozen = Utils.isTrue(scope.frozen, false);
                 scope.showClear = Utils.isTrue(scope.showClear, false);
                 scope.inputStr = Utils.getValue(scope.inputStr, iAttrs.inputStr, '');
@@ -94,43 +94,39 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 scope.closeShow = _closeShow;
                 scope.openShow = _openShow;
                 scope.isSelect = false;
-                scope.appScope=Utils.findAppScope(scope);
-                scope.dataClear=function(){
-                    EventService.broadcast(scope.id, EventTypes.CLEAR,scope.inputStr);
-                    scope.inputStr='';
-                };
+
                 if(scope.id) {
                     EventService.register(scope.id, EventTypes.CHANGE, function(event, data) {
                         scope.inputStr = data;
                     });
                 }
-                if(scope.showClear==true){
-                    scope.$watch('inputStr', function(newVal, oldVal) {
-                        scope.clearStatus = newVal==""?false:true;
-                    });
-                }
-                $(document).mouseup(function(e){
-                    if(!$(iEle).is(e.target) && $(iEle).has(e.target).length === 0){
-                        $timeout(function(){
+                $(document).mouseup(_hideDropdown);
+
+                scope.clearData = function() {
+                    EventService.raiseControlEvent(scope, EventTypes.CLEAR, scope.id);
+                    scope.inputStr = '';
+                };
+
+                function _hideDropdown(e) {
+                    if(!$(iEle).is(e.target) && $(iEle).has(e.target).length === 0) {
+                        $timeout(function() {
                             scope.open = false;
-                            if(scope.openPolicy==="hover"){
+                            if(scope.openPolicy==="hover") {
                                 scope.isSelect = false;
                             }
                         }, 0)
                     }
-                });
+                }
 
                 function _toggle(){
                     if(scope.frozen) return;//冻结
-                    if(hasOpen){   //初始open=true时直接关闭
-                        scope.open=!scope.open;
-                        hasOpen=false;
-                    }
-                    else if(scope.isSelect || !scope.open)
-                    {
-                        scope.open=!scope.open;
-                        hasOpen=false;
-                        if(!scope.open){
+                    if(hasOpen) {   //初始open=true时直接关闭
+                        scope.open =! scope.open;
+                        hasOpen = false;
+                    } else if(scope.isSelect || !scope.open) {
+                        scope.open =! scope.open;
+                        hasOpen = false;
+                        if(!scope.open) {
                             scope.isSelect = false;
                             return;
                         }
@@ -138,19 +134,18 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                     scope.isSelect=true;
                 }
 
-                function _closeShow()
-                {
-                    if(scope.isSelect || scope.openPolicy!="hover"){ //在进行选择地区过程中锁住close事件
+                function _closeShow() {
+                    if(scope.isSelect || scope.openPolicy != "hover"){ //在进行选择地区过程中锁住close事件
                         return;
                     }
                     scope.open=false;
                 }
-                function _openShow()
-                {
-                    if(scope.openPolicy!="hover"){
+
+                function _openShow() {
+                    if(scope.openPolicy != "hover"){
                         return;
                     }
-                    scope.open=true;
+                    scope.open = true;
                 }
             }
         }])

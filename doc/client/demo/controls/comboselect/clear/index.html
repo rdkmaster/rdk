@@ -12,7 +12,7 @@
 </head>
 
 <body ng-controller='myCtrl'>
-    <rdk_combo_select  open='true' frozen="frBln" show_clear="true" id="comboID">
+    <rdk_combo_select  open='true' show_clear="true" clear="clearSelected">
         <rdk_basic_selector data="allItems" selected_items="highLight" multiple_select="true" track_item_by="id" child_change="selected2string"><span>{{item.label}}</span>
         </rdk_basic_selector>
     </rdk_combo_select>
