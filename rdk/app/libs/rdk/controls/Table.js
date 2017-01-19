@@ -31,7 +31,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         </thead>\
                         <tbody ng-mouseleave="clearHovered()">\
                             <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
-                                ng-class="{\'selected-row\':ifRowHighLight(item,\'click\'),\'selected-row-hover\':ifRowHighLight(item,\'hover\')}" ng-dblclick="dbClickHandler(item,$index)">\
+                                ng-class="{\'row-span\':groupTargets,\'selected-row\':ifRowHighLight(item,\'click\'),\'selected-row-hover\':ifRowHighLight(item,\'hover\')}" ng-dblclick="dbClickHandler(item,$index)">\
                                 <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="currentPageData[$index].checked"></td>\
                                 <td ng-class="{\'selected-row-td\':ifRowHighLight(item,\'click\',columnDef),\'selected-row-hover-td\':ifRowHighLight(item,\'hover\',columnDef)}" ng-mouseenter="setHovered(item,$event)" rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" ng-style="getCellStyle(itemRowSpan,columnDef)">\
                                 </td>\
