@@ -242,7 +242,9 @@
                 if (scope.id) {
                     this.broadcast(scope.id, eventType, data);
                 }
-                var fn = scope[Utils.snake2camel(eventType)];
+
+                var fn = scope[Utils.snake2camel(eventType)](scope);
+
                 if (!fn) {
                     return defaultReturnValue;
                 }

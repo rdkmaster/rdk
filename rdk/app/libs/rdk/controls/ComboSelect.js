@@ -20,9 +20,9 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
 
                 scope: scopeDefine,
                 template:'<div class="rdk-combo-select-module" ng-mouseleave="closeShow()">\
-                              <div class="combo-content" ng-mouseenter="openShow()" >\
+                              <div class="combo-content" ng-mouseenter="openShow()">\
                                   <span class="combo-caption" ng-show="!!caption">{{caption}}</span>\
-                                  <p class="form-control combo-content-theme" ng-class="{\'margin-show\':!clearStatus,\'margin-hide\':!!clearStatus}" title="{{inputStr}}" \
+                                  <p class="form-control combo-content-theme" ng-class="{\'margin-hide\':!!showClear}" title="{{inputStr}}" \
                                   unselectable="on" ng-model="inputStr" ng-click="toggle()">{{inputStr}}</p>\
                                   <i class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
                                   <i ng-if="!!clearStatus" class="fa fa-times-circle fa-1 combo-content-close" ng-click="dataClear()"></i>\
@@ -96,7 +96,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 scope.isSelect = false;
                 scope.appScope=Utils.findAppScope(scope);
                 scope.dataClear=function(){
-                    EventService.raiseControlEvent(scope, EventTypes.CLEAR,scope.inputStr);
+                    EventService.broadcast(scope.id, EventTypes.CLEAR,scope.inputStr);
                     scope.inputStr='';
                 };
                 if(scope.id) {
