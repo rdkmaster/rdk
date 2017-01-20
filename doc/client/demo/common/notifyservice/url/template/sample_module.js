@@ -6,8 +6,8 @@ define([], function() {
         scope.someData = 'some data defined in the SampleModule controller...';
         scope.myData = 'sample inter load module manually...';
 
-        this.destroy = function(){
-            alert('ready to destroy the dialog...');
+        scope.destroyHandler = function(){
+            NotifyService.removeNotify(scope.$moduleId);
         }
     }]);
 });

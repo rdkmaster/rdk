@@ -19,13 +19,18 @@
 ### 入参说明
 
 1. message json对象，必选。是需要显示的内容。
+
 		{
 			title: '',			//提示框的标题
 			message: ''			//提示框的内容，可以是字符串，可以是html字符串，也可以是用户模块url
 		}
+
 2. option json对象，可选。option的结构为：
+
 		{
-		    position: '',		//提示框显示的位置，默认为left，显示在页面的左上侧
+		    position: '',		//提示框显示的位置，默认为 left，显示在页面的左上侧
+			type: '',		    //message的格式，有 url/html/text 三种，缺省默认 text
+			initData: ''        //初始化数据，参照 module 中的 initData
 		}
 
 

@@ -24,10 +24,5 @@ define('main', ['rd.controls.Module', 'rd.services.NotifyService', 'sample_modul
             };
             moduleID = NotifyService.notify({title: 'my first notify', message: sampleUrl}, option);
         };
-
-        scope.destroyHandler = function(){
-            rdk[moduleID].child.destroy();
-            NotifyService.removeNotify(moduleID);
-        }
     }]);
 });
