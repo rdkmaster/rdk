@@ -6,15 +6,16 @@ define(['angular', 'jquery', 'rd.core',
   var nInputApp = angular.module("rd.controls.NumericInput", ['rd.core']);
   nInputApp.directive('rdkNumericInput', ['EventService', 'EventTypes','Utils', '$timeout','$compile', '$controller',
     function(EventService, EventTypes, Utils, $timeout, $compile, $controller) {
-      return {
-        restrict: 'E',
-        require: '?ngModel',
-        scope: {
+      var scopeDefine = {
           step: '=',
           min: '=',
           max: '=',
           change: '&?'
-        },
+      }; 
+      return {
+        restrict: 'E',
+        require: '?ngModel',
+        scope: scopeDefine,
         controller: ['$scope', function(scope){
           Utils.publish(scope, this);
         }],
@@ -34,9 +35,8 @@ define(['angular', 'jquery', 'rd.core',
         }
       }
 
-
-
       function _link(scope, element, attrs, ngModel) {
+        Utils.checkEventHandlers(attrs,scopeDefine);
         if (!ngModel) return;
         var inputElement = element[0].children[0].children[0];
 

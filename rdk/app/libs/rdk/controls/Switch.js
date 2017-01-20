@@ -6,15 +6,16 @@ define(['angular', 'jquery', 'rd.core',
   var nInputApp = angular.module("rd.controls.Switch", ['rd.core']);
   nInputApp.directive('rdkSwitch', ['EventService', 'EventTypes','Utils', '$timeout','$compile', '$controller',
     function(EventService, EventTypes, Utils) {
-      return {
-        restrict: 'E',
-        scope: {
+      var scopeDefine = {
           checked: '=',
           onLabel: '@?',
           offLabel: '@?',
           enabled: '=?',
           change: '&?'
-        },
+      };
+      return {
+        restrict: 'E',
+        scope: scopeDefine,
         controller: ['$scope', function(scope){
           Utils.publish(scope, this);
           console.log(scope.onLabel)
@@ -38,6 +39,7 @@ define(['angular', 'jquery', 'rd.core',
       }
 
       function _link(scope, element, attrs) {
+        Utils.checkEventHandlers(attrs,scopeDefine);
         scope.onLabel = Utils.getValue(scope.onLabel, attrs.onLabel, 'on');
         scope.offLabel = Utils.getValue(scope.offLabel, attrs.offLabel, 'off');
         scope.checked = Utils.isTrue(scope.checked, false);
