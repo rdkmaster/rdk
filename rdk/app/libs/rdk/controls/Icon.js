@@ -1,7 +1,7 @@
 /**
  * Created by 00100630 on 2016/12/23.
  */
-define(['angular', 'jquery', 'rd.core', 'css!rd.styles.IconFonts', 
+define(['angular', 'jquery', 'rd.core', 'css!rd.styles.IconCss', 'css!rd.styles.IconFont', 
   'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
   var nInputApp = angular.module("rd.controls.Icon", ['rd.core']);
   nInputApp.directive('rdkIcon', ['Utils', 'EventService', 'EventTypes', function(Utils, EventService, EventTypes) {

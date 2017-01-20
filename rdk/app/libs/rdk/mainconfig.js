@@ -79,7 +79,8 @@ require.config({
         "rd.services.NotifyService": "../rdk/services/NotifyService",
         "rd.services.MenuService": "../rdk/services/MenuService",
 
-        "rd.styles.IconFonts": "../iconFonts/fonts/iconfont",
+        "rd.styles.IconCss": "../iconFonts/css/iconfont",
+        "rd.styles.IconFont": "../iconFonts/fonts/iconfont",
         "rd.styles.Bootstrap": "../bootstrap/css/bootstrap.min",
         "rd.styles.FontAwesome": "../font-awesome-4.3.0/css/font-awesome",
 
