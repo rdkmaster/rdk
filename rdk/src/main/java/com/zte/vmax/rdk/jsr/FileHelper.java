@@ -115,31 +115,27 @@ public class FileHelper extends AbstractAppLoggable {
     public String readString(String path) {
         path = fixPath(path, appName);
 
-        BufferedReader in = null;
+        byte[] buf=null;
+        FileInputStream fInputStream= null;
         try {
-            in = new BufferedReader(new FileReader(path));
-        } catch (Exception e) {
-            logger.error("create BufferedReader error," + e);
-            return "";
-        }
-        String s;
-        StringBuilder sb = new StringBuilder();
-        try {
-            while ((s = in.readLine()) != null) {
-                sb.append(s).append('\n');
-            }
-        } catch (Exception e) {
-            logger.error("read stream error," + e);
-            return "";
-        } finally {
+            fInputStream = new FileInputStream(path);
+            int len=fInputStream.available();
+            buf=new byte[len];
+            fInputStream.read(buf);
+
+        } catch (FileNotFoundException e) {
+            logger.error("read file not exist," + e.getCause());
+        } catch (IOException e) {
+            logger.error("read stream error," + e.getCause());
+        }finally {
             try {
-                in.close();
+                fInputStream.close();
             } catch (Exception e) {
                 logger.error("close stream error," + e);
             }
         }
+        return new String(buf).toString();
 
-        return sb.toString();
     }
 
     public String readXml(String path) {
