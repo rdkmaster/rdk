@@ -78,7 +78,6 @@ define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector
                     var item = {};
                     var rateArr=[];
                     for(var j=0; j<lens;j++) {
-                        console.log(Data.data[i].subTopic[j]);
                         var subLabel=Data.data[i].subTopic[j].label;
                         if(subLabel.indexOf(searchVal) != -1){
                             item.topic=Data.data[i].topic;
@@ -94,7 +93,6 @@ define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector
                 scope.items=rateArrs;
         };
         scope.selected2string = function(selected, context) {
-            console.log(selected, context);
             var label='';
             var len = scope.items.length;
             if(scope.basicMultiple===true) {//多选
@@ -113,7 +111,6 @@ define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector
                 label=selected[0].label;
                 selectedLists=[];
                 selectedLists.push(selected[0]);
-                console.log(scope.selectedLists);
                 var len = scope.items.length;
                 for(var i=0 ;i<len;i++){
                     scope.items[i].highLight=selectedLists
@@ -135,7 +132,7 @@ define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector
                     document.getElementById("input").focus()
                 })
             }else{
-                document.getElementById("input").blur();//兼容IE11
+                document.getElementById("input").blur();
                scope.Open=false;
             }
         });
