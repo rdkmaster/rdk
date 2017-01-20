@@ -708,6 +708,25 @@ option的结构如下：
  
    undefined
 
+
+#### `Cache.clear()` ####
+
+定义：
+
+    function clear();
+
+说明：删除该应用的私有缓存
+
+参数：
+
+ 无
+
+
+返回：
+ 
+   undefined
+
+
 #### `Cache.global_put()` （已过时）####
 
 已过时，请使用[Cache.global.put()](#Cache_global_put)
@@ -1017,16 +1036,36 @@ Java返回数据给JS，原则也是尽量只返回简单类型。当然也可�
 
 返回：对应的当前请求对应http请求头对应的js对象。
 
-### `getHostName()` ###
+
+### `Host对象` ###
+
+该对象提供了一组可以获取主机相关信息的方法。
+
+#### `Host.getName()` ####
 定义：
 
-	function getHostName();
+	function getName();
 
 参数：
 
 无
 
 返回：获取服务主机名。
+
+#### `Host.getIp()` ####
+定义：
+
+	function getIp();
+
+参数：
+
+无
+
+返回：数组，获取服务主机的所有ipv4。
+
+说明：支持多网卡情况ip获取。
+
+
 ## 日期相关 ##
 
 [单击这里](service_date_api.md)
