@@ -715,8 +715,9 @@ var Data = {
             rdk_runtime.useDataSource("")
         }
     },
-    fetchWithDataSource: function (dataSource, sql, maxline) {
-
+    fetchWithDataSource: function (dataSource, sql, maxLine) {
+        Data.useDataSource(dataSource);
+        return Data.fetch(sql, maxLine);
     },
     fetch: function (sql, maxLine) {
         if (!maxLine || !_.isDefined(maxLine)) {
@@ -743,7 +744,12 @@ var Data = {
             return;
         }
         if (maxLine === undefined) {
+            Log.warn("param maxLine empty,set maxLine=4000");
             maxLine = 4000;
+        }
+        if (timeout === undefined) {
+            Log.warn("param timeout empty,set timeout=30");
+            timeout = 30;
         }
         var dataTableArray = [];
         var dataObj = JSON.parse(rdk_runtime.batchFetch(sqlArray, maxLine, timeout));
@@ -751,6 +757,10 @@ var Data = {
             dataTableArray.push(new DataTable(i18n(dataObj[idx].fieldNames), dataObj[idx].fieldNames, dataObj[idx].data))
         }
         return dataTableArray;
+    },
+    batchFetchWithDataSource: function (dataSource, sqlArray, maxLine, timeout) {
+        Data.useDataSource(dataSource);
+        return Data.batch_fetch(sqlArray, maxLine, timeout);
     },
     executeUpdate: function (sql) {
         if (_.isString(sql)) {
