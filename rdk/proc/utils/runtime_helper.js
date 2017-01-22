@@ -243,6 +243,14 @@ var JSON1 = {
 //动态类加载
 var JVM = {
     load_class: function loadClass(jar, className) {
+        Log.warn("function deprecated,please use JVM.loadClass()");
+        var loadclazz = rdk_runtime.jarHelper().loadClass(jar, className);
+        if (loadclazz == null) {
+            return undefined;
+        }
+        return loadclazz;
+    },
+    loadClass: function loadClass(jar, className) {
         var loadclazz = rdk_runtime.jarHelper().loadClass(jar, className);
         if (loadclazz == null) {
             return undefined;
@@ -509,7 +517,7 @@ function _listFiles(files, path, pattern, recursive) {
 
 ///////////////////////////////////////////////////////////////////////
 
-var rest = {
+var Rest = {
     get: function (url, option) {
         if (null == option) {
             option = undefined;
@@ -541,7 +549,8 @@ var rest = {
         return rdk_runtime.restHelper().put(url, param, option);
     }
 }
-
+//向下兼容
+var rest = Rest;
 ///////////////////////////////////////////////////////////////////////
 
 _.isResultSet = function (value) {
@@ -643,6 +652,13 @@ function mapper(resultSet, key, value, keepResultSet) {
 var Mapper = {
     from_object: function (jsObject, defaultValue) {
         return function (key) {
+            Log.warn("function deprecated,please use Mapper.fromObject()");
+            return jsObject && jsObject.hasOwnProperty(key) ? jsObject[key] :
+                defaultValue === undefined ? key : defaultValue;
+        }
+    },
+    fromObject: function (jsObject, defaultValue) {
+        return function (key) {
             return jsObject && jsObject.hasOwnProperty(key) ? jsObject[key] :
                 defaultValue === undefined ? key : defaultValue;
         }
@@ -650,9 +666,17 @@ var Mapper = {
 
     //from sql or dataTable 可合并
     from_sql: function (sql, keyName, valueName, defaultValue) {
+        Log.warn("function deprecated,please use Mapper.fromSql()");
+        return Mapper.from_object(Mapper.mkMap(sql, keyName, valueName), defaultValue);
+    },
+    fromSql: function (sql, keyName, valueName, defaultValue) {
         return Mapper.from_object(Mapper.mkMap(sql, keyName, valueName), defaultValue);
     },
     from_datatable: function (dataTable, keyName, valueName, defaultValue) {
+        Log.warn("function deprecated,please use Mapper.fromDataTable()");
+        return Mapper.from_object(Mapper.mkMap(dataTable, keyName, valueName), defaultValue);
+    },
+    fromDataTable: function (dataTable, keyName, valueName, defaultValue) {
         return Mapper.from_object(Mapper.mkMap(dataTable, keyName, valueName), defaultValue);
     },
     mkMap: function (param, keyName, valueName) {
@@ -732,10 +756,30 @@ var Data = {
         return new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data);
     },
     fetch_first_cell: function (sql) {
+        Log.warn("function deprecated,please use Data.fetchFirstCell()");
         return rdk_runtime.fetch_first_cell(sql);
     },
-    batch_fetch: function (sqlArray, maxLine, timeout) {  //并发实现
+    fetchFirstCell: function (sql) {
+        return rdk_runtime.fetch_first_cell(sql);
+    },
+    batchFetch: function (sqlArray, maxLine, timeout) {  //并发实现
 
+        if (!sqlArray || !_.isArray(sqlArray)) {
+            Log.error("Array param required! " + sqlArray);
+            return;
+        }
+        if (maxLine === undefined) {
+            maxLine = 4000;
+        }
+        var dataTableArray = [];
+        var dataObj = JSON.parse(rdk_runtime.batchFetch(sqlArray, maxLine, timeout));
+        for (idx in dataObj) {
+            dataTableArray.push(new DataTable(i18n(dataObj[idx].fieldNames), dataObj[idx].fieldNames, dataObj[idx].data))
+        }
+        return dataTableArray;
+    },
+    batch_fetch: function (sqlArray, maxLine, timeout) {  //并发实现
+        Log.warn("function deprecated,please use Data.batchFetch()");
         if (!sqlArray || !_.isArray(sqlArray)) {
             Log.error("Array param required! " + sqlArray);
             return;
