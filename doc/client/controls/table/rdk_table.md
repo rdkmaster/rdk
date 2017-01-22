@@ -456,6 +456,7 @@ cells 为 改变的行列信息的数组信息
 
 `search`设置成`true`时，支持搜索过滤。在这基础上设置`searchPattern`，可以对输入的关键字进行校验。校验通过后才能进行过滤。
 
+详细示例如下
 <live_demo example="controls/table/search_pattern" width="900"></live_demo>
 
 ## search-position ##
