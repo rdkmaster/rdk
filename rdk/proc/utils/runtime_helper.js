@@ -715,7 +715,9 @@ var Data = {
             rdk_runtime.useDataSource("")
         }
     },
+    fetchWithDataSource: function (dataSource, sql, maxline) {
 
+    },
     fetch: function (sql, maxLine) {
         if (!maxLine || !_.isDefined(maxLine)) {
             Log.warn("param maxLine empty,set maxLine=4000");
