@@ -277,7 +277,7 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                 var fi = scope.files[scope.selectedIndex];
                 try {
                     var data = JSON.parse(data.result);
-                    fi.content = data[0].content;
+                    fi.content = data[0].content.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
                     fi.status = 'not_real_edit';
                 } catch(e) {
                     fi.content = e.stack;
