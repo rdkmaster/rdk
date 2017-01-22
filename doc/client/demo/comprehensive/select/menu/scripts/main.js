@@ -132,7 +132,7 @@ define('main', ['angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector
                     document.getElementById("input").focus()
                 })
             }else{
-                document.getElementById("input").blur();
+                document.getElementById("input").blur();//兼容IE11
                scope.Open=false;
             }
         });
