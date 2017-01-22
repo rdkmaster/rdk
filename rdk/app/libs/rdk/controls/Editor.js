@@ -63,7 +63,7 @@ function(CodeMirror) {
                 });
 
                 scope.$watch('value', function(newVal, oldVal) {
-                    if (!angular.isString(newVal) /*|| newVal == scope.value*/) {
+                    if (!angular.isString(newVal)) {
                         return;
                     }
                     scope.editor.doc.setValue(newVal);
