@@ -156,6 +156,14 @@
 .rdk-table-module .mouseShape{
     cursor:url("/rdk/app/libs/rdk/css/img/edit.cur"),auto;
 }
+.rdk-table-module .rdk-table-sort-down{
+    background: url("../../img/sort-down.png") no-repeat;
+    background-size:contain;
+}
+.rdk-table-module .rdk-table-sort-up{
+    background: url("../../img/sort-up.png") no-repeat;
+    background-size:contain;
+}
 .rdk-table-icon{
     display: inline-block;
     width: 8px;
