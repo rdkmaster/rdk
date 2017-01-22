@@ -456,8 +456,32 @@ cells 为 改变的行列信息的数组信息
 
 `search`设置成`true`时，支持搜索过滤。在这基础上设置`searchPattern`，可以对输入的关键字进行校验。校验通过后才能进行过滤。
 
-详细示例如下：
+：
 <live_demo example="controls/table/search_pattern" width="900"></live_demo>
+
+## search-position ##
+>支持类型：字符串
+
+`search-position` 表示搜索框的位置，有两个值，bottom和top，bottom表示为搜索框在表格左下角，top表示为搜索框在表格右上角;
+
+## search-width ##
+>支持类型：字符串
+
+`search-width` 表示搜索框的宽度，如"200px",一定要加单位。
+
+## show-export ##
+>支持类型：布尔型
+
+`show-export`值为false时，表示不显示导出按钮，其为默认值;
+`show-export`值为true时，表示显示导出按钮;
+
+## label ##
+>支持类型：字符串
+
+`label`表示在导出按钮的内容;
+<live_demo example="controls/table/search_export_position" width="900"></live_demo>
+
+详细示例如下
 
 ## page_number ##
 >支持类型：数值

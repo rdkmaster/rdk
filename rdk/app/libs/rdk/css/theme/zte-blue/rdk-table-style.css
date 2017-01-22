@@ -2,18 +2,18 @@
     position: relative;
     margin: 0 0;
 }
-.rdk-table-search-top {
+.rdk-table-module.rdk-table-search-top {
     padding-top: 32px;
 }
-.search-position-top {
+.rdk-table-module .search-position-top {
     top: 0;
     right: 0;
 }
-.search-position-bottom {
+.rdk-table-module .search-position-bottom {
     bottom: 0;
     left: 0;
 }
-.table-export {
+.rdk-table-module .table-export {
     position: absolute;
     bottom: 0;
     right: 0;

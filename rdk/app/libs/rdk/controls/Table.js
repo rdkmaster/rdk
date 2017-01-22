@@ -47,7 +47,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 <rdk-paging ng-if="pageVisible && pageCtrl && paging && columnDefs.length!=0 && !noData" data-page-size="pageSize" \
                      data-lang="{{lang}}" data-position="{{position}}">\
                 </rdk-paging>\
-                <div ng-if="showExport" class="table-export"><rdk_button click="clickExport" icon="{{icon}}" label="{{label}}"></rdk_button></div>\
+                <div ng-if="showExport" class="table-export"><rdk_button click="export" icon="iconfont iconfont-output" label="{{label}}"></rdk_button></div>\
                 <div class="clearfix"></div>\
             </div>'
         );
@@ -274,9 +274,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
             searchPosition:"@?",
             searchWidth:"@?",
             label:"@?",
-            showExport:"=?",
-            icon:"@?",
-            click:"&?"
+            showExport:"=?"
         };
         return {
             restrict: 'EA',
@@ -429,13 +427,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     _init();
                     scope.searchPrompt="Search";
                     scope.showExport = Utils.isTrue(scope.showExport, false);
-                    scope.icon = Utils.getValue(scope.icon, attrs.icon, "iconfont iconfont-output");
                     scope.searchWidth = Utils.getValue(scope.searchWidth, attrs.searchWidth, "168px");
                     scope.label = Utils.getValue(scope.label, attrs.label, "导出");
-                    if(scope.click(scope)){
-                        scope.clickExport = function(event){
-                            scope.click(scope)(event);
-                        }
+                    scope.export=_export;
+                    function _export(){
+                        EventService.raiseControlEvent(scope, EventTypes.CLICK, null)
                     }
                     if(scope.search){
                         scope.position=scope.searchPosition=="bottom"?"bottom": "top"
@@ -1323,9 +1319,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 count: "=",
                 pageSize: "=",
                 lang: "@",
-                position:"@"
+                position:"@?"
             },
-            link: function($scope, element, attrs, TableCtrl) {
+            link: function($scope, element, attrs, TableCtrl,position) {
                 $scope.TableCtrl = TableCtrl;
                 $scope.TableCtrl.pageCtrl = $scope;
 
