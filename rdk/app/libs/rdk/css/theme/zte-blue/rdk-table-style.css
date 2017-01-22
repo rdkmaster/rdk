@@ -1,12 +1,27 @@
 .rdk-table-module {
+    position: relative;
     margin: 0 0;
 }
-
+.rdk-table-search-top {
+    padding-top: 32px;
+}
+.search-position-top {
+    top: 0;
+    right: 0;
+}
+.search-position-bottom {
+    bottom: 0;
+    left: 0;
+}
+.table-export {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 30px;
+}
 .rdk-table-module .searchWapper {
-    position: relative;
-    height: 40px;
-    width: 255px;
-    float: right;
+    height: 30px;
+    position: absolute;
     z-index: 9999;
 }
 
@@ -22,15 +37,13 @@
 } 
 
 .rdk-table-module .search {
-    max-width: 250px;
-    padding-right: 25px;
-    float: right;
-    margin-bottom: 15px;
+    width: 120px;
+    height: 30px;
 }
 .rdk-table-module .search_icon {
     position: absolute;
-    right: 8px;
-    top: 10px;
+    right: 6px;
+    top: 8px;
 }
 .rdk-table-module .search_select{
     width: 250px;
@@ -75,6 +88,10 @@
 }
 .rdk-table-module .pagination {
     margin: 0;
+}
+.rdk-table-module .pagingLine .search-bottom {
+    float:none;
+    vertical-align: super;
 }
 .rdk-table-module .count {
     font-size: 14px;
@@ -243,6 +260,7 @@ i.regular_right,i.regular_left{
 .rdk-table-module .pagination > li > a, .rdk-table-module .pagination > li > span {
     border:none;
     margin: 10px 0 0px;
+    padding: 0 12px;
 }
 .rdk-table-module .spanRecords {
     float: left;
