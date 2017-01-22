@@ -81,9 +81,7 @@ define(['angular', 'jquery', 'rd.core',
           if (value > max) {
             value = max;
           }
-          EventService.raiseControlEvent(scope, EventTypes.CHANGE, value);
-          ngModel.$setViewValue(value);
-          inputElement.value = value;
+          _resetValue(value);
         };
 
         scope.minus = function() {
@@ -95,9 +93,7 @@ define(['angular', 'jquery', 'rd.core',
           if (value < min) {
             value = min;
           }
-          EventService.raiseControlEvent(scope, EventTypes.CHANGE, value);
-          ngModel.$setViewValue(value);
-          inputElement.value = value;
+          _resetValue(value);
         };
 
         scope.changeValue = function (event) {
@@ -118,16 +114,21 @@ define(['angular', 'jquery', 'rd.core',
           }
         }
 
+        function _resetValue(value){
+          EventService.raiseControlEvent(scope, EventTypes.CHANGE, value);
+          ngModel.$setViewValue(value);
+          inputElement.value = value;
+        }
+
         function _refreshValue(){
-          var value = parseFloat(inputElement.value);
+          var value = parseFloat(inputElement.value) || 0;
           if(value < min){
             value = min;
           }
           if(value > max){
             value = max;
           }
-          inputElement.value = value;
-          ngModel.$setViewValue(value);
+          _resetValue(value);
         }
 
         ngModel.$render = function() {
