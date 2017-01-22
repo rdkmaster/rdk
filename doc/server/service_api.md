@@ -476,6 +476,34 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  [DataTable对象](#dataTable)
 
 
+ #### `Data.fetchWithDataSource()` {#fetchWithDataSource}####
+
+该函数提供了根据自定义数据源查询数据库数据的方法。
+
+定义：
+
+    function fetchWithDataSource(dataSource,sql,maxLine);
+
+参数：
+
+- dataSource：数据源标识字符串，必选
+
+- sql: 一个SQL字符串，必选。
+
+- maxLine:查询数据返回的最大记录数，数值型，可选，默认为4000。
+
+返回：
+
+ [DataTable对象](#dataTable)
+
+示例：
+
+    首先，进行自定义数据源示例，方法请参照 [rdk多数据源使用示例中的前四步](#mulit-ds-example)
+
+    其次，使用[Data.fetchWithDataSource()](#fetchWithDataSource)根据设置的数据源标识选择对应的数据库进行数据查询。
+     	
+        Data.fetchWithDataSource("mysql","select * from dim_ne where neid =10"); //查询mysql数据库
+                          
 
 #### `Data.fetch_first_cell()` ####
 
@@ -520,6 +548,37 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 示例：
 
     Data.batch_fetch(['select * from dim_ne;','select * from dim_comm_city'],4000,10);
+
+
+#### `Data.batchFetchWithDataSource()` ####
+
+该函数提供了根据数据源标识并发查询数据库的功能。
+
+定义：
+
+    function batchFetchWithDataSource(dataSource, sqlArray, maxLine, timeout);
+
+参数：
+
+- dataSource：数据源标识字符串，必选。
+
+- sqlArray: 一个SQL字符串数组，必选。
+
+- maxLine：返回的最大记录数，可选，默认为4000。
+
+- timeout ：批量查询超时时间，单位秒，可选，默认为30。
+
+返回：
+ 
+  [DataTable对象](#dataTable)数组
+
+示例：
+
+	首先，进行自定义数据源示例，方法请参照 [rdk多数据源使用示例中的前四步](#mulit-ds-example)
+
+    其次，使用[Data.batchFetchWithDataSource()](#batchFetchWithDataSource)根据设置的数据源标识选择对应的数据库进行数据查询。
+     	
+        Data.batchFetchWithDataSource("mysql",['select * from dim_ne;','select * from dim_comm_city']); //查询mysql数据库
 
 
 #### `Data.executeUpdate()` ####
