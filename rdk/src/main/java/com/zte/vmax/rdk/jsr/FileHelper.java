@@ -115,26 +115,28 @@ public class FileHelper extends AbstractAppLoggable {
     public String readString(String path) {
         path = fixPath(path, appName);
 
-        byte[] buf=null;
-        FileInputStream fInputStream= null;
+        byte[] buf = new byte[512 * 1024];
+        FileInputStream fin = null;
+        StringBuilder sb = new StringBuilder();
         try {
-            fInputStream = new FileInputStream(path);
-            int len=fInputStream.available();
-            buf=new byte[len];
-            fInputStream.read(buf);
+            int len;
+            fin = new FileInputStream(path);
+            while ((len = fin.read(buf)) != -1) {
+                sb.append(new String(buf, 0, len).toString());
+            }
 
         } catch (FileNotFoundException e) {
             logger.error("read file not exist," + e.getCause());
         } catch (IOException e) {
             logger.error("read stream error," + e.getCause());
-        }finally {
+        } finally {
             try {
-                fInputStream.close();
+                fin.close();
             } catch (Exception e) {
                 logger.error("close stream error," + e);
             }
         }
-        return new String(buf).toString();
+        return sb.toString();
 
     }
 
