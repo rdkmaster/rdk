@@ -244,11 +244,7 @@ var JSON1 = {
 var JVM = {
     load_class: function loadClass(jar, className) {
         Log.warn("function deprecated,please use JVM.loadClass()");
-        var loadclazz = rdk_runtime.jarHelper().loadClass(jar, className);
-        if (loadclazz == null) {
-            return undefined;
-        }
-        return loadclazz;
+        return JVM.loadClass(jar, className);
     },
     loadClass: function loadClass(jar, className) {
         var loadclazz = rdk_runtime.jarHelper().loadClass(jar, className);
@@ -651,11 +647,8 @@ function mapper(resultSet, key, value, keepResultSet) {
 
 var Mapper = {
     from_object: function (jsObject, defaultValue) {
-        return function (key) {
-            Log.warn("function deprecated,please use Mapper.fromObject()");
-            return jsObject && jsObject.hasOwnProperty(key) ? jsObject[key] :
-                defaultValue === undefined ? key : defaultValue;
-        }
+        Log.warn("function deprecated,please use Mapper.fromObject()");
+        return Mapper.fromObject(jsObject, defaultValue);
     },
     fromObject: function (jsObject, defaultValue) {
         return function (key) {
@@ -667,17 +660,17 @@ var Mapper = {
     //from sql or dataTable 可合并
     from_sql: function (sql, keyName, valueName, defaultValue) {
         Log.warn("function deprecated,please use Mapper.fromSql()");
-        return Mapper.from_object(Mapper.mkMap(sql, keyName, valueName), defaultValue);
+        return Mapper.fromSql(sql, keyName, valueName, defaultValue);
     },
     fromSql: function (sql, keyName, valueName, defaultValue) {
-        return Mapper.from_object(Mapper.mkMap(sql, keyName, valueName), defaultValue);
+        return Mapper.fromObject(Mapper.mkMap(sql, keyName, valueName), defaultValue);
     },
     from_datatable: function (dataTable, keyName, valueName, defaultValue) {
         Log.warn("function deprecated,please use Mapper.fromDataTable()");
-        return Mapper.from_object(Mapper.mkMap(dataTable, keyName, valueName), defaultValue);
+        return Mapper.fromDataTable(dataTable, keyName, valueName, defaultValue);
     },
     fromDataTable: function (dataTable, keyName, valueName, defaultValue) {
-        return Mapper.from_object(Mapper.mkMap(dataTable, keyName, valueName), defaultValue);
+        return Mapper.fromObject(Mapper.mkMap(dataTable, keyName, valueName), defaultValue);
     },
     mkMap: function (param, keyName, valueName) {
         var map = {};
@@ -757,7 +750,7 @@ var Data = {
     },
     fetch_first_cell: function (sql) {
         Log.warn("function deprecated,please use Data.fetchFirstCell()");
-        return rdk_runtime.fetch_first_cell(sql);
+        return Data.fetchFirstCell(sql);
     },
     fetchFirstCell: function (sql) {
         return rdk_runtime.fetch_first_cell(sql);
@@ -780,19 +773,7 @@ var Data = {
     },
     batch_fetch: function (sqlArray, maxLine, timeout) {  //并发实现
         Log.warn("function deprecated,please use Data.batchFetch()");
-        if (!sqlArray || !_.isArray(sqlArray)) {
-            Log.error("Array param required! " + sqlArray);
-            return;
-        }
-        if (maxLine === undefined) {
-            maxLine = 4000;
-        }
-        var dataTableArray = [];
-        var dataObj = JSON.parse(rdk_runtime.batchFetch(sqlArray, maxLine, timeout));
-        for (idx in dataObj) {
-            dataTableArray.push(new DataTable(i18n(dataObj[idx].fieldNames), dataObj[idx].fieldNames, dataObj[idx].data))
-        }
-        return dataTableArray;
+        return Data.batchFetch(sqlArray, maxLine, timeout);
     },
     executeUpdate: function (sql) {
         if (_.isString(sql)) {
