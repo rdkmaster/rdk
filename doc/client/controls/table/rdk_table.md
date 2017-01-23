@@ -546,7 +546,7 @@ cells 为 改变的行列信息的数组信息
 监听该事件，用户点击导出按钮时，可以发出一个事件。
 
 		EventService.register('id_table', EventTypes.EXPORT,
-			function(){//处理被选中的数据
+			function(){
         		console.log('导出事件');
         })
 
