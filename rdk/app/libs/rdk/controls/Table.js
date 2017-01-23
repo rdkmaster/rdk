@@ -1321,7 +1321,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 lang: "@",
                 position:"@?"
             },
-            link: function($scope, element, attrs, TableCtrl,position) {
+            link: function($scope, element, attrs, TableCtrl) {
                 $scope.TableCtrl = TableCtrl;
                 $scope.TableCtrl.pageCtrl = $scope;
 
