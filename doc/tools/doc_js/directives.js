@@ -98,6 +98,7 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                         timer = undefined;
                         return;
                     }
+                    //选中运行页
                     scope.selectFile(scope.files.length);
                     timer = true;
                     $(window).unbind('scroll', scrollHandler);
@@ -141,6 +142,10 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                 angular.forEach(iEle.find('li'), function(li, idx) {
                     $(li).css('background-color', (idx == selectedIndex ? '#ddd' : '#fff'));
                 });
+
+                if (!scope.files) {
+                    return;
+                }
                 if (selectedIndex == scope.files.length) {
                     $timeout(resetFontWeight, 0);
                     //run evaluate...
