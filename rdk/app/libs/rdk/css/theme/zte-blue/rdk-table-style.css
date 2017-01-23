@@ -21,6 +21,10 @@
     display: none;
 } 
 
+.rdk-table-module .wrapper{
+    background-color: white;
+}
+
 .rdk-table-module .search {
     max-width: 250px;
     padding-right: 25px;
