@@ -8,16 +8,17 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                    padding: 0 4px 0 4px;\
                    background-color: #fff;\
                    border-radius: 4px 4px 0 0;';
-    var aStyle =  'color:#428bca;\
-                   text-decoration:none;\
-                   font-size:12px;\
-                   font-family:微软雅黑;';
+    var aStyle =  'color: #428bca;\
+                   outline: none;\
+                   text-decoration: none;\
+                   font-size: 12px;\
+                   font-family: 微软雅黑;';
     return {
         restrict: 'E',
         replace: true,
         template: ('\
 <div>\
-    <ul ng-show="initDone" style="margin-top:2px">\
+    <ul style="margin-top:2px">\
         <li ng-repeat="code in files track by code.file" on-finish-render style="$liStyle">\
             <a href="javascript:void(0)" style="$aStyle" ng-click="selectFile($index)">{{code.file}}</a>\
         </li>\
@@ -37,8 +38,7 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
         change="editorChanged" initialized="editorReadyHandler">\
     </rdk_editor>\
     <iframe style="border:0;width:100%;height:' + defaultHeight + 'px;border:1px solid #ddd;margin-top:-16px;"\
-         ng-show="(selectedIndex==files.length || selectedIndex==-1) && initDone"></iframe>\
-    <span ng-if="!initDone">loading...</span>\
+         ng-show="selectedIndex==files.length || selectedIndex==-1"></iframe>\
 </div>').replace(/\$liStyle/g, liStyle).replace(/\$aStyle/g, aStyle),
 
         scope: {
@@ -52,6 +52,7 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
             scope.editorId = Utils.createUniqueId('editor_');
             scope.selectedIndex = -1;
             scope.initDone = false;
+            scope.files = [];
             var evaluator = $(iEle.find('iframe')[0]);
             var exampleUrl = makeOriginExampleUrl(scope.example);
             var newUrl = undefined;
@@ -72,8 +73,6 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                 resultHandler: uploadFiles, addMethod: 'post'
             });
 
-            listFiles(exampleUrl);
-
             $(window).bind('beforeunload', function (e) {
                 if (!hasCopied) {
                     return;
@@ -85,7 +84,12 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                 });
             });
 
+            scrollHandler();
             $(window).bind('scroll', scrollHandler);
+
+            scope.$on('ngRepeatFinished', function() {
+                scope.initDone = true;
+            });
 
             var timer;
             function scrollHandler() {
@@ -98,10 +102,10 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                         timer = undefined;
                         return;
                     }
-                    //选中运行页
-                    scope.selectFile(scope.files.length);
                     timer = true;
                     $(window).unbind('scroll', scrollHandler);
+
+                    listFiles(exampleUrl);
                 }, 100);
             }
 
@@ -142,10 +146,6 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                 angular.forEach(iEle.find('li'), function(li, idx) {
                     $(li).css('background-color', (idx == selectedIndex ? '#ddd' : '#fff'));
                 });
-
-                if (!scope.files) {
-                    return;
-                }
                 if (selectedIndex == scope.files.length) {
                     $timeout(resetFontWeight, 0);
                     //run evaluate...
@@ -241,7 +241,18 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                     return;
                 }
 
-                scope.files = [];
+                files.sort(
+                    //把index.*挪到最后面去
+                    function sortFileBy(a, b) {
+                        var reg = (/index\.(js|html)$/i);
+                        if (a.match(reg) && !b.match(reg)) {
+                            return 1;
+                        } else {
+                            return a < b ? -1 : 1;
+                        }
+                    }
+                );
+
                 //这里加3是因为exampleUrl前需要加上“..”  -- 具体原因请查阅listFiles()的注释
                 //再去掉最后的斜杠，一共去掉3个字符
                 var len = exampleUrl.length + 2;
@@ -262,7 +273,13 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                     fi.file = file.substring(len);
                     scope.files.push(fi);
                 });
+
+                $timeout(function() {
+                    //选中运行页
+                    scope.selectFile(scope.files.length);
+                }, 1);
             }
+
 
             function loadFileContent(file) {
                 dsListFiles.resultHandler = handleContentResult;
@@ -315,11 +332,6 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                 }
                 return url;
             }
-
-            scope.$on('ngRepeatFinished', function() {
-                scope.initDone = true;
-                scrollHandler();
-            });
         }
     };
 }]);
