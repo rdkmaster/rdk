@@ -47,7 +47,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 <rdk-paging ng-if="pageVisible && pageCtrl && paging && columnDefs.length!=0 && !noData" data-page-size="pageSize" \
                      data-lang="{{lang}}" data-position="{{position}}">\
                 </rdk-paging>\
-                <div ng-if="showExport" class="table-export"><rdk_button click="export" icon="iconfont iconfont-e811;" label="{{exportLabel}}"></rdk_button></div>\
+                <div ng-if="showExport" class="table-export"><rdk_button click="export" icon="iconfont iconfont-e811" label="{{exportLabel}}"></rdk_button></div>\
                 <div class="clearfix"></div>\
             </div>'
         );
