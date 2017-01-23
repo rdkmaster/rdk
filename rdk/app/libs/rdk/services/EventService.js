@@ -44,6 +44,7 @@
         DESTROY: 'destroy',
         RENAME:"rename",
         INITIALIZED: 'initialized',
+        EXPORT_CLICK: "export_click",
 
         TAB_SELECT: "tab_select",
         ITEM_SELECTED: "item_selected", //tab_select 从里向外抛，捕捉对象

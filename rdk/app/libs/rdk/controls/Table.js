@@ -47,7 +47,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 <rdk-paging ng-if="pageVisible && pageCtrl && paging && columnDefs.length!=0 && !noData" data-page-size="pageSize" \
                      data-lang="{{lang}}" data-position="{{position}}">\
                 </rdk-paging>\
-                <div ng-if="showExport" class="table-export"><rdk_button click="export" icon="iconfont iconfont-output" label="{{label}}"></rdk_button></div>\
+                <div ng-if="showExport" class="table-export"><rdk_button click="export" icon="iconfont iconfont-e811;" label="{{exportLabel}}"></rdk_button></div>\
                 <div class="clearfix"></div>\
             </div>'
         );
@@ -271,9 +271,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
             select: "&?",
             doubleClick: "&?",
             check: "&?",
+            exportClick: "&?",
             searchPosition:"@?",
             searchWidth:"@?",
-            label:"@?",
+            exportLabel:"@?",
             showExport:"=?"
         };
         return {
@@ -428,10 +429,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     scope.searchPrompt="Search";
                     scope.showExport = Utils.isTrue(scope.showExport, false);
                     scope.searchWidth = Utils.getValue(scope.searchWidth, attrs.searchWidth, "168px");
-                    scope.label = Utils.getValue(scope.label, attrs.label, "导出");
+                    scope.exportLabel = Utils.getValue(scope.exportLabel, attrs.exportLabel, "导出");
                     scope.export=_export;
                     function _export(){
-                        EventService.raiseControlEvent(scope, EventTypes.CLICK, null)
+                        EventService.raiseControlEvent(scope, EventTypes.EXPORT_CLICK, null)
                     }
                     if(scope.search){
                         scope.position=scope.searchPosition=="bottom"?"bottom": "top"

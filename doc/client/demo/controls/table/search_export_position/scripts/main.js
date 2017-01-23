@@ -6,8 +6,8 @@ define('main', ['rd.controls.Table'], function() {
             EventService.register('id_table', EventTypes.SELECT, function(event, data){//处理被选中的数据
                 console.log(data);
             })
-			EventService.register('exportID', EventTypes.CLICK, function(event,data){//处理被选中的数据
-                alert(1111)
+			EventService.register('exportID', EventTypes.EXPORT_CLICK, function(){//处理被选中的数据
+                console.log('导出按钮的事件')
             })
             $scope.idx = 3;
             $timeout(function(){

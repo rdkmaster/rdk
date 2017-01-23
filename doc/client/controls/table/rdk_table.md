@@ -459,26 +459,26 @@ cells 为 改变的行列信息的数组信息
 详细示例如下
 <live_demo example="controls/table/search_pattern" width="900"></live_demo>
 
-## search-position ##
+## search_position ##
 >支持类型：字符串
 
-`search-position` 表示搜索框的位置，有两个值，bottom和top，bottom表示为搜索框在表格左下角，top表示为搜索框在表格右上角;
+`search_position` 表示搜索框的位置，有两个值，bottom和top，bottom表示为搜索框在表格左下角，top表示为搜索框在表格右上角;
 
-## search-width ##
+## search_width ##
 >支持类型：字符串
 
-`search-width` 表示搜索框的宽度，如"200px",一定要加单位。
+`search_width` 表示搜索框的宽度，如"200px",一定要加单位。
 
-## show-export ##
+## show_export ##
 >支持类型：布尔型
 
-`show-export`值为false时，表示不显示导出按钮，其为默认值;
-`show-export`值为true时，表示显示导出按钮;
+`show_export`值为false时，表示不显示导出按钮，其为默认值;
+`show_export`值为true时，表示显示导出按钮;
 
-## label ##
+## export_label ##
 >支持类型：字符串
 
-`label`表示在导出按钮的内容;
+`export_label`表示在导出按钮的内容;
 
 详细示例如下
 <live_demo example="controls/table/search_export_position" width="900"></live_demo>
@@ -538,6 +538,15 @@ cells 为 改变的行列信息的数组信息
 		EventService.register('id_table', EventTypes.SELECT,
 			function(event, data){//处理被选中的数据
         		console.log(data);
+        })
+
+## EXPORT_CLICK ##
+
+监听该事件，用户点击导出按钮时，可以发出一个事件。
+
+		EventService.register('id_table', EventTypes.EXPORT_CLICK,
+			function(){//处理被选中的数据
+        		console.log('导出事件');
         })
 
 ## DOUBLE_CLICK ##
