@@ -55,7 +55,36 @@ SVN下载完成之后，就可以在 `d:\rdk-develop-environment\rdk\app` 目录
 
 ![](server/img/locale_config.PNG)
 
+## Linux环境RDK版本包独立部署
 
+###基于Nginx
+假设根路径为/home/rdk,监听端口为26180
+
+1) 新建/home/rdk目录
+
+2）打开[下载页面](/site/download/index.html)，下载rdk-runtime-environment*.zip，并解压到该目录下
+
+3）修改Nginx配置文件，[参考这里](conf/nginx.conf)
+
+4）重启Nginx
+
+###基于Tomcat+Nginx
+
+1）下载运行环境rdk-runtime-environment*.zip，并解压到Tomcat安装目录下的webapps目录；
+
+2）配置转发规则，uri匹配rdk/service/则转发到5812端口/rdk/service/~，假设tomcat监听端口为8888，nginx转发监听端口为8081，配置[参见这里](conf/nginx1.conf)。
+
+3）重启Nginx
+
+###基于Node.js
+
+1）环境安装node.js;
+
+2) 基于express框架构建一个Http服务；可以参考rdk-develop-environment*.zip目录下tools/http_server/server.js
+
+3）具体监听端口及代理规则配置可以修改tools/http_server/config.json
+
+4）执行nohup node server.js &启动服务。
 
 ### 常见错误
 

@@ -28,3 +28,5 @@
 - #505 Panel beforeclose的demo，关闭第一个tab页，跳转到第三个tab页，但界面展示为第二个tab页的内容
 - #503 table 控件后端分页，分页信息显示错误
 - #509 [time] beginTime 大于 endTime 时 endTime不能进行选择
+
+###########
