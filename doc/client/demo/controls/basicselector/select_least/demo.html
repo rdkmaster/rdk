@@ -1,0 +1,11 @@
+<rdk_basic_selector id="id_selector" selected_items="selectedItems" data="allItems" least="leastValue"></rdk_basic_selector>
+    <form>
+        <label>设置选择最小值（least）：</label>
+        <select ng-model="leastValue">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="3">3</option>
+        </select>
+    </form>
+    <button ng-click="selectAll()">全选</button>
+    <button ng-click="clearSelected()">全不选</button>

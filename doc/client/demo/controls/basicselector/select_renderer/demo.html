@@ -1,0 +1,26 @@
+<div>
+        <rdk_basic_selector id="id_selector" data="allItems" ng-init="initialValue()">
+            <item_renderer>
+                <span>{{item.label + '~渲染'}}</span>
+                <i ng-attr-class="{{appScope.img_selected}}" ng-click="appScope.selfImageByRender()"></i>
+            </item_renderer>
+        </rdk_basic_selector>
+    </div>
+    <hr>
+    <div>
+        <form>
+            <h1>自定义图片渲染示例</h1>
+            <label>自定义图片:</label>
+            <select ng-model="img_selected" ng-options="m.value as m.label for m in imgRes" ng-change="imgChanged()">
+                <option value="">--请选择图片--</option>
+            </select>
+            <img ng-src="{{img_value}}">
+            <br>
+        </form>
+    </div>
+    <div>
+        <h1>自定义指令渲染示例</h1>
+        <rdk_basic_selector id="id_selector" data="allItems" ng-init="initialValue()">
+            <render></render>
+        </rdk_basic_selector>
+    </div>    

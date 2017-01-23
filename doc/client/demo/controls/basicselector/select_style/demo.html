@@ -1,0 +1,66 @@
+<div>
+        <rdk_basic_selector id="id_selector" selected_items="selectedItems" data="allItems" ng-init="initialValue()"></rdk_basic_selector>
+    </div>
+    <hr>
+    <div>
+        <div style="float:right">
+            <h1>生成的CSS样式字段</h1>
+            <textarea ng-model="selectItemCSSValue" ng-change="attrChanged()">{{selectItemCSSValue}}</textarea>
+        </div>
+        <div>
+            <h1>关键样式演示：</h1>
+            <form>
+                <label>边框样式（border）：</label>
+                <input type="text" ng-model="borderValue" ng-change="attrChanged()"></input>
+            </form>
+            <form>
+                <label>边框圆角样式（border-radius）：</label>
+                <input type="text" ng-model="borderRadiusValue" ng-change="attrChanged()"></input>
+            </form>
+            <form>
+                <label>背景色（background-color）：</label>
+                <input type="color" ng-model="backgroundColorValue" ng-change="attrChanged()">{{backgroundColorValue}}</input>
+            </form>
+            <form>
+                <label>宽度（width）：</label>
+                <input type="text" ng-model="widthValue" ng-change="attrChanged()"></input>
+            </form>
+            <form>
+                <label>最大高度（max-height）：</label>
+                <input type="text" ng-model="maxHeightValue" ng-change="attrChanged()"></input>
+            </form>
+            <!-- Item属性 -->
+            <hr>
+            <h1>选中的Item属性</h1>
+            <form>
+                <label>背景色（background-color）：</label>
+                <input type="color" ng-model="backgroundColorValue_SelectedItem" ng-change="attrChanged()">{{backgroundColorValue_SelectedItem}}</input>
+            </form>
+            <form>
+                <label>文字颜色（color）：</label>
+                <input type="color" ng-model="color_Selected" ng-change="attrChanged()">{{color_Selected}}</input>
+            </form>
+            <form>
+                <label>边框圆角样式（border-radius）：</label>
+                <input type="text" ng-model="borderRadiusValue_SelectedItem" ng-change="attrChanged()"></input>
+            </form>
+            <form>
+                <label>边框样式（border）：</label>
+                <input type="text" ng-model="borderValue_SelectedItem" ng-change="attrChanged()"></input>
+            </form>
+            <form>
+                <label>水平浮动（float）：</label>
+                <select ng-model="float_Selcted" ng-change="attrChanged()">
+                    <option selected>{{float_left}}</option>
+                    <option>{{float_right}}</option>
+                </select>
+            </form>
+            <form>
+                <label>光标样式（cursor）：</label>
+                <select ng-model="cursor_Selected" ng-options="m.value as m.label for m in cursorRes" ng-change="attrChanged()">
+                    <option value="">-- 请选择光标 --</option>
+                </select>
+            </form>
+            <hr>
+        </div>
+    </div>

@@ -1,0 +1,26 @@
+<div style="margin: 10px auto;width: 80%;">
+    <ds id="dsProv1" url="../doc/client/demo/common/datasource/server/areaServiceProv.js"></ds>
+    <ds id="dsProv2" url="../doc/client/demo/common/datasource/server/areaServiceProv.js"></ds>
+    <ds id="dsCity2" url="../doc/client/demo/common/datasource/server/areaServiceCity.js"></ds>
+    <ds id="dsArea2" url="../doc/client/demo/common/datasource/server/areaServiceArea.js"></ds>
+    <ds id="dsProv3" url="../doc/client/demo/common/datasource/server/areaServiceProv.js"></ds>
+    <ds id="dsCity3" url="../doc/client/demo/common/datasource/server/areaServiceCity.js"></ds>
+    <h3>省</h3>
+    <div class="area-wrap area-wrap1 iconfont iconfont-positioning">
+        <rdk_combo_select open-policy="hover">
+            <rdk-area-select ds_province="dsProv1"  area-data="resultData1"  granularity="province" show-all="false"></rdk-area-select>
+        </rdk_combo_select>
+    </div>
+    <h3>省-市-区</h3>
+    <div class="area-wrap area-wrap2 iconfont iconfont-positioning">
+        <rdk_combo_select open-policy="hover">
+            <rdk-area-select ds_province="dsProv2"  ds_city="dsCity2"  ds_area="dsArea2" area-data="resultData2" ></rdk-area-select>
+        </rdk_combo_select>
+    </div>
+    <h3>省-市</h3>
+    <div class="area-wrap area-wrap3 iconfont iconfont-positioning">
+        <rdk_combo_select open-policy="hover">
+            <rdk-area-select ds_province="dsProv3" ds_city="dsCity3"  change-handler="alert(d)" area-data="resultData3"   granularity="city" setting="setting"  show-all="false" ></rdk-area-select>
+        </rdk_combo_select>
+    </div>
+</div>

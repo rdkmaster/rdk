@@ -1,0 +1,23 @@
+ <ds id="dsProv" url="../doc/client/demo/common/datasource/server/areaServiceProv.js"></ds>
+    <ds id="dsCity" url="../doc/client/demo/common/datasource/server/areaServiceCity.js"></ds>
+    <ds id="dsArea" url="../doc/client/demo/common/datasource/server/areaServiceArea.js"></ds>
+    <ds id="dsProv2" url="../doc/client/demo/common/datasource/server/areaServiceProv.js"></ds>
+    <ds id="dsCity2" url="../doc/client/demo/common/datasource/server/areaServiceCity.js"></ds>
+    <div class="area-wrap">
+        <rdk_combo_select>
+            <rdk-area-select ds_province="dsProv" ds_city="dsCity" ds_area="dsArea" area-data="default"></rdk-area-select>
+        </rdk_combo_select>
+    </div>
+    <div ng-if="default">
+        你选择的地区：
+        {{default.province.name}}  {{default.city.name}}  {{default.area.name}}
+    </div>
+    <div class="area-wrap">
+        <rdk_combo_select>
+            <rdk-area-select ds_province="dsProv2" ds_city="dsCity2" granularity="city" area-data="default2"></rdk-area-select>
+        </rdk_combo_select>
+    </div>
+    <div ng-if="default">
+        你选择的地区：
+        {{default2.province.name}}  {{default2.city.name}}
+    </div>

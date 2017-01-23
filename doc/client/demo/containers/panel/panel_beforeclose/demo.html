@@ -1,0 +1,24 @@
+<rdk_tab id='tabID'>
+           <div title="RDK" show_close_button='true'>
+                <button ng-click="setmodal('topModal', 'modal', {x:100, y:100})">单击弹出模态框</button>
+                <div id="topModal" rdk_modal="hide" class="modalcss">
+                    <rdk_panel id="panel_close" icon="fa fa-cubes" width="600px" height="300px" show_title='true' show_close="true" hide_on_close="false" before_close="handle_beforeclose()" title="'My first Panel'" >
+                        <rdk_table data="data"></rdk_table>
+                    </rdk_panel>
+                </div>
+            </div>
+            <div title="{{rdkSelector}}" show_close_button='true'>
+                <rdk_basic_selector selected_items="selectedItems" data="cityItems"></rdk_basic_selector>
+            </div>
+            <div title="Rdk_tab" show_close_button='true'>
+                <rdk_tab>
+                    <div title="RDK">
+                        <p>Rapid developing is a brilliant project</p>
+                    </div>
+                    <div title="rdkSelector">
+                        <p>rdk-Basic-Selector是RDK中出现频率最高的控件之一！</p>
+                    </div>
+                </rdk_tab>
+            </div>
+        </rdk_tab>
+       
