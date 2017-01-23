@@ -21,7 +21,7 @@ define(['angular', 'jquery', 'rd.core',
         }],
         template: function(tElement, tAttrs) {
           return '<div class="input-group numeric_input"> \
-            <input type="number" class="form-control" value=0 ng-keyup="changeValue($event)"> \
+            <input type="text" class="form-control" value=0 ng-keydown="keydownHandler($event)" ng-keyup="keyupHandler($event)""> \
             <div class="input-group-addon"> \
               <a href="javascript:;" class="spin-up" ng-click="plus()"><i class="fa fa-angle-up"></i></a> \
               <a href="javascript:;" class="spin-down" ng-click="minus()"><i class="fa fa-angle-down"></i></a> \
@@ -96,17 +96,23 @@ define(['angular', 'jquery', 'rd.core',
           _resetValue(value);
         };
 
-        scope.changeValue = function (event) {
-          event.preventDefault();
-          if(event.keyCode === KEY_CODE.UP) {
+        scope.keydownHandler = function(event){
+          if(event.keyCode === KEY_CODE.UP){
+            event.preventDefault();
             scope.plus();
-          } else if (event.keyCode === KEY_CODE.DOWN) {
+          }
+          if (event.keyCode === KEY_CODE.DOWN){
+            event.preventDefault();
             scope.minus();
           }
-          else{
-            _refreshValue();
-          }
         };
+
+        scope.keyupHandler = function(event){
+          event.preventDefault();
+          if((event.keyCode === KEY_CODE.UP) || (event.keyCode === KEY_CODE.DOWN)) return;
+          _checkInputIntFloat();
+          _refreshValue();
+        }
 
         function _refreshBits(valueStr){
           if (/^[+-]{0,1}([0-9]*\.)\d+$/.test(valueStr)){
@@ -120,15 +126,26 @@ define(['angular', 'jquery', 'rd.core',
           inputElement.value = value;
         }
 
+        function _checkInputIntFloat(){
+          if(!/^[-]?\d+(?:\.\d+)?$/.test(inputElement.value)){
+            inputElement.value = inputElement.value.match(/\d{1,}\.{0,1}\d{0,}/) == null ? '' : inputElement.value.match(/\d{1,}\.{0,1}\d{0,}/);
+          }
+        }
+
         function _refreshValue(){
-          var value = parseFloat(inputElement.value) || 0;
-          if(value < min){
-            value = min;
-          }
-          if(value > max){
-            value = max;
-          }
-          _resetValue(value);
+            var arr = inputElement.value.split('.');
+            if((arr.length == 2) && (arr[1] == '')){
+              _resetValue(inputElement.value);
+              return;
+            }
+            var value = parseFloat(inputElement.value) || 0;
+            if(value < min){
+              value = min;
+            }
+            if(value > max){
+              value = max;
+            }
+            _resetValue(value);
         }
 
         ngModel.$render = function() {
