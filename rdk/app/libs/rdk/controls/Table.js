@@ -47,7 +47,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                 <rdk-paging ng-if="pageVisible && pageCtrl && paging && columnDefs.length!=0 && !noData" data-page-size="pageSize" \
                      data-lang="{{lang}}" data-position="{{position}}">\
                 </rdk-paging>\
-                <div ng-if="showExport" class="table-export"><rdk_button click="export" icon="iconfont iconfont-e811" label="{{exportLabel}}"></rdk_button></div>\
+                <div ng-if="showExport" class="table-export"><rdk_button click="touchExport" icon="iconfont iconfont-e811" label="{{exportLabel}}"></rdk_button></div>\
                 <div class="clearfix"></div>\
             </div>'
         );
@@ -271,7 +271,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
             select: "&?",
             doubleClick: "&?",
             check: "&?",
-            exportClick: "&?",
+            export: "&?",
             searchPosition:"@?",
             searchWidth:"@?",
             exportLabel:"@?",
@@ -429,10 +429,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     scope.searchPrompt="Search";
                     scope.showExport = Utils.isTrue(scope.showExport, false);
                     scope.searchWidth = Utils.getValue(scope.searchWidth, attrs.searchWidth, "168px");
-                    scope.exportLabel = Utils.getValue(scope.exportLabel, attrs.exportLabel, "导出");
-                    scope.export=_export;
-                    function _export(){
-                        EventService.raiseControlEvent(scope, EventTypes.EXPORT_CLICK, null)
+                    scope.exportLabel = Utils.getValue(scope.exportLabel, attrs.exportLabel, "");
+                    scope.touchExport=_touchExport;
+                    function _touchExport(){
+                        EventService.raiseControlEvent(scope, EventTypes.EXPORT, null)
                     }
                     if(scope.search){
                         scope.position=scope.searchPosition=="bottom"?"bottom": "top"
@@ -736,7 +736,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             }
                         };
                         scope.setSelected = function(item, event) {
-                            scope.selectedModel = _setRowHighLight(item,event.target);
+                            if(event!=null){
+                                scope.selectedModel = _setRowHighLight(item,event.target);
+                            }else{
+                                scope.selectedModel.rows.push(item);
+                            }
                             EventService.raiseControlEvent(scope, 'select', item);
                         };
                         scope.setHovered = function(item, event) {

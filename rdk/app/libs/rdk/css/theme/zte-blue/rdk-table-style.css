@@ -45,8 +45,7 @@
     right: 6px;
     top: 8px;
 }
-.rdk-table-module .search_select{
-    width: 250px;
+.rdk-table-module div.btn-group.search_select{
     position: absolute;
     top: 34px;
     right: 0;
@@ -282,7 +281,6 @@ i.regular_right,i.regular_left{
 }
 
 /*翻页1*/
-
 .rdk-page-theme-short .rdk-table-module .pagination > li > span{
     padding: 0 15px;
 }
@@ -292,8 +290,6 @@ i.regular_right,i.regular_left{
 }
 
 /*翻页2*/
-
-
 /*********** 翻页样式 ***********/
 .rdk-page-theme-long .rdk-table-module .pagination > li > a{
     padding: 0 6px;
@@ -306,3 +302,23 @@ i.regular_right,i.regular_left{
     padding: 0 4px 0 18px;
 }
 
+/*搜索下拉框*/
+.rdk-table-module div.search_select .dropdown-toggle.btn:focus{
+    border-color: #66afe9;
+    outline: 0 !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+}
+.rdk-table-module div.search_select .dropdown-toggle.btn{
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+}
+.rdk-table-module .dropdown-menu>li>a:hover {
+    background: #eee;
+    color: #333;
+}
+.rdk-table-module .dropdown-menu>li>a:focus{
+    background: #3ab1ea;
+    color: #fff;
+}
