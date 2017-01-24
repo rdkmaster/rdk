@@ -102,6 +102,7 @@ function createDirDiv() {
     var dirDiv = document.createElement('div');
     document.body.appendChild(dirDiv);
     dirDiv.id = '___dir___';
+    dirDiv.style['z-index'] = '10';
     dirDiv.style['border'] = '1px solid rgb(224, 224, 224)';
     dirDiv.style['border-radius'] = '6px 0px 0px 6px';
     dirDiv.style['position'] = 'fixed';
