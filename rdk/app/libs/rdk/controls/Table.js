@@ -1,4 +1,8 @@
-define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', 'rd.services.DataSourceService', "css!rd.styles.Table", 'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap','rd.controls.Button','css!rd.styles.IconFonts'], function() {
+define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
+    'rd.services.DataSourceService', "css!rd.styles.Table", 'css!rd.styles.FontAwesome',
+    'css!rd.styles.Bootstrap','rd.controls.Button','css!rd.styles.IconFonts',
+    'bootstrap-select','bootstrap'
+], function() {
 
     var tableModule = angular.module('rd.controls.Table', ['rd.core','rd.controls.Button']);
 
