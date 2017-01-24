@@ -102,13 +102,13 @@ rdk为应用提供可扩展的日志上报功能。
 
 实际开发中，常常需要定义一个可根据给定的属性来从一个映射中获取其对应的值的处理函数，Mapper变量提供了简便的处理方法。
 
-#### `Mapper.from_object()` ####
+#### `Mapper.fromObject()` ####
 
 该函数可以构造一个基于js对象完成映射获取的处理函数。
 
 定义：
 
-	function from_object(jsObject, defaultValue);
+	function fromObject(jsObject, defaultValue);
 
 参数：
 
@@ -121,7 +121,7 @@ rdk为应用提供可扩展的日志上报功能。
 
 示例：某个表中有一个字段用于表示“是否”这样的状态，存在库中，1代表“是”，0代表“否”，可以使用下面的代码得到一个转换函数：
 
-	var tranformFunction = Mapper.from_object({1: "是", 0: "否"});
+	var tranformFunction = Mapper.fromObject({1: "是", 0: "否"});
 
 	var val = tranformFunction(0); // "否"
 	var val = tranformFunction(1); // "是"
@@ -129,16 +129,16 @@ rdk为应用提供可扩展的日志上报功能。
 
 如果期望在输入非1、0时得到“未知”，则可以使用下面代码
 
-	var tranformFunction = Mapper.from_object({1: "是", 0: "否"}， "未知");
+	var tranformFunction = Mapper.fromObject({1: "是", 0: "否"}， "未知");
 	var val = tranformFunction(2); // "未知"
 
-#### `Mapper.from_sql()` ####
+#### `Mapper.fromSql()` ####
 
 该函数可以构造一个基于sql查询数据库并完成映射获取的处理函数。
 
 定义：
 
-	function from_sql(sql, keyField, valueField, defaultValue);
+	function fromSql(sql, keyField, valueField, defaultValue);
 
 参数：
 
@@ -151,22 +151,22 @@ rdk为应用提供可扩展的日志上报功能。
 
 示例：假设需要查询数据库，根据dim_ne表的neid,name列生成一组映射，并根据此映射来构造一个转换函数以便给定一个neid值时方便的得到其对应的name值：
 
-	  var tranformFunction = Mapper.from_sql("select * from dim_ne;",'neid','name',"unknown");
+	  var tranformFunction = Mapper.fromSql("select * from dim_ne;",'neid','name',"unknown");
       tranformFunction("30");//表dim_ne中neid=30对应的name值
       
-说明：**注意，该函数只限制查询20000条记录，若应用需要更大数量的查询，可将[fetch函数](#fetch)和[Mapper.from_datatable 函数](#from_datatable)结合使用：**
+说明：**注意，该函数只限制查询20000条记录，若应用需要更大数量的查询，可将[fetch函数](#fetch)和[Mapper.fromDataTable 函数](#fromDataTable)结合使用：**
 
       var regionData = Data.fetch("select distinct region_id,region from ts_cell", 300000);//先调用fetch函数并设置你想要的查询最大记录数
-      Mapper.from_datatable(regionData, 'region_id', 'region'); //再调用Mapper.from_datatable 函数即可                          
+      Mapper.fromDataTable(regionData, 'region_id', 'region'); //再调用Mapper.fromDataTable 函数即可                          
 
-#### `Mapper.from_datatable()` {#from_datatable}####
+#### `Mapper.fromDataTable()` {#fromDataTable}####
 
 
 该函数可以构造一个基于[DataTable](#dataTable)并完成映射获取的处理函数。
 
 定义：
 
-	function from_datatable(dataTable, keyField, valueField, defaultValue);
+	function fromDataTable(dataTable, keyField, valueField, defaultValue);
 
 参数：
 
@@ -180,7 +180,7 @@ rdk为应用提供可扩展的日志上报功能。
 示例：假设需要查询数据库，根据dim_ne表的neid,name列生成一组映射，并根据此映射来构造一个转换函数以便给定一个neid值时方便的得到其对应的name值：
 
       var dataTable=Data.fetch("select * from dim_ne;")
-	  var tranformFunction = Mapper.from_datatable(dataTable,'neid','name',"unknown");
+	  var tranformFunction = Mapper.fromDataTable(dataTable,'neid','name',"unknown");
       tranformFunction("30");//表dim_ne中neid=30对应的name值
 
 
@@ -232,8 +232,8 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 		return function(request) {
 		
 			var mapIter = {
-				//使用Mapper.from_sql函数创建一个通用的国际化迭代函数
-				neid: Mapper.from_sql("select neid,name from dim_ne",'neid', 'name'),
+				//使用Mapper.fromSql函数创建一个通用的国际化迭代函数
+				neid: Mapper.fromSql("select neid,name from dim_ne",'neid', 'name'),
 	
 				//根据自定义算法算出 kpi_succ_rate 的值。可根据第二个参数row获取辅助行数据数组，根据第三个参数field获取辅助字段数组。
 				kpi_succ_rate: function(value,row,field) {
@@ -476,7 +476,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  [DataTable对象](#dataTable)
 
 
- #### `Data.fetchWithDataSource()` {#fetchWithDataSource}####
+#### `Data.fetchWithDataSource()` {#fetchWithDataSource}####
 
 该函数提供了根据自定义数据源查询数据库数据的方法。
 
@@ -503,15 +503,15 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
     其次，使用[Data.fetchWithDataSource()](#fetchWithDataSource)根据设置的数据源标识选择对应的数据库进行数据查询。
      	
         Data.fetchWithDataSource("mysql","select * from dim_ne where neid =10"); //查询mysql数据库
-                          
+                          		
 
-#### `Data.fetch_first_cell()` ####
+#### `Data.fetchFirstCell()` ####
 
 该函数返回查询数据的第一行第一列。
 
 定义：
 
-    function fetch_first_cell(sql);
+    function fetchFirstCell(sql);
 
 参数：
 
@@ -522,13 +522,13 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
   数据的第一行第一列，字符串类型
 
 
-#### `Data.batch_fetch()` ####
+#### `Data.batchFetch()` ####
 
 该函数提供了并发查询数据库的功能。
 
 定义：
 
-    function batch_fetch(sqlArray, maxLine,timeout);
+    function batchFetch(sqlArray, maxLine,timeout);
 
 说明：并发执行多个sql的查询并返回结果，超时后抛出超时异常。
 
@@ -547,7 +547,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 示例：
 
-    Data.batch_fetch(['select * from dim_ne;','select * from dim_comm_city'],4000,10);
+    Data.batchFetch(['select * from dim_ne;','select * from dim_comm_city'],4000,10);
 
 
 #### `Data.batchFetchWithDataSource()` ####
@@ -580,7 +580,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
      	
         Data.batchFetchWithDataSource("mysql",['select * from dim_ne;','select * from dim_comm_city']); //查询mysql数据库
 
-
+        
 #### `Data.executeUpdate()` ####
 
 该函数提供了可并发完成数据库增删改功能。
@@ -630,8 +630,8 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 	lib.hello('rdk');
 
 
-### `rest` ###
-#### `rest.get()` ####
+### `Rest` ###
+#### `Rest.get()` ####
 
 定义：
 
@@ -659,7 +659,7 @@ option的结构如下：
 
 
 返回：该服务的返回值。
-#### `rest.put()` ####
+#### `Rest.put()` ####
 
 定义：
 
@@ -675,7 +675,7 @@ option的结构如下：
 
 返回：该服务的返回值。    
 
-#### `rest.post()` ####
+#### `Rest.post()` ####
 
 定义：
 
@@ -691,7 +691,7 @@ option的结构如下：
 
 返回：该服务的返回值。
 
-#### `rest.delete()` ####
+#### `Rest.delete()` ####
 
 定义：
 
@@ -990,7 +990,7 @@ rdk_server在服务启动时会自动加载应用的初始化脚本。
 			(function () {
 			    function _init_() {
 					try{
-						Cache.put("ne_data",Mapper.from_sql("select neid,name from dim_ne",'neid','name',4000))
+						Cache.put("ne_data",Mapper.fromSql("select neid,name from dim_ne",'neid','name',4000))
 					}catch(error){
 						log("cache ne_data error"+error)
 					}
@@ -1005,7 +1005,7 @@ rdk_server在服务启动时会自动加载应用的初始化脚本。
            Cache.get("ne_data")(11) //Cache.get("ne_data")返回的是一个转换函数闭包，对其进行调用即可获取neid=11对应的name值
 
 **注意，若init.js文件发生修改，请一定要重启rdk_server才会生效。**
-### `JVM.load_class()` ###
+### `JVM.loadClass()` ###
 
 定义：
 
