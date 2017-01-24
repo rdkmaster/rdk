@@ -82,7 +82,7 @@ define(['angular', 'jquery', 'rd.core',
           if (value > max) {
             value = originValue;
           }
-          _resetValue(value);
+          event.keyCode ? _resetValue(value) : inputElement.value = value;
         };
 
         scope.minus = function() {
@@ -93,7 +93,7 @@ define(['angular', 'jquery', 'rd.core',
           if (value < min) {
             value = originValue;
           }
-          _resetValue(value);
+          event.keyCode ? _resetValue(value) : inputElement.value = value;
         };
 
         scope.keydownHandler = function(event){
