@@ -1,6 +1,11 @@
 ﻿
 <rdk_title>后端服务API</rdk_title>
 
+## rdk rest 服务请求说明 ##
+
+可以方便的向rdk发起请求。
+
+[查看rest请求说明](rdk_rest_service.md)
 
 ## 集合/数组/对象的常用功能集 ##
 
