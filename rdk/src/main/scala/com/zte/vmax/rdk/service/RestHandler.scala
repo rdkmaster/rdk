@@ -9,7 +9,7 @@ import org.apache.log4j.{Level, LogManager}
 import org.json4s.{DefaultFormats, Formats}
 import spray.http.HttpCharsets
 import spray.httpx.Json4sSupport
-import spray.routing.{ Directives, RequestContext}
+import spray.routing.{Directives, RequestContext}
 import scala.concurrent.duration._
 
 
@@ -36,12 +36,11 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
     onHalfOpen(
       logger.warn("circuit breaker half-open!"))
 
-  def doDispatch(rct: RequestContext, url: List[String], app: String, param: AnyRef): Unit = {
+  def doDispatch(rct: RequestContext, url: List[String], app: String, param: AnyRef, isResultWrapped: Boolean): Unit = {
     val urls = url mkString "/"
     logger.debug(s"${urls},$param")
     val method = rct.request.method.name.toLowerCase
     val begin = System.currentTimeMillis()
-
     val body = () => (router ? ServiceRequest(HttpRequestContext(rct),
       url.mkString("/"), app, param, method, begin)).mapTo[Either[Exception, String]]
 
@@ -56,7 +55,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
     }
     future.onSuccess {
       case Left(e) => rct.failWith(e)
-      case Right(s) => rct.complete(ServiceResult(s))
+      case Right(s) => if (isResultWrapped) rct.complete(ServiceResult(s)) else rct.complete(s)
     }
 
   }
@@ -84,28 +83,26 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
     } ~
       path("rdk" / "service" / Segments) {
         url => {
-//          get {
-//            parameters('p.as[ServiceParam]) {
-//              req => ctx =>
-//                doDispatch(ctx, url, req.app, req.param)
-//            }
-//          } ~
+          get {
+            parameters('p.as[ServiceParam]) {
+              req => ctx =>
+                logger.warn( s"""queryString style deprecated ! please use this type:uri?app=""&param={}&service="" """)
+                doDispatch(ctx, url, req.app, req.param, true)
+            }
+          } ~
             get {
-              parameters('service,'param,'app ) {
-                (service,param,app) => ctx =>
-                   var x= param
-                    ""
-//                  doDispatch(ctx, url, req.app, req.param)
+              parameters('service ? "", 'app, 'param) { (service, app, param) => ctx =>
+                doDispatch(ctx, url, app, RdkUtil.json2Object[AnyRef](param).getOrElse(param), false)
               }
             } ~
             get { ctx =>
-              doDispatch(ctx, url, null, null)
+              doDispatch(ctx, url, null, null, true)
             } ~
             (put | post | delete) {
               ctx =>
                 val json = ctx.request.entity.asString(HttpCharsets.`UTF-8`)
                 val req = str2ServiceCallParam(json)
-                doDispatch(ctx, url, req.app, req.param)
+                doDispatch(ctx, url, req.app, req.param, true)
             }
         }
       } ~
@@ -113,14 +110,20 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
         get {
           parameters('p.as[ServiceParam]) {
             req => ctx =>
-              doDispatch(ctx, req.service :: Nil, req.app, req.param)
+              logger.warn( s"""queryString style deprecated ! please use this type:uri?app=""&param={}&service="" """)
+              doDispatch(ctx, req.service :: Nil, req.app, req.param, true)
           }
         } ~
+          get {
+            parameters('service ? "", 'app, 'param) { (service, app, param) => ctx =>
+              doDispatch(ctx, service :: Nil, app, RdkUtil.json2Object[AnyRef](param).getOrElse(param), false)
+            }
+          } ~
           (put | post | delete) {
             ctx =>
               val json = ctx.request.entity.asString(HttpCharsets.`UTF-8`)
               val req = str2ServiceCallParam(json)
-              doDispatch(ctx, req.service :: Nil, req.app, req.param)
+              doDispatch(ctx, req.service :: Nil, req.app, req.param, true)
           }
       }
 
