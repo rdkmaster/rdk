@@ -6,7 +6,7 @@
     var requiredComponents = [ ], ctx = {};
     var controllerDefination = ['$scope', main];
     function main(scope) {
-scope.panelStatus=true;
+        scope.panelStatus=true;
                 scope.clkShowPanel=function(){
                     scope.panelStatus=!scope.panelStatus;
                 }

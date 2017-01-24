@@ -6,7 +6,7 @@
     var requiredComponents = [ ], ctx = {};
     var controllerDefination = ['$scope',  main];
     function main(scope) {
-scope.allItems = [
+        scope.allItems = [
                 { label: "江苏省" }, { label: "浙江省" },
                 { label: "广东省" }, { label: "广西省" },
                 { label: "河北省" }, { label: "河南省" },

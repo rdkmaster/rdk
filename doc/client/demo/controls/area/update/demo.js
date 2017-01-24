@@ -6,7 +6,7 @@
     var requiredComponents = [ ], ctx = {};
     var controllerDefination = ['$scope',  main];
     function main(scope ) {
-scope.change=function(){
+        scope.change=function(){
             //其它操作更新地区数据
 
             scope.test={

@@ -6,7 +6,7 @@
     var requiredComponents = [ ], ctx = {};
     var controllerDefination = ['$scope', main];
     function main(scope) {
-scope.gap = {
+        scope.gap = {
             value: ['2016-03-04 14:00', '2016-03-04 16:00'],
             selectGranularity: true,
             granularity: "date",

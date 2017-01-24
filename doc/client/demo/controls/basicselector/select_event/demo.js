@@ -4,9 +4,9 @@
         'rd.controls.BasicSelector'
     ];
     var requiredComponents = [ ], ctx = {};
-    var controllerDefination = ['$scope',  main];
-    function main(scope) {
-scope.allItems = [{
+    var controllerDefination = ['$scope','EventService','EventTypes', main];
+    function main(scope,EventService,EventTypes) {
+        scope.allItems = [{
                 label: "江苏省"
             }, {
                 label: "浙江省"

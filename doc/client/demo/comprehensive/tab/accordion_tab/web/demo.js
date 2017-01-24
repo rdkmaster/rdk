@@ -6,7 +6,7 @@
     var requiredComponents = [ ], ctx = {};
     var controllerDefination = ['$scope',main];
     function main(scope) {
-scope.btnStatus = true;//按钮初始状态标志
+        scope.btnStatus = true;//按钮初始状态标志
                 scope.changeTabsStatus =function(){
                     scope.btnStatus=!scope.btnStatus;
                     //折叠收缩content的显示，TODO:控制器中不应该进行DOM操作。。

@@ -4,9 +4,9 @@
         'rd.controls.BasicSelector'
     ];
     var requiredComponents = [ ], ctx = {};
-    var controllerDefination = ['$scope', main];
-    function main(scope ) {
-scope.initialValue = function() {
+    var controllerDefination = ['$scope','EventService','EventTypes', main];
+    function main(scope,EventService,EventTypes ) {
+        scope.initialValue = function() {
                 scope.img_selected = 'fa fa-pencil fa-fw';
                 scope.img_base = "demo/controls/basicselector/select_renderer/images/";
                 scope.img_value = scope.img_base + "edit.png";

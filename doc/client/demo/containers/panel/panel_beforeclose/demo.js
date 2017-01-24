@@ -4,9 +4,9 @@
         'rd.containers.Panel', 'rd.controls.Table','rd.controls.BasicSelector','rd.containers.Tab','rd.attributes.modal','rd.services.Alert', 'rd.controls.ProgressBar'
     ];
     var requiredComponents = [ ], ctx = {};
-    var controllerDefination = ['$scope', main];
-    function main(scope) {
-$scope.cityItems = [{
+    var controllerDefination = ['$scope','EventService','EventTypes', main];
+    function main($scope,EventService,EventTypes) {
+        $scope.cityItems = [{
                 label: "江苏省"
             }, {
                 label: "浙江省"

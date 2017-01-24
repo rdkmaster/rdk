@@ -1,0 +1,10 @@
+<rdk_scroller data="images" page_num=3 scroll_policy="manual" has_vertical_scrollbar="true" style="width:600px;height:400px" >
+
+    <!--         <img ng-src="{{item.src}}" width="200px" />
+      <span> {{item.title}} </span> -->
+        <div>
+          <img ng-src="{{item.src}}"  />
+          <span> {{item.title}} </span> 
+          <rdk_graph graph_define="/doc/client/demo/controls/scroller/con_graph/scripts/graph_define/simple_line.js" data="item.graphData"></rdk_graph>
+        </div>
+    </rdk_scroller>

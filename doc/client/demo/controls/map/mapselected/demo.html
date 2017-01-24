@@ -1,0 +1,9 @@
+<button ng-click="selectCity()">选择长春市</button>
+    <button ng-click="unSelectCity()">取消选择长春市</button>
+    <rdk_map id="gis" map_define="/doc/client/demo/controls/map/mapselected/scripts/graph_define/map.js" map="'/doc/client/demo/controls/map/mapselected/data/jilin.json'"></rdk_map>
+    <div id="gisModal" rdk_modal="hide">
+        <strong>
+           {{name}}
+        </strong>
+        <button ng-click="setmodal('gisModal', 'hide')">close</button>
+    </div>

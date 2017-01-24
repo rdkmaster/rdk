@@ -5,7 +5,7 @@
     var requiredComponents = [ ], ctx = {};
     var controllerDefination = ['$scope', 'DataSourceService', 'EventService', main];
     function main(scope, DataSourceService, EventService) {
-$code
+        $code
     }
 
     var controllerName = 'DemoController';

@@ -4,9 +4,9 @@
         'rd.containers.Panel', 'rd.controls.Time', 'rd.containers.Accordion'
     ];
     var requiredComponents = [ ], ctx = {};
-    var controllerDefination = ['$scope', main];
-    function main(scope) {
- scope.closeEvent=function(){
+    var controllerDefination = ['$scope','EventService','EventTypes', main];
+    function main(scope,EventService,EventTypes) {
+        scope.closeEvent=function(){
                alert("do something before close");
             EventService.broadcast('panel_close', EventTypes.CLOSE);
        }

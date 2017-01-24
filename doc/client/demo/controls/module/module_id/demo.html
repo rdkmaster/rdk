@@ -1,0 +1,5 @@
+<p>
+        如果一个module在同一页面上会被多次使用，那在模板中使用dom的id属性要很小心
+        因为一个module多次使用后，dom树上就会有多个相同id的dom节点，因此在模块的html模板的id，必须使用 id@{{$moduleId}}
+    </p>
+    <rdk_module id="rdkModule" url="/doc/client/demo/controls/module/module_id/template/sample_module.html"></rdk_module>

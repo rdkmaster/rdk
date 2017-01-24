@@ -4,9 +4,9 @@
         'rd.containers.Accordion', 'rd.controls.BasicSelector'
     ];
     var requiredComponents = [ ], ctx = {};
-    var controllerDefination = ['$scope', main];
-    function main(scope) {
-scope.accordionOpenable = false;
+    var controllerDefination = ['$scope','EventService','EventTypes', main];
+    function main(scope,EventService,EventTypes) {
+        scope.accordionOpenable = false;
 
             scope.allItems = [
                 { id: 0, label: "江苏省" },

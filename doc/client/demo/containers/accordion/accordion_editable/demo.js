@@ -6,7 +6,6 @@
     var requiredComponents = [ ], ctx = {};
     var controllerDefination = ['$scope', main];
     function main(scope) {
-        function(scope) {
             scope.buttonSource = [{
                 icon: "./../img/edit.png",
                 label: "编辑",

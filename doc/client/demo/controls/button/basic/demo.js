@@ -6,7 +6,7 @@
     var requiredComponents = [ ], ctx = {};
     var controllerDefination = ['$scope', main];
     function main(scope ) {
-var userInfo = "用户接口";
+        var userInfo = "用户接口";
     scope.clickHandler = function() {
         alert(userInfo)
     };

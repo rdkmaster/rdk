@@ -6,7 +6,7 @@
     var requiredComponents = [ ], ctx = {};
     var controllerDefination = ['$scope', main];
     function main(scope) {
-scope.floatChanged = function() {
+        scope.floatChanged = function() {
                 alert('选择的浮动样式：' + scope.float_Selcted);
             }
 

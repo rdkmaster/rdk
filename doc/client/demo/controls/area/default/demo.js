@@ -6,7 +6,7 @@
     var requiredComponents = [ ], ctx = {};
     var controllerDefination = ['$scope',  main];
     function main(scope ) {
- scope.default={
+        scope.default={
             province:{name:"广东",code:"1"},
             city:{name:"深圳",code:"2"},
             area:{name:"南山区",code:"3"}

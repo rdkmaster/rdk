@@ -1,0 +1,15 @@
+<table rdk_table id="table" ds="ds_table" ds_url="/doc/client/demo/controls/table/mockdata/table" ds_query_if="ready" setting="setting">
+          <thead>
+            <tr>
+                <th><input type="checkbox" ng-click="appScope.select_all()" ng-model="appScope.selectAll"></th>
+                <th>姓名</th>
+                <th>职位</th>
+                <th>薪资</th>
+                <th>入职日期</th>
+                <th>部门</th>
+                <th>其他</th>               
+            </tr>
+        </thead>
+    </table>
+
+    <span>Check  --> 数据ROWINDEX：状态 </span>  <span style="color:red">{{checkable}}</span>

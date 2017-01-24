@@ -6,7 +6,7 @@
     var requiredComponents = [ ], ctx = {};
     var controllerDefination = ['$scope',main];
     function main(scope) {
-scope.buttonSource = [{
+        scope.buttonSource = [{
                 icon: "/doc/client/demo/containers/accordion/img/refresh.png",
                 label: "刷新",
                 tooltips: "点击可进行图标变更",

@@ -6,7 +6,7 @@
     var requiredComponents = [ ], ctx = {};
     var controllerDefination = ['$scope',  main];
     function main(scope ) {
-scope.allItems = [{label: "江苏省"}, {label: "浙江省"}, {label: "河南省"}, {label: "湖北省"}];
+        scope.allItems = [{label: "江苏省"}, {label: "浙江省"}, {label: "河南省"}, {label: "湖北省"}];
 
         var initData = {title: 'my title', showCloseButton: true, awesomeData: [{label: "江苏省"}, {label: "浙江省"}]};
         scope.clickHandler = function(){

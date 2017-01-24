@@ -6,7 +6,7 @@
     var requiredComponents = [ ], ctx = {};
     var controllerDefination = ['$scope',  main];
     function main(scope ) {
-scope.setting={
+        scope.setting={
             defaultData:{
                 province:{name:"广东",code:"1"},
                 city:{name:"深圳",code:"2"},

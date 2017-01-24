@@ -6,7 +6,7 @@
     var requiredComponents = [ ], ctx = {};
     var controllerDefination = ['$scope', main];
     function main(scope) {
-scope.cityItems = [{
+        scope.cityItems = [{
             id: 0,
             label: "江苏省"
         }, {

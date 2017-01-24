@@ -1,0 +1,83 @@
+<div>
+        <rdk_table ds="ds_table" ds_url="../mockdata/table"
+            ds_query_if="ready" ng-init="initialValue()">
+        </rdk_table>
+    </div>
+    <hr>
+    <div>
+        <div style="float:right">
+            <h1>生成的CSS样式字段</h1>
+            <textarea ng-model="CSSValue" ng-change="attrChanged()">{{CSSValue}}</textarea>
+        </div>
+        <div>
+            <h1>表的整体属性：</h1>
+            <form>
+                <label>字体大小（font-size）：</label>
+                <input type="text" ng-model="tableFontSize" ng-change="attrChanged()"></input>
+            </form>
+            <form>
+                <label>行高（line-height）：</label>
+                <input type="text" ng-model="lineHeight" ng-change="attrChanged()"></input>
+            </form>
+            <hr>
+            <h1>选择行的属性:</h1>
+            <form>
+                <label>背景色（background-color）：</label>
+                <input type="color" ng-model="backgroundColor_bodyAndRowTD" ng-change="attrChanged()">{{backgroundColor_bodyAndRowTD}}</input>
+            </form>
+            <hr>
+            <h1>鼠标移动到行上的属性：</h1>
+            <form>
+                <label>背景色（background-color）：</label>
+                <input type="color" ng-model="backgroundColor_NotSelectData" ng-change="attrChanged()">{{backgroundColor_NotSelectData}}</input>
+            </form>
+            <hr>
+            <h1>表头:</h1>
+            <form>
+                <label>文字水平对齐（text-align）：</label>
+                <select ng-model="textAlign_th" ng-change="attrChanged()">
+                    <option value="">-- 请选择 --</option>
+                    <option value={{align_center}}>{{align_center}}</option>
+                    <option value={{align_left}}>{{align_left}}</option>
+                    <option value={{align_right}}>{{align_right}}</option>
+                </select>
+            </form>
+            <form>
+                <label>文字与边框间距（padding）：</label>
+                <input type="text" ng-model="padding_th" ng-change="attrChanged()"></input>
+            </form>
+            <form>
+                <label>背景色（background-color）：</label>
+                <input type="color" ng-model="backgroundColor_footOrHead" ng-change="attrChanged()">{{backgroundColor_footOrHead}}</input>
+            </form>
+            <form>
+                <label>颜色（color）：</label>
+                <input type="color" ng-model="color_footOrHead" ng-change="attrChanged()">{{color_footOrHead}}</input>
+            </form>             
+            <hr>
+            <h1>表体:</h1>
+            <form>
+                <label>文字水平对齐（text-align）：</label>
+                <select ng-model="textAlign_td" ng-change="attrChanged()">
+                    <option value="">-- 请选择 --</option>
+                    <option value={{align_center}}>{{align_center}}</option>
+                    <option value={{align_left}}>{{align_left}}</option>
+                    <option value={{align_right}}>{{align_right}}</option>
+                </select>
+            </form>
+            <form>
+                <label>文字的垂直对齐（vertical-align）：</label>
+                <select ng-model="verticalAlign_td" ng-change="attrChanged()">
+                    <option value="">-- 请选择 --</option>
+                    <option value={{vAlign_middle}}>{{vAlign_middle}}</option>
+                    <option value={{vAlign_top}}>{{vAlign_top}}</option>
+                    <option value={{vAlign_bottom}}>{{vAlign_bottom}}</option>
+                </select>
+            </form>
+            <form>
+                <label>文字与边框间距（padding）：</label>
+                <input type="text" ng-model="padding_td" ng-change="attrChanged()"></input>
+            </form>
+            <hr>
+        </div>
+    </div>

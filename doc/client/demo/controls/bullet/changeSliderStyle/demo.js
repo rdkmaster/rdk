@@ -6,7 +6,7 @@
     var requiredComponents = [ ], ctx = {};
     var controllerDefination = ['$scope', main];
     function main(scope ) {
-scope.inputScales = [ 20, 40, 68, 89 ];
+        scope.inputScales = [ 20, 40, 68, 89 ];
 
         scope.sliderStyles = [
                     {color:'red',label:'警告',position:'down'},
