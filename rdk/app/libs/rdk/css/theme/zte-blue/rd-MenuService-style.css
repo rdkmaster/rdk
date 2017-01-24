@@ -1,5 +1,6 @@
 .rdk_menu ul{
     margin: 0;
+    color: rgba(0, 0, 0, 0.65);
 }
 
 .rdk_menu ul.rdk_sub_menu {
@@ -22,20 +23,18 @@
     position: absolute;
     right: 3px;
     padding-top: 3px;
-    color: #999;
+    color: rgba(0, 0, 0, 0.43);
 }
 
 .rdk_menu .list-group-item:hover>ul.rdk_sub_menu,
 .rdk_menu .list-group-item:active>ul.rdk_sub_menu,
 .rdk_menu .list-group-item.active>ul.rdk_sub_menu{
     background-color: #fff;
-    color: #000;
 }
 .rdk_menu .list-group-item:hover,
 .rdk_menu .list-group-item:active,
 .rdk_menu .list-group-item.active,
 .rdk_menu .list-group-item:hover .icon{
-    background-color: #008fd5;
-    color: #fff;
+    background-color: #ecf6fd;
 }
 
