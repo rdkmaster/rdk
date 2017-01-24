@@ -737,7 +737,6 @@ var Data = {
             return;
         }
 
-
         var dataObj = JSON.parse(rdk_runtime.fetch(sql, maxLine));
         return new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data);
     },
