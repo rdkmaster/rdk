@@ -84,12 +84,20 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
     } ~
       path("rdk" / "service" / Segments) {
         url => {
-          get {
-            parameters('p.as[ServiceParam]) {
-              req => ctx =>
-                doDispatch(ctx, url, req.app, req.param)
-            }
-          } ~
+//          get {
+//            parameters('p.as[ServiceParam]) {
+//              req => ctx =>
+//                doDispatch(ctx, url, req.app, req.param)
+//            }
+//          } ~
+            get {
+              parameters('service,'param,'app ) {
+                (service,param,app) => ctx =>
+                   var x= param
+                    ""
+//                  doDispatch(ctx, url, req.app, req.param)
+              }
+            } ~
             get { ctx =>
               doDispatch(ctx, url, null, null)
             } ~
