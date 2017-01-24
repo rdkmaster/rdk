@@ -243,6 +243,10 @@ var JSON1 = {
 //动态类加载
 var JVM = {
     load_class: function loadClass(jar, className) {
+        Log.warn("function deprecated,please use JVM.loadClass()");
+        return JVM.loadClass(jar, className);
+    },
+    loadClass: function loadClass(jar, className) {
         var loadclazz = rdk_runtime.jarHelper().loadClass(jar, className);
         if (loadclazz == null) {
             return undefined;
@@ -509,7 +513,7 @@ function _listFiles(files, path, pattern, recursive) {
 
 ///////////////////////////////////////////////////////////////////////
 
-var rest = {
+var Rest = {
     get: function (url, option) {
         if (null == option) {
             option = undefined;
@@ -541,7 +545,8 @@ var rest = {
         return rdk_runtime.restHelper().put(url, param, option);
     }
 }
-
+//向下兼容
+var rest = Rest;
 ///////////////////////////////////////////////////////////////////////
 
 _.isResultSet = function (value) {
@@ -595,16 +600,6 @@ function require(script) {
     return load(script);
 }
 
-function sql(sql) {
-    log("exec sql: " + sql);
-    return rdk_runtime.dbHelper().sql(rdk_runtime.useDbSession(), sql);
-}
-
-function clear(resultSet) {
-    info("clearing the resultSet and every resource else.");
-    rdk_runtime.dbHelper().clear(rdk_runtime.useDbSession(), resultSet);
-}
-
 function mapper(resultSet, key, value, keepResultSet) {
     if (_.isString(resultSet)) {
         return mapper(sql(resultSet), key, value);
@@ -642,6 +637,10 @@ function mapper(resultSet, key, value, keepResultSet) {
 
 var Mapper = {
     from_object: function (jsObject, defaultValue) {
+        Log.warn("function deprecated,please use Mapper.fromObject()");
+        return Mapper.fromObject(jsObject, defaultValue);
+    },
+    fromObject: function (jsObject, defaultValue) {
         return function (key) {
             return jsObject && jsObject.hasOwnProperty(key) ? jsObject[key] :
                 defaultValue === undefined ? key : defaultValue;
@@ -650,10 +649,18 @@ var Mapper = {
 
     //from sql or dataTable 可合并
     from_sql: function (sql, keyName, valueName, defaultValue) {
-        return Mapper.from_object(Mapper.mkMap(sql, keyName, valueName), defaultValue);
+        Log.warn("function deprecated,please use Mapper.fromSql()");
+        return Mapper.fromSql(sql, keyName, valueName, defaultValue);
+    },
+    fromSql: function (sql, keyName, valueName, defaultValue) {
+        return Mapper.fromObject(Mapper.mkMap(sql, keyName, valueName), defaultValue);
     },
     from_datatable: function (dataTable, keyName, valueName, defaultValue) {
-        return Mapper.from_object(Mapper.mkMap(dataTable, keyName, valueName), defaultValue);
+        Log.warn("function deprecated,please use Mapper.fromDataTable()");
+        return Mapper.fromDataTable(dataTable, keyName, valueName, defaultValue);
+    },
+    fromDataTable: function (dataTable, keyName, valueName, defaultValue) {
+        return Mapper.fromObject(Mapper.mkMap(dataTable, keyName, valueName), defaultValue);
     },
     mkMap: function (param, keyName, valueName) {
         var map = {};
@@ -735,9 +742,13 @@ var Data = {
         return new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data);
     },
     fetch_first_cell: function (sql) {
+        Log.warn("function deprecated,please use Data.fetchFirstCell()");
+        return Data.fetchFirstCell(sql);
+    },
+    fetchFirstCell: function (sql) {
         return rdk_runtime.fetch_first_cell(sql);
     },
-    batch_fetch: function (sqlArray, maxLine, timeout) {  //并发实现
+    batchFetch: function (sqlArray, maxLine, timeout) {  //并发实现
 
         if (!sqlArray || !_.isArray(sqlArray)) {
             Log.error("Array param required! " + sqlArray);
@@ -762,6 +773,10 @@ var Data = {
         Data.useDataSource(dataSource);
         return Data.batch_fetch(sqlArray, maxLine, timeout);
     },
+    batch_fetch: function (sqlArray, maxLine, timeout) {  //并发实现
+        Log.warn("function deprecated,please use Data.batchFetch()");
+        return Data.batchFetch(sqlArray, maxLine, timeout);
+    },
     executeUpdate: function (sql) {
         if (_.isString(sql)) {
             return rdk_runtime.executeUpdate(rdk_runtime.application(), sql);
@@ -773,8 +788,18 @@ var Data = {
 
         Log.error("String or Array[String] param required!");
         return;
+    },
+    sql: function(sql) {
+        log("exec sql: " + sql);
+        return rdk_runtime.dbHelper().sql(rdk_runtime.useDbSession(), sql);
+    },
+    clear: function(resultSet) {
+        info("clearing the resultSet and every resource else.");
+        rdk_runtime.dbHelper().clear(rdk_runtime.useDbSession(), resultSet);
     }
 }
+var sql = Data.sql;
+var clear = Data.clear;
 
 function DataTable(header, field, data, paging) {
     this.header = header;

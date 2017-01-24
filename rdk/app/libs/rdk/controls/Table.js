@@ -1,12 +1,16 @@
-define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', 'rd.services.DataSourceService', "css!rd.styles.Table", 'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
+define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
+    'rd.services.DataSourceService', "css!rd.styles.Table", 'css!rd.styles.FontAwesome',
+    'css!rd.styles.Bootstrap','rd.controls.Button','css!rd.styles.IconFonts',
+    'bootstrap-select','bootstrap'
+], function() {
 
-    var tableModule = angular.module('rd.controls.Table', ['rd.core']);
+    var tableModule = angular.module('rd.controls.Table', ['rd.core','rd.controls.Button']);
 
     tableModule.run(["$templateCache", function($templateCache) {
         $templateCache.put("/src/templates/common.html",
-            '<div class="rdk-table-module">\
-                <div ng-if="search && (noData!=undefined)" class="searchWapper">\
-                    <input type="text" class="form-control search" placeholder="{{searchPrompt}}" ng-focus="searchFocusHandler()"\
+            '<div class="rdk-table-module rdk-table-search-{{position}}">\
+                <div ng-if="search && (noData!=undefined)" class="searchWapper search-position-{{position}}">\
+                    <input type="text" ng-style="width" class="form-control search" placeholder="{{searchPrompt}}" ng-focus="searchFocusHandler()"\
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
                     <i class="glyphicon glyphicon-search search_icon" ng-click="serverSearchHandler()" style="cursor:{{pagingType==\'server\' ? \'pointer\' : \'default\'}}"></i>\
                     <div ng-show="($parent.globalSearch && searchFocus)?true:false">\
@@ -45,15 +49,16 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     </table>\
                 </div>\
                 <rdk-paging ng-if="pageVisible && pageCtrl && paging && columnDefs.length!=0 && !noData" data-page-size="pageSize" \
-                     data-lang="{{lang}}">\
+                     data-lang="{{lang}}" data-position="{{position}}">\
                 </rdk-paging>\
+                <div ng-if="showExport" class="table-export"><rdk_button click="touchExport" icon="iconfont iconfont-e811" label="{{exportLabel}}"></rdk_button></div>\
                 <div class="clearfix"></div>\
             </div>'
         );
 
         $templateCache.put("/src/templates/paging.html",
             '<div class="pagingLine">\
-                <span class="disabledRecords spanRecords">{{i18n.total}} {{count}} {{i18n.records}}</span>\
+                <span class="disabledRecords spanRecords search-{{position}}">{{i18n.total}} {{count}} {{i18n.records}}</span>\
                 <ul class="pagination">\
                     <li ng-class="prevPageDisabled()"> \
                         <a href ng-click="firstPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==0]">\
@@ -270,6 +275,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
             select: "&?",
             doubleClick: "&?",
             check: "&?",
+            export: "&?",
+            searchPosition:"@?",
+            searchWidth:"@?",
+            exportLabel:"@?",
+            showExport:"=?"
         };
         return {
             restrict: 'EA',
@@ -421,6 +431,21 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                     _init();
                     scope.searchPrompt="Search";
+                    scope.showExport = Utils.isTrue(scope.showExport, false);
+                    scope.searchWidth = Utils.getValue(scope.searchWidth, attrs.searchWidth, "168px");
+                    scope.exportLabel = Utils.getValue(scope.exportLabel, attrs.exportLabel, "");
+                    scope.touchExport=_touchExport;
+                    scope.width = {
+                        "width":scope.searchWidth
+                    }
+                    function _touchExport(){
+                        EventService.raiseControlEvent(scope, EventTypes.EXPORT, null)
+                    }
+                    if(scope.search){
+                        scope.position=scope.searchPosition=="bottom"?"bottom": "top"
+                    }else{
+                        scope.position="";
+                    }
                     var curSortIndex;
                     var sortIconStatus=true;
 
@@ -718,7 +743,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             }
                         };
                         scope.setSelected = function(item, event) {
-                            scope.selectedModel = _setRowHighLight(item,event.target);
+                            if(event!=null){
+                                scope.selectedModel = _setRowHighLight(item,event.target);
+                            }else{
+                                scope.selectedModel.rows.push(item);
+                            }
                             EventService.raiseControlEvent(scope, 'select', item);
                         };
                         scope.setHovered = function(item, event) {
@@ -1301,7 +1330,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
             scope: {
                 count: "=",
                 pageSize: "=",
-                lang: "@"
+                lang: "@",
+                position:"@?"
             },
             link: function($scope, element, attrs, TableCtrl) {
                 $scope.TableCtrl = TableCtrl;

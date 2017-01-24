@@ -1,19 +1,18 @@
 package com.zte.vmax.rdk.db
 
-import java.sql.{Statement, Connection}
+import java.sql.Types._
+import java.sql.{Connection, ResultSet}
 
 import akka.util.Timeout
 import com.zte.vmax.rdk.RdkServer
 import com.zte.vmax.rdk.actor.Messages.{DBSession, DataTable}
 import com.zte.vmax.rdk.defaults.Misc
-import com.zte.vmax.rdk.proxy.{ProxyManager}
-import com.zte.vmax.rdk.util.{RdkUtil, Logger}
+import com.zte.vmax.rdk.proxy.ProxyManager
+import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 
 import scala.collection.mutable.ArrayBuffer
-import scala.concurrent.{Await, Future}
-
 import scala.concurrent.duration._
-
+import scala.concurrent.{Await, Future}
 /**
   * Created by 10054860 on 2016/7/19.
   */
@@ -44,16 +43,10 @@ object DataBaseHelper extends Logger {
         val fieldLst = 1 to fieldCnt map (i => (meta.getColumnLabel(i), meta.getColumnType(i)))
         val fieldNames = fieldLst.map(_._1).toArray
         val fieldTypes = fieldLst.map(_._2).toArray
-        rs.beforeFirst()
         val dataArray = new ArrayBuffer[Array[String]]
         var i = 0L
         while (rs.next() && i < maxLine) {
-
-          val row = 1 to fieldCnt map (i => {
-            val bytes = rs.getBytes(i)
-            if (bytes == null) nullToString else new String(bytes)
-          })
-          dataArray.append(row.toArray)
+          dataArray.append(getRowValue(rs, fieldCnt, fieldTypes, nullToString))
           i = i + 1
         }
 
@@ -74,6 +67,36 @@ object DataBaseHelper extends Logger {
 
   }
 
+  private def getRowValue(rs: ResultSet, fieldCnt: Int, fieldTypes: Array[Int], nullToString: String): Array[String] = {
+    val row = 1 to fieldCnt map (i => {
+      fieldTypes(i - 1) match {
+        case INTEGER => rs.getInt(i)
+        case BIGINT | REAL => rs.getLong(i)
+        case NUMERIC | DECIMAL => rs.getBigDecimal(i)
+        case CHAR => rs.getString(i)
+        case VARCHAR | LONGVARCHAR => rs.getString(i)
+        case TIMESTAMP => rs.getTimestamp(i)
+        case DOUBLE => rs.getDouble(i)
+        case BIT | BOOLEAN => rs.getBoolean(i)
+        case TINYINT => rs.getByte(i)
+        case SMALLINT => rs.getShort(i)
+        case FLOAT => rs.getFloat(i)
+        case DATE => rs.getDate(i)
+        case TIME => rs.getTime(i)
+        case BINARY | VARBINARY | LONGVARBINARY | JAVA_OBJECT | OTHER | STRUCT => rs.getBytes(i)
+        case NULL | DISTINCT => null
+        case ARRAY => rs.getArray(i)
+        case BLOB => rs.getBlob(i)
+        case CLOB => rs.getClob(i)
+        case ROWID => rs.getRowId(i)
+        case NCHAR | NVARCHAR | LONGNVARCHAR => rs.getNString(i)
+        case NCLOB => rs.getNClob(i)
+        case SQLXML => rs.getSQLXML(i)
+        case _ => null
+      }
+    })
+    row.map(it => if (it == null) nullToString else it.toString).toArray
+  }
 
   /**
     * 批量查询数据库(并发查询)
