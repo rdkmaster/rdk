@@ -96,7 +96,7 @@
             }
 
             function calPosition (moduleID) {
-                var pos = option.position, location = $.extend({}, PositionTypes[pos]),
+                var pos = option.position || 'right', location = $.extend({}, PositionTypes[pos]),
                   brothers = $('#Notify_' + moduleID).prevAll('.notify'), temp= 0;
 
                 function getNumFromStr(str) {

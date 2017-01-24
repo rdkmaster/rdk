@@ -28,7 +28,7 @@
 2. option json对象，可选。option的结构为：
 
 		{
-		    position: '',		//提示框显示的位置，默认为 left，显示在页面的左上侧
+		    position: '',		//提示框显示的位置，缺省默认right，显示在页面的右上侧
 			type: '',		    //message的格式，有 url/html/text 三种，缺省默认 text
 			initData: ''        //初始化数据，参照 module 中的 initData
 		}

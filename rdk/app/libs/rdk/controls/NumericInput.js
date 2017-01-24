@@ -21,7 +21,7 @@ define(['angular', 'jquery', 'rd.core',
         }],
         template: function(tElement, tAttrs) {
           return '<div class="input-group numeric_input"> \
-            <input type="text" class="form-control" value=0 ng-keydown="keydownHandler($event)" ng-keyup="keyupHandler($event)"" ng-blur="blurHandler($event)"> \
+            <input type="text" class="form-control" value=0 ng-keydown="keydownHandler($event)" ng-keyup="keyupHandler($event)" ng-blur="blurHandler($event)" ng-focus="focusHandler($event)"> \
             <div class="input-group-addon"> \
               <a href="javascript:;" class="spin-up" ng-click="plus()"><i class="fa fa-angle-up"></i></a> \
               <a href="javascript:;" class="spin-down" ng-click="minus()"><i class="fa fa-angle-down"></i></a> \
@@ -72,7 +72,7 @@ define(['angular', 'jquery', 'rd.core',
           inputElement.value = min;
         }
 
-        var originValue;
+        var originValue, beforeChange;
 
         scope.plus = function() {
           originValue = parseFloat(inputElement.value);
@@ -82,7 +82,8 @@ define(['angular', 'jquery', 'rd.core',
           if (value > max) {
             value = originValue;
           }
-          event.keyCode ? _resetValue(value) : inputElement.value = value;
+          beforeChange = value;
+          _resetValue(value);
         };
 
         scope.minus = function() {
@@ -93,7 +94,8 @@ define(['angular', 'jquery', 'rd.core',
           if (value < min) {
             value = originValue;
           }
-          event.keyCode ? _resetValue(value) : inputElement.value = value;
+          beforeChange = value;
+          _resetValue(value);
         };
 
         scope.keydownHandler = function(event){
@@ -120,6 +122,10 @@ define(['angular', 'jquery', 'rd.core',
           }, 100);
         }
 
+        scope.focusHandler = function(event){
+          beforeChange = parseFloat(inputElement.value) || 0;
+        }
+
         function _refreshBits(valueStr){
           if (/^[+-]{0,1}([0-9]*\.)\d+$/.test(valueStr)){
             bits = Math.max(valueStr.split('.')[1].length, bits);
@@ -141,6 +147,7 @@ define(['angular', 'jquery', 'rd.core',
         function _refreshValue(){
             var value = parseFloat(inputElement.value) || 0;
             value = _getValidateValue(value);
+            if(value == beforeChange) return;
             _resetValue(value);
         }
 

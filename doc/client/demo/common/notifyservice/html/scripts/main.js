@@ -12,7 +12,7 @@ define('main', ['rd.controls.Module', 'rd.services.NotifyService'], function() {
         scope.load = function(){
             var sampleUrl = '<button>Hello, web! </button><button>Hello, rdk!</button>';
             var option = {
-                position: 'right',
+                position: '',
                 type: 'html'
             };
             moduleID = NotifyService.notify({title: 'my notify - html', message: sampleUrl}, option);

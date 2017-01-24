@@ -12,10 +12,11 @@ define('main', ['rd.services.MenuService'], function() {
             {label: 'menu item 3', event: 'menu_item_3'},
         ];
 
+        var moduleID;
 
         scope.load = function(event){
             var position = 'mouse';
-            MenuService.addMenu(scope.menuConfig, position, event);
+            moduleID = MenuService.addMenu(scope.menuConfig, position, event);
         }
 
         scope.close = function () {
