@@ -600,16 +600,6 @@ function require(script) {
     return load(script);
 }
 
-function sql(sql) {
-    log("exec sql: " + sql);
-    return rdk_runtime.dbHelper().sql(rdk_runtime.useDbSession(), sql);
-}
-
-function clear(resultSet) {
-    info("clearing the resultSet and every resource else.");
-    rdk_runtime.dbHelper().clear(rdk_runtime.useDbSession(), resultSet);
-}
-
 function mapper(resultSet, key, value, keepResultSet) {
     if (_.isString(resultSet)) {
         return mapper(sql(resultSet), key, value);
@@ -786,8 +776,18 @@ var Data = {
 
         Log.error("String or Array[String] param required!");
         return;
+    },
+    sql: function(sql) {
+        log("exec sql: " + sql);
+        return rdk_runtime.dbHelper().sql(rdk_runtime.useDbSession(), sql);
+    },
+    clear: function(resultSet) {
+        info("clearing the resultSet and every resource else.");
+        rdk_runtime.dbHelper().clear(rdk_runtime.useDbSession(), resultSet);
     }
 }
+var sql = Data.sql;
+var clear = Data.clear;
 
 function DataTable(header, field, data, paging) {
     this.header = header;
