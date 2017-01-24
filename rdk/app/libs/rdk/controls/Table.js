@@ -6,7 +6,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
         $templateCache.put("/src/templates/common.html",
             '<div class="rdk-table-module rdk-table-search-{{position}}">\
                 <div ng-if="search && (noData!=undefined)" class="searchWapper search-position-{{position}}">\
-                    <input type="text" style="width:{{searchWidth}}" class="form-control search" placeholder="{{searchPrompt}}" ng-focus="searchFocusHandler()"\
+                    <input type="text" ng-style="width" class="form-control search" placeholder="{{searchPrompt}}" ng-focus="searchFocusHandler()"\
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
                     <i class="glyphicon glyphicon-search search_icon" ng-click="serverSearchHandler()" style="cursor:{{pagingType==\'server\' ? \'pointer\' : \'default\'}}"></i>\
                     <div ng-show="($parent.globalSearch && searchFocus)?true:false">\
@@ -431,6 +431,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     scope.searchWidth = Utils.getValue(scope.searchWidth, attrs.searchWidth, "168px");
                     scope.exportLabel = Utils.getValue(scope.exportLabel, attrs.exportLabel, "");
                     scope.touchExport=_touchExport;
+                    scope.width = {
+                        "width":scope.searchWidth
+                    }
                     function _touchExport(){
                         EventService.raiseControlEvent(scope, EventTypes.EXPORT, null)
                     }
