@@ -1,12 +1,27 @@
 .rdk-table-module {
+    position: relative;
     margin: 0 0;
 }
-
+.rdk-table-module.rdk-table-search-top {
+    padding-top: 32px;
+}
+.rdk-table-module .search-position-top {
+    top: 0;
+    right: 0;
+}
+.rdk-table-module .search-position-bottom {
+    bottom: 0;
+    left: 0;
+}
+.rdk-table-module .table-export {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 30px;
+}
 .rdk-table-module .searchWapper {
-    position: relative;
-    height: 40px;
-    width: 255px;
-    float: right;
+    height: 30px;
+    position: absolute;
     z-index: 9999;
 }
 
@@ -26,18 +41,15 @@
 }
 
 .rdk-table-module .search {
-    max-width: 250px;
-    padding-right: 25px;
-    float: right;
-    margin-bottom: 15px;
+    width: 120px;
+    height: 30px;
 }
 .rdk-table-module .search_icon {
     position: absolute;
-    right: 8px;
-    top: 10px;
+    right: 6px;
+    top: 8px;
 }
-.rdk-table-module .search_select{
-    width: 250px;
+.rdk-table-module div.btn-group.search_select{
     position: absolute;
     top: 34px;
     right: 0;
@@ -79,6 +91,10 @@
 }
 .rdk-table-module .pagination {
     margin: 0;
+}
+.rdk-table-module .pagingLine .search-bottom {
+    float:none;
+    vertical-align: super;
 }
 .rdk-table-module .count {
     font-size: 14px;
@@ -142,6 +158,14 @@
 }
 .rdk-table-module .mouseShape{
     cursor:url("/rdk/app/libs/rdk/css/img/edit.cur"),auto;
+}
+.rdk-table-module .rdk-table-sort-down{
+    background: url("../../img/sort-down.png") no-repeat;
+    background-size:contain;
+}
+.rdk-table-module .rdk-table-sort-up{
+    background: url("../../img/sort-up.png") no-repeat;
+    background-size:contain;
 }
 .rdk-table-icon{
     display: inline-block;
@@ -247,6 +271,7 @@ i.regular_right,i.regular_left{
 .rdk-table-module .pagination > li > a, .rdk-table-module .pagination > li > span {
     border:none;
     margin: 10px 0 0px;
+    padding: 0 12px;
 }
 .rdk-table-module .spanRecords {
     float: left;
@@ -260,7 +285,6 @@ i.regular_right,i.regular_left{
 }
 
 /*翻页1*/
-
 .rdk-page-theme-short .rdk-table-module .pagination > li > span{
     padding: 0 15px;
 }
@@ -270,8 +294,6 @@ i.regular_right,i.regular_left{
 }
 
 /*翻页2*/
-
-
 /*********** 翻页样式 ***********/
 .rdk-page-theme-long .rdk-table-module .pagination > li > a{
     padding: 0 6px;
@@ -284,3 +306,23 @@ i.regular_right,i.regular_left{
     padding: 0 4px 0 18px;
 }
 
+/*搜索下拉框*/
+.rdk-table-module div.search_select .dropdown-toggle.btn:focus{
+    border-color: #66afe9;
+    outline: 0 !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+}
+.rdk-table-module div.search_select .dropdown-toggle.btn{
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+}
+.rdk-table-module .dropdown-menu>li>a:hover {
+    background: #eee;
+    color: #333;
+}
+.rdk-table-module .dropdown-menu>li>a:focus{
+    background: #3ab1ea;
+    color: #fff;
+}

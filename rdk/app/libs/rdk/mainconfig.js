@@ -75,6 +75,7 @@ require.config({
 
         "rd.styles.Bootstrap": "../bootstrap/css/bootstrap.min",
         "rd.styles.FontAwesome": "../font-awesome-4.3.0/css/font-awesome",
+        "rd.styles.IconFonts": "../iconFonts/fonts/iconfont",
 
         "rdk.theme.zte-blue":"css/theme/zte-blue/zte-blue",
         "rdk.theme.default":"css/theme/default/default",
