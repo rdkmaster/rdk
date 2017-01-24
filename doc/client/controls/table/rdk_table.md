@@ -478,9 +478,9 @@ cells 为 改变的行列信息的数组信息
 ## export_label ##
 >支持类型：字符串
 
-`export_label`表示在导出按钮的内容;
+`export_label`表示在导出按钮的内容，其默认值为""。
 
-详细示例如下
+导出按钮和搜索框的详细示例如下:
 <live_demo example="controls/table/search_export_position" width="900"></live_demo>
 
 
