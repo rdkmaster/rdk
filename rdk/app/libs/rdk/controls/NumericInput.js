@@ -60,9 +60,9 @@ define(['angular', 'jquery', 'rd.core',
         }
         //纠错
         try{
-          step = parseFloat(step);//isFloat? parseFloat(step): parseInt(step);
-          min = parseFloat(min);//isFloat? parseFloat(min): parseInt(min);
-          max = parseFloat(max);//isFloat? parseFloat(max): parseInt(max);
+          step = parseFloat(step);
+          min = parseFloat(min);
+          max = parseFloat(max);
         }catch(e) {
           console.error('step、min和max属性必须为数值');
           return;
@@ -75,8 +75,6 @@ define(['angular', 'jquery', 'rd.core',
         var originValue;
 
         scope.plus = function() {
-          // var value = inputElement.value;
-          //value = isFloat? parseFloat(value): parseInt(value);
           originValue = parseFloat(inputElement.value);
           _refreshBits(inputElement.value);
           var value = parseFloat(inputElement.value);
@@ -88,8 +86,6 @@ define(['angular', 'jquery', 'rd.core',
         };
 
         scope.minus = function() {
-          // var value = inputElement.value;
-          //value = isFloat? parseFloat(value): parseInt(value);
           originValue = parseFloat(inputElement.value)
           _refreshBits(inputElement.value);
           var value = parseFloat(inputElement.value);
@@ -137,9 +133,6 @@ define(['angular', 'jquery', 'rd.core',
         }
 
         function _checkInputIntFloat(){
-          // if(!/^[-]?\d+(?:\.\d+)?$/.test(inputElement.value)){
-          //   inputElement.value = inputElement.value.match(/\d{1,}\.{0,1}\d{0,}/) == null ? '' : inputElement.value.match(/\d{1,}\.{0,1}\d{0,}/);
-          // }
           if(!/^\-?[0-9\,]*\.?\d*$/.test(inputElement.value)){
             inputElement.value = inputElement.value.match(/\d{1,}\.{0,1}\d{0,}/) == null ? '' : inputElement.value.match(/\d{1,}\.{0,1}\d{0,}/);
           }
