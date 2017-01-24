@@ -21,7 +21,7 @@ define(['angular', 'jquery', 'rd.core',
         }],
         template: function(tElement, tAttrs) {
           return '<div class="input-group numeric_input"> \
-            <input type="text" class="form-control" value=0 ng-keydown="keydownHandler($event)" ng-keyup="keyupHandler($event)""> \
+            <input type="text" class="form-control" value=0 ng-keydown="keydownHandler($event)" ng-keyup="keyupHandler($event)"" ng-blur="blurHandler($event)"> \
             <div class="input-group-addon"> \
               <a href="javascript:;" class="spin-up" ng-click="plus()"><i class="fa fa-angle-up"></i></a> \
               <a href="javascript:;" class="spin-down" ng-click="minus()"><i class="fa fa-angle-down"></i></a> \
@@ -72,14 +72,17 @@ define(['angular', 'jquery', 'rd.core',
           inputElement.value = min;
         }
 
+        var originValue;
+
         scope.plus = function() {
           // var value = inputElement.value;
           //value = isFloat? parseFloat(value): parseInt(value);
+          originValue = parseFloat(inputElement.value);
           _refreshBits(inputElement.value);
           var value = parseFloat(inputElement.value);
           value = parseFloat((value + step).toFixed(bits));
           if (value > max) {
-            value = max;
+            value = originValue;
           }
           _resetValue(value);
         };
@@ -87,11 +90,12 @@ define(['angular', 'jquery', 'rd.core',
         scope.minus = function() {
           // var value = inputElement.value;
           //value = isFloat? parseFloat(value): parseInt(value);
+          originValue = parseFloat(inputElement.value)
           _refreshBits(inputElement.value);
           var value = parseFloat(inputElement.value);
           value = parseFloat((value - step).toFixed(bits));
           if (value < min) {
-            value = min;
+            value = originValue;
           }
           _resetValue(value);
         };
@@ -111,7 +115,13 @@ define(['angular', 'jquery', 'rd.core',
           event.preventDefault();
           if((event.keyCode === KEY_CODE.UP) || (event.keyCode === KEY_CODE.DOWN)) return;
           _checkInputIntFloat();
-          _refreshValue();
+        }
+
+        scope.blurHandler = function(event){
+          event.preventDefault();
+          $timeout(function(){
+            _refreshValue();
+          }, 100);
         }
 
         function _refreshBits(valueStr){
@@ -127,30 +137,33 @@ define(['angular', 'jquery', 'rd.core',
         }
 
         function _checkInputIntFloat(){
-          if(!/^[-]?\d+(?:\.\d+)?$/.test(inputElement.value)){
+          // if(!/^[-]?\d+(?:\.\d+)?$/.test(inputElement.value)){
+          //   inputElement.value = inputElement.value.match(/\d{1,}\.{0,1}\d{0,}/) == null ? '' : inputElement.value.match(/\d{1,}\.{0,1}\d{0,}/);
+          // }
+          if(!/^\-?[0-9\,]*\.?\d*$/.test(inputElement.value)){
             inputElement.value = inputElement.value.match(/\d{1,}\.{0,1}\d{0,}/) == null ? '' : inputElement.value.match(/\d{1,}\.{0,1}\d{0,}/);
           }
         }
 
         function _refreshValue(){
-            var arr = inputElement.value.split('.');
-            if((arr.length == 2) && (arr[1] == '')){
-              _resetValue(inputElement.value);
-              return;
-            }
             var value = parseFloat(inputElement.value) || 0;
+            value = _getValidateValue(value);
+            _resetValue(value);
+        }
+
+        function _getValidateValue(value){
             if(value < min){
               value = min;
             }
             if(value > max){
               value = max;
             }
-            _resetValue(value);
+            return value;          
         }
 
         ngModel.$render = function() {
-          inputElement.value = ngModel.$viewValue || 0;
-        };
+          inputElement.value = _getValidateValue(ngModel.$viewValue || 0);
+        };       
       }
     }
   ]);
