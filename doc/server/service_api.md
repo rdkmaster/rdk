@@ -8,7 +8,7 @@
 
 [查看underscore使用API](underscore_doc_v1_7_0.html)
 
-## 文件操作 {#file_oper}
+## 文件操作 {#file_oper} ##
 
 [查看文件操作API](service_file_api.md)
 
@@ -159,7 +159,7 @@ rdk为应用提供可扩展的日志上报功能。
       var regionData = Data.fetch("select distinct region_id,region from ts_cell", 300000);//先调用fetch函数并设置你想要的查询最大记录数
       Mapper.fromDataTable(regionData, 'region_id', 'region'); //再调用Mapper.fromDataTable 函数即可                          
 
-#### `Mapper.fromDataTable()` {#fromDataTable}####
+#### `Mapper.fromDataTable()` {#fromDataTable} ####
 
 
 该函数可以构造一个基于[DataTable](#dataTable)并完成映射获取的处理函数。
@@ -349,7 +349,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 返回：undefined
 
 
-### `rdk多数据源使用示例` {#mulit-ds-example}###
+### `rdk多数据源使用示例` {#mulit-ds-example} ###
 第一步，在**proc\bin\lib**目录下放置应用所需数据库jdbc驱动包，rdk默认已经提供gbase和mysql的驱动包。
 
 第二步，配置应用需要的数据源信息，包括数据库连接信息以及对应的连接池信息，配置文件位于 **proc/conf/datasource.cfg**，以下示例配置了mysql和hbase的数据库以及各自连接池信息
@@ -455,7 +455,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 
    		
-#### `Data.fetch()` {#fetch}####
+#### `Data.fetch()` {#fetch} ####
 
 该函数提供了简便的可查询数据库数据的方法。
 
@@ -476,6 +476,30 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  [DataTable对象](#dataTable)
 
 
+ #### `Data.fetchWithDataSource()` {#fetchWithDataSource} ####
+
+该函数提供了根据自定义数据源查询数据库数据的安全方法。
+
+定义：
+
+    function fetchWithDataSource(dataSource,sql,maxLine);
+
+参数：
+
+- dataSource：数据源标识字符串，必选，** 注意，该标识对应于`proc/conf/datasource.cfg`文件中真实数据标记（以db.开头）**
+
+- sql: 一个SQL字符串，必选。
+
+- maxLine:查询数据返回的最大记录数，数值型，可选，默认为4000。
+
+返回：
+
+ [DataTable对象](#dataTable)
+
+示例：查询`proc/conf/datasource.cfg`文件中db目录下mysql标记对应的数据库
+
+        Data.fetchWithDataSource("db.mysql","select * from dim_ne where neid =10"); 
+                          
 
 #### `Data.fetchFirstCell()` ####
 
@@ -510,7 +534,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 - maxLine：返回的最大记录数，可选，默认为4000。
 
-- timeout ：批量查询超时时间，单位秒，必选。
+- timeout ：批量查询超时时间，单位秒，可选，默认为30。
 
 
 返回：
@@ -521,6 +545,34 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
     Data.batchFetch(['select * from dim_ne;','select * from dim_comm_city'],4000,10);
 
+
+#### `Data.batchFetchWithDataSource()` ####
+
+该函数提供了根据数据源标识并发查询数据库的安全方法。
+
+定义：
+
+    function batchFetchWithDataSource(dataSource, sqlArray, maxLine, timeout);
+
+参数：
+
+- dataSource：数据源标识字符串，必选，** 注意，该标识对应于`proc/conf/datasource.cfg`文件中真实数据标记（以db.开头）**
+
+- sqlArray: 一个SQL字符串数组，必选。
+
+- maxLine：返回的最大记录数，可选，默认为4000。
+
+- timeout ：批量查询超时时间，单位秒，可选，默认为30。
+
+返回：
+ 
+  [DataTable对象](#dataTable)数组
+
+示例：
+
+并发查询`proc/conf/datasource.cfg`文件中db目录下mysql标记对应的数据库表：
+     	
+        Data.batchFetchWithDataSource("mysql",['select * from dim_ne;','select * from dim_comm_city']); //查询mysql数据库
 
 #### `Data.executeUpdate()` ####
 

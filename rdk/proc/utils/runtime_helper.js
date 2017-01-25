@@ -722,8 +722,7 @@ var Data = {
             rdk_runtime.useDataSource("")
         }
     },
-
-    fetch: function (sql, maxLine) {
+    fetchWithDataSource: function (dataSource, sql, maxLine) {
         if (!maxLine || !_.isDefined(maxLine)) {
             Log.warn("param maxLine empty,set maxLine=4000");
             maxLine = 4000;
@@ -734,6 +733,19 @@ var Data = {
             return;
         }
 
+        var dataObj = JSON.parse(rdk_runtime.fetchWithDataSource(dataSource, sql, maxLine));
+        return new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data);
+    },
+    fetch: function (sql, maxLine) {
+        if (!maxLine || !_.isDefined(maxLine)) {
+            Log.warn("param maxLine empty,set maxLine=4000");
+            maxLine = 4000;
+        }
+
+        if (!_.isNumber(maxLine)) {
+            Log.error("maxLine must be a number!");
+            return;
+        }
 
         var dataObj = JSON.parse(rdk_runtime.fetch(sql, maxLine));
         return new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data);
@@ -752,10 +764,36 @@ var Data = {
             return;
         }
         if (maxLine === undefined) {
+            Log.warn("param maxLine empty,set maxLine=4000");
             maxLine = 4000;
+        }
+        if (timeout === undefined) {
+            Log.warn("param timeout empty,set timeout=30");
+            timeout = 30;
         }
         var dataTableArray = [];
         var dataObj = JSON.parse(rdk_runtime.batchFetch(sqlArray, maxLine, timeout));
+        for (idx in dataObj) {
+            dataTableArray.push(new DataTable(i18n(dataObj[idx].fieldNames), dataObj[idx].fieldNames, dataObj[idx].data))
+        }
+        return dataTableArray;
+    },
+    batchFetchWithDataSource: function (dataSource, sqlArray, maxLine, timeout) {
+
+        if (!sqlArray || !_.isArray(sqlArray)) {
+            Log.error("Array param required! " + sqlArray);
+            return;
+        }
+        if (maxLine === undefined) {
+            Log.warn("param maxLine empty,set maxLine=4000");
+            maxLine = 4000;
+        }
+        if (timeout === undefined) {
+            Log.warn("param timeout empty,set timeout=30");
+            timeout = 30;
+        }
+        var dataTableArray = [];
+        var dataObj = JSON.parse(rdk_runtime.batchFetchWithDataSource(dataSource, sqlArray, maxLine, timeout));
         for (idx in dataObj) {
             dataTableArray.push(new DataTable(i18n(dataObj[idx].fieldNames), dataObj[idx].fieldNames, dataObj[idx].data))
         }
