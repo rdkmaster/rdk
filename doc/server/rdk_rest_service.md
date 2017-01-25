@@ -1,14 +1,13 @@
 ### rdk_server rest请求说明
 
-rdk提供了可支持get,put,delete,put四种动作rest服务。rdk提供了两种url格式对应用javaScript服务进行调用。
+rdk提供了可支持get,put,delete,put四种动作rest服务。
 
 #### get 请求
+url格式：
 
-第一种格式：
+        	http://ip:port/rdk/service/js服务脚本相对路径?app=应用名&param=json对象字符串
 
-        	http://ip:port/rdk/service/js服务脚本相对路径？app=应用名&param={jsonObject}
-
-- js服务脚本相对路径: 即需要请求的js服务脚本路径，该路径与服务脚本相对app目录所在路径一致。比如，以请求example应用server目录下my_service.js服务为例，完整的请求路径为：`http://ip:port/rdk/service/app/server/my_service`。
+- js服务脚本相对路径：即需要请求的js服务脚本路径，该路径与服务脚本相对app目录所在路径一致。比如，以请求example应用server目录下my_service.js服务为例，完整的请求路径为：`http://ip:port/rdk/service/app/server/my_service`。
 
 - app:应用名，该参数用于rdk区分各个应用，比如在记录应用日志时会以该属性值来标识具体应用。
 
@@ -37,27 +36,8 @@ my_service服务:
 			
 			})();
 
-第二种格式：
- 
-   		 	http://ip:port/rdk/service？service=js服务脚本相对路径&app=应用名&param={jsonObject}  		
-
-- service: 即需要请求的js服务脚本路径，该路径与服务脚本相对app目录所在路径一致。比如，以请求example应用server目录下my_service.js服务为例，则service参数值即为`app/example/server/my_service`。
-
-- app:应用名，该参数用于rdk区分各个应用，比如在记录应用日志时会以该属性值来标识具体应用。
-
-- param: 应用js脚本需要获取的前端带过来的请求参数，是一个json串。
-
-返回：即被请求的服务脚本对应的返回值。
-
-示例：
-
-请求本机rdk服务上的example/my_service服务，并将参数{"a":"A"}传给该脚本：
-
-			http://localhost:5812/rdk/service?service=app/example/server/my_service&param={"a":"A"}&app=example (需要进行url编码)
-
 #### post/put/delete 请求
-
-第一种格式：
+url格式：
 
         	 http://ip:port/rdk/service/js服务脚本相对路径
 
@@ -101,27 +81,3 @@ my_service服务:
 			})();
 
 前端收到的返回值为 `{"result":{"a":"A"}}`	
-
-第二种格式：
- 
-   		 	http://ip:port/rdk/service 
-
-请求消息体为json格式，参数有：   		 		
-
-- service: 即需要请求的js服务脚本路径，该路径与服务脚本相对app目录所在路径一致。比如，以请求example应用server目录下my_service.js服务为例，则service参数值即为app/example/server/my_service。
-
-- app:应用名，该参数用于rdk区分各个应用，比如在记录应用日志时会以该属性值来标识具体应用。
-
-- param: 应用js脚本需要获取的前端带过来的请求参数，是一个json串。
-
-返回：即被请求的服务脚本对应的返回值。
-
-示例：
-
-请求本机rdk服务上的example/my_service服务，并将参数{"a":"A"}传给该脚本：
-
-   			http://localhost:5812/rdk/service	 
-
-请求消息体json格式为：
-
-			{"service":"app/example/server/my_service","param"：{"a":"A"},"app":"example"}
