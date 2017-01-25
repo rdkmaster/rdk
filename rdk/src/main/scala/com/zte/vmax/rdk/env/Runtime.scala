@@ -208,9 +208,21 @@ class Runtime(engine: ScriptEngine) extends Logger {
     objectToJson(data getOrElse "null") //转json？
   }
 
+  def fetchWithDataSource(dataSource: String, sql: String, maxLine: Int): String = {
+    val data = DataBaseHelper.fetch(DBSession(application, Some(dataSource)), sql, maxLine)
+    objectToJson(data getOrElse "null")
+  }
+
   def batchFetch(sqlArr: ScriptObjectMirror, maxLine: Int, timeout: Long): String = {
     val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
     val data = DataBaseHelper.batchFetch(useDbSession, lst.toList, maxLine, timeout)
+    val ret = data.map(it => if (it.nonEmpty) it.get else Nil)
+    objectToJson(ret.toArray)
+  }
+
+  def batchFetchWithDataSource(dataSource: String, sqlArr: ScriptObjectMirror, maxLine: Int, timeout: Long): String = {
+    val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
+    val data = DataBaseHelper.batchFetch(DBSession(application, Some(dataSource)), lst.toList, maxLine, timeout)
     val ret = data.map(it => if (it.nonEmpty) it.get else Nil)
     objectToJson(ret.toArray)
   }
