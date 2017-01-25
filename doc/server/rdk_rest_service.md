@@ -9,9 +9,9 @@ url格式：
 
 - js服务脚本相对路径：即需要请求的js服务脚本路径，该路径与服务脚本相对app目录所在路径一致。比如，以请求example应用server目录下my_service.js服务为例，完整的请求路径为：`http://ip:port/rdk/service/app/server/my_service`。
 
-- app:应用名，该参数用于rdk区分各个应用，比如在记录应用日志时会以该属性值来标识具体应用。
+- app：应用名，该参数用于rdk区分各个应用，比如在记录应用日志时会以该属性值来标识具体应用。
 
-- param: 应用js脚本需要获取的前端带过来的请求参数，是一个json串。
+- param：应用js脚本需要获取的前端带过来的请求参数，是一个json串。
 
 返回：即被请求的服务脚本对应的返回值。
 
@@ -41,13 +41,13 @@ url格式：
 
         	 http://ip:port/rdk/service/js服务脚本相对路径
 
-- js服务脚本相对路径: 即需要请求的js服务脚本路径，该路径与服务脚本相对app目录所在路径一致。比如，以请求example应用server目录下my_service.js服务为例，完整的请求路径为：`http://ip:port/rdk/service/app/server/my_service`。
+- js服务脚本相对路径：即需要请求的js服务脚本路径，该路径与服务脚本相对app目录所在路径一致。比如，以请求example应用server目录下my_service.js服务为例，完整的请求路径为：`http://ip:port/rdk/service/app/server/my_service`。
 
 请求消息体为json格式，参数有：
 
-- app:应用名，该参数用于rdk区分各个应用，比如在记录应用日志时会以该属性值来标识具体应用。
+- app：应用名，该参数用于rdk区分各个应用，比如在记录应用日志时会以该属性值来标识具体应用。
 
-- param: 应用js脚本需要获取的前端带过来的请求参数，是一个json串。
+- param：应用js脚本需要获取的前端带过来的请求参数，是一个json串。
 
 返回：**json对象，{"result":被请求的服务脚本对应的返回值}**。
 
