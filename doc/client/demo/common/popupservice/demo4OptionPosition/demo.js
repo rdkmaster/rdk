@@ -14,12 +14,12 @@
             var myOption = {
                 modal: true,
                 effect: 'explode',
-                x: 100,
-                y: 100,
-                // left: 100,
-                // top: 100,         
-                // right: 100,
-                // bottom: 100,//bottom时有像素差
+                x: 50,
+                y: 50,
+                // left: 50,
+                // top: 50,         
+                // right: 50,
+                // bottom: 50,//bottom时有像素差
             }
             moduleID = PopupService.popup(sampleUrl, initData, myOption);
         }

@@ -4,9 +4,9 @@
         'rd.attributes.modal','bootstrap','bootstrap-select','rd.controls.Button'
     ];
     var requiredComponents = [ ], ctx = {};
-    var controllerDefination = ['$scope', 'EventService','Button', main];
-    function main($scope,EventService,Button) {
-        $scope.setmodal = function(id, modal, position) {
+    var controllerDefination = ['$scope', 'EventService', main];
+    function main(scope,EventService) {
+        scope.setmodal = function(id, modal, position) {
             EventService.broadcast(id, modal, position);
             $('.selectpicker').selectpicker();
             $('.content>ul>li:nth-child(2)>i').click(function(){

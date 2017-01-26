@@ -41,20 +41,8 @@ define(['rd.core'], function() {
 
     function _fixUrl(url) {
         if (url.search(/\$svr/) != -1) {
-            if (window.$svr) {
-                if (window.$svr[window.$svr.length-1] != '/') {
-                    window.$svr += '/';
-                }
-                return url.replace(/\$svr\//, window.$svr);
-            }
-            var match = location.pathname.match(/^(\/.*?\/)web\//);
-            if (match) {
-                return url.replace(/\$svr\//, match[1] + 'server/');
-            }
-            match = location.search.match(/^\?(.*?\/)web\s*$/);
-            if (match) {
-                return url.replace(/\$svr\//, '/doc/client/demo/' + match[1] + 'server/');
-            }
+            var svr = window.$svr ? window.$svr : location.pathname;
+            url = url.replace(/\$svr\//, svr);
         }
         return url;
     }

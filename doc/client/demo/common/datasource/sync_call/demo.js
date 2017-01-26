@@ -15,7 +15,7 @@
         }
 
         scope.syncQuery = function() {
-            var citys = DS.syncQuery('mockdata/city_list.json');
+            var citys = DS.syncQuery('mock/city_list.json');
             scope.cityList = toString(citys);
         }
     }

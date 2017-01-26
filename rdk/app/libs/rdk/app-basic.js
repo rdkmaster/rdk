@@ -1,5 +1,53 @@
 application = (function() {
+    function _import(downloads) {
+        var list = [];
+        for (var i = 0; i < downloads.length; i++) {
+            var item = downloads[i];
+            var url;
+            if (item.hasOwnProperty('url')) {
+                url = item.url;
+            } else {
+                url = item;
+            }
+            list.push(url);
+        }
+        return list;
+    }
+    function _initImports(imports, values, realImports) {
+        //兼容老版本
+        realImports = !realImports ? imports : realImports;
+        for (var i = 0; i < realImports.length; i++) {
+            var item = realImports[i];
+            if (!item.hasOwnProperty('url')) {
+                continue;
+            }
+            imports[item.alias] = values[i];
+        }
+    }
+    function _getComponents(components, imports) {
+        //自动将下载列表中的 "rd." 开头的模块名加入到Angular的依赖列表总
+        var compList = components.concat('blockUI');
+        for (var i = 0; i < imports.length; i++) {
+            var item = imports[i];
+            var compName = item.hasOwnProperty('url') ? item.url : item;
+            if (compName.match(/^\s*rd\..*/)) {
+                compList.push(compName);
+            }
+        }
+        return compList;
+    }
     return {
+        base: (function() {
+            var match = location.pathname.match(/^(.*)\//);
+            return match[1];
+        })(),
+
+        import:        _import,
+        getDownloads:  _import,
+        initImports:   _initImports,
+        initContext:   _initImports,
+        getComponents: _getComponents,
+
         loadingImage: '<img src="data:image/gif;base64, ' +
         'R0lGODlhPAA8AOZOACqa0n7ZOw6NzG3UIVSu25fhYQyMzGvUH7HoiX/C5OLx+TKe1KrmfpjO6bvr' +
         'mKnmfcDtoBWQzU+r2rne8Dih1dTzvobcSD+k1t/2z7re8N/w+MvwsO365IrdTpDfVvX6/fn99pTg' +
@@ -56,44 +104,5 @@ application = (function() {
         'LGaxk0GMCTcSa9iJH0aAIocRhCfPX717KfV5EucSnTqR7kBJo2YNmzZuAr+1UhYUmqtg7I7FsoVL' +
         'Fy9ftKJKnUq1qtWrWLNq3cq1q9evYMOKrRoIADs=' + 
         '" alt="loading..." style="width:60px;height:60px"/>',
-        base: (function() {
-            var match = location.pathname.match(/^(.*)\//);
-            return match[1];
-        })(),
-        getDownloads: function(downloads) {
-            var list = [];
-            for (var i = 0; i < downloads.length; i++) {
-                var item = downloads[i];
-                var url;
-                if (item.hasOwnProperty('url')) {
-                    url = item.url;
-                } else {
-                    url = item;
-                }
-                list.push(url);
-            }
-            return list;
-        },
-        getComponents: function(components, downloads) {
-            //自动将下载列表中的 "rd." 开头的模块名加入到Angular的依赖列表总
-            var compList = components.concat('blockUI');
-            for (var i = 0; i < downloads.length; i++) {
-                var item = downloads[i];
-                var compName = item.hasOwnProperty('url') ? item.url : item;
-                if (compName.match(/^\s*rd\..*/)) {
-                    compList.push(compName);
-                }
-            }
-            return compList;
-        },
-        initContext: function(ctx, values, downloads) {
-            for (var i = 0; i < downloads.length; i++) {
-                var item = downloads[i];
-                if (!item.hasOwnProperty('url')) {
-                    continue;
-                }
-                ctx[item.alias] = values[i];
-            }
-        }
     }
 })();

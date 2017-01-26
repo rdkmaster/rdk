@@ -1,11 +1,9 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
-    var downloadDependency = [
-        'application','rd.attributes.Scroll'
-    ];
+    var downloadDependency = [ ];
     var requiredComponents = [ ], ctx = {};
-    var controllerDefination = ['$scope', main];
-    function main(scope) {
+    var controllerDefination = ['$scope', 'DataSourceService', main];
+    function main(scope, DataSourceService) {
         function onSuccess(url) {
             alert('数据上传成功，可通过这个url引用它\n' + url);
         }

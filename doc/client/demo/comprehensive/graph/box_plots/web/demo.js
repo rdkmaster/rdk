@@ -1,13 +1,11 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var downloadDependency = [
-        'application', 'rd.controls.Graph'
+        'rd.controls.Graph'
     ];
     var requiredComponents = [ ], ctx = {};
-    var controllerDefination = ['$scope','DataSourceService', 'Graph',main];
-    function main(scope,DataSourceService,Graph) {
-        console.log(application);
-        application.initDataSourceService(DataSourceService);
+    var controllerDefination = ['$scope','DataSourceService', main];
+    function main(scope, DataSourceService) {
     }
 
     var controllerName = 'DemoController';

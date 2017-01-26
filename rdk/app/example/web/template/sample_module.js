@@ -3,13 +3,12 @@
     var controllerName = 'SampleModuleController';
 
     //参考 main.js 中同名变量的说明
-    var downloadDependency = [
+    var imports = [
         'css!base/template/css/sample_module',
         { url: 'base/scripts/utils', alias: 'utils' },
         'rd.controls.Button',
     ];
-    var requiredComponents = [ ];
-    var ctx = {};
+    var extraModules = [ ];
 
     var controllerDefination = ['$scope', 'DataSourceService', 'EventService', main];
     function main(scope, DataSourceService, EventService) {
@@ -34,10 +33,10 @@
     //==========================================================================
     //                 从这里开始的代码、注释请不要随意修改
     //==========================================================================
-    define(/*fix-from*/application.getDownloads(downloadDependency)/*fix-to*/, start);
+    define(/*fix-from*/application.import(imports)/*fix-to*/, start);
     function start() {
-        application.initContext(ctx, arguments, downloadDependency);
-        rdk.$injectDependency(application.getComponents(requiredComponents, downloadDependency));
+        application.initImports(imports, arguments);
+        rdk.$injectDependency(application.getComponents(extraModules, imports));
         rdk.$ngModule.controller(controllerName, controllerDefination);
     }
 })();

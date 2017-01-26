@@ -4,10 +4,19 @@
         'rd.controls.Module', 'rd.services.PopupService', 'base/template/sample_module'
     ];
     var requiredComponents = [ ], ctx = {};
-    var controllerDefination = ['$scope', 'PopupService','DemoController', main];
-    function main(scope,PopupService,DemoController) {
+    var controllerDefination = ['$scope', 'PopupService', main];
+    function main(scope, PopupService) {
         var moduleID;
 
+        scope.load = function(){
+            var sampleUrl = 'template/sample_module.html';
+            var initData = {myData: 'load module manually...'};
+            var myOption = {
+                modal: false,
+                effect: 'explode'
+            }
+            moduleID = PopupService.popup(sampleUrl, initData, myOption);
+        }
     }
 
     var controllerName = 'DemoController';

@@ -9,7 +9,7 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
-    <title>RDK Client Demo, loading...</title>
+    <title>loading demo...</title>
     
     <!-- fix-from -->
     <!--
@@ -18,7 +18,7 @@
     -->
 
     <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/loading.css">
-    <script data-main="/rdk/app/libs/rdk/rdk.js" src="/rdk/app/libs/requirejs/require.js" rdk-app="live-demo">
+    <script data-main="/rdk/app/libs/rdk/rdk.js" src="/rdk/app/libs/requirejs/require.js" rdk-app="index">
     </script>
 
     <!-- 上面两行会被自动替换为下面两行 -->
@@ -34,7 +34,6 @@
 <!-- rdk-loading 样式只能在body节点添加一次，其他节点不要添加 -->
 <body ng-controller='RootController' class="rdk-loading">
     <rdk_module id="m" initialized="load" ready="setTitle" controller="DemoController"></rdk_module>
-
 </body>
 
 </html>

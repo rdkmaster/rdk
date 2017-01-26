@@ -1,4 +1,5 @@
-<button ng-click="setmodal('topModal', 'none_modal', {x:50, y:50})">可以点击一下</button>
+<div>
+    <button ng-click="setmodal('topModal', 'none_modal', {x:50, y:50})">可以点击一下</button>
     <div id="topModal" rdk_modal="hide" class="modalcss">
         <div class='title'>
             <span>修改项弹出框</span><i ng-click="setmodal('topModal', 'hide')"></i>
@@ -15,7 +16,8 @@
                         <option>Relish</option>
                     </select>
                 </li>
-                <li><rdk_button label="保存" ng-click="setmodal('topModal', 'hide')"></rdk_button></li>
+                <li><rdk_button label="保存" click="setmodal('topModal', 'hide')"></rdk_button></li>
             </ul>
         </div>
     </div>
+</div>

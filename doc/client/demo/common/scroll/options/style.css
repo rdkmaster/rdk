@@ -1,0 +1,20 @@
+.content2{
+    height: 400px;
+    width: 600px;
+    margin: 0 auto;
+    border: 1px solid #eee;
+    overflow: scroll;
+}
+.ps-theme-myStyle > .ps-scrollbar-y-rail > .ps-scrollbar-y{
+    background-color: #ed7448;
+    opacity: 0.7;
+}
+.ps-theme-myStyle > .ps-scrollbar-y-rail > .ps-scrollbar-y{
+    background-color: #ed7448;
+    opacity: 1;
+    border-radius: 6px;
+}
+.ps-theme-myStyle:hover > .ps-scrollbar-y-rail:hover > .ps-scrollbar-y{
+    background-color: #ed7448;
+    opacity: 1;
+}

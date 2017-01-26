@@ -9,11 +9,11 @@
         ctx.i18n.$init(scope);
         scope.time = new Date();
 
-        //js中获取时间
-        var curTime = ctx.i18n.time.st(scope.time);
-        setTimeout(function() {
-            alert('在JS中使用国际化\n\n' + curTime);
-        }, 0);
+        scope.getI18n = function() {
+            //js中获取i18n字符串
+            var curTime = ctx.i18n.time.st(scope.time);
+            alert(curTime);
+        }
     }
 
     var controllerName = 'DemoController';
