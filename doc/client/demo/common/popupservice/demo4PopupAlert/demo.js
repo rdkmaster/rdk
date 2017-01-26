@@ -1,9 +1,9 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
-    var downloadDependency = [
+    var imports = [
         'rd.controls.Module', 'rd.services.PopupService', 'rd.services.Alert', 'base/template/sample_module'
     ];
-    var requiredComponents = [ ], ctx = {};
+    var extraModules = [ ];
     var controllerDefination = ['$scope', 'PopupService','Alert', main];
     function main(scope,PopupService,Alert) {
         var moduleID;
@@ -35,10 +35,10 @@
     //==========================================================================
     //                 从这里开始的代码、注释请不要随意修改
     //==========================================================================
-    define(/*fix-from*/application.getDownloads(downloadDependency)/*fix-to*/, start);
+    define(/*fix-from*/application.import(imports)/*fix-to*/, start);
     function start() {
-        application.initContext(ctx, arguments, downloadDependency);
-        rdk.$injectDependency(application.getComponents(requiredComponents, downloadDependency));
+        application.initImports(imports, arguments);
+        rdk.$injectDependency(application.getComponents(extraModules, imports));
         rdk.$ngModule.controller(controllerName, controllerDefination);
     }
 })();

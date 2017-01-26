@@ -1,8 +1,8 @@
 (function() {
-    // ÕâĞ©±äÁ¿ºÍº¯ÊıµÄËµÃ÷£¬Çë²Î¿¼ rdk/app/example/web/scripts/main.js µÄ×¢ÊÍ
-    var downloadDependency = [
+    // è¿™äº›å˜é‡å’Œå‡½æ•°çš„è¯´æ˜ï¼Œè¯·å‚è€ƒ rdk/app/example/web/scripts/main.js çš„æ³¨é‡Š
+    var imports = [
     ];
-    var requiredComponents = [ ], ctx = {};
+    var extraModules = [ ];
     var controllerDefination = ['$scope', 'DataSourceService', 'EventService', main];
     function main(scope, DataSourceService, EventService) {
         $code
@@ -10,12 +10,12 @@
 
     var controllerName = 'DemoController';
     //==========================================================================
-    //                 ´ÓÕâÀï¿ªÊ¼µÄ´úÂë¡¢×¢ÊÍÇë²»ÒªËæÒâĞŞ¸Ä
+    //                 ä»è¿™é‡Œå¼€å§‹çš„ä»£ç ã€æ³¨é‡Šè¯·ä¸è¦éšæ„ä¿®æ”¹
     //==========================================================================
-    define(/*fix-from*/application.getDownloads(downloadDependency)/*fix-to*/, start);
+    define(/*fix-from*/application.import(imports)/*fix-to*/, start);
     function start() {
-        application.initContext(ctx, arguments, downloadDependency);
-        rdk.$injectDependency(application.getComponents(requiredComponents, downloadDependency));
+        application.initImports(imports, arguments);
+        rdk.$injectDependency(application.getComponents(extraModules, imports));
         rdk.$ngModule.controller(controllerName, controllerDefination);
     }
 })();
