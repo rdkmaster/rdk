@@ -8,10 +8,11 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                    padding: 0 4px 0 4px;\
                    background-color: #fff;\
                    border-radius: 4px 4px 0 0;';
-    var aStyle =  'color:#428bca;\
-                   text-decoration:none;\
-                   font-size:12px;\
-                   font-family:微软雅黑;';
+    var aStyle =  'color: #428bca;\
+                   outline: none;\
+                   text-decoration: none;\
+                   font-size: 12px;\
+                   font-family: 微软雅黑;';
     return {
         restrict: 'E',
         replace: true,
@@ -51,6 +52,7 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
             scope.editorId = Utils.createUniqueId('editor_');
             scope.selectedIndex = -1;
             scope.initDone = false;
+            scope.files = [];
             var evaluator = $(iEle.find('iframe')[0]);
             var exampleUrl = makeOriginExampleUrl(scope.example);
             var newUrl = undefined;
@@ -239,7 +241,18 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                     return;
                 }
 
-                scope.files = [];
+                files.sort(
+                    //把index.*挪到最后面去
+                    function sortFileBy(a, b) {
+                        var reg = (/index\.(js|html)$/i);
+                        if (a.match(reg) && !b.match(reg)) {
+                            return 1;
+                        } else {
+                            return a < b ? -1 : 1;
+                        }
+                    }
+                );
+
                 //这里加3是因为exampleUrl前需要加上“..”  -- 具体原因请查阅listFiles()的注释
                 //再去掉最后的斜杠，一共去掉3个字符
                 var len = exampleUrl.length + 2;
@@ -262,9 +275,11 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                 });
 
                 $timeout(function() {
+                    //选中运行页
                     scope.selectFile(scope.files.length);
                 }, 1);
             }
+
 
             function loadFileContent(file) {
                 dsListFiles.resultHandler = handleContentResult;
@@ -284,7 +299,7 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                 var fi = scope.files[scope.selectedIndex];
                 try {
                     var data = JSON.parse(data.result);
-                    fi.content = data[0].content;
+                    fi.content = data[0].content.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
                     fi.status = 'not_real_edit';
                 } catch(e) {
                     fi.content = e.stack;

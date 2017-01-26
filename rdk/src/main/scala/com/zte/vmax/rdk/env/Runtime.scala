@@ -56,6 +56,15 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   //获取主机名
   def getHostName: String = RdkUtil.getHostName
+
+  //获取主机ips
+  def getHostIps: String = RdkUtil.toJsonString(RdkUtil.getHostIps)
+
+  //shell脚本调用
+  def executeShell(cmd: String, option: String, args: ScriptObjectMirror) = {
+    RdkUtil.executeShell(cmd, option, args)
+  }
+
   //当前数据源
   private var opCurDataSource: Option[String] = Some("db.default")
 
@@ -153,6 +162,10 @@ class Runtime(engine: ScriptEngine) extends Logger {
     CacheHelper.getAppCache.remove(key)
   }
 
+  def clearAppCache(appName: String): Unit = {
+    CacheHelper.clearAppCache(appName)
+  }
+
   def cachePut(key: String, data: AnyRef) = buffer(key, data)
 
   def cacheGet(key: String) = buffer(key)
@@ -195,9 +208,21 @@ class Runtime(engine: ScriptEngine) extends Logger {
     objectToJson(data getOrElse "null") //转json？
   }
 
+  def fetchWithDataSource(dataSource: String, sql: String, maxLine: Int): String = {
+    val data = DataBaseHelper.fetch(DBSession(application, Some(dataSource)), sql, maxLine)
+    objectToJson(data getOrElse "null")
+  }
+
   def batchFetch(sqlArr: ScriptObjectMirror, maxLine: Int, timeout: Long): String = {
     val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
     val data = DataBaseHelper.batchFetch(useDbSession, lst.toList, maxLine, timeout)
+    val ret = data.map(it => if (it.nonEmpty) it.get else Nil)
+    objectToJson(ret.toArray)
+  }
+
+  def batchFetchWithDataSource(dataSource: String, sqlArr: ScriptObjectMirror, maxLine: Int, timeout: Long): String = {
+    val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
+    val data = DataBaseHelper.batchFetch(DBSession(application, Some(dataSource)), lst.toList, maxLine, timeout)
     val ret = data.map(it => if (it.nonEmpty) it.get else Nil)
     objectToJson(ret.toArray)
   }

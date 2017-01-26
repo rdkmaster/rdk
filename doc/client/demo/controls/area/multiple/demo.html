@@ -1,0 +1,47 @@
+<div>
+    <!--
+        这里的 $svr 是指代demo当前目录。实际开发时的 $svr 指代app的server目录。
+        可用绝对路径替换 $svr
+    -->
+    <ds id="dsProv1" url="$svr/mock/areaServiceProv.js"></ds>
+    <ds id="dsProv2" url="$svr/mock/areaServiceProv.js"></ds>
+    <ds id="dsCity2" url="$svr/mock/areaServiceCity.js"></ds>
+    <ds id="dsProv3" url="$svr/mock/areaServiceProv.js"></ds>
+    <ds id="dsCity3" url="$svr/mock/areaServiceCity.js"></ds>
+    <ds id="dsArea3" url="$svr/mock/areaServiceArea.js"></ds>
+
+    <h3>选择省(多选)</h3>
+    <div class="area-wrap1">
+        <rdk_combo_select>
+            <rdk-area-select multiple-select="true" ds_province="dsProv1" area-data="resultData1" granularity="province"></rdk-area-select>
+        </rdk_combo_select>
+    </div>
+    <div ng-if="resultData1" class="show">
+        你选择的地区：{{resultData1.province.name}} {{resultData1.city.name}} {{resultData1.area.name}}
+        <span ng-repeat="province in resultData1.province">{{province.name}}; </span>
+    </div>
+
+    <h3>选择省市(多选)</h3>
+    <div class="area-wrap">
+        <rdk_combo_select>
+            <rdk-area-select multiple-select="true" ds_province="dsProv2" ds_city="dsCity2" area-data="resultData2" granularity="city"
+                             freeze-province="false"></rdk-area-select>
+        </rdk_combo_select>
+    </div>
+    <div ng-if="resultData2" class="show">
+        你选择的地区：{{resultData2.province.name}} {{resultData2.city.name}}
+        <span ng-repeat="city in resultData2.city">{{city.name}}; </span>
+    </div>
+
+    <h3>选择省市区(多选)</h3>
+    <div class="area-wrap">
+        <rdk_combo_select  open-policy="hover">
+            <rdk-area-select multiple-select="true" ds_province="dsProv3" ds_city="dsCity3" ds_area="dsArea3" area-data="resultData3"></rdk-area-select>
+        </rdk_combo_select>
+    </div>
+    <div ng-if="resultData3" class="show">
+        你选择的地区：
+        {{resultData3.province.name}} {{resultData3.city.name}}
+        <span ng-repeat="area in resultData3.area">{{area.name}}; </span>
+    </div>
+</div>

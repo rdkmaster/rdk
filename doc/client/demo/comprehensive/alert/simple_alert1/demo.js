@@ -1,14 +1,13 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var downloadDependency = [
-        'rd.services.Alert'
+        'rd.services.Alert', 'css!base/css/simple_alert1'
     ];
     var requiredComponents = [ ], ctx = {};
-    var controllerDefination = ['$scope', 'Alert','ButtonTypes',main];
-    function main(scope,Alert,ButtonTypes) {
+    var controllerDefination = ['$scope', 'Alert', 'ButtonTypes', main];
+    function main(scope, Alert, ButtonTypes) {
         scope.clickHandler = function() {
-            Alert.scope = scope;
-            Alert.confirm('信息确认请注意认请注意认请注意认请注意认请注意认请注意认请注意认请注意', '确认提示',  ButtonTypes.YES + ButtonTypes.NO , callbackHandler);
+            Alert.confirm('信息确认请注意认请注意认请注意认请注意认请注意认请注意认请注意认请注意', '确认提示',  ButtonTypes.NO + ButtonTypes.YES , callbackHandler);
         }
 
         function callbackHandler(val) {
@@ -26,6 +25,7 @@
             }
         }
     }
+
     var controllerName = 'DemoController';
     //==========================================================================
     //                 从这里开始的代码、注释请不要随意修改

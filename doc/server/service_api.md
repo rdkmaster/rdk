@@ -1,4 +1,4 @@
-﻿
+
 <rdk_title>后端服务API</rdk_title>
 
 
@@ -8,7 +8,7 @@
 
 [查看underscore使用API](underscore_doc_v1_7_0.html)
 
-## 文件操作 {#file_oper}
+## 文件操作 {#file_oper} ##
 
 [查看文件操作API](service_file_api.md)
 
@@ -102,13 +102,13 @@ rdk为应用提供可扩展的日志上报功能。
 
 实际开发中，常常需要定义一个可根据给定的属性来从一个映射中获取其对应的值的处理函数，Mapper变量提供了简便的处理方法。
 
-#### `Mapper.from_object()` ####
+#### `Mapper.fromObject()` ####
 
 该函数可以构造一个基于js对象完成映射获取的处理函数。
 
 定义：
 
-	function from_object(jsObject, defaultValue);
+	function fromObject(jsObject, defaultValue);
 
 参数：
 
@@ -121,7 +121,7 @@ rdk为应用提供可扩展的日志上报功能。
 
 示例：某个表中有一个字段用于表示“是否”这样的状态，存在库中，1代表“是”，0代表“否”，可以使用下面的代码得到一个转换函数：
 
-	var tranformFunction = Mapper.from_object({1: "是", 0: "否"});
+	var tranformFunction = Mapper.fromObject({1: "是", 0: "否"});
 
 	var val = tranformFunction(0); // "否"
 	var val = tranformFunction(1); // "是"
@@ -129,16 +129,16 @@ rdk为应用提供可扩展的日志上报功能。
 
 如果期望在输入非1、0时得到“未知”，则可以使用下面代码
 
-	var tranformFunction = Mapper.from_object({1: "是", 0: "否"}， "未知");
+	var tranformFunction = Mapper.fromObject({1: "是", 0: "否"}， "未知");
 	var val = tranformFunction(2); // "未知"
 
-#### `Mapper.from_sql()` ####
+#### `Mapper.fromSql()` ####
 
 该函数可以构造一个基于sql查询数据库并完成映射获取的处理函数。
 
 定义：
 
-	function from_sql(sql, keyField, valueField, defaultValue);
+	function fromSql(sql, keyField, valueField, defaultValue);
 
 参数：
 
@@ -151,22 +151,22 @@ rdk为应用提供可扩展的日志上报功能。
 
 示例：假设需要查询数据库，根据dim_ne表的neid,name列生成一组映射，并根据此映射来构造一个转换函数以便给定一个neid值时方便的得到其对应的name值：
 
-	  var tranformFunction = Mapper.from_sql("select * from dim_ne;",'neid','name',"unknown");
+	  var tranformFunction = Mapper.fromSql("select * from dim_ne;",'neid','name',"unknown");
       tranformFunction("30");//表dim_ne中neid=30对应的name值
       
-说明：**注意，该函数只限制查询20000条记录，若应用需要更大数量的查询，可将[fetch函数](#fetch)和[Mapper.from_datatable 函数](#from_datatable)结合使用：**
+说明：**注意，该函数只限制查询20000条记录，若应用需要更大数量的查询，可将[fetch函数](#fetch)和[Mapper.fromDataTable 函数](#fromDataTable)结合使用：**
 
       var regionData = Data.fetch("select distinct region_id,region from ts_cell", 300000);//先调用fetch函数并设置你想要的查询最大记录数
-      Mapper.from_datatable(regionData, 'region_id', 'region'); //再调用Mapper.from_datatable 函数即可                          
+      Mapper.fromDataTable(regionData, 'region_id', 'region'); //再调用Mapper.fromDataTable 函数即可                          
 
-#### `Mapper.from_datatable()` {#from_datatable}####
+#### `Mapper.fromDataTable()` {#fromDataTable} ####
 
 
 该函数可以构造一个基于[DataTable](#dataTable)并完成映射获取的处理函数。
 
 定义：
 
-	function from_datatable(dataTable, keyField, valueField, defaultValue);
+	function fromDataTable(dataTable, keyField, valueField, defaultValue);
 
 参数：
 
@@ -180,7 +180,7 @@ rdk为应用提供可扩展的日志上报功能。
 示例：假设需要查询数据库，根据dim_ne表的neid,name列生成一组映射，并根据此映射来构造一个转换函数以便给定一个neid值时方便的得到其对应的name值：
 
       var dataTable=Data.fetch("select * from dim_ne;")
-	  var tranformFunction = Mapper.from_datatable(dataTable,'neid','name',"unknown");
+	  var tranformFunction = Mapper.fromDataTable(dataTable,'neid','name',"unknown");
       tranformFunction("30");//表dim_ne中neid=30对应的name值
 
 
@@ -232,8 +232,8 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 		return function(request) {
 		
 			var mapIter = {
-				//使用Mapper.from_sql函数创建一个通用的国际化迭代函数
-				neid: Mapper.from_sql("select neid,name from dim_ne",'neid', 'name'),
+				//使用Mapper.fromSql函数创建一个通用的国际化迭代函数
+				neid: Mapper.fromSql("select neid,name from dim_ne",'neid', 'name'),
 	
 				//根据自定义算法算出 kpi_succ_rate 的值。可根据第二个参数row获取辅助行数据数组，根据第三个参数field获取辅助字段数组。
 				kpi_succ_rate: function(value,row,field) {
@@ -349,7 +349,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 返回：undefined
 
 
-### `rdk多数据源使用示例` {#mulit-ds-example}###
+### `rdk多数据源使用示例` {#mulit-ds-example} ###
 第一步，在**proc\bin\lib**目录下放置应用所需数据库jdbc驱动包，rdk默认已经提供gbase和mysql的驱动包。
 
 第二步，配置应用需要的数据源信息，包括数据库连接信息以及对应的连接池信息，配置文件位于 **proc/conf/datasource.cfg**，以下示例配置了mysql和hbase的数据库以及各自连接池信息
@@ -455,7 +455,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 
    		
-#### `Data.fetch()` {#fetch}####
+#### `Data.fetch()` {#fetch} ####
 
 该函数提供了简便的可查询数据库数据的方法。
 
@@ -476,14 +476,38 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  [DataTable对象](#dataTable)
 
 
+ #### `Data.fetchWithDataSource()` {#fetchWithDataSource} ####
 
-#### `Data.fetch_first_cell()` ####
+该函数提供了根据自定义数据源查询数据库数据的安全方法。
+
+定义：
+
+    function fetchWithDataSource(dataSource,sql,maxLine);
+
+参数：
+
+- dataSource：数据源标识字符串，必选，** 注意，该标识对应于`proc/conf/datasource.cfg`文件中真实数据标记（以db.开头）**
+
+- sql: 一个SQL字符串，必选。
+
+- maxLine:查询数据返回的最大记录数，数值型，可选，默认为4000。
+
+返回：
+
+ [DataTable对象](#dataTable)
+
+示例：查询`proc/conf/datasource.cfg`文件中db目录下mysql标记对应的数据库
+
+        Data.fetchWithDataSource("db.mysql","select * from dim_ne where neid =10"); 
+                          
+
+#### `Data.fetchFirstCell()` ####
 
 该函数返回查询数据的第一行第一列。
 
 定义：
 
-    function fetch_first_cell(sql);
+    function fetchFirstCell(sql);
 
 参数：
 
@@ -494,13 +518,13 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
   数据的第一行第一列，字符串类型
 
 
-#### `Data.batch_fetch()` ####
+#### `Data.batchFetch()` ####
 
 该函数提供了并发查询数据库的功能。
 
 定义：
 
-    function batch_fetch(sqlArray, maxLine,timeout);
+    function batchFetch(sqlArray, maxLine,timeout);
 
 说明：并发执行多个sql的查询并返回结果，超时后抛出超时异常。
 
@@ -510,7 +534,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 - maxLine：返回的最大记录数，可选，默认为4000。
 
-- timeout ：批量查询超时时间，单位秒，必选。
+- timeout ：批量查询超时时间，单位秒，可选，默认为30。
 
 
 返回：
@@ -519,8 +543,36 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 示例：
 
-    Data.batch_fetch(['select * from dim_ne;','select * from dim_comm_city'],4000,10);
+    Data.batchFetch(['select * from dim_ne;','select * from dim_comm_city'],4000,10);
 
+
+#### `Data.batchFetchWithDataSource()` ####
+
+该函数提供了根据数据源标识并发查询数据库的安全方法。
+
+定义：
+
+    function batchFetchWithDataSource(dataSource, sqlArray, maxLine, timeout);
+
+参数：
+
+- dataSource：数据源标识字符串，必选，** 注意，该标识对应于`proc/conf/datasource.cfg`文件中真实数据标记（以db.开头）**
+
+- sqlArray: 一个SQL字符串数组，必选。
+
+- maxLine：返回的最大记录数，可选，默认为4000。
+
+- timeout ：批量查询超时时间，单位秒，可选，默认为30。
+
+返回：
+ 
+  [DataTable对象](#dataTable)数组
+
+示例：
+
+并发查询`proc/conf/datasource.cfg`文件中db目录下mysql标记对应的数据库表：
+     	
+        Data.batchFetchWithDataSource("mysql",['select * from dim_ne;','select * from dim_comm_city']); //查询mysql数据库
 
 #### `Data.executeUpdate()` ####
 
@@ -571,8 +623,8 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 	lib.hello('rdk');
 
 
-### `rest` ###
-#### `rest.get()` ####
+### `Rest` ###
+#### `Rest.get()` ####
 
 定义：
 
@@ -600,7 +652,7 @@ option的结构如下：
 
 
 返回：该服务的返回值。
-#### `rest.put()` ####
+#### `Rest.put()` ####
 
 定义：
 
@@ -616,7 +668,7 @@ option的结构如下：
 
 返回：该服务的返回值。    
 
-#### `rest.post()` ####
+#### `Rest.post()` ####
 
 定义：
 
@@ -632,7 +684,7 @@ option的结构如下：
 
 返回：该服务的返回值。
 
-#### `rest.delete()` ####
+#### `Rest.delete()` ####
 
 定义：
 
@@ -707,6 +759,25 @@ option的结构如下：
 返回：
  
    undefined
+
+
+#### `Cache.clear()` ####
+
+定义：
+
+    function clear();
+
+说明：删除该应用的私有缓存
+
+参数：
+
+ 无
+
+
+返回：
+ 
+   undefined
+
 
 #### `Cache.global_put()` （已过时）####
 
@@ -912,7 +983,7 @@ rdk_server在服务启动时会自动加载应用的初始化脚本。
 			(function () {
 			    function _init_() {
 					try{
-						Cache.put("ne_data",Mapper.from_sql("select neid,name from dim_ne",'neid','name',4000))
+						Cache.put("ne_data",Mapper.fromSql("select neid,name from dim_ne",'neid','name',4000))
 					}catch(error){
 						log("cache ne_data error"+error)
 					}
@@ -927,7 +998,7 @@ rdk_server在服务启动时会自动加载应用的初始化脚本。
            Cache.get("ne_data")(11) //Cache.get("ne_data")返回的是一个转换函数闭包，对其进行调用即可获取neid=11对应的name值
 
 **注意，若init.js文件发生修改，请一定要重启rdk_server才会生效。**
-### `JVM.load_class()` ###
+### `JVM.loadClass()` ###
 
 定义：
 
@@ -1017,16 +1088,36 @@ Java返回数据给JS，原则也是尽量只返回简单类型。当然也可�
 
 返回：对应的当前请求对应http请求头对应的js对象。
 
-### `getHostName()` ###
+
+### `Host对象` ###
+
+该对象提供了一组可以获取主机相关信息的方法。
+
+#### `Host.getName()` ####
 定义：
 
-	function getHostName();
+	function getName();
 
 参数：
 
 无
 
 返回：获取服务主机名。
+
+#### `Host.getIp()` ####
+定义：
+
+	function getIp();
+
+参数：
+
+无
+
+返回：数组，获取服务主机的所有ipv4。
+
+说明：支持多网卡情况ip获取。
+
+
 ## 日期相关 ##
 
 [单击这里](service_date_api.md)

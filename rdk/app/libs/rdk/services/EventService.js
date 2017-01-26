@@ -30,6 +30,7 @@
         SELECT: "select",
         UNSELECT:"unselect",
         CHANGE: "change",
+        CLEAR: "clear",
         ENTER: "enter",
         RESTORE: "restore",
         ERROR: "error",
@@ -43,6 +44,7 @@
         DESTROY: 'destroy',
         RENAME:"rename",
         INITIALIZED: 'initialized',
+        EXPORT: "export",
 
         TAB_SELECT: "tab_select",
         ITEM_SELECTED: "item_selected", //tab_select 从里向外抛，捕捉对象
@@ -257,7 +259,9 @@
                 if (scope.id) {
                     this.broadcast(scope.id, eventType, data);
                 }
+
                 var fn = scope[Utils.snake2camel(eventType)](scope);
+
                 if (!fn) {
                     if(typeof(defaultReturnValue) == 'function'){
                         defaultReturnValue();

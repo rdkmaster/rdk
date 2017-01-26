@@ -115,6 +115,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
               doDispatch(ctx, req.service :: Nil, req.app, req.param)
           }
       }
+
 }
 
 

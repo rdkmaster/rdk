@@ -6,7 +6,7 @@
     var requiredComponents = [ ], ctx = {};
     var controllerDefination = ['$scope', main];
     function main(scope) {
-  scope.code = 'var aa;'
+        scope.code = 'var aa;'
     }
 
     var controllerName = 'DemoController';

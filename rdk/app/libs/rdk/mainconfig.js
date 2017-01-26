@@ -14,7 +14,7 @@ require.config({
         "echarts": "../echarts/echarts3.min",
         "echarts3": "../echarts/echarts3.min",
         "echarts.dataTool": "../echarts/dataTool",
-        "jquery": "../jquery/jquery-1.11.3.min",
+        "jquery": "../jquery/jquery-2.2.3.min",
         "jquery-ui": "../jquery-ui/js/jquery-ui.min",
         "bootstrap": "../bootstrap/js/bootstrap",
         "bootstrap-datepicker": "../bootstrap-datepicker/js/bootstrap-datetimepicker",
@@ -24,6 +24,7 @@ require.config({
         "jquery-headfix":"../jquery-headfix/jquery.stickyheader",
         "jquery-freezeheader":"../jquery-freezeheader/jquery.freezeheader",
         "jquery-gesture":"../jquery-ext/jquery.gesture",
+        "jquery-peity":"../jquery-peity/jquery.peity",
         "throttle-debounce" : '../jquery-headfix/jquery.ba-throttle-debounce.min',
         "perfect-scrollbar" : '../perfect-scrollbar/perfect-scrollbar',
 
@@ -45,6 +46,7 @@ require.config({
         "rd.controls.Bullet": "../rdk/controls/Bullet",
         "rd.controls.Button":"../rdk/controls/Button",
         "rd.controls.ComboSelect": "../rdk/controls/ComboSelect",
+        "rd.controls.ChartIcon": "../rdk/controls/ChartIcon",
         "rd.controls.Editor": "../rdk/controls/Editor",
         "rd.controls.FoldSelector": "../rdk/controls/FoldSelector",
         "rd.controls.Graph": "../rdk/controls/Graph",
@@ -73,6 +75,7 @@ require.config({
 
         "rd.styles.Bootstrap": "../bootstrap/css/bootstrap.min",
         "rd.styles.FontAwesome": "../font-awesome-4.3.0/css/font-awesome",
+        "rd.styles.IconFonts": "../iconFonts/fonts/iconfont",
 
         "rdk.theme.zte-blue":"css/theme/zte-blue/zte-blue",
         "rdk.theme.default":"css/theme/default/default",

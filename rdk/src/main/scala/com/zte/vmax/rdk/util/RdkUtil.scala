@@ -28,8 +28,10 @@ import jdk.nashorn.internal.runtime.Undefined
 import spray.http.{MultipartFormData, IllegalRequestException, StatusCodes}
 import scala.concurrent.{Future, Await}
 import scala.reflect.ClassTag
+import scala.sys.process.ProcessBuilder
 import scala.util.Try
 import akka.pattern.ask
+
 
 
 
@@ -322,6 +324,10 @@ object RdkUtil extends Logger {
     InetAddress.getLocalHost().getHostName
   }
 
+  def getHostIps: Array[String] = {
+    InetAddress.getAllByName(getHostName).map(_.getHostAddress).filter(!_.contains(":"))
+  }
+
   private def getFileParam(fileParamMap: StringMap[String], fileType: String): Tuple2[String, String] = {
     fileType.toLowerCase match {
       case param if param.equals("csv") || param.equals("excel") =>
@@ -383,5 +389,18 @@ object RdkUtil extends Logger {
         None
     }
 
+  }
+
+  def executeShell(cmd: String, option: String, args: ScriptObjectMirror): String = {
+    val params: List[String] = (for (elem <- 2 to args.size - 1) yield args.getMember(elem.toString).toString).toList
+    val pb: ProcessBuilder = if (params.isEmpty) cmd else cmd :: params
+    option match {
+      case "0" => ShellExecutor.getReturnCode(pb) match {
+        case Left(returnCode) => returnCode.toString
+        case Right(error) => "-1"
+      }
+      case "1" => ShellExecutor.getOutputLines(pb).getOrElse("null")
+      case _ => s"unexpected option ${option}"
+    }
   }
 }

@@ -44,6 +44,7 @@ ul, ol ,p{margin: 0; padding: 0;}
     position: relative;
     box-sizing: border-box;
     line-height: 26px;
+    padding:  2px 0;
 }
 .rdk-area-panel ul li a{
     display: inline-block;
@@ -113,3 +114,72 @@ ul, ol ,p{margin: 0; padding: 0;}
     background-color: #3ab1ea;
     color: #fff ;
 }
+.rdk-area-content .rdk-area-panel .icon-selected{
+    position: absolute;
+    top:1px;
+    right: 0;
+    color: #3ab1ea;
+}
+.rdk-area-content .rdk-area-panel .rdk-area-checkbox{
+    display:inline-block;
+    width: 15px;
+    height: 15px;
+    font-size: 8px;
+    border: 1px solid #008FD4;
+    vertical-align: middle;
+    position: relative;
+    border-radius: 2px;
+}
+
+/*rdk-area-theme-self 另一种风格的地区选择 start*/
+.rdk-area-theme-self .rdk-area-contain{
+    position: initial;
+}
+.rdk-area-theme-self .rdk-area-contain .nav-tabs{
+    width: 100%;
+    background-color: #3ab1ea;
+    padding-left: 5px;
+}
+.rdk-area-theme-self .rdk-area-contain .nav-tabs li a{
+    height: 30px;
+    line-height: 8px;
+    padding: 10px 26px;
+    text-decoration: none;
+}
+.rdk-area-theme-self .rdk-area-contain .nav-tabs>li{
+    margin-right: 0;
+}
+.rdk-area-theme-self .rdk-area-contain .nav-tabs>li>a{
+    margin-right: 0;
+    border-radius: 0;
+    border: none;
+    border-right: 1px solid #fff;
+    color: #fff;
+    background-color: #3ab1ea;
+}
+.rdk-area-theme-self .rdk-area-contain .nav-tabs>li.active>a,
+.rdk-area-theme-self .rdk-area-contain .nav-tabs>li.active>a:hover{
+    background-color: #fff ;
+    color: #3ab1ea;
+}
+.rdk-area-theme-self .rdk-area-contain .rdk-area-content ul{
+    width: 610px;
+}
+.rdk-area-theme-self .rdk-area-contain .rdk-area-content{
+    padding: 20px 0 28px 25px ;
+    border-radius: 0 0 4px 4px;
+}
+.rdk-area-theme-self .rdk-area-contain .nav-tabs>li>a:hover {
+    cursor: pointer;
+}
+.rdk-area-theme-self .rdk-area-panel ul li{
+    line-height: 36px;
+}
+.rdk-area-theme-self .rdk-area-contain .rdk-area-content {
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: 0;
+    border-bottom: 1px solid #3ab1ea;
+}
+/*rdk-area-theme-multiple 另一种风格的地区选择 end*/

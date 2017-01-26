@@ -42,29 +42,29 @@ var java = {
 
 };
 
-var mq={
+var mq = {
     p2p: function (subject, message) {
         return rdk_runtime.p2p(subject, message);
     },
     //默认120秒
     rpc: function (subject, replySubject, message, timeout) {
-        if(!_.isDefined(timeout)){
-            timeout=120
+        if (!_.isDefined(timeout)) {
+            timeout = 120
         }
         return rdk_runtime.rpc(subject, replySubject, message, timeout);
     },
     broadcast: function (subject, message) {
         return rdk_runtime.broadcast(subject, message);
     },
-    subscribe: function (topic,callback_function_name, jsfile){
-        return rdk_runtime.subscribe(topic,callback_function_name, jsfile);
+    subscribe: function (topic, callback_function_name, jsfile) {
+        return rdk_runtime.subscribe(topic, callback_function_name, jsfile);
     },
-    unsubscribe: function (topic,callback_function_name, jsfile){
-        return rdk_runtime.unSubscribe(topic,callback_function_name, jsfile);
+    unsubscribe: function (topic, callback_function_name, jsfile) {
+        return rdk_runtime.unSubscribe(topic, callback_function_name, jsfile);
     }
 };
 
-var websock ={
+var websock = {
     broadcast: function (subject, message) {
         return rdk_runtime.webSocketBroadcast(subject, message);
     }
@@ -118,7 +118,36 @@ var Log = {
 }
 
 function getHostName() {
+    Log.warn("function deprecated,please use Host.getName()");
     return rdk_runtime.getHostName()
+}
+
+var Host = {
+    getIp: function () {
+        return JSON.parse(rdk_runtime.getHostIps())
+    },
+    getName: function () {
+        return rdk_runtime.getHostName()
+    }
+}
+
+/**
+ *
+ * @param cmd  shell命令或者脚本
+ * @param option 0，返回执行码 1，返回脚本执行字符串,默认为0
+ *
+ */
+var Shell = {
+    execute: function (cmd, option) {
+        if (!_.isDefined(cmd)) {
+            Log.error("param cmd required!");
+            return undefined;
+        } else if (!_.isDefined(option)) {
+            Log.warn("param option miss,set 0!");
+            arguments["1"] = 0;
+        }
+        return rdk_runtime.executeShell(cmd, option.toString(), arguments);
+    }
 }
 
 function getRequestContextHeader() {
@@ -157,6 +186,9 @@ var Cache = {
     },
     del: function (k) {
         return rdk_runtime.cacheDel(k)
+    },
+    clear: function () {
+        return rdk_runtime.clearAppCache(rdk_runtime.application())
     },
     global_put: function (k, v) {
         Log.warn("function deprecated,please use Cache.global.put()");
@@ -210,13 +242,17 @@ var JSON1 = {
 
 //动态类加载
 var JVM = {
-    load_class: function loadClass(jar,className) {
-        var loadclazz=rdk_runtime.jarHelper().loadClass(jar, className);
-            if (loadclazz==null){
-                return undefined;
-            }
-          return loadclazz;
+    load_class: function loadClass(jar, className) {
+        Log.warn("function deprecated,please use JVM.loadClass()");
+        return JVM.loadClass(jar, className);
+    },
+    loadClass: function loadClass(jar, className) {
+        var loadclazz = rdk_runtime.jarHelper().loadClass(jar, className);
+        if (loadclazz == null) {
+            return undefined;
         }
+        return loadclazz;
+    }
 }
 
 //国际化
@@ -277,24 +313,24 @@ function _fixContent(content, excludeIndexes) {
     return csv;
 }
 
-function _fixEXCELContent(ctent,exIndexes){
-    var excel={};
-    excel.data={};
-    excel.excludeIndexes={};
-    for(var sheet in ctent){
-        if(_.isDataTable(ctent[sheet])){
+function _fixEXCELContent(ctent, exIndexes) {
+    var excel = {};
+    excel.data = {};
+    excel.excludeIndexes = {};
+    for (var sheet in ctent) {
+        if (_.isDataTable(ctent[sheet])) {
             ctent[sheet].data.unshift(ctent[sheet].header);
-            excel.data[sheet]=ctent[sheet].data;
-            excel.excludeIndexes[sheet]=[];
-            if(_.isDefined(exIndexes)){
+            excel.data[sheet] = ctent[sheet].data;
+            excel.excludeIndexes[sheet] = [];
+            if (_.isDefined(exIndexes)) {
                 each(exIndexes[sheet], function (value) {
                     excel.excludeIndexes[sheet].push(_.isString(value) ? ctent[sheet].field.indexOf(value) : value);
                 });
             }
 
-        }else{
-            excel.data[sheet]=ctent[sheet];
-            if(_.isDefined(exIndexes)) {
+        } else {
+            excel.data[sheet] = ctent[sheet];
+            if (_.isDefined(exIndexes)) {
                 excel.excludeIndexes[sheet] = exIndexes[sheet];
             }
         }
@@ -303,16 +339,16 @@ function _fixEXCELContent(ctent,exIndexes){
 }
 
 var File = {
-    loadProperty:function(file){
+    loadProperty: function (file) {
         if (!file) {
             log("invalid file path:", file);
             return false;
         }
         file = file.toString();
-        log("reading property file:",file);
+        log("reading property file:", file);
         return rdk_runtime.fileHelper().loadProperty(file);
     },
-    readString: function(path) {
+    readString: function (path) {
         if (!path) {
             log("invalid file path:", path);
             return undefined;
@@ -369,14 +405,14 @@ var File = {
         csv.data.shift();
         return b;
     },
-    saveAsEXCEL:function(file,content,excludeIndexes,option){
-        if(!_.isDefined(file)){
+    saveAsEXCEL: function (file, content, excludeIndexes, option) {
+        if (!_.isDefined(file)) {
             Log.error("please input extract file!");
             return;
         }
         file = file.toString();
         log("saving to Excel:", file);
-        if(!_.isDefined(content)){
+        if (!_.isDefined(content)) {
             Log.error("please input extract content!");
             return;
         }
@@ -388,20 +424,20 @@ var File = {
         }
         var excel = _fixEXCELContent(content, excludeIndexes);
 
-        var b = rdk_runtime.fileHelper().saveAsEXCEL(file, excel.data, excel.excludeIndexes,option);
+        var b = rdk_runtime.fileHelper().saveAsEXCEL(file, excel.data, excel.excludeIndexes, option);
         //_fixExcelContent中修改了content，这里还原
-        for(var sheet in content) {
+        for (var sheet in content) {
             if (_.isDataTable(content[sheet])) {
                 content[sheet].data.shift(content[sheet].header);
             }
         }
         return b;
     },
-    delete: function(path) {
+    delete: function (path) {
         var jFile = new java.File(path);
         if (jFile.isDirectory()) {
             var files = file.list(path, true);
-            _.each(files.reverse(), function(item) {
+            _.each(files.reverse(), function (item) {
                 log('deleting sub file/dir:', item);
                 new java.File(item).delete();
             });
@@ -410,7 +446,7 @@ var File = {
         log('remove file or dir:', path, 'result:', result);
         return result;
     },
-    list: function(path, recursive, pattern) {
+    list: function (path, recursive, pattern) {
         path = java.FileHelper.fixPath(path, rdk_runtime.application());
         log('listing dir: ' + path + ', recursive: ' + (!!recursive));
 
@@ -428,7 +464,7 @@ var File = {
 
         return files;
     },
-    copy: function(cpFrom, cpTo, recursive, force) {
+    copy: function (cpFrom, cpTo, recursive, force) {
         if (!_.isString(cpFrom) || !_.isString(cpTo)) {
             Log.error("copy file, code 1, detail: bad arguments");
             return 1;
@@ -436,17 +472,17 @@ var File = {
         return rdk_runtime.fileHelper().copy(cpFrom, cpTo, !!recursive, !!force);
     },
     get web() {
-        return function(){
+        return function () {
             return java.FileHelper.fixPath('$web', rdk_runtime.application());
         }
     },
     get base() {
-        return function(){
+        return function () {
             return java.FileHelper.fixPath('$base', rdk_runtime.application());
         }
     },
     get svr() {
-        return function(){
+        return function () {
             return java.FileHelper.fixPath('$svr', rdk_runtime.application());
         }
     }
@@ -477,7 +513,7 @@ function _listFiles(files, path, pattern, recursive) {
 
 ///////////////////////////////////////////////////////////////////////
 
-var rest = {
+var Rest = {
     get: function (url, option) {
         if (null == option) {
             option = undefined;
@@ -509,7 +545,8 @@ var rest = {
         return rdk_runtime.restHelper().put(url, param, option);
     }
 }
-
+//向下兼容
+var rest = Rest;
 ///////////////////////////////////////////////////////////////////////
 
 _.isResultSet = function (value) {
@@ -559,18 +596,8 @@ function forEach(obj, iteratee, context, extra) {
 
 function require(script) {
     script = java.FileHelper.fixPath(script, rdk_runtime.application());
-  //  log("loading script in js: " + script);
+    //  log("loading script in js: " + script);
     return load(script);
-}
-
-function sql(sql) {
-    log("exec sql: " + sql);
-    return rdk_runtime.dbHelper().sql(rdk_runtime.useDbSession(),sql);
-}
-
-function clear(resultSet) {
-    info("clearing the resultSet and every resource else.");
-    rdk_runtime.dbHelper().clear(rdk_runtime.useDbSession(),resultSet);
 }
 
 function mapper(resultSet, key, value, keepResultSet) {
@@ -610,6 +637,10 @@ function mapper(resultSet, key, value, keepResultSet) {
 
 var Mapper = {
     from_object: function (jsObject, defaultValue) {
+        Log.warn("function deprecated,please use Mapper.fromObject()");
+        return Mapper.fromObject(jsObject, defaultValue);
+    },
+    fromObject: function (jsObject, defaultValue) {
         return function (key) {
             return jsObject && jsObject.hasOwnProperty(key) ? jsObject[key] :
                 defaultValue === undefined ? key : defaultValue;
@@ -618,10 +649,18 @@ var Mapper = {
 
     //from sql or dataTable 可合并
     from_sql: function (sql, keyName, valueName, defaultValue) {
-        return Mapper.from_object(Mapper.mkMap(sql, keyName, valueName), defaultValue);
+        Log.warn("function deprecated,please use Mapper.fromSql()");
+        return Mapper.fromSql(sql, keyName, valueName, defaultValue);
+    },
+    fromSql: function (sql, keyName, valueName, defaultValue) {
+        return Mapper.fromObject(Mapper.mkMap(sql, keyName, valueName), defaultValue);
     },
     from_datatable: function (dataTable, keyName, valueName, defaultValue) {
-        return Mapper.from_object(Mapper.mkMap(dataTable, keyName, valueName), defaultValue);
+        Log.warn("function deprecated,please use Mapper.fromDataTable()");
+        return Mapper.fromDataTable(dataTable, keyName, valueName, defaultValue);
+    },
+    fromDataTable: function (dataTable, keyName, valueName, defaultValue) {
+        return Mapper.fromObject(Mapper.mkMap(dataTable, keyName, valueName), defaultValue);
     },
     mkMap: function (param, keyName, valueName) {
         var map = {};
@@ -656,10 +695,10 @@ var Data = {
         if (classDef != undefined) {
             var methodCall = classDef.getMethod(methodName, java.String.class);
             var fixDsName = dsName;
-            if(dsName.indexOf("db.") != 0){
+            if (dsName.indexOf("db.") != 0) {
                 fixDsName = "db." + dsName;
             }
-            Cache.put(Data.VSqlProcessorKey+fixDsName, methodCall);
+            Cache.put(Data.VSqlProcessorKey + fixDsName, methodCall);
             Log.info("registerVSqlProcessor for " + fixDsName);
         } else {
             Log.error('Failed to load ' + jar + ":" + className);
@@ -668,26 +707,25 @@ var Data = {
     },
 
     //数据源选择器标识
-    DataSourceSelector:"#_#DataSourceSelector#_#",
+    DataSourceSelector: "#_#DataSourceSelector#_#",
 
     //设置数据源选择器
-    setDataSourceSelector:function(selector){
-        Cache.put(Data.DataSourceSelector,selector)
+    setDataSourceSelector: function (selector) {
+        Cache.put(Data.DataSourceSelector, selector)
     },
     //启用数据源
-    useDataSource : function() {
-        var selector  = Cache.get(Data.DataSourceSelector);
-        if(selector != null){
+    useDataSource: function () {
+        var selector = Cache.get(Data.DataSourceSelector);
+        if (selector != null) {
             rdk_runtime.useDataSource(selector(arguments))
-        }else {
+        } else {
             rdk_runtime.useDataSource("")
         }
     },
-
-    fetch: function (sql, maxLine) {
-        if (!maxLine || !_.isDefined(maxLine)){
+    fetchWithDataSource: function (dataSource, sql, maxLine) {
+        if (!maxLine || !_.isDefined(maxLine)) {
             Log.warn("param maxLine empty,set maxLine=4000");
-            maxLine=4000;
+            maxLine = 4000;
         }
 
         if (!_.isNumber(maxLine)) {
@@ -695,48 +733,105 @@ var Data = {
             return;
         }
 
+        var dataObj = JSON.parse(rdk_runtime.fetchWithDataSource(dataSource, sql, maxLine));
+        return new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data);
+    },
+    fetch: function (sql, maxLine) {
+        if (!maxLine || !_.isDefined(maxLine)) {
+            Log.warn("param maxLine empty,set maxLine=4000");
+            maxLine = 4000;
+        }
+
+        if (!_.isNumber(maxLine)) {
+            Log.error("maxLine must be a number!");
+            return;
+        }
 
         var dataObj = JSON.parse(rdk_runtime.fetch(sql, maxLine));
         return new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data);
     },
     fetch_first_cell: function (sql) {
+        Log.warn("function deprecated,please use Data.fetchFirstCell()");
+        return Data.fetchFirstCell(sql);
+    },
+    fetchFirstCell: function (sql) {
         return rdk_runtime.fetch_first_cell(sql);
     },
-    batch_fetch: function (sqlArray, maxLine,timeout) {  //并发实现
+    batchFetch: function (sqlArray, maxLine, timeout) {  //并发实现
 
         if (!sqlArray || !_.isArray(sqlArray)) {
             Log.error("Array param required! " + sqlArray);
             return;
         }
         if (maxLine === undefined) {
+            Log.warn("param maxLine empty,set maxLine=4000");
             maxLine = 4000;
         }
+        if (timeout === undefined) {
+            Log.warn("param timeout empty,set timeout=30");
+            timeout = 30;
+        }
         var dataTableArray = [];
-        var dataObj = JSON.parse(rdk_runtime.batchFetch(sqlArray, maxLine,timeout));
-        for(idx in dataObj){
-           dataTableArray.push(new DataTable(i18n(dataObj[idx].fieldNames), dataObj[idx].fieldNames, dataObj[idx].data))
+        var dataObj = JSON.parse(rdk_runtime.batchFetch(sqlArray, maxLine, timeout));
+        for (idx in dataObj) {
+            dataTableArray.push(new DataTable(i18n(dataObj[idx].fieldNames), dataObj[idx].fieldNames, dataObj[idx].data))
         }
         return dataTableArray;
     },
+    batchFetchWithDataSource: function (dataSource, sqlArray, maxLine, timeout) {
+
+        if (!sqlArray || !_.isArray(sqlArray)) {
+            Log.error("Array param required! " + sqlArray);
+            return;
+        }
+        if (maxLine === undefined) {
+            Log.warn("param maxLine empty,set maxLine=4000");
+            maxLine = 4000;
+        }
+        if (timeout === undefined) {
+            Log.warn("param timeout empty,set timeout=30");
+            timeout = 30;
+        }
+        var dataTableArray = [];
+        var dataObj = JSON.parse(rdk_runtime.batchFetchWithDataSource(dataSource, sqlArray, maxLine, timeout));
+        for (idx in dataObj) {
+            dataTableArray.push(new DataTable(i18n(dataObj[idx].fieldNames), dataObj[idx].fieldNames, dataObj[idx].data))
+        }
+        return dataTableArray;
+    },
+    batch_fetch: function (sqlArray, maxLine, timeout) {  //并发实现
+        Log.warn("function deprecated,please use Data.batchFetch()");
+        return Data.batchFetch(sqlArray, maxLine, timeout);
+    },
     executeUpdate: function (sql) {
         if (_.isString(sql)) {
-            return rdk_runtime.executeUpdate(rdk_runtime.application(),sql);
+            return rdk_runtime.executeUpdate(rdk_runtime.application(), sql);
         }
 
         if (_.isArray(sql)) {
-            return JSON.parse(rdk_runtime.batchExecuteUpdate(rdk_runtime.application(),sql));
+            return JSON.parse(rdk_runtime.batchExecuteUpdate(rdk_runtime.application(), sql));
         }
 
         Log.error("String or Array[String] param required!");
         return;
+    },
+    sql: function(sql) {
+        log("exec sql: " + sql);
+        return rdk_runtime.dbHelper().sql(rdk_runtime.useDbSession(), sql);
+    },
+    clear: function(resultSet) {
+        info("clearing the resultSet and every resource else.");
+        rdk_runtime.dbHelper().clear(rdk_runtime.useDbSession(), resultSet);
     }
 }
+var sql = Data.sql;
+var clear = Data.clear;
 
 function DataTable(header, field, data, paging) {
     this.header = header;
     this.field = field;
     this.data = data;
-    this.paging=paging;
+    this.paging = paging;
 
     this.transform = function (trans_object_conf) {
         for (field in trans_object_conf) {
@@ -752,7 +847,7 @@ function DataTable(header, field, data, paging) {
             }
             for (var row = 0; row < this.data.length; row++) {
                 try {
-                    this.data[row][fieldIndex] = func(this.data[row][fieldIndex],this.data[row],this.field);
+                    this.data[row][fieldIndex] = func(this.data[row][fieldIndex], this.data[row], this.field);
                 } catch (error) {
                     Log.warn("function call error");
                 }
@@ -761,66 +856,66 @@ function DataTable(header, field, data, paging) {
         return this;
     },
 
-    this.filter = function (func) {
-        if (!_.isFunction(func)) {
-            Log.error("function required!param value:" + func);
-            return this;
-        }
-        var data = [];
-        try {                            //try catch
-            if (func(this.data[row])) {
-                data.push(this.data[row]);
+        this.filter = function (func) {
+            if (!_.isFunction(func)) {
+                Log.error("function required!param value:" + func);
+                return this;
             }
-        } catch (error) {
-            Log.warn("function call error");
-        }
-        return this;
-    },
+            var data = [];
+            try {                            //try catch
+                if (func(this.data[row])) {
+                    data.push(this.data[row]);
+                }
+            } catch (error) {
+                Log.warn("function call error");
+            }
+            return this;
+        },
 
-    this.select = function (colNameArray) {
-        if (!colNameArray || !_.isArray(colNameArray)) {
+        this.select = function (colNameArray) {
+            if (!colNameArray || !_.isArray(colNameArray)) {
                 Log.error("field Array required! field param:" + colNameArray);
                 return this;
             }
-        var field = [];
-        var header = [];  //delete
-        var data = [];    //转置？
-        var paging={};
-        var index = 0;
-        for (var i = 0; i < colNameArray.length; i++) {
-            var colName = colNameArray[i];
-            index = this.field.indexOf(colName)
-            if (index == -1) {
-                Log.warn("field not exist! " + colName);
-                continue;
+            var field = [];
+            var header = [];  //delete
+            var data = [];    //转置？
+            var paging = {};
+            var index = 0;
+            for (var i = 0; i < colNameArray.length; i++) {
+                var colName = colNameArray[i];
+                index = this.field.indexOf(colName)
+                if (index == -1) {
+                    Log.warn("field not exist! " + colName);
+                    continue;
+                }
+                field.push(colName);
+                header.push(this.header[index]);
+                for (row = 0; row < this.data.length; row++) {
+                    var rowArray = [];
+                    rowArray.push(this.data[row][index]);
+                    data.push(rowArray);
+                }
             }
-        field.push(colName);
-        header.push(this.header[index]);
-           for (row = 0; row < this.data.length; row++) {
-                var rowArray = [];
-                rowArray.push(this.data[row][index]);
-               data.push(rowArray);
-            }
-        }
-        this.header = header;
-        this.field = field;
-        this.data = data;
-        this.paging=paging;
-        return this;
-    },
+            this.header = header;
+            this.field = field;
+            this.data = data;
+            this.paging = paging;
+            return this;
+        },
 
-    this.map = function (func) {  //log error
-        Log.error("map funciton is not supported yet!");
+        this.map = function (func) {  //log error
+            Log.error("map funciton is not supported yet!");
             //if(!_.isFunction(func)){
             //    Log.error("function required! parm:"+func);
             //}
             //each(this.data,func);
-        return this;
-    },
+            return this;
+        },
 
-    this.clone = function () {
-        return new DataTable(this.header, this.field, this.data, this.paging);
-    }
+        this.clone = function () {
+            return new DataTable(this.header, this.field, this.data, this.paging);
+        }
 }
 
 function json(data, indent) {

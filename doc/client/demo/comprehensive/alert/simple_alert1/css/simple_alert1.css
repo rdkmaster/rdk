@@ -3,17 +3,17 @@
 	margin: 0 10px 20px 10px;
 	min-width: 80px;
 }
-.rdk-alert-no {
+.rdk-popupservice-content .rdk-alert-btnLine .rdk-alert-yes {
 	background: #f6f6f6;
-	border: #f6f6f6;
+	border: 1px solid #ddd;
 	color: #5395d8;
 }
-.rdk-alert-no:focus {
-	border: none;
+.rdk-alert-yes:focus {
+	border:1px solid #f6f6f6;
 }
-.rdk-alert-no:hover {
+.rdk-alert-yes:hover {
 	background: #e8e8e8;
 }
-.rdk-alert-no:active {
-	background: #e0e0e0
+.rdk-alert-yes:active {
+	background: #e0e0e0;
 }

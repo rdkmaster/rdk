@@ -1,12 +1,12 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var downloadDependency = [
-        'rd.controls.Table','rd.containers.Panel'
+        'rd.controls.Table','css!base/css/simple_tab1','css!rd.styles.IconFonts'
     ];
     var requiredComponents = [ ], ctx = {};
     var controllerDefination = ['$scope', main];
-    function main($scope) {
-        $scope.setting = {
+    function main(scope) {
+         scope.setting = {
             "columnDefs" :[
                 {
                     title : "操作",
@@ -24,9 +24,9 @@
         }
         imagePosition();
         //左右拉的点击动漫效果
-        $scope.iconCondition = true;
-        $scope.images = function(){
-            $scope.iconCondition =!$scope.iconCondition;
+        scope.iconCondition = true;
+        scope.images = function(){
+            scope.iconCondition = !scope.iconCondition;
             if($('.hao').hasClass('images_down')){
                 $('.hao').removeClass('images_down').addClass('images_up');
             }else{

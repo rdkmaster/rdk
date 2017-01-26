@@ -6,7 +6,7 @@
     var requiredComponents = [ ], ctx = {};
     var controllerDefination = ['$scope', main];
     function main(scope) {
- scope.code = '\
+        scope.code = '\
 <html>\n\
     <head>\n\
         <link rel="stylesheet" href="mystyle.css">\n\
@@ -23,7 +23,6 @@
         }\n\
     </script>\n\
 </html>';
-
     }
 
     var controllerName = 'DemoController';

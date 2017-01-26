@@ -456,8 +456,33 @@ cells 为 改变的行列信息的数组信息
 
 `search`设置成`true`时，支持搜索过滤。在这基础上设置`searchPattern`，可以对输入的关键字进行校验。校验通过后才能进行过滤。
 
-详细示例如下：
+详细示例如下:
 <live_demo example="controls/table/search_pattern" width="900"></live_demo>
+
+## search_position ##
+>支持类型：字符串
+
+`search_position` 表示搜索框的位置，有两个值，bottom和top，bottom表示为搜索框在表格左下角，top表示为搜索框在表格右上角;
+
+## search_width ##
+>支持类型：字符串
+
+`search_width` 表示搜索框的宽度，如"200px",一定要加单位。
+
+## show_export ##
+>支持类型：布尔型
+
+`show_export`值为false时，表示不显示导出按钮，其为默认值;
+`show_export`值为true时，表示显示导出按钮;
+
+## export_label ##
+>支持类型：字符串
+
+`export_label`表示在导出按钮的内容，其默认值为""。
+
+导出按钮和搜索框的详细示例如下:
+<live_demo example="controls/table/search_export_position" width="900"></live_demo>
+
 
 ## page_number ##
 >支持类型：数值
@@ -484,10 +509,11 @@ cells 为 改变的行列信息的数组信息
 实例如下：
 <live_demo example="controls/table/demo4FloatableHeader" width="900"></live_demo>
 
-## change/select/check/double_click ##
+## change/select/export/check/double_click ##
 
 - 编辑单元格后，如果定义了`change`函数，就会调用应用自定义的`change`方法。该属性可绕开事件机制。
 - 单击表格某行后，如果定义了`select`函数，就会调用应用自定义的`select`方法。该属性可绕开事件机制。
+- 单击导出按钮后，如果定义了`export`函数，就会调用应用自定义的`export`方法。该属性可绕开事件机制。
 - 双击表格某行后，如果定义了`double_click`函数，就会调用应用自定义的`double_click`方法。该属性可绕开事件机制。
 - `add_check_box = true`时，首列出现复选框，勾选某个复选框后，如果定义了`check`函数，就会调用应用自定义的`check`方法。该属性可绕开事件机制。
 
@@ -513,6 +539,15 @@ cells 为 改变的行列信息的数组信息
 		EventService.register('id_table', EventTypes.SELECT,
 			function(event, data){//处理被选中的数据
         		console.log(data);
+        })
+
+## EXPORT ##
+
+监听该事件，用户点击导出按钮时，可以发出一个事件。
+
+		EventService.register('id_table', EventTypes.EXPORT,
+			function(){
+        		console.log('导出事件');
         })
 
 ## DOUBLE_CLICK ##

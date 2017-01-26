@@ -1,12 +1,16 @@
-define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', 'rd.services.DataSourceService', "css!rd.styles.Table", 'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
+define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
+    'rd.services.DataSourceService', "css!rd.styles.Table", 'css!rd.styles.FontAwesome',
+    'css!rd.styles.Bootstrap','rd.controls.Button','css!rd.styles.IconFonts',
+    'bootstrap-select','bootstrap'
+], function() {
 
-    var tableModule = angular.module('rd.controls.Table', ['rd.core']);
+    var tableModule = angular.module('rd.controls.Table', ['rd.core','rd.controls.Button']);
 
     tableModule.run(["$templateCache", function($templateCache) {
         $templateCache.put("/src/templates/common.html",
-            '<div class="rdk-table-module">\
-                <div ng-if="search && (noData!=undefined)" class="searchWapper">\
-                    <input type="text" class="form-control search" placeholder="{{searchPrompt}}" ng-focus="searchFocusHandler()"\
+            '<div class="rdk-table-module rdk-table-search-{{position}}">\
+                <div ng-if="search && (noData!=undefined)" class="searchWapper search-position-{{position}}">\
+                    <input type="text" ng-style="width" class="form-control search" placeholder="{{searchPrompt}}" ng-focus="searchFocusHandler()"\
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
                     <i class="glyphicon glyphicon-search search_icon" ng-click="serverSearchHandler()" style="cursor:{{pagingType==\'server\' ? \'pointer\' : \'default\'}}"></i>\
                     <div ng-show="($parent.globalSearch && searchFocus)?true:false">\
@@ -29,11 +33,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                                 </th>\
                             </tr>\
                         </thead>\
-                        <tbody>\
+                        <tbody ng-mouseleave="clearHovered()">\
                             <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
-                                ng-class="{\'selected-row\':ifSelected(item)}" ng-dblclick="dbClickHandler(item,$index)">\
+                                ng-class="{\'row-span\':groupTargets,\'selected-row\':ifRowHighLight(item,\'click\'),\'selected-row-hover\':ifRowHighLight(item,\'hover\')}" ng-dblclick="dbClickHandler(item,$index)">\
                                 <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="currentPageData[$index].checked"></td>\
-                                <td rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" ng-style="getCellStyle(itemRowSpan,columnDef)">\
+                                <td ng-class="{\'selected-row-td\':ifRowHighLight(item,\'click\',columnDef),\'selected-row-hover-td\':ifRowHighLight(item,\'hover\',columnDef)}" ng-mouseenter="setHovered(item,$event)" rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" ng-style="getCellStyle(itemRowSpan,columnDef)">\
                                 </td>\
                             </tr>\
                              <tr ng-if="noData">\
@@ -45,15 +49,16 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                     </table>\
                 </div>\
                 <rdk-paging ng-if="pageVisible && pageCtrl && paging && columnDefs.length!=0 && !noData" data-page-size="pageSize" \
-                     data-lang="{{lang}}">\
+                     data-lang="{{lang}}" data-position="{{position}}">\
                 </rdk-paging>\
+                <div ng-if="showExport" class="table-export"><rdk_button click="touchExport" icon="iconfont iconfont-e811" label="{{exportLabel}}"></rdk_button></div>\
                 <div class="clearfix"></div>\
             </div>'
         );
 
         $templateCache.put("/src/templates/paging.html",
             '<div class="pagingLine">\
-                <span class="disabledRecords spanRecords">{{i18n.total}} {{count}} {{i18n.records}}</span>\
+                <span class="disabledRecords spanRecords search-{{position}}">{{i18n.total}} {{count}} {{i18n.records}}</span>\
                 <ul class="pagination">\
                     <li ng-class="prevPageDisabled()"> \
                         <a href ng-click="firstPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==0]">\
@@ -270,6 +275,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
             select: "&?",
             doubleClick: "&?",
             check: "&?",
+            export: "&?",
+            searchPosition:"@?",
+            searchWidth:"@?",
+            exportLabel:"@?",
+            showExport:"=?"
         };
         return {
             restrict: 'EA',
@@ -419,15 +429,23 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         return itemRowSpan && itemRowSpan[item["targets"]] ? itemRowSpan[item["targets"]] : 1;
                     }
 
-                    scope.getRowStyle = function(itemRowSpan, item) {
-                        var result = "";
-                        if (itemRowSpan && itemRowSpan[item["targets"]] == 0) {
-                            result = "display:none";
-                        }
-                        return result;
-                    }
                     _init();
                     scope.searchPrompt="Search";
+                    scope.showExport = Utils.isTrue(scope.showExport, false);
+                    scope.searchWidth = Utils.getValue(scope.searchWidth, attrs.searchWidth, "168px");
+                    scope.exportLabel = Utils.getValue(scope.exportLabel, attrs.exportLabel, "");
+                    scope.touchExport=_touchExport;
+                    scope.width = {
+                        "width":scope.searchWidth
+                    }
+                    function _touchExport(){
+                        EventService.raiseControlEvent(scope, EventTypes.EXPORT, null)
+                    }
+                    if(scope.search){
+                        scope.position=scope.searchPosition=="bottom"?"bottom": "top"
+                    }else{
+                        scope.position="";
+                    }
                     var curSortIndex;
                     var sortIconStatus=true;
 
@@ -465,8 +483,15 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                         //控制分页的显示
                         scope.pageCtrl = angular.isDefined(scope.pageCtrl) ? scope.pageCtrl : true;
 
-                        //选中行
-                        scope.selectedModel = {};
+                        //选中行高亮
+                        scope.selectedModel = {
+                            rows:[],
+                            cols:[]
+                        };
+                        scope.hoveredModel = {
+                            rows:[],
+                            cols:[]
+                        };
 
                         //启用搜索功能
                         scope.search = (attrs.search == "true") ? true : ((attrs.searchable == "true") ? true : false); //优先attrs.search
@@ -549,10 +574,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
 
                         scope.getCellStyle = function(itemRowSpan,columnDef){
                             var destObj = {};
-                            var result = scope.getRowStyle(itemRowSpan,columnDef);
-                            angular.forEach(result, function(value, key) {
-                                destObj[key] = value;
-                            });                          
+                            if (itemRowSpan && itemRowSpan[columnDef["targets"]] == 0) {
+                                destObj.display="none";
+                            }
                             destObj.width = columnDef.width;
                             destObj.cursor = 'move';
                             return destObj;
@@ -703,18 +727,71 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
                             return curSortIndex===index &&  sortIconStatus;
                         };
 
-                        scope.ifSelected = function(item) {
-                            return item.$$hashKey == scope.selectedModel.$$hashKey;
+                        scope.ifRowHighLight = function(item,type,columnDef){
+                            if(type==="click"){
+                                if(!columnDef){
+                                    return Utils.contains(scope.selectedModel.rows,item,true)!=-1 && scope.selectedModel.cols.length==0;
+                                }else{
+                                    return Utils.contains(scope.selectedModel.rows,item,true)!=-1 && scope.selectedModel.cols.indexOf(columnDef.targets)!=-1;
+                                }
+                            }else if(type==="hover"){
+                                if(!columnDef){
+                                    return  Utils.contains(scope.hoveredModel.rows,item,true)!=-1 && scope.hoveredModel.cols.length==0;
+                                }else{
+                                    return Utils.contains(scope.hoveredModel.rows,item,true)!=-1 && scope.hoveredModel.cols.indexOf(columnDef.targets)!=-1;
+                                }
+                            }
                         };
-
                         scope.setSelected = function(item, event) {
-                            if (item.$$hashKey == scope.selectedModel.$$hashKey) {
-                                // scope.selectedModel = {};
-                            } else {
-                                scope.selectedModel = item;
+                            if(event!=null){
+                                scope.selectedModel = _setRowHighLight(item,event.target);
+                            }else{
+                                scope.selectedModel.rows.push(item);
                             }
                             EventService.raiseControlEvent(scope, 'select', item);
                         };
+                        scope.setHovered = function(item, event) {
+                            scope.hoveredModel = _setRowHighLight(item,event.target);
+                        };
+                        scope.clearHovered = function() {
+                            scope.hoveredModel = {
+                                rows:[],
+                                cols:[]
+                            };
+                        };
+                        function _setRowHighLight(rowItem,targetNode){
+                            var highLight = {
+                                rows:[],
+                                cols:[]
+                            };
+                            var tdDom=_findParentTdByChild(targetNode);
+                            var rowSpanCount = parseInt(tdDom.getAttribute("rowSpan"));
+                            if(rowSpanCount!=1)
+                            {
+                                for(var i=0 ; i<rowSpanCount ; i++)
+                                {
+                                    highLight.rows.push(scope.$filtered[rowItem.$index+i]);
+                                }
+                            }
+                            else{
+                                var tds = tdDom.parentNode.querySelectorAll("td[rowSpan]");
+                                for(var k= 0,len=tds.length ; k<len ; k++)
+                                {
+                                    if(tds[k].getAttribute("rowSpan") == "1"){
+                                        highLight.cols.push(k);
+                                    }
+                                }
+                                highLight.rows.push(rowItem);
+                            }
+                            return highLight;
+                        }
+
+                        function _findParentTdByChild(node){
+                            while (node.nodeName!="TD"){
+                                node=node.parentNode;
+                            }
+                            return node;
+                        }
 
                         scope.singleCheck = function(){
                             scope.refreshSingleCurrentPage();
@@ -1253,7 +1330,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture', '
             scope: {
                 count: "=",
                 pageSize: "=",
-                lang: "@"
+                lang: "@",
+                position:"@?"
             },
             link: function($scope, element, attrs, TableCtrl) {
                 $scope.TableCtrl = TableCtrl;
