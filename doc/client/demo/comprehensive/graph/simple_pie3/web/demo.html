@@ -1,22 +1,24 @@
-<div id='main_image' style="width:800px;position: relative">
+<div>
+    <div id='main_image' style="width:400px;position: relative;display:inline-block">
         <div style="width:350px; display:inline-block">
-            <rdk_graph ds="dsGraph" height="250" id='pie' ds_url="$svr/data" ds_query_if="ready"
+            <rdk_graph ds="dsGraph" height="250" id='pie' ds_url="mock/data.json" ds_query_if="ready"
             graph_define="scripts/graph_define/simple_line.js" ></rdk_graph>
         </div>
-        <div style="width:350px;display:none" id='line'   ds="line" ds_url="../server/data9" ds_query_if="ready">
+        <div ng-show="showDetail" id='line' ds="line" ds_url="mock/data9.json" ds_query_if="ready">
             <ul >
                 <li>其它问题（3项）</li>
                 <li ng-repeat="item in line.data"><span data="{{item.number}}" ng-class="{'color' : clickNumber==$index}" ng-click="numClick($event)" >{{item.name}}（{{item.chance}}）</span></li>
             </ul>
         </div>
     </div>
-    <div id="pie_child" style="width:350px; display:inline-block">
-            <div ng-show="showNumber==$index" ng-repeat="item in [1,2,3,4]">
-                <rdk_graph height="250" ds="dsGraph{{item}}" ds_url="$svr/data{{item}}" ds_query_if="ready"
-                graph_define="scripts/graph_define/simple_line{{item}}.js" ></rdk_graph>
-            </div>
-            <div ng-show="clickNumber==$index" ng-repeat="item in [5,6,7]">
-                 <rdk_graph ds="dsGraph{{item}}" height="250" ds_url="$svr/data{{item}}" ds_query_if="ready"
-                graph_define="scripts/graph_define/simple_line{{item}}.js" ></rdk_graph>
-            </div>
+    <div id="pie_child" style="width:350px; display:inline-block;">
+        <div ng-show="showNumber==$index" ng-repeat="item in [1,2,3,4]">
+            <rdk_graph height="250" ds="dsGraph{{item}}" ds_url="mock/data{{item}}.json" ds_query_if="ready"
+            graph_define="scripts/graph_define/simple_line{{item}}.js" ></rdk_graph>
+        </div>
+        <div ng-show="clickNumber==$index" ng-repeat="item in [5,6,7]">
+             <rdk_graph ds="dsGraph{{item}}" height="250" ds_url="mock/data{{item}}.json" ds_query_if="ready"
+            graph_define="scripts/graph_define/simple_line{{item}}.js" ></rdk_graph>
+        </div>
     </div>
+</div>

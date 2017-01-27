@@ -1,0 +1,36 @@
+ul,li{
+    list-style: none;
+    padding:0px;
+    margin:0px;
+}
+#line ul>li{
+        font-size:14px;
+        margin-top:2px;
+        cursor: pointer;
+}
+#line ul>li>span{
+    display:inline-block;
+    font-size:12px;
+    line-height: 20px;
+    padding-left: 6px;
+    padding-right: 6px;
+    border-radius: 2px; 
+}
+.color{
+    background: #bea5c8;
+    color: #fff;
+}
+#line{
+    position: absolute;
+    font-family: "微软雅黑";
+    left:200px;
+    top:100px;
+}
+#line ul>li:first-child{
+    padding:6px;
+    color: #bea5c8;
+    cursor:default
+}
+#line ul>li:last-child{
+    margin-bottom: 20px;
+}

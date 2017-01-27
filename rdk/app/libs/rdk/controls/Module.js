@@ -100,8 +100,12 @@ define(['rd.core'], function() {
 
                     function _compileModule(htmlSource) {
                         var html = $(htmlSource);
-                        if (!html[0]) {
-                            console.error('invalid module template content, url=' + url);
+                        if (html.length == 0) {
+                            console.error('模块HTML片段无效\n%s', htmlSource);
+                            return;
+                        }
+                        if (html.length > 2) {
+                            console.error('多根节点HTML片段错误，模块HTML片段只能有且只能有一个根节点\n%s', htmlSource);
                             return;
                         }
                         var loadContext = scope.loadContext;
