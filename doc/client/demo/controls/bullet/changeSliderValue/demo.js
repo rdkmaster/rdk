@@ -7,13 +7,12 @@
     var controllerDefination = ['$scope',  main];
     function main(scope ) {
         scope.inputScales = [ 20, 40, 68, 89 ];
-
-
+        
         scope.sliderStyles = [
-                    {color:'red',label:'警告',position:'down'},
-                    {color:'green',label:'轻微',position:'up'},
-                    {color:'blue',label:'严重',position:'up'},
-                    {color:'gray',label:'致命',position:'up'},
+            {color:'red',label:'警告',position:'down'},
+            {color:'green',label:'轻微',position:'up'},
+            {color:'blue',label:'严重',position:'up'},
+            {color:'gray',label:'致命',position:'up'},
         ];
 
 

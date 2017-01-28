@@ -25,7 +25,7 @@
             bar: {delimiter: ",", fill: ["#9d89f9"], height: 56, max: null, min: 0, padding: 0.1, width: 84}
         };
         ChartIconConfigProvider.setOptions(defaultOption);
-    }
+    }]);
 
     var controllerName = 'DemoController';
     //==========================================================================

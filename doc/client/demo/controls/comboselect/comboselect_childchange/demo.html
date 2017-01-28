@@ -1,13 +1,13 @@
 <form>
-        <rdk_combo_select caption="'选择内容：'">
-            <rdk_accordion child_change="getSelectedParam" open="false" caption="'排序字段'">
-                TOP:
-                <rdk_basic_selector class="rdk_selector_style" id="topid" multiple_select="false" data="TOPItems" least="1"></rdk_basic_selector>
-                排序:
-                <rdk_basic_selector class="rdk_selector_style" id="sortid" multiple_select="false" data="SortItems" editable="false" least="1"></rdk_basic_selector>
-            </rdk_accordion>
-            <rdk_accordion child_change="getSelectedCity" open="false" caption="CityParam">
-                <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
-            </rdk_accordion>
-        </rdk_combo_select>
-    </form>
+    <rdk_combo_select caption="'选择内容：'">
+        <rdk_accordion child_change="getSelectedParam" open="false" caption="'排序字段'">
+            TOP:
+            <rdk_basic_selector class="rdk_selector_style" id="topid" multiple_select="false" data="TOPItems" least="1"></rdk_basic_selector>
+            排序:
+            <rdk_basic_selector class="rdk_selector_style" id="sortid" multiple_select="false" data="SortItems" editable="false" least="1"></rdk_basic_selector>
+        </rdk_accordion>
+        <rdk_accordion child_change="getSelectedCity" open="false" caption="CityParam">
+            <rdk_basic_selector class="rdk_selector_style" id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
+        </rdk_accordion>
+    </rdk_combo_select>
+</form>

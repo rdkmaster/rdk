@@ -6,10 +6,10 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope',  main];
     function main(scope ) {
-        var userInfo = "用户接口";
-    scope.clickHandler = function() {
-        alert(userInfo)
-    }
+        var userInfo = "按钮单击回调";
+        scope.clickHandler = function() {
+            alert(userInfo)
+        }
     }
 
     var controllerName = 'DemoController';

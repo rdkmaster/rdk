@@ -4,8 +4,8 @@
         'angular', 'rd.controls.ComboSelect', 'rd.controls.BasicSelector'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope', main];
-    function main(scope ) {
+    var controllerDefination = ['$scope', 'BasicSelector', main];
+    function main(scope, BasicSelector) {
         scope.allItems = [{
             id: 0,
             label: "江苏省"

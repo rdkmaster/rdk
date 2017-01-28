@@ -7,17 +7,17 @@
     var controllerDefination = ['$scope', main];
     function main(scope ) {
         scope.cityData = [
-                { id: 0, label: "江苏省" },
-                { id: 1, label: "浙江省" },
-                { id: 2, label: "广东省" },
-                { id: 3, label: "广西省" },
-                { id: 4, label: "河北省" },
-                { id: 5, label: "河南省" },
-                { id: 6, label: "湖北省" },
-                { id: 7, label: "湖南省" },
-                { id: 8, label: "新疆省" },
-                { id: 9, label: "四川省" }
-            ];
+            { id: 0, label: "江苏省" },
+            { id: 1, label: "浙江省" },
+            { id: 2, label: "广东省" },
+            { id: 3, label: "广西省" },
+            { id: 4, label: "河北省" },
+            { id: 5, label: "河南省" },
+            { id: 6, label: "湖北省" },
+            { id: 7, label: "湖南省" },
+            { id: 8, label: "新疆省" },
+            { id: 9, label: "四川省" }
+        ];
     }
 
     var controllerName = 'DemoController';

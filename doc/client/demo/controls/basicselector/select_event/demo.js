@@ -4,57 +4,55 @@
         'rd.controls.BasicSelector'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope','EventService','EventTypes', main];
-    function main(scope,EventService,EventTypes) {
+    var controllerDefination = ['$scope', 'EventService', 'EventTypes', 'BasicSelector', main];
+    function main(scope, EventService, EventTypes, BasicSelector) {
+        scope.changeHandler = function(event, data) {
+            console.log('changeHandler..........');
+        }
+
+        scope.selectAll = function() {
+            EventService.broadcast('id_selector', EventTypes.SELECT, "all");
+        }
+
+        scope.clearSelected = function() {
+            EventService.broadcast('id_selector', EventTypes.SELECT);
+        }
+
+        scope.getSelected = function() {
+            var res = '';
+            res = BasicSelector.selected2string(scope.selectedItems, 'label', ';');
+            alert('选中了 "' + res + '"');
+        }
+
         scope.allItems = [{
-                label: "江苏省"
-            }, {
-                label: "浙江省"
-            }, {
-                label: "广东省"
-            }, {
-                label: "广西省"
-            }, {
-                label: "河北省"
-            }, {
-                label: "河南省"
-            }, {
-                label: "湖北省"
-            }, {
-                label: "湖南省"
-            }, {
-                label: "新疆省"
-            }, {
-                label: "四川省"
-            }];
+            label: "江苏省"
+        }, {
+            label: "浙江省"
+        }, {
+            label: "广东省"
+        }, {
+            label: "广西省"
+        }, {
+            label: "河北省"
+        }, {
+            label: "河南省"
+        }, {
+            label: "湖北省"
+        }, {
+            label: "湖南省"
+        }, {
+            label: "新疆省"
+        }, {
+            label: "四川省"
+        }];
 
-            scope.selectedItems = [{
-                label: "广西省"
-            }, {
-                label: "湖南省"
-            }, {
-                label: "河北省"
-            }];
-
-
-            EventService.register('id_selector', EventTypes.CHANGE, function(event, data) {
-                console.log('accept inner_change');
-            });
-
-            scope.selectAll = function() {
-                EventService.broadcast('id_selector', EventTypes.SELECT, "all");
-            }
-
-            scope.clearSelected = function() {
-                EventService.broadcast('id_selector', EventTypes.SELECT);
-            }
-
-            scope.getSelected = function() {
-                var res = '';
-                res = BasicSelector.selected2string(scope.selectedItems, 'label', ';');
-                alert('选中了 "' + res + '"');
-            }
-
+        scope.selectedItems = [{
+            label: "广西省"
+        }, {
+            label: "湖南省"
+        }, {
+            label: "河北省"
+        }];
     }
 
     var controllerName = 'DemoController';
