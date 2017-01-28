@@ -1,12 +1,12 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.controls.Table','rd.controls.Button'
+        'rd.controls.Table','rd.controls.Button','css!base/css/simple_tab1','css!rd.styles.IconFonts'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
-    function main($scope) {
-        $scope.setting = {
+    function main(scope) {
+        scope.setting = {
             "columnDefs" :[
                 {
                     title : "详单",

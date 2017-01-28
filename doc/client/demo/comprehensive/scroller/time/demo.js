@@ -10,10 +10,9 @@
                 src: 'img/img1.png',
                 title: 'Pic 1',
                 showGranularity: {
-
-                    value: ['2016-11-01', '2016-11-15'],
+                    value: ['2016-1-01', '2016-2-15'],
                     granularity: "quarter",
-                    startDate: "2016-11-01",
+                    startDate: "2016-1-01",
                     endDate: "now",
                     selectGranularity: true,
                     granularityItems: [{
@@ -34,19 +33,12 @@
                 src: 'img/img2.jpg',
                 title: 'Pic 2',
                 showGranularity: {
-
-                    value: ['2016-11-01', '2016-11-15'],
+                    value: ['2016-2-01', '2016-3-15'],
                     granularity: "quarter",
-                    startDate: "2016-11-01",
+                    startDate: "2016-9-02",
                     endDate: "now",
                     selectGranularity: true,
                     granularityItems: [{
-                        label: "15分钟",
-                        value: "quarter"
-                    }, {
-                        label: "小时",
-                        value: "hour"
-                    }, {
                         label: "天",
                         value: "date"
                     }, {
@@ -58,18 +50,14 @@
                 src: 'img/img3.jpg',
                 title: 'Pic 3',
                 showGranularity: {
-
-                    value: ['2016-11-01', '2016-11-15'],
+                    value: ['2016-3-01', '2016-4-15'],
                     granularity: "quarter",
-                    startDate: "2016-11-01",
+                    startDate: "2016-10-03",
                     endDate: "now",
                     selectGranularity: true,
                     granularityItems: [{
                         label: "15分钟",
                         value: "quarter"
-                    }, {
-                        label: "小时",
-                        value: "hour"
                     }, {
                         label: "天",
                         value: "date"
@@ -79,21 +67,16 @@
                     }]
                 }
             },
-
             {
                 src: 'img/img5.png',
                 title: 'Pic 5',
                 showGranularity: {
-
-                    value: ['2016-11-01', '2016-11-15'],
+                    value: ['2016-4-01', '2016-5-15'],
                     granularity: "quarter",
-                    startDate: "2016-11-01",
+                    startDate: "2016-11-04",
                     endDate: "now",
                     selectGranularity: true,
-                    granularityItems: [{
-                        label: "15分钟",
-                        value: "quarter"
-                    }, {
+                    granularityItems: [ {
                         label: "小时",
                         value: "hour"
                     }, {

@@ -1,8 +1,8 @@
 application = (function() {
-    function _import(downloads) {
+    function _import(imports) {
         var list = [];
-        for (var i = 0; i < downloads.length; i++) {
-            var item = downloads[i];
+        for (var i = 0; i < imports.length; i++) {
+            var item = imports[i];
             var url;
             if (item.hasOwnProperty('url')) {
                 url = item.url;

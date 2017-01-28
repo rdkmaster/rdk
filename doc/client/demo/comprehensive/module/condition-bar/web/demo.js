@@ -1,11 +1,18 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.controls.Graph'
+        'rd.controls.Module', 'base/module/condition-bar'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main(scope) {
+        scope.getTime = function() {
+            alert(rdk.conBar.child.getTime());
+        }
+        scope.getSelectedProvince = function() {
+            var prov = rdk.conBar.child.getSelectedProvince();
+            alert('label=' + prov.label + ', id=' + prov.id);
+        }
     }
 
     var controllerName = 'DemoController';

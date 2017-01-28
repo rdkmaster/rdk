@@ -3,7 +3,6 @@
     top: 300px;
     background-color: #fff;
     transition: top 0.35s linear;
-    margin: 10%;
 }
 .rdk-panel{
     opacity: 0;

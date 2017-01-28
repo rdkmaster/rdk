@@ -1,7 +1,7 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.controls.Time','rd.attributes.theme'
+        'rd.controls.Time','rd.attributes.theme','css!base/css/time'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
@@ -33,8 +33,7 @@
                 gap: "inyear"
             }]
         }
-        var b=$('option');
-        console.log(b);
+
         scope.gap1 = {
             value: "now - 2y", //支持y/m/w/d
             granularity: "date"

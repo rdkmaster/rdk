@@ -1,13 +1,13 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.controls.AreaSelect', 'rd.controls.ComboSelect','rd.containers.Panel'
+        'rd.controls.AreaSelect', 'rd.controls.ComboSelect', 'css!rd.styles.IconFonts'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main(scope ) {
-        scope.alert=function(){
-
+        scope.alert=function(d){
+            alert(d)
         };
         scope.resultData1={
             province:{name:"四川",code:"1"},

@@ -1,7 +1,7 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.services.EventService', 'rd.services.Utils','rd.containers.Tab'
+        'rd.containers.Tab', 'css!base/css/custom'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', 'EventService', main];

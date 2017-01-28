@@ -1,7 +1,7 @@
 <rdk_scroller id="scroller" data="data" scroll_policy='manual' loop="false" >
     <div>
-      <img ng-src="{{item.src}}"/>
+      <rdk_time range setting="item.showGranularity" style="width:500px"></rdk_time>
       <span>{{item.title}} </span>
-      <rdk_time range setting="item.showGranularity" ></rdk_time>
+      <img ng-src="{{item.src}}"/>
     </div>
 </rdk_scroller>
