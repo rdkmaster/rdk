@@ -40,10 +40,17 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                             try {
                                 data = userChangeHandler(data, context);
                             } catch (e) {
-                                console.warn('call user change handler error: ' + e);
+                                console.warn('call user change handler error: ');
+                                console.warn(e.stack);
                             }
                         } else {
-                            data = angular.isArray(data) ? data.join(', ') : data.toString();
+                            if (angular.isArray(data)) {
+                                angular.forEach(data, function(item) {
+                                    data += (angular.isString(item) ? item : '') + ', ';
+                                });
+                            } else {
+                                data = angular.isString(data) ? data : '';
+                            }
                         }
                         if (data === RDKConst.STOP_PROPAGATIOIN) {
                             return data;
