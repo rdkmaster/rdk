@@ -105,8 +105,8 @@ define(['rd.core'], function() {
                             return;
                         }
                         if (html.length > 2) {
-                            console.error('多根节点HTML片段错误，模块HTML片段只能有且只能有一个根节点\n%s', htmlSource);
-                            return;
+                            //修复多根节点HTML片段
+                            html = $('<div></div>').append(html);
                         }
                         var loadContext = scope.loadContext;
                         scope.loadContext = null;
