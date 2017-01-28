@@ -1,7 +1,7 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'angular', 'rd.containers.Accordion', 'rd.controls.BasicSelector'
+        'rd.containers.Accordion', 'rd.controls.BasicSelector'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope',  main];
@@ -23,7 +23,7 @@
             cityItems: scope.cityItems
         },
         {
-            caption: 'test_2',
+            caption: 'frozen',
             open: false,
             frozen: true,
             cityItems: []
@@ -40,7 +40,7 @@
                     cityItems: []
                 },
                 {
-                    caption: 'test_2',
+                    caption: 'frozen',
                     open: false,
                     frozen: true,
                     cityItems: []
@@ -56,14 +56,13 @@
                     cityItems: scope.cityItems
                 },
                 {
-                    caption: 'test_2',
+                    caption: 'frozen',
                     open: true,
                     frozen: false,
                     cityItems: scope.cityItems
                 }
                 ];                  
             }
-
         }
     }
 

@@ -1,26 +1,24 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'angular', 'rd.containers.Accordion'
+        'rd.containers.Accordion'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main(scope) {
-            scope.buttonSource = [{
-                icon: "./../img/edit.png",
-                label: "编辑",
-                tooltips: "点击可进行编辑",
-                callback: function(obj, htmlID) {
-                    scope.isEditable = !scope.isEditable;
-                    alert("编辑状态：" + scope.isEditable);
-                }
-            }];
+        scope.buttonSource = [{
+            icon: "./../img/edit.png",
+            label: "编辑",
+            tooltips: "点击可进行编辑",
+            callback: function(obj, htmlID) {
+                scope.isEditable = !scope.isEditable;
+                alert("编辑状态：" + scope.isEditable);
+            }
+        }];
 
-            scope.isEditable = false;
-            scope.foldedIcon = "fa fa-angle-double-down";
-            scope.unfoldedIcon = "fa fa-angle-double-up";
-
-        }
+        scope.isEditable = false;
+        scope.foldedIcon = "fa fa-angle-double-down";
+        scope.unfoldedIcon = "fa fa-angle-double-up";
     }
 
     var controllerName = 'DemoController';
