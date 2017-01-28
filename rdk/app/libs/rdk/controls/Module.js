@@ -111,6 +111,9 @@ define(['rd.core'], function() {
                         var loadContext = scope.loadContext;
                         scope.loadContext = null;
 
+                        if (html.attr('id')) {
+                            console.warn('根节点的id属性[%s]将会被覆盖，请不要在根节点上定义id属性！', html.attr('id'));
+                        }
                         var id = Utils.createUniqueId('module_');
                         html.attr('id', id);
                         element.append(html);
