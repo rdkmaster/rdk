@@ -1,25 +1,11 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.containers.Tab', 'rd.controls.BasicSelector'
+        'rd.containers.Tab'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main(scope) {
-        scope.cityItems = [{
-            label: "江苏省"
-        }, {
-            label: "浙江省"
-        }, {
-            label: "河南省"
-        }, {
-            label: "湖北省"
-        }];
-
-        scope.selectedItems = [{
-            label: "江苏省"
-        }];
-
         scope.rdkSelector = "Selector控件";
     }
 

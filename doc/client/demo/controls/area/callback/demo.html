@@ -1,8 +1,8 @@
-<ds id="dsProv" url="../doc/client/demo/common/datasource/server/areaServiceProv.js"></ds>
-    <ds id="dsCity" url="../doc/client/demo/common/datasource/server/areaServiceCity.js"></ds>
-    <ds id="dsArea" url="../doc/client/demo/common/datasource/server/areaServiceArea.js"></ds>
-    <div class="area-wrap">
-        <rdk_combo_select>
-            <rdk-area-select id="areaID" ds_province="dsProv" ds_city="dsCity" ds_area="dsArea" area-data="resultObj"  change="callBackAlert()"></rdk-area-select>
-        </rdk_combo_select>
-    </div>
+<ds id="dsProv" url="$svr/mock/areaServiceProv.js"></ds>
+<ds id="dsCity" url="$svr/mock/areaServiceCity.js"></ds>
+<ds id="dsArea" url="$svr/mock/areaServiceArea.js"></ds>
+<div class="area-wrap">
+    <rdk_combo_select>
+        <rdk-area-select id="areaID" ds_province="dsProv" ds_city="dsCity" ds_area="dsArea" area-data="resultObj"  change="callBackAlert"></rdk-area-select>
+    </rdk_combo_select>
+</div>
