@@ -35,10 +35,11 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
 
                 controller: ['$scope', function(scope) {
                     Utils.onChildChange(scope, function(data, context) {
+                        var str = '';
                         var userChangeHandler = scope.childChange(scope);
                         if (userChangeHandler) {
                             try {
-                                data = userChangeHandler(data, context);
+                                str = userChangeHandler(data, context);
                             } catch (e) {
                                 console.warn('call user change handler error: ');
                                 console.warn(e.stack);
@@ -46,16 +47,16 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                         } else {
                             if (angular.isArray(data)) {
                                 angular.forEach(data, function(item) {
-                                    data += (angular.isString(item) ? item : '') + ', ';
+                                    str += angular.isString(item) ? (item + ', ') : '';
                                 });
                             } else {
-                                data = angular.isString(data) ? data : '';
+                                str = angular.isString(data) ? data : '';
                             }
                         }
                         if (data === RDKConst.STOP_PROPAGATIOIN) {
                             return data;
                         }
-                        scope.inputStr = data;
+                        scope.inputStr = str;
                     });
                     Utils.publish(scope, this);
                     this.changeOpenStatus = function(){
