@@ -1,18 +1,17 @@
 (function() {
-    // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
+    //这是本控制器的ID，非常重要，不要和已有的控制器重名
+    var controllerName = 'tabController';
+
+    //参考 main.js 中同名变量的说明
     var imports = [
-        'rd.containers.Panel', 'rd.controls.Time', 'rd.containers.Accordion'
+        'rd.controls.BasicSelector'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope','EventService','EventTypes', main];
-    function main(scope,EventService,EventTypes) {
-        scope.closeEvent=function(){
-            alert("do something before close");
-            EventService.broadcast('panel_close', EventTypes.CLOSE);
-       }
+
+    var controllerDefination = ['$scope', main];
+    function main(scope) {
     }
 
-    var controllerName = 'DemoController';
     //==========================================================================
     //                 从这里开始的代码、注释请不要随意修改
     //==========================================================================

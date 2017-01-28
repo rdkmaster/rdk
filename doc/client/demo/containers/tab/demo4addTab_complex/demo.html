@@ -1,9 +1,9 @@
-<rdk_tab>
+<rdk_tab id='tabID' close="closeHandler">
     <div title="RDK">
         <p>RDK最突出的特点就是易用！</p>
     </div>
-    <div title="{{rdkSelector}}">
-        <rdk_basic_selector selected_items="selectedItems" data="cityItems"></rdk_basic_selector>
+    <div title="{{rdkSelector}}" show_close_button='true' ng-controller="tabController">
+        <rdk_basic_selector selected_items="selectedItems" data="cityItems" change="changeHandler"></rdk_basic_selector>
     </div>
     <div title="Rdk_tab">
         <rdk_tab>
@@ -16,3 +16,5 @@
         </rdk_tab>
     </div>
 </rdk_tab>
+
+<button ng-click='clickHandler()'>动态新增tab</button>

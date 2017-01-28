@@ -6,7 +6,6 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main(scope ) {
-    
     }
 
     var controllerName = 'DemoController';

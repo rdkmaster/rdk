@@ -1,7 +1,7 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'angular', 'rd.containers.Tab', 'rd.controls.BasicSelector'
+        'rd.containers.Tab', 'rd.controls.BasicSelector'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
