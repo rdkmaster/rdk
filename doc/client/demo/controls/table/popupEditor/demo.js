@@ -1,37 +1,11 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.controls.Table', 'rd.attributes.modal', 'rd.controls.BasicSelector'
+        'rd.controls.Table', 'rd.services.PopupService', 'base/mod/name-editor', 'base/mod/habit-editor'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope', 'EventService','EventTypes', main];
-    function main($scope,EventService,EventTypes ) {
-        $scope.allItems_1 = [
-            { id: 0, label: "angelababy" },
-            { id: 1, label: "selina" },
-            { id: 2, label: "hebbe" },
-            { id: 3, label: "jolin" },
-            { id: 4, label: "sara" },
-            { id: 5, label: "joana" },
-            { id: 6, label: "brown" },
-            { id: 7, label: "bush" },
-            { id: 8, label: "nikoson" },
-            { id: 9, label: "mike" }
-        ];
-
-        $scope.allItems = [
-            { id: 0, label: "网球" },
-            { id: 1, label: "乒乓" },
-            { id: 2, label: "排球" },
-            { id: 3, label: "篮球" },
-            { id: 4, label: "冰球" },
-            { id: 5, label: "垒球" },
-            { id: 6, label: "棒球" },
-            { id: 7, label: "游泳" },
-            { id: 8, label: "体操" },
-            { id: 9, label: "射击" }
-        ];
-
+    var controllerDefination = ['$scope', 'EventService','EventTypes', 'PopupService', main];
+    function main($scope,EventService,EventTypes,PopupService) {
         $scope.data = {};
         $scope.data.header = ["姓名", "职位", "爱好", "入职日期", "部门", "其他"];
         $scope.data.field = ["name", "position", "salary", "start_date", "office", "extn"];
@@ -67,60 +41,53 @@
                 {
                     targets : 0,
                     editable : true,
-                    editorRenderer: '<a ng-click="appScope.clickHandler(item, $parent.$index, $index)">{{data.data[item.$index][$index]}}</a>'
+                    editorRenderer: '<a ng-click="appScope.editName(item, $parent.$index, $index)">{{data.data[item.$index][$index]}}</a>'
                 },
                 {
                     targets : 2,
                     editable : true,
-                    editorRenderer: '<a ng-click="appScope.click(item, $parent.$index, $index)">{{data.data[item.$index][$index]}}</a>'
+                    editorRenderer: '<a ng-click="appScope.editHabit(item, $parent.$index, $index)">{{data.data[item.$index][$index]}}</a>'
                 }
-
             ]
         }
 
-        _getMultipleSelectedItems = function(data){
+        $scope.editName = function(item, row, column) {
+            var id = PopupService.popup('mod/name-editor.html',
+                { selected: {'label': $scope.data.data[row][column]} },
+                { controller: 'NameEditorController', showTitle: false });
+
+            EventService.register(id, 'edit', function(event, data) {
+                PopupService.removePopup(id);
+                //清空回调函数
+                EventService.remove(id, 'edit');
+                //让数据生效
+                $scope.data.data[row][column] = data.label;
+            });
+        }
+
+        $scope.editHabit = function(item, row, column) {
+            var id = PopupService.popup('mod/habit-editor.html',
+                { selected: _getMultipleSelectedItems($scope.data.data[row][column]) },
+                { controller: 'HabitEditorController', showTitle: false });
+
+            EventService.register(id, 'edit', function(event, data) {
+                PopupService.removePopup(id);
+                //清空回调函数
+                EventService.remove(id, 'edit');
+                //让数据生效
+                $scope.data.data[row][column] = data;
+            });
+        }
+
+        var _getMultipleSelectedItems = function(data){
             var retArr = [];
             var arr = data.split(',');
             for(var i=0; i<arr.length; i++){
                 var obj = {};
-                obj.label = arr[i];
+                obj.label = arr[i].trim();
                 retArr.push(obj);
             }
             return retArr;
-        }
-
-        $scope.clickHandler = function(item, row, column){
-            $scope.row = row;
-            $scope.column = column;
-            $scope.selectedItems_1 = [{'label': $scope.data.data[row][column]}];
-            var pos = {
-                x: ($(window).width() -  $('#selectModal_1').width())/2,
-                y: ($(window).height() -  $('#selectModal_1').height())/2
-            };
-            EventService.broadcast('selectModal_1', 'modal', pos);
-
-            EventService.register('selectorID_1',EventTypes.CHANGE, function(event, data){
-                EventService.broadcast('selectModal_1', 'hide');
-                if(data.length == 0) return;
-                $scope.data.data[$scope.row][$scope.column] = data[0].label;              
-            });
-        }
-
-        $scope.closeHandler = function(){
-            EventService.broadcast('selectModal', 'hide');
-            if($scope.selectedItems.length == 0) return;
-            $scope.data.data[$scope.rowIdx][$scope.columnIdx] = BasicSelector.selected2string($scope.selectedItems, 'label', ',');
-        }
-
-        $scope.click = function(item, row, column){
-            $scope.rowIdx = row;
-            $scope.columnIdx = column;
-            $scope.selectedItems = _getMultipleSelectedItems($scope.data.data[row][column]);
-            var pos = {
-                x: ($(window).width() -  $('#selectModal').width())/2,
-                y: ($(window).height() -  $('#selectModal').height())/2
-            };
-            EventService.broadcast('selectModal', 'modal', pos);
         }
     }
 

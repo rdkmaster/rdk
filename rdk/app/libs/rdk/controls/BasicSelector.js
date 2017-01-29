@@ -355,7 +355,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.BasicSelector',
 
                     var fn;
                     if (scope[action]) {
-                        fn = scope[action](scope);
+                        fn = scope[action](scope.appScope);
                     }
                     if (!fn) {
                         fn = defaultHandlers[action];

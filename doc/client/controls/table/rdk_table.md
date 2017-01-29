@@ -589,8 +589,6 @@ cells 为 改变的行列信息的数组信息
 
 # 样式 #
 
-### [关键样式示例](/doc/client/demo/controls/table/table_style) ###
-
 ### 表的整体属性 ###
 
 #### font-size ####

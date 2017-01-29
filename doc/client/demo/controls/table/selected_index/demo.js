@@ -4,16 +4,16 @@
         'rd.controls.Table'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope', 'EventService','EventTypes','$timeout', main];
-    function main($scope,EventService,EventTypes,$timeout ) {
-        EventService.register('id_table', EventTypes.SELECT, function(event, data){//处理被选中的数据
-                console.log(data);
-            })
+    var controllerDefination = ['$scope', 'EventService','EventTypes', main];
+    function main($scope,EventService,EventTypes) {
+        EventService.register('id_table', EventTypes.SELECT, function(event, data) {//处理被选中的数据
+            console.log(data);
+        })
 
-            $scope.idx = 3;
-            $timeout(function(){
-                $scope.idx = 5;
-            }, 3000);
+        $scope.idx = 3;
+        $scope.change = function() {
+            $scope.idx++;
+        }
     }
 
     var controllerName = 'DemoController';

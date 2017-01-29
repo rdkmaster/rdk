@@ -6,6 +6,10 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main($scope) {
+        $scope.setting = {
+            scrollX : true
+        }
+
         $scope.data = {};
         $scope.data.header = ["姓名", "职位", "薪资", "入职日期", "部门", "其他",
                               "姓名", "职位", "薪资", "入职日期", "部门", "其他",
@@ -224,11 +228,6 @@
                 "8422"
             ]
         ];
-
-
-        $scope.setting = {
-            scrollX : true
-        }
     }
 
     var controllerName = 'DemoController';

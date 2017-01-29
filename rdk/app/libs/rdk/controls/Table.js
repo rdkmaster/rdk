@@ -765,6 +765,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 cols:[]
                             };
                             var tdDom=_findParentTdByChild(targetNode);
+                            if (!tdDom) {
+                                return highLight;
+                            }
                             var rowSpanCount = parseInt(tdDom.getAttribute("rowSpan"));
                             if(rowSpanCount!=1)
                             {
@@ -787,7 +790,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         }
 
                         function _findParentTdByChild(node){
-                            while (node.nodeName!="TD"){
+                            while (node && node.nodeName!="TD"){
                                 node=node.parentNode;
                             }
                             return node;

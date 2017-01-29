@@ -10,9 +10,8 @@
             "columnDefs" :[
                 {
                     targets : 0,
-                    group : true,
-                    editable : true
-                },{
+                    group : true
+                }, {
                     targets : "position",
                     group : function(rowspans,filedName,filterData,target){
                         console.log(rowspans);
@@ -20,19 +19,14 @@
                         console.log(filterData);
                         return rowspans;
                     }
-                },{
-                    targets : "salary",
-                    group : true,
-                    editable : true
                 }, {
-                    targets : 3,
-                    editable : true
+                    targets : "salary",
+                    group : true
                 }
             ]
         }
 
-
-        EventService.register('test', EventTypes.CHANGE, function(event, data){
+        EventService.register('test', EventTypes.SELECT, function(event, data){
             scope.changeData = data;
             console.log(data);
         });

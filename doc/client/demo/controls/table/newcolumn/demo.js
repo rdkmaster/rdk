@@ -10,7 +10,7 @@
             "columnDefs" :[
                 {
                     title : "编辑列",
-                    render : '<a ng-click="appScope.click(item)">点击</a>'
+                    render : "<a style='cursor:pointer' ng-click='appScope.click(item)'>点击</a>"
                 },{
                     title : "索引添加",
                     targets : 1,

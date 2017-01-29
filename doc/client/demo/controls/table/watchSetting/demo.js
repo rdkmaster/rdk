@@ -41,16 +41,9 @@
             ]
         }
 
-        $timeout(function(){
+        $scope.change = function() {
             $scope.setting.columnDefs[0].editable = true;
-        }, 3000);
-
-        EventService.register('testID', EventTypes.CHANGE, function(event, data){
-            if($scope.data.data[data.rowIndex][data.columnIndex] == data.oldValue){
-                $scope.data.data[data.rowIndex][data.columnIndex] = data.newValue;
-            }
-            
-        });
+        }
     }
 
     var controllerName = 'DemoController';
