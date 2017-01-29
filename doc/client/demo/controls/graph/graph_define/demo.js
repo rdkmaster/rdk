@@ -6,11 +6,11 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main(scope ) {
-    scope.graphData = {
-        rowDescriptor: [],
-        header: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        data: [10, 52, 200, 334, 390, 330, 220]
-    };
+        scope.graphData = {
+            rowDescriptor: [],
+            header: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            data: [10, 52, 200, 334, 390, 330, 220]
+        };
     }
 
     var controllerName = 'DemoController';

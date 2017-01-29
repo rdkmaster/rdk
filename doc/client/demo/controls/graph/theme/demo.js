@@ -6,15 +6,19 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main(scope) {
-    scope.graphData = {
-        rowDescriptor: ['最高气温', '最低气温'],
-        header: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-        data: [
-            [11, 13, 15, 18, 15, 12, 10],
-            [1, 4, 6, 4, 9, 6, 3]
-        ]
-    };
+        scope.graphData = {
+            rowDescriptor: ['最高气温', '最低气温'],
+            header: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+            data: [
+                [11, 13, 15, 18, 15, 12, 10],
+                [1, 4, 6, 4, 9, 6, 3]
+            ]
+        };
     }
+
+    rdk.$ngModule.config(['RdkGraphProvider', function(RdkGraphProvider) {
+        RdkGraphProvider.setTheme("theme/vmax_theme.js");
+    }]);
 
     var controllerName = 'DemoController';
     //==========================================================================

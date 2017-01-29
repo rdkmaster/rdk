@@ -29,9 +29,9 @@
             console.log(scope.selectedItems); //里面影响外面
         }
 
-        $timeout(function() {
+        scope.select = function() {
             scope.selectedItems = [{ id: 3, label: "广西省" }]; //外面影响里面
-        }, 3000);
+        };
     }
 
     var controllerName = 'DemoController';

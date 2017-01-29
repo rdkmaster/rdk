@@ -29,17 +29,17 @@
             console.log(scope.selectedItems);
         });
 
-        $timeout(function() {
+        scope.open = function() {
             EventService.broadcast("foldSelectorID", EventTypes.OPEN);
-        }, 1000);
+        };
 
-        $timeout(function() {
+        scope.select = function() {
             EventService.broadcast("foldSelectorID", EventTypes.SELECT);
-        }, 3000);
+        };
 
-        $timeout(function() {
+        scope.close = function() {
             EventService.broadcast("foldSelectorID", EventTypes.CLOSE);
-        }, 5000);
+        };
 
     }
 

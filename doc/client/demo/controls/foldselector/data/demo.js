@@ -4,8 +4,8 @@
         'rd.controls.FoldSelector'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope','$timeout', main];
-    function main(scope,$timeout) {
+    var controllerDefination = ['$scope', main];
+    function main(scope) {
         scope.data = [
             { id: 0, label: "江苏省" },
             { id: 1, label: "浙江省" },
@@ -25,7 +25,7 @@
             { id: 4, label: "河北省" },
         ];
 
-        $timeout(function() {
+        scope.change = function() {
             scope.data = [
                 { id: 2, label: "广东省" },
                 { id: 3, label: "广西省" },
@@ -34,7 +34,7 @@
                 { id: 6, label: "湖北省" },
                 { id: 7, label: "湖南省" }
             ];
-        }, 3000);
+        };
     }
 
     var controllerName = 'DemoController';
