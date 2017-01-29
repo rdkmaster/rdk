@@ -1,31 +1,32 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'i18n','rd.controls.Time'
+        { url: 'base/i18n', alias: 'i18n' }, 'rd.controls.Time'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main(scope) {
-        i18n.$init(scope);
+        imports.i18n.$init(scope);
+        
         scope.i18Set = {
             value: "2015-01-01",
             selectGranularity: true,
             granularity: "week",
             weekStart :1, // 0（星期日）到6（星期六）
             granularityItems: [{
-                label: i18n.quarter,
+                label: imports.i18n.quarter,
                 value: "quarter"
             }, {
-                label: i18n.hour,
+                label: imports.i18n.hour,
                 value: "hour"
             }, {
-                label: i18n.date,
+                label: imports.i18n.date,
                 value: "date"
             }, {
-                label: i18n.week,
+                label: imports.i18n.week,
                 value: "week"
             },{
-                label: i18n.month,
+                label: imports.i18n.month,
                 value: "month"
             }]
         }

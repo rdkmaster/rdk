@@ -7,16 +7,16 @@
     var controllerDefination = ['$scope', 'EventService','EventTypes', main];
     function main(scope, EventService,EventTypes) {
         EventService.register('tabselectData', EventTypes.RESULT, function(event, data) {
-                console.log("获取了TabSelect控件的内容!");
-                scope.tabselectData = data;
-            });
+            console.log("获取了TabSelect控件的内容!");
+            scope.tabselectData = data;
+        });
 
-            scope.trackItemByVal = "value";
+        scope.trackItemByVal = "value";
 
-            scope.selItems = [{
-                "label": "江苏省",
-                "value": "1"
-            }];
+        scope.selItems = [{
+            "label": "江苏省",
+            "value": "1"
+        }];
     }
 
     var controllerName = 'DemoController';

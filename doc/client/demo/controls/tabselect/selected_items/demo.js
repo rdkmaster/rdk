@@ -1,25 +1,25 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'angular', 'rd.controls.TabSelect'
+        'rd.controls.TabSelect'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', 'EventService', 'EventTypes',main];
     function main(scope,EventService,EventTypes ) {
         EventService.register('tabselectData', EventTypes.RESULT, function(event, data) {
-                scope.tabselectData = data;
-            });
+            scope.tabselectData = data;
+        });
 
-            scope.trackItemByVal = "value";
+        scope.trackItemByVal = "value";
 
-            scope.selItems = [{
-                "label": "浙江省",
-                "value": "2"
-            }];
+        scope.selItems = [{
+            "label": "浙江省",
+            "value": "2"
+        }];
 
-            scope.tabSelectChanged = function() {
-                alert("捕获到childChange事件！");
-            }
+        scope.tabSelectChanged = function() {
+            alert("捕获到childChange事件！");
+        }
     }
 
     var controllerName = 'DemoController';
