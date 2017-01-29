@@ -530,7 +530,7 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
 
 
                         function _timeMacroCalculate(timeMacro) {
-                            if (timeMacro != undefined) {
+                            if (angular.isString(timeMacro)) {
                                 var isLetter = /^[a-z]/i;
                                 timeMacro = timeMacro.toLowerCase();
                                 if (isLetter.test(timeMacro)) {

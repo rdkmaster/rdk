@@ -1,0 +1,10 @@
+<rdk_accordion style="width: 300px; margin-top: 30px" open="accordionOpenable" id="testID">
+    <header_renderer>
+        <i class="{{appScope.accordionOpenable?'fa fa-angle-double-up':'fa fa-angle-double-down'}}"></i>
+        <span>网易考拉</span>
+        <strong style="color: #FFFFFF;background: linear-gradient(#C81E2B, #F04349);">2</strong>
+        <i style="float: right; line-height: 24px;" class="fa fa-long-arrow-down"></i>
+    </header_renderer>
+    <rdk_basic_selector least="1" selected_items="testSelectedItems" style="width: 100%" data="allItems" track_item_by="id" change="changeHandler">
+    </rdk_basic_selector>
+</rdk_accordion>

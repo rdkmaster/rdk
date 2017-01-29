@@ -1,0 +1,24 @@
+<ds id="dsProv" url="$svr/mock/areaServiceProv.js"></ds>
+<ds id="dsCity" url="$svr/mock/areaServiceCity.js"></ds>
+<ds id="dsArea" url="$svr/mock/areaServiceArea.js"></ds>
+
+<div style="padding: 30px">
+    <div style="float: left">
+        <h3>可选区域</h3>
+        <div class="area-wrap">
+            <rdk-area-select
+                    rdk-theme="rdk-area-theme-self"
+                    ds_province="dsProv" ds_city="dsCity" ds_area="dsArea"
+                    area-data="resultData" show-all="false"
+                    province-label="省份" city-label="城市" area-label="区镇"
+                    multiple-select="true" multiple-area="true"></rdk-area-select>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+    <div style="float: left;width: 400px;margin-left: 200px" ng-if="resultData" class="show">
+        <h3>已选区域</h3>
+        <div style="width: 100%">
+            <span class="selected-item" ng-repeat="area in resultData.area">{{area.name}}</span>
+        </div>
+    </div>
+</div>

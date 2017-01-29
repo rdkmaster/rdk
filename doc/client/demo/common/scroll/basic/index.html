@@ -1,62 +1,39 @@
 <!DOCTYPE html>
 <html>
-
+<!--
+===============================
+    这些代码不重要，可无视
+===============================
+-->
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>rdk-scroll</title>
-    <!--
-      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
-    -->
-    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-    <script src="scripts/main.js"></script>
-    <script type="text/javascript">
-        require.config({
-            paths: {
-                //这里引用了rdk应用的公共助手文件，不要改动
-                "application": '/doc/tools/doc_js/doc_app_helper'
-            }
-        });
-    </script>
-    <style>
-        .content{
-            height: 200px;
-            width: 500px;
-            border: 1px solid #eee;
-            margin:0px auto;
-            padding:0px;
-        }
-        .content2{
-            height: 500px;
-            width: 600px;
-            margin: 0 auto;
-            border: 1px solid #eee;
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
-        }
-    </style>
+    <title>loading demo...</title>
+    
+    <!-- fix-from -->
+    <!--
+        这个区域中的代码将被替换掉，请不要在这里添加任何有用代码
+        fix-from 和 fix-to 是两个重要标志位，请勿改动
+    -->
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/loading.css">
+    <script data-main="/rdk/app/libs/rdk/rdk.js" src="/rdk/app/libs/requirejs/require.js" rdk-app="index">
+    </script>
+
+    <!-- 上面两行会被自动替换为下面两行 -->
+    <!--
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    <script data-main="main.min" src="/rdk/app/libs/requirejs/require.min.js"></script>
+    -->
+
+    <!-- fix-to -->
+
 </head>
 
-<body ng-controller='myCtrl' style="position: relative">
-    <div rdk-scroll class="content2">
-        <h2>test</h2>
-        <h2>test</h2>
-        <div  rdk-scroll class="content">
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
-            <h1>this is a content</h1>
-        </div>
-        <h2>test</h2>
-        <h2>test</h2>
-        <h2>test</h2>
-        <h2>test</h2>
-        <h2>test</h2>
-    </div>
+<!-- rdk-loading 样式只能在body节点添加一次，其他节点不要添加 -->
+<body ng-controller='RootController' class="rdk-loading">
+    <rdk_module id="m" initialized="load" ready="setTitle" controller="DemoController"></rdk_module>
 </body>
+
 </html>

@@ -1,22 +1,39 @@
 <!DOCTYPE html>
 <html>
-
+<!--
+===============================
+    这些代码不重要，可无视
+===============================
+-->
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>ComboSelect -> Frozen</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+    <title>loading demo...</title>
+    
+    <!-- fix-from -->
     <!--
-      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+        这个区域中的代码将被替换掉，请不要在这里添加任何有用代码
+        fix-from 和 fix-to 是两个重要标志位，请勿改动
     -->
-    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-    <script src="scripts/main.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/loading.css">
+    <script data-main="/rdk/app/libs/rdk/rdk.js" src="/rdk/app/libs/requirejs/require.js" rdk-app="index">
+    </script>
+
+    <!-- 上面两行会被自动替换为下面两行 -->
+    <!--
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    <script data-main="main.min" src="/rdk/app/libs/requirejs/require.min.js"></script>
+    -->
+
+    <!-- fix-to -->
+
 </head>
 
-<body ng-controller='myCtrl'>
-    <rdk_combo_select caption="'已选项:'" open='true' frozen="frBln">
-        <rdk_basic_selector data="allItems" multiple_select="true" track_item_by="id" child_change="selected2string"><span>{{item.label}}</span>
-        </rdk_basic_selector>
-    </rdk_combo_select>
-    <button ng-click="toggleFrozen()">{{btnLabel}}</button>
+<!-- rdk-loading 样式只能在body节点添加一次，其他节点不要添加 -->
+<body ng-controller='RootController' class="rdk-loading">
+    <rdk_module id="m" initialized="load" ready="setTitle" controller="DemoController"></rdk_module>
 </body>
 
 </html>

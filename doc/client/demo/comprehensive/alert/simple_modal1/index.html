@@ -1,36 +1,39 @@
 <!DOCTYPE html>
 <html>
-
+<!--
+===============================
+    这些代码不重要，可无视
+===============================
+-->
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <title>demo 4 modal</title>
-    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-    <script src="scripts/main.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/simple_modal1.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+    <title>loading demo...</title>
+    
+    <!-- fix-from -->
+    <!--
+        这个区域中的代码将被替换掉，请不要在这里添加任何有用代码
+        fix-from 和 fix-to 是两个重要标志位，请勿改动
+    -->
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/loading.css">
+    <script data-main="/rdk/app/libs/rdk/rdk.js" src="/rdk/app/libs/requirejs/require.js" rdk-app="index">
+    </script>
+
+    <!-- 上面两行会被自动替换为下面两行 -->
+    <!--
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    <script data-main="main.min" src="/rdk/app/libs/requirejs/require.min.js"></script>
+    -->
+
+    <!-- fix-to -->
+
 </head>
 
-<body ng-controller='myCtrl'>
-    <button ng-click="setmodal('topModal', 'none_modal', {x:50, y:50})">可以点击一下</button>
-    <div id="topModal" rdk_modal="hide" class="modalcss">
-        <div class='title'>
-            <span>修改项弹出框</span><i ng-click="setmodal('topModal', 'hide')"></i>
-        </div>
-        <div class='content'>
-            <ul>
-                <li><span>城市:</span><input type="text" name="" placeholder="例：成都市 "> </li>
-                <li><span>是否RRU扇区:</span><i>是</i><i>否</i></li>
-                <li>
-                    <span>系统类型:</span>
-                    <select class="selectpicker">
-                        <option>Mustard</option>
-                        <option>Ketchup</option>
-                        <option>Relish</option>
-                    </select>
-                </li>
-                <li><rdk_button label="保存" ng-click="setmodal('topModal', 'hide')"></rdk_button></li>
-            </ul>
-        </div>
-    </div>
+<!-- rdk-loading 样式只能在body节点添加一次，其他节点不要添加 -->
+<body ng-controller='RootController' class="rdk-loading">
+    <rdk_module id="m" initialized="load" ready="setTitle" controller="DemoController"></rdk_module>
 </body>
 
 </html>

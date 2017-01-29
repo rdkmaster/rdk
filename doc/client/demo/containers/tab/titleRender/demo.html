@@ -1,0 +1,28 @@
+<rdk-tab>        
+    <div>
+        <title_renderer>
+             <rdk-progressbar value="60" style="width:50px;">
+             </rdk-progressbar>
+        </title_renderer>
+        
+        <p><img src="icon.ico">这个tab使用到了标题渲染器！</p>
+    </div>
+    <div title="{{rdkSelector}}">
+        <rdk_basic_selector selected_items="selectedItems" data="cityItems"></rdk_basic_selector>
+    </div>
+    <div title="Rdk_tab">
+        <rdk-tab >
+            <div title="RDK">
+                <p><img src="icon.ico">Rapid developing is a brilliant project</p>
+            </div>
+            <div title="rdkSelector">
+                <p>rdk-Basic-Selector是RDK中出现频率最高的控件之一！</p>
+            </div>
+        </rdk-tab>
+    </div>
+</rdk-tab>
+
+<!-- <div ng-repeat="data in [1,2]">
+    <rdk_basic_selector selected_items="selectedItems" data="cityItems">
+     </rdk_basic_selector>
+</div> -->

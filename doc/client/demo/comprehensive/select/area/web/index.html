@@ -1,75 +1,39 @@
 <!DOCTYPE html>
 <html>
+<!--
+===============================
+    这些代码不重要，可无视
+===============================
+-->
 <head>
-    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
-    <title>地区控件</title>
-    <!-- 应用在开发、调试阶段，请使用下面这个节点，RDK会使用编译前的代码，方便定位问题 -->
-    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/iconFonts/fonts/iconfont.css">
-    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
-    <script src="scripts/main.js"></script>
-    <script type="text/javascript">
-        require.config({
-            paths: {
-                //这里引用了rdk应用的公共助手文件，不要改动
-                //"application": '/rdk/app/modules/rdk_app_helpers',
-                "application": '/doc/tools/doc_js/doc_app_helper'
-            }
-        });
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+    <title>loading demo...</title>
+    
+    <!-- fix-from -->
+    <!--
+        这个区域中的代码将被替换掉，请不要在这里添加任何有用代码
+        fix-from 和 fix-to 是两个重要标志位，请勿改动
+    -->
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/loading.css">
+    <script data-main="/rdk/app/libs/rdk/rdk.js" src="/rdk/app/libs/requirejs/require.js" rdk-app="index">
     </script>
-    <style>
-        .area-wrap{
-            padding:5px;
-            width: 100%;
-            background:#008fd4 no-repeat 5px 5px;
-        }
-        .iconfont-positioning {
-            font-size: 26px;
-            color: #fff;
-        }
-        .rdk-combo-select-module .combo-caption{
-            color: #666;
-        }
-        .rdk-area-contain .nav-tabs>li {
-            margin-right: -2px;
-        }
-        .area-wrap2 .rdk-combo-select-module .combo-content-theme {
-            min-width: 240px;
-        }
-        .area-wrap3 .rdk-combo-select-module .combo-content-theme {
-            min-width: 120px;
-        }
-        .area-wrap4 .rdk-combo-select-module .combo-content-theme {
-            width: 90px;
-            min-width: 0;
-        }
-    </style>
+
+    <!-- 上面两行会被自动替换为下面两行 -->
+    <!--
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    <script data-main="main.min" src="/rdk/app/libs/requirejs/require.min.js"></script>
+    -->
+
+    <!-- fix-to -->
+
 </head>
-<body ng-controller='rdk_ctrl' class="rdk-loading">
-<div style="margin: 10px auto;width: 80%;">
-    <ds id="dsProv1" url="../doc/client/demo/common/datasource/server/areaServiceProv.js"></ds>
-    <ds id="dsProv2" url="../doc/client/demo/common/datasource/server/areaServiceProv.js"></ds>
-    <ds id="dsCity2" url="../doc/client/demo/common/datasource/server/areaServiceCity.js"></ds>
-    <ds id="dsArea2" url="../doc/client/demo/common/datasource/server/areaServiceArea.js"></ds>
-    <ds id="dsProv3" url="../doc/client/demo/common/datasource/server/areaServiceProv.js"></ds>
-    <ds id="dsCity3" url="../doc/client/demo/common/datasource/server/areaServiceCity.js"></ds>
-    <h3>省</h3>
-    <div class="area-wrap area-wrap1 iconfont iconfont-positioning">
-        <rdk_combo_select open-policy="hover">
-            <rdk-area-select ds_province="dsProv1"  area-data="resultData1"  granularity="province" show-all="false"></rdk-area-select>
-        </rdk_combo_select>
-    </div>
-    <h3>省-市-区</h3>
-    <div class="area-wrap area-wrap2 iconfont iconfont-positioning">
-        <rdk_combo_select open-policy="hover">
-            <rdk-area-select ds_province="dsProv2"  ds_city="dsCity2"  ds_area="dsArea2" area-data="resultData2" ></rdk-area-select>
-        </rdk_combo_select>
-    </div>
-    <h3>省-市</h3>
-    <div class="area-wrap area-wrap3 iconfont iconfont-positioning">
-        <rdk_combo_select open-policy="hover">
-            <rdk-area-select ds_province="dsProv3" ds_city="dsCity3"  change-handler="alert(d)" area-data="resultData3"   granularity="city" setting="setting"  show-all="false" ></rdk-area-select>
-        </rdk_combo_select>
-    </div>
-</div>
+
+<!-- rdk-loading 样式只能在body节点添加一次，其他节点不要添加 -->
+<body ng-controller='RootController' class="rdk-loading">
+    <rdk_module id="m" initialized="load" ready="setTitle" controller="DemoController"></rdk_module>
 </body>
+
 </html>

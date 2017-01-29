@@ -1,0 +1,12 @@
+<ds id="dsProv1" url="$svr/mock/areaServiceProv.js"></ds>
+<ds id="dsCity1" url="$svr/mock/areaServiceCity.js"></ds>
+<ds id="dsArea1" url="$svr/mock/areaServiceArea.js"></ds>
+<h5>请选择您所在的省市</h5>
+<div class="area-wrap">
+    <rdk_combo_select open-policy="hover">
+        <rdk-area-select ds_province="dsProv1" ds_city="dsCity1" ds_area="dsArea1"  area-data="test1" show-all="false" province-label="请选择省" city-label="请选择市" area-label="请选择区"></rdk-area-select>
+    </rdk_combo_select>
+</div>
+<div ng-if="test1">
+    你选择的地区：{{test1.province.name}}  {{test1.city.name}}  {{test1.area.name}}
+</div>

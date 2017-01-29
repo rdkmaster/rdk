@@ -1,0 +1,9 @@
+<rdk-tab id="tabid">
+    <div ng-repeat="data in datas">
+        <title_renderer>
+            <rdk_single_indicator point_to="data.point_to" label="data.label" value="data.value" icon="{{data.icon}}">
+            </rdk_single_indicator>
+        </title_renderer>
+        <p>{{data.label}}</p>
+    </div>
+</rdk-tab>

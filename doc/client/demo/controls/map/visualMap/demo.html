@@ -1,0 +1,7 @@
+<button ng-click="setMarkPoint()" ds="markPoint" ds-url="mapinfo/markPoint.json">
+    给地图添加MarkPoint
+</button>
+<span>注意echarts在添加markpoint时有bug，导致显示的数据不正确</span>
+<rdk_map id='gis' ds="colorMap" ds-url="mapinfo/colorMap.json" query_if="ready"
+    map_define="graph_define/map.js" map="'mapinfo/jilin.json'" height=260>
+</rdk_map>

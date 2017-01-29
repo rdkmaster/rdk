@@ -1,0 +1,16 @@
+<button style="margin-top: 50px">点击一下</button><br>
+
+   点击一下可以给控件加一个主题2 rdk_theme="rdk-theme-table2" ，再点一下会移除主题2  rdk_theme="rdk-theme-table2"<br>
+
+    <div class="hao images_down">
+        <span class="title">全城通信</span>
+        <span class='images_right' ng-click="images()" ></span>
+        <rdk_table ds="ds_table" ds-url="mockdata/table_paging" ds_query_if="ready" page-size="6" setting="setting" page_number ="4" search="true" searchprompt="搜索一下">
+        </rdk_table>
+    </div>
+    <div class="hao images_down selecter">
+        <span class="title">全城通信</span>
+        <span class='images_right' ng-click="images()" ></span>
+        <rdk_table ds="ds_table" rdk_theme="rdk-theme-table2" ds-url="mockdata/table_paging" ds_query_if="ready" page-size="6" setting="setting" page_number ="4" search="true" searchprompt="搜索一下">
+        </rdk_table>
+    </div>

@@ -1,0 +1,10 @@
+<rdk_scroller id="dsScroller" ds="dsScroller" ds_url="mock/data.json"  ds_query_if="ready" loop="false" 
+     scroll_policy="manual" page_num="{{dsScroller.length -1 }}" class="scollerDiv" offset="20">
+    <div class="wrapper" ng-click="appScope.clickItem(item)" ng-class="{true :'selected', false :'normal'}[item.selected == '1']">
+        <span ng-bind="item.title"></span>
+        <br>
+        <span class="oldPercent">{{item.oldPercent}}%</span>
+        <span class="newPercent">{{item.newPercent}}%</span>
+    </div>
+    <div class="bottom_line"  ng-show="{{item.selected == '1'}}"></div>
+</rdk_scroller>

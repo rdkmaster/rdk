@@ -226,7 +226,7 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                             //RDK进程运行的目录是工程所在目录的一级子目录，
                             //因此在web绝对路径前加上“..”就可以转为RDK进程能识别的相对路径
                             path: '..' + path,
-                            pattern: (/\.js$|\.html$|\.css$|\.json$/i).toString(),
+                            pattern: (/\.js$|\.html$|\.css$|\.json|\.txt$/i).toString(),
                             recursive: true, needContent: false
                         }
                     }
@@ -267,6 +267,8 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                         fi.mode = 'css';
                     } else if (match[1] == 'json') {
                         fi.mode = 'json';
+                    } else if (match[1] == 'txt') {
+                        fi.mode = 'txt';
                     } else {
                         console.warn('unknown mode: ' + match[1]);
                     }

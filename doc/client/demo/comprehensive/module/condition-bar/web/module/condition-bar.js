@@ -1,11 +1,16 @@
-//模板控制器需要把模板用到的依赖添加到依赖列表中，这样模块代码更加内聚，方便使用
-define(['rd.controls.Time', 'rd.controls.BasicSelector', 'rd.controls.ComboSelect',
-    'css!/doc/client/demo/comprehensive/module/condition-bar/web/module/css/style'],
-function() {
-    rdk.$injectDependency('rd.controls.Time', 'rd.controls.BasicSelector', 'rd.controls.ComboSelect');
+(function() {
+    //这是本控制器的ID，非常重要，不要和已有的控制器重名
+    var controllerName = 'ConditionBarController';
 
-    rdk.$app.controller('ConditionBarController', ['$scope', 'BasicSelector', 'Utils','$timeout',
-    function(scope, BasicSelector, Utils, $timeout) {
+    //参考 main.js 中同名变量的说明
+    var imports = [
+        'rd.controls.Time', 'rd.controls.BasicSelector', 'rd.controls.ComboSelect',
+        'css!base/module/css/style'
+    ];
+    var extraModules = [ ];
+
+    var controllerDefination = ['$scope', 'BasicSelector', main];
+    function main(scope, BasicSelector) {
         this.getTime = function() {
             return scope.timeSetting.value;
         }
@@ -35,5 +40,15 @@ function() {
         scope.selected2string = function(selected, context, index) {
             return BasicSelector.selected2string(selected, 'label', '...');
         }
-    }]);
-});
+    }
+
+    //==========================================================================
+    //                 从这里开始的代码、注释请不要随意修改
+    //==========================================================================
+    define(/*fix-from*/application.import(imports)/*fix-to*/, start);
+    function start() {
+        application.initImports(imports, arguments);
+        rdk.$injectDependency(application.getComponents(extraModules, imports));
+        rdk.$ngModule.controller(controllerName, controllerDefination);
+    }
+})();

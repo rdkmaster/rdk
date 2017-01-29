@@ -1,0 +1,11 @@
+<rdk_accordion id='accordionID_1' style='margin-top: 60px;' expand_direction='right' coverable='true' exchangable='false' open='localOpen_1' min_width='minWidth_1'>
+    <rdk_basic_selector style='width: 350px;' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
+</rdk_accordion>
+
+<div style='width: 100%; height: 100px; background-color: #BEEAFF; text-align: center;'>
+    <button style="float: right; margin: 10px" ng-click="open()">展开容器</button>
+    <button style="float: right; margin: 10px" ng-click="close()">缩小容器</button>容器展开后该色块会被覆盖</div>
+
+<rdk_accordion id='accordionID_2' expand_direction='right' coverable='true' exchangable='false' min_width='minWidth_2' open='localOpen_2'>
+    <rdk_basic_selector style='width: 350px;' id="cityid" track_item_by="id" data="cityItems"></rdk_basic_selector>
+</rdk_accordion>

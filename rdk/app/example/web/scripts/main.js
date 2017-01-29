@@ -7,7 +7,7 @@
         // 注意：所有的url都不能加 .js 扩展名
         'base/template/sample_module',
 
-        // 带有 alias 属性的条目，可以通过 ctx.alias 的方式来访问到
+        // 带有 alias 属性的条目，在main函数中，可通过 imports.<alias> 来使用
         { url: 'base/scripts/utils', alias: 'utils' },
         { url: 'base/scripts/i18n',  alias: 'i18n'  },
 
@@ -18,14 +18,8 @@
         'rd.controls.Module'
     ];
 
-    // 在这里把页面需要用到的 Angular module 一一列出来，包括所需的第三方 module
-    // RDK定义的 Angular module 会被自动加入，无需再次添加
-    // 如果你没有用到第三方的 Angular module，那这里留空就好
-    var requiredComponents = [ ];
-
-    // imports 中带有 alias 的条目的返回值会被保存在这个对象中
-    // 可通过 ctx.alias 的方式引用到这些下载项的返回值
-    var ctx = {};
+    // 在这里把页面需要用到的第三方  Angular module 一一列在此变量中。这里一般留空就好。
+    var extraModules = [ ];
 
     // controllerDefination 定义了本应用的根控制器，它是所有子控制器的祖先
     // 这个数组遵循Angular依赖注入的规则，简单的讲，把Angular和RDK提供的服务名填在数组中
@@ -34,8 +28,8 @@
     var controllerDefination = ['$scope', 'DataSourceService', 'EventService', main];
     function main(scope, DataSourceService, EventService) {
         // 应用内部初始化，一般不需要修改，也请保持这2行代码在main函数的最开始
-        ctx.i18n.$init(scope);
-        ctx.helper.initDataSourceService(DataSourceService);
+        imports.i18n.$init(scope); //初始化页面国际化信息，无需国际化的页面请删除这一行
+        imports.helper.initDataSourceService(DataSourceService);
 
         //                              关于 scope 变量
         // 
@@ -53,9 +47,10 @@
 
         //=================== 在这里开始编写本应用的第一行代码 ========================
 
+        scope.exampleVersion = 'v2.0.2'
 
         // 这里演示了调用 scripts/utils.js 的返回值
-        ctx.utils.hello('RDK example');
+        imports.utils.hello('RDK example');
 
         scope.loadModule = function() {
             // 调用 rdk_module 的方法，详情请参阅这里
@@ -90,19 +85,19 @@
     require.config({paths:{helper: '/rdk/app/modules/rdk_app_helpers'}});
     imports.push({ url: 'blockUI', alias: 'blockUI' });
     imports.push({ url: 'helper', alias: 'helper' });
-    define(/*fix-from*/application.getDownloads(imports)/*fix-to*/, start);
+    define(/*fix-from*/application.import(imports)/*fix-to*/, start);
     function start() {
-        application.initContext(ctx, arguments, imports);
-        rdk.$injectDependency(application.getComponents(requiredComponents, imports));
+        application.initImports(imports, arguments);
+        rdk.$injectDependency(application.getComponents(extraModules, imports));
         rdk.$ngModule.controller('RootController', controllerDefination);
         rdk.$ngModule.config(['blockUIConfig', function(blockUIConfig) {
             // blockUI默认只要有ajax请求在进行，就会自动启动，阻止页面响应鼠标事件
             // 使用下面代码可以启用手动模式
             // blockUIConfig.autoBlock=false
             // 然后在需要阻止页面相应鼠标事件的时候，使用下面代码
-            // ctx.blockUI.start();
+            // imports.blockUI.start();
             // 在需要继续相应页面相应鼠标事件的时候，使用下面代码
-            // ctx.blockUI.stop();
+            // imports.blockUI.stop();
 
             // blockUI的详细用法参考 https://github.com/McNull/angular-block-ui
             blockUIConfig.template = '<div class="block-ui-message-container">'

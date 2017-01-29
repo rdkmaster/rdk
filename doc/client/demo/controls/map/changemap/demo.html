@@ -1,0 +1,4 @@
+<select ng-options="map.url as map.name for map in mapData" ng-model="mapUrl">
+</select>
+<rdk_map id="gis" map_define="graph_define/map.js" map="mapUrl" height=260>
+</rdk_map>

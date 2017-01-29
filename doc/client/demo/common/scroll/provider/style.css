@@ -1,0 +1,14 @@
+.content{
+    height: 200px;
+    width: 500px;
+    border: 1px solid #eee;
+    margin:0px auto;
+    padding:0px;
+}
+.content2{
+    height: 500px;
+    width: 600px;
+    margin: 0 auto;
+    border: 1px solid #eee;
+
+}

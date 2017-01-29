@@ -1,0 +1,13 @@
+<ds id="dsProv" url="$svr/mock/areaServiceProv.js"></ds>
+<ds id="dsCity" url="$svr/mock/areaServiceCity.js"></ds>
+<ds id="dsArea" url="$svr/mock/areaServiceArea.js"></ds>
+<div class="area-wrap">
+    <rdk_combo_select>
+        <rdk-area-select id="areaID" ds_province="dsProv" ds_city="dsCity" ds_area="dsArea" area-data="test"></rdk-area-select>
+    </rdk_combo_select>
+</div>
+<div ng-if="test">
+    你选择的地区：
+    {{test.province.name}}  {{test.city.name}}  {{test.area.name}}
+</div>
+<button ng-click="change()">change</button>
