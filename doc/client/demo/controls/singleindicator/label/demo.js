@@ -6,7 +6,7 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main(scope ) {
- //这个是文字描述，支持双向绑定
+        //这个是文字描述，支持双向绑定
         scope.label = 'sss';
     }
 

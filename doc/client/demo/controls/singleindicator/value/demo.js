@@ -6,8 +6,12 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main(scope ) {
-        scope.value = '10';
-      
+        scope.value = 0;
+        setInterval(function() {
+            scope.value += 1;
+            scope.value = scope.value > 100 ? 0 : scope.value;
+            scope.$apply();
+        }, 200)
     }
 
     var controllerName = 'DemoController';

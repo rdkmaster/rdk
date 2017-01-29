@@ -4,8 +4,8 @@
         'rd.controls.ProgressBar'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope','ProgressbarFactory', main];
-    function main(scope,ProgressbarFactory ) {
+    var controllerDefination = ['$scope', 'ProgressbarFactory', main];
+    function main(scope, ProgressbarFactory ) {
         scope.progressbar = ProgressbarFactory.createInstance();
 
         scope.start = function(){

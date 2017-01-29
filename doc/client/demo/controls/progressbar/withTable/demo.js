@@ -16,7 +16,7 @@
                 "$320,800",
                 "2011/04/25",
                 "Edinburgh",
-                "5421"
+                "54.21"
             ],
             [
                 "Garrett Winters",
@@ -24,7 +24,7 @@
                 "$170,750",
                 "2011/07/25",
                 "Tokyo",
-                "8422"
+                "84.22"
             ]
         ];
 
@@ -33,7 +33,7 @@
                 {
                     targets : 5,
                     render : function(item){
-                        return '<rdk-progressbar value="'+item.extn+'" style="width:300px;" max="10000"></rdk-progressbar>';
+                        return '<rdk-progressbar value="'+item.extn+'" style="width:300px;" max="200"></rdk-progressbar>';
                     }
                 }
             ]

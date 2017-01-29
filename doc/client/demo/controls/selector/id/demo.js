@@ -6,6 +6,16 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope','$timeout','EventService','EventTypes', main];
     function main(scope,$timeout,EventService,EventTypes) {
+        scope.groupBy = function(item) {
+            if (item.id < 3) {
+                return 'theme1';
+            } else if (item.id < 5) {
+                return 'theme2';
+            } else {
+                return 'theme3';
+            }
+        }
+
         scope.allItems = [
             { id: 0, label: "江苏省" },
             { id: 1, label: "浙江省" },
@@ -19,16 +29,6 @@
             { id: 9, label: "四川省" }
         ];
 
-        scope.groupByFun = function(item) {
-            if (item.id < 3) {
-                return 'theme1';
-            } else if (item.id < 5) {
-                return 'theme2';
-            } else {
-                return 'theme3';
-            }
-        }
-
         scope.dimSelectedItems = [
             { id: 1, label: "浙江省" },
             { id: 3, label: "广西省" },
@@ -36,9 +36,9 @@
         ]; //根据同一个groupBy
 
 
-        $timeout(function() {
+        scope.open = function() {
             EventService.broadcast("selectorID", EventTypes.OPEN);
-        }, 3000);
+        }
 
         EventService.register("selectorID", EventTypes.CHANGE, function(event, data) {
             console.log(data); //获取用户交互的那个group下所有被选中元素

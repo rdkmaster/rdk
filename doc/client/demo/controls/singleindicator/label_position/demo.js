@@ -6,9 +6,8 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope',main];
     function main(scope ) {
- //label_position文字的位置,备选left/right/top/bottom.
+        //label_position文字的位置,备选left/right/top/bottom.
         scope.pos = 'left';
-
     }
 
     var controllerName = 'DemoController';

@@ -5,11 +5,11 @@
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', '$timeout', main];
-    function main($scope, $timeout) {
-        $scope.data = {};
-        $scope.data.header = ["姓名", "职位", "薪资", "入职日期", "部门", "其他"];
-        $scope.data.field = ["name", "position", "salary", "start_date", "office", "extn"];
-        $scope.data.data = [
+    function main(scope, $timeout) {
+        scope.data = {};
+        scope.data.header = ["姓名", "职位", "薪资", "入职日期", "部门", "其他"];
+        scope.data.field = ["name", "position", "salary", "start_date", "office", "extn"];
+        scope.data.data = [
             [
                 "Tiger Nixon",
                 "System Architect",
@@ -28,13 +28,11 @@
             ]
         ];
 
-        $timeout(function() {
-
-          $scope.data.header = [];//["姓名", "职位", "薪资", "入职日期", "部门", "其他"];
-          $scope.data.field = ["name", "position", "salary", "start_date", "office", "extn"];
-          $scope.data.data = [
-          ];
-        }, 1000);
+        scope.clear = function() {
+          scope.data.header = [];
+          scope.data.field = ["name", "position", "salary", "start_date", "office", "extn"];
+          scope.data.data = [ ];
+        };
 
     }
 

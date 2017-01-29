@@ -6,16 +6,6 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main($scope) {
-        $scope.conditionProcessor = function(condition){
-          var condition = {};
-          condition.aaa = "bbb";
-          return condition;
-        }
-
-        $scope.tableProcessor = function(baseCondition,additionalCondition){
-          baseCondition.paging = additionalCondition.paging;
-          return baseCondition;
-        }
     }
 
     var controllerName = 'DemoController';

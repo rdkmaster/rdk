@@ -12,7 +12,6 @@
                        { id: 4, label: "河北省" }, { id: 5, label: "河南省" }]
         };
 
-
         scope.groupSelectedItems = {
             "title1": [{ id: 0, label: "江苏省" }, { id: 1, label: "浙江省" }],
             "title2": [{ id: 2, label: "广东省" }]

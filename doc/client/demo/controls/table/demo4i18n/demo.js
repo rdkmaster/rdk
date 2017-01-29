@@ -1,14 +1,13 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'application', 'i18n', 'rd.controls.Table'
+        'rd.controls.Table', { url: 'base/i18n', alias: 'i18n' }
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main(scope ) {
-        i18n.$init(scope);
-
-        console.log(i18n.table_prev);
+        imports.i18n.$init(scope);
+        console.log(imports.i18n.table_prev);
     }
 
     var controllerName = 'DemoController';

@@ -6,11 +6,11 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main(scope) {
-        scope.images=[{src:'/doc/client/demo/controls/scroller/timer/img/img1.png',title:'Pic 1'},
-                      {src:'/doc/client/demo/controls/scroller/timer/img/img2.jpg',title:'Pic 2'},
-                      {src:'/doc/client/demo/controls/scroller/timer/img/img3.jpg',title:'Pic 3'},
-                      {src:'/doc/client/demo/controls/scroller/timer/img/img4.png',title:'Pic 4'},
-                      {src:'/doc/client/demo/controls/scroller/timer/img/img5.png',title:'Pic 5'}];
+        scope.images=[{src:'img/img1.png',title:'Pic 1'},
+                      {src:'img/img2.jpg',title:'Pic 2'},
+                      {src:'img/img3.jpg',title:'Pic 3'},
+                      {src:'img/img4.png',title:'Pic 4'},
+                      {src:'img/img5.png',title:'Pic 5'}];
     }
 
     var controllerName = 'DemoController';

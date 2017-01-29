@@ -6,23 +6,23 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main(scope) {
-    //point_to是当前指向,支持双向绑定，备选left/right/top/bottom
-           scope.pointTo = "right";
-           scope.leftTob = function(){
-          scope.pointTo = "left"
-        }
-        scope.rightTob = function(){
-          scope.pointTo = "right"
-        }
-        scope.topTob = function(){
-          scope.pointTo = "top"
-        }
-        scope.bottomTob = function(){
-          scope.pointTo = "bottom"
-        }
-        scope.nullTob = function(){
-               scope.pointTo = "null"
-           }
+      //point_to是当前指向,支持双向绑定，备选left/right/top/bottom
+      scope.pointTo = "right";
+        scope.leftTob = function(){
+        scope.pointTo = "left"
+      }
+      scope.rightTob = function(){
+        scope.pointTo = "right"
+      }
+      scope.topTob = function(){
+        scope.pointTo = "top"
+      }
+      scope.bottomTob = function(){
+        scope.pointTo = "bottom"
+      }
+      scope.nullTob = function(){
+        scope.pointTo = "null"
+      }
     }
 
     var controllerName = 'DemoController';

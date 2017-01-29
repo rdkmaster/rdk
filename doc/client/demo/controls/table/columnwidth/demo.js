@@ -5,8 +5,8 @@
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
-    function main($scope) {
-        $scope.setting = {
+    function main(scope) {
+        scope.setting = {
             "columnDefs" :[
                 {
                     targets : 0,

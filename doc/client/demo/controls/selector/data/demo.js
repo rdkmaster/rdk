@@ -4,8 +4,8 @@
         'rd.controls.Selector'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope','$timeout',main];
-    function main(scope,timeout) {
+    var controllerDefination = ['$scope',main];
+    function main(scope) {
         scope.groupData = {
             "title1": [{ id: 0, label: "江苏省" }, { id: 1, label: "浙江省" }],
             "title2": [{ id: 2, label: "广东省" }, { id: 3, label: "广西省" }, 
@@ -17,12 +17,12 @@
             "title2": [{ id: 2, label: "广东省" }]
         };
 
-        timeout(function() {
+        scope.change = function() {
             scope.groupData = {
                 "title1": [{ id: 0, label: "江苏省" }, { id: 1, label: "浙江省" }],
                 "title2": [{ id: 2, label: "广东省" }, { id: 3, label: "广西省" }]
             };
-        }, 3000);
+        };
     }
 
     var controllerName = 'DemoController';
