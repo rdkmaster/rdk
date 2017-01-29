@@ -6,9 +6,12 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main(scope) {
-            scope.age = 11;
+        scope.age = 11;
+        scope.readonly = true;
 
-            scope.readonly = true;
+        scope.change = function() {
+            scope.readonly = !scope.readonly;
+        }
     }
 
     var controllerName = 'DemoController';

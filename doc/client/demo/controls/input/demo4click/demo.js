@@ -8,9 +8,9 @@
     function main(scope) {
         scope.age = 11;
 
-            scope.clickHandler = function(event, data){
-                alert('填写的内容是 '+ data);
-            }
+        scope.clickHandler = function(event, data){
+            alert('填写的内容是 '+ data);
+        }
     }
 
     var controllerName = 'DemoController';

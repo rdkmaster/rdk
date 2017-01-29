@@ -7,8 +7,8 @@
     var controllerDefination = ['$scope','EventService',main];
     function main(scope,EventService) {
         EventService.register('gis', 'click', function(event, data) {
-                alert("您选择了" + data.name);
-            });
+            alert("您选择了" + data.name);
+        });
     }
 
     var controllerName = 'DemoController';

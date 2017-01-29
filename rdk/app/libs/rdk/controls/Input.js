@@ -15,7 +15,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
             template: '<div>\
                      <input type="text" class="form-control" placeholder="{{placeholder}}">\
                  <i class="{{icon}}" \
-                   style="position:absolute;right:10px;color:gray;font-size:14px"\
+                   style="position:absolute;right:10px;color:gray;font-size:14px;cursor:pointer"\
                    ng-show="showDelete"></i>\
                  <div style="clear:both"></div>\
                 </div>',
@@ -38,16 +38,15 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
                     $(iconElement).css("right", 10 - parseInt($(inputElement).css("margin-left")));
 
                     scope.$watch("readonly", function(newVal, oldVal){   
-                        if(newVal == 'true'){
+                        if(newVal == 'true') {
                             $(iElement[0]).find("input").attr("readOnly", true);
                             scope.showDelete = false;
                             $(inputElement).attr("unselectable", "on");
-                        }
-                        else{
+                        } else {
                             $(iElement[0]).find("input").removeAttr("readOnly");
                             $(inputElement).attr("unselectable", "off");
                         }      
-                    }, true);                    
+                    }, false);                    
 
                     var updateModel = function(inputValue) {
                         scope.$apply(function() {

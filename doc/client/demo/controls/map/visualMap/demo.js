@@ -6,21 +6,20 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', 'EventService','EventTypes', main];
     function main(scope,EventService,EventTypes) {
-            EventService.register('gis', 'click', function(event, data) {
-                if (data.componentType == "markPoint") {
-                    alert("您选择了" + data.name + "的markPoint");
-                }
-            });
-
-
-            EventService.register('markPoint', 'result', function(event, data) {
-                scope.markPointData = data;
-                EventService.broadcast('gis', EventTypes.UPDATE_GRAPH);
-            });
-
-            scope.setMarkPoint = function() {
-                EventService.broadcast('markPoint', EventTypes.START_QUERY);
+        EventService.register('gis', 'click', function(event, data) {
+            if (data.componentType == "markPoint") {
+                alert("您选择了" + data.name + "的markPoint");
             }
+        });
+
+        EventService.register('markPoint', 'result', function(event, data) {
+            scope.markPointData = data;
+            EventService.broadcast('gis', EventTypes.UPDATE_GRAPH);
+        });
+
+        scope.setMarkPoint = function() {
+            EventService.broadcast('markPoint', EventTypes.START_QUERY);
+        }
     }
 
     var controllerName = 'DemoController';

@@ -1,21 +1,22 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        
+        'rd.controls.Map'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope','EventService', main];
     function main(scope,EventService) {
-        scope.mapUrl = '/doc/client/demo/controls/map/drill/data/china.json';
+        scope.mapUrl = 'mapinfo/china.map';
 
-            EventService.register('gis', 'click', function(event, data) {
-                scope.name = data.name;
-                var id = data.rawData.properties.id;
-                if (id.length == 2) {
-                    scope.mapUrl = '/doc/client/demo/controls/map/drill/data/geometryProvince/' + id + '.json';
-                } else if (id.length == 4) {
-                    scope.mapUrl = '/doc/client/demo/controls/map/drill/data/geometryCouties/' + id + '00.json';
-                }
+        EventService.register('gis', 'click', function(event, data) {
+            scope.name = data.name;
+            var id = data.rawData.properties.id;
+            if (id.length == 2) {
+                scope.mapUrl = 'mapinfo/geometryProvince/' + id + '.map';
+            } else if (id.length == 4) {
+                scope.mapUrl = 'mapinfo/geometryCouties/' + id + '00.map';
+            }
+        });
     }
 
     var controllerName = 'DemoController';
