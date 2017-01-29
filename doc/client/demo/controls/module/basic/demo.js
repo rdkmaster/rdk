@@ -1,16 +1,11 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.controls.Module', 'sample_module'
+        'rd.controls.Module', 'base/template/sample_module'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
-    function main(scope ) {
-        rdk.$injectDependency(['rd.controls.Module']);
-
-        // 创建主控制器，主控制器所有所有子控制器的共同祖先。
-        // 子控制器可以直接访问这个控制器中的方法和属性
-        rdk.$ngModule.controller('rdk_ctrl', ['$scope', function(scope) {
+    function main(scope) {
         // 注意到module2在定义的时候，没有给initData属性，因此module2在访问data属性的时候，
         // 实际上是使用了这里的data属性。这是因为这个data属性被定义在所有module的父控制器中。
         // 相反的，module1由于通过initData自定义了一个data属性，RDK会优先读取自子控制器中的

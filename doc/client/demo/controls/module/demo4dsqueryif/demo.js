@@ -1,17 +1,11 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.controls.Module', 'sample_module', 'rd.controls.Table', 'rd.attributes.ds'
+        'rd.controls.Module', 'base/template/sample_module',
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main(scope ) {
-        rdk.$injectDependency(['rd.controls.Module', 'rd.controls.Table', 'rd.attributes.ds']);
-
-        // 创建主控制器，主控制器所有所有子控制器的共同祖先。
-        // 子控制器可以直接访问这个控制器中的方法和属性
-        rdk.$ngModule.controller('rdk_ctrl', ['$scope', 'EventService', function(scope, EventService) {
-        //按需加载
         scope.load = function() {        
             rdk.mymodule.loadModule({myData: 'load module manually...'});
         }

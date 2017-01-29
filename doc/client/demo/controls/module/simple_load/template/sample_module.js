@@ -1,8 +1,27 @@
-define([], function() {
-    //创建一个子控制器
-    rdk.$ngModule.controller('SampleModuleController', ['$scope', 'Utils', function(scope, Utils) {
+(function() {
+    //这是本控制器的ID，非常重要，不要和已有的控制器重名
+    var controllerName = 'SampleModuleController';
+
+    //参考 main.js 中同名变量的说明
+    var imports = [
+    ];
+    var extraModules = [ ];
+
+    var controllerDefination = ['$scope', main];
+    function main(scope) {
         console.log('SampleModule controller is running..........');
         //只有定义在this上的属性才能发布给外部。
         scope.someData = 'some data defined in the SampleModule controller...';
-    }]);
-});
+        scope.loaded = false;
+    }
+
+    //==========================================================================
+    //                 从这里开始的代码、注释请不要随意修改
+    //==========================================================================
+    define(/*fix-from*/application.import(imports)/*fix-to*/, start);
+    function start() {
+        application.initImports(imports, arguments);
+        rdk.$injectDependency(application.getComponents(extraModules, imports));
+        rdk.$ngModule.controller(controllerName, controllerDefination);
+    }
+})();
