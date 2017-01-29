@@ -11,32 +11,32 @@
                 key: "specialtopic",
                 label: "专题",
                 open: true,
-                icon: "/doc/client/demo/controls/tree/img/u199.png",
+                icon: "../img/u199.png",
             }, {
                 node: [],
                 key: "specialtopic",
                 label: "总览",
-                icon: "/doc/client/demo/controls/tree/img/u199.png"
+                icon: "../img/u199.png"
             }],
             key: "e2e",
             label: "端到端定界定位",
             open: true,
-            icon: "/doc/client/demo/controls/tree/img/u1110.png",
+            icon: "../img/u1110.png",
         }, {
             node: [{
                 key: "monitoring",
                 label: "监控",
                 open: true,
-                icon: "/doc/client/demo/controls/tree/img/u199.png",
+                icon: "../img/u199.png",
             }, {
                 node: [],
                 key: "reasonconfig",
                 label: "原因配置",
-                icon: "/doc/client/demo/controls/tree/img/u199.png",
+                icon: "../img/u199.png",
             }],
             key: "realtimeMonitor",
             label: "实时监控",
-            icon: "/doc/client/demo/controls/tree/img/u1110.png",
+            icon: "../img/u1110.png",
         }];
 
         $scope.clickFun=function(event,data){
