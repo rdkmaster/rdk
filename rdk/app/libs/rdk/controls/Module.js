@@ -118,25 +118,19 @@ define(['rd.core'], function() {
                         var ctrl = loadContext.controller;
                         var initData = loadContext.initData;
                         ctrl = ctrl ? ctrl : html.attr('controller');
-                        if(ctrl) {
-                            moduleScope = appScope.$new();
-                            //实例化一个控制器
-                            if (angular.isObject(initData)) {
-                                Utils.shallowCopy(initData, moduleScope);
-                            } else {
-                                moduleScope.initData = initData;
-                            }
-                            moduleScope.$moduleId = scope.id ? scope.id : id;
-
-                            var moduleController =  $controller(ctrl, {$scope: moduleScope});
-                            scope.$broadcast('update_controller', {key: 'child', value: moduleController});
+                        ctrl = ctrl ? ctrl : '___DefaultModuleController___';
+                        
+                        moduleScope = appScope.$new();
+                        moduleScope.$moduleId = scope.id ? scope.id : id;
+                        //实例化一个控制器
+                        if (angular.isObject(initData)) {
+                            Utils.shallowCopy(initData, moduleScope);
                         } else {
-                            if (initData) {
-                                //采用了全局控制器，定义了的initData会被忽略，给个提示
-                                console.warn('ignoring initData because this module has no controller.');
-                            }
-                            moduleScope = appScope;
+                            moduleScope.initData = initData;
                         }
+
+                        var moduleController =  $controller(ctrl, {$scope: moduleScope});
+                        scope.$broadcast('update_controller', {key: 'child', value: moduleController});
 
                         $compile($('#' + id))(moduleScope);
 
@@ -158,10 +152,7 @@ define(['rd.core'], function() {
                         //destroy a module
                         element.empty();
 
-                        if (moduleScope !== appScope) {
-                            //只有新建的scope才要destroy
-                            moduleScope.$destroy();
-                        }
+                        moduleScope.$destroy();
                         moduleScope = undefined;
 
                         EventService.raiseControlEvent(scope, EventTypes.DESTROY, scope.id);
@@ -170,4 +161,8 @@ define(['rd.core'], function() {
             }
         }
     ]);
+
+    moduleApp.controller('___DefaultModuleController___', function() {
+        console.log('using default module controller...')
+    });
 });
