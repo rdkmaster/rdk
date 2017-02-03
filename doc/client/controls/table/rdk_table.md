@@ -5,7 +5,7 @@
 `rdk_table` 主要用于提供表格展示。
 
 这是一个简单的 `rdk_table` 例子：
-<live_demo example="controls/table/basic" width="900"></live_demo>
+<live_demo example="controls/table/basic"></live_demo>
 
 ---
 # 属性 #
@@ -21,7 +21,7 @@ data对象中应该包含以下**必填属性**：
 - header：field的各个列头的国际化内容
 - data:真实的数据
 
-<live_demo example="controls/table/basic" width="900"></live_demo>
+<live_demo example="controls/table/basic"></live_demo>
 
 ## selected_index <binding></binding>##
 > 支持类型：整型数据
@@ -35,7 +35,7 @@ data对象中应该包含以下**必填属性**：
 这里表示表格初始化完成后，默认选中第三行。
 
 详细示例如下：
-<live_demo example="controls/table/selected_index" width="900"></live_demo>
+<live_demo example="controls/table/selected_index"></live_demo>
 
 
 ## setting <binding></binding>##
@@ -61,7 +61,7 @@ data对象中应该包含以下**必填属性**：
 
 其中的class为自定义的样式。详细示例如下：
 
-<live_demo example="controls/table/columnclass" width="900"></live_demo>
+<live_demo example="controls/table/columnclass"></live_demo>
 
 ### 设置列的显隐性 ###
 具体设置格式如下：
@@ -80,7 +80,7 @@ data对象中应该包含以下**必填属性**：
 
 详细示例如下：
 
-<live_demo example="controls/table/columnvisible" width="900"></live_demo>
+<live_demo example="controls/table/columnvisible"></live_demo>
 
 ### 设置列的宽度 ###
 具体设置格式如下：
@@ -99,7 +99,7 @@ data对象中应该包含以下**必填属性**：
 
 详细示例如下：
 
-<live_demo example="controls/table/columnwidth" width="900"></live_demo>
+<live_demo example="controls/table/columnwidth"></live_demo>
 
 ### 添加自定义列 ### {#add-column}
 具体设置格式如下：
@@ -139,7 +139,7 @@ data对象中应该包含以下**必填属性**：
 
 详细示例如下：
 
-<live_demo example="controls/table/newcolumn" width="900"></live_demo>
+<live_demo example="controls/table/newcolumn"></live_demo>
 
 ### 添加自定义表头 ###
 
@@ -174,7 +174,7 @@ data对象中应该包含以下**必填属性**：
 - targets列的索引。
 
 详细示例如下：
-<live_demo example="controls/table/customHeader" width="900"></live_demo>
+<live_demo example="controls/table/customHeader"></live_demo>
 
 ### 添加多级表头 ###
 
@@ -188,7 +188,7 @@ data对象中应该包含以下**必填属性**：
         }
 
 详细示例如下：
-<live_demo example="controls/table/additionalHeader" width="900"></live_demo>
+<live_demo example="controls/table/additionalHeader"></live_demo>
 >删除自带表头：如果自定义了多级表头，可以通过属性设置删除表格自带的表头
 
 具体设置格式如下：
@@ -207,7 +207,7 @@ data对象中应该包含以下**必填属性**：
 
 详细示例如下：
 
-<live_demo example="controls/table/scrollx" width="900"></live_demo>
+<live_demo example="controls/table/scrollx"></live_demo>
 
 ### 设置排序参数 ###
 RDK2.0表格支持服务端和客户端排序两种方式。
@@ -248,7 +248,11 @@ RDK2.0表格支持服务端和客户端排序两种方式。
 
 客户端排序详细示例如下：
 
-<live_demo example="controls/table/columnsortable" width="900"></live_demo>
+<live_demo example="controls/table/columnsortable"></live_demo>
+
+服务端排序详细示例如下：
+
+<live_demo example="controls/table/column-server-sort"></live_demo>
 
 ### 设置列单元格的可编辑性 ###
 
@@ -285,7 +289,7 @@ RDK2.0表格支持服务端和客户端排序两种方式。
 
 详细示例如下：
 
-<live_demo example="controls/table/popupEditor" width="900" height="400"></live_demo>
+<live_demo example="controls/table/popupEditor" height="400"></live_demo>
 
 (2) 缺省 `editorRenderer` 时的具体格式如下：
 
@@ -300,7 +304,7 @@ RDK2.0表格支持服务端和客户端排序两种方式。
 
 详细示例如下：
 
-<live_demo example="controls/table/columneditable" width="900"></live_demo>
+<live_demo example="controls/table/columneditable"></live_demo>
 
 ### 设置单元格的合并 ###
 通过`setting`中的`columnDefs` 的 `group`控制。`group` 缺省时默认为`false`，表示列不是合并列。
@@ -366,7 +370,7 @@ cells 为 改变的行列信息的数组信息
 **目前情况下当Edit功能和Group功能一起使用时，rowIndex和columnIndex的值均不正确，该两个属性为了兼容以前版本存在，请使用cells去操作**
     
 详细举例如下
-<live_demo example="controls/table/rowSpan" width="900"></live_demo>
+<live_demo example="controls/table/rowSpan"></live_demo>
 
 
 ## 复选框列 add_check_box ##
@@ -377,13 +381,13 @@ cells 为 改变的行列信息的数组信息
     <rdk_table add_check_box='true'></rdk_table>
 
 详细示例如下：
-<live_demo example="controls/table/demo4AddCheckBox" width="900"></live_demo>
+<live_demo example="controls/table/demo4AddCheckBox"></live_demo>
 
 ## 自动添加行编号 ##
 可以通过列渲染的方式实现行号自动自动添加功能。
 
 详细示例如下：
-<live_demo example="controls/table/columnIDRenderer" width="900"></live_demo>
+<live_demo example="controls/table/columnIDRenderer"></live_demo>
 
 ## page_size ##
 >支持类型：字符串
@@ -391,22 +395,17 @@ cells 为 改变的行列信息的数组信息
 
     <rdk_table page_size="1"></rdk_table>
 
-<live_demo example="controls/table/localpaging" width="900"></live_demo>
+<live_demo example="controls/table/localpaging"></live_demo>
 
 ## paging_type ##
->支持类型：字符串
+> 支持类型：local/server-auto/server
 
-此属性设置服务端的分页要求。
-示例中绑定的数据源模拟的是从服务端反馈回来的数据，在反馈的信息中有以下分页要求，客户端接收到此数据后根据数据要求进行分页显示。
-    
-    "paging" :{"totalRecord":14,"currentPage":1,"pageSize":5}
-
-- totalRecord : 返回的中的数据条数。
-- currentPage : 当前显示第几页数据。
-- pageSize : 每页显示的最大条数。 
+- local: 本地分页。包括分页、排序、搜索操作，全部都在浏览器本地进行。当服务端返回的数据很多的时候，浏览器会卡顿。
+- server-auto: 服务端分页。包括分页、排序、搜索操作，全部都在服务端进行。适合处理大数量的情形。
+- server: 已废弃，使用server-auto代替。
 
 例如：
-<live_demo example="controls/table/serverpaging" width="900"></live_demo>
+<live_demo example="controls/table/serverpaging"></live_demo>
 
 ## search ##
 >支持类型：布尔型
@@ -419,7 +418,7 @@ cells 为 改变的行列信息的数组信息
 		<rdk_table data="data" search='true'></rdk_table>
 
 `search`前端过滤示例：
-<live_demo example="controls/table/search" width="900"></live_demo>
+<live_demo example="controls/table/search"></live_demo>
 
 ### 后端过滤 ###
 
@@ -428,12 +427,12 @@ cells 为 改变的行列信息的数组信息
 后端过滤时，如果搜索框内有输入内容，就会出现搜索字段的下拉框，方便用户指定关键字的检索字段。
 
 `search`后端过滤示例：
-<live_demo example="controls/table/server_search" width="900"></live_demo>
+<live_demo example="controls/table/server_search"></live_demo>
 
 ## search_prompt <binding></binding>##
 支持类型：字符串
 
-<live_demo example="controls/table/searchPrompt" width="900"></live_demo>
+<live_demo example="controls/table/searchPrompt"></live_demo>
 
 ## searchable ##
 >支持类型：布尔型
@@ -441,7 +440,7 @@ cells 为 改变的行列信息的数组信息
 `searchable` 功能同 `search`。保留`search`属性是为了向下兼容。
 
 `searchable`前端过滤示例：
-<live_demo example="controls/table/searchable" width="900"></live_demo>
+<live_demo example="controls/table/searchable"></live_demo>
 
 ## search_pattern ##
 >支持类型：正则表达式
@@ -449,7 +448,7 @@ cells 为 改变的行列信息的数组信息
 `search`设置成`true`时，支持搜索过滤。在这基础上设置`searchPattern`，可以对输入的关键字进行校验。校验通过后才能进行过滤。
 
 详细示例如下:
-<live_demo example="controls/table/search_pattern" width="900"></live_demo>
+<live_demo example="controls/table/search_pattern"></live_demo>
 
 ## search_position ##
 >支持类型：字符串
@@ -473,7 +472,7 @@ cells 为 改变的行列信息的数组信息
 `export_label`表示在导出按钮的内容，其默认值为""。
 
 导出按钮和搜索框的详细示例如下:
-<live_demo example="controls/table/search_export_position" width="900"></live_demo>
+<live_demo example="controls/table/search_export_position"></live_demo>
 
 
 ## page_number ##
@@ -487,10 +486,10 @@ cells 为 改变的行列信息的数组信息
 缺省 `page_number` 时，默认为 `0`，采用第一种分页样式展示。
 
 缺省 `page_number` 或者 `page_number = "0"` 时的详细示例如下：
-<live_demo example="controls/table/demo4PageNumber0" width="900"></live_demo>
+<live_demo example="controls/table/demo4PageNumber0"></live_demo>
 
 `page_number` 非零数值时的详细示例如下：
-<live_demo example="controls/table/demo4PageNumber" width="900"></live_demo>
+<live_demo example="controls/table/demo4PageNumber"></live_demo>
 
 ## floatable_header ##
 >支持类型：布尔型
@@ -499,7 +498,7 @@ cells 为 改变的行列信息的数组信息
  - `false`时滚动条下拉不会再出现表头。
 
 实例如下：
-<live_demo example="controls/table/demo4FloatableHeader" width="900"></live_demo>
+<live_demo example="controls/table/demo4FloatableHeader"></live_demo>
 
 ## change/select/export/check/double_click ##
 

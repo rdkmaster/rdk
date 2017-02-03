@@ -13,16 +13,14 @@
         log('data key =', key);
         var dataTable = Cache.aging.get(key);
         if (!dataTable) {
-            var url = 'http://localhost:5812';
-            if (req.service[0] != '/') {
-                url += '/';
-            }
-            url += req.service + '?p={param:' + JSON.stringify(param) + '}';
+            var url = req.service + '?p={param:' + JSON.stringify(param) + '}';
 
             timestamp = new Date().getTime();
             dataTable = Rest.get(url, {readTimeout: 120000});
-            var dataTable = JSON.parse(dataTable).result;
             dataTable = JSON.parse(dataTable);
+            if (dataTable.hasOwnProperty('result')) {
+                dataTable = JSON.parse(dataTable.result);
+            }
             log('read data spent', (new Date().getTime() - timestamp), 'ms');
             Cache.aging.put(key, dataTable, 6*3600);
         }
@@ -85,13 +83,15 @@
         log('sort param: index = [', index, '] sortAs = [', sortAs, '] order = [', order, ']');
 
         var sortBy;
-        if (sortAs == 'number') {
+        if (sortAs == 'number' || sortAs == 'int' || sortAs == 'float') {
             sortBy = sortAsNumber;
         } else if (sortAs == 'string') {
             sortBy = sortAsString;
+        } else if (sortAs == 'date') {
+            sortBy = sortAsString;
         } else if (!sortAs) {
             //自动检测
-            sortBy = _.isNumber(data[0][index]) ? sortAsNumber : sortAsString;
+            sortBy = Number(data[0][index]) !== NaN ? sortAsNumber : sortAsString;
         } else {
             try {
                 //应用自定义排序算法
@@ -119,6 +119,7 @@
             Log.warn('invalid filter key, need at least ONE char!');
             return;
         }
+        key = key.toLowerCase();
         field = !!field ? field : allField;
         field = _.isArray(field) ? field : [field];
         log('filter param: key = [', key, '] field = [', field.join(','),
@@ -136,7 +137,13 @@
 
         return data.filter(function(item) {
             for (var i = 0, len = indexes.length; i < len; i++) {
-                if (item[indexes[i]].indexOf(key) != -1) {
+                var cell = item[indexes[i]];
+                if (!cell) {
+                    continue;
+                }
+                //模糊搜索大小写不敏感
+                cell = cell.toLowerCase();
+                if (cell.indexOf(key) != -1) {
                     return true;
                 }
             }

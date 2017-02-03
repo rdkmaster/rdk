@@ -108,7 +108,7 @@ public class RestHelper extends AbstractAppLoggable {
 
         int connTimeout = Integer.parseInt(getProperty(option, "connectTimeout", "60000"));
         conn.setConnectTimeout(connTimeout);
-        int readTimeout = Integer.parseInt(getProperty(option, "readTimeout", "20000"));
+        int readTimeout = Integer.parseInt(getProperty(option, "readTimeout", "120000"));
         conn.setReadTimeout(readTimeout);
 
         //读取请求返回值

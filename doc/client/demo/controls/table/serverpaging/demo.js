@@ -12,11 +12,6 @@
           return condition;
         }
 
-        $scope.tableProcessor = function(baseCondition,additionalCondition){
-          baseCondition.paging = additionalCondition.paging;
-          return baseCondition;
-        }
-
         EventService.register('table', EventTypes.CHECK, function(event, data){
             var selectedData = data.data;
         }); 

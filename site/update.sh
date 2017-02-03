@@ -27,7 +27,7 @@ sh ./shutdown.sh > /dev/null
 
 cd $basepath/..
 # web listen 80 port
-sed -i 's/8080/80/g' tools/http_server/config.json
+sed -i 's/\b8080\b/80/g' rdk/proc/conf/rdk.cfg
 
 sh start.sh > /dev/null
 

@@ -2,6 +2,7 @@
 var http = require('http'),
 httpProxy = require('http-proxy'),
 url = require('url'),
+fs = require('fs'),
 config = require('./config.json');
 
 var proxy = new httpProxy.createProxyServer();
@@ -46,19 +47,27 @@ app.use(function(req, res) {
     if (_reqUrl.match(_proxy.url) ) {
       _targetUrl = 'http://' + _proxy.host + ':' + _proxy.port + req.url;
       console.log('proxy to: ' + _targetUrl);
-      /*jshint -W083*/
       proxy.web(req, res, {
         target: _targetUrl
       }, function(e) {
         console.log('proxy to ' + _targetUrl + ' faild.' + e);
       });
-      /*jshint +W083*/
       break;
     }
   }
 
 });
 
-http.createServer(app).listen(config.port, function( /*req, res*/ ) {
-  console.log('Express server listening on port ' + config.port);
+var cfgPath = '../../rdk/proc/conf/rdk.cfg'
+console.log('reading http port from property "http.server.port" of [%s]', cfgPath);
+var rdkCfg = fs.readFileSync(cfgPath)+'';
+var match = rdkCfg.match(/^\s*http\.server\.port\s*\=\s*(\d+)\s*$/m);
+var port = 8080;
+if (match) {
+  port = match[1];
+} else {
+  console.log('WARN: cannot find property "http.port" in [%s]', cfgPath);
+}
+http.createServer(app).listen(port, function( /*req, res*/ ) {
+  console.log('Express server listening on port ' + port);
 });
