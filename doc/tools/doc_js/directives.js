@@ -97,7 +97,7 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                     return;
                 }
                 timer = $timeout(function() {
-                    //如果在视线内抄过100ms，就去加载
+                    //如果在视线内抄过200ms，就去加载
                     if (!visible()) {
                         timer = undefined;
                         return;
@@ -106,7 +106,7 @@ module.directive('liveDemo', ['DataSourceService', 'Utils', '$timeout', function
                     $(window).unbind('scroll', scrollHandler);
 
                     listFiles(exampleUrl);
-                }, 100);
+                }, 200);
             }
 
             function visible() {
