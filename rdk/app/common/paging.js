@@ -23,6 +23,8 @@
             }
             log('read data spent', (new Date().getTime() - timestamp), 'ms');
             Cache.aging.put(key, dataTable, 6*3600);
+        } else {
+            log('read data from cache success!')
         }
         if (!_.isDataTable(dataTable)) {
             Log.error('no data or invalid data format, need a "DataTable" object!');

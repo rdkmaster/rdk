@@ -101,7 +101,7 @@ data对象中应该包含以下**必填属性**：
 
 <live_demo example="controls/table/columnwidth"></live_demo>
 
-### 添加自定义列 ### {#add-column}
+### 添加自定义列 {#add-column} ###
 具体设置格式如下：
 
         scope.setting = {
