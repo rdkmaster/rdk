@@ -240,9 +240,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                     _addFeature();
                     _setTabsWidth();
                     scope.$watch("selectedTab", function(newVal, oldVal) {
-                        _activeTabByIndex(newVal);
-                        var tabs = $(dom).tabs();
-                        tabs.tabs("refresh"); 
+                        _selectedTabHandler(newVal);
                     }, true);
                 });
 
@@ -270,6 +268,24 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                 scope.tabMouseOver = function(event){
                     if(scope.toggleCondition!='mouseover') return;
                     _tabSwitchHandler(event);
+                }
+
+                function _selectedTabHandler(index){
+                    _tabsHandler(); 
+                    _activeTabByIndex(index);
+                }
+
+                function _tabsHandler(){
+                    var tabs = $(dom).tabs();
+                    tabs.tabs("refresh"); 
+                    if(tabs.find("ul").eq(0).find("li").length == 0){
+                        tabs.find("ul").addClass('noborder');
+                        tabs.find(".content").addClass('noborder');
+                    }
+                    else{
+                        tabs.find("ul").removeClass('noborder');
+                        tabs.find(".content").removeClass('noborder');
+                    }
                 }
 
                 function _compileScopeHandler(tabController, initData){
@@ -407,9 +423,14 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
 
                 function _activeTab(index){
                     if(scope.currentSelectedIndex >= index){
-                        var activeIndex;
-                        (scope.currentSelectedIndex>=1) ? (activeIndex=index-1) : (activeIndex=index+1);
-                        scope.selectedTab = activeIndex;
+                        if((scope.currentSelectedIndex == 0) && (index == 0)){
+                            scope.selectedTab = 0;
+                            $timeout(function(){
+                                _selectedTabHandler(0);
+                            }, 0);
+                            return;
+                        }
+                        scope.selectedTab = scope.currentSelectedIndex-1;
                     }
                 }
 

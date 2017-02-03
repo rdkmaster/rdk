@@ -2,6 +2,10 @@
 	margin : 10px;
 }
 
+.rdk-tab-module .noborder{
+    border: none !important;
+}
+
 .rdk-tab-module .title{
 /*    display: flex;
     display: -webkit-flex;*/

@@ -1,6 +1,11 @@
 .rdk-tab-module{
 	margin : 10px;
 }
+
+.rdk-tab-module .noborder{
+    border: none !important;
+}
+
 .rdk-tab-module .ui-tabs .ui-tabs-nav .ui-tabs-anchor{
 	font-size: 14px;
 }
