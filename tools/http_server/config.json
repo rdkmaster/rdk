@@ -1,9 +1,0 @@
-{
-	"root": "./../../",
-	"port": 8080,
-	"proxy": [{
-		"url": "/rdk/service",
-		"port": 5812,
-		"host": "localhost"
-	}]
-}

@@ -27,6 +27,8 @@
 ### 设置RDK开发环境
 打开[下载页面](/site/download/index.html)，下载一个与自己项目正在使用的RDK版本匹配的开发环境。将下载得到的压缩包解压缩到任意目录，假设为 `d:\rdk-develop-environment`，运行 `d:\rdk-develop-environment\start.exe` 就可以开始使用rdk来开发页面和调试rest服务了。
 
+RDK服务进程依赖java8运行环境，如果未配置好，请[查看这里](#install-java8)
+
 ### 配置数据库信息
 如果你的app不需要访问任何数据库，那可无视这小节的配置。
 
@@ -57,7 +59,7 @@ SVN下载完成之后，就可以在 `d:\rdk-develop-environment\rdk\app` 目录
 
 ### 常见错误
 
-#### 未找到运行环境
+#### 未找到运行环境 {#install-java8}
 如果启动的时候，报错：
 
 ![](server/img/no_jre_error.PNG)
@@ -72,21 +74,11 @@ SVN下载完成之后，就可以在 `d:\rdk-develop-environment\rdk\app` 目录
 
 说明你当前环境使用的Java运行环境版本过低，请使用至少Java1.8以上的版本。这里可以下载到 [Win32](http://10.9.233.35:8080/tools/jre1.8.0_32_101.zip) 或者 [Win64](http://10.9.233.35:8080/tools/jre1.8.0_64_101.zip) 的Java8运行环境。
 
-#### 无nodejs运行环境
-如果启动的时候，报错：
-
-![](server/img/no_nodejs_error.PNG)
-
-原因：说明当前电脑没有安装nodejs
-
-解决：[下载nodejs](http://nodejs.cn/)并正确安装，需要至少 v4.2 以上版本
-
-#### RDK服务端口被占
+#### RDK服务5812端口被占
 在 “RDK Server for Windows” 的RDK页的控制台看到如下打印
 
-	2016-11-16 12:34:51,507 WARN  [UpgradableHttpListener] Bind to localhost/127.0.0.1:5888 failed
-	2016-11-16 12:34:51,523 WARN  [HttpListener] Bind to localhost/127.0.0.1:5812 failed
-	2016-11-16 12:34:51,539 ERROR [Run$] !!! RDK Server starts failed. java.lang.RuntimeException: Binding failed. Switch on DEBUG-level logging for `akka.io.TcpListener` to log the cause.
+	2017-02-03 23:20:32,612 WARN  [HttpListener] Bind to /0.0.0.0:5812 failed
+	2017-02-03 23:20:32,612 ERROR [Run$] !!! RDK Server starts failed. java.lang.RuntimeException: Binding failed. Switch on DEBUG-level logging for `akka.io.TcpListener` to log the cause.
 
 原因：5812端口被占用
 
@@ -95,67 +87,10 @@ SVN下载完成之后，就可以在 `d:\rdk-develop-environment\rdk\app` 目录
 也可以修改RDK服务进程的监听端口，编辑 `d:\rdk-develop-environment\rdk\proc\conf\rdk.cfg`，修改 `listen.port` 配置项就好。修改RDK默认监听端口比较麻烦，不推荐。
 
 
-#### HTTP端口被占
-在 “RDK Server for Windows” 的HTTP页的控制台看到如下打印
+#### HTTP服务8080端口被占
+打开[example应用](http://localhost:8080/rdk/app/example/web)，如果页面长时间打不开，浏览器报404错误，则很可能是HTTP 8080端口被占。
 
-	connect.limit() will be removed in connect 3.0
-	events.js:141
-	      throw er; // Unhandled 'error' event
-	      ^
-	
-	Error: listen EADDRINUSE 0.0.0.0:8080
-	    at Object.exports._errnoException (util.js:870:11)
-	    at exports._exceptionWithHostPort (util.js:893:20)
-	    at Server._listen2 (net.js:1237:14)
-	    at listen (net.js:1273:10)
-	    at Server.listen (net.js:1369:5)
-	    at Object.<anonymous> (developing\demo\nodejs\serv\server.js:55:24)
-	    at Module._compile (module.js:410:26)
-	    at Object.Module._extensions..js (module.js:417:10)
-	    at Module.load (module.js:344:32)
-	    at Function.Module._load (module.js:301:12)
-
-原因：8080端口被占用
-
-解决方案：
-
-建议释放8080端口给RDK调试器使用，或者更改RDK的调试端口：
-
-<a name="config-http-port"></a>
-编辑 `d:\rdk-develop-environment\tools\http_server\config.json` 文件，修改其中的端口号就行啦：
-
-	{
-		"root": "./../../",
-		"port": 8080,
-		"proxy": [{
-			"url": "/rdk/service",
-			"port": 5812,
-			"host": "localhost"
-		},{
-			"url": "/demos",
-			"port": 9090,
-			"host": "localhost"
-		}]
-	}
-
-#### REST端口被占
-在 “RDK Server for Windows” 的REST页的控制台看到如下打印
-
-	events.js:141
-	      throw er; // Unhandled 'error' event
-	      ^
-
-	Error: listen EADDRINUSE 0.0.0.0:9090
-	    at Object.exports._errnoException (util.js:870:11)
-	    at exports._exceptionWithHostPort (util.js:893:20)
-
-原因：9090端口被占用
-
-解决方案：释放9090端口给RDK调试器，也可修改这个端口，但是比较麻烦，不推荐。
-
-> 提示：
-> 
-> 这个错误只会影响本地文档阅读体验，不会造成无法调试应用，可无视。
+解决方案：释放8080端口，或者修改 tools\nginx-1.11.9\conf\rules.conf 的 listen 配置项的值。
 
 ## RDK运行环境部署
 
