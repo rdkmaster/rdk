@@ -69,7 +69,8 @@ object Run extends App with SimpleRoutingApp with Logger {
   }
   def concatRestHandler:Route ={
     val main = new ExportHandler(system, RdkServer.appRouter).runRoute ~ new UploadHandler(system, RdkServer.appRouter).runRoute ~ new RestHandler(system, RdkServer.appRouter).runRoute
-    main ~ RdkServer.getRestHandler.reduce(_~_)
+    RdkServer.addRestHandler(main)
+    RdkServer.getRestHandler.reduce(_~_)
   }
 
   //start now
