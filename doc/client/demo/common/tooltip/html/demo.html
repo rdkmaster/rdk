@@ -1,0 +1,24 @@
+<style>
+    label {
+        width: 150px;
+        text-align: left;
+    }
+
+    .content>div {
+        height: 100px;
+        padding: 30px;
+    }
+    input {
+        display: inline-block;
+        height: 50px;
+    }
+</style>
+
+<div class="content" style="width: 500px; margin: 6px;">
+    <p style="color:red;">请点击输入框</p>
+    <p>富文本，提示内容中分别包含了一个h1、h2、h3</p>
+    <div>
+        <label>富文本</label>
+        <input type="text" rdk_tooltip="{{content}}" rdk_tooltip_placement="top">
+    </div>
+</div>

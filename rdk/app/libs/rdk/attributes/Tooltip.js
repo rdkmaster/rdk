@@ -27,7 +27,6 @@ define(['jquery', 'rd.core', 'css!rd.styles.Bootstrap', 'rd.controls.Module'], f
             function _link(scope, element, attrs)
             {
                 if( !attrs.rdkTooltip) {
-                    console.error('creating tooltip by DOM: invalid rdk_tooltip!');
                     return;
                 }
                 var content = Utils.getValue(scope.rdkTooltip, attrs.rdkTooltip, '');
@@ -46,54 +45,73 @@ define(['jquery', 'rd.core', 'css!rd.styles.Bootstrap', 'rd.controls.Module'], f
                     content = $(contentStr).text(content)[0].outerHTML;
                 }
 
-                var tooltipID = Utils.createUniqueId('tooltip_'),
-                    contentID ='content-'+tooltipID,
-
-                  tooltipHtml = '<div class="tooltip fade" role="tooltip" id="'+tooltipID+'"> \
+                var $tip;
+                var tooltipID = Utils.createUniqueId('tooltip_');
+                var contentID ='content-'+tooltipID;
+                var tooltipHtml = '<div class="tooltip fade" role="tooltip" id="' + tooltipID + '"> \
                   <div class="tooltip-arrow"></div> \
                   <div class="tooltip-inner">\
-                    <rdk_module id="'+contentID+'" url="'+content+'" ready="moduleReady"></rdk_module>\
+                    <rdk_module id="' + contentID + '" url="' + escapeString(content) + '" ready="moduleReady">\
+                    </rdk_module>\
                   </div> \
-                </div>',$tip;
+                </div>';
 
                 $(tooltipHtml).insertAfter(element);
                 $tip = $('#'+tooltipID);
                 element.attr('id', 'element-'+tooltipID);
 
-                $compile($tip)($rootScope.$$childHead);
+                var appScope = Utils.findAppScope(scope);
+                $compile($tip)(appScope);
 
                 scope.moduleReady = function(event, data){
                     $tip = $('#'+data.split('-')[1]);
                     element = $('#element-'+data.split('-')[1]);
                     placement = element.attr('rdk_tooltip_placement') || 'top';
                     setPosition(element, $tip, placement);
+                    $tip.css('display', 'none');
                 }
 
                 initEvents(trigger, element, $tip);
             }
 
             function initEvents(trigger, element, $tip) {
-                var $element = $(element)
-
-                var toggle = function () {
-                    $tip.toggleClass('in');
-                  },enter = function () {
-                    $tip.addClass('in');
-                  }, leave= function () {
-                    $tip.removeClass('in');
-                };
-
+                var $element = $(element);
                 if (trigger == 'click') {
-                    $element.on('click', toggle)
+                    $element.on('click', function () {
+                        if ($tip.hasClass('in')) {
+                            hideTip();
+                        } else {
+                            showTip();
+                        }
+                    });
                 } else if (trigger != 'manual') {
-                    var eventIn  = trigger == 'hover' ? 'mouseenter' : 'focusin'
-                    var eventOut = trigger == 'hover' ? 'mouseleave' : 'focusout'
-                    $element.on(eventIn, enter);
-                    $element.on(eventOut, leave);
+                    var eventIn  = trigger == 'hover' ? 'mouseenter' : 'focusin';
+                    var eventOut = trigger == 'hover' ? 'mouseleave' : 'focusout';
+                    $element.on(eventIn, showTip);
+                    $element.on(eventOut, hideTip);
+                }
+
+                var inTimer = -1, outTimer = -1;
+                function showTip() {
+                    $tip.css('display', 'block');
+                    clearTimeout(inTimer);
+                    clearTimeout(outTimer);
+                    inTimer = setTimeout(function() {
+                        $tip.addClass('in');
+                    }, 0);
+                }
+
+                function hideTip() {
+                    $tip.removeClass('in');
+                    clearTimeout(inTimer);
+                    clearTimeout(outTimer);
+                    outTimer = setTimeout(function() {
+                        $tip.css('display', 'none');
+                    }, 300);
                 }
             }
 
-            function getPosition ($element) {
+            function getPosition($element) {
                 var el = $element[0]
                 return $.extend({}, (typeof el.getBoundingClientRect == 'function') ? el.getBoundingClientRect() : {
                     width: el.offsetWidth,
@@ -101,34 +119,31 @@ define(['jquery', 'rd.core', 'css!rd.styles.Bootstrap', 'rd.controls.Module'], f
                 }, $element.offset())
             }
 
-
             function setPosition($element, $tip, placement) {
-                var $parent  = $element.parent();
-                var ePos     = getPosition($element),
-                tPos         = getPosition($tip),
-                actualWidth  = $tip[0].offsetWidth,
-                actualHeight = $tip[0].offsetHeight,
-                orgPlacement = placement,
-                docScroll    = document.documentElement.scrollTop || document.body.scrollTop,
-                parentWidth  = $parent.outerWidth(),
-                parentHeight = $parent.outerHeight(),
-                parentLeft   = $parent.offset().left;
+                var $parent      = $element.parent();
+                var ePos         = getPosition($element);
+                var tPos         = getPosition($tip);
+                var actualWidth  = $tip[0].offsetWidth;
+                var actualHeight = $tip[0].offsetHeight;
+                var orgPlacement = placement;
+                var docScroll    = document.documentElement.scrollTop || document.body.scrollTop;
+                var parentWidth  = $parent.outerWidth();
+                var parentHeight = $parent.outerHeight();
+                var parentLeft   = $parent.offset().left;
 
                 //TODO: 判断是否有足够空间,没有则对向替换
 
                 var direct = placement.split('-');
                 $tip.addClass(direct[0]);
 
-                var calculatedOffset = getCalculatedOffset (placement, ePos, tPos, actualWidth, actualHeight);
-                $tip.css(calculatedOffset);
-
+                $tip.css(calculatedOffset(placement, ePos, tPos, actualWidth, actualHeight));
             }
 
-
-            function getCalculatedOffset (placement, ePos, tPos, actualWidth, actualHeight) {
+            function calculatedOffset (placement, ePos, tPos, actualWidth, actualHeight) {
                 var offset = {
                     top: ePos.top + ePos.height/2 - actualHeight/2,
-                    left: ePos.left + ePos.width/2 - actualWidth/2};
+                    left: ePos.left + ePos.width/2 - actualWidth/2
+                };
                 var direct = placement.split('-');
 
                 if (direct[0] === 'top') {
@@ -142,15 +157,19 @@ define(['jquery', 'rd.core', 'css!rd.styles.Bootstrap', 'rd.controls.Module'], f
                 }
 
                 if (direct[1] === 'top') {
-                    offset.top = ePos.top;
+                    offset.top = ePos.top - actualHeight/2 + 5;
                 } else if (direct[1] === 'right') {
-                    offset.left = ePos.left + ePos.width - actualWidth;
+                    offset.left = ePos.left + ePos.width - actualWidth/2 - 5;
                 } else if (direct[1] === 'bottom') {
-                    offset.top = ePos.top + ePos.height - actualHeight;
+                    offset.top = ePos.top + ePos.height - actualHeight/2 - 5;
                 } else if (direct[1] === 'left') {
-                    offset.left = ePos.left;
+                    offset.left = ePos.left - actualWidth/2 + 5;
                 }
                 return offset;
+            }
+
+            function escapeString(html) {
+                return html.replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace('/&/g', '&amp;');
             }
         }
       ]);

@@ -114,7 +114,6 @@
                     }
                 }
 
-                console.info(location);
                 return location;
             }
         };

@@ -1,0 +1,13 @@
+label {
+    width: 150px;
+    text-align: left;
+}
+
+.content>div {
+    height: 200px;
+    padding: 30px;
+}
+input {
+    display: inline-block;
+    height: 50px;
+}

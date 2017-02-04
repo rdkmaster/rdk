@@ -54,28 +54,29 @@ define(['angular', 'rd.core', 'jquery', 'rd.controls.Module', 'rd.services.Popup
 
       this.destroyMenu = destroyMenu;
 
-      this.addMenu = function (menuConfig, position, event){
+      this.addMenu = function(menuConfig, position, event) {
         if (position === 'mouse') {
           if (!event) {
             console.warn('您需要添加$event参数，否则将无法得到鼠标位置');
             return;
           }
         } 
-        else if(typeof position === 'string'){
+        else if(typeof position === 'string') {
           if (!document.getElementById(position)) {
             console.warn('您的网页中没有该节点（节点id：'+position+'）');
             return;
           }
         } 
-        else if(typeof position === 'object'){
+        else if(typeof position === 'object') {
           if (position.relateTo &&
-            typeof position.hoffset !== 'undefined'&&
-            typeof position.voffset !== 'undefined' &&
-            !document.getElementById(position.relateTo)){
-              console.warn('您的网页中没有该节点（节点id：'+position.relateTo+'）');
-              return;
-            }
+              typeof position.hoffset !== 'undefined'&&
+              typeof position.voffset !== 'undefined' &&
+              !document.getElementById(position.relateTo))
+          {
+            console.warn('您的网页中没有该节点（节点id：'+position.relateTo+'）');
+            return;
           }
+        }
 
         /*已有则destroy*/
         destroyMenu();
@@ -106,16 +107,10 @@ define(['angular', 'rd.core', 'jquery', 'rd.controls.Module', 'rd.services.Popup
         </li> \
         </ul>\
         </div>';
-        menuModuleID = PopupService.popup(menuHTML, undefined, menuOption);
+        menuModuleID = PopupService.popup(menuHTML, {menuConfig: menuConfig}, menuOption);
 
         /*空白处单击*/
-        $(document).mouseup(function(e){
-          var myMenu = document.querySelector('.rdk_menu');
-          if(!$(myMenu).is(e.target) && $(myMenu).has(e.target).length === 0){
-            $(document).off("mouseup");
-            destroyMenu();
-          }
-        })
+        $(document).mouseup(hideMenu);
 
         $timeout(function(){
           $('.rdk_menu').parents('.ui-dialog').css({'border': 'none'});
@@ -124,15 +119,24 @@ define(['angular', 'rd.core', 'jquery', 'rd.controls.Module', 'rd.services.Popup
         return menuModuleID;
       }
 
-      function destroyMenu(menuModuleID){
+      function destroyMenu(menuModuleID) {
         if(!menuModuleID){
           menuModuleID = $('.rdk_menu').parents('.ui-dialog-content').attr('id');
         }
+        $(document).off("mouseup", hideMenu);
         PopupService.removePopup(menuModuleID);
       }
 
-      function adjustPosition (pos, event) {
-        if (!pos) return;
+      function hideMenu(e) {
+          var myMenu = document.querySelector('.rdk_menu');
+          if(!$(myMenu).is(e.target) && $(myMenu).has(e.target).length === 0){
+            destroyMenu();
+          }
+      }
+
+      function adjustPosition (position, event) {
+        if (!position) return;
+        var pos = angular.isString(position) ? position : angular.extend({}, position);
         var wOffx = 0, wOffy = 0, bodyWidth = $(window).width(), bodyHeight = $(window).height();
         if (pos === 'mouse') {
           pos = {
