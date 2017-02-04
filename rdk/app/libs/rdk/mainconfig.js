@@ -31,6 +31,7 @@ require.config({
         "rd.attributes.ds": "../rdk/attributes/ds",
         "rd.attributes.modal": "../rdk/attributes/modal",
         "rd.attributes.Scroll": "../rdk/attributes/Scroll",
+        "rd.attributes.Tooltip": "../rdk/attributes/Tooltip",
         "rd.attributes.theme": "../rdk/attributes/theme",
 
         "rd.containers.Accordion": "../rdk/containers/Accordion",
@@ -64,6 +65,9 @@ require.config({
         "rd.controls.TabSelector": "../rdk/controls/TabSelector",
         "rd.controls.Time": "../rdk/controls/Time",
         "rd.controls.Tree": "../rdk/controls/Tree",
+        "rd.controls.NumericInput": "../rdk/controls/NumericInput",
+        "rd.controls.Switch": "../rdk/controls/Switch",
+        "rd.controls.Icon": "../rdk/controls/Icon",
 
         "rd.services.PopupService": "../rdk/services/PopupService",
         "rd.services.Alert": "../rdk/services/Alert",
@@ -72,7 +76,11 @@ require.config({
         "rd.services.I18nService": "../rdk/services/I18nService",
         "rd.services.NodeService": "../rdk/services/NodeService",
         "rd.services.Utils": "../rdk/services/Utils",
+        "rd.services.NotifyService": "../rdk/services/NotifyService",
+        "rd.services.MenuService": "../rdk/services/MenuService",
 
+        "rd.styles.IconCss": "../iconFonts/css/iconfont",
+        "rd.styles.IconFont": "../iconFonts/fonts/iconfont",
         "rd.styles.Bootstrap": "../bootstrap/css/bootstrap.min",
         "rd.styles.FontAwesome": "../font-awesome-4.3.0/css/font-awesome",
         "rd.styles.IconFonts": "../iconFonts/fonts/iconfont",

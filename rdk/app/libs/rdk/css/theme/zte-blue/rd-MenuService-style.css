@@ -1,0 +1,40 @@
+.rdk_menu ul{
+    margin: 0;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.rdk_menu ul.rdk_sub_menu {
+    display:none;
+    margin:0;
+    padding:0;
+    position: absolute;
+    top: 0;
+    width: 150px;
+    border-radius: 5px;
+    box-shadow: black 1px 1px 10px;
+}
+
+.rdk_menu .list-group-item {
+    position: relative;
+    text-align: left;
+}
+
+.rdk_menu .icon{
+    position: absolute;
+    right: 3px;
+    padding-top: 3px;
+    color: rgba(0, 0, 0, 0.43);
+}
+
+.rdk_menu .list-group-item:hover>ul.rdk_sub_menu,
+.rdk_menu .list-group-item:active>ul.rdk_sub_menu,
+.rdk_menu .list-group-item.active>ul.rdk_sub_menu{
+    background-color: #fff;
+}
+.rdk_menu .list-group-item:hover,
+.rdk_menu .list-group-item:active,
+.rdk_menu .list-group-item.active,
+.rdk_menu .list-group-item:hover .icon{
+    background-color: #ecf6fd;
+}
+

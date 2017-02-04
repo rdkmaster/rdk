@@ -1,0 +1,26 @@
+.notify {
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 6px;
+    -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.1);
+    box-shadow: 5px 5px 5px rgba(0,0,0,.1);
+    min-width: 300px;
+    background-color: #fff;
+    z-index: 3000;
+    padding: 15px;
+}
+
+.notify .notify-header {
+    color: #666;
+    height: 25px;
+}
+
+.notify .notify-header>h4{
+    margin:0;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.notify .notify-header>span{
+    float: right;
+}
+

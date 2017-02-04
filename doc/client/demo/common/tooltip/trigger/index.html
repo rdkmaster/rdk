@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>rdk-tooltip -> trigger</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+    <style>
+        label {
+            width: 150px;
+            text-align: left;
+        }
+
+        .content>div {
+            height: 100px;
+            padding: 30px;
+        }
+        input {
+            display: inline-block;
+            height: 50px;
+        }
+
+    </style>
+</head>
+
+<body ng-controller='myCtrl' >
+
+    <div class="content" style="width: 500px; margin: 50px;">
+
+        <div>
+            <label>默认的trigger：focus，请点击输入框</label>
+            <input type="text" rdk_tooltip="<span>prompt text</span>"  >
+        </div>
+        <div>
+            <label>trigger：hover，请将鼠标移至输入框上方</label>
+            <input type="text" rdk_tooltip="<span>prompt text</span>"  rdk_tooltip_trigger="hover">
+        </div>
+        <div>
+            <label>trigger：click，请点击输入框，需再次点击输入框提示才消失</label>
+            <input type="text" rdk_tooltip="<span>prompt text</span>"  rdk_tooltip_trigger="click">
+        </div>
+    </div>
+</body>
+</html>

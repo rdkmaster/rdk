@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>Editor -> change</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='myCtrl' >
+    <div style="width:600px;" >
+        <p>值发生改变后将alert修改后的数值</p>
+        <rdk_numeric_input ng-model="myValue" change="handleChanged"></rdk_numeric_input>
+    </div>
+</body>
+
+</html>

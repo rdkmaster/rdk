@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>NumericInput -> step</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body ng-controller='myCtrl' >
+    <div style="width:600px;" >
+        <div> step: 2</div>
+        <rdk_numeric_input ng-model="myValue" step="2"></rdk_numeric_input>
+        您输入的值： {{myValue}}
+        <div> ----------------------------------</div>
+        <div> step: 0.1</div>
+        <rdk_numeric_input ng-model="myFloat" step="0.1"></rdk_numeric_input>
+        您输入的值： {{myFloat}}
+
+        <div> ----------------------------------</div>
+        <div> step: 0.0000000001</div>
+        <rdk_numeric_input ng-model="myFloat2" step="0.0000000001"></rdk_numeric_input>
+        您输入的值： {{myFloat2}}
+    </div>
+</body>
+
+</html>

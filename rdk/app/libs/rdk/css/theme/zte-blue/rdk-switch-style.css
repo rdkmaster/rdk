@@ -1,0 +1,80 @@
+/*switcher*/
+.switcher{
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 10px;
+    border: 1px solid;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    position: relative;
+    text-align: left;
+    overflow: hidden;
+    line-height: 8px;
+    width: 50px;
+    color:#fff;
+}
+.switcher input{
+    display:none;
+}
+.switcher > div {
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+    vertical-align: middle;
+}
+.switcher > div.switch-animate {
+    transition: left 0.5s;
+}
+.switcher > div.switch-off {
+    background-color: #999;
+}
+.switcher > div.switch-on {
+    background-color: #008fd5;
+}
+.switcher span,
+.switcher button {
+    box-sizing: border-box;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    font-size: 1em;
+    line-height: 1em;
+    padding: 0;
+    margin: 0;
+    width: 50%;
+}
+.switcher button {
+    z-index: 100;
+    width: 16px;
+    height: 16px;
+    border-radius: 16px;
+    background-color: #fff;
+    border: none;
+    margin: 2px;
+}
+.switch-on span {
+    padding-left: 4px;
+}
+
+.switch-off span {
+    padding-right: 4px;
+}
+.switcher button:hover,
+.switcher button:focus,
+.switcher button:active,
+.switcher button.active,
+.switcher button.disabled,
+.switcher button[disabled] {
+    color: #ffffff;
+    background-color: #e6e6e6;
+}
+.switcher button:active,
+.switcher button.active {
+    background-color: #cccccc \9;
+}
+.switcher span {
+    text-align: center;
+    z-index: 1;
+    width: 24px;
+}

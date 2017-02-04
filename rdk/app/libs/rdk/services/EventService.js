@@ -260,7 +260,10 @@
                     this.broadcast(scope.id, eventType, data);
                 }
 
-                var fn = scope[Utils.snake2camel(eventType)](scope);
+                var fun = scope[Utils.snake2camel(eventType)];
+                if(!fun) return;
+                var appScope = Utils.findAppScope(scope);
+                var fn = fun(appScope);
 
                 if (!fn) {
                     if(typeof(defaultReturnValue) == 'function'){

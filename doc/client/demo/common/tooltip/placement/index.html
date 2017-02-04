@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <title>rdk-tooltip -> placement</title>
+    <!--
+      这个节点描述了rdk启动相关参数。其中，src是requirejs的位置，data-main是rdk主文件的位置
+    -->
+    <script data-main="/rdk/app/libs/rdk/rdk" src="/rdk/app/libs/requirejs/require.js"></script>
+    <script src="scripts/main.js"></script>
+    <style>
+        label {
+            width: 150px;
+            text-align: left;
+        }
+
+        .content>div {
+            height: 100px;
+            padding: 30px;
+        }
+        input {
+            display: inline-block;
+            height: 50px;
+        }
+
+    </style>
+</head>
+
+<body ng-controller='myCtrl' >
+
+    <p style="color: red;">请依次点击以下输入框</p>
+
+    <p>placement支持'top-left'，'top'，'top-right'，'right-top'，'right'，'right-bottom'，'bottom-right'，'bottom'，
+        'bottom-left'，'left-bottom'，'left'和'left-top'，总共12个方向
+    </p>
+
+
+    <div class="content" style="width: 500px; margin: 50px;">
+        <div><label>'top-left'</label> <input type="text" rdk_tooltip="{{content}}" rdk_tooltip_placement="top-left"></div>
+        <div><label>'top'</label> <input type="text" rdk_tooltip="{{content}}" rdk_tooltip_placement="top"></div>
+        <div><label>'top-right'</label><input type="text" rdk_tooltip="{{content}}" rdk_tooltip_placement="top-right"></div>
+        <div><label>'right-top'</label><input type="text" rdk_tooltip="{{content}}" rdk_tooltip_placement="right-top"></div>
+        <div><label>'right'</label><input type="text" rdk_tooltip="{{content}}" rdk_tooltip_placement="right"></div>
+        <div><label>'right-bottom'</label><input type="text" rdk_tooltip="{{content}}" rdk_tooltip_placement="right-bottom"></div>
+        <div><label>'bottom-right'</label><input type="text" rdk_tooltip="{{content}}" rdk_tooltip_placement="bottom-right"></div>
+        <div><label>'bottom'</label><input type="text" rdk_tooltip="{{content}}" rdk_tooltip_placement="bottom"></div>
+        <div><label>'bottom-left'</label><input type="text" rdk_tooltip="{{content}}" rdk_tooltip_placement="bottom-left"></div>
+        <div><label>'left-bottom'</label><input type="text" rdk_tooltip="{{content}}" rdk_tooltip_placement="left-bottom"></div>
+        <div><label>'left'</label><input type="text" rdk_tooltip="{{content}}" rdk_tooltip_placement="left"></div>
+        <div><label>'left-top'</label><input type="text" rdk_tooltip="{{content}}" rdk_tooltip_placement="left-top"></div>
+    </div>
+</body>
+</html>
