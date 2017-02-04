@@ -32,7 +32,6 @@ my_service服务:
 					log(request);   // {"param1":{"a":"A"},"param2":"aaa","param3":"'bbb'","app":"example"}
 					log(request.param1.a); // "A"
 					log(request.param2); // "aaa"
-					log(script); // "app/example/server/my_service.js"
 					return request;
 			    }
 			
@@ -51,9 +50,9 @@ url格式：
 
 - param：应用js脚本需要获取的前端带过来的请求参数，是一个json串。
 
-返回：**json对象，{"result":被请求的服务脚本对应的返回值}**。
+返回：**若请求消息体含有参数param属性且属性值不为null,则返回json对象：{"result":被请求的服务脚本对应的返回值};其他情况下和服务脚本返回值一致**。
 
-示例：
+示例一：
 
 请求本机rdk服务上的example/my_service服务，并将参数{"a":"A"}传给该脚本：
 
@@ -73,7 +72,7 @@ my_service服务:
 					//直接将前端传递过来的参数打印到日志中。
 					log(request);   // {"a":"A"}
 					log(request.a); // "A"
-					return request;
+					return "rdk";
 			    }
 
 			    return {
@@ -82,4 +81,32 @@ my_service服务:
 			
 			})();
 
-前端收到的返回值为 `{"result":{"a":"A"}}`	
+前端收到的返回值为 `{"result":"rdk"}`	
+
+示例二：
+
+请求本机rdk服务上的example/my_service服务：
+
+   			http://localhost:5812/rdk/service/app/example/server/my_service
+
+请求消息体json格式为：
+
+   			{"app":"example"}
+
+这样在my_service服务中即可以request对象获取该参数值。
+
+my_service服务:
+
+			(function() {
+			
+			    function _post(request, script) {
+					return "rdk";
+			    }
+
+			    return {
+			    	post : _post
+			    }
+			
+			})();
+
+前端收到的返回值为 "rdk"

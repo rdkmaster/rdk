@@ -105,7 +105,11 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
               ctx =>
                 val json = ctx.request.entity.asString(HttpCharsets.`UTF-8`)
                 val req = str2ServiceCallParam(json)
-                doDispatch(ctx, url, req.app, req.param, true)
+                if (req.param != null) {
+                  doDispatch(ctx, url, req.app, req.param, true)
+                } else {
+                  doDispatch(ctx, url, req.app, req.param, false)
+                }
             }
         }
       } ~
