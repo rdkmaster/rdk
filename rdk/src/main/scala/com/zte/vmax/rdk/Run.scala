@@ -7,6 +7,7 @@ package com.zte.vmax.rdk
 
 import java.io.File
 import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
 
 import akka.actor.{ActorRef, ActorSystem, Props}
 
@@ -18,12 +19,10 @@ import com.zte.vmax.rdk.config.Config
 import com.zte.vmax.rdk.db.DataSource
 import com.zte.vmax.rdk.service.{UploadHandler, ExportHandler, RestHandler}
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
-
-
 import org.apache.log4j.PropertyConfigurator
+import spray.routing.{Route, SimpleRoutingApp}
 
-import spray.routing.SimpleRoutingApp
-
+import scala.collection.JavaConversions._
 import scala.concurrent.duration._
 import scala.util.{Failure, Success}
 
@@ -57,7 +56,7 @@ object Run extends App with SimpleRoutingApp with Logger {
     RdkUtil.initApplications
 
     startServer(interface = ip, port = port) {
-      new ExportHandler(system, RdkServer.appRouter).runRoute ~ new UploadHandler(system, RdkServer.appRouter).runRoute ~ new RestHandler(system, RdkServer.appRouter).runRoute
+      concatRestHandler
     } onComplete {
       case Success(x) =>
         logger.info("#" * 50)
@@ -67,6 +66,10 @@ object Run extends App with SimpleRoutingApp with Logger {
         logger.error(s"!!! RDK Server starts failed. ${ex}")
         system.shutdown()
     }
+  }
+  def concatRestHandler:Route ={
+    val main = new ExportHandler(system, RdkServer.appRouter).runRoute ~ new UploadHandler(system, RdkServer.appRouter).runRoute ~ new RestHandler(system, RdkServer.appRouter).runRoute
+    main ~ RdkServer.getRestHandler.reduce(_~_)
   }
 
   //start now
@@ -85,5 +88,12 @@ object RdkServer {
   val agingActor:ActorRef = system.actorOf(Props[AgingCacheActor], "agingActor")
   //本RDK-server的唯一标识
   val uuid: String = UUID.randomUUID().toString
+
+  private val restHandMap = new ConcurrentHashMap[Route, Int] {}
+  //注册路由
+  def addRestHandler(route: Route):Unit={
+    restHandMap.put(route,1)
+  }
+  def getRestHandler:Set[Route] = restHandMap.keySet().toSet
 
 }

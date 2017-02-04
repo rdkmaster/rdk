@@ -13,6 +13,7 @@ import com.zte.vmax.rdk.util.Logger
   */
 trait DBPool {
   def getConnection: Option[Connection]
+  def getDataSource: SqlDataSource
 }
 
 object DBPoolFactory {
@@ -62,5 +63,6 @@ private class DbcpConnectionPool(dbInfo: DatabaseInfo, poolInfo: DbPoolInfo) ext
     }
 
   }
+  def getDataSource = dataSource
 
 }
