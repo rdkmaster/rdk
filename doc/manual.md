@@ -94,7 +94,7 @@ SVN下载完成之后，就可以在 `d:\rdk-develop-environment\rdk\app` 目录
 
 ## RDK运行环境部署
 
-###基于Nginx
+### 基于Nginx {#base-on-nginx}
 假设根路径为/home/rdk，监听端口为26180
 
 1) 新建/home/rdk目录
