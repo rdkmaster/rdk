@@ -18,7 +18,6 @@ EndIf
 
 
 Global $java
-Global $httpPid = 0
 Global $rdkPid = 0
 
 Global $versionFetched = False
@@ -42,11 +41,12 @@ GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 GUICtrlSetFont(-1, 8.5, 0, 0, 'Courier New')
 _GUICtrlEdit_SetLimitText($rdkConsole, 3000000000)
 
-GUICtrlCreateTabItem("HTTP 服务进程控制台")
-Global $httpConsole = GUICtrlCreateEdit("", 2, 23, $width, $height, $WS_HSCROLL + $WS_VSCROLL + $ES_WANTRETURN)
+GUICtrlCreateTabItem("转发规则")
+Global $btnApplyRule = GUICtrlCreateButton('应用规则', 12, 26)
+GUICtrlSetResizing(-1, $GUI_DOCKALL)
+Global $nginxConf = GUICtrlCreateEdit("", 12, 54, $width - 18, $height - 36)
 GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 GUICtrlSetFont(-1, 8.5, 0, 0, 'Courier New')
-_GUICtrlEdit_SetLimitText($httpConsole, 3000000000)
 
 GUICtrlCreateTabItem("关于 RDK")
 GUICtrlCreateLabel('欢迎使用 RDK Windows 开发环境', 12, 36, 400)
@@ -118,6 +118,8 @@ While 1
 	Switch GUIGetMsg()
 		Case $GUI_EVENT_CLOSE
 			If MsgBox(292, "RDK Server for Windows", "是否关闭所有的服务进程并退出？", 0, $gui) == 6 Then Exit
+		Case $btnApplyRule
+			_applyRules()
 		Case $lbGetStarted
 			_visitWeb('http://www.rdkapp.com/doc/#best_practise/index.md')
 		Case $lbSite
@@ -131,24 +133,55 @@ While 1
 		Case $lbDownload
 			_visitWeb('http://www.rdkapp.com/site/download/index.html')
 		Case $tab
-			If GUICtrlRead($tab) <> 2 Then ContinueLoop
-			If $versionFetched Then ContinueLoop
-			$versionFetched = True
-			GUICtrlSetData($lbVersion, '○ 当前版本 ' & _getVersion())
+			If GUICtrlRead($tab) == 1 Then _initRule()
+			If GUICtrlRead($tab) == 2 Then _initVersion()
 	EndSwitch
-
 WEnd
 
-Func _updateConsole()
-	_updateConsoleDo($rdkPid, $rdkConsole)
-	_updateConsoleDo($httpPid, $httpConsole)
+Func _initRule()
+	If _GUICtrlEdit_GetText($nginxConf) <> '' Then Return
+	_GUICtrlEdit_SetText($nginxConf, FileRead(@ScriptDir & '\tools\nginx-1.11.9\conf\rules.conf'))
 EndFunc
 
-Func _updateConsoleDo($pid, $console)
-	Local $out = StdoutRead($pid)
+Func _initVersion()
+	If $versionFetched Then Return
+	$versionFetched = True
+	GUICtrlSetData($lbVersion, '○ 当前版本 ' & _getVersion())
+EndFunc
+
+Func _applyRules()
+	Local $tpl = FileRead(@ScriptDir & '\tools\nginx-1.11.9\conf\nginx.conf.tpl')
+	Local $idx1 = StringInStr($tpl, '## proxy setting start ##')
+	Local $endMark = '## proxy setting end ##'
+	Local $idx2 = StringInStr($tpl, $endMark)
+	If $idx1 == 0 Or $idx2 == 0 Then Return MsgBox(16+4096, "出错啦！", 'tools\nginx-1.11.9\conf\nginx.conf.tpl 被破坏，请重新下载RDK再试', 0, $gui)
+
+	If MsgBox(292,"RDK控制台","应用规则会替换现有nginx.conf文件中的相关规则，是否继续？", 0, $gui) == 7 Then Return
+
+	Local $conf = StringLeft($tpl, $idx1-1) & @CRLF & _
+		_GUICtrlEdit_GetText($nginxConf) & @CRLF & _
+		StringMid($tpl, $idx2 + StringLen($endMark))
+
+	FileCopy(@ScriptDir & '\tools\nginx-1.11.9\conf\nginx.conf', @ScriptDir & '\tools\nginx-1.11.9\conf\nginx.conf.bak', 1)
+	Local $file = FileOpen(@ScriptDir & '\tools\nginx-1.11.9\conf\nginx.conf', 2)
+	FileWrite($file, $conf)
+	FileClose($file)
+
+	$file = FileOpen(@ScriptDir & '\tools\nginx-1.11.9\conf\rules.conf', 2)
+	FileWrite($file, _GUICtrlEdit_GetText($nginxConf))
+	FileClose($file)
+
+	_stopHTTP()
+	_startHTTP()
+	Sleep(500)
+	MsgBox(64,"RDK控制台","转发规则应用成功！", 0, $gui)
+EndFunc
+
+Func _updateConsole()
+	Local $out = StdoutRead($rdkPid)
 	If @extended > 0 Then
 		$out = _fixConoleText($out)
-		_GUICtrlEdit_AppendText($console, $out)
+		_GUICtrlEdit_AppendText($rdkConsole, $out)
 	EndIf
 EndFunc
 
@@ -157,8 +190,7 @@ Func _fixConoleText($text)
 EndFunc
 
 Func _startHTTP()
-	FileChangeDir(@ScriptDir & '\tools\http_server\')
-	$httpPid = Run("node server.js", "", @SW_HIDE, $STDERR_MERGED)
+	Run('"' & @ScriptDir & '\tools\nginx-1.11.9\nginx.exe"', @ScriptDir & '\tools\nginx-1.11.9\', @SW_HIDE)
 EndFunc
 
 Func _startRDK()
@@ -171,13 +203,6 @@ Func _startRDK()
 EndFunc
 
 Func _init()
-	Local $pid = Run('node --version', @WorkingDir, @SW_HIDE)
-	If $pid == 0 Then
-		_error('请先安装nodejs的运行环境！' & @CRLF & @CRLF & _
-				'下载地址： http://nodejs.cn/' & @CRLF & @CRLF & _
-				'Ctrl+C 可复制链接。')
-	EndIf
-
 	$java = @WorkingDir & '\proc\bin\jre\bin\java.exe'
 	If Not FileExists($java) Then $java = EnvGet ( "JAVA_HOME" ) & '\bin\java.exe'
 
@@ -212,7 +237,7 @@ EndFunc
 
 Func _beforeExit()
 	ToolTip('正在关闭后台进程，请稍候。。。', @DesktopWidth/2, @DesktopHeight/2-50, '', 0, 2)
-	If $httpPid <> 0 Then ProcessClose($httpPid)
+	_stopHTTP()
 	If $rdkPid <> 0 Then ProcessClose($rdkPid)
 	ToolTip('')
 
@@ -221,6 +246,13 @@ Func _beforeExit()
 	; 删除上传的文件
 	DirRemove(@ScriptDir & '\rdk\upload_files', True)
 EndFunc
+
+Func _stopHTTP()
+	While ProcessExists('nginx.exe')
+		ProcessClose('nginx.exe')
+	WEnd
+EndFunc
+
 
 Func _visitWeb($url)
 	Run(@ComSpec & " /c " & 'start ' & $url, "", @SW_HIDE)
@@ -234,7 +266,7 @@ Func _getVersion()
 EndFunc
 
 Func _error($msg)
-	MsgBox(16+4096, "出错啦！", $msg)
+	MsgBox(16+4096, "出错啦！", $msg, 0, $gui)
 	Exit 0
 EndFunc
 
