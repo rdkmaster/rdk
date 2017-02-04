@@ -1068,7 +1068,7 @@ function _java2json(javaObj) {
             json[key.toString()] = _java2json(_tryParseJson(javaObj.get(key).get()));
         }
     } else if (javaObj instanceof java.String) {
-        json = javaObj;
+        json = String(javaObj);
     } else {
         //数字，布尔等
         json = javaObj;

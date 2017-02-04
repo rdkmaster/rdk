@@ -19,7 +19,7 @@ url格式：
 
 请求本机rdk服务上的example/my_service服务，并将参数{"a":"A"}传给该脚本：
 
-   			http://localhost:5812/rdk/service/app/example/server/my_service?param={"a":"A"}&app=example (需要进行url编码)
+   			http://localhost:5812/rdk/service/app/example/server/my_service?param1={"a":"A"}&param2=aaa&param3='bbb'&app=example (需要进行url编码)
 
 这样在my_service服务中即可以request对象获取该参数值。
 
@@ -29,8 +29,10 @@ my_service服务:
 			
 			    return function(request, script) {
 					//直接将前端传递过来的参数打印到日志中。
-					log(request);   // {"a":"A"}
-					log(request.a); // "A"
+					log(request);   // {"param1":{"a":"A"},"param2":"aaa","param3":"'bbb'","app":"example"}
+					log(request.param1.a); // "A"
+					log(request.param2); // "aaa"
+					log(script); // "app/example/server/my_service.js"
 					return request;
 			    }
 			
