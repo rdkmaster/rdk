@@ -85,14 +85,17 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
         url => {
           get {
             parameters('p.as[ServiceParam]) {
-              req => ctx =>
-                logger.warn( s"""queryString style deprecated ! please use this type:uri?app=""&param={}&service="" """)
-                doDispatch(ctx, url, req.app, req.param, true)
+              req =>
+                ctx =>
+                  logger.warn( s"""queryString style deprecated ! please use this type:uri?app=""&param=""&service="" """)
+                  doDispatch(ctx, url, req.app, req.param, true)
             }
           } ~
             get {
-              parameters('service ? "", 'app, 'param) { (service, app, param) => ctx =>
-                doDispatch(ctx, url, app, RdkUtil.json2Object[AnyRef](param).getOrElse(param), false)
+              parameterMap {
+                req =>
+                  ctx =>
+                    doDispatch(ctx, url, req.getOrElse("app", "unknown"), req, false)
               }
             } ~
             get { ctx =>
@@ -110,15 +113,9 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
         get {
           parameters('p.as[ServiceParam]) {
             req => ctx =>
-              logger.warn( s"""queryString style deprecated ! please use this type:uri?app=""&param={}&service="" """)
               doDispatch(ctx, req.service :: Nil, req.app, req.param, true)
           }
         } ~
-          get {
-            parameters('service ? "", 'app, 'param) { (service, app, param) => ctx =>
-              doDispatch(ctx, service :: Nil, app, RdkUtil.json2Object[AnyRef](param).getOrElse(param), false)
-            }
-          } ~
           (put | post | delete) {
             ctx =>
               val json = ctx.request.entity.asString(HttpCharsets.`UTF-8`)

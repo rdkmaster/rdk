@@ -36,6 +36,8 @@ var java = {
 
     StringMap: Java.type('com.google.gson.internal.StringMap'),
 
+    ScalaMap: Java.type('scala.collection.immutable.Map'),
+
     FileHelper: Java.type('com.zte.vmax.rdk.jsr.FileHelper'),
     RegFileFilter: Java.type('com.zte.vmax.rdk.util.RegFileFilter'),
     Config: Java.type('com.zte.vmax.rdk.config.Config')
@@ -1033,6 +1035,15 @@ function groupI18n(keys) {
     return result;
 }
 
+function _tryParseJson(str) {
+    try {
+        return JSON.parse(str);
+    } catch (e) {
+        Log.warn("json parse fail,use string!");
+        return str;
+    }
+}
+
 function _java2json(javaObj) {
     var json = null;
     if (javaObj instanceof java.ArrayList) {
@@ -1048,8 +1059,16 @@ function _java2json(javaObj) {
             var key = it.next();
             json[key.toString()] = _java2json(javaObj.get(key));
         }
+    } else if (javaObj instanceof java.ScalaMap) {
+        json = {};
+        var keySet = javaObj.keySet();
+        var it = keySet.iterator();
+        while (it.hasNext()) {
+            var key = it.next();
+            json[key.toString()] = _java2json(_tryParseJson(javaObj.get(key).get()));
+        }
     } else if (javaObj instanceof java.String) {
-        json = String(javaObj);
+        json = javaObj;
     } else {
         //数字，布尔等
         json = javaObj;
