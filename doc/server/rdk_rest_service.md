@@ -11,13 +11,13 @@ url格式：
 
 - app：应用名，该参数用于rdk区分各个应用，比如在记录应用日志时会以该属性值来标识具体应用。
 
-- param：应用js脚本需要获取的前端带过来的请求参数，是一个json串。
+- param：应用js脚本需要获取的前端带过来的请求参数，可以多个，所有参数均会被封装于服务脚本的request参数中。
 
 返回：即被请求的服务脚本对应的返回值。
 
 示例：
 
-请求本机rdk服务上的example/my_service服务，并将参数{"a":"A"}传给该脚本：
+请求本机rdk服务上的example/my_service服务，并将参数传给该脚本：
 
    			http://localhost:5812/rdk/service/app/example/server/my_service?param1={"a":"A"}&param2=aaa&param3='bbb'&app=example (需要进行url编码)
 
