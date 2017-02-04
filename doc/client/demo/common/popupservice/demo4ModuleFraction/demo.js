@@ -1,7 +1,7 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.controls.Module', 'rd.services.PopupService'
+        'rd.controls.Module', 'rd.services.PopupService', 'base/module-controller'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', 'PopupService', main];
@@ -18,16 +18,6 @@
 
             var initData = {myData: 'load module manually...'};
             moduleID = PopupService.popup(sampleDiv, initData);
-        }
-    }
-    
-    rdk.$ngModule.controller('SampleModuleController', ['$scope', 'Utils', 'PopupService',function(scope, Utils, PopupService) {
-        console.log('SampleModule controller is running..........');
-        scope.someData = 'some data defined in the SampleModule controller...';
-        scope.myData = 'sample inter load module manually...';
-
-        scope.destroyHandler = function(){
-            PopupService.removePopup(scope.$moduleId);
         }
     }
 
