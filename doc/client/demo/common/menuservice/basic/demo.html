@@ -1,0 +1,12 @@
+<div style="width: 500px; height: 500px; text-align: center; vertical-align: middle">
+    <p>
+        菜单的绝对位置 = { x: {{position.x}}, y: {{position.y}} }，支持页面边界自动修正
+    </p>
+    <div>
+        x: <input type="number" ng-model="position.x" >
+    </div>
+    <div>
+        y: <input type="number" ng-model="position.y">
+    </div>
+    <button ng-click="load($event)">弹出菜单</button><button ng-click="close()">关闭菜单</button>
+</div>
