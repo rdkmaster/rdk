@@ -719,7 +719,9 @@ var Data = {
         if (selector != null) {
             rdk_runtime.useDataSource(selector(arguments))
         } else {
-            rdk_runtime.useDataSource("")
+            rdk_runtime.useDataSource( function selectDataSource(params){
+                return params[0];
+            })
         }
     },
     fetchWithDataSource: function (dataSource, sql, maxLine) {
