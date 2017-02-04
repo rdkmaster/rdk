@@ -12,7 +12,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 <div ng-if="search && (noData!=undefined)" class="searchWapper search-position-{{position}}">\
                     <input type="text" ng-style="width" class="form-control search" placeholder="{{searchPrompt}}" ng-focus="searchFocusHandler()"\
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
-                    <i class="glyphicon glyphicon-search search_icon" ng-click="serverSearchHandler()" style="cursor:{{pagingType==\'server\' ? \'pointer\' : \'default\'}}"></i>\
+                    <i class="glyphicon glyphicon-search search_icon" ng-click="serverSearchHandler()" style="cursor:{{pagingType==\'server\' || pagingType==\'server-auto\' ? \'pointer\' : \'default\'}}"></i>\
                     <div ng-show="($parent.globalSearch && searchFocus)?true:false">\
                         <select selectpicker="{{columnDefs.length}}" ng-model="val" ng-change="selectChangeHandler(val)"\
                                 ng-options="columnDef.data as columnDef.name for columnDef in columnDefs | realoption"\
@@ -294,6 +294,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     scope.proxyDs = Utils.compile(scope.$parent, scope.proxyDs);
                     if (scope.pagingType == "server") {
                         _loadDataFromServer();
+                    } else if (scope.pagingType == "server-auto") {
+                        _loadDataFromPagingService();
                     }
                 };
 
@@ -357,18 +359,19 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 function _loadDataFromServer() {
                     var ds = DataSourceService.get(scope.proxyDs);
                     if (!ds) {
+                        console.error('need a datasource when pagingType=="server"');
                         return;
                     }
                     var attachCondition = {};
                     attachCondition.paging = {};
                     attachCondition.paging.currentPage = scope.currentPage + 1;
                     attachCondition.paging.pageSize = scope.pageSize;
-                    if (scope.fieldStr && scope.directionStr) {
+                    if (scope.sortField && scope.directionStr) {
                         attachCondition.orderBy = {};
-                        attachCondition.orderBy.field = scope.fieldStr;
+                        attachCondition.orderBy.field = scope.sortField;
                         attachCondition.orderBy.direction = scope.directionStr;
                     }
-                    if ((scope.search) && (scope.pagingType == "server")) {
+                    if ((scope.search) && (scope.pagingType == "server" || scope.pagingType == "server-auto")) {
                         scope.defaultSearchHandler();
                         attachCondition.search = {};
                         attachCondition.search.searchKey = scope.globalSearch;
@@ -393,6 +396,15 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     }
                     ds.query(finallyCondition, { "directQuery": true, "supressEvent": false });
                 }
+
+                function _loadDataFromPagingService() {
+                    var ds = DataSourceService.get(scope.proxyDs);
+                    if (!ds) {
+                        console.error('need a datasource when pagingType=="server-auto"');
+                        return;
+                    }
+                    ds.query(scope.baseCondition, { "directQuery": true, "supressEvent": false });
+                }
             }],
             scope: scopeDefine,
             compile: function(tElement, tAttributes) {
@@ -415,7 +427,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 var searchFieldFilter = "";
                 searchFieldFilter = " | fieldfilter: searchFields : globalSearch";
 
-                if (tAttributes.pagingType !== "server") {
+                if (tAttributes.pagingType !== "server" && tAttributes.pagingType !== "server-auto") {
                     tElement.find("rdk-paging").attr("count", "$filtered.length");
                     tElement[0].querySelector(".rowTr").setAttribute("ng-repeat", "item in $filtered = (destData" + rowFilter + ")" + pagingFilter + searchFieldFilter);
                 } else {
@@ -434,13 +446,13 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     scope.showExport = Utils.isTrue(scope.showExport, false);
                     scope.searchWidth = Utils.getValue(scope.searchWidth, attrs.searchWidth, "168px");
                     scope.exportLabel = Utils.getValue(scope.exportLabel, attrs.exportLabel, "");
-                    scope.touchExport=_touchExport;
+                    scope.touchExport = function() {
+                        EventService.raiseControlEvent(scope, EventTypes.EXPORT, null)
+                    };
                     scope.width = {
                         "width":scope.searchWidth
                     }
-                    function _touchExport(){
-                        EventService.raiseControlEvent(scope, EventTypes.EXPORT, null)
-                    }
+                    
                     if(scope.search){
                         scope.position=scope.searchPosition=="bottom"?"bottom": "top"
                     }else{
@@ -451,8 +463,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                     function _init() {
 
-                        if (angular.isUndefined(scope.proxyDs) && scope.pagingType == "server") {
-                            console.warn('Table with server as pagingType must provide ds attribute');
+                        if (angular.isUndefined(scope.proxyDs) && (scope.pagingType == "server" || scope.pagingType == "server-auto")) {
+                            console.error('Table with server as pagingType must provide ds attribute');
                             return;
                         }
 
@@ -461,6 +473,54 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 curSortIndex=-1; //重置排序索引
                                 scope.baseCondition = data.condition;
                             });
+
+                            if (scope.pagingType == 'server-auto') {
+                                EventService.register(scope.proxyDs, EventTypes.CREATE, _initAjaxConfigProcessor);
+                            }
+
+                            function _initAjaxConfigProcessor(event, ds) {
+                                EventService.remove(scope.proxyDs, EventTypes.CREATE, _initAjaxConfigProcessor);
+                                ds.ajaxConfigProcessor = _ajaxConfigProcessor;
+                            }
+
+                            function _ajaxConfigProcessor(config) {
+                                var url = config.url;
+                                if (url[0] != '/') {
+                                    var baseURI = document.head.baseURI.substring(location.origin.length);
+                                    url = baseURI + url;
+                                }
+
+                                var key = config.method == 'get' ? 'params' : 'data';
+                                var param = {
+                                    param: {
+                                        param: config[key],
+                                        service: url,
+                                        paging: {
+                                            currentPage: Number(scope.currentPage+1),
+                                            pageSize: Number(scope.pageSize)
+                                        }
+                                    }
+                                }
+                                if (!!scope.globalSearch) {
+                                    param.param.filter = {
+                                        key: scope.globalSearch,
+                                        field: scope.searchFields
+                                    }
+                                }
+                                if (!!scope.sortField && !!scope.directionStr) {
+                                    var sortas = scope.columnDefs[scope.data.field.indexOf(scope.sortField)].sortas;
+                                    param.param.sort = {
+                                        order: scope.directionStr,
+                                        field: scope.sortField,
+                                        as: sortas
+                                    }
+                                }
+                                config[key] = config.method == 'get' ? { p: param } : param;
+                                config.url = '/rdk/service/app/common/paging';
+
+                                return config;
+                            }
+                            
                         };
 
                         //分页栏是否展现
@@ -474,6 +534,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         scope.paging = angular.isDefined(scope.paging) ? scope.paging : true;
                         //默认采用本地分页
                         scope.pagingType = angular.isDefined(scope.pagingType) ? scope.pagingType : "local";
+                        if (scope.pagingType == 'server') {
+                            console.warn('pagingType="server" is deprecated, try pagingType="server-auto" instead.');
+                        }
 
                         scope.currentPage = 0;
 
@@ -540,7 +603,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             if($.isEmptyObject(newVal)) return;
                             scope.currentPage = 0;
                             _reloadLocalData();
-                            if (scope.pagingType == "server") {
+                            if (scope.pagingType == "server" || scope.pagingType == "server-auto") {
                                 scope.currentPage = scope.data.paging ? (scope.data.paging.currentPage - 1) : 0;
                             }
                             if (ctrl.pageCtrl) {
@@ -565,7 +628,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                         scope.$watch("globalSearch", function(newVal, oldVal) {
                             if (newVal != oldVal) {
-                                if (scope.pagingType == "server") return; //#115
+                                if (scope.pagingType == "server" || scope.pagingType == "server-auto") return; //#115
                                 if (ctrl.pageCtrl) {
                                     ctrl.pageCtrl.firstPage();
                                 }
@@ -606,7 +669,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         }
 
                         scope.serverSearchHandler = function(){
-                            if((scope.globalSearch == undefined) || (scope.pagingType != 'server')) return;
+                            if(scope.globalSearch == undefined || (scope.pagingType != 'server' && scope.pagingType != 'server-auto')) return;
                             scope.currentPage = 0;
                             ctrl.setCurrentPage(scope.currentPage);
                         }
@@ -701,7 +764,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
                             sortIconStatus=!sortIconStatus;
                             var table = element[0].querySelector('.sticky-enabled');
-                            if (scope.pagingType == "server") {
+                            if (scope.pagingType == "server" || scope.pagingType == "server-auto") {
                                 scope.serverSortCache = true;
                                 if (curSortIndex == iCol) {
                                     _loadSortDataFromServer(columnDef.data, sortIconStatus?'desc':'asc');
@@ -828,7 +891,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         }
 
                         scope.getCurrentPageDataArr = function(){
-                            if(scope.pagingType == "server"){
+                            if(scope.pagingType == "server" || scope.pagingType == "server-auto") {
                                 return scope.destData;
                             }
                             var currentPage = parseInt(scope.currentPage, 10);
@@ -1009,7 +1072,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     }
 
                     function _loadSortDataFromServer(field, direction) {
-                        scope.fieldStr = field;
+                        scope.sortField = field;
                         scope.directionStr = direction;
                         ctrl.setCurrentPage(scope.currentPage);
                     }
@@ -1407,8 +1470,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     $scope.setCurrentPageToTable();
                 };
                 $scope.nextPage = function() {
-                    if ($scope.currentPage == $scope.pageCount()) return;
-                    if ($scope.currentPage < $scope.pageCount()) {
+                    var pageCount = $scope.pageCount()
+                    if ($scope.currentPage == pageCount) return;
+                    if ($scope.currentPage < pageCount) {
                         $scope.currentPage++;
                     }
                     $scope.setCurrentPageToTable();

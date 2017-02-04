@@ -71,6 +71,7 @@
                     var ds = new DataSource(dsInfo);
 					console.log('DataSource created, id=' + ds.id + ', url=' + ds.url);
                     dataSourcePool[ds.id] = ds;
+                    EventService.broadcast(ds.id, EventTypes.CREATE, ds);
                 } catch (e) {
                     console.error('创建数据源失败：' + e);
                     return;
@@ -366,7 +367,7 @@
                         _this.busy = true;
                         console.log('DataSource [id=' + _this.id + '] is visiting network!');
 
-                        if( !(option && option.directQuery)){
+                        if( !(option && option.directQuery)) {
                             condition = _callConditionProcessor(condition);
                         }
 

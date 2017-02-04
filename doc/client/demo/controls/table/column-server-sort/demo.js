@@ -4,21 +4,29 @@
         'rd.controls.Table'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope', main];
-    function main($scope ) {
-      $scope.conditionProcessor = function(condition){
-          var condition = {};
-          condition.aaa = "bbb";
-          return condition;
-        }
+    var controllerDefination = ['$scope',main];
+    function main($scope) {
+        // $scope.setting = {
+        //     scrollX: true
+        // } 
 
         $scope.setting = {
-          "columnDefs" :[
-              {
-                targets : 0,
-                visible : false
-              }
-          ]
+            "columnDefs" :[
+                {
+                    targets : 0,
+                    sortas: "string",
+                    sortable: true
+                }, {
+                    targets : "extn",
+                    sortable: true,
+                    sortas: "int",
+                }, {
+                    targets : 3,
+                    sortas: "date",
+                    sortable: true
+                }
+
+            ]
         }
     }
 

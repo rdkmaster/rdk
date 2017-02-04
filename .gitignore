@@ -21,3 +21,6 @@ test/npm-debug.log
 **/.idea
 **/.idea_modules
 
+#忽略运行期临时目录
+**/doc/client/demo/tmp
+**/upload_files

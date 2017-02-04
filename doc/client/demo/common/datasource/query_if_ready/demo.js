@@ -5,6 +5,11 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', 'DataSourceService', 'EventService', main];
     function main(scope, DataSourceService, EventService) {
+
+        scope.ajaxProc = function(config) {
+            console.log(config);
+            return config;
+        }
         //当这个处理器被执行时，ds_user和ds_city的值已经准备好了
         //这里可以放心的去访问他们
         scope.showUserCity = function(data) {

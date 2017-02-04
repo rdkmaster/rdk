@@ -1,6 +1,5 @@
-<button ng-click="clickHandler()">服务端分页pageSize改变</button>
+<button ng-click="clickHandler()">改变单页记录数为10</button>
 <rdk_table id='tableID' ds="ds_table" ds_url="mock.json" ds_query_if="ready"
     ds_condition_processor="conditionProcessor"
-    default_condition_processor="tableProcessor"
-    paging_type="server" page_size="5">
+    paging_type="server-auto" page_size="5">
 </rdk_table>

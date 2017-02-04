@@ -3,7 +3,7 @@
     <!--
         先定义两个数据源实例，并让他们在系统初始化完成后立即发起查询
     -->
-    <ds id="ds_user" url="mock/user_list.json" query_if="ready"></ds>
+    <ds id="ds_user" url="mock/user_list.json" ajax_config_processor="ajaxProc" query_if="ready"></ds>
     <ds id="ds_city" url="mock/city_list.json" query_if="ready"></ds>
 
     <!-- 
