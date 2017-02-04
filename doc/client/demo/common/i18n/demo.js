@@ -6,12 +6,12 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main(scope) {
-        ctx.i18n.$init(scope);
+        imports.i18n.$init(scope);
         scope.time = new Date();
 
         scope.getI18n = function() {
             //js中获取i18n字符串
-            var curTime = ctx.i18n.time.st(scope.time);
+            var curTime = imports.i18n.time.st(scope.time);
             alert(curTime);
         }
     }
