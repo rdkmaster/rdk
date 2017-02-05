@@ -1,10 +1,10 @@
 (function() {
 
     return function(request, script) {
-        var data// = Cache.aging.get('big-data-test');
+        var data = Cache.aging.get('big-data-test');
         if (!data) {
             data = createRandomData();
-            Cache.aging.put('big-data-test', data);
+            Cache.aging.put('big-data-test', data, 60*1000);
         }
         return data;
     }
@@ -13,7 +13,7 @@
         var dt = new DataTable([], [], []);
 
         var dataLen = 100000;
-        var colLen = 110;
+        var colLen = 50;
         log('createRandomData, dataLen=' + dataLen + ' , colLen=' + colLen);
         var colTypes = [];
         for (var i = 0; i < colLen; i++) {
@@ -23,6 +23,9 @@
         }
 
         for (var i = 0; i < dataLen; i++) {
+            if (i % 2000 == 0) {
+                log(i + ' rows has been created! ' + (dataLen-i) + ' rows to go...');
+            }
             var row = [];
             for (var j = 0; j < 100; j++) {
                 if (colTypes[j] == 1) {
@@ -35,6 +38,7 @@
             }
             dt.data.push(row);
         }
+        log('createRandomData, done!');
         return dt;
     }
 
