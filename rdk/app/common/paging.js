@@ -93,7 +93,7 @@
             sortBy = sortAsString;
         } else if (!sortAs) {
             //自动检测
-            sortBy = Number(data[0][index]) !== NaN ? sortAsNumber : sortAsString;
+            sortBy = isNaN(Number(data[0][index])) ? sortAsString : sortAsNumber;
         } else {
             try {
                 //应用自定义排序算法
