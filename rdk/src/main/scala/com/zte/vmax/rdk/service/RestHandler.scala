@@ -8,7 +8,7 @@ import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 import org.apache.log4j.{Level, LogManager}
 import org.json4s.{DefaultFormats, Formats}
-import spray.http.HttpCharsets
+import spray.http._
 import spray.httpx.Json4sSupport
 import spray.routing.{Directives, RequestContext}
 
@@ -24,7 +24,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
 
 
   implicit def str2ServiceCallParam(json: String): ServiceParam = {
-    RdkUtil.json2Object[ServiceParam](json).getOrElse(null)
+    RdkUtil.json2Object[ServiceParam](json).orNull
   }
 
   private lazy val breaker = new CircuitBreaker(system.scheduler,
@@ -57,12 +57,19 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
     }
     future.onSuccess {
       case Left(e) => rct.failWith(e)
-      case Right(s) => if (isResultWrapped) rct.complete(ServiceResult(s)) else rct.complete(s)
+      case Right(s) =>
+        if (isResultWrapped) {
+          rct.complete(ServiceResult(s))
+        } else {
+          logger.debug(s)
+          rct.complete(
+            HttpResponse(StatusCodes.OK,
+            HttpEntity(ContentType(MediaTypes.`application/json`, HttpCharsets.`UTF-8`), s))
+          )
+        }
     }
-
   }
 
-  //中文注释
   def runRoute =
     path("runtime" / "log") {
       get {
