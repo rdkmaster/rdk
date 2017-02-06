@@ -3,6 +3,7 @@ package com.zte.vmax.rdk.service
 import akka.actor.{ActorRef, ActorSystem}
 import akka.pattern.{CircuitBreaker, ask}
 import akka.util.Timeout
+import com.google.gson.internal.StringMap
 import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 import org.apache.log4j.{Level, LogManager}
@@ -10,6 +11,7 @@ import org.json4s.{DefaultFormats, Formats}
 import spray.http.HttpCharsets
 import spray.httpx.Json4sSupport
 import spray.routing.{Directives, RequestContext}
+
 import scala.concurrent.duration._
 
 
@@ -95,7 +97,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
               parameterMap {
                 req =>
                   ctx =>
-                    doDispatch(ctx, url, req.getOrElse("app", "unknown"), req, false)
+                    doDispatch(ctx, url, req.getOrElse("app", null), req, false)
               }
             } ~
             get { ctx =>
@@ -104,11 +106,23 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
             (put | post | delete) {
               ctx =>
                 val json = ctx.request.entity.asString(HttpCharsets.`UTF-8`)
-                val req = str2ServiceCallParam(json)
-                if (req.param != null) {
-                  doDispatch(ctx, url, req.app, req.param, true)
-                } else {
-                  doDispatch(ctx, url, req.app, req.param, false)
+                val req = RdkUtil.json2Object[AnyRef](json).orNull
+                try {
+                  val strMap = req.asInstanceOf[StringMap[AnyRef]]
+                  val param = strMap.get("param")
+                  if (param == null) {
+                    doDispatch(ctx, url, null, json, false)
+                  } else {
+                    val app = strMap.get("app")
+                    var appStr:String = null
+                    if (app != null) {
+                      appStr = app.toString
+                    }
+                    doDispatch(ctx, url, appStr, param.asInstanceOf[AnyRef], true)
+                  }
+                } catch {
+                  case t: Throwable =>
+                    doDispatch(ctx, url, null, json, false)
                 }
             }
         }
