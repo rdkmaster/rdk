@@ -13,7 +13,7 @@
     var CHARS;
     var CHARS_LEN;
     function createRandomData() {
-        CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         CHARS_LEN = CHARS.length - 1;
         var StringBuffer = Java.type('java.lang.StringBuffer')
         var stringBuffer = new StringBuffer(100);
