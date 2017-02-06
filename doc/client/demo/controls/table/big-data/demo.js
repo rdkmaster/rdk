@@ -4,9 +4,9 @@
         'rd.controls.Table'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope',main];
-    function main($scope) {
-        $scope.setting = {
+    var controllerDefination = ['$scope', 'DataSourceService', main];
+    function main(scope, DataSourceService) {
+        scope.setting = {
             "columnDefs" :[
                 {
                     targets : 0,
@@ -40,6 +40,13 @@
 
             ]
         }
+
+        scope.startTest = function() {
+            DataSourceService.get('ds_table').query();
+            scope.hasStart = true;
+        }
+
+        scope.hasStart = false;
     }
 
     var controllerName = 'DemoController';

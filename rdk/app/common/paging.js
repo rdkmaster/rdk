@@ -2,9 +2,10 @@
     function _do(req, method) {
     }
     function _get(req) {
+        var result = new DataTable([], [], []);
         if (!req.service) {
             Log.error('bad argument, need a "service" property!')
-            return {};
+            return result;
         }
 
         var timestamp;
@@ -17,9 +18,14 @@
 
             timestamp = new Date().getTime();
             dataTable = Rest.get(url, {readTimeout: 120000});
-            dataTable = JSON.parse(dataTable);
-            if (dataTable.hasOwnProperty('result')) {
-                dataTable = JSON.parse(dataTable.result);
+            try {
+                dataTable = JSON.parse(dataTable);
+                if (dataTable.hasOwnProperty('result')) {
+                    dataTable = JSON.parse(dataTable.result);
+                }
+            } catch (e) {
+                Log.error(e.stack);
+                return result;
             }
             log('read data spent', (new Date().getTime() - timestamp), 'ms');
             Cache.aging.put(key, dataTable, 6*3600);
@@ -28,7 +34,7 @@
         }
         if (!_.isDataTable(dataTable)) {
             Log.error('no data or invalid data format, need a "DataTable" object!');
-            return {};
+            return result;
         }
 
         var data;
@@ -66,12 +72,11 @@
             data = [];
         }
 
-        return {
-            header: dataTable.header,
-            field: dataTable.field,
-            data: data,
-            paging: pagingInfo
-        };
+        result.header = dataTable.header;
+        result.field = dataTable.field;
+        result.data = data;
+        result.paging = pagingInfo;
+        return result;
     }
     return {
         get: _get
@@ -140,9 +145,10 @@
         return data.filter(function(item) {
             for (var i = 0, len = indexes.length; i < len; i++) {
                 var cell = item[indexes[i]];
-                if (!cell) {
+                if (cell == null || cell == undefined) {
                     continue;
                 }
+                cell = String(cell);
                 //模糊搜索大小写不敏感
                 cell = cell.toLowerCase();
                 if (cell.indexOf(key) != -1) {

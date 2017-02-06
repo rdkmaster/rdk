@@ -62,6 +62,9 @@
 
         var role=file.loadProperty("app/console/server/application.properties").getProperty("role");
         log("rdk_console_role: "+role);
+        if (!role) {
+            return;
+        }
         Cache.put("rdk_console_role",role);
 
         if (role.equals("console")){
