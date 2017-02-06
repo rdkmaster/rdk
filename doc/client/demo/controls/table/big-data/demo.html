@@ -1,3 +1,5 @@
-<rdk_table ds="ds_table" ds_url="$svr/100k.js" ds_query_if="ready"
-    paging_type="server-auto" page_size="5" search="true" setting="setting">
+<p ng-show="!hasStart">注意这个测试需要在rdk后端产生 100k行*50列 的数据，如果你是通过localhost访问的这个页面，请不要单击开始按钮，因为运行在你PC上的rdk进程会因为内存不够而退出。</p>
+<button ng-show="!hasStart" ng-click="startTest()">我知道啦，开始吧</button>
+<rdk_table ds="ds_table" ds_url="$svr/100k.js" setting="setting"
+    paging_type="server-auto" page_size="5" search="true">
 </rdk_table>

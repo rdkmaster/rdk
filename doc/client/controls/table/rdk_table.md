@@ -407,6 +407,10 @@ cells 为 改变的行列信息的数组信息
 例如：
 <live_demo example="controls/table/serverpaging"></live_demo>
 
+服务端分页大数量测试
+
+<live_demo example="controls/table/big-data"></live_demo>
+
 ## search ##
 >支持类型：布尔型
 

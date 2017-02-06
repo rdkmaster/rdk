@@ -30,6 +30,11 @@
             colTypes.push(random(1, 3));
         }
 
+        //确保前三列是三种不同数据类型
+        colTypes[0] = 1;
+        colTypes[1] = 2;
+        colTypes[2] = 3;
+
         for (var i = 0; i < dataLen; i++) {
             if (i % 2000 == 0) {
                 log(i + ' rows has been created! ' + (dataLen-i) + ' rows to go...');

@@ -20,7 +20,9 @@
             dataTable = Rest.get(url, {readTimeout: 120000});
             try {
                 dataTable = JSON.parse(dataTable);
-                dataTable = JSON.parse(dataTable.result);
+                if (dataTable.hasOwnProperty('result')) {
+                    dataTable = JSON.parse(dataTable.result);
+                }
             } catch (e) {
                 Log.error(e.stack);
                 return result;
