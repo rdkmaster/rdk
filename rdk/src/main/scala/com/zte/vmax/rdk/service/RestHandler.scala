@@ -61,7 +61,6 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
         if (isResultWrapped) {
           rct.complete(ServiceResult(s))
         } else {
-          logger.debug(s)
           rct.complete(
             HttpResponse(StatusCodes.OK,
             HttpEntity(ContentType(MediaTypes.`application/json`, HttpCharsets.`UTF-8`), s))
@@ -96,7 +95,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
             parameters('p.as[ServiceParam]) {
               req =>
                 ctx =>
-                  logger.warn( s"""queryString style deprecated ! please use this type:uri?app=""&param=""&service="" """)
+                  logger.warn( s"""query param type deprecated ! please use this type: uri?key1=val1&key2=val2&... """)
                   doDispatch(ctx, url, req.app, req.param, true)
             }
           } ~
@@ -108,6 +107,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
               }
             } ~
             get { ctx =>
+              //这个分支应该走不进来
               doDispatch(ctx, url, null, null, true)
             } ~
             (put | post | delete) {
@@ -116,15 +116,12 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
                 val req = RdkUtil.json2Object[AnyRef](json).orNull
                 try {
                   val strMap = req.asInstanceOf[StringMap[AnyRef]]
+                  val app = strMap.get("app")
+                  val appStr:String = if (app == null) null else app.toString
                   val param = strMap.get("param")
                   if (param == null) {
-                    doDispatch(ctx, url, null, json, false)
+                    doDispatch(ctx, url, appStr, req, false)
                   } else {
-                    val app = strMap.get("app")
-                    var appStr:String = null
-                    if (app != null) {
-                      appStr = app.toString
-                    }
                     doDispatch(ctx, url, appStr, param.asInstanceOf[AnyRef], true)
                   }
                 } catch {
