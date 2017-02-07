@@ -1,12 +1,19 @@
 (function() {
 
-    return function(request, script) {
+    function aa(request, script) {
         //服务的第一行代码写在这里！
-        var lib = require("app/example/server/mylib.js");
-        lib.hello('rdk');
-        //为了演示blockUI的效果，这里故意延迟返回
-        sleep(500);
-        return i18n('greetings', script);
+        var a = 123;
+        // a.indexOf('aaa')
+
+        // throw {status:'500', detail: 123};
+        // Request.completeWithError('501', 134)
+
+        return {"a.b": 'a.b.c', c: 123, d: "ffffff服务的第一行代码写在这里！fffff", e: request};
+    }
+
+    return {
+    	put: aa, 
+    	// get: aa
     }
 
 })();
