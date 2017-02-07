@@ -1,32 +1,63 @@
 ## 新增功能
-- !412 支持公共导出功能
-- #443 [table] 前端过滤统一成后端过滤的设计
-- !426 增加app开发说明文档
-- #41 支持统一文件上传服务
-- 开始对IE11进行兼容，修改诸多控件的bug
-- #453 增加老化时回调释放资源回调功能
-- !457 增加旧api— sql调用日志，以方便定位sql执行时间
+- #548 rdk_paas 应用部署
+- #549 rdk_paas 应用升级
+- #550 rdk_paas 应用卸载
+- #551 rdk支持rest触发init.js服务
+- #552 rdk支持获取本机多网口IP
+- #559 PopupService提供属性控制是否需要表头
+- #560 AreaSelect控件提供复选功能
+- #561 表格支持server-auto分页方式 
+- #572 表格搜索框位置支持可定制 
+- #575 新增rdk_chart_icon控件
+- #577 rdk_icon控件支持rdk自研的符号图标iconfont 
+- #588 新增后端api `Data.fetchWithDataSource()` 和 `Data.batchFetchWithDataSource()`
+- #592 rdk后端支持适配Phoenix、GreenPlum、Bdai等数据库 
+- #599 新增公共分页服务，用于实现统一后端分页功能 
+- #600 DBPool 增加 getDataSource方法 
+- #601 RDK 开放REST路由注入方法
+- #546 独立版本包部署，主要基于Nginx、Tomcat+Nginx,node等服务器场景
+- #591 支持懒加载文件列表
+- #526 RDK融合adminlte库
+- #521 支持全新的live-demo系统
+- #529 基于Graph控件完成Echart官网示例demo
+- #585 新增通知服务NotifyService
+- #584 新增数值输入框Numeric_Input
+- #583 新增tooltip
+- #582 新增弹出菜单MenuService
+- #581 新增icon控件
+- #442 新增Editor，Switch控件
 
 ## 修改功能
-- !417 alert 效果调整和 alert按钮位置放置，确定键在取消键的右边
-- #449 [alert] 用popupservice改写
-- !432 bar图标题字体，位置修改，tu3刻度朝向修改
-- !433 rdk进程监听ip改为0.0.0.0
-- #469 增加jvm最大分配内存至8G
-- !438 得分图控件的颜色由js参数传入的条件修改为可选参数，建议不在配置color,和emotion两个属性，但依然保留此接口的功能。控件已提供默认的设置，在不配置color,和emotion两个属性时，rdk可以进行主题切换控制。另外支持emotion可配置字体图标fa
-- !459 rdk图标更新
-
+- #589 后端api的命名全部改为驼峰命名法
+- #558 accordion改写
+- #571 Editor控件补充文档、测试用例以及代码优化；补充后端File新api文档
+- #578 补充iconfont的使用说明及基于rdk的使用示例
+- #520 PopupService文档优化
+- #566 Tab增加左右移动按钮
+- #569 input支持图标icon属性以及click事件回调
+- #562 添加表格大数据demo
+- #560 优化popupservice,menuservice,notifyservice,tooltip等demo
+- #556 module提供默认控制器
+- #555 使用nginx作为调试用http服务器
+- #549 将sql()函数挪到Data.sql()中
+- #536 表格合并行高亮
+- #535 Iconfonts 更新图标列表和Demo页面
+- #513 jquery版本由1.11.3升级到2.2.3
 ## 修复故障
-- #446 使用popupservice弹出框服务，当点击确定按钮使用Alert控件弹出对话框时，原来的弹出框设置的标题以及close图标消失了
-- !423 time控件用例错误解决 
-- #447 服务端排序时，排序功能异常
-- #420 accordion和button以及ng-repeat一起用的时候，button的样式一直都会灰的。
-- !431 修改表格控件不需要表头和自定义表头，搜索过滤问题
-- #457 Alert重构后问题如下图所示
-- #504 button控件不支持双向绑定
-- #507 Accordion editable 例子中编辑的图标刷新不出来
-- #505 Panel beforeclose的demo，关闭第一个tab页，跳转到第三个tab页，但界面展示为第二个tab页的内容
-- #503 table 控件后端分页，分页信息显示错误
-- #509 [time] beginTime 大于 endTime 时 endTime不能进行选择
-
-###########
+- #543 tab文档中的demo有addtab的点击动态新增tab界面就会卡死
+- #553 rdk_button和PopupService一起用，button会在阴影上面且还可以点击
+- #554 修复vreport tab控件bug
+- #561 Firefox 40.0下table控件搜索框位置异常
+- #573 表格控件的单元格合并功能有bug
+- #581 notify service 相关示例入参option中type是url的示例，弹出多个对话框之后，将最外层的对话框关闭之后，余下的对话框无法通过确定来关闭 
+- #582 下拉菜单，入参position指定为domid的demo在文档中显示异常，弹出菜单未在目标dom中间位置显示 
+- #583 提示信息，属性rdk_tooltip的例子建议稍微调整下位置，当位置为top时，点击文本框后，弹出的内容首行在页面显示不全 
+- #584 NumericInput中step的demo小数点后位数超过10位也可以与描述‘支持小数点后10位以内的浮点数’冲突 
+- #586 [Module] destroyModule时需要移除所有事件监听，涉及EventService修改
+- #587 readString函数读取xml时，json解析报错
+- #591 live-demo指令异常
+- #594 Menuservice 相关示例中当position为mouse时点击关闭弹出框，控制台有报错
+- #595 NumericINput 点击向上或向下按钮，数值改变后，“您输入的值**”后面的数值不会随之改变。
+- #596 NumericInput 中change的例子值发生改变后不出现弹框，只有将光标置入文本框后再点击其他空白处才出现弹框 
+- #597 rdk_switch 中on_label例子缺失 
+- #492 修改rest读取大数据返回值截断问题，同时修复inputStream未关闭问题
