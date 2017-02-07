@@ -161,10 +161,10 @@ var Request = {
         return _transferHeader(JSON.parse(reqCtxHeaderInfo));
     },
     completeWithError: function(status, detail) {
-        status = _.isNumber(status) ? status : 500;
-        detail = _.isString(detail) ? detail : "unknown error";
+        status = status === undefined || status === null ? '500' : status.toString();
+        detail = detail === undefined || detail === null ? "no detail" : detail.toString();
         Log.error("completeWithError, status=" + status + ", detail=" + detail);
-        throw {status: status, detail: detail, type: '__ApplicationRuntimeException__'};
+        throw {status: status, detail: detail};
     }
 
 }

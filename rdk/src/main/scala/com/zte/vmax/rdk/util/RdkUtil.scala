@@ -144,29 +144,44 @@ object RdkUtil extends Logger {
     }
     catch {
       case e: RequestProcessingException => {
+        val error: String = "RequestProcessingException: " + e.getMessage + ", param=" + param + ", service path='" + realJs
+        appLogger(app).error(error, e)
         Left(e)
       }
       case e: ECMAException => {
-        val som = e.getEcmaError.asInstanceOf[ScriptObjectMirror]
-        val status = som.getMember("status").asInstanceOf[Int]
+        val som = if (e.getEcmaError.isInstanceOf[ScriptObjectMirror]) {
+          e.getEcmaError.asInstanceOf[ScriptObjectMirror]
+        } else {
+          null
+        }
+        var obj = if (som == null) "500" else som.getMember("status")
+        var str = if (obj.isInstanceOf[Undefined]) "500" else obj.asInstanceOf[String]
+        var status:Int = 500
+        try {
+          status = Integer.parseInt(str)
+        } catch {
+          case t:Exception => {
+            status = 500
+          }
+        }
+
+        obj = if (som == null) "invalid ECMAException\n" + e.getStackTraceString else som.getMember("detail")
+        val detail = if (obj.isInstanceOf[String]) obj.asInstanceOf[String] else e.getStackTraceString
+
         if (status >= 400 && status <= 499) {
           Left(new IllegalRequestException(
-            StatusCode.int2StatusCode(status).asInstanceOf[ClientError],
-            som.getMember("detail").asInstanceOf[String]))
+            StatusCode.int2StatusCode(status).asInstanceOf[ClientError], detail))
         } else if (status >= 500 && status <= 599) {
           Left(new RequestProcessingException(
-            StatusCode.int2StatusCode(status).asInstanceOf[ServerError],
-            som.getMember("detail").asInstanceOf[String]))
+            StatusCode.int2StatusCode(status).asInstanceOf[ServerError], detail))
         } else {
-          Left(new RequestProcessingException(
-            StatusCodes.InternalServerError,
-            som.getMember("detail").asInstanceOf[String]))
+          Left(new RequestProcessingException(StatusCodes.InternalServerError, detail))
         }
       }
       case e: Exception => {
         val error: String = "service error: " + e.getMessage + ", param=" + param + ", service path='" + realJs
         appLogger(app).error(error, e)
-        Left(new RequestProcessingException(StatusCodes.InternalServerError, e.getMessage))
+        Left(new RequestProcessingException(StatusCodes.InternalServerError, e.getStackTraceString))
       }
     }
   }
