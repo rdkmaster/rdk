@@ -2,18 +2,20 @@ package com.zte.vmax.rdk.util
 
 
 
-import java.io.{FileOutputStream, File, FilenameFilter}
+import java.io.{File, FileOutputStream, FilenameFilter}
 import java.lang.reflect.Method
 import java.net.InetAddress
 import java.nio.file._
 import java.nio.file.attribute.BasicFileAttributes
 import java.util.UUID
 import java.util.regex.{Matcher, Pattern}
+
 import akka.util.Timeout
 import com.google.gson.internal.StringMap
+
 import scala.concurrent.duration._
 import com.google.gson.{Gson, GsonBuilder}
-import com.typesafe.config.{Config=>TypeSafeConfig}
+import com.typesafe.config.{Config => TypeSafeConfig}
 import com.zte.vmax.activemq.rdk.RDKActiveMQ
 import com.zte.vmax.rdk.RdkServer
 import com.zte.vmax.rdk.actor.Messages._
@@ -24,13 +26,15 @@ import com.zte.vmax.rdk.env.Runtime
 import com.zte.vmax.rdk.jsr.FileHelper
 import com.zte.vmax.rdk.service.ServiceConfig
 import jdk.nashorn.api.scripting.ScriptObjectMirror
-import jdk.nashorn.internal.runtime.Undefined
-import spray.http.{MultipartFormData, IllegalRequestException, StatusCodes}
-import scala.concurrent.{Future, Await}
+import jdk.nashorn.internal.runtime.{ECMAException, Undefined}
+import spray.http._
+
+import scala.concurrent.{Await, Future}
 import scala.reflect.ClassTag
 import scala.sys.process.ProcessBuilder
 import scala.util.Try
 import akka.pattern.ask
+import spray.http.StatusCodes.{ClientError, ServerError}
 
 
 
@@ -115,7 +119,7 @@ object RdkUtil extends Logger {
     runtime.setAppName(realApp)
     runtime.resetDataSource
     appLogger(realApp).info(s"handling request($realApp), script=$realJs , method=$method param=$param")
-    if (false == fileExist(FileHelper.fixPath(realJs, realApp))) {
+    if (!fileExist(FileHelper.fixPath(realJs, realApp))) {
       return Left(new IllegalRequestException(StatusCodes.NotFound, realJs))
     }
 
@@ -126,22 +130,45 @@ object RdkUtil extends Logger {
         Right(runtime.callService(callable.asInstanceOf[ScriptObjectMirror], param, realJs))
       }
       else if (method == RequestMethod.GET) {
-        Right(runtime.callService(service, param, realJs))
+        if (service.isFunction) {
+          Right(runtime.callService(service, param, realJs))
+        } else {
+          Left(new IllegalRequestException(StatusCodes.MethodNotAllowed,
+            "invalid service implement, need '" + method + "' method!"))
+        }
       }
       else {
-        Left(new IllegalRequestException(StatusCodes.MethodNotAllowed, "invalid service implement, need '" + method + "' method!"))
+        Left(new IllegalRequestException(StatusCodes.MethodNotAllowed,
+          "invalid service implement, need '" + method + "' method!"))
       }
-
     }
     catch {
+      case e: RequestProcessingException => {
+        Left(e)
+      }
+      case e: ECMAException => {
+        val som = e.getEcmaError.asInstanceOf[ScriptObjectMirror]
+        val status = som.getMember("status").asInstanceOf[Int]
+        if (status >= 400 && status <= 499) {
+          Left(new IllegalRequestException(
+            StatusCode.int2StatusCode(status).asInstanceOf[ClientError],
+            som.getMember("detail").asInstanceOf[String]))
+        } else if (status >= 500 && status <= 599) {
+          Left(new RequestProcessingException(
+            StatusCode.int2StatusCode(status).asInstanceOf[ServerError],
+            som.getMember("detail").asInstanceOf[String]))
+        } else {
+          Left(new RequestProcessingException(
+            StatusCodes.InternalServerError,
+            som.getMember("detail").asInstanceOf[String]))
+        }
+      }
       case e: Exception => {
-        val error: String = "service error: " + e.getMessage + ", param=" + param + "service path='" + realJs
+        val error: String = "service error: " + e.getMessage + ", param=" + param + ", service path='" + realJs
         appLogger(app).error(error, e)
-
-        Left(new IllegalRequestException(StatusCodes.BadRequest, e.getMessage))
+        Left(new RequestProcessingException(StatusCodes.InternalServerError, e.getMessage))
       }
     }
-
   }
 
   /**

@@ -128,7 +128,6 @@ class Runtime(engine: ScriptEngine) extends Logger {
   }
 
   def callService(callable: ScriptObjectMirror, param: AnyRef, script: String): String = {
-    try {
       val result: AnyRef = serviceCaller.call(callable, callable, param, script)
       if (result.isInstanceOf[String]) {
         return result.toString
@@ -136,14 +135,6 @@ class Runtime(engine: ScriptEngine) extends Logger {
       else {
         return jsonParser.call(callable, result, "").toString
       }
-    }
-    catch {
-      case e: Exception => {
-        val error: String = "service error, message: " + e.getMessage + ", param=" + param + ", path=" + script
-        appLogger.error(error, e)
-        return error
-      }
-    }
   }
 
   /**
