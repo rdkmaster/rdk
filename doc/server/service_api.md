@@ -14,7 +14,7 @@
 
 ## 公共导出服务 ##
 
-[查看公共导出服务](common_export.md)
+[查看公共导出服务](/doc/client/common/export.md)
 
 ## 消息队列 ##
 
