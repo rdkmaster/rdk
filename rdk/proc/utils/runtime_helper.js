@@ -41,7 +41,6 @@ var java = {
     FileHelper: Java.type('com.zte.vmax.rdk.jsr.FileHelper'),
     RegFileFilter: Java.type('com.zte.vmax.rdk.util.RegFileFilter'),
     Config: Java.type('com.zte.vmax.rdk.config.Config')
-
 };
 
 var mq = {
@@ -97,7 +96,7 @@ var Log = {
         rdk_runtime.jsLogger().error(message);
     },
     operateLog: function (userOpInfo) {
-        var reqCtxHeaderInfo = getRequestContextHeader()
+        var reqCtxHeaderInfo = Request.getContextHeader()
         if (!reqCtxHeaderInfo) {
             Log.error("NoneContext call!");
             return false;
@@ -152,14 +151,25 @@ var Shell = {
     }
 }
 
-function getRequestContextHeader() {
-    var reqCtxHeaderInfo = rdk_runtime.getReqCtxHeaderInfo()
-    if (!reqCtxHeaderInfo) {
-        Log.warn("NoneContext call!")
-        return "";
+var Request = {
+    getContextHeader: function() {
+        var reqCtxHeaderInfo = rdk_runtime.getReqCtxHeaderInfo()
+        if (!reqCtxHeaderInfo) {
+            Log.warn("NoneContext call!")
+            return "";
+        }
+        return _transferHeader(JSON.parse(reqCtxHeaderInfo));
+    },
+    completeWithError: function(status, detail) {
+        status = status === undefined || status === null ? '500' : status.toString();
+        detail = detail === undefined || detail === null ? "no detail" : detail.toString();
+        Log.error("completeWithError, status=" + status + ", detail=" + detail);
+        throw {status: status, detail: detail};
     }
-    return _transferHeader(JSON.parse(reqCtxHeaderInfo));
+
 }
+var getRequestContextHeader = Request.getContextHeader;
+
 //reqCtxHeaderInfo为数组，转换为对象方便使用
 //[{"key": "Cookie","value": "JSESSIONID=11ruoxiraug56gcl0ilshlpyk"}]  => {"Cookie":"JSESSIONID=11ruoxiraug56gcl0ilshlpyk"}
 function _transferHeader(headerArray) {

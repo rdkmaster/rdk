@@ -27,6 +27,29 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
     RdkUtil.json2Object[ServiceParam](json).orNull
   }
 
+  def completeWithError(rct: RequestContext, status: StatusCode, detail: String): Unit = {
+    rct.complete(HttpResponse(status, detail))
+  }
+
+  def completeWithError(rct: RequestContext, exception: IllegalRequestException): Unit = {
+    rct.complete(HttpResponse(exception.status, exception.getMessage))
+  }
+
+  def completeWithError(rct: RequestContext, exception: RequestProcessingException): Unit = {
+    rct.complete(HttpResponse(exception.status, exception.getMessage))
+  }
+
+  def completeWithError(rct: RequestContext, exception: Exception): Unit = {
+    exception match {
+      case e:IllegalRequestException =>
+        completeWithError(rct, e)
+      case e:RequestProcessingException =>
+        completeWithError(rct, e)
+      case _ =>
+        completeWithError(rct, StatusCodes.InternalServerError, exception.getMessage)
+    }
+  }
+
   private lazy val breaker = new CircuitBreaker(system.scheduler,
     maxFailures = ServiceConfig.maxFailures,
     callTimeout = ServiceConfig.callTimeout seconds,
@@ -43,8 +66,9 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
     logger.debug(s"${urls},$param")
     val method = rct.request.method.name.toLowerCase
     val begin = System.currentTimeMillis()
-    val body = () => (router ? ServiceRequest(HttpRequestContext(rct),
-      url.mkString("/"), app, param, method, begin)).mapTo[Either[Exception, String]]
+    val body = () => (router ? ServiceRequest(
+      HttpRequestContext(rct), url.mkString("/"), app, param, method, begin)
+      ).mapTo[Either[Exception, String]]
 
     val future = if (ServiceConfig.enable) {
       breaker.withCircuitBreaker(body())
@@ -56,14 +80,14 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
       case e => rct.failWith(e)
     }
     future.onSuccess {
-      case Left(e) => rct.failWith(e)
+      case Left(e) => completeWithError(rct, e)
       case Right(s) =>
         if (isResultWrapped) {
           rct.complete(ServiceResult(s))
         } else {
           rct.complete(
             HttpResponse(StatusCodes.OK,
-            HttpEntity(ContentType(MediaTypes.`application/json`, HttpCharsets.`UTF-8`), s))
+              HttpEntity(ContentType(MediaTypes.`application/json`, HttpCharsets.`UTF-8`), s))
           )
         }
     }
@@ -96,14 +120,22 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
               req =>
                 ctx =>
                   logger.warn( s"""query param type deprecated ! please use this type: uri?key1=val1&key2=val2&... """)
-                  doDispatch(ctx, url, req.app, req.param, true)
+                  if (req == null) {
+                    completeWithError(ctx, StatusCodes.BadRequest, "bad argument")
+                  } else {
+                    doDispatch(ctx, url, req.app, req.param, true)
+                  }
             }
           } ~
             get {
               parameterMap {
                 req =>
                   ctx =>
-                    doDispatch(ctx, url, req.getOrElse("app", null), req, false)
+                    if (req == null) {
+                      completeWithError(ctx, StatusCodes.BadRequest, "bad argument")
+                    } else {
+                      doDispatch(ctx, url, req.getOrElse("app", null), req, false)
+                    }
               }
             } ~
             get { ctx =>
@@ -117,7 +149,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
                 try {
                   val strMap = req.asInstanceOf[StringMap[AnyRef]]
                   val app = strMap.get("app")
-                  val appStr:String = if (app == null) null else app.toString
+                  val appStr: String = if (app == null) null else app.toString
                   val param = strMap.get("param")
                   if (param == null) {
                     doDispatch(ctx, url, appStr, req, false)
@@ -134,15 +166,24 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
       path("rdk" / "service") {
         get {
           parameters('p.as[ServiceParam]) {
-            req => ctx =>
-              doDispatch(ctx, req.service :: Nil, req.app, req.param, true)
+            req =>
+              ctx =>
+                if (req == null || req.service == null || req.app == null || req.param == null) {
+                  completeWithError(ctx, StatusCodes.BadRequest, "bad argument, need service/app/param property!")
+                } else {
+                  doDispatch(ctx, req.service :: Nil, req.app, req.param, true)
+                }
           }
         } ~
           (put | post | delete) {
             ctx =>
               val json = ctx.request.entity.asString(HttpCharsets.`UTF-8`)
               val req = str2ServiceCallParam(json)
-              doDispatch(ctx, req.service :: Nil, req.app, req.param, true)
+              if (req == null || req.service == null || req.app == null || req.param == null) {
+                completeWithError(ctx, StatusCodes.BadRequest, "bad argument, need service/app/param property!")
+              } else {
+                doDispatch(ctx, req.service :: Nil, req.app, req.param, true)
+              }
           }
       }
 
