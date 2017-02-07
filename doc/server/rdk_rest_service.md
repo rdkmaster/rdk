@@ -1,4 +1,4 @@
-### rdk_server rest请求说明
+### rest请求参数说明
 
 rdk可支持 get/put/delete/put 四种动作rest服务。
 
@@ -130,3 +130,18 @@ my_service服务:
 	})();
 
 前端收到的返回值为 `{result: "rdk"}`
+
+### rest请求http状态码说明
+#### 内置状态码
+- 当请求的rest服务时参数非法，系统返回 400 Bad Request
+- 当请求的rest服务不存在，系统返回 404 Not Found
+- 当请求的rest服务未实现对应方法（get/put/post/delete），系统返回 405 Method Not Allowed
+- 当请求的rest服务内部异常未捕获的，系统返回 500 Interval Server Error
+- 其他未知错误，系统返回 500 Interval Server Error
+
+#### 自定义状态码
+RDK允许后端js中根据实际情况返回对应的状态码，用法：
+
+	Request.completeWithError(statusCode, detail)
+
+[详见这里](/doc/#/server/service_api.md#Request)
