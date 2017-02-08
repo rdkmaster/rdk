@@ -1,7 +1,7 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.containers.Panel', 'rd.controls.Table', 'css!base/css/panel'
+        'rd.containers.Panel', 'rd.controls.Table', 'css!base/css/panel','css!rd.styles.IconFonts'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];

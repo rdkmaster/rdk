@@ -17,7 +17,8 @@
     outline: 0;
     padding: 0;
     position: absolute;
-    top: -14px;
+    width: 0;
+    top: -20px;
     left: 44.2%;
     background-color: #fff;
     color: #008fd4;
