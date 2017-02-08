@@ -144,7 +144,7 @@ public class FileHelper extends AbstractAppLoggable {
         String content = readString(path);
         JSONObject jsonObj = null;
         try {
-            jsonObj = XML.toJSONObject(content);
+            jsonObj = XML.toJSONObject(content.replace("\n","").replace("\r",""));
         } catch (Exception e) {
             logger.error("transform json object error," + e);
             return "";
