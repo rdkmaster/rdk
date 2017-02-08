@@ -20,7 +20,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.IconCss', 'css!rd.styles.
           return '<div>\
                     <span style="{{getCursorStyle()}}" ng-click="clickHandler()"> \
                       <i ng-if="!isImage" class="{{icon}}"></i>\
-                      <img ng-show="isImage" src="{{icon}}" style="width:1em; height: 1em;">{{label}}\
+                      <img ng-show="isImage" ng-src="{{icon}}" style="width:1em; height: 1em;">{{label}}\
                     </span>\
                   </div>';
         },
