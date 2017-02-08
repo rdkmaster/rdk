@@ -1,7 +1,7 @@
-define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!rd.styles.FontAwesome',
+define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'css!rd.styles.Tab', 'css!rd.styles.FontAwesome',
     'css!rd.styles.Bootstrap'
 ], function() {
-    var tabApp = angular.module("rd.containers.Tab", ['rd.core']);
+    var tabApp = angular.module("rd.containers.Tab", ['rd.core', 'rd.attributes.Scroll']);
     tabApp.directive('rdkTabtitleParser', ['$compile', 'Utils', function($compile, Utils) {
         return {
             restrict: 'A',
@@ -73,7 +73,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'css!rd.styles.Tab', 'css!r
                                             <i ng-class="{\'disabled\':isMove(+1)}" ng-click="changeTabs(+1)"  class="move fa fa-caret-right"></i>\
                                         </div>\
                                     </div>\
-                                    <div ng-transclude class="content"> </div>\
+                                    <div ng-transclude class="content" rdk_scroll> </div>\
                                 </div>\
                         </div>';
                 },
