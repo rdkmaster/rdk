@@ -109,9 +109,9 @@ object RdkUtil extends Logger {
     * @param method
     * @return
     */
-  def handleJsRequest(runtime: Runtime, ctx: RDKContext, script: String, app: String, param: AnyRef, method: String): Either[Exception, String] = {
+  def handleJsRequest(runtime: Runtime, ctx: RDKContext, script: String, app: String, param: AnyRef, method: String): Either[Exception, ServiceRawResult] = {
     def isDefined(obj: AnyRef): Boolean = {
-      return !(obj.isInstanceOf[Undefined])
+      !(obj.isInstanceOf[Undefined])
     }
 
     val realJs = if (script.toLowerCase.endsWith(".js")) script else script + ".js"

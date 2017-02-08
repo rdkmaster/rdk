@@ -11,9 +11,10 @@ import com.zte.vmax.rdk.db.DataBaseHelper
 import com.zte.vmax.rdk.jsr._
 import com.zte.vmax.rdk.mq.MqHelper
 import com.zte.vmax.rdk.proxy.ProxyManager
-import com.zte.vmax.rdk.util.{RdkUtil, Logger}
+import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 import jdk.nashorn.api.scripting.ScriptObjectMirror
 import com.zte.vmax.rdk.actor.Messages._
+import spray.http.MediaTypes
 
 /**
   * Created by 10054860 on 2016/7/11.
@@ -120,21 +121,17 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   @throws(classOf[ScriptException])
   def eval(script: String): ScriptObjectMirror = {
-    return engine.eval(script).asInstanceOf[ScriptObjectMirror]
+    engine.eval(script).asInstanceOf[ScriptObjectMirror]
   }
 
   def getEngine:ScriptEngine={
-    return engine
+    engine
   }
 
-  def callService(callable: ScriptObjectMirror, param: AnyRef, script: String): String = {
+  def callService(callable: ScriptObjectMirror, param: AnyRef, script: String): ServiceRawResult = {
       val result: AnyRef = serviceCaller.call(callable, callable, param, script)
-      if (result.isInstanceOf[String]) {
-        return result.toString
-      }
-      else {
-        return jsonParser.call(callable, result, "").toString
-      }
+      if (result.isInstanceOf[String]) ServiceRawResult(result.toString, MediaTypes.`text/plain`)
+      else ServiceRawResult(jsonParser.call(callable, result, "").toString, MediaTypes.`application/json`)
   }
 
   /**
