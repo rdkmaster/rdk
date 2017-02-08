@@ -4,7 +4,7 @@ package com.zte.vmax.rdk.actor
 import akka.routing.ConsistentHashingRouter.ConsistentHashable
 import com.zte.vmax.activemq.rdk.RDKMessage
 import org.json4s.JObject
-import spray.http.MultipartFormData
+import spray.http.{MediaType, MediaTypes, MultipartFormData}
 import spray.routing.RequestContext
 
 import scala.language.existentials
@@ -30,6 +30,8 @@ object Messages {
                             app: String, param: AnyRef, method: String, timeStamp: Long)
 
   case class ServiceResult(result: String)
+
+  case class ServiceRawResult(content: String, contentType: MediaType)
 
   case class UploadServiceParam(data: MultipartFormData, fileName: String, timeStamp: Long)
 
@@ -100,7 +102,7 @@ object Messages {
     * @param head 同WSRequest的head
     * @param body
     */
-  case class WSResponse(head: WSHead, body: String)
+  case class WSResponse(head: WSHead, body: ServiceRawResult)
 
   /**
     * websocket 广播消息

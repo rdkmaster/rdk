@@ -68,7 +68,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
     val begin = System.currentTimeMillis()
     val body = () => (router ? ServiceRequest(
       HttpRequestContext(rct), url.mkString("/"), app, param, method, begin)
-      ).mapTo[Either[Exception, String]]
+      ).mapTo[Either[Exception, ServiceRawResult]]
 
     val future = if (ServiceConfig.enable) {
       breaker.withCircuitBreaker(body())
@@ -83,11 +83,11 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
       case Left(e) => completeWithError(rct, e)
       case Right(s) =>
         if (isResultWrapped) {
-          rct.complete(ServiceResult(s))
+          rct.complete(ServiceResult(s.content))
         } else {
           rct.complete(
             HttpResponse(StatusCodes.OK,
-              HttpEntity(ContentType(MediaTypes.`application/json`, HttpCharsets.`UTF-8`), s))
+              HttpEntity(ContentType(s.contentType, HttpCharsets.`UTF-8`), s.content))
           )
         }
     }

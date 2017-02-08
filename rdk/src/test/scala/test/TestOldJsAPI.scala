@@ -64,7 +64,7 @@ class TestOldJsAPI extends FunSpec with Matchers{
     }
 
     it("readXml(path)=> test cases passed!") {
-      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_readXml").fold(ex=>ex,v=> v.contains("orderedProviders") should be(true))
+      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_readXml").fold(ex=>ex,v=> v.content.contains("orderedProviders") should be(true))
     }
 
     it("save(file, content, append, encoding)=>test cases passed!") {
@@ -101,7 +101,7 @@ class TestOldJsAPI extends FunSpec with Matchers{
 
     it("list()=>ok return file lists") {
       val fileList=RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_list")
-      fileList.right.get.contains("conf1.propertites") should be (true)
+      fileList.right.get.content.contains("conf1.propertites") should be (true)
     }
 
    it("web()=>test cases passed!") {
