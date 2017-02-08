@@ -32,14 +32,14 @@ class WorkRoutee extends Actor with Json4sSupport with Logger {
 
       if (isRequestTimeout(timeStamp)) {
         //超时消息直接丢弃
-        logger.debug(s"<No.${no}> Drop timeout request: $script (${currentTimeMillis - timeStamp}ms)")
+        logger.debug(s"<No.$no> Drop timeout request: $script (${currentTimeMillis - timeStamp}ms)")
       } else {
         val result = RdkUtil.handleJsRequest(runtime, ctx, script, app, param, method)
-        logger.debug(s"<No.${no}> $script (${System.currentTimeMillis() - timeStamp}ms)")
+        logger.debug(s"<No.$no> $script (${System.currentTimeMillis() - timeStamp}ms)")
 
         if (sender != context.system.deadLetters) {
           if (isRequestTimeout(timeStamp)) {
-            logger.debug(s"<No.${no}> Drop timeout result of : $script")
+            logger.debug(s"<No.$no> Drop timeout result of : $script")
           } else {
             sender ! result
           }
@@ -53,19 +53,19 @@ class WorkRoutee extends Actor with Json4sSupport with Logger {
     case (no: Long, UploadServiceParam(data: MultipartFormData, fileName: String, timeStamp: Long)) =>
       runtime.setAppName("uploadFile")
       val result = RdkUtil.uploadFile(runtime, data, fileName)
-      logger.debug(s"<No.${no}> upload ${fileName} (${System.currentTimeMillis() - timeStamp}ms)")
+      logger.debug(s"<No.$no> upload $fileName (${System.currentTimeMillis() - timeStamp}ms)")
       sender ! result
 
     case (no: Long, ExportParam(source, fileType, fileParam, timeStamp)) =>
-      logger.debug(s"<No.${no}> ${source} export fileType:${fileType}")
+      logger.debug(s"<No.$no> $source export fileType:$fileType")
       runtime.setAppName("export")
-      var sourceData: String = runtime.getEngine.eval(s"rest.get('${source.url}',${RdkUtil.toJsonString(source.peerParam)})").asInstanceOf[String]
+      val sourceData: String = runtime.getEngine.eval(s"rest.get('${source.url}',${RdkUtil.toJsonString(source.peerParam)})").asInstanceOf[String]
       if (sourceData == null) {
         logger.error("get source error:empty!")
         sender ! None
       } else {
         sender ! RdkUtil.writeExportTempFile(runtime, sourceData, fileType, fileParam)
-        logger.debug(s"<No.${no}> $source (${System.currentTimeMillis() - timeStamp}ms)")
+        logger.debug(s"<No.$no> $source (${System.currentTimeMillis() - timeStamp}ms)")
       }
   }
 }
