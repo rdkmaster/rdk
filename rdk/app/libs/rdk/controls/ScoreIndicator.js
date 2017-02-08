@@ -1,5 +1,5 @@
 define(['rd.core', 'css!rd.styles.ScoreIndicator',
-    'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'
+    'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap','css!rd.styles.IconFonts'
 ], function () {
     var scoreIndicatorApp = angular.module('rd.controls.ScoreIndicator', ['rd.core']);
     scoreIndicatorApp.directive('rdkScoreIndicator', ['Utils',
@@ -41,16 +41,16 @@ define(['rd.core', 'css!rd.styles.ScoreIndicator',
                     if(item.emotion===undefined ||item.emotion===null)
                     {
                         switch (index){ //todo:等字体图标实现后再修改
-                            case 0:faSmile="fa-smile-o";break;
-                            case 1:faSmile="fa-smile-o";break;
-                            case 2:faSmile="fa-smile-o";break;
-                            case 3:faSmile="fa-smile-o";break;
+                            case 0:faSmile="iconfont-e8be";break;
+                            case 1:faSmile="iconfont-e8bd";break;
+                            case 2:faSmile="iconfont-e8bf";break;
+                            case 3:faSmile="iconfont-e8bc";break;
                             default:faSmile="";
                         }
                     }else{
                         faSmile=item.emotion;
                     }
-                    return "fa "+ faSmile +" faceSpan"+index
+                    return "iconfont "+ faSmile +" faceSpan"+index
                 };
                 scope.isIcon=function(item){
                     if(item.emotion && item.emotion.match(/[^\s]+\.(jpg|gif|png|bmp|jpeg)/i))

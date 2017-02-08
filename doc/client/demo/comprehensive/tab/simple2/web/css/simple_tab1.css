@@ -5,7 +5,7 @@
 	margin:0 auto;
 	margin-top:50px;
 }
-.hao{
+.main{
 	position: relative;
 	width:740px;
 	height: 308px;
@@ -21,11 +21,10 @@ button.images_right{
 	border: 0;
 	outline: none;
 	height:64px;
-	width:12px;
+	width:0;
     padding: 0;
 	cursor: pointer;
 	position:absolute;
-	margin-top:100px;
 	font-size: 72px;
 	background-color: #fff;
 	color: #008fd4;
@@ -40,7 +39,7 @@ button.images_right{
     transition: all 0.25s linear
 }
 /*标题样式*/
-div.hao >span.title{
+div.main >span.title{
 	position:absolute;
 	border: none;
 	top:10px;
@@ -53,12 +52,12 @@ div.hao >span.title{
 .rdk-table-module .pagingLine {
 	position: absolute;
 	width: 100%;
-	top: 268px;
+	top: 260px;
 }
 i.iconfont {
 	color: #008fd4;
 	font-size: 16px;
 }
-i.iconfont-line {
+i.iconfont-e8c8 {
 	font-size: 20px;
 }
