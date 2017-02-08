@@ -500,14 +500,14 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                     }
                                 }
                                 if (!!scope.globalSearch) {
-                                    param.param.filter = {
+                                    param.filter = {
                                         key: scope.globalSearch,
                                         field: scope.searchFields
                                     }
                                 }
                                 if (!!scope.sortField && !!scope.directionStr) {
                                     var sortas = scope.columnDefs[scope.data.field.indexOf(scope.sortField)].sortas;
-                                    param.param.sort = {
+                                    param.sort = {
                                         order: scope.directionStr,
                                         field: scope.sortField,
                                         as: sortas
