@@ -50,6 +50,11 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                     this.getTabs = function(){
                         return scope.tabs;
                     }
+
+                    this.activeTab = function(index){
+                        scope.currentSelectedIndex = index;
+                        scope.selectedTab = index;
+                    }
                 }],
                 template: function(tElement, tAttrs) {
                     return '<div class="rdk-tab-module">\
@@ -354,7 +359,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                     tabs.tabs("refresh");
                     $compile($('#'+scope.tabid))(scope.compileScope);
                     scope.contentDomStr = undefined;//一次新增后重置
-                    EventService.raiseControlEvent(scope, EventTypes.ADD);
+                    EventService.raiseControlEvent(scope, EventTypes.ADD, scope.tabs.length-1);
                 }
 
                 function _getTabIndex(tabId) {
