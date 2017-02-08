@@ -1,6 +1,4 @@
 (function() {
-    function _do(req, method) {
-    }
     function _get(req) {
         var result = new DataTable([], [], []);
         if (!req.service) {

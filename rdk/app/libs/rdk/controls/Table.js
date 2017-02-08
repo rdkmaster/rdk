@@ -492,13 +492,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                                 var key = config.method == 'get' ? 'params' : 'data';
                                 var param = {
-                                    param: {
-                                        param: config[key],
-                                        service: url,
-                                        paging: {
-                                            currentPage: Number(scope.currentPage+1),
-                                            pageSize: Number(scope.pageSize)
-                                        }
+                                    param: config[key],
+                                    service: url,
+                                    paging: {
+                                        currentPage: Number(scope.currentPage+1),
+                                        pageSize: Number(scope.pageSize)
                                     }
                                 }
                                 if (!!scope.globalSearch) {
@@ -515,7 +513,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                         as: sortas
                                     }
                                 }
-                                config[key] = config.method == 'get' ? { p: param } : param;
+                                config[key] = param;
                                 config.url = '/rdk/service/app/common/paging';
 
                                 return config;
