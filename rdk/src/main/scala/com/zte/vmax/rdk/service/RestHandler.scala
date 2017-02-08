@@ -63,7 +63,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
 
   def doDispatch(rct: RequestContext, url: List[String], app: String, param: AnyRef, isResultWrapped: Boolean): Unit = {
     val urls = url mkString "/"
-    logger.debug(s"${urls},$param")
+    logger.debug(s"$urls, $param")
     val method = rct.request.method.name.toLowerCase
     val begin = System.currentTimeMillis()
     val body = () => (router ? ServiceRequest(
