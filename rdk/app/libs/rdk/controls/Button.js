@@ -23,7 +23,7 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                                     <div class="rdk-button-shade rdk-button-{{type}}"></div>\
                                     <button class="rdk-button-btn" ng-mousedown="$mouseDown()" ng-mouseup="$mouseUP()" ng-mouseover="$mouseOver()" ng-mouseout="$mouseOut()"\
                                     title="{{tooltip}}" ng-class="setBtnClass()" ng-disabled="!enabled">\
-                                        <img src="{{icon}}" ng-click="$stopPro($event)" ng-if="iconShow" ng-class="{\'rdk-padding-right\':paddingHide}">\
+                                        <img ng-src="{{icon}}" ng-click="$stopPro($event)" ng-if="iconShow" ng-class="{\'rdk-padding-right\':paddingHide}">\
                                         <i ng-click="$stopPro($event)" ng-class="{\'rdk-padding-right\':paddingHide}" class="{{icon}}" ng-if="!iconShow"></i>{{label}}\
                                     </button>\
                                 </div>\
