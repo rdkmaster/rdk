@@ -174,3 +174,95 @@
 
 
 
+
+
+
+		
+		
+
+### `File.list()` {#list}###
+
+定义：
+
+    function list(path, recursive, pattern);
+
+参数：
+
+- path      字符串，需要读取的文件路径。
+- recursive boolean变量，是否递归查找子目录。
+- pattern   字符串，正则表达式。
+
+返回：path目录符合pattern的文件列表
+
+说明：pattern可以参考js正则表达式写法，若不需默认填空。
+
+示例： 从给定目录中过滤出文件名是数字的文件
+
+       var m=file.list("app/common/conf",true,"/-?[1-9]\d*/");
+ 
+ 
+### `File.copy()` {#copy}###
+
+定义：
+
+    function copy(cpFrom, cpTo, recursive, force);
+
+参数：
+
+- cpFrom      字符串，文件源路径。
+- cpTo        字符串，文件目的路径。
+- recursive   boolean变量，是否递归拷贝。
+- force       boolean变量。
+
+返回：成功返回0，其余为失败
+
+说明：force暂未实现，默认填false。
+
+示例： 将源目录路径拷贝到目的路径
+
+       var m=file.copy("/source","/dest",false,false);
+  
+### `File.web()` {#web}###
+
+定义：
+
+    function web();
+
+返回：web目录
+
+说明：无。
+
+示例： 返回当前应用web所在目录
+
+       var m=file.web();
+	   
+	   
+
+### `File.svr()` {#svr}###
+
+定义：
+
+    function svr();
+
+返回：server目录
+
+说明：无。
+
+示例： 返回当前应用server所在目录
+
+       var m=file.svr();
+	 
+	 
+### `File.base()` {#base}###
+
+定义：
+
+    function base();
+
+返回：base目录
+
+说明：无。
+
+示例： 返回当前应用目录
+
+       var m=file.svr();	   
