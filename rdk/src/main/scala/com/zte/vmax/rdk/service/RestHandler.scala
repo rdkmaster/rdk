@@ -1,4 +1,4 @@
-package com.zte.vmax.rdk.service
+﻿package com.zte.vmax.rdk.service
 
 import akka.actor.{ActorRef, ActorSystem}
 import akka.pattern.{CircuitBreaker, ask}
@@ -41,9 +41,9 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
 
   def completeWithError(rct: RequestContext, exception: Exception): Unit = {
     exception match {
-      case e:IllegalRequestException =>
+      case e: IllegalRequestException =>
         completeWithError(rct, e)
-      case e:RequestProcessingException =>
+      case e: RequestProcessingException =>
         completeWithError(rct, e)
       case _ =>
         completeWithError(rct, StatusCodes.InternalServerError, exception.getMessage)
@@ -63,7 +63,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
 
   def doDispatch(rct: RequestContext, url: List[String], app: String, param: AnyRef, isResultWrapped: Boolean): Unit = {
     val urls = url mkString "/"
-    logger.debug(s"$urls, $param")
+    logger.debug(s"${urls},$param")
     val method = rct.request.method.name.toLowerCase
     val begin = System.currentTimeMillis()
     val body = () => (router ? ServiceRequest(
@@ -131,10 +131,19 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
               parameterMap {
                 req =>
                   ctx =>
-                    if (req == null) {
+                    req match {
+                      case null =>
                       completeWithError(ctx, StatusCodes.BadRequest, "bad argument")
-                    } else {
-                      doDispatch(ctx, url, req.getOrElse("app", null), req, false)
+                      case _ =>
+                        val param = req.getOrElse("param", null)
+                        var request: AnyRef = null
+                        param match {
+                          case json: String =>
+                            request = RdkUtil.json2Object[AnyRef](json.substring(0, json.length)).orNull
+                          case _ =>
+                            request = req
+                        }
+                        doDispatch(ctx, url, req.getOrElse("app", null), request, false)
                     }
               }
             } ~
