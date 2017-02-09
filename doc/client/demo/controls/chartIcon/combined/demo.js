@@ -10,6 +10,7 @@
             "columnDefs": [
                 {
                     title: "",
+                    target:
                     render: '<a style="cursor:pointer" ng-click="appScope.click(item)">点击</a>'
                 }, {
                     title: "Ratio",

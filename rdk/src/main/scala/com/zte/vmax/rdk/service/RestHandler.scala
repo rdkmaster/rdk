@@ -41,9 +41,9 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
 
   def completeWithError(rct: RequestContext, exception: Exception): Unit = {
     exception match {
-      case e:IllegalRequestException =>
+      case e: IllegalRequestException =>
         completeWithError(rct, e)
-      case e:RequestProcessingException =>
+      case e: RequestProcessingException =>
         completeWithError(rct, e)
       case _ =>
         completeWithError(rct, StatusCodes.InternalServerError, exception.getMessage)
@@ -68,7 +68,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
     val begin = System.currentTimeMillis()
     val body = () => (router ? ServiceRequest(
       HttpRequestContext(rct), url.mkString("/"), app, param, method, begin)
-      ).mapTo[Either[Exception, String]]
+      ).mapTo[Either[Exception, ServiceRawResult]]
 
     val future = if (ServiceConfig.enable) {
       breaker.withCircuitBreaker(body())
@@ -83,11 +83,11 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
       case Left(e) => completeWithError(rct, e)
       case Right(s) =>
         if (isResultWrapped) {
-          rct.complete(ServiceResult(s))
+          rct.complete(ServiceResult(s.content))
         } else {
           rct.complete(
             HttpResponse(StatusCodes.OK,
-              HttpEntity(ContentType(MediaTypes.`application/json`, HttpCharsets.`UTF-8`), s))
+              HttpEntity(ContentType(s.contentType, HttpCharsets.`UTF-8`), s.content))
           )
         }
     }
@@ -131,10 +131,19 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
               parameterMap {
                 req =>
                   ctx =>
-                    if (req == null) {
+                    req match {
+                      case null =>
                       completeWithError(ctx, StatusCodes.BadRequest, "bad argument")
-                    } else {
-                      doDispatch(ctx, url, req.getOrElse("app", null), req, false)
+                      case _ =>
+                        val param = req.getOrElse("param", null)
+                        var request: AnyRef = null
+                        param match {
+                          case json: String =>
+                            request = RdkUtil.json2Object[AnyRef](json.substring(0, json.length)).orNull
+                          case _ =>
+                            request = req
+                        }
+                        doDispatch(ctx, url, req.getOrElse("app", null), req, false)
                     }
               }
             } ~

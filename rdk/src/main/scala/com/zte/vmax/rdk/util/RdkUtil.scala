@@ -1,7 +1,6 @@
 package com.zte.vmax.rdk.util
 
 
-
 import java.io.{File, FileOutputStream, FilenameFilter}
 import java.lang.reflect.Method
 import java.net.InetAddress
@@ -35,8 +34,6 @@ import scala.sys.process.ProcessBuilder
 import scala.util.Try
 import akka.pattern.ask
 import spray.http.StatusCodes.{ClientError, ServerError}
-
-
 
 
 /**
@@ -109,9 +106,9 @@ object RdkUtil extends Logger {
     * @param method
     * @return
     */
-  def handleJsRequest(runtime: Runtime, ctx: RDKContext, script: String, app: String, param: AnyRef, method: String): Either[Exception, String] = {
+  def handleJsRequest(runtime: Runtime, ctx: RDKContext, script: String, app: String, param: AnyRef, method: String): Either[Exception, ServiceRawResult] = {
     def isDefined(obj: AnyRef): Boolean = {
-      return !(obj.isInstanceOf[Undefined])
+      !(obj.isInstanceOf[Undefined])
     }
 
     val realJs = if (script.toLowerCase.endsWith(".js")) script else script + ".js"
@@ -149,24 +146,22 @@ object RdkUtil extends Logger {
         Left(e)
       }
       case e: ECMAException => {
-        val som = if (e.getEcmaError.isInstanceOf[ScriptObjectMirror]) {
-          e.getEcmaError.asInstanceOf[ScriptObjectMirror]
-        } else {
-          null
-        }
+        val error: String = "ECMAException: " + e.getMessage + ", param=" + param + ", service path='" + realJs
+        appLogger(app).error(error, e)
+        val som = if (e.getEcmaError.isInstanceOf[ScriptObjectMirror]) e.getEcmaError.asInstanceOf[ScriptObjectMirror] else null
         var obj = if (som == null) "500" else som.getMember("status")
         var str = if (obj.isInstanceOf[Undefined]) "500" else obj.asInstanceOf[String]
-        var status:Int = 500
+        var status: Int = 500
         try {
           status = Integer.parseInt(str)
         } catch {
-          case t:Exception => {
+          case t: Exception => {
             status = 500
           }
         }
 
         obj = if (som == null) "invalid ECMAException\n" + e.getStackTraceString else som.getMember("detail")
-        val detail = if (obj.isInstanceOf[String]) obj.asInstanceOf[String] else e.getStackTraceString
+        val detail = if (obj.isInstanceOf[String]) obj.asInstanceOf[String] else e.getMessage + '\n' + e.getStackTraceString
 
         if (status >= 400 && status <= 499) {
           Left(new IllegalRequestException(
@@ -179,9 +174,10 @@ object RdkUtil extends Logger {
         }
       }
       case e: Exception => {
-        val error: String = "service error: " + e.getMessage + ", param=" + param + ", service path='" + realJs
+        val error: String = "Exception: " + e.getMessage + ", param=" + param + ", service path='" + realJs
         appLogger(app).error(error, e)
-        Left(new RequestProcessingException(StatusCodes.InternalServerError, e.getStackTraceString))
+        Left(new RequestProcessingException(StatusCodes.InternalServerError,
+          e.getMessage + '\n' + e.getStackTraceString))
       }
     }
   }
@@ -288,19 +284,19 @@ object RdkUtil extends Logger {
       CacheHelper.getAppCache(dbSession.appName).get(VSqlProcessorKey + dsName, None) match {
         case None => sql
         case method: Method =>
-        try {
+          try {
             method.invoke(null, sql).asInstanceOf[String]
-        } catch {
+          } catch {
             case e: Exception =>
               logger.error(s"toVsql failed: $sql")
               sql
-            }
-        case _ =>sql
           }
-        }
+        case _ => sql
+      }
+    }
     )
 
-    }
+  }
 
 
   /**
@@ -339,8 +335,8 @@ object RdkUtil extends Logger {
 
   def getConfigValue[A](prop: String)(implicit config: TypeSafeConfig): Option[A] =
     withOption(config.getAnyRef(prop)) match {
-      case r:Some[A] =>r
-      case _ =>None
+      case r: Some[A] => r
+      case _ => None
     }
 
   def uploadFile(runtime: Runtime, formData: MultipartFormData, fileName: String): Either[Exception, String] = {

@@ -633,14 +633,19 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 定义：
 
-    function get(url, option);
+	function get(url, param, option); 
 
 说明：在后端代码中调用其他的rest服务并返回其应答数据。
 
 参数：
 
 - url: 目标服务的url。
+- param: 传递给rest服务的参数
 - option: 本次请求的参数
+
+说明：
+
+原api接口 `Rest.get(url, option)` 被保留，但是不推荐继续使用。
 
 option的结构如下：
 
@@ -651,12 +656,17 @@ option的结构如下：
 			content-type: 'application/json'
 		},
 		connectTimeout: 60000,
-		readTimeout: 20000
+		readTimeout: 20000,
+
+		//如果为true则系统不会自动为这个url做编码，默认值是false
+		//在hasEncoded==false时，传递复杂结构参数，RDK会对 `encodeURI()`
+		//无法编码到的字符进行编码编码，这些字符有 # & ' + =
+		hasEncoded: true
 	}
 
-
-
 返回：该服务的返回值。
+
+
 #### `Rest.put()` ####
 
 定义：
@@ -704,6 +714,20 @@ option的结构如下：
 - option: 本次请求的参数，同get参数option，可选。
 
 返回：该服务的返回值。
+
+#### `Rest.encodeURIExt()` ####
+
+定义：
+
+    function encodeURIExt(uri);
+
+说明：扩展了原声encodeURI()函数的功能，加入了这几个字符的编码 `# & ' + =`
+
+参数：
+
+- uri: 待编码的uri，必选。
+
+返回：编码后的uri。
 
 ### `Cache` ###
 
