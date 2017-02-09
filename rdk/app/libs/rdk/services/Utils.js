@@ -268,7 +268,7 @@
 
         this.shallowCopy = function(src, dest) {
             if (!dest) {
-                dest = {};
+                dest = angular.isArray(src) ? [] : {};
             }
             angular.forEach(src, function(value, key) {
                 dest[key] = value;
