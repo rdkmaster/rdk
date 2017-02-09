@@ -29,7 +29,7 @@
     function main(scope, DataSourceService, EventService) {
         // 应用内部初始化，一般不需要修改，也请保持这2行代码在main函数的最开始
         imports.i18n.$init(scope); //初始化页面国际化信息，无需国际化的页面请删除这一行
-        imports.helper.initDataSourceService(DataSourceService);
+        imports.helper.v2.$init(DataSourceService);
 
         //                              关于 scope 变量
         // 
@@ -47,10 +47,14 @@
 
         //=================== 在这里开始编写本应用的第一行代码 ========================
 
-        scope.exampleVersion = 'v2.0.2'
+        scope.exampleVersion = 'v2.0.3';
 
         // 这里演示了调用 scripts/utils.js 的返回值
-        imports.utils.hello('RDK example');
+        imports.utils.hello('RDK example ' + scope.exampleVersion);
+
+        scope.conProc = function(condition) {
+            return {toWho: 'rdk', extra: 'good luck...'};
+        }
 
         scope.loadModule = function() {
             // 调用 rdk_module 的方法，详情请参阅这里
