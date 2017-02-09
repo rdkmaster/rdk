@@ -10,6 +10,7 @@
             "columnDefs" :[
                 {
                     title : "详单",
+
                     render : '<i class="iconfont iconfont-tab"></i>'
                 },
                 {
