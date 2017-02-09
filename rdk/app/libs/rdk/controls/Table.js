@@ -492,7 +492,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                                 var key = config.method == 'get' ? 'params' : 'data';
                                 var param = {
-                                    param: config[key],
+                                    peerParam: config[key],
                                     service: url,
                                     paging: {
                                         currentPage: Number(scope.currentPage+1),

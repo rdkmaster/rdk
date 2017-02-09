@@ -10,6 +10,10 @@
         //     scrollX: true
         // } 
 
+        $scope.cp = function() {
+            return [1, 2, '中文，ffff汉子ddf', "#&'+=#&'+=#&'+=#&'+="];
+        }
+
         $scope.setting = {
             "columnDefs" :[
                 {

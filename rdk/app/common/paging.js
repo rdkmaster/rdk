@@ -7,15 +7,13 @@
         }
 
         var timestamp;
-        var param = !!req.param ? req.param : {};
-        var key = JSON.stringify({ service: req.service, param: param });
-        log('data key =', key);
+        var param = !!req.peerParam ? req.peerParam : {};
+        var key = JSON.stringify({ service: req.service, peerParam: param });
+        log('paging data key =', key);
         var dataTable = Cache.aging.get(key);
         if (!dataTable) {
-            var url = req.service + '?p={param:' + JSON.stringify(param) + '}';
-
             timestamp = new Date().getTime();
-            dataTable = Rest.get(url, {readTimeout: 120000});
+            dataTable = Rest.get(req.service, param, {readTimeout: 120000});
             try {
                 dataTable = JSON.parse(dataTable);
                 if (dataTable.hasOwnProperty('result')) {
@@ -41,7 +39,8 @@
             data = _filter(dataTable.data, req.filter.key, req.filter.field, dataTable.field);
             log('filter data spent', (new Date().getTime() - timestamp), 'ms');
         } else {
-            data = dataTable.data;
+            //浅拷贝一份
+            data = dataTable.data.concat();
         }
 
         if (req.hasOwnProperty('sort')) {

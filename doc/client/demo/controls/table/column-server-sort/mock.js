@@ -2,6 +2,7 @@
 
     return function(request, script) {
         log('creating data..............')
+        log(request);
         return {
             "data": [
                 [
