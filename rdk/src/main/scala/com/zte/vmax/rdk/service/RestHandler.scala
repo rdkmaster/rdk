@@ -1,4 +1,4 @@
-﻿package com.zte.vmax.rdk.service
+package com.zte.vmax.rdk.service
 
 import akka.actor.{ActorRef, ActorSystem}
 import akka.pattern.{CircuitBreaker, ask}
@@ -143,7 +143,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
                           case _ =>
                             request = req
                         }
-                        doDispatch(ctx, url, req.getOrElse("app", null), request, false)
+                        doDispatch(ctx, url, req.getOrElse("app", null), req, false)
                     }
               }
             } ~
