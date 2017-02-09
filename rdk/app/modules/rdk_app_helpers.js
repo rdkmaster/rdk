@@ -1,5 +1,24 @@
 define(['rd.core'], function() {
 
+    return {
+        initDataSourceService: function(DSService) {
+            console.warn('this helper is deprecated, try "imports.helper.v2.$init(DataSourceService);" instead');
+            DSService.commonAjaxConfigProcessor = commonAjaxConfigProcessor;
+            DSService.commonDataProcessor = commonDataProcessor;
+        },
+        v2: {
+            $init: function(DSService) {
+                DSService.commonAjaxConfigProcessor = commonAjaxConfigProcessorV2;
+            }
+        }
+    }
+
+    function commonAjaxConfigProcessorV2(config) {
+        var url = _fixUrl(config.url).trim();
+        config.url = '/rdk/service/' + url;
+        return config;
+    }
+
     function commonAjaxConfigProcessor(config) {
         var url = _fixUrl(config.url).trim();
         if (!_isRdkService(url)) {
@@ -43,12 +62,5 @@ define(['rd.core'], function() {
         }
         url = url.replace(/^\s*\/rdk\/service\//, '');
         return url;
-    }
-
-    return {
-        initDataSourceService: function(DSService) {
-            DSService.commonAjaxConfigProcessor = commonAjaxConfigProcessor;
-            DSService.commonDataProcessor = commonDataProcessor;
-        }
     }
 });
