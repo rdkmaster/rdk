@@ -537,16 +537,28 @@ var Rest = {
             option = undefined;
         }
 
-        if (_.isString(param)) {
-            url += '?';
-        } else if (!!param) {
-            url += '?param=';
-            param = JSON.stringify(param);
+        if (!param) {
+            param = '';
         }
-        if (!!param && (!option || !option.hasEncoded)) {
-            param = encodeURI(param).replace(/[#&'+=]/g, function(found) {
-                return '%' + found.charCodeAt(0).toString(16);
+        var hasEncoded = option && option.hasEncoded;
+        if (_.isObject(param)) {
+            var pStr = '';
+            _.each(param, function(value, key) {
+                var json = JSON.stringify(value);
+                if (!!json) {
+                    json = hasEncoded ? json : Rest.encodeURIExt(json);
+                } else {
+                    json = '';
+                }
+                json = !!json ? json : '';
+                pStr += key + '=' + json + '&';
             });
+            param = pStr.substring(0, pStr.length-1);
+        } else if (_.isString(param)) {
+            param = Rest.encodeURIExt(param);
+        }
+        if (!!param) {
+            url += '?';
         }
         url += param;
 
@@ -575,6 +587,12 @@ var Rest = {
             param = JSON.stringify(param);
         }
         return rdk_runtime.restHelper().put(url, param, option);
+    },
+    encodeURIExt: function(uri) {
+        return !uri ? uri : encodeURI(uri.toString()).
+            replace(/[#&'+=]/g, function(found) {
+                return '%' + found.charCodeAt(0).toString(16);
+            });
     }
 }
 //向下兼容
