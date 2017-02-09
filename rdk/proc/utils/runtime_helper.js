@@ -526,11 +526,43 @@ function _listFiles(files, path, pattern, recursive) {
 ///////////////////////////////////////////////////////////////////////
 
 var Rest = {
-    get: function (url, option) {
-        if (null == option) {
+    get: function (url, param, option) {
+        if (arguments.length == 2) {
+            //同时支持 Rest.get(url, option) 和 Rest.get(url, param, option) 两个方式
+            option = param;
+            param = undefined;
+        }
+
+        if (option == null) {
             option = undefined;
         }
-        return rdk_runtime.restHelper().get(encodeURI(url), option);
+
+        if (!param) {
+            param = '';
+        }
+        var hasEncoded = option && option.hasEncoded;
+        if (_.isObject(param)) {
+            var pStr = '';
+            _.each(param, function(value, key) {
+                var json = JSON.stringify(value);
+                if (!!json) {
+                    json = hasEncoded ? json : Rest.encodeURIExt(json);
+                } else {
+                    json = '';
+                }
+                json = !!json ? json : '';
+                pStr += key + '=' + json + '&';
+            });
+            param = pStr.substring(0, pStr.length-1);
+        } else if (_.isString(param)) {
+            param = Rest.encodeURIExt(param);
+        }
+        if (!!param) {
+            url += '?';
+        }
+        url += param;
+
+        return rdk_runtime.restHelper().get(url, option);
     },
     post: function (url, param, option) {
         if (_.isUndefined(param)) {
@@ -555,6 +587,12 @@ var Rest = {
             param = JSON.stringify(param);
         }
         return rdk_runtime.restHelper().put(url, param, option);
+    },
+    encodeURIExt: function(uri) {
+        return !uri ? uri : encodeURI(uri.toString()).
+            replace(/[#&'+=]/g, function(found) {
+                return '%' + found.charCodeAt(0).toString(16);
+            });
     }
 }
 //向下兼容
@@ -1110,15 +1148,6 @@ function groupI18n(keys) {
     return result;
 }
 
-function _tryParseJson(str) {
-    try {
-        return JSON.parse(str);
-    } catch (e) {
-        Log.warn("json parse fail,use string!");
-        return str;
-    }
-}
-
 function _java2json(javaObj) {
     var json = null;
     if (javaObj instanceof java.ArrayList) {
@@ -1126,21 +1155,23 @@ function _java2json(javaObj) {
         for (var i = 0, len = javaObj.size(); i < len; i++) {
             json.push(_java2json(javaObj.get(i)));
         }
-    } else if (javaObj instanceof java.StringMap) {
+    } else if (javaObj instanceof java.StringMap || javaObj instanceof java.ScalaMap) {
         json = {};
+        var isScaleMap = javaObj instanceof java.ScalaMap;
         var keySet = javaObj.keySet();
         var it = keySet.iterator();
         while (it.hasNext()) {
             var key = it.next();
-            json[key.toString()] = _java2json(javaObj.get(key));
-        }
-    } else if (javaObj instanceof java.ScalaMap) {
-        json = {};
-        var keySet = javaObj.keySet();
-        var it = keySet.iterator();
-        while (it.hasNext()) {
-            var key = it.next();
-            json[key.toString()] = _java2json(_tryParseJson(javaObj.get(key).get()));
+            var value = javaObj.get(key);
+            if (isScaleMap) {
+                value = value.get();
+                try {
+                    value = JSON.parse(value);
+                } catch (e) {
+                    Log.info("input param string parse to json failed, use origin strnig!");
+                }
+            }
+            json[key.toString()] = _java2json(value);
         }
     } else if (javaObj instanceof java.String) {
         json = String(javaObj);
