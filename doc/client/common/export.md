@@ -4,7 +4,10 @@ rdk 提供了可支持导出excel，csv，txt格式的公共导出服务
 
 ## 服务url
 
-    http://ip:port/rdk/service/common/export?p=%7B%22source%22:%7B%22url%22:%22http://localhost:5812/rdk/service/app/example/server/my_service%22%7D,%22fileType%22:%22txt%22,%22param%22:%7B%22excludeIndexes%22:%7B'sheet1':%5B'a'%5D,'sheet2':%5B'0'%5D%7D%7D%7D
+	http://ip:port/rdk/service/common/export?p=
+		%7B%22source%22:%7B%22url%22:%22http://localhost:5812/rdk/service/app/example/server/my_service%22
+		%7D,%22fileType%22:%22txt%22,%22param%22:%7B%22excludeIndexes%22:%7B'sheet1':%5B'a'%5D,
+		'sheet2':%5B'0'%5D%7D%7D%7D
 
 参数p被url编码，格式为：
 
@@ -26,38 +29,49 @@ rdk 提供了可支持导出excel，csv，txt格式的公共导出服务
 示例1：访问本机 `/rdk/service/app/example/server/my_service` 服务获取数据源并导出excel文件，同时隐藏sheet1的第a列和sheet2的第0列。
 请求url为（需要编码）：
 
-    http://localhost:5812/rdk/service/common/export?p={"source":{"url":"/rdk/service/app/example/server/my_service"},"fileType":"excel","param":{"excludeIndexes":{'sheet1':['a'],'sheet2':['0']}}}
+	http://localhost:5812/rdk/service/common/export?p={
+			"source": {
+				"url":"/rdk/service/app/example/server/my_service"
+			},
+			"fileType":"excel",
+			"param":{
+				"excludeIndexes":{
+					'sheet1':['a'],
+					'sheet2':['0']
+				}
+			}
+		}
 
 my_service.js 服务：
 
 				
-				(function() {
-				    return function(request, script) {
-				    	var content={                 
-							            'sheet1':new DataTable(['A','B'],['a','b'],[[1,2],[3,4]]),
-							        
-							            'sheet2':
-							                [['30','test1'],['20','test2']]
-							        };
-				        return content;
-				    }
-				})();
+	(function() {
+		return function(request, script) {
+			var content={                 
+							'sheet1':new DataTable(['A','B'],['a','b'],[[1,2],[3,4]]),
+						
+							'sheet2':
+								[['30','test1'],['20','test2']]
+						};
+			return content;
+		}
+	})();
 
 示例2：从 `/rdk/service/app/example/server/my_service` 服务获取数据源并导出csv文件。
 
 请求url为（需要编码）：
 
-    
-    http://localhost:5812/rdk/service/common/export?p={"source":{"url":"/rdk/service/app/example/server/my_service"},"fileType":"csv"}
+	
+	http://localhost:5812/rdk/service/common/export?p={"source":{"url":"/rdk/service/app/example/server/my_service"},"fileType":"csv"}
 
 my_service.js 服务：
 
 				
-				(function() {
-				    return function(request, script) {
-				    	return  new DataTable(['网元','名字'],['neid','name'],[['30','test1'],['20','test2']]);
-				    }
-				})();
+	(function() {
+		return function(request, script) {
+			return  new DataTable(['网元','名字'],['neid','name'],[['30','test1'],['20','test2']]);
+		}
+	})();
 
 
 示例3：从 `/rdk/service/app/example/server/my_service` 服务获取数据源并导出txt文件。
@@ -65,13 +79,17 @@ my_service.js 服务：
 请求url为（需要编码）：
 
 
-     http://localhost:5812/rdk/service/common/export?p={"source":{"url":"/rdk/service/app/example/server/my_service"},"fileType":"txt"}
+	 http://localhost:5812/rdk/service/common/export?p={
+		 	"source":{
+		 		"url":"/rdk/service/app/example/server/my_service"
+			},
+			"fileType":"txt"
+		}
 
 my_service.js 服务：
 
-				
-				(function() {
-				    return function(request, script) {
-				    	return  "rdk common download";
-				    }
-				})();
+	(function() {
+		return function(request, script) {
+			return  "rdk common download";
+		}
+	})();
