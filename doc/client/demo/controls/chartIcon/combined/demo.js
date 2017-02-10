@@ -9,10 +9,6 @@
         scope.setting = {
             "columnDefs": [
                 {
-                    title: "",
-                    target:
-                    render: '<a style="cursor:pointer" ng-click="appScope.click(item)">点击</a>'
-                }, {
                     title: "Ratio",
                     targets: 0,
                     override: false,
@@ -45,6 +41,11 @@
                     render: function (item) {
                         return '<a class="frequency" ng-click="appScope.click(item)">{{item.TargetFrequency}}</a>'
                     }
+                },
+                {
+                    title: "详情",
+                    targets:6,
+                    render: '<a style="cursor:pointer" ng-click="appScope.click(item)">点击</a>'
                 }
             ]
         }
