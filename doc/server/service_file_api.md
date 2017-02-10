@@ -198,7 +198,7 @@
 
 示例： 从给定目录中过滤出文件名是数字的文件
 
-    var m = file.list("app/common/conf", true, (/-?[1-9]\d*/).toString());
+    var m = file.list("app/common/conf", true, /-?[1-9]\d*/);
  
  
 ### `File.copy()` {#copy}###
