@@ -3,13 +3,38 @@
  * rest服务请求转发，实现在app目录以外的js文件的执行
  */
 (function() {
-    return function(req) {
-        var param = req.param;
-        var script = req.script;
-        if (!script.match(/\.js$/)) {
-            script += '.js';
+    return {
+        get: function(req) {
+            return _relay(req, 'get');
+        },
+        post: function(req) {
+            return _relay(req, 'post');
+        },
+        put: function(req) {
+            return _relay(req, 'put');
+        },
+        delete: function(req) {
+            return _relay(req, 'delete');
         }
-        var service = require(script);
-        return service(param, script);
+    }
+
+    function _relay(req, method) {
+        return !!req.throughtRest ?
+            restRelay(req.service, req.param, method) :
+            nativeRelay(req.service, req.param);
+    }
+
+    function nativeRelay(service, param) {
+        log(service, param);
+        if (!service.match(/\.js$/)) {
+            service += '.js';
+        }
+        var service = require(service);
+        return service(param, service);
+    }
+
+    function restRelay(service, param, method) {
+        log(method, '-------------------')
+        return Rest[method](service, param, {});
     }
 })();
