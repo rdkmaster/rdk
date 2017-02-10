@@ -72,6 +72,7 @@
     border: 1px solid #d9d9d9;
     color: #333;
     background-color: white;
+    display: flex;
 }
 .rdk-combo-select-module .combo-content .combo-content-theme{
     background-color: white;

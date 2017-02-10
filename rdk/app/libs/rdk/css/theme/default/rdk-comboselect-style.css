@@ -12,6 +12,7 @@
 }
 
 .rdk-combo-select-module .combo-content{
+    display: flex;
     position: relative;
     flex-flow: row;
     align-items:center;
