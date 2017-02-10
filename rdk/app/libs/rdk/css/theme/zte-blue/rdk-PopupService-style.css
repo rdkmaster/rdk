@@ -12,6 +12,7 @@
 .rdk-popupservice-dialog .rdk-popupservice-content{
 	margin: 0;
 	padding: 0;
+	min-height: 0 !important;
 }
 
 .rdk-popupservice-dialog .rdk-popupservice-titlebar i{
