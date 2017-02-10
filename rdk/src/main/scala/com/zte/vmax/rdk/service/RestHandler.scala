@@ -133,16 +133,8 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
                   ctx =>
                     req match {
                       case null =>
-                      completeWithError(ctx, StatusCodes.BadRequest, "bad argument")
+                        completeWithError(ctx, StatusCodes.BadRequest, "bad argument")
                       case _ =>
-                        val param = req.getOrElse("param", null)
-                        var request: AnyRef = null
-                        param match {
-                          case json: String =>
-                            request = RdkUtil.json2Object[AnyRef](json.substring(0, json.length)).orNull
-                          case _ =>
-                            request = req
-                        }
                         doDispatch(ctx, url, req.getOrElse("app", null), req, false)
                     }
               }
