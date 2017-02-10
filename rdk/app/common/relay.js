@@ -34,7 +34,6 @@
     }
 
     function restRelay(service, param, method) {
-        log(method, '-------------------')
         return Rest[method](service, param, {});
     }
 })();

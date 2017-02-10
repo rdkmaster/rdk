@@ -53,7 +53,7 @@
         imports.utils.hello('RDK example ' + scope.exampleVersion);
 
         scope.conProc = function(condition) {
-            return {toWho: 'rdk', extra: 'good luck...'};
+            return {toWho: 'rdk', extra: 'good luck...', crossDomain: true};
         }
 
         scope.loadModule = function() {
