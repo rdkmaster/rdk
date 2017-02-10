@@ -17,11 +17,6 @@
         font-size: 14px;\n\
     }\n\
     </type>\n\
-    <script>\n\
-        function func(a, b, c) {\n\
-            alert(a, b, c);\n\
-        }\n\
-    </script>\n\
 </html>';
     }
 

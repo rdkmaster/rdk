@@ -211,8 +211,6 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                         _prepareTabs(tabs[i], title, tabid, closable);
                     }
                 }, 0);
-                debugger;
-                $(".content").css("display","block");
                 function _setTabsWidth(){  //设置tabs容器宽度,判断显示移动按钮
                     tabItems =element[0].querySelector(".title").querySelectorAll("li");
                     var total=0;
@@ -274,7 +272,9 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                     if(scope.toggleCondition!='mouseover') return;
                     _tabSwitchHandler(event);
                 }
-
+                EventService.register('EventService', 'ready', function() {
+                    $(".content").css("display","block");
+                });
                 function _selectedTabHandler(index){
                     _tabsHandler(); 
                     _activeTabByIndex(index);
