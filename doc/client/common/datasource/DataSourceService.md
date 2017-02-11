@@ -253,11 +253,53 @@
 ![](数据源查询流程图.PNG)
 
 
+## 直接调用Rest服务 ##
+在js中请求rest服务的时候，使用直接调用rest服务会让代码更简洁。
+
+以`query()`为例：
+
+定义为
+
+	function(url, condition, callback);
+
+参数说明：
+
+- url: 目标服务的url
+- condition: 本次查询的条件
+- callback: 成功&失败的回调函数
+
+示例代码：
+
+    DataSourceService.query('$svr/mydata', {...}, function(data) {
+    	alert(data.toString());
+	});
+
+提供如下方法：
+
+- `query()`：同步查询，采用get动作
+- `update()`：同步更新，采用post动作
+- `add()`：同步添加，采用put动作
+- `delete()`：同步更新，采用delete动作
+
+他们都有相同的参数定义和用法
+
+
 ## 同步调用Rest服务 ##
 
 <span style="color:red">注意：</span>尽管同步调用Rest服务会让代码更简洁和清晰，但是还是应该少用，因为这会导致界面短暂无响应。
 
 以`syncQuery()`为例：
+
+定义为
+
+	function(url, condition);
+
+参数说明：
+
+- url: 目标服务的url
+- condition: 本次查询的条件
+
+示例代码：
 
     var citys = DataSourceService.syncQuery('/doc/client/demo/common/datasource/mockdata/city_list');
     alert(citys);
@@ -268,5 +310,7 @@
 - `syncUpdate()`：同步更新，默认采用post动作
 - `syncAdd()`：同步添加，默认采用put动作
 - `syncDelete()`：同步更新，默认采用delete动作
+
+他们都有相同的参数定义和用法
 
 <live_demo example="common/datasource/sync_call" width="600" height="120"></live_demo>

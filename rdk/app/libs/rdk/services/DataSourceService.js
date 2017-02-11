@@ -69,7 +69,7 @@
             function _create(dsInfo) {
                 try {
                     var ds = new DataSource(dsInfo);
-					console.log('DataSource created, id=' + ds.id + ', url=' + ds.url);
+                    console.log('DataSource created, id=' + ds.id + ', url=' + ds.url);
                     dataSourcePool[ds.id] = ds;
                     EventService.broadcast(ds.id, EventTypes.CREATE, ds);
                 } catch (e) {
@@ -186,8 +186,8 @@
                 if (!config) {
                     config = {};
                 }
-                if (!config.hasOwnProperty('type')) {
-                    config.type = 'GET';
+                if (!config.hasOwnProperty('method')) {
+                    config.method = 'GET';
                 }
                 return _syncCall(url, condition, config);
             }
@@ -196,8 +196,8 @@
                 if (!config) {
                     config = {};
                 }
-                if (!config.hasOwnProperty('type')) {
-                    config.type = 'PUT';
+                if (!config.hasOwnProperty('method')) {
+                    config.method = 'PUT';
                 }
                 return _syncCall(url, condition, config);
             }
@@ -206,8 +206,8 @@
                 if (!config) {
                     config = {};
                 }
-                if (!config.hasOwnProperty('type')) {
-                    config.type = 'POST';
+                if (!config.hasOwnProperty('method')) {
+                    config.method = 'POST';
                 }
                 return _syncCall(url, condition, config);
             }
@@ -216,10 +216,59 @@
                 if (!config) {
                     config = {};
                 }
-                if (!config.hasOwnProperty('type')) {
-                    config.type = 'DELETE';
+                if (!config.hasOwnProperty('method')) {
+                    config.method = 'DELETE';
                 }
                 return _syncCall(url, condition, config);
+            }
+
+            function _callService(url, condition, resultHandler, method) {
+                var config = {
+                    method: method, url: url, headers: { 'Content-Type': 'application/json' }
+                }
+                config[method == DSConst.HTTP_GET ? 'params' : 'data'] = condition;
+                config.resultHandler = resultHandler;
+
+                try {
+                    if (angular.isDefined(_dsService.commonAjaxConfigProcessor)) {
+                        config = _dsService.commonAjaxConfigProcessor(config);
+                    }
+                } catch (e) {
+                    console.error('process ajax config error: ' + e.message + '\n' + e.stack);
+                }
+
+                $http(config).success(function(data) {
+                    console.log("DataSource success");
+                    try {
+                        if (!!config.resultHandler) config.resultHandler(data);
+                    } catch(e) {
+                        console.error('call resultHandler error: ' + e.message + '\n' + e.stack);
+                    }
+                }).error(function(data, status, headers, config) {
+                    console.error("DataSource error, url=" + config.url + ", data=" + data + ', status=' + status);
+                    data = { result: false, data: data, status: status, headers: headers, config: config };
+                    try {
+                        if (!!config.resultHandler) config.resultHandler(data);
+                    } catch(e) {
+                        console.error('call resultHandler error: ' + e.message + '\n' + e.stack);
+                    }
+                });
+            }
+
+            this.query = function(url, condition, resultHandler) {
+                _callService(url, condition, resultHandler, DSConst.HTTP_GET);
+            }
+
+            this.add = function(url, condition, resultHandler) {
+                _callService(url, condition, resultHandler, DSConst.HTTP_PUT);
+            }
+
+            this.update = function(url, condition, resultHandler) {
+                _callService(url, condition, resultHandler, DSConst.HTTP_POST);
+            }
+
+            this.delete = function(url, condition, resultHandler) {
+                _callService(url, condition, resultHandler, DSConst.HTTP_DELETE);
             }
 
             function DataSource(dsInfo) {
@@ -248,7 +297,6 @@
                 _this.removed = false;
 
                 var loopHandler = -1;
-                var sequence = 0;
 
                 _findFunction('ajaxConfigProcessor', dsInfo.ajaxConfigProcessor || dsInfo.dsAjaxConfigProcessor);
                 _findFunction('conditionProcessor', dsInfo.conditionProcessor || dsInfo.dsConditionProcessor);
@@ -363,7 +411,6 @@
                             console.error('DataSource [id=' + _this.id + '] is busy!!!');
                             return;
                         }
-                        sequence++;
                         _this.busy = true;
                         console.log('DataSource [id=' + _this.id + '] is visiting network!');
 
@@ -436,7 +483,7 @@
 
                 function _callAjaxConfigProcessor(config) {
                     try {
-						if (angular.isDefined(_dsService.commonAjaxConfigProcessor)) {
+                        if (angular.isDefined(_dsService.commonAjaxConfigProcessor)) {
                             config = _dsService.commonAjaxConfigProcessor(config, _this);
                         }
                         if (angular.isDefined(_this.ajaxConfigProcessor)) {
@@ -450,7 +497,7 @@
 
                 function _callConditionProcessor(condition) {
                     try {
-						if (angular.isDefined(_dsService.commonConditionProcessor)) {
+                        if (angular.isDefined(_dsService.commonConditionProcessor)) {
                             condition = _dsService.commonConditionProcessor(condition, _this);
                         }
                         if (angular.isDefined(_this.conditionProcessor)) {
@@ -465,7 +512,7 @@
 
                 function _callDataProcessor(data) {
                     try {
-						if (angular.isDefined(_dsService.commonDataProcessor)) {
+                        if (angular.isDefined(_dsService.commonDataProcessor)) {
                             data = _dsService.commonDataProcessor(data, _this);
                         }
                         if (angular.isDefined(_this.dataProcessor)) {
