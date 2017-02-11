@@ -186,8 +186,8 @@
                 if (!config) {
                     config = {};
                 }
-                if (!config.hasOwnProperty('type')) {
-                    config.type = 'GET';
+                if (!config.hasOwnProperty('method')) {
+                    config.method = 'GET';
                 }
                 return _syncCall(url, condition, config);
             }
@@ -196,8 +196,8 @@
                 if (!config) {
                     config = {};
                 }
-                if (!config.hasOwnProperty('type')) {
-                    config.type = 'PUT';
+                if (!config.hasOwnProperty('method')) {
+                    config.method = 'PUT';
                 }
                 return _syncCall(url, condition, config);
             }
@@ -206,8 +206,8 @@
                 if (!config) {
                     config = {};
                 }
-                if (!config.hasOwnProperty('type')) {
-                    config.type = 'POST';
+                if (!config.hasOwnProperty('method')) {
+                    config.method = 'POST';
                 }
                 return _syncCall(url, condition, config);
             }
@@ -216,8 +216,8 @@
                 if (!config) {
                     config = {};
                 }
-                if (!config.hasOwnProperty('type')) {
-                    config.type = 'DELETE';
+                if (!config.hasOwnProperty('method')) {
+                    config.method = 'DELETE';
                 }
                 return _syncCall(url, condition, config);
             }
