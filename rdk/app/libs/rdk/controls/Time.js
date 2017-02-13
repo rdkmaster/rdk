@@ -60,8 +60,42 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                     var arr = dateStr.split('/');//new Date带-参数时
                     if(arr.length == 2) dateStr = dateStr + '/01';//month时处理
                     return new Date(dateStr);
+                },
+                getTimeMacroCalculate:function(timeMacro){
+                    if (angular.isString(timeMacro)) {
+                        var isLetter = /^[a-z]/i;
+                        timeMacro = timeMacro.toLowerCase();
+                        if (isLetter.test(timeMacro)) {
+                            timeMacro = timeMacro.replace(/\s+/g, "");
+                            var fullPara = /([a-z]+)(\+|\-)?([\d]+)([a-z]+)?/i;
+                            var timeMacroArr = fullPara.exec(timeMacro);
+                            var result = null;
+                            if (timeMacroArr && timeMacroArr[2] != undefined) {
+                                result = this.dateAdd(_timeMacroConvert(timeMacroArr[1]), timeMacroArr[4], "" + timeMacroArr[2] + timeMacroArr[3]);
+                                return result;
+                            } else {
+                                return _timeMacroConvert(timeMacro);
+                            }
+                        } else {
+                            return this.getDateForStringDate(timeMacro);
+                        }
+                    } else {
+                        return timeMacro;
+                    }
                 }
             };
+            function _timeMacroConvert(timeMacro) {
+                var date;
+                switch (timeMacro) {
+                    case 'now':
+                        date = new Date();
+                        break;
+                    default:
+                        date = timeMacro;
+                        break;
+                }
+                return date;
+            }
         }]);
         //考虑单独拎出来
         timeApp.directive('datetimepicker', ['TimeUtilService', '$timeout', function(TimeUtilService, $timeout) {
@@ -139,7 +173,6 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                 scope.option.format = scope.option.realFormat.replace(/mm/, "ii");
                                 scope.option.format = scope.option.format.replace(/MM/, "mm");
                             }
-
                             $(element).datetimepicker(scope.option);
                             _weekHandle(scope.option.realValue);
                             $(element).datetimepicker().on('changeDate', function(ev) {
@@ -225,18 +258,18 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
 
                                     if (initValue.toString().indexOf("now") >= 0) {
                                         if (scope.range) {
-                                            scope.setting.value[0] = TimeUtilService.dateFormate(_timeMacroCalculate(initValue[0]), scope.timeFormat);
-                                            scope.setting.value[1] = TimeUtilService.dateFormate(_timeMacroCalculate(initValue[1]), scope.timeFormat);
+                                            scope.setting.value[0] = TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(initValue[0]), scope.timeFormat);
+                                            scope.setting.value[1] = TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(initValue[1]), scope.timeFormat);
                                         } else {
-                                            scope.setting.value = TimeUtilService.dateFormate(_timeMacroCalculate(initValue), scope.timeFormat);
+                                            scope.setting.value = TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(initValue), scope.timeFormat);
                                         }
                                     }
                                     if (initStartDate.indexOf("now") >= 0) {
-                                        scope.setting.startDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(initStartDate), scope.timeFormat), undefined, null);
+                                        scope.setting.startDate = Utils.getValue(TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(initStartDate), scope.timeFormat), undefined, null);
 
                                     }
                                     if (initEndDate.indexOf("now") >= 0) {
-                                        scope.setting.endDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(initEndDate), scope.timeFormat), undefined, null);
+                                        scope.setting.endDate = Utils.getValue(TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(initEndDate), scope.timeFormat), undefined, null);
                                     }
 
                                     _init();
@@ -263,32 +296,32 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                             scope.setting.granularity = Utils.getValue(scope.setting.granularity, undefined, TimeUnit.DAY);
                             //默认周日为一周开始
                             scope.setting.weekStart = Utils.getValue(scope.setting.weekStart, undefined, 0);
-                            scope.timeFormat = TimeFormate[_getValueFromKey(TimeUnit, scope.setting.granularity)];
+                            scope.timeFormat = TimeFormate[Utils.getValueFromKey(TimeUnit, scope.setting.granularity)];
                             if (angular.isUndefined(scope.setting.value)) {
                                 if (scope.range) {
                                     scope.setting.value = [];
-                                    scope.setting.value[0] = TimeUtilService.dateFormate(_timeMacroCalculate('now - 1d'), scope.timeFormat);
-                                    scope.setting.value[1] = TimeUtilService.dateFormate(_timeMacroCalculate('now'), scope.timeFormat);
+                                    scope.setting.value[0] = TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate('now - 1d'), scope.timeFormat);
+                                    scope.setting.value[1] = TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate('now'), scope.timeFormat);
                                 } else {
                                     scope.setting.value = TimeUtilService.dateFormate(new Date(), scope.timeFormat);
                                 }
                             } else {
                                 if (scope.range) {
-                                    scope.setting.value[0] = TimeUtilService.dateFormate(_timeMacroCalculate(scope.setting.value[0]), scope.timeFormat);
-                                    scope.setting.value[1] = TimeUtilService.dateFormate(_timeMacroCalculate(scope.setting.value[1]), scope.timeFormat);
+                                    scope.setting.value[0] = TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(scope.setting.value[0]), scope.timeFormat);
+                                    scope.setting.value[1] = TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(scope.setting.value[1]), scope.timeFormat);
                                 } else {
-                                    scope.setting.value = TimeUtilService.dateFormate(_timeMacroCalculate(scope.setting.value), scope.timeFormat);
+                                    scope.setting.value = TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(scope.setting.value), scope.timeFormat);
                                 }
                             }
                             if (angular.isUndefined(scope.setting.startDate) || !scope.setting.startDate) {
-                                scope.setting.startDate = Utils.getValue(_timeMacroCalculate(scope.setting.startDate), undefined, null);
+                                scope.setting.startDate = Utils.getValue(TimeUtilService.getTimeMacroCalculate(scope.setting.startDate), undefined, null);
                             } else {
-                                scope.setting.startDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(scope.setting.startDate), scope.timeFormat), undefined, null);
+                                scope.setting.startDate = Utils.getValue(TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(scope.setting.startDate), scope.timeFormat), undefined, null);
                             }
                             if (angular.isUndefined(scope.setting.endDate) || !scope.setting.endDate) {
-                                scope.setting.endDate = Utils.getValue(_timeMacroCalculate(scope.setting.endDate), undefined, null);
+                                scope.setting.endDate = Utils.getValue(TimeUtilService.getTimeMacroCalculate(scope.setting.endDate), undefined, null);
                             } else {
-                                scope.setting.endDate = Utils.getValue(TimeUtilService.dateFormate(_timeMacroCalculate(scope.setting.endDate), scope.timeFormat), undefined, null);
+                                scope.setting.endDate = Utils.getValue(TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(scope.setting.endDate), scope.timeFormat), undefined, null);
                             }
 
                             scope.granularityList = Utils.getValue(scope.setting.granularityItems, undefined, undefined);
@@ -324,7 +357,7 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                 scope.$watch('selectedGranularity', function(newVal, oldVal) {
                                     if (newVal != oldVal && newVal != null) {
                                         scope.setting.granularity = scope.selectedGranularity.value;
-                                        scope.timeFormat = TimeFormate[_getValueFromKey(TimeUnit, scope.setting.granularity)];
+                                        scope.timeFormat = TimeFormate[Utils.getValueFromKey(TimeUnit, scope.setting.granularity)];
                                         _handleOption();
                                     }
                                 }, true);
@@ -517,52 +550,6 @@ define(['rd.services.Utils', 'css!rd.styles.Time', 'rd.core', 'jquery', 'bootstr
                                     break;
                             }
                             return option;
-                        }
-
-                        function _getValueFromKey(obj, value) {
-                            var propertyNames = Object.getOwnPropertyNames(obj);
-                            for (var i = 0; i < propertyNames.length; i++) {
-                                var property = propertyNames[i];
-                                if (obj[property] == value) break;
-                            };
-                            return propertyNames[i];
-                        }
-
-
-                        function _timeMacroCalculate(timeMacro) {
-                            if (angular.isString(timeMacro)) {
-                                var isLetter = /^[a-z]/i;
-                                timeMacro = timeMacro.toLowerCase();
-                                if (isLetter.test(timeMacro)) {
-                                    timeMacro = timeMacro.replace(/\s+/g, "");
-                                    var fullPara = /([a-z]+)(\+|\-)?([\d]+)([a-z]+)?/i;
-                                    var timeMacroArr = fullPara.exec(timeMacro);
-                                    var result = null;
-                                    if (timeMacroArr && timeMacroArr[2] != undefined) {
-                                        result = TimeUtilService.dateAdd(_timeMacroConvert(timeMacroArr[1]), timeMacroArr[4], "" + timeMacroArr[2] + timeMacroArr[3]);
-                                        return result;
-                                    } else {
-                                        return _timeMacroConvert(timeMacro);
-                                    }
-                                } else {
-                                    return TimeUtilService.getDateForStringDate(timeMacro);
-                                }
-                            } else {
-                                return timeMacro;
-                            }
-                        }
-
-                        function _timeMacroConvert(timeMacro) {
-                            var date;
-                            switch (timeMacro) {
-                                case TimeMacro.NOW:
-                                    date = new Date();
-                                    break;
-                                default:
-                                    date = timeMacro;
-                                    break;
-                            }
-                            return date;
                         }
                     }
                 }

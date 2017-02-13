@@ -64,6 +64,7 @@ require.config({
         "rd.controls.TabSelect": "../rdk/controls/TabSelect",
         "rd.controls.TabSelector": "../rdk/controls/TabSelector",
         "rd.controls.Time": "../rdk/controls/Time",
+        "rd.controls.TimeSelect": "../rdk/controls/TimeSelect",
         "rd.controls.Tree": "../rdk/controls/Tree",
         "rd.controls.NumericInput": "../rdk/controls/NumericInput",
         "rd.controls.Switch": "../rdk/controls/Switch",

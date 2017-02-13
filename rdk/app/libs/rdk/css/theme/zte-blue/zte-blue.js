@@ -23,6 +23,7 @@ require.config({
         "rd.styles.TabSelector": "../rdk/css/theme/zte-blue/rdk-tabselector-style",
         "rd.styles.Theme": "../rdk/css/theme/zte-blue/rdk-theme-style",
         "rd.styles.Time": "../rdk/css/theme/zte-blue/rdk-time-style",
+        "rd.styles.TimeSelect": "../rdk/css/theme/zte-blue/rdk-time-select-style",
         "rd.styles.Tree": "../rdk/css/theme/zte-blue/rdk-tree-style",
         "rd.styles.Switch": "../rdk/css/theme/zte-blue/rdk-switch-style",
         "rd.styles.NumericInput": "../rdk/css/theme/zte-blue/rdk-numericinput-style",

@@ -103,7 +103,6 @@ input, button, select, textarea {
  }
 .datetimepicker th, .datetimepicker .year, .datetimepicker .day{
     font-weight: bold;
-    line-height: normal
 }
 .datetimepicker .day{
     padding: 6px 6px;
