@@ -117,7 +117,9 @@ OnAutoItExitRegister('_beforeExit')
 While 1
 	Switch GUIGetMsg()
 		Case $GUI_EVENT_CLOSE
-			If MsgBox(292, "RDK Server for Windows", "是否关闭所有的服务进程并退出？", 0, $gui) == 6 Then Exit
+			If MsgBox(292, "RDK Server for Windows", "是否关闭所有的服务进程并退出？", 0, $gui) <> 6 Then ContinueLoop
+			AdlibUnRegister('_updateConsole')
+			Exit
 		Case $btnApplyRule
 			_applyRules()
 		Case $lbGetStarted
