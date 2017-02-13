@@ -1,6 +1,6 @@
-define(['rd.core','rd.controls.Time','css!rd.styles.TimeSelect'],
+define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
     function() {
-        var timeSelectApp = angular.module('rd.controls.TimeSelect', ['rd.core','rd.controls.Time']);
+        var timeSelectApp = angular.module('rd.controls.TimeSelect', ['rd.core','rd.controls.TimeBasic']);
 
         timeSelectApp.directive('rdkTimeSelect', ['PickerConstant', 'TimeMacro', 'TimeFormate', 'TimeUnit', 'Utils', 'TimeUtilService', '$timeout', function(PickerConstant, TimeMacro, TimeFormate, TimeUnit, Utils, TimeUtilService, $timeout) {
             var scopeDefine={
@@ -23,7 +23,7 @@ define(['rd.core','rd.controls.Time','css!rd.styles.TimeSelect'],
                         if (angular.isUndefined(scope.setting)) {
                             scope.setting = {};
                         }
-                        if (typeof(scope.setting.value) != 'undefined') {
+                        if (!angular.isUndefined(scope.setting.value)) {
                             initValue = scope.setting.value;
                         }
                         initStartDate = scope.setting.startDate;

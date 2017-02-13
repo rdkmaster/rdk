@@ -1,20 +1,17 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.controls.Time',
-        'rd.controls.TimeSelect'
+        'rd.controls.TimeSelect','css!base/css/time-select'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
-    function main(scope ) {
-        scope.setting = {
-            value: '2017-02-9 13:30',
+    function main(scope) {
+        scope.showGranularity = {
+            value: 'now-2h',
             granularity: "quarter",
-            weekStart:"0",          //属性，周开始设置，类型0~6数字。默认值是0
-            startDate:"2017-01-1 13:30", //可选的开始时间，类型字符串/Date对象
-            endDate:"now"  //可选的结束时间，类型字符串/Date对象
+            startDate:"2016-11-01",
+            endDate:"now"
         }
-
     }
 
     var controllerName = 'DemoController';
