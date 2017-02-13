@@ -29,7 +29,7 @@
     function main(scope, DataSourceService, EventService) {
         // 应用内部初始化，一般不需要修改，也请保持这2行代码在main函数的最开始
         imports.i18n.$init(scope); //初始化页面国际化信息，无需国际化的页面请删除这一行
-        imports.helper.v2.$init(DataSourceService);
+        imports.helper.v2.$init(DataSourceService, true);
 
         //                              关于 scope 变量
         // 

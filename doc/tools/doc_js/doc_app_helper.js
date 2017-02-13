@@ -10,7 +10,7 @@ define(['rd.core'], function() {
             var key = config.method == 'get' ? 'params' : 'data';
             config[key] = {
                 //绝对路径的话，需要根据rdk进程运行路径做调整
-                script: url[0] == '/' ? '..' + url : url,
+                service: url[0] == '/' ? '..' + url : url,
                 param: config[key],
                 app: 'common'
             }

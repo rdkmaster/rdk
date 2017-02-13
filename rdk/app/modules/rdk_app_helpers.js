@@ -7,16 +7,53 @@ define(['rd.core'], function() {
             DSService.commonDataProcessor = commonDataProcessor;
         },
         v2: {
-            $init: function(DSService) {
-                DSService.commonAjaxConfigProcessor = commonAjaxConfigProcessorV2;
+            $init: function(DSService, supportCrossDomain) {
+                DSService.commonAjaxConfigProcessor = !!supportCrossDomain ? supportCrossDomainProcessor : commonAjaxConfigProcessorV2;
             }
         }
     }
 
     function commonAjaxConfigProcessorV2(config) {
         var url = _fixUrl(config.url).trim();
-        config.url = '/rdk/service/' + url;
+        if (_isRdkService(url)) {
+            config.url = '/rdk/service/' + url;
+        }
         return config;
+    }
+
+    function supportCrossDomainProcessor(config) {
+        config = commonAjaxConfigProcessorV2(config);
+        if (_isCrossDomain(config.url)) {
+            var url = config.url;
+            config.url = '/rdk/service/app/common/relay';
+            var key = config.method == 'get' ? 'params' : 'data';
+            config[key] = {
+                //绝对路径的话，需要根据rdk进程运行路径做调整
+                service: url, param: config[key], app: 'common', throughtRest: true
+            }
+        }
+        return config;
+    }
+
+    function _isCrossDomain(url) {
+        if (!url) {
+            return false;
+        }
+        url = url.trim();
+        if (url.match(/^(http:|https:|ftp:)?\/\/.+/i)) {
+            //完整url，支持有协议和无协议的
+            return true;
+        }
+        if (url.match(/^([a-zA-Z0-9][-a-zA-Z0-9_]{0,62}\.)?([a-zA-Z0-9][-a-zA-Z0-9_]{0,62}\.)([a-zA-Z0-9][-a-zA-Z0-9_]{0,62})(:\d{2,5})?\/.+/)) {
+            // www.rdkapp.com/aa/bb 的模式
+            // www.rdkapp.com:8080/aa/bb 的模式
+            return true;
+        }
+        if (url.match(/^\/[^\/]\w+/)) {
+            //绝对路径url
+            return false;
+        }
+        return false;
     }
 
     function commonAjaxConfigProcessor(config) {
