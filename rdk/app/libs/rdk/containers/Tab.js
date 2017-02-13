@@ -175,7 +175,8 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                             offsetLeft+=tabItems[i].offsetWidth;
                         }
                     }
-                    return offsetLeft;
+                    //tab的宽度+ step*1px margin
+                    return offsetLeft + step;
                 }
 
                 function _calculRemoveOffset(index){
@@ -220,7 +221,11 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                         total+=tabItems[i].offsetWidth;
                     }
                     totalOffsetWidth=total;
-                    tabsDom.style.width = totalOffsetWidth+10+"px"; //10校验误差
+                    if(totalOffsetWidth <= tabsDom.parentNode.offsetWidth){
+                        tabsDom.style.width = tabsDom.parentNode.offsetWidth;
+                    }else{
+                        tabsDom.style.width = totalOffsetWidth + len + 10+"px"; //10校验误差 //len为每个tab项都有1px右边距
+                    }
                     offsetMax = totalOffsetWidth+10-tabsDom.parentNode.offsetWidth;
                     pageIndexMax = Math.ceil(len/_step);
                     if(offsetMax > 0){

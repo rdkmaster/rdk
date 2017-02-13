@@ -4,7 +4,7 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
             var $$options = {
                 wheelSpeed:0.7, //鼠标滚轮移动滚动条的速度
                 minScrollbarLength:80, //滚动条最小长度
-                maxScrollbarLength:300, //滚动条最大长度
+                maxScrollbarLength:null, //滚动条最大长度
                 theme:"default" //主题
             };
             //调用ScrollConfigProvider为整个项目配置统一的滚动条风格

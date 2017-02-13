@@ -1,8 +1,8 @@
 <div class="tab_wrap rdk-tab-theme-blue" ng-class="{'wrap-animation':!btnStatus}">
     <rdk_tab selected_tab="0" draggable="true" collapsible="false" class="rdk_tab">
         <div title="空口问题">
-            <rdk_accordion caption="'区域指标'">
-                <rdk_table  ds="dsTable3" ds-url="data/tabelData2" ds_query_if="ready" paging-visible="false">
+            <rdk_accordion caption="'区域指标'"  open="true">
+                <rdk_table  ds="dsTable3" ds-url="data/tableData2.json" ds_query_if="ready" paging-visible="false">
                 </rdk_table>
             </rdk_accordion>
             <rdk_accordion caption="'弱覆盖问题'">
@@ -32,7 +32,7 @@
                 <div>除了可以填充RDK控件，还支持标准的标签</div>
             </rdk_accordion>
             <rdk_accordion caption="'RRC建立失败原因'" open="true" class="rdk-table-theme-gray">
-                <rdk_table ds="dsTable" ds-url="data/tabelData1" ds_query_if="ready" paging-visible="false">
+                <rdk_table ds="dsTable" ds-url="data/tableData2.json" ds_query_if="ready" paging-visible="false">
                 </rdk_table>
                 <rdk_table data="dsTable" paging-visible="false"></rdk_table>
             </rdk_accordion>
@@ -63,4 +63,5 @@
     <button class="tab_btn rdk-tab-item" ng-click="changeTabsStatus()">
         <i class="rdk-icon fa" ng-class="{true:'fa-angle-double-down',false:'fa-angle-double-up'}[btnStatus]"></i>
     </button>
+
 </div>
