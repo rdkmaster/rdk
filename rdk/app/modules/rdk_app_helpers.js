@@ -28,7 +28,6 @@ define(['rd.core'], function() {
             config.url = '/rdk/service/app/common/relay';
             var key = config.method == 'get' ? 'params' : 'data';
             config[key] = {
-                //绝对路径的话，需要根据rdk进程运行路径做调整
                 service: url, param: config[key], app: 'common', throughtRest: true
             }
         }
@@ -71,10 +70,7 @@ define(['rd.core'], function() {
         config.url = '/rdk/service/' + url;
 
         var key = config.method == 'get' ? 'params' : 'data';
-        var param = {
-                param: config[key],
-                app: app,
-            }
+        var param = { param: config[key], app: app };
         config[key] = config.method == 'get' ? { p: param } : param;
         
         return config;

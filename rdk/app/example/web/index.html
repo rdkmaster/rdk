@@ -51,7 +51,10 @@
             ds属性可以放在任意dom节点上，将它放在直接使用数据的节点是一个非常好的实践
             ds更多用法，请参考各个控件的demo
         -->
-        <li ng-bind="msgFromSvr" ds="msgFromSvr" ds_url="$svr/my_service" ds_query_if="ready"
+        <li ng-bind="msgFromNativeDomain" ds="msgFromNativeDomain" ds_query_if="ready"
+            ds_url="$svr/my_service" ds_init_data="{{i18n.wait}}"></li>
+        <li ng-bind="msgFromCrossDomain" ds="msgFromCrossDomain" ds_query_if="ready"
+            ds_url="http://localhost:5812/rdk/service/app/example/server/my_service"
             ds_condition_processor="conProc" ds_init_data="{{i18n.wait}}"></li>
     </ul>
 
