@@ -17,7 +17,7 @@
     margin: 0 .2em;
 }
 .ui-tabs .ui-tabs-nav li {
-    margin: 1px 0 0 0;
+    margin: 1px 1px 0 0;
 }
 /*rdk-tab-item 样式类：为外部额外增加页签项到到tab里提供统一的样式*/
 .ui-tabs .ui-tabs-nav li a.ui-tabs-anchor,.rdk-tab-item{

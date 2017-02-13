@@ -8,7 +8,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
     tableModule.run(["$templateCache", function($templateCache) {
         $templateCache.put("/src/templates/common.html",
-            '<div class="rdk-table-module rdk-table-search-{{position}}">\
+            '<div>\
+            <div class="rdk-table-module rdk-table-search-{{position}}">\
                 <div ng-if="search && (noData!=undefined)" class="searchWapper search-position-{{position}}">\
                     <input type="text" ng-style="width" class="form-control search" placeholder="{{searchPrompt}}" ng-focus="searchFocusHandler()"\
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
@@ -53,6 +54,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 </rdk-paging>\
                 <div ng-if="showExport" class="table-export"><rdk_button click="touchExport" icon="iconfont iconfont-e8c9" label="{{exportLabel}}"></rdk_button></div>\
                 <div class="clearfix"></div>\
+            </div>\
             </div>'
         );
 

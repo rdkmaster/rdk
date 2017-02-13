@@ -25,6 +25,9 @@
 .sticky-wrap {
     overflow: hidden;
 }
+.rdk-tab-module .rdk-tabs-wrap{
+    height: 36px;
+}
 /* tabs nav->btn */
 .tab_btn {
     margin-top: 0;
@@ -32,8 +35,8 @@
     border: 0;
     outline: none;
     position: absolute;
-    top: 22px;
-    left: 425px;
+    top: 24px;
+    left: 424px;
     font-size: 16px;
 }
 /*table*/

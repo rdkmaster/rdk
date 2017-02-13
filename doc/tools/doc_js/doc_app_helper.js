@@ -1,7 +1,7 @@
 define(['rd.core'], function() {
     function commonAjaxConfigProcessor(config) {
         var url = _fixUrl(config.url).trim();
-        if (url.match(/.+\.json\s*$/i)) {
+        if (url.match(/.+\.(json|txt)\s*$/i)) {
             //json静态文件无逻辑
             config.url = url;
         } else {
