@@ -10,7 +10,7 @@
 
 这是一个简单的 `rdk_time_select` 例子：
 
-<live_demo example="controls/time/basic" width="900"></live_demo>
+<live_demo example="controls/timeSelect/basic" width="900"></live_demo>
 
 ---
 # 属性 #
