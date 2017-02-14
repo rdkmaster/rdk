@@ -19,7 +19,7 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                 replace: true,
                 transclude: true,
                 template:'<div class="rdk-button-wrap">\
-                                <div class="rdk-button-comment" ng-click="setSelected()">\
+                                <div class="rdk-button-comment" ng-click="setSelected($event)">\
                                     <div class="rdk-button-shade rdk-button-{{type}}"></div>\
                                     <button class="rdk-button-btn" ng-mousedown="$mouseDown()" ng-mouseup="$mouseUP()" ng-mouseover="$mouseOver()" ng-mouseout="$mouseOut()"\
                                     title="{{tooltip}}" ng-class="setBtnClass()" ng-disabled="!enabled">\
@@ -34,7 +34,7 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                     scope.label = Utils.getValue(scope.label, attr.label, '');
                     scope.icon = Utils.getValue(scope.icon, attr.icon, false);
                     scope.enabled = Utils.getValue(scope.enabled, attr.enabled ,true);
-                    scope.setSelected=function(){
+                    scope.setSelected=function($event){
                         if(!scope.enabled){
                             return;
                         }
@@ -43,7 +43,7 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                             if(scope.toggle==true){
                                 scope.selected=!scope.selected
                             }
-                            EventService.raiseControlEvent(scope, EventTypes.CLICK, scope.id);
+                            EventService.raiseControlEvent(scope, EventTypes.CLICK, $event);
                         }, 0);
                     }
                     scope.$stopPro=function($event){
