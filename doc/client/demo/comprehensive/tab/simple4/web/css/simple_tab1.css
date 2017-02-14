@@ -81,10 +81,10 @@ div.hao >div.title>ul>li:first-child {
 	color: #008fd4;
 	font-size: 16px;
 }
-.iconfont-output:before {
+.iconfont-e8c9:before {
 	color: #fff;
 }
-i.iconfont-line {
+i.iconfont-e8c8:before {
 	font-size: 20px;
 }
 /* 翻页定位 */
@@ -92,7 +92,7 @@ i.iconfont-line {
 	position: absolute;
 	width: 100%;
 	margin:0 auto;
-	top: 286px;
+	top: 334px;
 }
 /*输入框的样式*/
 .form-control {

@@ -10,16 +10,16 @@
             "columnDefs" :[
                 {
                     title : "操作",
-                    render : '<i class="iconfont iconfont-tab"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="iconfont iconfont-line"></i>'
-                }
+                    targets:6,
+                    render : '<i class="iconfont iconfont-e8b7"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="iconfont iconfont-e8c8"></i>'                }
             ]
         }
         function  imagePosition(){
-            var width = parseFloat($('.hao').css('width'));
-            var height = parseFloat($('.hao').css('height'));//恨据外围 div的长宽给图标自动定位
+            var width = parseFloat($('.main').css('width'));
+            var height = parseFloat($('.main').css('height'));//恨据外围 div的长宽给图标自动定位
             $('button.images_right').css({
                 'left':(width-1)+"px",
-                'top':(height/2-32-100)+"px"
+                'top':(height/2-32)+"px"
             });
         }
         imagePosition();
@@ -27,10 +27,10 @@
         scope.iconCondition = true;
         scope.images = function(){
             scope.iconCondition = !scope.iconCondition;
-            if($('.hao').hasClass('images_down')){
-                $('.hao').removeClass('images_down').addClass('images_up');
+            if($('.main').hasClass('images_down')){
+                $('.main').removeClass('images_down').addClass('images_up');
             }else{
-                $('.hao').removeClass('images_up').addClass('images_down')
+                $('.main').removeClass('images_up').addClass('images_down')
             }
         }
     }

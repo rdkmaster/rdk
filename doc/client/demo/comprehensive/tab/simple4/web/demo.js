@@ -11,11 +11,11 @@
                 {
                     title : "详单",
 
-                    render : '<i class="iconfont iconfont-tab"></i>'
+                    render : '<i class="iconfont iconfont-e8b7"></i>'
                 },
                 {
                     title : "得分趋势",
-                    render : '<i class="iconfont iconfont-line"></i>'
+                    render : '<i class="iconfont iconfont-e8c8"></i>'
                 }
             ]
         }
