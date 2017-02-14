@@ -7,9 +7,9 @@
     var controllerDefination = ['$scope',  main];
     function main(scope ) {
         var userInfo = "按钮单击回调";
-        scope.clickHandler = function(scope,event) {
-            console.log(scope,event);
-            alert(userInfo)
+        scope.clickHandler = function(event,data) {
+            console.log(event,data);
+            alert(userInfo);
         };
     }
 

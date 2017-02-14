@@ -61,7 +61,7 @@ tooltip 表示按钮的tooltip，支持双绑。
 ## click ##
 > 支持类型：函数。
 
-click 表示按钮单击之后的回调函数。其有两个参，第一个是其名字相关的对象，第二个参数是这函数的evevt对象
+click 表示按钮单击之后的回调函数。
 
 <live_demo example="controls/button/click" width="900"></live_demo>
 
