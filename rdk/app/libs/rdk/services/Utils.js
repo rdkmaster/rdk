@@ -394,6 +394,14 @@
             return domStr;
         }
 
+        this.getValueFromKey =function (obj, value){
+            var propertyNames = Object.getOwnPropertyNames(obj);
+            for (var i = 0; i < propertyNames.length; i++) {
+                var property = propertyNames[i];
+                if (obj[property] == value) break;
+            }
+            return propertyNames[i];
+        }
     }]);
 
     utilsModule.service('RDKConst', [function() {

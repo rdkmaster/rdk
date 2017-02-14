@@ -23,7 +23,6 @@
     vertical-align: middle;
     width: 5px;
 }
-
 .rdk-time-module .time-content .startTime,
 .rdk-time-module .time-content .endTime {
     font-size: 14px;
@@ -35,7 +34,6 @@
     height: 30px;
     margin-bottom: 4px;
 }
-
 .rdk-time-module input {
     height: 30px;
     text-align:center !important;
@@ -54,8 +52,7 @@
 
 .rdk-time-module select::-ms-expand {
     display: none;
-} 
-
+}
 input, button, select, textarea {
     font-family:"微软雅黑";
 }
@@ -65,7 +62,6 @@ input, button, select, textarea {
 .rdk-time-module .bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]) {
     width: 80px;
 }
-
 .rdk-time-module .btn {
     line-height: 16px;
     margin-bottom: 5px;
@@ -74,15 +70,12 @@ input, button, select, textarea {
     padding-right: 8px;
     line-height: 3px;
 }
-
 .rdk-time-module .btn>span{
     font-size: 14px;
 }
-.rdk-time-module .bootstrap-select.btn-group,
-.bootstrap-select.btn-group[class*="span"] {
+.rdk-time-module .bootstrap-select.btn-group{
     margin-bottom: 0px;
 }
-
 .rdk-time-module .time-content .granularity{
     position:absolute;
     display: inline-block;
@@ -91,41 +84,6 @@ input, button, select, textarea {
     top: 5px;
     pointer-events:none;
 }
-
-.datetimepicker th, .datetimepicker td, .datetimepicker table tr td span{
-    font-family: Arial;
-    font-weight: normal;
-    font-size: 12px;
-}
- .datetimepicker table tr td span {
-    height: 26px;
-    line-height: 26px;
- }
-.datetimepicker th, .datetimepicker .year, .datetimepicker .day{
-    font-weight: bold;
-    line-height: normal
-}
-.datetimepicker .day{
-    padding: 6px 6px;
-}
-
-.datetimepicker-dropdown-bottom-right:after{
-    top: 0 ;
-}
-.dropdown-toggle {
-    height:30px;
-}
-[class*=" datetimepicker-dropdown"]:before {
-    content: '';
-    display: inline-block;
-    border:none;
-    position: absolute;
-}
-
-.datetimepicker{
-    margin-top: 0;
-}
-
 .fa-angle-down,.fa-angle-up{
     font-size:25px;
 }
@@ -133,31 +91,13 @@ input, button, select, textarea {
     line-height: 27px;
     vertical-align: top;
 }
-[class*=" datetimepicker-dropdown"]:after {
-    content: '';
-    display: inline-block;
-    border: 6px solid transparent;
-    position: absolute;
-}
-
 .rdk-time-module .bootstrap-select .btn:focus{
     outline-offset: none !important; 
     outline:none !important;
 }
-.bootstrap-select .btn:active{
-    outline:none !important;
-    box-shadow: none;.
-}
 /** 粒度样式 **/
 .rdk-time-module .bootstrap-select.btn-group .btn .caret {
     right: 8px;
-}
-.bootstrap-select.btn-group .btn .filter-option {
-    overflow: visible;
-    left: 2px;
-    right: 25px;
-    height: 18px;
-    text-align: center;
 }
 .rdk-time-module .time-content .granularity {
     height: 18px;
@@ -168,15 +108,6 @@ input, button, select, textarea {
 }
 .rdk-time-module .dropdown-menu>li>a {
     width: 80px;
-}
-/* 悬浮状态样式 */
-.dropdown-menu>li>a:active {
-    outline:none;
-}
-
-/**** 激活状态样式 *****/
-.dropdown-menu>li>a:focus{ 
-    outline: none;
 }
 .rdk-time-module .bootstrap-select.btn-group .btn .caret {
     width: 10px;
@@ -196,9 +127,6 @@ input, button, select, textarea {
 .rdk-time-module .time-content .endTime {
     width: 140px;
     font-family: arial;
-}
-div.datetimepicker th.switch {
-    line-height: 24px;
 }
 /*todo :theme colors*/
 
@@ -229,44 +157,14 @@ div.datetimepicker th.switch {
 .rdk-time-module .time-content .granularity{
     border-left:1px solid #ccc;
 }
-.datetimepicker th, .datetimepicker td, .datetimepicker table tr td span{
-    color: #666666;
-}
-.datetimepicker .active{
-    background-image: -webkit-gradient(linear,0 0,0 100%,from(#008fd4),to(#008fd4)) !important;
-}
-[class*=" datetimepicker-dropdown"]:before {
-    border-bottom-color: rgba(0,0,0,0.2);
-}
-.datetimepicker th.switch {
-    color:#666;
-    line-height: 24px;
-}
-.datetimepicker table tr td.disabled, .datetimepicker table tr td.disabled:hover {
-    color: #dedede;
-}
-.datetimepicker table tr td.old {
-    color: #dedede;
-}
 .form-control{
     color:#333;
-}
-.rdk-time-module .datetimepicker table tr td.active:active,.rdk-time-module .datetimepicker table tr td.active:hover:active, .datetimepicker table tr td.active.disabled:active, .datetimepicker table tr td.active.disabled:hover:active, .datetimepicker table tr td.active.active, .datetimepicker table tr td.active:hover.active, .datetimepicker table tr td.active.disabled.active,
- .datetimepicker table tr td.active.disabled:hover.active{
-    background:#3ab1ea !important;
-}
- .datetimepicker table tr td span.active:active, .datetimepicker table tr td span.active:hover:active, .datetimepicker table tr td span.active.disabled:active, .datetimepicker table tr td span.active.disabled:hover:active, .datetimepicker table tr td span.active.active, .datetimepicker table tr td span.active:hover.active, .datetimepicker table tr td span.active.disabled.active,
-  .datetimepicker table tr td span.active.disabled:hover.active{
-    background:#3ab1ea !important;
 }
 .rdk-time-module .dropdown-menu>li>a:hover {
     background: #eee;
     color: #333;
 }
-.bootstrap-select.btn-group .dropdown-menu>li.selected{
-    background: #eee ;
-}
-.rdk-time-module .dropdown-menu>li>a:focus{ 
+.rdk-time-module .dropdown-menu>li>a:focus{
     background: #3ab1ea;
     color: #fff;
 }
@@ -275,3 +173,4 @@ div.datetimepicker th.switch {
     border-top:1px solid transparent;
     border-left:1px solid transparent;
 }
+

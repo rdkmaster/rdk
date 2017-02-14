@@ -121,6 +121,7 @@ inday/inweek/inmonth/inyear 和具体的 1d,2w,3m,4y。
 以下是时间控件的综合使用例子：
 
 <live_demo example="controls/time/showGranularity" width="900"></live_demo>
+
 # 支持国际化 #
 <live_demo example="controls/time/i18n" width="900"></live_demo>
 

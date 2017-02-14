@@ -1,0 +1,21 @@
+.rdk-time-select-module{
+    display: inline-flex;
+}
+.rdk-time-select-module .datetimepicker {
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    font-size: 14px;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+}
+.rdk-time-select-module .datetimepicker-inline{
+    width: initial;
+}
+.rdk-time-select-module .icon-arrow-left:before {
+    content: "\e091";
+}
+.rdk-time-select-module .icon-arrow-right:before {
+    content: "\e092";
+}
