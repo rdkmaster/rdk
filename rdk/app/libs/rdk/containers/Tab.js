@@ -78,7 +78,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                                             <i ng-class="{\'disabled\':isMove(+1)}" ng-click="changeTabs(+1)"  class="move fa fa-caret-right"></i>\
                                         </div>\
                                     </div>\
-                                    <div ng-transclude class="content" rdk_scroll> </div>\
+                                    <div ng-transclude class="content" ng-class="{\'show-content\': protect}" rdk_scroll> </div>\
                                 </div>\
                         </div>';
                 },
@@ -103,6 +103,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                 scope.currentSelectedIndex = 0;
 
                 scope.tabsOffset=0;
+                scope.protect=false;
                 scope.removeableTabs=false;
                 scope.moveStep= Utils.getValue(scope.moveStep, attrs.moveStep, 3); //移动个数
 
@@ -273,7 +274,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                     _tabSwitchHandler(event);
                 }
                 EventService.register('EventService', 'ready', function() {
-                    $(".content").css("display","block");
+                    scope.protect=true;
                 });
                 function _selectedTabHandler(index){
                     _tabsHandler(); 
