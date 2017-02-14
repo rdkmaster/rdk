@@ -48,11 +48,9 @@ my_service.js 服务：
 	(function() {
 		return function(request, script) {
 			var content={                 
-							'sheet1':new DataTable(['A','B'],['a','b'],[[1,2],[3,4]]),
-						
-							'sheet2':
-								[['30','test1'],['20','test2']]
-						};
+				'sheet1':new DataTable(['A','B'],['a','b'],[[1,2],[3,4]]),
+				'sheet2': [['30','test1'],['20','test2']]
+			};
 			return content;
 		}
 	})();
