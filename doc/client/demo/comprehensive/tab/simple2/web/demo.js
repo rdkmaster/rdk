@@ -10,8 +10,8 @@
             "columnDefs" :[
                 {
                     title : "操作",
-                    render : '<i class="iconfont iconfont-e8b7"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="iconfont iconfont-e8c8"></i>'
-                }
+                    targets:6,
+                    render : '<i class="iconfont iconfont-e8b7"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="iconfont iconfont-e8c8"></i>'                }
             ]
         }
         function  imagePosition(){

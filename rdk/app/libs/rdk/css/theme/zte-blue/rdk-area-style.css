@@ -138,16 +138,21 @@ ul, ol ,p{margin: 0; padding: 0;}
 .rdk-area-theme-self .rdk-area-contain .nav-tabs{
     width: 100%;
     background-color: #3ab1ea;
+    border-bottom: none;
+    overflow: hidden;
     padding-left: 5px;
 }
 .rdk-area-theme-self .rdk-area-contain .nav-tabs li a{
     height: 30px;
-    line-height: 8px;
-    padding: 10px 26px;
+    line-height: 30px;
+    display: inline-block;
+    padding: 0 26px;
     text-decoration: none;
 }
 .rdk-area-theme-self .rdk-area-contain .nav-tabs>li{
     margin-right: 0;
+    margin-bottom: 0;
+    list-style: none;
 }
 .rdk-area-theme-self .rdk-area-contain .nav-tabs>li>a{
     margin-right: 0;
@@ -174,6 +179,9 @@ ul, ol ,p{margin: 0; padding: 0;}
 }
 .rdk-area-theme-self .rdk-area-panel ul li{
     line-height: 36px;
+}
+.rdk-area-theme-self .rdk-area-panel .icon-selected {
+    right: 2px;
 }
 .rdk-area-theme-self .rdk-area-contain .rdk-area-content {
     border: none;

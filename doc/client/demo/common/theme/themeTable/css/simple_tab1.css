@@ -9,7 +9,7 @@
 	margin:0 auto;
 	margin-top:50px;
 }
-.hao{
+.main{
 	position: relative;
 	width:740px;
 	height: 308px;
@@ -129,7 +129,7 @@ span.images_left{
 }
 
 /*标题样式*/
-div.hao >span.title{
+div.main >span.title{
 	position:absolute;
 	border: none;
 	top:10px;
@@ -158,7 +158,7 @@ i{
 .rdk-table-module .pagingLine {
 	position: absolute;
 	width: 100%;
-	top: 268px;
+	top: 256px;
 }
 /** 下面翻页字体居中 **/
 .rdk-table-module .pagination > li > a, .rdk-table-module .pagination > li > span {
@@ -235,6 +235,9 @@ i.regular_left{
 .rdk-table-module .disabledRecords{
 	font-size:12px;
 }
+.selecter {
+	display:none
+}
 
 
 /*第二种主题*/
@@ -242,10 +245,10 @@ i.regular_left{
 
 .rdk-theme-table2 .rdk-table > thead > tr > th{
 	color:#f99660;
-	background:#ddd;	
+	background:#ddd;
 }
-.rdk-theme-table2 .rdk-table > tbody > tr:nth-child(even){
-	background:#c0e3df;
+.rdk-theme-table2 .rdk-table-module .rdk-table > tbody > tr:nth-child(even){
+	background:#54acd5;
 }
 .rdk-theme-table2 .rdk-table > thead > tr>th{
 	border-right:1px solid #a4bf6a;

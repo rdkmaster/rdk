@@ -15,6 +15,10 @@
 .rdk-tab-module .tabs>.content{
     border: 1px solid #ddd;
     margin: 0 .2em;
+    display:none;
+}
+.rdk-tab-module .tabs>.show-content {
+    display:block;
 }
 .ui-tabs .ui-tabs-nav li {
     margin: 1px 1px 0 0;

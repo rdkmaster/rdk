@@ -75,7 +75,7 @@
                 })
             }else{
                 document.getElementById("input").blur();//兼容IE11
-               scope.Open=false;
+                scope.Open=false;
             }
         });
     }

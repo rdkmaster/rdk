@@ -1,7 +1,8 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.attributes.modal','bootstrap','bootstrap-select','rd.controls.Button'
+        'rd.attributes.modal','bootstrap','bootstrap-select','rd.controls.Button',
+        'css!base/css/simple_modal1.css'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', 'EventService', main];
