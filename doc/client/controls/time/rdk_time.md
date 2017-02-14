@@ -122,26 +122,6 @@ inday/inweek/inmonth/inyear 和具体的 1d,2w,3m,4y。
 
 <live_demo example="controls/time/showGranularity" width="900"></live_demo>
 
-## time_select ##
-
-用于不绑定输入框,独立使用时间控件场景。
-
-页面中使用方法：
-
-		<rdk_time_select setting="setting"></rdk_time>
-
-控制器中可配置的属性：
-
-	    $scope.setting = {
-            value: 'now-2h', //当前选中的时间value,支持双向绑定
-            granularity: "quarter",  //粒度，类型枚举，备选date/week/month/hour/quarter，默认值是date
-            weekStart:"0",          //属性，周开始设置，类型0~6数字。默认值是0
-            startDate:"2016-01-01", //可选的开始时间，类型字符串/Date对象
-            endDate:"now"  //可选的结束时间，类型字符串/Date对象
-	    }
-
-<live_demo example="controls/time/timeSelect" width="900"></live_demo>
-
 # 支持国际化 #
 <live_demo example="controls/time/i18n" width="900"></live_demo>
 
