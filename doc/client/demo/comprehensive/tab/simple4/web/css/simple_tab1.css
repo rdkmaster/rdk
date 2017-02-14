@@ -10,7 +10,7 @@ ul,li{
 	margin:0;
 	list-style:none; 
 }
-.hao{
+.main{
 	position: relative;
 	width:740px;
 	height: 380px;
@@ -48,7 +48,7 @@ ul,li{
 	width: 80px;
 }
 /*标题样式*/
-div.hao >div.title{
+div.main >div.title{
 	border: none;
 	padding-left: 8px;
 	font-size: 14px;
@@ -56,10 +56,10 @@ div.hao >div.title{
 	font-style: normal;
 	color: #666;
 }
-div.hao >div.title>ul{
+div.main >div.title>ul{
 	overflow: hidden;
 }
-div.hao >div.title>ul>li{
+div.main >div.title>ul>li{
 	float: left;
 	font-size: 12px;
 	margin-top:5px;
@@ -69,7 +69,7 @@ div.hao >div.title>ul>li{
 	margin-right:12px;
 	background-color: #dedede;
 }
-div.hao >div.title>ul>li:first-child {
+div.main >div.title>ul>li:first-child {
 	margin-right: 50px;
 	font-size: 14px;
 	text-align:left; 
@@ -92,7 +92,7 @@ i.iconfont-e8c8:before {
 	position: absolute;
 	width: 100%;
 	margin:0 auto;
-	top: 334px;
+	top: 290px;
 }
 /*输入框的样式*/
 .form-control {
@@ -112,7 +112,7 @@ thead.ng-scope>tr >th{
 .rdk-button-comment {
 	position:absolute;
 	right:16px;
-	bottom:10px;
+	bottom:5px;
 }
 .rdk-button-shade {
 	background-color: #008fd4;
