@@ -12,12 +12,13 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.IconCss', 'css!rd.styles.
       };
       return {
         restrict: 'E',
+        replace:true,
         scope: scopeDefine,
         controller: ['$scope', function(scope){
           Utils.publish(scope, this);
         }],
         template: function() {
-          return '<div>\
+          return '<div class="rdk-icon-module" style="display: inline-block">\
                     <span style="{{getCursorStyle()}}" ng-click="clickHandler()"> \
                       <i ng-if="!isImage" class="{{icon}}"></i>\
                       <img ng-show="isImage" ng-src="{{icon}}" style="width:1em; height: 1em;">{{label}}\

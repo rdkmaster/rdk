@@ -16,11 +16,6 @@
 	height: 26px;
 	vertical-align: middle;
 }
-
-.comSelect::before{
-	background: url(../images/calendar.png) no-repeat; 
-}
-
 .rdk-time-module::before{
-	background: url(../images/positioning.png) no-repeat; 
+	background: url(../images/calendar.png) no-repeat;
 }
