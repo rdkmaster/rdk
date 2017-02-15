@@ -1,7 +1,4 @@
-/**
- * Created by 00100630 on 2016/12/23.
- */
-define(['angular', 'jquery', 'rd.core', 'css!rd.styles.IconCss', 'css!rd.styles.IconFont', 
+define(['angular', 'jquery', 'rd.core', 'css!rd.styles.IconCss', 'css!rd.styles.IconFont',
   'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
   var nInputApp = angular.module("rd.controls.Icon", ['rd.core']);
   nInputApp.directive('rdkIcon', ['Utils', 'EventService', 'EventTypes', function(Utils, EventService, EventTypes) {
@@ -14,17 +11,12 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.IconCss', 'css!rd.styles.
         restrict: 'E',
         replace:true,
         scope: scopeDefine,
-        controller: ['$scope', function(scope){
-          Utils.publish(scope, this);
-        }],
-        template: function() {
-          return '<div class="rdk-icon-module" style="display: inline-block">\
+        template: '<div class="rdk-icon-module" style="display: inline-block">\
                     <span style="{{getCursorStyle()}}" ng-click="clickHandler()"> \
                       <i ng-if="!isImage" class="{{icon}}"></i>\
                       <img ng-show="isImage" ng-src="{{icon}}" style="width:1em; height: 1em;">{{label}}\
                     </span>\
-                  </div>';
-        },
+                  </div>',
         compile: function(tEle, tAttrs) {
           return {
             post: _link
