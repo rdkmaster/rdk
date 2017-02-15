@@ -1,4 +1,4 @@
-define(['angular', 'css!rd.styles.Bootstrap','css!rd.styles.FontAwesome','css!rd.styles.Area'], function () {
+define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAwesome','css!rd.styles.Area'], function () {
     var areaModule = angular.module('rd.controls.AreaSelect', ['rd.core']);
     areaModule.run(["$templateCache", function($templateCache) {
         $templateCache.put("province.html",
