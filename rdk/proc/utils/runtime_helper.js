@@ -544,7 +544,7 @@ var Rest = {
         if (_.isObject(param)) {
             var pStr = '';
             _.each(param, function(value, key) {
-                var json = JSON.stringify(value);
+                var json = _.isObject(value) ? JSON.stringify(value) : value;
                 if (!!json) {
                     json = hasEncoded ? json : Rest.encodeURIExt(json);
                 } else {
