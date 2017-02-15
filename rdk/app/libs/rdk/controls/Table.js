@@ -1232,6 +1232,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                     function _produceColumnDefs() {
                         scope.columnDefs = [];
+                        scope.compileHeads={};
                         for (var i = 0; i < scope.data.field.length; i++) {
                             columnDef = {};
                             columnDef.data = scope.data.field[i];
@@ -1333,8 +1334,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                     }
                                 }
                             };
-                        }else{
-                            scope.compileHeads={};//需要被编译的表头对象
                         }
                         //对columnDefs 排序根据targets升序
                         scope.columnDefs.sort(function(a, b) {
@@ -1403,8 +1402,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                     function _parseTitle(target,title){
                         var isFunction = typeof title === 'function';
-                        target =  target || scope.columnDefs.length;
                         if(isFunction){
+                            if(target===0){
+                                target = 0
+                            }else{
+                                target =  target || scope.columnDefs.length;
+                            }
                             scope.compileHeads[target]=title(scope.data,target);
                         }
                     }
