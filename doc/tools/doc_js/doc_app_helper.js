@@ -22,6 +22,10 @@ define(['rd.core'], function() {
     function _fixUrl(url) {
         if (url.search(/\$svr/) != -1) {
             var svr = window.$svr ? window.$svr : location.pathname;
+            var match = svr.match(/\/[a-z0-9-_]+.html$/i);
+            if (match) {
+                svr = svr.substring(0, match.index+1);
+            }
             url = url.replace(/\$svr\//, svr);
         }
         return url;

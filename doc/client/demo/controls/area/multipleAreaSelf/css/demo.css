@@ -1,0 +1,12 @@
+.show{
+    line-height: 50px;
+}
+.selected-item{
+    display: inline-block;
+    background-color: #3ab1ea;
+    color: #fff;
+    width: 150px;
+    text-align: center;
+    margin: 10px;
+    border-radius: 4px;
+}
