@@ -432,7 +432,6 @@
                 priority: 1000,
                 link: function(scope, elem, attrs) {
                     $timeout(function() {
-
                         var size = attrs.selectpicker && parseInt(attrs.selectpicker) || 5;
                         $(elem).selectpicker({
                             style: 'btn',
