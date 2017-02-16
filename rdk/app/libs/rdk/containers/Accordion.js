@@ -146,14 +146,12 @@ define(['angular', 'jquery', 'gsap', 'rd.core', 'css!rd.styles.Accordion',
 
                 function _setDefaultState(){
                     TweenLite.set($(transcludeDom), 0, {height: 'auto', width: 'auto'});
-                    $timeout(function(){
-                        scope.contentHeight = parseInt($(transcludeDom).css('height'), 10);
-                        scope.contentWidth = parseInt($(transcludeDom).css('width'), 10);
-                        _moveArrowToCenter();
-                        _coverStateHandler();
-                        _resetDefaultState();
-                        scope.firstTimeBln = false;
-                    }, 0); 
+                    scope.contentHeight = parseInt($(transcludeDom).css('height'), 10);
+                    scope.contentWidth = parseInt($(transcludeDom).css('width'), 10);
+                    _moveArrowToCenter();
+                    _coverStateHandler();
+                    _resetDefaultState();
+                    scope.firstTimeBln = false;
                 }
 
                 function _resetDefaultState(){
