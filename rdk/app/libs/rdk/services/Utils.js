@@ -1,4 +1,4 @@
-﻿define(['angular', 'jquery'], function() {
+﻿define(['angular', 'jquery','bootstrap','bootstrap-select','css!rd.styles.Bootstrap'], function() {
     var utilsModule = angular.module("rd.services.Utils", []);
     utilsModule.service('Utils', ['RDKConst', function(RDKConst) {
         var _this = this;
@@ -432,6 +432,7 @@
                 priority: 1000,
                 link: function(scope, elem, attrs) {
                     $timeout(function() {
+
                         var size = attrs.selectpicker && parseInt(attrs.selectpicker) || 5;
                         $(elem).selectpicker({
                             style: 'btn',
