@@ -1,4 +1,4 @@
-﻿define(['angular', 'jquery','bootstrap','bootstrap-select','css!rd.styles.Bootstrap'], function() {
+﻿define(['angular', 'jquery'], function() {
     var utilsModule = angular.module("rd.services.Utils", []);
     utilsModule.service('Utils', ['RDKConst', function(RDKConst) {
         var _this = this;
