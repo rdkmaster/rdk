@@ -7,13 +7,13 @@
     var controllerDefination = ['$scope',  main];
     function main(scope ) {
         scope.setting={
-            defaultData:{
-                province:{name:"广东",code:"1"},
-                city:{name:"深圳",code:"2"},
-                area:{name:"南山区",code:"3"}
-            },
             freezeProvince:true
         };
+        scope.areaObj={
+            province:{name:"广东",code:"1"},
+            city:{name:"深圳",code:"2"},
+            area:{name:"南山区",code:"3"}
+        }
     }
 
     var controllerName = 'DemoController';

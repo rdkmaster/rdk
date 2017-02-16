@@ -1,0 +1,18 @@
+.area-wrap{
+    height: 40px;
+    padding: 3px 0;
+}
+.input-width-60 .rdk-combo-select-module .combo-content-theme{
+    width: 60px;
+}
+.input-width-180 .rdk-combo-select-module .combo-content-theme{
+    width: 180px;
+}
+.iconfont-e8ca:before{
+    color: #fff;
+    font-size: 20px;
+}
+.rdk-icon-module{
+    margin: 0 10px;
+    vertical-align: bottom;
+}
