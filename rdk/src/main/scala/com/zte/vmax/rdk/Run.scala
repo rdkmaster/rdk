@@ -40,7 +40,7 @@ object Run extends App with SimpleRoutingApp with Logger {
     Config.setConfig("proc/conf/")
 
     //init datasource
-    if (false == DataSource.init(Config.config )) {
+    if (!DataSource.init(Config.config )) {
       logger.error("Fail to init datasource config.")
       return
     }

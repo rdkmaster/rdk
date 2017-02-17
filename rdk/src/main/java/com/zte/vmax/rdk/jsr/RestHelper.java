@@ -26,22 +26,22 @@ public class RestHelper extends AbstractAppLoggable {
     private static Pattern URL_PTN = Pattern.compile("^http://.+", Pattern.CASE_INSENSITIVE);
 
     public String get(String url, Object option) {
-        return commonRest(url, null, option, "GET", false);
+        return commonRest(url, null, option, "GET");
     }
 
     public String post(String url, String param, Object option) {
-        return commonRest(url, param, option, "POST", true);
+        return commonRest(url, param, option, "POST");
     }
 
     public String delete(String url, String param, Object option) {
-        return commonRest(url, param, option, "DELETE", true);
+        return commonRest(url, param, option, "DELETE");
     }
 
     public String put(String url, String param, Object option) {
-        return commonRest(url, param, option, "PUT", true);
+        return commonRest(url, param, option, "PUT");
     }
 
-    private String commonRest(String url, String param, Object option, String method, boolean isGet) {
+    private String commonRest(String url, String param, Object option, String method) {
         url = url.trim();
         Matcher m = URL_PTN.matcher(url);
         if (!m.find()) {
@@ -72,6 +72,13 @@ public class RestHelper extends AbstractAppLoggable {
             return null;
         }
 
+        setRequestProperties(conn, option);
+
+        int connTimeout = Integer.parseInt(getProperty(option, "connectTimeout", "60000"));
+        conn.setConnectTimeout(connTimeout);
+        int readTimeout = Integer.parseInt(getProperty(option, "readTimeout", "120000"));
+        conn.setReadTimeout(readTimeout);
+
         // 提交模式
         try {
             conn.setRequestMethod(method);
@@ -80,7 +87,7 @@ public class RestHelper extends AbstractAppLoggable {
             return null;
         }
 
-        if (isGet) {
+        if (!method.equals("GET")) {
             // 发送POST,PUT,DELETE请求必须设置如下两行
             conn.setDoOutput(true);
             conn.setDoInput(true);
@@ -103,13 +110,6 @@ public class RestHelper extends AbstractAppLoggable {
             }
 
         }
-
-        setRequestProperties(conn, option);
-
-        int connTimeout = Integer.parseInt(getProperty(option, "connectTimeout", "60000"));
-        conn.setConnectTimeout(connTimeout);
-        int readTimeout = Integer.parseInt(getProperty(option, "readTimeout", "120000"));
-        conn.setReadTimeout(readTimeout);
 
         //读取请求返回值
         InputStream inStream = null;
