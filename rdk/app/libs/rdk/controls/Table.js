@@ -1097,7 +1097,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         var thead = element[0].querySelector('thead');
                         var ths=thead.querySelector("tr:last-child").querySelectorAll("th[ng-repeat]");
                         //创建一个节点包裹自定义表头渲染的DOM元素
-                        var customHeader="<div id='customHeader'>";
+                        var customHeader="<div class='rdk-table-custom-header'>";
                         var customHeaderEndTag="</div>";
                         for(var key in scope.compileHeads)
                         {
@@ -1108,8 +1108,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                         var evt = event || window.event;
                                         evt.stopPropagation();
                                     });
-                                    if(ths[i].querySelector("#customHeader")){
-                                        $(ths[i].querySelector("#customHeader")).remove();
+                                    if(ths[i].querySelector(".rdk-table-custom-header")){
+                                        $(ths[i].querySelector(".rdk-table-custom-header")).remove();
                                     }
                                     $(ths[i]).prepend(th);
                                 }
@@ -1123,7 +1123,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         for(var i= 0,thLen=ths.length;i<thLen;i++) {
                             for (var key in compileHeads) {
                                 if (compileHeads.hasOwnProperty(key) && key == i) {
-                                    ths[i].querySelector("#customHeader").innerHTML = null;
+                                    ths[i].querySelector(".rdk-table-custom-header").innerHTML = null;
                                 }
                             }
                         }
