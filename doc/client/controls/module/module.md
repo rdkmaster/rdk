@@ -14,6 +14,13 @@
 
 # 属性 #
 
+## `id` ##
+> 支持类型：字符串，可选。
+
+模块的唯一性标识
+
+<live_demo example="controls/module/module_id" width="900"></live_demo>
+
 ## `url` ##
 > 支持类型：字符串，可选。
 

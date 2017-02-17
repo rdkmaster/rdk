@@ -20,7 +20,7 @@
     <script>\n\
         function func(a, b, c) {\n\
             alert(a, b, c);\n\
-        }\n\
+       }\n\
     </script>\n\
 </html>';
     }

@@ -78,7 +78,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                                             <i ng-class="{\'disabled\':isMove(+1)}" ng-click="changeTabs(+1)"  class="move fa fa-caret-right"></i>\
                                         </div>\
                                     </div>\
-                                    <div ng-transclude class="content" rdk_scroll> </div>\
+                                    <div ng-transclude class="content" ng-class="{\'show-content\': protect}" rdk_scroll> </div>\
                                 </div>\
                         </div>';
                 },
@@ -103,6 +103,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                 scope.currentSelectedIndex = 0;
 
                 scope.tabsOffset=0;
+                scope.protect=false;
                 scope.removeableTabs=false;
                 scope.moveStep= Utils.getValue(scope.moveStep, attrs.moveStep, 3); //移动个数
 
@@ -212,7 +213,6 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                         _prepareTabs(tabs[i], title, tabid, closable);
                     }
                 }, 0);
-
                 function _setTabsWidth(){  //设置tabs容器宽度,判断显示移动按钮
                     tabItems =element[0].querySelector(".title").querySelectorAll("li");
                     var total=0;
@@ -253,7 +253,6 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                         _selectedTabHandler(newVal);
                     }, true);
                 });
-
                 scope.getLiStyle = function(index){
                     var destObj = {};
                     destObj.display = (scope.getIndex(index) == -1 ? 'none' : 'inline');
@@ -279,7 +278,9 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                     if(scope.toggleCondition!='mouseover') return;
                     _tabSwitchHandler(event);
                 }
-
+                EventService.register('EventService', 'ready', function() {
+                    scope.protect=true;
+                });
                 function _selectedTabHandler(index){
                     _tabsHandler(); 
                     _activeTabByIndex(index);

@@ -6,19 +6,22 @@
     <ds id="dsProv3" url="$svr/mock/areaServiceProv.js"></ds>
     <ds id="dsCity3" url="$svr/mock/areaServiceCity.js"></ds>
     <h3>省</h3>
-    <div class="area-wrap area-wrap1 iconfont iconfont-e8ca">
+    <div class="area-wrap input-width-60 rdk-zte-blue">
+        <rdk_icon icon="iconfont iconfont-e8ca"></rdk_icon>
         <rdk_combo_select open-policy="hover">
             <rdk-area-select ds_province="dsProv1"  area-data="resultData1"  granularity="province" show-all="false"></rdk-area-select>
         </rdk_combo_select>
     </div>
     <h3>省-市</h3>
-    <div class="area-wrap area-wrap3 iconfont iconfont-e8ca">
+    <div class="area-wrap input-width-60 rdk-zte-blue">
+        <rdk_icon icon="iconfont iconfont-e8ca"></rdk_icon>
         <rdk_combo_select open-policy="hover">
             <rdk-area-select ds_province="dsProv3" ds_city="dsCity3" area-data="resultData3" granularity="city" setting="setting"  show-all="false" ></rdk-area-select>
         </rdk_combo_select>
     </div>
     <h3>省-市-区</h3>
-    <div class="area-wrap area-wrap2 iconfont iconfont-e8ca">
+    <div class="area-wrap input-width-180 rdk-zte-blue">
+        <rdk_icon icon="iconfont iconfont-e8ca"></rdk_icon>
         <rdk_combo_select open-policy="hover">
             <rdk-area-select ds_province="dsProv2"  ds_city="dsCity2"  ds_area="dsArea2" area-data="resultData2" ></rdk-area-select>
         </rdk_combo_select>

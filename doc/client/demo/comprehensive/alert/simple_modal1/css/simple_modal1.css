@@ -61,6 +61,7 @@ ul,li{
 .content>ul>li:first-child>input{
 	width: 200px;
 	height: 28px;
+	padding-left: 10px;
 	outline: none;
 	border: 1px solid #d8d8d8;
 	border-radius: 4px;
@@ -95,9 +96,13 @@ ul,li{
 	border-bottom-right-radius: 4px;
 }
 .bootstrap-select.btn-group .btn .caret {
-	border-top: 7px solid #008fd4;
-    border-right: 7px solid transparent;
-    border-left: 7px solid transparent;
+	width: 8px;
+	height: 8px;
+	margin-top: -6px;
+	border: 1px solid #008fd4;
+	border-top: 1px solid transparent;
+	border-left: 1px solid transparent;
+	transform:rotate(45deg);
 }
 .bootstrap-select>.btn{
 	width: 200px;

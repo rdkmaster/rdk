@@ -1,18 +1,22 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.controls.AreaSelect', 'rd.controls.ComboSelect'
+        'angular', 'rd.controls.TabSelect','css!base/css/demo',
+        'bootstrap','bootstrap-select','css!rd.styles.Bootstrap'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope',  main];
-    function main(scope ) {
-        scope.setting={
-            freezeProvince:true
-        };
-        scope.areaObj={
-            province:{name:"广东",code:"1"},
-            city:{name:"深圳",code:"2"},
-            area:{name:"南山区",code:"3"}
+    var controllerDefination = ['$scope', 'EventService','EventTypes', main];
+    function main(scope, EventService,EventTypes) {
+        scope.colors = [
+            {name: 'black', shade: 'dark'},
+            {name: 'white', shade: 'light'},
+            {name: 'red', shade: 'dark'},
+            {name: 'blue', shade: 'dark'},
+            {name: 'yellow', shade: 'light'}
+        ];
+      
+        scope.showColor = function() {
+            console.log('My favourate color is ' + scope.myColor1)
         }
     }
 

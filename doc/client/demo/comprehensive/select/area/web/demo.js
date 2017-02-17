@@ -1,7 +1,8 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.controls.AreaSelect', 'rd.controls.ComboSelect', 'css!rd.styles.IconFonts'
+        'rd.controls.AreaSelect', 'rd.controls.ComboSelect', 'rd.controls.Icon','css!rd.styles.IconFonts','rd.attributes.theme',
+        'css!base/css/demo'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
