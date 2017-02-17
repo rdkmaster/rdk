@@ -14,6 +14,10 @@
             {name: 'blue', shade: 'dark'},
             {name: 'yellow', shade: 'light'}
         ];
+      
+        scope.showColor = function() {
+            alert('My favourate color is ' + scope.myColor1)
+        }
     }
 
     var controllerName = 'DemoController';
