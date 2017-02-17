@@ -291,6 +291,48 @@
                 return -1;
             }
         };
+
+        this.getSize = function(element,targetEl) {
+            var _addCss = { visibility: 'hidden' };
+            var _oldCss = {};
+            var _width;
+            var _height;
+            if (this.getStyle(element, "display") != "none") {
+                return { width: !!targetEl ? targetEl.offsetWidth  : element.offsetWidth , height: !!targetEl ? targetEl.offsetHeight : element.offsetHeight };
+            }
+            for (var i in _addCss) {
+                _oldCss[i] = this.getStyle(element, i);
+            }
+            this.setStyle(element, _addCss);
+            var _isNgHide = element.classList.contains("ng-hide");
+            _isNgHide && element.classList.remove("ng-hide");
+            _width = !!targetEl ? targetEl.offsetWidth  : element.offsetWidth;
+            _height =!!targetEl ? targetEl.offsetHeight : element.offsetHeight;
+            this.setStyle(element, _oldCss);
+            _isNgHide && element.classList.add("ng-hide");
+            return { width: _width, height: _height };
+        };
+
+        this.getStyle = function(element, styleName) {
+            return element.style[styleName] ? element.style[styleName] : element.currentStyle ? element.currentStyle[styleName] : window.getComputedStyle(element, null)[styleName];
+        };
+
+        this.setStyle = function(element, obj){
+            if (angular.isObject(obj)) {
+                for (var property in obj) {
+                    var cssNameArr = property.split("-");
+                    for (var i = 1,len=cssNameArr.length; i < len; i++) {
+                        cssNameArr[i] = cssNameArr[i].replace(cssNameArr[i].charAt(0), cssNameArr[i].charAt(0).toUpperCase());
+                    }
+                    var cssName = cssNameArr.join("");
+                    element.style[cssName] = obj[property];
+                }
+            }
+            else if (angular.isString(obj)) {
+                element.style.cssText = obj;
+            }
+        };
+
         // 下面这几个函数提供了子级控件和父级控件之间的交互通道
         // 子级控件在自身数据有了变化之后，调用 callUpdater 通知父级
         // 通过控件的require属性无法做到任意父子级，因此通过这个方式实现

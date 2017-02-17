@@ -147,13 +147,19 @@ define(['angular', 'jquery', 'gsap', 'rd.core', 'css!rd.styles.Accordion',
                 function _setDefaultState(){
                     TweenLite.set($(transcludeDom), 0, {height: 'auto', width: 'auto'});
                     $timeout(function(){
-                        scope.contentHeight = parseInt($(transcludeDom).css('height'), 10);
-                        scope.contentWidth = parseInt($(transcludeDom).css('width'), 10);
+                        scope.contentHeight = parseInt($(transcludeDom).css('height'), 10) ;
+                        scope.contentWidth  = parseInt($(transcludeDom).css('Width'), 10)  ;
+                        if(scope.contentHeight==0 || scope.contentWidth==0){
+                            //找出隐藏的父元素节点,获取隐藏元素内transcludeDom的size
+                            var parentHideDom = $(transcludeDom).parents().find("div[ng-show]:first")[0];
+                            scope.contentHeight = scope.contentHeight || (!!parentHideDom && Utils.getSize(parentHideDom,transcludeDom).height);
+                            scope.contentWidth  = scope.contentWidth || (!!parentHideDom && Utils.getSize(parentHideDom,transcludeDom).width);
+                        }
                         _moveArrowToCenter();
                         _coverStateHandler();
                         _resetDefaultState();
                         scope.firstTimeBln = false;
-                    }, 0); 
+                    }, 0);
                 }
 
                 function _resetDefaultState(){
