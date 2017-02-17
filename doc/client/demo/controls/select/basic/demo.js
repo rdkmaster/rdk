@@ -16,7 +16,7 @@
         ];
       
         scope.showColor = function() {
-            alert('My favourate color is ' + scope.myColor1)
+            console.log('My favourate color is ' + scope.myColor1)
         }
     }
 
