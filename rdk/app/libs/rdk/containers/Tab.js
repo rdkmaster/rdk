@@ -259,9 +259,31 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                     return destObj;
                 }
 
+                var addingTabInfo = [];
+
                 scope.addTab = function(source, tabController, initData){//变量controlscope私有化
-                    _compileScopeHandler(tabController, initData);
-                    _domFractionHandler(source);
+                    addingTabInfo.push({
+                        source: source, tabController: tabController, initData: initData
+                    });
+                    _addNextTab();
+                }
+
+                function _addNextTab() {
+                    if (EventService.hasEvent(scope.id, EventTypes.ADD, _addNextTabResult)) {
+                        return;
+                    }
+                    EventService.register(scope.id, EventTypes.ADD, _addNextTabResult);
+                    _addNextTabResult();
+                }
+
+                function _addNextTabResult() {
+                    var tabInfo = addingTabInfo.shift();
+                    if (tabInfo) {
+                        _compileScopeHandler(tabInfo.tabController, tabInfo.initData);
+                        _domFractionHandler(tabInfo.source);
+                    } else {
+                        EventService.remove(scope.id, EventTypes.ADD, _addNextTabResult);
+                    }
                 }
 
                 scope.picShow = function(index) {
@@ -381,11 +403,10 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                     return tabIndex;
                 }
 
-                if(scope.id){
-                    EventService.register(scope.id, EventTypes.TAB_SELECT, function(event, data){
-                        scope.selectedTab = data;
-                    });
-                }
+                scope.id = !!scope.id ? scope.id : Utils.createUniqueId('tab_');
+                EventService.register(scope.id, EventTypes.TAB_SELECT, function(event, data){
+                    scope.selectedTab = data;
+                });
 
                 scope.getIndex = function(idx) {
                     if(!scope.showItems) return 0; //没定义，默认全部显示
