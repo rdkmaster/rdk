@@ -1403,9 +1403,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     function _parseTitle(target,title){
                         var isFunction = typeof title === 'function';
                         if(isFunction){
-                            if(target===0){
-                                target = 0
-                            }else{
+                            if(target!==0){
                                 target =  target || scope.columnDefs.length;
                             }
                             scope.compileHeads[target]=title(scope.data,target);
