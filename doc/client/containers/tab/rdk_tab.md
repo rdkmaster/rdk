@@ -205,12 +205,12 @@ tab的`div`模板带有该属性时，该`div`对应的tab页面会出现关闭�
 
 `destroyTab`用于销毁tab页面。直接将第`index`个tab页从dom树上清理掉。使用方法如下：
 
-            EventService.register('tabID', EventTypes.CLOSE, function(event, data){
-                var result = confirm('是否关闭Tab页');
-                if(result){
-                    rdk.tabID.destroyTab(data.tabIndex);
-                }
-            });
+    EventService.register('tabID', EventTypes.CLOSE, function(event, data){
+        var result = confirm('是否关闭Tab页');
+        if(result){
+            rdk.tabID.destroyTab(data.tabIndex);
+        }
+    });
 
 demo举例如下：
 
@@ -225,12 +225,30 @@ demo举例如下：
 
 `closeTab`用于隐藏tab页面。直接将第`index`个tab页从dom树上隐藏掉。使用方法如下：
 
-            EventService.register('tabID', EventTypes.CLOSE, function(event, data){
-                var result = confirm('是否关闭Tab页');
-                if(result){
-                    rdk.tabID.closeTab(data.tabIndex);
-                }
-            });
+    EventService.register('tabID', EventTypes.CLOSE, function(event, data){
+        var result = confirm('是否关闭Tab页');
+        if(result){
+            rdk.tabID.closeTab(data.tabIndex);
+        }
+    });
+
+## getTabs ##
+获得当前所有的tab页信息
+
+使用方法如下：
+
+    var tabs = rdk.tabId.getTabs();
+    console.log(tabs);
+
+## activeTab ##
+激活某个tab页，参数如下
+
+- index 待激活的tab索引值
+
+使用方法如下：
+
+    rdk.tabId.activeTab(0);
+
 
 # 样式 #
 
