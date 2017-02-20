@@ -41,7 +41,7 @@
     outline:none !important;
     box-shadow: none;.
 }
-.bootstrap-select.btn-group .btn .filter-option {
+div.bootstrap-select.btn-group .btn .filter-option {
     overflow: visible;
     left: 2px;
     right: 25px;
