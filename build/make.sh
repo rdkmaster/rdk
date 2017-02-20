@@ -169,8 +169,9 @@ MAKR_RDK_RELEASE(){
   #uname -a|grep Linux
   ##linux环境
   echo "start to zip package"
-  zip -r $filename$RDK_VERSION.zip $filename
- 
+  zip -r $filename$RDK_VERSION.zip $filename > /dev/null
+
+  echo 'version: '$filename$RDK_VERSION.zip
 }
 
 MAIN(){
