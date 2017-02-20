@@ -21,12 +21,12 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
 
                 scope: scopeDefine,
                 template:'<div class="rdk-combo-select-module" ng-mouseleave="closeShow()">\
-                              <div class="combo-content" ng-mouseenter="openShow()">\
+                              <div class="combo-content" ng-mouseenter="openShow()" ng-click="toggle($event)">\
                                   <span class="combo-caption" ng-show="!!caption">{{caption}}</span>\
                                   <p class="form-control combo-content-theme" ng-class="{\'margin-hide\':!!showClear}" title="{{inputStr}}" \
-                                  unselectable="on" ng-model="inputStr" ng-click="toggle()">{{inputStr}}</p>\
+                                  unselectable="on" ng-model="inputStr">{{inputStr}}</p>\
                                   <i class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
-                                  <i ng-if="!!inputStr && showClear" class="fa fa-times-circle fa-1 combo-content-close" ng-click="clearData()"></i>\
+                                  <i ng-if="!!inputStr && showClear" class="fa fa-times-circle fa-1 combo-content-close" ng-click="clearData($event)"></i>\
                               </div>\
                               <div class="combo-content-transclude">\
                                   <div ng-transclude ng-show="open"></div>\
@@ -117,7 +117,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                     }
                 }, false);
 
-                scope.clearData = function() {
+                scope.clearData = function(event) {
+                    event.stopPropagation();
                     EventService.raiseControlEvent(scope, EventTypes.CLEAR, scope.id);
                     scope.inputStr = '';
                 };
@@ -125,7 +126,6 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 function _hideDropdown(e) {
                     //冻结
                     if(scope.frozen) return;
-                    
                     if(!$(iEle).is(e.target) && $(iEle).has(e.target).length === 0) {
                         $timeout(function() {
                             scope.open = false;
@@ -136,8 +136,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                     }
                 }
 
-                function _toggle() {
-                    if(scope.frozen) return;//冻结
+                function _toggle(e) {
+                    if(scope.frozen || e.target.nodeName=="SPAN") return;//冻结
                     if(hasOpen) {   //初始open=true时直接关闭
                         scope.open =! scope.open;
                         hasOpen = false;
