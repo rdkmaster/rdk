@@ -171,7 +171,7 @@ MAKR_RDK_RELEASE(){
   echo "start to zip package"
   zip -r $filename$RDK_VERSION.zip $filename > /dev/null
 
-  echo 'version: '`pwd`'/'$filename$RDK_VERSION.zip
+  echo 'version: /tmp/rdk_git/rdk/build/'$filename$RDK_VERSION.zip
 }
 
 MAIN(){
