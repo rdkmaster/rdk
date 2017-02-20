@@ -78,6 +78,9 @@
     font-weight: normal;
     padding: 5px 8px;
 }
+.rdk-table-module .rdk-table > thead div.rdk-table-custom-header{
+    display: inline-block;
+}
 .rdk-table-module .rdk-table tr {
     line-height: 20px;
 }

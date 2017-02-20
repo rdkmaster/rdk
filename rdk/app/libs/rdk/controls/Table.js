@@ -576,6 +576,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             scope.floatableHeader = Utils.isTrue(scope.floatableHeader, true);
                         }, 0);
 
+                        scope.compileHeads={};//需要被编译的表头对象
                         _searchGapClick();//只要有search
 
                         //默认国际化
@@ -623,6 +624,13 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         scope.$watch("setting.columnDefs", function(newVal, oldVal) {
                             if (newVal != oldVal) {
                                 _reloadLocalData();
+                            }
+                        }, true);
+
+                        scope.$watch("compileHeads", function(newVal, oldVal) {
+                            if (newVal != oldVal) {
+                                _restTableHeaders(oldVal);
+                                _reSetTableHeaders();
                             }
                         }, true);
 
@@ -1084,21 +1092,38 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         }
                     }
 
-                    var _compileHeads={};//需要被编译的表头对象
                     var _hasAddTrReady=false; //标记多级表头的Html字符串是否插入到模板中
                     function _reSetTableHeaders(){
                         var thead = element[0].querySelector('thead');
                         var ths=thead.querySelector("tr:last-child").querySelectorAll("th[ng-repeat]");
-                        for(var key in _compileHeads)
+                        //创建一个节点包裹自定义表头渲染的DOM元素
+                        var customHeader="<div class='rdk-table-custom-header'>";
+                        var customHeaderEndTag="</div>";
+                        for(var key in scope.compileHeads)
                         {
                             for(var i= 0,thLen=ths.length;i<thLen;i++){
-                                if(_compileHeads.hasOwnProperty(key) && key==i){
-                                    var th= $compile(_compileHeads[key])(scope.appScope);
+                                if(scope.compileHeads.hasOwnProperty(key) && key==i){
+                                    var th= $compile(customHeader + scope.compileHeads[key] + customHeaderEndTag)(scope.appScope);
                                     $(th).on("click",function(event){
                                         var evt = event || window.event;
                                         evt.stopPropagation();
                                     });
+                                    if(ths[i].querySelector(".rdk-table-custom-header")){
+                                        $(ths[i].querySelector(".rdk-table-custom-header")).remove();
+                                    }
                                     $(ths[i]).prepend(th);
+                                }
+                            }
+                        }
+                    }
+                    //重置表头自定义的列渲染，删除已渲染好的节点元素
+                    function _restTableHeaders(compileHeads){
+                        var thead = element[0].querySelector('thead');
+                        var ths=thead.querySelector("tr:last-child").querySelectorAll("th[ng-repeat]");
+                        for(var i= 0,thLen=ths.length;i<thLen;i++) {
+                            for (var key in compileHeads) {
+                                if (compileHeads.hasOwnProperty(key) && key == i) {
+                                    ths[i].querySelector(".rdk-table-custom-header").innerHTML = null;
                                 }
                             }
                         }
@@ -1207,6 +1232,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                     function _produceColumnDefs() {
                         scope.columnDefs = [];
+                        scope.compileHeads={};
                         for (var i = 0; i < scope.data.field.length; i++) {
                             columnDef = {};
                             columnDef.data = scope.data.field[i];
@@ -1376,9 +1402,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                     function _parseTitle(target,title){
                         var isFunction = typeof title === 'function';
-                        target =  target || scope.columnDefs.length;
                         if(isFunction){
-                            _compileHeads[target]=title(scope.data,target);
+                            if(target!==0){
+                                target =  target || scope.columnDefs.length;
+                            }
+                            scope.compileHeads[target]=title(scope.data,target);
                         }
                     }
                 }
