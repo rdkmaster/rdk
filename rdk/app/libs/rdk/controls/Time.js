@@ -139,7 +139,7 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                                 }
                             }
                             initStartDate = scope.setting.startDate;
-                            initStartDate = scope.setting.endDate;
+                            initEndDate = scope.setting.endDate;
                         }
                         getInitValue();
                         _init();
@@ -264,6 +264,9 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                                         scope.setting.granularity = scope.selectedGranularity.value;
                                         scope.timeFormat = TimeFormate[Utils.getValueFromKey(TimeUnit, scope.setting.granularity)];
                                         _handleOption();
+                                        if (scope.range) {
+                                            _handlerGapConditions(scope.condition.startTime);
+                                        }
                                     }
                                 }, true);
                             };
@@ -271,17 +274,7 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                             scope.$watch('condition.startTime', function(newVal, oldVal) {
                                 if (scope.range) {
                                     scope.setting.value[0] = newVal;
-                                    if (scope.selectedGranularity.gap) {
-                                        _handlerGap(newVal, scope.selectedGranularity.gap);
-                                    }
-                                    if (scope.selectedGranularity.value == "week") {
-                                        scope.endTimeOption.startDate = scope.startTimeOption.realValue;
-                                    } else {
-                                        scope.endTimeOption.startDate = newVal;
-                                    }
-                                    if (scope.condition.endTime < scope.endTimeOption.startDate) {
-                                        scope.condition.endTime = scope.endTimeOption.startDate;
-                                    }
+                                    _handlerGapConditions(newVal);
                                 } else {
                                     scope.setting.value = newVal;
                                 }
@@ -329,10 +322,25 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                             }
                         }
 
+                        function _handlerGapConditions(conditionStartTime){
+                            if (scope.selectedGranularity.gap) {
+                                _handlerGap(conditionStartTime, scope.selectedGranularity.gap);
+                            }
+                            if (scope.selectedGranularity.value == "week") {
+                                scope.endTimeOption.startDate = scope.startTimeOption.realValue;
+                            } else {
+                                scope.endTimeOption.startDate = conditionStartTime;
+                            }
+                            if (scope.condition.endTime < scope.endTimeOption.startDate) {
+                                scope.condition.endTime = scope.endTimeOption.startDate;
+                            }
+                        }
+
                         function _handlerGap(beginTime, gap) {
                             if(scope.selectedGranularity.value == "week"){
                                 var realTime = beginTime.match(/(\d+).+?(\d+)/);
                                 beginTime = TimeUtilService.dateAdd(TimeUtilService.getDateForStringDate(realTime[1] + "-01-01"), 'w', realTime[2] - 1);
+                                beginTime = TimeUtilService.dateFormate(beginTime,scope.timeFormat);
                             }
 
                             var endTime = TimeUtilService.getDateForStringDate(beginTime.toString());
@@ -387,6 +395,7 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                             if(scope.selectedGranularity.value == "week"){
                                 var realTime = endTimeCache.match(/(\d+).+?(\d+)/);
                                 endTimeCache = TimeUtilService.dateAdd(TimeUtilService.getDateForStringDate(realTime[1] + "-01-01"), 'w', realTime[2] - 1);
+                                endTimeCache = TimeUtilService.dateFormate(endTimeCache,scope.timeFormat);
                             }
                             if((TimeUtilService.getDateForStringDate(endTimeCache) > TimeUtilService.getDateForStringDate(beginTime))&&(TimeUtilService.getDateForStringDate(endTimeCache) < limitTime)){
                                 limitTime = TimeUtilService.getDateForStringDate(endTimeCache);
