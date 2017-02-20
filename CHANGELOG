@@ -1,67 +1,36 @@
 ## 新增功能
-- #548 rdk_paas 应用部署
-- #549 rdk_paas 应用升级
-- #550 rdk_paas 应用卸载
-- #551 rdk支持rest触发init.js服务
-- #552 rdk支持获取本机多网口IP
-- #559 PopupService提供属性控制是否需要表头
-- #560 AreaSelect控件提供复选功能
-- #561 表格支持server-auto分页方式 
-- #572 表格搜索框位置支持可定制 
-- #575 新增rdk_chart_icon控件
-- #577 rdk_icon控件支持rdk自研的符号图标iconfont 
-- #588 新增后端api `Data.fetchWithDataSource()` 和 `Data.batchFetchWithDataSource()`
-- #592 rdk后端支持适配Phoenix、GreenPlum、Bdai等数据库 
-- #599 新增公共分页服务，用于实现统一后端分页功能 
-- #600 DBPool 增加 getDataSource方法 
-- #601 RDK 开放REST路由注入方法
-- #546 独立版本包部署，主要基于Nginx、Tomcat+Nginx,node等服务器场景
-- #591 支持懒加载文件列表
-- #526 RDK融合adminlte库
-- #521 支持全新的live-demo系统
-- #529 基于Graph控件完成Echart官网示例demo
-- #585 新增通知服务NotifyService
-- #584 新增数值输入框Numeric_Input
-- #583 新增tooltip
-- #582 新增弹出菜单MenuService
-- #581 新增icon控件
-- #442 新增Editor，Switch控件
-- !556 服务端支持更准确、更丰富的http状态码
-- !556 支持应用返回自定义状态码
-- #456 RDK后端rest服务参数结构调整，支持更加简单的参数结构，并直接返回json对象，而非json字符串
+- !571 增加activeTab方法
+- !574 服务端自动根据应用返回类型更改返回媒体类型
+- !578 表格自动分页功能和文档调用服务时采用新参数结构采用新的参数结构
+- !608 后端file list,copy,web等API增加文档说明
+- !581 增加example使用说明
+- !583 给按钮控件加一个event参数
+- !585 数据源支持跨域调用rest服务，增加demo
+- !586 数据源支持直接调用query/add/put/delete，无需创建DataSource对象
+- !588 增加TimeSelect控件
+- !597 select 使用demo
+- #555 支持同步调用addtab
 
 ## 修改功能
-- #589 后端api的命名全部改为驼峰命名法
-- #558 accordion改写
-- #571 Editor控件补充文档、测试用例以及代码优化；补充后端File新api文档
-- #578 补充iconfont的使用说明及基于rdk的使用示例
-- #520 PopupService文档优化
-- #566 Tab增加左右移动按钮
-- #569 input支持图标icon属性以及click事件回调
-- #562 添加表格大数据demo
-- #560 优化popupservice,menuservice,notifyservice,tooltip等demo
-- #556 module提供默认控制器
-- #555 使用nginx作为调试用http服务器
-- #549 将sql()函数挪到Data.sql()中
-- #536 表格合并行高亮
-- #535 Iconfonts 更新图标列表和Demo页面
-- #513 jquery版本由1.11.3升级到2.2.3
+- !565 增加新图标
+- !578 `Rest.get()`支持新的参数序列：`Rest.get(url, param, option)`
+- !578 优化http请求出错时的提示信息
+- !580 升级example到2.0.3，调用rest服务时采用新的参数结构
+- !584 弹出框最小高度限制为0
+- !589 start退出前先停止rdk进程检查
+- !590 1.table控件模板增加一个空的跟节点，避免影响滚动条。 2.取消滚动条最大高度限制，让其自动计算。 3.tab控件左右移动功能考虑边距的计算，增加精确度。
+- !591 修改多个comprehensive demo
+- !594 Rest.get在参数类型是非对象时不加双引号
 
 ## 修复故障
-- #543 tab文档中的demo有addtab的点击动态新增tab界面就会卡死
-- #553 rdk_button和PopupService一起用，button会在阴影上面且还可以点击
-- #554 修复vreport tab控件bug
-- #561 Firefox 40.0下table控件搜索框位置异常
-- #573 表格控件的单元格合并功能有bug
-- #581 notify service 相关示例入参option中type是url的示例，弹出多个对话框之后，将最外层的对话框关闭之后，余下的对话框无法通过确定来关闭 
-- #582 下拉菜单，入参position指定为domid的demo在文档中显示异常，弹出菜单未在目标dom中间位置显示 
-- #583 提示信息，属性rdk_tooltip的例子建议稍微调整下位置，当位置为top时，点击文本框后，弹出的内容首行在页面显示不全 
-- #584 NumericInput中step的demo小数点后位数超过10位也可以与描述‘支持小数点后10位以内的浮点数’冲突 
-- #586 [Module] destroyModule时需要移除所有事件监听，涉及EventService修改
-- #587 readString函数读取xml时，json解析报错
-- #591 live-demo指令异常
-- #594 Menuservice 相关示例中当position为mouse时点击关闭弹出框，控制台有报错
-- #595 NumericINput 点击向上或向下按钮，数值改变后，“您输入的值**”后面的数值不会随之改变。
-- #596 NumericInput 中change的例子值发生改变后不出现弹框，只有将光标置入文本框后再点击其他空白处才出现弹框 
-- #597 rdk_switch 中on_label例子缺失 
-- #492 修改rest读取大数据返回值截断问题，同时修复inputStream未关闭问题
+- #606 后端API readXml 读取文件，所读文件里面有多余换行符时json解析报错
+- #607 公共导出的文档位置修复
+- !569 Button和Icon图标修正
+- !579 utils.shallowcopy将数组误拷贝为json对象
+- #613 修改自定义表头功能
+- #612 rdk_accordion动效有bug
+- !599 调整rest.post设置请求头信息的位置，否则有异常
+- #614 rdk_Combo_Select设置宽度较长后，后面部分点击下拉框无效
+- #563 Time控件粒度选择周时候报错
+- #611 时间控件Time中的Gap属性问题
+- #621 时间控件粒度选择框中的值显示不全
