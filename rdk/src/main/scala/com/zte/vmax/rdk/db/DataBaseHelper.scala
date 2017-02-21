@@ -69,31 +69,33 @@ object DataBaseHelper extends Logger {
 
   private def getRowValue(rs: ResultSet, fieldCnt: Int, fieldTypes: Array[Int], nullToString: String): Array[String] = {
     val row = 1 to fieldCnt map (i => {
-      fieldTypes(i - 1) match {
-        case INTEGER => rs.getInt(i)
-        case BIGINT | REAL => rs.getLong(i)
-        case NUMERIC | DECIMAL => rs.getBigDecimal(i)
-        case CHAR => rs.getString(i)
-        case VARCHAR | LONGVARCHAR => rs.getString(i)
-        case TIMESTAMP => rs.getTimestamp(i)
-        case DOUBLE => rs.getDouble(i)
-        case BIT | BOOLEAN => rs.getBoolean(i)
-        case TINYINT => rs.getByte(i)
-        case SMALLINT => rs.getShort(i)
-        case FLOAT => rs.getFloat(i)
-        case DATE => rs.getDate(i)
-        case TIME => rs.getTime(i)
-        case BINARY | VARBINARY | LONGVARBINARY | JAVA_OBJECT | OTHER | STRUCT => rs.getBytes(i)
-        case NULL | DISTINCT => null
-        case ARRAY => rs.getArray(i)
-        case BLOB => rs.getBlob(i)
-        case CLOB => rs.getClob(i)
-        case ROWID => rs.getRowId(i)
-        case NCHAR | NVARCHAR | LONGNVARCHAR => rs.getNString(i)
-        case NCLOB => rs.getNClob(i)
-        case SQLXML => rs.getSQLXML(i)
-        case _ => null
-      }
+      if (rs.getObject(i) != null) {
+        fieldTypes(i - 1) match {
+          case INTEGER => rs.getInt(i)
+          case BIGINT | REAL => rs.getLong(i)
+          case NUMERIC | DECIMAL => rs.getBigDecimal(i)
+          case CHAR => rs.getString(i)
+          case VARCHAR | LONGVARCHAR => rs.getString(i)
+          case TIMESTAMP => rs.getTimestamp(i)
+          case DOUBLE => rs.getDouble(i)
+          case BIT | BOOLEAN => rs.getBoolean(i)
+          case TINYINT => rs.getByte(i)
+          case SMALLINT => rs.getShort(i)
+          case FLOAT => rs.getFloat(i)
+          case DATE => rs.getDate(i)
+          case TIME => rs.getTime(i)
+          case BINARY | VARBINARY | LONGVARBINARY | JAVA_OBJECT | OTHER | STRUCT => rs.getBytes(i)
+          case NULL | DISTINCT => null
+          case ARRAY => rs.getArray(i)
+          case BLOB => rs.getBlob(i)
+          case CLOB => rs.getClob(i)
+          case ROWID => rs.getRowId(i)
+          case NCHAR | NVARCHAR | LONGNVARCHAR => rs.getNString(i)
+          case NCLOB => rs.getNClob(i)
+          case SQLXML => rs.getSQLXML(i)
+          case _ => null
+        }
+      } else null
     })
     row.map(it => if (it == null) nullToString else it.toString).toArray
   }
