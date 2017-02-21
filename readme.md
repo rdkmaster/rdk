@@ -1,6 +1,5 @@
 ## RDK 官网
-- 内网1 [www.rdkapp.com](http://www.rdkapp.com) (内测中)
-- 内网2 <http://10.9.233.35:8080> 
+- [http://rdk.zte.com.cn](http://rdk.zte.com.cn)
 
 ## 第一步
 [《天龙八步》](http://10.9.233.35:8080/doc/#best_practise/index.md)，这是RDK的Hello World。
