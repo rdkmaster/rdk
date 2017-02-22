@@ -150,6 +150,12 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                         }
                     }
                     scope.isSelect = true;
+                    if(scope.open){
+                        EventService.broadcast(scope.id, EventTypes.OPEN);
+                    }
+                    else{
+                        EventService.broadcast(scope.id, EventTypes.CLOSE);
+                    }
                 }
 
                 function _closeShow() {
