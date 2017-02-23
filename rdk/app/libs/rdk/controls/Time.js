@@ -92,7 +92,7 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                 };
             }]);
 
-        timeApp.directive('rdkTime', ['PickerConstant', 'TimeMacro', 'TimeFormate', 'TimeUnit', 'Utils', 'TimeUtilService', '$timeout', function(PickerConstant, TimeMacro, TimeFormate, TimeUnit, Utils, TimeUtilService, $timeout) {
+        timeApp.directive('rdkTime', ['PickerConstant', 'TimeMacro', 'TimeFormate', 'TimeUnit', 'Utils', 'TimeUtilService', '$timeout','EventService','EventTypes', function(PickerConstant, TimeMacro, TimeFormate, TimeUnit, Utils, TimeUtilService, $timeout,EventService,EventTypes) {
             var scopeDefine={
                 setting: "=?",
                 label: "=?",
@@ -111,7 +111,7 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                                 ng-if="range" readonly datetimepicker option="endTimeOption">\
                                 <span ng-show="setting.selectGranularity == true" class="granularity" \
                                     ng-bind="selectedGranularity.label" ng-click="focusSelect()"></span>\
-                                <select selectpicker class="selectpicker" ng-model="selectedGranularity" \
+                                <select id="{{$id}}" selectpicker class="selectpicker" ng-model="selectedGranularity" \
                                     ng-options="granularity.label for granularity in granularityList" \
                                     ng-show="setting.selectGranularity == true">\
                                 </select>\
@@ -125,7 +125,6 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                         var initStartDate = "";
                         var initEndDate = "";
                         scope.range = Utils.isTrue(iAttrs.range);
-
                         function getInitValue() {
                             if (angular.isUndefined(scope.setting)) {
                                 scope.setting = {};
@@ -261,6 +260,10 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                             if (scope.setting.selectGranularity === true) {
                                 scope.$watch('selectedGranularity', function(newVal, oldVal) {
                                     if (newVal != oldVal && newVal != null) {
+                                        //scope.updateSelectpicker && scope.updateSelectpicker();
+                                        debugger;
+                                        //EventService.raiseControlEvent(scope, EventTypes.CHANGE, scope.$id);
+                                        EventService.broadcast(scope.$id, EventTypes.CHANGE);
                                         scope.setting.granularity = scope.selectedGranularity.value;
                                         scope.timeFormat = TimeFormate[Utils.getValueFromKey(TimeUnit, scope.setting.granularity)];
                                         _handleOption();

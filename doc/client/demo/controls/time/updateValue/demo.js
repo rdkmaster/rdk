@@ -29,7 +29,8 @@
         }
 
         scope.valueChang=function(){
-            scope.showGranularity.value = ['2015-03-04 14:00', '2015-03-10 16:00'] //支持y/m/w/d/h
+            scope.showGranularity.value = ['2015-05-04 14:00', '2015-05-10 16:00']; //支持y/m/w/d/h
+            scope.showGranularity.granularity = "month"; //支持y/m/w/d/h
         }
     }
 
