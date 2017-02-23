@@ -211,25 +211,25 @@
 .rdk-table-module .rdk-table tr {
     color: #434343;
 }
-/*表格选择行的背景色*/
-.rdk-table-module .rdk-table tbody tr.rowTr.selected-row{
-    background-color: #cde4fa;
-}
-.rdk-table-module .rdk-table tbody tr.rowTr>td.selected-row-td{
-    background-color:  #cde4fa;
-}
-.rdk-table-module .rdk-table tbody tr.selected-row-hover {
-    background-color:  #e2eef9;
-}
-.rdk-table-module .rdk-table tbody tr>td.selected-row-hover-td{
-    background-color:  #e2eef9;
-}
 /* tr 隔行不同颜色*/
 .rdk-table-module .rdk-table > tbody > tr:not(.row-span):nth-child(odd){
     background-color: #fff;
 }
 .rdk-table-module .rdk-table > tbody > tr:not(.row-span):nth-child(even){
     background-color: #f3f3f3;
+}
+/*表格选择行的背景色*/
+.rdk-table-module .rdk-table > tbody > tr.rowTr.selected-row{
+    background-color: #cde4fa;
+}
+.rdk-table-module .rdk-table > tbody > tr.rowTr>td.selected-row-td{
+    background-color:  #cde4fa;
+}
+.rdk-table-module .rdk-table > tbody > tr.selected-row-hover {
+    background-color:  #e2eef9;
+}
+.rdk-table-module .rdk-table > tbody > tr>td.selected-row-hover-td{
+    background-color:  #e2eef9;
 }
 .rdk-table-module .count {
     color: #2165a3;
