@@ -117,6 +117,10 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                     }
                 }, false);
 
+                scope.$watch('frozen', function() {
+                    scope.frozen ? $(iEle).find('p').css('cursor', 'not-allowed') : $(iEle).find('p').css('cursor', 'pointer');
+                }, false);
+
                 scope.clearData = function(event) {
                     event.stopPropagation();
                     EventService.raiseControlEvent(scope, EventTypes.CLEAR, scope.id);
