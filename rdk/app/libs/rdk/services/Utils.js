@@ -473,13 +473,26 @@
                 restrict: 'A',
                 priority: 1000,
                 link: function(scope, elem, attrs) {
-                    $timeout(function() {
+                    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+                    var selectpickerObserver;
+                    if(!!MutationObserver)
+                    {
+                        selectpickerObserver=new MutationObserver(function(){
+                            $(elem).selectpicker('refresh');
+                        });
+                        selectpickerObserver.observe(elem[0], {'childList': true});
+                    }
+                    $timeout(function(){
                         var size = attrs.selectpicker && parseInt(attrs.selectpicker) || 5;
                         $(elem).selectpicker({
                             style: 'btn',
                             size:size
                         });
                     }, 0);
+                    scope.$on('$destroy', function() {
+                        !!selectpickerObserver && selectpickerObserver.disconnect();
+                        $(elem).selectpicker('destroy');
+                    });
                 }
             };
         }])
