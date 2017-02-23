@@ -468,18 +468,19 @@
                 }
             }
         }])
-        .directive('selectpicker', ['$timeout', function($timeout) {
+        .directive('selectpicker', ['$timeout', 'EventService', 'EventTypes', function($timeout,EventService,EventTypes) {
             return {
                 restrict: 'A',
                 priority: 1000,
                 link: function(scope, elem, attrs) {
                     var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
                     var selectpickerObserver;
+                    if(attrs.id) {
+                        EventService.register(attrs.id, EventTypes.CHANGE, _refreshSelectpicker);
+                    }
                     if(!!MutationObserver)
                     {
-                        selectpickerObserver=new MutationObserver(function(){
-                            $(elem).selectpicker('refresh');
-                        });
+                        selectpickerObserver=new MutationObserver(_refreshSelectpicker);
                         selectpickerObserver.observe(elem[0], {'childList': true});
                     }
                     $timeout(function(){
@@ -493,6 +494,11 @@
                         !!selectpickerObserver && selectpickerObserver.disconnect();
                         $(elem).selectpicker('destroy');
                     });
+                    function _refreshSelectpicker(){
+                        $timeout(function(){
+                            $(elem).selectpicker('refresh');
+                        },0)
+                    }
                 }
             };
         }])

@@ -7,7 +7,7 @@
     var controllerDefination = ['$scope', main];
     function main(scope) {
         scope.defaultValue = {
-            value: "2015-01-01 14:00",
+            value: ["now-2d","now"],
             granularity: "hour",
         }
     }

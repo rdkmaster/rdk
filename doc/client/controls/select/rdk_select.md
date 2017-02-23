@@ -16,3 +16,16 @@
 <live_demo example="controls/select/basic" width="900"></live_demo>
 
 
+# 事件 #
+
+如果设置了`id`，即可广播/监听以下事件。
+
+## CHANGE ##
+
+通过`CHANGE`事件方式，更新下拉框选择值。
+
+		EventService.broadcast('my_select', EventTypes.CHANGE);
+
+这是一个简单的 `CHANGE` 例子：
+
+<live_demo example="controls/select/change" width="900"></live_demo>
