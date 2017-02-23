@@ -7,7 +7,7 @@
     var controllerDefination = ['$scope', main];
     function main(scope) {
         scope.exportHandler = function() {
-            var msg = 'RDK提供了基础导出服务，详情参考这里 www.rdkapp.com/doc/#client/common/export.md';
+            var msg = 'RDK提供了基础导出服务，详情参考这里 http://rdk.zte.com.cn/doc/#client/common/export.md';
             console.log(msg)
             alert(msg);
         }

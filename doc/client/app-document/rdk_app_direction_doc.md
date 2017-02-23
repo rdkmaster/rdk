@@ -2,11 +2,11 @@
 
 ## 背景
 
-在VMAX项目RDK框架推动初期，虽然<a href="http://10.9.233.35:8080/site/index.html" target="_blank">RDK官网</a>对RDK框架的使用有全面深入的介绍，以及<a href="http://10.9.233.35" target="_blank">e办</a>上有rdk控件demo，但是各团队面对一个全新的框架，从各个功能独立的控件demo到开发一个完整的具有复杂逻辑功能的app应用的时候，会遇到一些问题。本文档主要根据在使用RDK框架进行开发过程中遇到的问题，总结出相关的思路和方法，可供参考。
+在VMAX项目RDK框架推动初期，虽然<a href="http://rdk.zte.com.cn/site/index.html" target="_blank">RDK官网</a>对RDK框架的使用有全面深入的介绍，以及<a href="http://10.9.233.35" target="_blank">e办</a>上有rdk控件demo，但是各团队面对一个全新的框架，从各个功能独立的控件demo到开发一个完整的具有复杂逻辑功能的app应用的时候，会遇到一些问题。本文档主要根据在使用RDK框架进行开发过程中遇到的问题，总结出相关的思路和方法，可供参考。
 
 ## 目的
 
-本文档旨在指导了解过angularJs、rdk数据源、事件机制等相关知识基础上的开发人员进行完整app页面开发。rdk新手请<a href="http://10.9.233.35:8080/doc/client/" target="_blank">点击</a>这里
+本文档旨在指导了解过angularJs、rdk数据源、事件机制等相关知识基础上的开发人员进行完整app页面开发。rdk新手请<a href="http://rdk.zte.com.cn/doc/client/" target="_blank">点击</a>这里
 
 ## 实践操作
 

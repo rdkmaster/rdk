@@ -72,7 +72,7 @@ SVN下载完成之后，就可以在 `d:\rdk-develop-environment\rdk\app` 目录
 
 ![](server/img/jre_too_old_error.PNG)
 
-说明你当前环境使用的Java运行环境版本过低，请使用至少Java1.8以上的版本。这里可以下载到 [Win32](http://10.9.233.35:8080/tools/jre1.8.0_32_101.zip) 或者 [Win64](http://10.9.233.35:8080/tools/jre1.8.0_64_101.zip) 的Java8运行环境。
+说明你当前环境使用的Java运行环境版本过低，请使用至少Java1.8以上的版本。这里可以下载到 [Win32](http://rdk.zte.com.cn/tools/jre1.8.0_32_101.zip) 或者 [Win64](http://rdk.zte.com.cn/tools/jre1.8.0_64_101.zip) 的Java8运行环境。
 
 #### RDK服务5812端口被占
 在 “RDK Server for Windows” 的RDK页的控制台看到如下打印
@@ -99,7 +99,7 @@ SVN下载完成之后，就可以在 `d:\rdk-develop-environment\rdk\app` 目录
 
 1) 新建/home/rdk目录
 
-2）打开[下载页面](www.rdkapp.com/site/download/index.html)，下载rdk-runtime-environment*.zip，并解压到该目录下
+2）打开[下载页面](http://rdk.zte.com.cn/site/download/index.html)，下载rdk-runtime-environment*.zip，并解压到该目录下
 
 3）将Nginx配置文件改为
 

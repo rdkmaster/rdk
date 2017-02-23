@@ -72,11 +72,11 @@ rdk_server需要jre1.8作为运行环境。windows用户打开cmd命令端口使
 
 ## 安装 Idea IDE ##
 
-必须要ultimate版的才行，[点击直接下载](http://10.9.233.35:8080/tools/ideaIU-15.zip)。
+必须要ultimate版的才行，[点击直接下载](http://rdk.zte.com.cn/tools/ideaIU-15.zip)。
 
 各种下一步后就装好了。
 
-随后需要安装scala插件，如果不需要编辑代码可以跳过这一步。下载[这个插件](http://10.9.233.35:8080/tools/scala-intellij-bin-2.2.0.zip)，在Idea中选择菜单 File-> Settings 打开配置页，找到Plugins，单击 Install plugin from disk...，找到刚刚下载的scala插件，根据向导安装即可：
+随后需要安装scala插件，如果不需要编辑代码可以跳过这一步。下载[这个插件](http://rdk.zte.com.cn/tools/scala-intellij-bin-2.2.0.zip)，在Idea中选择菜单 File-> Settings 打开配置页，找到Plugins，单击 Install plugin from disk...，找到刚刚下载的scala插件，根据向导安装即可：
 
 <img src="img/plugin.PNG"></img>
 
