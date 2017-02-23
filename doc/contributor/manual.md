@@ -12,7 +12,7 @@
 	#连接的数据库ip，原本有可能是注释掉的，要删掉开头的#字符，并修改为实际值
 	database.gbase.hostList=10.43.149.74
 
-确定当前电脑已经安装了nodejs，如果没有烦请[下载nodejs](http://10.9.233.35:8080/tools/node-v5.10.1-x86.msi)并正确安装。最后，运行 `d:\rdkProject\rdk\start.exe` 就可以启动RDK的开发环境了。
+确定当前电脑已经安装了nodejs，如果没有烦请[下载nodejs](http://rdk.zte.com.cn/tools/node-v5.10.1-x86.msi)并正确安装。最后，运行 `d:\rdkProject\rdk\start.exe` 就可以启动RDK的开发环境了。
 
 先无视控制台报的异常信息,打开浏览器，输入 `http://localhost:8080/rdk/app/example/web/index.html`，页面能打开表示一切正常。
 

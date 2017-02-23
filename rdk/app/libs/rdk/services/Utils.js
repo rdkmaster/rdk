@@ -23,7 +23,7 @@
                     continue;
                 }
                 console.warn('事件属性 %s 的值 %s 不该有圆括号！关于此警告请查看 ' +
-                    'http://10.9.233.35:8080/doc/#client/common/supress_warning.md', prop, attrs[prop]);
+                    'http://rdk.zte.com.cn/doc/#client/common/supress_warning.md', prop, attrs[prop]);
             }
         };
 
