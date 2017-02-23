@@ -1286,7 +1286,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                     columnDef.class = def.class;
                                     columnDef.width = def.width;
                                     columnDef.group = def.group;
-                                    columnDef.targets = scope.columnDefs.length + 1;
+                                    columnDef.targets = scope.columnDefs.length;
                                     scope.columnDefs.push(columnDef);
                                 } else {
                                     if (customColumnDefs[i].override === false) {
