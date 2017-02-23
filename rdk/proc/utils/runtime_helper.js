@@ -382,6 +382,19 @@ var File = {
         }
         return JSON.parse(result);
     },
+    readCSV: function (path, option) {
+        if (!path) {
+            log("invalid file path:", path);
+            return undefined;
+        }
+        path = path.toString();
+        log("reading file as string:", path);
+        var result = rdk_runtime.fileHelper().readCSV(path, option)
+        if (!result) {
+            return undefined;
+        }
+        return JSON.parse(result);
+    },
     save: function (file, content, append, encoding) {
         if (!file) {
             log("invalid file path:", file);

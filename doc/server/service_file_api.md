@@ -60,6 +60,34 @@
         //普通路径
        File.readXml("app/example/server/dialog_settings.xml")   
 
+
+### `File.readCSV()` {#readCSV}###
+
+定义：
+
+    function readCSV(path,option);
+
+参数：
+
+- path 字符串。需要读取的文件路径，如果是目录则会报错。可使用[路径宏](relative_path_rule.md)简化路径。
+
+- option 对象，可选。读csv文件的选项，支持下面的配置项：
+    - separator: csv分列字符，默认值是英文逗号（`,`），常用的有 `\t`。
+    - quoteChar: 包围单元格字符串的字符，默认值是双引号（`"`），如果不需要包围字符，可以给一个空格。
+    - escapeChar: 转义字符，默认值为（`'`）。
+   
+
+返回：返回一个json格式的js二维数组对象
+
+说明：异常情况返回undefined。
+
+示例： 解析CSV文件并返回对应json对象。
+        //使用宏路径
+       File.readCSV("$svr/dialog_settings.csv")
+        //普通路径
+       File.readCSV("app/example/server/dialog_settings.csv")   
+
+
 ### `File.save()` {#save}###
 
 定义：
@@ -106,7 +134,7 @@
 - option 对象，可选。写csv文件的选项，支持下面的配置项：
     - separator: csv分列字符，默认值是英文逗号（`,`），常用的有 `\t`。
     - quoteChar: 包围单元格字符串的字符，默认值是双引号（`"`），如果不需要包围字符，可以给一个空格。
-    - escapeChar: 转义字符，一般需要和 `separator` 一样。
+    - escapeChar: 转义字符，默认值为（`'`）。
     - lineEnd: 换行字符，默认值是 `\n`
     - encoding: 写入文件的字符集编码，默认值是GBK。常用备选的是utf-8/gb2312/gbk。注：Excel只认GBK编码的csv文件，utf-8编码的csv文件在Excel中打开中文会有乱码，所以如果是打算用Excel打开的csv文件，使用默认值编码即可。给其他功能写的csv文件，请根据实际情况选择正确的编码以避免中文乱码。
     - append: 为 `false`（默认）则覆盖原文件（如果存在），为 `true` 则追加到文件的最后；

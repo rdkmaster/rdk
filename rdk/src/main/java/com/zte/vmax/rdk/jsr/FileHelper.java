@@ -1,8 +1,10 @@
 package com.zte.vmax.rdk.jsr;
 
+import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.zte.vmax.rdk.log.AbstractAppLoggable;
 import com.zte.vmax.rdk.log.AppLogger;
+import com.zte.vmax.rdk.util.RdkUtil;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import jdk.nashorn.internal.runtime.Undefined;
 
@@ -243,29 +245,75 @@ public class FileHelper extends AbstractAppLoggable {
         return true;
     }
 
-    public boolean saveAsCSV(String file, Object content, Object excludeIndexes, Object option) {
+    public String readCSV(String fileStr, Object option) {
+        HashMap<String, Object> op = parseCSVOptionFromScript(option);
+        char separator = (char) op.get("separator");
+        char quoteChar = (char) op.get("quoteChar");
+        char escapeChar = (char) op.get("escapeChar");
+        int line = (int) op.get("line");
+        boolean strictQuotes = (boolean) op.get("strictQuotes");
+        boolean ignoreLeadingWhiteSpace = (boolean) op.get("ignoreLeadingWhiteSpace");
+        boolean keepCR = (boolean) op.get("keepCR");
+
+        fileStr = fixPath(fileStr, appName);
+
+        File file = new File(fileStr);
+
+        Reader reader = null;
+        try {
+            reader = new FileReader(file);
+        } catch (FileNotFoundException ex) {
+            logger.error("create file reader exception:" + ex);
+            return null;
+        }
+
+        List<String[]> result = null;
+        try {
+            result = new CSVReader(reader, separator, quoteChar, escapeChar, line, strictQuotes, ignoreLeadingWhiteSpace, keepCR).readAll();
+        } catch (IOException ex) {
+            logger.error("read csv file error:" + ex);
+            return null;
+        }
+        return RdkUtil.toJsonString(result);
+
+    }
+
+    private HashMap<String, Object> parseCSVOptionFromScript(Object option) {
         HashMap<String, Object> op = new HashMap<>();
 
         if (option instanceof ScriptObjectMirror) {
             ScriptObjectMirror som = (ScriptObjectMirror) option;
             op.put("separator", toChar(som.getMember("separator"), ','));
             op.put("quoteChar", toChar(som.getMember("quoteChar"), '"'));
-            op.put("escapeChar", toChar(som.getMember("escapeChar"), '"'));
+            op.put("escapeChar", toChar(som.getMember("escapeChar"), '\''));
             op.put("lineEnd", toString(som.getMember("lineEnd"), "\n"));
             op.put("encoding", toString(som.getMember("encoding"), "GBK"));
             op.put("append", toBoolean(som.getMember("append")));
+            op.put("line", toInt(som.getMember("line"), 0));
+            op.put("strictQuotes", toBoolean(som.getMember("strictQuotes")));
+            op.put("ignoreLeadingWhiteSpace", toBoolean(som.getMember("ignoreLeadingWhiteSpace")));
+            op.put("keepCR", toBoolean(som.getMember("keepCR")));
         } else {
             if (!(option instanceof Undefined)) {
                 logger.error("unsupported option type[" + option.getClass().getName() + "]! ignoring it!");
             }
             op.put("separator", ',');
             op.put("quoteChar", '"');
-            op.put("escapeChar", '"');
+            op.put("escapeChar", '\'');
             op.put("lineEnd", "\n");
             op.put("encoding", "GBK");
             op.put("append", toBoolean(false));
+            op.put("line", 0);
+            op.put("strictQuotes",toBoolean(false));
+            op.put("ignoreLeadingWhiteSpace", toBoolean(false));
+            op.put("keepCR", toBoolean(false));
         }
 
+        return op;
+    }
+
+    public boolean saveAsCSV(String file, Object content, Object excludeIndexes, Object option) {
+        HashMap<String, Object> op = parseCSVOptionFromScript(option);
         return saveAsCSV(file, content, excludeIndexes, op);
     }
 
