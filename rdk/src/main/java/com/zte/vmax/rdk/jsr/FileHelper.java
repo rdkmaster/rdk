@@ -254,16 +254,20 @@ public class FileHelper extends AbstractAppLoggable {
         boolean strictQuotes = (boolean) op.get("strictQuotes");
         boolean ignoreLeadingWhiteSpace = (boolean) op.get("ignoreLeadingWhiteSpace");
         boolean keepCR = (boolean) op.get("keepCR");
+        String encoding = (String) op.get("encoding");
 
         fileStr = fixPath(fileStr, appName);
 
         File file = new File(fileStr);
 
-        Reader reader = null;
+        InputStreamReader reader = null;
         try {
-            reader = new FileReader(file);
+            reader = new InputStreamReader(new FileInputStream(file), encoding);
         } catch (FileNotFoundException ex) {
-            logger.error("create file reader exception:" + ex);
+            logger.error("file not found exception:" + ex);
+            return null;
+        } catch (UnsupportedEncodingException ex) {
+            logger.error("UnsupportedEncodingException:" + ex);
             return null;
         }
 
