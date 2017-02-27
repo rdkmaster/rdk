@@ -111,7 +111,8 @@ GUISetState(@SW_SHOW)
 _startRDK()
 _startHTTP()
 
-AdlibRegister('_updateConsole', 100)
+AdlibRegister('_updateConsole', 200)
+AdlibRegister('_checkRDK', 1000)
 OnAutoItExitRegister('_beforeExit')
 
 While 1
@@ -119,6 +120,7 @@ While 1
 		Case $GUI_EVENT_CLOSE
 			If MsgBox(292, "RDK Server for Windows", "是否关闭所有的服务进程并退出？", 0, $gui) <> 6 Then ContinueLoop
 			AdlibUnRegister('_updateConsole')
+			AdlibUnRegister('_checkRDK')
 			Exit
 		Case $btnApplyRule
 			_applyRules()
@@ -180,13 +182,6 @@ Func _applyRules()
 EndFunc
 
 Func _updateConsole()
-	If Not ProcessExists($rdkPid) Then
-		AdlibUnRegister('_updateConsole')
-		_error('RDK后台进程意外退出！请重启start.exe。' & @CRLF & @CRLF & _
-			'具体原因不明，很可能是java虚拟机内存不足所致，请到 http://gitlab.zte.com.cn/10045812/rdk/issues ' & _
-			'新增一个issue报告此问题，把日志文件[' & @ScriptDir & '\rdk\proc\logs\log.txt' & ']反馈给我们，十分感谢，十分抱歉。')
-	EndIf
-
 	Local $out = StdoutRead($rdkPid)
 	If @extended > 0 Then
 		$out = _fixConoleText($out)
@@ -243,6 +238,16 @@ Func _init()
 	EndIf
 	_saveArg($jreOpt)
 EndFunc
+
+Func _checkRDK()
+	If Not ProcessExists($rdkPid) Then
+		AdlibUnRegister('_checkRDK')
+		_error('RDK后台进程意外退出！请重启start.exe。' & @CRLF & @CRLF & _
+			'具体原因不明，很可能是java虚拟机内存不足所致，请到 http://gitlab.zte.com.cn/10045812/rdk/issues ' & _
+			'新增一个issue报告此问题，把日志文件[' & @ScriptDir & '\rdk\proc\logs\log.txt' & ']反馈给我们，十分感谢，十分抱歉。')
+	EndIf
+EndFunc
+
 
 Func _beforeExit()
 	ToolTip('正在关闭后台进程，请稍候。。。', @DesktopWidth/2, @DesktopHeight/2-50, '', 0, 2)
