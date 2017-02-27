@@ -428,7 +428,8 @@
             $.ajax({
                 type: "GET",
                 async: false, 
-                url: requestUrl,  
+                url: requestUrl, 
+                cache: false,
                 success: function(msg){
                     domStr = msg;
                 }
