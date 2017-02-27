@@ -16,16 +16,14 @@
 <live_demo example="controls/select/basic" width="900"></live_demo>
 
 
-# 事件 #
+# 方法 #
 
-如果设置了`id`，即可广播/监听以下事件。
+## refreshSelect ##
 
-## CHANGE ##
+通过调用`refreshSelect`方法，更新下拉框选择值。
 
-通过`CHANGE`事件方式，更新下拉框选择值。
+		rdk.xxxId.refreshSelect();
 
-		EventService.broadcast('my_select', EventTypes.CHANGE);
-
-这是一个简单的 `CHANGE` 例子：
+这是一个简单的 `refreshSelect` 例子：
 
 <live_demo example="controls/select/change" width="900"></live_demo>

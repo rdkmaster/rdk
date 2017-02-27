@@ -468,16 +468,24 @@
                 }
             }
         }])
-        .directive('selectpicker', ['$timeout', 'EventService', 'EventTypes', function($timeout,EventService,EventTypes) {
+        .directive('selectpicker', ['$timeout', 'EventService', 'EventTypes','Utils', function($timeout,EventService,EventTypes,Utils) {
             return {
                 restrict: 'A',
                 priority: 1000,
+                scope:{
+                    id:"@?"
+                },
+                controller: ['$scope', function(scope){
+                    Utils.publish(scope, this);
+                    //刷新selectpicker
+                    this.refreshSelect = function(){
+                        scope.refreshSelect();
+                    }
+                }],
                 link: function(scope, elem, attrs) {
                     var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
                     var selectpickerObserver;
-                    if(attrs.id) {
-                        EventService.register(attrs.id, EventTypes.CHANGE, _refreshSelectpicker);
-                    }
+                    scope.refreshSelect = _refreshSelectpicker;
                     if(!!MutationObserver)
                     {
                         selectpickerObserver=new MutationObserver(_refreshSelectpicker);

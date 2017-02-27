@@ -260,8 +260,7 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                             if (scope.setting.selectGranularity === true) {
                                 scope.$watch('selectedGranularity', function(newVal, oldVal) {
                                     if (newVal != oldVal && newVal != null) {
-                                       //EventService.raiseControlEvent(scope, EventTypes.CHANGE, scope.$id);
-                                        EventService.broadcast("timeSelect"+scope.$id, EventTypes.CHANGE);
+                                        rdk["timeSelect"+scope.$id].refreshSelect();
                                         scope.setting.granularity = scope.selectedGranularity.value;
                                         scope.timeFormat = TimeFormate[Utils.getValueFromKey(TimeUnit, scope.setting.granularity)];
                                         _handleOption();

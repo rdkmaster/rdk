@@ -21,7 +21,7 @@
 
         scope.change = function(){
             scope.myColor1 = scope.colors[2];
-            EventService.broadcast("myColorSelect", EventTypes.CHANGE);
+            rdk.myColorSelect.refreshSelect();
         }
     }
 
