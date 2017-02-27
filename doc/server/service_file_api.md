@@ -75,7 +75,7 @@
     - separator: csv分列字符，默认值是英文逗号（`,`），常用的有 `\t`。
     - quoteChar: 包围单元格字符串的字符，默认值是双引号（`"`），如果不需要包围字符，可以给一个空格。
     - escapeChar: 转义字符，默认值为（`'`）。
-   
+    - encoding: 按指定的字符集编码来读，默认值GBK。常用备选的是GBK/gb2312/utf-8。
 
 返回：返回一个json格式的js二维数组对象
 
@@ -86,6 +86,8 @@
        File.readCSV("$svr/dialog_settings.csv")
         //普通路径
        File.readCSV("app/example/server/dialog_settings.csv")   
+        //按GBK编码方式来读
+       File.readCSV("app/example/server/dialog_settings.csv",{"encoding":"GBK"})  
 
 
 ### `File.save()` {#save}###
