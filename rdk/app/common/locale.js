@@ -4,6 +4,6 @@
  */
 (function() {
     return function() {
-        return rdk_runtime.locale();
+        return {result: rdk_runtime.locale()};
     }
 })();
