@@ -1,7 +1,8 @@
-#include <GUIConstantsEx.au3>
+ï»¿#include <GUIConstantsEx.au3>
 #include <GuiEdit.au3>
 #include <WindowsConstants.au3>
 #include <Misc.au3>
+#include <NamedPipes.au3>
 
 #AutoIt3Wrapper_Icon=favicon.ico
 
@@ -10,9 +11,12 @@
 
 Const $WIN_TITLE = 'RDK Server for Windows'
 
-If _Singleton("rdk_console_for_windows", 1) = 0 Then
-	_error('ÒÑ¾­ÓĞÒ»¸ö¿ØÖÆÌ¨ÔÚÔËĞĞÁË£¡')
+
+If _checkInstance() Then
 	WinActivate($WIN_TITLE)
+	MsgBox(16+4096, 'å‡ºé”™å•¦', 'å·²ç»æœ‰ä¸€ä¸ªæ§åˆ¶å°åœ¨è¿è¡Œäº†ï¼' & @CRLF & _
+							'å¦‚æœè¿™ä¸ªé”™è¯¯æ˜¯è¯¯æŠ¥çš„ï¼Œé‚£è¯·å…ˆé€€å‡ºæ­£åœ¨è¿è¡Œçš„nginxè¿›ç¨‹åå†è¯•ä¸€ä¸‹ã€‚')
+	Exit
 EndIf
 
 
@@ -35,49 +39,49 @@ GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKTOP)
 
 $height -= 20
 
-GUICtrlCreateTabItem("RDK ·şÎñ½ø³Ì¿ØÖÆÌ¨")
+GUICtrlCreateTabItem("RDK æœåŠ¡è¿›ç¨‹æ§åˆ¶å°")
 Global $rdkConsole = GUICtrlCreateEdit("", 2, 23, $width, $height, $WS_HSCROLL + $WS_VSCROLL + $ES_WANTRETURN)
 GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 GUICtrlSetFont(-1, 8.5, 0, 0, 'Courier New')
 _GUICtrlEdit_SetLimitText($rdkConsole, 3000000000)
 
-GUICtrlCreateTabItem("×ª·¢¹æÔò")
-Global $btnApplyRule = GUICtrlCreateButton('Ó¦ÓÃ¹æÔò', 12, 26)
+GUICtrlCreateTabItem("è½¬å‘è§„åˆ™")
+Global $btnApplyRule = GUICtrlCreateButton('åº”ç”¨è§„åˆ™', 12, 26)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
 Global $nginxConf = GUICtrlCreateEdit("", 12, 54, $width - 18, $height - 36)
 GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
 GUICtrlSetFont(-1, 8.5, 0, 0, 'Courier New')
 
-GUICtrlCreateTabItem("¹ØÓÚ RDK")
-GUICtrlCreateLabel('»¶Ó­Ê¹ÓÃ RDK Windows ¿ª·¢»·¾³', 12, 36, 400)
+GUICtrlCreateTabItem("å…³äº RDK")
+GUICtrlCreateLabel('æ¬¢è¿ä½¿ç”¨ RDK Windows å¼€å‘ç¯å¢ƒ', 12, 36, 400)
 GUICtrlSetFont(-1, 12, $FW_BOLD)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
 
-Global $lbVersion = GUICtrlCreateLabel('¡ğ µ±Ç°°æ±¾ ...', 24, 70, 140)
+Global $lbVersion = GUICtrlCreateLabel('â—‹ å½“å‰ç‰ˆæœ¬ ...', 24, 70, 140)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
-Global $lbDownload = GUICtrlCreateLabel ('ÏÂÔØ×îĞÂ°æ', 165, 69)
-GUICtrlSetResizing(-1, $GUI_DOCKALL)
-GuiCtrlSetFont(-1, 9, $FW_NORMAL, $GUI_FONTUNDER)
-GuiCtrlSetColor(-1, 0x0000ff)
-GuiCtrlSetCursor(-1, 0)
-
-GUICtrlCreateLabel('¡ğ ÈçºÎ¿ªÊ¼', 24, 90)
-GUICtrlSetResizing(-1, $GUI_DOCKALL)
-Global $lbGetStarted = GUICtrlCreateLabel ('www.rdkapp.com/doc/#best_practise/index.md', 96, 89)
+Global $lbDownload = GUICtrlCreateLabel ('ä¸‹è½½æœ€æ–°ç‰ˆ', 165, 69)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
 GuiCtrlSetFont(-1, 9, $FW_NORMAL, $GUI_FONTUNDER)
 GuiCtrlSetColor(-1, 0x0000ff)
 GuiCtrlSetCursor(-1, 0)
 
-GUICtrlCreateLabel('¡ğ RDK ¹ÙÍø', 24, 110)
+GUICtrlCreateLabel('â—‹ å¦‚ä½•å¼€å§‹', 24, 90)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
-Global $lbSite = GUICtrlCreateLabel ('www.rdkapp.com', 96, 109)
+Global $lbGetStarted = GUICtrlCreateLabel ('http://rdk.zte.com.cn/doc/#best_practise/index.md', 96, 89)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
 GuiCtrlSetFont(-1, 9, $FW_NORMAL, $GUI_FONTUNDER)
 GuiCtrlSetColor(-1, 0x0000ff)
 GuiCtrlSetCursor(-1, 0)
 
-GUICtrlCreateLabel('¡ğ RDK ´úÂë', 24, 130)
+GUICtrlCreateLabel('â—‹ RDK å®˜ç½‘', 24, 110)
+GUICtrlSetResizing(-1, $GUI_DOCKALL)
+Global $lbSite = GUICtrlCreateLabel ('http://rdk.zte.com.cn', 96, 109)
+GUICtrlSetResizing(-1, $GUI_DOCKALL)
+GuiCtrlSetFont(-1, 9, $FW_NORMAL, $GUI_FONTUNDER)
+GuiCtrlSetColor(-1, 0x0000ff)
+GuiCtrlSetCursor(-1, 0)
+
+GUICtrlCreateLabel('â—‹ RDK ä»£ç ', 24, 130)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
 Global $lbGitlab = GUICtrlCreateLabel ('http://gitlab.zte.com.cn/10045812/rdk', 96, 129)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
@@ -85,7 +89,7 @@ GuiCtrlSetFont(-1, 9, $FW_NORMAL, $GUI_FONTUNDER)
 GuiCtrlSetColor(-1, 0x0000ff)
 GuiCtrlSetCursor(-1, 0)
 
-GUICtrlCreateLabel('¡ğ ÎÒÓĞĞèÇó', 24, 150)
+GUICtrlCreateLabel('â—‹ æˆ‘æœ‰éœ€æ±‚', 24, 150)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
 Global $lbIssue = GUICtrlCreateLabel ('http://gitlab.zte.com.cn/10045812/rdk/issues/new', 96, 149)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
@@ -93,7 +97,7 @@ GuiCtrlSetFont(-1, 9, $FW_NORMAL, $GUI_FONTUNDER)
 GuiCtrlSetColor(-1, 0x0000ff)
 GuiCtrlSetCursor(-1, 0)
 
-GUICtrlCreateLabel('¡ğ ±¨¸æ Bug', 24, 170)
+GUICtrlCreateLabel('â—‹ æŠ¥å‘Š Bug', 24, 170)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
 Global $lbBug = GUICtrlCreateLabel ('http://gitlab.zte.com.cn/10045812/rdk/issues/new', 96, 169)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
@@ -101,7 +105,7 @@ GuiCtrlSetFont(-1, 9, $FW_NORMAL, $GUI_FONTUNDER)
 GuiCtrlSetColor(-1, 0x0000ff)
 GuiCtrlSetCursor(-1, 0)
 
-GUICtrlCreateLabel('¡ğ ¹¤×÷Ä¿Â¼ ' & @ScriptDir, 24, 190)
+GUICtrlCreateLabel('â—‹ å·¥ä½œç›®å½• ' & @ScriptDir, 24, 190)
 GUICtrlSetResizing(-1, $GUI_DOCKALL)
 
 GUICtrlCreateTabItem("") ; end tabitem definition
@@ -112,22 +116,22 @@ _startRDK()
 _startHTTP()
 
 AdlibRegister('_updateConsole', 200)
-AdlibRegister('_checkRDK', 1000)
+AdlibRegister('_checkRDK', 5000)
 OnAutoItExitRegister('_beforeExit')
 
 While 1
 	Switch GUIGetMsg()
 		Case $GUI_EVENT_CLOSE
-			If MsgBox(292, "RDK Server for Windows", "ÊÇ·ñ¹Ø±ÕËùÓĞµÄ·şÎñ½ø³Ì²¢ÍË³ö£¿", 0, $gui) <> 6 Then ContinueLoop
+			If MsgBox(292, "RDK Server for Windows", "æ˜¯å¦å…³é—­æ‰€æœ‰çš„æœåŠ¡è¿›ç¨‹å¹¶é€€å‡ºï¼Ÿ", 0, $gui) <> 6 Then ContinueLoop
 			AdlibUnRegister('_updateConsole')
 			AdlibUnRegister('_checkRDK')
 			Exit
 		Case $btnApplyRule
 			_applyRules()
 		Case $lbGetStarted
-			_visitWeb('http://www.rdkapp.com/doc/#best_practise/index.md')
+			_visitWeb('http://rdk.zte.com.cn/doc/#best_practise/index.md')
 		Case $lbSite
-			_visitWeb('http://www.rdkapp.com')
+			_visitWeb('http://rdk.zte.com.cn')
 		Case $lbGitlab
 			_visitWeb('http://gitlab.zte.com.cn/10045812/rdk')
 		Case $lbIssue
@@ -135,7 +139,7 @@ While 1
 		Case $lbBug
 			_visitWeb('http://gitlab.zte.com.cn/10045812/rdk/issues/new')
 		Case $lbDownload
-			_visitWeb('http://www.rdkapp.com/site/download/index.html')
+			_visitWeb('http://rdk.zte.com.cn/site/download/index.html')
 		Case $tab
 			If GUICtrlRead($tab) == 1 Then _initRule()
 			If GUICtrlRead($tab) == 2 Then _initVersion()
@@ -150,7 +154,7 @@ EndFunc
 Func _initVersion()
 	If $versionFetched Then Return
 	$versionFetched = True
-	GUICtrlSetData($lbVersion, '¡ğ µ±Ç°°æ±¾ ' & _getVersion())
+	GUICtrlSetData($lbVersion, 'â—‹ å½“å‰ç‰ˆæœ¬ ' & _getVersion())
 EndFunc
 
 Func _applyRules()
@@ -158,9 +162,9 @@ Func _applyRules()
 	Local $idx1 = StringInStr($tpl, '## proxy setting start ##')
 	Local $endMark = '## proxy setting end ##'
 	Local $idx2 = StringInStr($tpl, $endMark)
-	If $idx1 == 0 Or $idx2 == 0 Then Return MsgBox(16+4096, "³ö´íÀ²£¡", 'tools\nginx-1.11.9\conf\nginx.conf.tpl ±»ÆÆ»µ£¬ÇëÖØĞÂÏÂÔØRDKÔÙÊÔ', 0, $gui)
+	If $idx1 == 0 Or $idx2 == 0 Then Return MsgBox(16+4096, "å‡ºé”™å•¦ï¼", 'tools\nginx-1.11.9\conf\nginx.conf.tpl è¢«ç ´åï¼Œè¯·é‡æ–°ä¸‹è½½RDKå†è¯•', 0, $gui)
 
-	If MsgBox(292,"RDK¿ØÖÆÌ¨","Ó¦ÓÃ¹æÔò»áÌæ»»ÏÖÓĞnginx.confÎÄ¼şÖĞµÄÏà¹Ø¹æÔò£¬ÊÇ·ñ¼ÌĞø£¿", 0, $gui) == 7 Then Return
+	If MsgBox(292,"RDKæ§åˆ¶å°","åº”ç”¨è§„åˆ™ä¼šæ›¿æ¢ç°æœ‰nginx.confæ–‡ä»¶ä¸­çš„ç›¸å…³è§„åˆ™ï¼Œæ˜¯å¦ç»§ç»­ï¼Ÿ", 0, $gui) == 7 Then Return
 
 	Local $conf = StringLeft($tpl, $idx1-1) & @CRLF & _
 		_GUICtrlEdit_GetText($nginxConf) & @CRLF & _
@@ -178,7 +182,7 @@ Func _applyRules()
 	_stopHTTP()
 	_startHTTP()
 	Sleep(500)
-	MsgBox(64,"RDK¿ØÖÆÌ¨","×ª·¢¹æÔòÓ¦ÓÃ³É¹¦£¡", 0, $gui)
+	MsgBox(64,"RDKæ§åˆ¶å°","è½¬å‘è§„åˆ™åº”ç”¨æˆåŠŸï¼", 0, $gui)
 EndFunc
 
 Func _updateConsole()
@@ -211,19 +215,19 @@ Func _init()
 	If Not FileExists($java) Then $java = EnvGet ( "JAVA_HOME" ) & '\bin\java.exe'
 
 	If Not FileExists($java) Then
-		_error('ÕÒ²»µ½ Java1.8 ÔËĞĞ»·¾³¡£' & @CRLF & @CRLF & _
-			'¡¾½â¾ö·½·¨¡¿' & @CRLF & 'Çë½« Java1.8 ¼°ÒÔÉÏµÄ Java ÔËĞĞ»·¾³¿½±´µ½Õâ¸öÄ¿Â¼£º'  _
+		_error('æ‰¾ä¸åˆ° Java1.8 è¿è¡Œç¯å¢ƒã€‚' & @CRLF & @CRLF & _
+			'ã€è§£å†³æ–¹æ³•ã€‘' & @CRLF & 'è¯·å°† Java1.8 åŠä»¥ä¸Šçš„ Java è¿è¡Œç¯å¢ƒæ‹·è´åˆ°è¿™ä¸ªç›®å½•ï¼š'  _
 			& @WorkingDir & '\proc\bin\jre' & @CRLF & _
-			'»òÕß ÕıÈ·ÅäÖÃ JAVA_HOME »·¾³±äÁ¿µÄÖµ¡£')
+			'æˆ–è€… æ­£ç¡®é…ç½® JAVA_HOME ç¯å¢ƒå˜é‡çš„å€¼ã€‚')
 	EndIf
 
-	ToolTip('ÕıÔÚ¼ì²é JRE °æ±¾¡£¡£¡£', @DesktopWidth/2, @DesktopHeight/2-50, '', 0, 2)
+	ToolTip('æ­£åœ¨æ£€æŸ¥ JRE ç‰ˆæœ¬ã€‚ã€‚ã€‚', @DesktopWidth/2, @DesktopHeight/2-50, '', 0, 2)
 	$pid = Run(@ComSpec & " /c " & '"' & $java & '" -version', "", @SW_HIDE, $STDERR_CHILD)
 	ProcessWaitClose($pid)
 	ToolTip('')
 	Local $version = Number(StringMid(StderrRead($pid), 15, 3))
 	If $version < 1.8 Then
-		_error('µ±Ç° Java ÔËĞĞ»·¾³°æ±¾(' & $version & ') °æ±¾¹ıµÍ£¬ÖÁÉÙĞèÒª JRE1.8 ÒÔÉÏµÄ°æ±¾¡£')
+		_error('å½“å‰ Java è¿è¡Œç¯å¢ƒç‰ˆæœ¬(' & $version & ') ç‰ˆæœ¬è¿‡ä½ï¼Œè‡³å°‘éœ€è¦ JRE1.8 ä»¥ä¸Šçš„ç‰ˆæœ¬ã€‚')
 	EndIf
 
 	Local $jreOpt = ''
@@ -232,8 +236,8 @@ Func _init()
 			$jreOpt &= $cmdLine[$i] & ' '
 		Next
 	Else
-		$jreOpt = InputBox("RDK for Windows", "ÊäÈë RDK Æô¶¯²ÎÊı¡£" & @CRLF & _
-				"Èç¹û²»ÖªµÀ¸ÉÉ¶ÓÃµÄ£¬¾ÍÊ¹ÓÃÄ¬ÈÏÖµ¾ÍĞĞÀ²¡£", _readArg()," ","350","150")
+		$jreOpt = InputBox("RDK for Windows", "è¾“å…¥ RDK å¯åŠ¨å‚æ•°ã€‚" & @CRLF & _
+				"å¦‚æœä¸çŸ¥é“å¹²å•¥ç”¨çš„ï¼Œå°±ä½¿ç”¨é»˜è®¤å€¼å°±è¡Œå•¦ã€‚", _readArg()," ","350","150")
 		If @error == 1 Or @error == 3 Then Exit
 	EndIf
 	_saveArg($jreOpt)
@@ -242,22 +246,22 @@ EndFunc
 Func _checkRDK()
 	If Not ProcessExists($rdkPid) Then
 		AdlibUnRegister('_checkRDK')
-		_error('RDKºóÌ¨½ø³ÌÒâÍâÍË³ö£¡ÇëÖØÆôstart.exe¡£' & @CRLF & @CRLF & _
-			'¾ßÌåÔ­Òò²»Ã÷£¬ºÜ¿ÉÄÜÊÇjavaĞéÄâ»úÄÚ´æ²»×ãËùÖÂ£¬Çëµ½ http://gitlab.zte.com.cn/10045812/rdk/issues ' & _
-			'ĞÂÔöÒ»¸öissue±¨¸æ´ËÎÊÌâ£¬°ÑÈÕÖ¾ÎÄ¼ş[' & @ScriptDir & '\rdk\proc\logs\log.txt' & ']·´À¡¸øÎÒÃÇ£¬Ê®·Ö¸ĞĞ»£¬Ê®·Ö±§Ç¸¡£')
+		_error('RDKåå°è¿›ç¨‹æ„å¤–é€€å‡ºï¼è¯·é‡å¯start.exeã€‚' & @CRLF & @CRLF & _
+			'å…·ä½“åŸå› ä¸æ˜ï¼Œå¾ˆå¯èƒ½æ˜¯javaè™šæ‹Ÿæœºå†…å­˜ä¸è¶³æ‰€è‡´ï¼Œè¯·åˆ° http://gitlab.zte.com.cn/10045812/rdk/issues ' & _
+			'æ–°å¢ä¸€ä¸ªissueæŠ¥å‘Šæ­¤é—®é¢˜ï¼ŒæŠŠæ—¥å¿—æ–‡ä»¶[' & @ScriptDir & '\rdk\proc\logs\log.txt' & ']åé¦ˆç»™æˆ‘ä»¬ï¼Œååˆ†æ„Ÿè°¢ï¼Œååˆ†æŠ±æ­‰ã€‚')
 	EndIf
 EndFunc
 
 
 Func _beforeExit()
-	ToolTip('ÕıÔÚ¹Ø±ÕºóÌ¨½ø³Ì£¬ÇëÉÔºò¡£¡£¡£', @DesktopWidth/2, @DesktopHeight/2-50, '', 0, 2)
+	ToolTip('æ­£åœ¨å…³é—­åå°è¿›ç¨‹ï¼Œè¯·ç¨å€™ã€‚ã€‚ã€‚', @DesktopWidth/2, @DesktopHeight/2-50, '', 0, 2)
 	_stopHTTP()
 	If $rdkPid <> 0 Then ProcessClose($rdkPid)
 	ToolTip('')
 
-	; É¾³ıdemoµÄÁÙÊ±ÎÄ¼ş
+	; åˆ é™¤demoçš„ä¸´æ—¶æ–‡ä»¶
 	DirRemove(@ScriptDir & '\doc\client\demo\tmp', True)
-	; É¾³ıÉÏ´«µÄÎÄ¼ş
+	; åˆ é™¤ä¸Šä¼ çš„æ–‡ä»¶
 	DirRemove(@ScriptDir & '\rdk\upload_files', True)
 EndFunc
 
@@ -280,7 +284,7 @@ Func _getVersion()
 EndFunc
 
 Func _error($msg)
-	MsgBox(16+4096, "³ö´íÀ²£¡", $msg, 0, $gui)
+	MsgBox(16+4096, "å‡ºé”™å•¦ï¼", $msg, 0, $gui)
 	Exit 0
 EndFunc
 
@@ -296,5 +300,9 @@ EndFunc
 
 Func _getConfigFileName()
 	Return StringLeft(@ScriptFullPath, StringInStr(@ScriptFullPath, '.', 0, -1) - 1) & '.cfg'
+EndFunc
+
+Func _checkInstance()
+	Return ProcessExists('nginx.exe')
 EndFunc
 
