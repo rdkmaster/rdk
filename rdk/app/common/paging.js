@@ -73,6 +73,12 @@
         result.field = dataTable.field;
         result.data = data;
         result.paging = pagingInfo;
+        _.each(dataTable, function(value, key) {
+            if (key == 'header' || key == 'field' || key == 'paging' || key == 'data') {
+                return;
+            }
+            result[key] = value;
+        });
         return result;
     }
     return {

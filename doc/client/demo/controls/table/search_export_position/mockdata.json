@@ -154,6 +154,5 @@
                 ]
             ],
             "field": ["name", "position", "salary", "start_date", "office", "extn"],
-            "header": ["姓名", "职位", "薪资", "入职日期", "部门", "其他"],
-            "paging" :{"totalRecord":14,"currentPage":1,"pageSize":5}
+            "header": ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]
         }
