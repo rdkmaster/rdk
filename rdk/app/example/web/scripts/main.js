@@ -47,7 +47,7 @@
 
         //=================== 在这里开始编写本应用的第一行代码 ========================
 
-        scope.exampleVersion = 'v2.0.3';
+        scope.exampleVersion = 'v2.0.4';
 
         // 这里演示了调用 scripts/utils.js 的返回值
         imports.utils.hello('RDK example ' + scope.exampleVersion);
