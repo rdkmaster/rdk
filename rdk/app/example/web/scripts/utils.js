@@ -1,9 +1,7 @@
 //这个文件定义了当前应用的功能函数，可以把常用的函数定义在这里方便复用。
 (function() {
     var imports = [
-        { url: 'base/scripts/other-utils', alias: 'others' },
-        // 或者可以简写为如下：
-        // 'base/scripts/other-utils',
+        { url: 'base/scripts/other-utils', alias: 'others' }
     ];
 
     define(/*fix-from*/application.import(imports)/*fix-to*/, function() {
