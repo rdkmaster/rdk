@@ -9,7 +9,7 @@
         //=================== 在这里开始编写本文件的第一行代码 ========================
 
     
-        function otherFunc(toWho) {
+        function otherFunc() {
             console.log('this is a function defined in other-utils.js');
         }
         
