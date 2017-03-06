@@ -1,7 +1,7 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'angular', 'jquery', 'rd.containers.Tab', 'rd.controls.BasicSelector', 'rd.controls.ProgressBar'
+        'rd.containers.Tab', 'rd.controls.BasicSelector', 'rd.controls.ProgressBar','base/template/tab'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope',  main];
@@ -10,7 +10,7 @@
 
         var initData = {title: 'my title', showCloseButton: true, awesomeData: [{label: "江苏省"}, {label: "浙江省"}]};
         scope.clickHandler = function(){
-            rdk.tabID.addTab('./scripts/template/tab.html', 'tabController', initData);
+            rdk.tabID.addTab('template/tab.html', 'tabController', initData);
         }
 
         scope.closeHandler = function(event, data){
