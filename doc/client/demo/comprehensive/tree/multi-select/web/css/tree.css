@@ -1,0 +1,69 @@
+.ztree li span.button.ico_open, .ztree li span.button.ico_close,
+.ztree li span.button.ico_docu {
+    display: none;
+}
+
+.ztree li a.curSelectedNode {
+    background-color: #cde4fa;
+    border: none;
+    height: 24px;
+    vertical-align: middle;
+    padding-top: 1px;
+    margin: 0;
+}
+.ztree li a {
+    vertical-align: middle;
+    height: 24px;
+    line-height: 24px;
+}
+.ztree li a:hover {
+    background-color: #e8e8e8;
+    text-decoration: none;
+}
+.ztree li span.button.chk.checkbox_false_full, .ztree li span.button.chk.checkbox_false_full_focus {
+    background-position: -1px -1px;
+}
+.ztree li span.button.chk.checkbox_true_full, .ztree li span.button.chk.checkbox_true_full_focus {
+    background-position: -55px -1px;
+}
+.ztree li span.button.chk.checkbox_true_part, .ztree li span.button.chk.checkbox_true_part_focus {
+    background-position: -19px -1px;
+}
+.ztree li span.button.chk {
+    width: 16px;
+    height: 16px;
+}
+.ztree li span.button.switch {
+    width: 16px;
+    height: 16px;
+}
+.ztree li span.button, .ztree li span.button.noline_open, .ztree li span.button.noline_close {
+    background-image: url(/doc/client/demo/comprehensive/tree/multi-select/web/img/allIcon.png);
+}
+.ztree li span.button.noline_open {
+    background-position: -86px -1px;
+}
+.ztree li span.button.noline_close {
+    background-position: -71px -1px;
+}
+.ztree li span.button.edit {
+    background-image: url(/doc/client/demo/comprehensive/tree/multi-select/web/img/edit.png);
+    width: 14px;
+    height: 14px;
+}
+.ztree li span.button.remove {
+    background-image: url(/doc/client/demo/comprehensive/tree/multi-select/web/img/delete.png);
+    width: 14px;
+    height: 14px;
+}
+.ztree li span.button.add {
+    background-image: url(/doc/client/demo/comprehensive/tree/multi-select/web/img/add.png);
+    width: 14px;
+    height: 14px;
+}
+.ztree li span.button.edit, .ztree li span.button.remove {
+    margin-left: 2px;
+}
+.ztree li span.button.add {
+    margin-left: 6px;
+}

@@ -1,47 +1,63 @@
-.title{
-   margin:20px 0 -8px 20px; 
-   font-family: '微软雅黑';
-   font-size: 14px;
-   color:#008fd4;
-}
-ul,li{
-    list-style: none;
-    padding:0;
-    margin:0;
-}
-.select_container{
-    float:left; 
-    margin-top:14px;
-    margin-left:34px;
-}
-.select_container li{
-    padding-top:2px;
-}
-.select_container li span{
+.title {
+    margin: 20px 0 -8px 20px;
     font-family: '微软雅黑';
-    color:#434343;
+    font-size: 14px;
+    color: #008fd4;
+}
+
+ul, li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.select_container {
+    float: left;
+    margin-top: 14px;
+    margin-left: 34px;
+}
+
+.select_container li {
+    padding-top: 2px;
+}
+
+.select_container li span {
+    font-family: '微软雅黑';
+    color: #434343;
     font-size: 12px;
 }
-#graph{
-    float:left;
-    width:200px;
+
+#graph {
+    float: left;
+    width: 200px;
 }
-.selector_symbol{
-    display:inline-block;
-    border:1px solid #ccc;
-    border-radius:2px;
+
+.selector_symbol {
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 2px;
     box-sizing: border-box;
-    width:16px;
-    height:16px;
-    margin-right:16px;
+    width: 16px;
+    height: 16px;
+    margin-right: 16px;
     vertical-align: middle;
 }
-.select_container li.selector .selector_symbol{
-    cursor:pointer;
+
+.select_container li.selector .selector_symbol {
+    cursor: pointer;
 }
-.iconfont-shape:before {
+
+.select_container li.selector .selector_symbol_color {
+    background-color: #54acd5;
+    border: 1px solid transparent;
+}
+
+.iconfont-e8b3:before {
     display: inline-block;
     margin-top: 1px;
-    color: #008fd4;
+    color: #fff;
+    position: relative;
+    right: 1px;
+    top: -2px;
 
- }
+}
