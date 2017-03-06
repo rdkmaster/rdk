@@ -337,6 +337,12 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                     reg.test(source) ? (domFractionStr = source) : (domFractionStr = Utils.getHtmlFraction(source));
 
                     var contentDom = $(domFractionStr).get(0);
+                    if(!contentDom){
+                        EventService.raiseControlEvent(scope, EventTypes.ERROR);
+                        EventService.remove(scope.id, EventTypes.ADD, _addNextTabResult);
+                        addingTabInfo.splice(0);
+                        return;
+                    }
                     var tabid = Utils.createUniqueId('tab_item_');
                     contentDom.setAttribute('id', tabid);
 
