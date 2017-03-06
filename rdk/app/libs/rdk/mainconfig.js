@@ -122,7 +122,7 @@ require.config({
             exports: "jquery-freezeheader"
         },
         "jquery-ui": {
-            deps: ["css!../jquery-ui/css/jquery-ui.min"],
+            deps: ["css!../jquery-ui/css/jquery-ui.min", "bootstrap"],
             exports: "jquery-ui"
         },
         "ztree": {
