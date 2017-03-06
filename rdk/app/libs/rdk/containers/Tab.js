@@ -340,6 +340,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                     if(!contentDom){
                         EventService.raiseControlEvent(scope, EventTypes.ERROR);
                         EventService.remove(scope.id, EventTypes.ADD, _addNextTabResult);
+                        addingTabInfo.splice(0);
                         return;
                     }
                     var tabid = Utils.createUniqueId('tab_item_');
