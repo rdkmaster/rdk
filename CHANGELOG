@@ -1,36 +1,19 @@
 ## 新增功能
-- !571 增加activeTab方法
-- !574 服务端自动根据应用返回类型更改返回媒体类型
-- !578 表格自动分页功能和文档调用服务时采用新参数结构采用新的参数结构
-- #608 后端file list,copy,web等API增加文档说明
-- !581 增加example使用说明
-- !583 给按钮控件加一个event参数
-- !585 数据源支持跨域调用rest服务，增加demo
-- !586 数据源支持直接调用query/add/put/delete，无需创建DataSource对象
-- !588 增加TimeSelect控件
-- !597 select 使用demo
-- #555 支持同步调用addtab
+- #626 支持读csv文件api
+- !607 combo发出open/close事件
+- !624 tab加载模板出错时，抛出ERROR事件
 
 ## 修改功能
-- !565 增加新图标
-- !578 `Rest.get()`支持新的参数序列：`Rest.get(url, param, option)`
-- !578 优化http请求出错时的提示信息
-- !580 升级example到2.0.3，调用rest服务时采用新的参数结构
-- !584 弹出框最小高度限制为0
-- !589 start退出前先停止rdk进程检查
-- !590 1.table控件模板增加一个空的跟节点，避免影响滚动条。 2.取消滚动条最大高度限制，让其自动计算。 3.tab控件左右移动功能考虑边距的计算，增加精确度。
-- !591 修改多个comprehensive demo
-- !594 Rest.get在参数类型是非对象时不加双引号
+- #622 rdk数据库查询不能区分null值问题
+- !614 减少start.exe的cpu占用率
+- !615 下载模板时强制不走缓存
+- !617 规范utils.js的模板 升级example到2.3.4；
+- #632 表格没有数据的时候，需要将搜索框和导出按钮隐藏
+- #633 paging返回数据需要带上原数据的其他信息
+- !621 jquery-ui之前先加载bootstrap
 
 ## 修复故障
-- #606 后端API readXml 读取文件，所读文件里面有多余换行符时json解析报错
-- #607 公共导出的文档位置修复
-- !569 Button和Icon图标修正
-- !579 utils.shallowcopy将数组误拷贝为json对象
-- #613 修改自定义表头功能
-- #612 rdk_accordion动效有bug
-- !599 调整rest.post设置请求头信息的位置，否则有异常
-- #614 rdk_Combo_Select设置宽度较长后，后面部分点击下拉框无效
-- #563 Time控件粒度选择周时候报错
-- #611 时间控件Time中的Gap属性问题
-- #621 时间控件粒度选择框中的值显示不全
+- #628 select控件的数据在延时返回时下拉框无法显示数据
+- #603 table 控件 selected_index的demo选定的行未被标记
+- #630 table使用列渲染器如果targets没定义渲染到具体的列时，选中一行时此渲染列无法高亮
+- !616 国际化兼容老版本
