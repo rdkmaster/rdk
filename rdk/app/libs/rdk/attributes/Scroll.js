@@ -82,8 +82,17 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                         'characterData':true,
                         'subtree': false
                     });
-                    perfectScroll.observerList.push(perfectScroll.observer);
-
+                    var parentNode = _findParentScrollNode(container);
+                    if(!!parentNode){
+                        perfectScroll.parentNodeObserver  =  new MutationObserver(perfectScroll.lazyResize);
+                        perfectScroll.parentNodeObserver.observe(parentNode, {
+                            'childList': true,
+                            'attributes':true,
+                            'characterData':true,
+                            'subtree': false
+                        });
+                        perfectScroll.observerList.push(perfectScroll.parentNodeObserver);
+                    }
                     //dom注销，取消观察对象
                     perfectScroll.observerRemover = new MutationObserver(
                         function(mutations) {
@@ -109,6 +118,16 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                         perfectScroll.destroy(container);
                     }
                 });
+
+                function _findParentScrollNode(node){
+                    while (node && !node.classList.contains("rdk-scroll") && node.nodeName!="BODY"){
+                        node=node.parentNode;
+                    }
+                    if(node.nodeName == "BODY"){
+                        return null
+                    }
+                    return node;
+                }
             }
         }]);
 

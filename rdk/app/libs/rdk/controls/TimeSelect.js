@@ -2,23 +2,48 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
     function() {
         var timeSelectApp = angular.module('rd.controls.TimeSelect', ['rd.core','rd.controls.TimeBasic']);
 
-        timeSelectApp.directive('rdkTimeSelect', ['PickerConstant', 'TimeMacro', 'TimeFormate', 'TimeUnit', 'Utils', 'TimeUtilService', '$timeout', function(PickerConstant, TimeMacro, TimeFormate, TimeUnit, Utils, TimeUtilService, $timeout) {
+        timeSelectApp.directive('rdkTimeSelect', ['PickerConstant', 'TimeMacro', 'TimeFormate', 'TimeUnit', 'Utils', 'TimeUtilService', '$timeout','EventService','EventTypes', function(PickerConstant, TimeMacro, TimeFormate, TimeUnit, Utils, TimeUtilService, $timeout,EventService,EventTypes) {
             var scopeDefine={
                 setting: "=?",
-                refreshTimeout: "@?"
+                refreshTimeout: "@?",
+                id:"@?"
             };
             return {
                 restrict: 'E',
                 replace: true,
-                template: '<div class="rdk-time-select-module">\
+                template: ' <div>\
+                                <div ng-show="setting.selectGranularity && setting.selectGranularity.length" class="rdk-time-granularity">\
+                                    <span ng-repeat="granularityItem in setting.selectGranularity" \
+                                    ng-click="changeGranularity(granularityItem.value)" \
+                                    ng-class="{\'rdk-time-active\':active(granularityItem.value)}">\
+                                    {{granularityItem.label}}\
+                                    </span>\
+                                </div>\
+                            <div class="rdk-time-select-module">\
                                <input ng-show="false" ng-model="setting.value"  type="text">\
-                           </div>',
+                           </div></div>',
                 scope:scopeDefine,
                 link:function(scope, iElement, iAttrs) {
                     var initValue = [];
                     var initStartDate = "";
                     var initEndDate = "";
                     var datetimepicker=null;
+                    var defaultGranularity=[
+                        {label: "Day", value: "date"},
+                        {label: "Week", value: "week"},
+                        {label: "Month", value: "month"}
+                    ];
+                    scope.setting.language = "zh_cn";
+                    scope.active = function(granularity){
+                        return scope.setting.granularity == granularity;
+                    };
+                    scope.selectedGranularity={};
+
+                    scope.changeGranularity = function(granularity){
+                        scope.setting.granularity=granularity;
+                        scope.selectedGranularity.value=granularity;
+                    };
+
                     function getInitValue() {
                         if (angular.isUndefined(scope.setting)) {
                             scope.setting = {};
@@ -29,6 +54,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         initStartDate = scope.setting.startDate;
                         initEndDate = scope.setting.endDate;
                     }
+
                     getInitValue();
                     _init();
 
@@ -37,6 +63,16 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                             _init();
                         }
                     });
+                    scope.$watch('setting.granularity', function(newVal, oldVal) {
+                        if (!!newVal && newVal !== oldVal) {
+                            _init();
+                        }
+                    });
+                    scope.$watch('condition.startTime', function(newVal, oldVal) {
+                        scope.setting.value = newVal;
+                        handleWeekValue();
+                    });
+
                     var timer;
                     var updateValue = function() {
                         var value=scope.setting.value.toString();
@@ -62,6 +98,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         }
                         timer = $timeout(updateValue, scope.refreshTimeout);
                     };
+
                     if (!!eval(scope.refreshTimeout)) {
                         $timeout(updateValue, scope.refreshTimeout);
                     }
@@ -70,12 +107,13 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         !!datetimepicker && datetimepicker.datetimepicker('remove');
                     });
 
-
                     function _init() {
                         if (angular.isUndefined(scope.setting)) {
                             scope.setting = {};
                         }
+                        scope.setting.weekValue = null;
                         scope.setting.selectGranularity = Utils.getValue(scope.setting.selectGranularity, undefined, false);
+                        scope.setting.selectGranularity = scope.setting.selectGranularity && (angular.isArray(scope.setting.selectGranularity) ? scope.setting.selectGranularity : defaultGranularity);
                         scope.setting.granularity = Utils.getValue(scope.setting.granularity, undefined, TimeUnit.DAY);
                         //默认周日为一周开始
                         scope.setting.weekStart = Utils.getValue(scope.setting.weekStart, undefined, 0);
@@ -114,47 +152,25 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                                 "value": scope.setting.granularity
                             };
                         }
-
                         scope.startTimeOption = _generateOption();
                         scope.condition = {};
                         scope.condition.startTime = scope.setting.value;
+                        _datetimepicker(iElement[0].querySelector(".rdk-time-select-module"),scope.startTimeOption);
 
-                        if (scope.setting.selectGranularity === true) {
-                            scope.$watch('selectedGranularity', function(newVal, oldVal) {
-                                if (newVal != oldVal && newVal != null) {
-                                    scope.setting.granularity = scope.selectedGranularity.value;
-                                    scope.timeFormat = TimeFormate[Utils.getValueFromKey(TimeUnit, scope.setting.granularity)];
-                                    scope.startTimeOption = _generateOption();
-                                }
-                            }, true);
-                        };
-                        _datetimepicker(iElement,scope.startTimeOption);
-                        scope.$watch('condition.startTime', function(newVal, oldVal) {
-                            scope.setting.value = newVal;
-                            handleWeekValue();
-                        });
                     }
-
                     function handleWeekValue() {
-                        function formatWeekValue(str) {
-                            if (angular.isString(str)) {
-                                var match = str.match(/(\d+).+?(\d+)/);
-                                var obj = {};
-                                obj.label = str;
-                                obj.year = match[1];
-                                obj.week = match[2];
-                                return obj;
-                            }
-                            return str;
-                        }
-                        if (scope.selectedGranularity.value != "week")
+                        if (scope.selectedGranularity.value != "week"){
                             return;
-                        if (angular.isArray(scope.setting.value)) {
-                            for (var i = 0; i < scope.setting.value.length; i++) {
-                                scope.setting.value[i] = formatWeekValue(scope.setting.value[i]);
-                            }
+                        }
+                        scope.setting.weekValue = _getWeekFormat(scope.setting.value);
+                    }
+                    function _getWeekFormat(date) {
+                        date = TimeUtilService.getDateForStringDate(date);
+                        var week = TimeUtilService.getWeekOfYear(date, scope.setting.weekStart);
+                        if (scope.setting.language === 'zh_cn') {
+                            return date.getFullYear() + '第' + (week < 10 ? '0' : '') + week + '周';
                         } else {
-                            scope.setting.value = formatWeekValue(scope.setting.value);
+                            return date.getFullYear() + 'Week' + (week < 10 ? '0' : '') + week;
                         }
                     }
                     function _generateOption() {
@@ -205,11 +221,13 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         return option;
                     }
                     function _datetimepicker(domNode,option){
+                        !!datetimepicker && datetimepicker.datetimepicker('remove');
                         datetimepicker = $(domNode).datetimepicker(option);
                         datetimepicker.datetimepicker('update');//增加个隐藏的input节点目的:解决没法更新时间的BUG
                         datetimepicker.on('changeDate', function(ev) {
                             scope.$apply(function() {
                                 scope.setting.value = TimeUtilService.dateFormate(new Date(ev.date.valueOf()), scope.startTimeOption.format);
+                                EventService.raiseControlEvent(scope, EventTypes.CHANGE, scope.setting.weekValue || scope.setting.value);
                             });
                         })
                     }

@@ -4,6 +4,7 @@ require.config({
         "rd.styles.Alert": "../rdk/css/theme/zte-blue/rdk-Alert-style",
         "rd.styles.Area": "../rdk/css/theme/zte-blue/rdk-area-style",
         "rd.styles.BasicSelector": "../rdk/css/theme/zte-blue/rdk-basicselector-style",
+        "rd.styles.ListSelector": "../rdk/css/theme/zte-blue/rdk-listselector-style",
         "rd.styles.Bullet": "../rdk/css/theme/zte-blue/rdk-bullet-style",
         "rd.styles.Button": "../rdk/css/theme/zte-blue/rdk-button-style",
         "rd.styles.ButtonGroup": "../rdk/css/theme/zte-blue/rdk-buttongroup-separator-style",

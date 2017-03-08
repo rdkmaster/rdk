@@ -44,6 +44,7 @@ require.config({
         "rd.controls.Alert": "../rdk/controls/Alert",
         "rd.controls.AreaSelect": "../rdk/controls/AreaSelect",
         "rd.controls.BasicSelector": "../rdk/controls/BasicSelector",
+        "rd.controls.ListSelector": "../rdk/controls/ListSelector",
         "rd.controls.Bullet": "../rdk/controls/Bullet",
         "rd.controls.Button":"../rdk/controls/Button",
         "rd.controls.ComboSelect": "../rdk/controls/ComboSelect",

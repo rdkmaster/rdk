@@ -1,5 +1,6 @@
 /*reset*/
 ul, ol ,p{margin: 0; padding: 0;}
+.rdk-area-panel>ul{margin-top: 0;  margin-bottom: 0;}
 /*rdk*/
 /*rdk-area 省市区页签导航 --start*/
 .rdk-area-contain{
@@ -27,6 +28,7 @@ ul, ol ,p{margin: 0; padding: 0;}
 /*rdk-area 省市区数据 --start*/
 .rdk-area-contain .rdk-area-content{
     padding: 10px 0 18px 6px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.175);
     border-radius: 0 0 4px 4px;
 }
 .rdk-area-contain .rdk-area-content ul{
@@ -91,8 +93,6 @@ ul, ol ,p{margin: 0; padding: 0;}
     background-color: #fff;
     border: 1px solid rgba(0,0,0,0.15);
     border-top: none;
-    -webkit-box-shadow: 0 1px 6px rgba(0,0,0,0.175);
-    box-shadow: 0 1px 6px rgba(0,0,0,0.175);
 }
 /*省市区每个选择项*/
 .rdk-area-panel ul li a{
@@ -191,3 +191,54 @@ ul, ol ,p{margin: 0; padding: 0;}
     border-bottom: 1px solid #3ab1ea;
 }
 /*rdk-area-theme-multiple 另一种风格的地区选择 end*/
+
+/* -- theme style : rdk-theme-zte-vmax start --*/
+.rdk-theme-zte-vmax .rdk-area-contain{
+    position: absolute;
+    z-index: 99;
+    font-size: 12px;
+    border: 1px solid rgba(0,0,0,0.15);
+    margin-top: 2px;
+    background-color: #fff;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.175);
+    border-radius: 0 0 4px 4px;
+}
+.rdk-theme-zte-vmax .rdk-area-contain .nav-tabs{
+    background-color: #fff;
+    border-bottom: 4px solid #eee;
+    display: flex;
+    justify-content: center;
+}
+.rdk-theme-zte-vmax .rdk-area-contain .nav-tabs>li {
+    float: left;
+    margin-bottom: 0;
+    padding: 0 12px;
+}
+.rdk-theme-zte-vmax .rdk-area-contain .nav-tabs>li>a {
+    height: 30px;
+    line-height: 30px;
+    padding: 0;
+    text-decoration: none;
+    border: none;
+    background-color: initial;
+}
+.rdk-theme-zte-vmax .rdk-area-contain .rdk-area-content{
+    padding: 6px 0 5px 6px;
+    border: none;
+    box-shadow:none;
+}
+.rdk-theme-zte-vmax .rdk-area-contain .nav-tabs>li>a:hover {
+    border: none;
+    border-color: transparent transparent transparent;
+}
+.rdk-theme-zte-vmax .rdk-area-contain .nav-tabs>li.active>a,
+.rdk-theme-zte-vmax .rdk-area-contain .nav-tabs>li.active>a:hover,
+.rdk-theme-zte-vmax .rdk-area-contain .nav-tabs>li.active>a:focus {
+    border: none;
+    border-bottom: 2px solid #3ab1ea;
+    color: initial;
+}
+.rdk-theme-zte-vmax .rdk-area-contain .rdk-area-content{
+    border: 0;
+}
+/* -- theme style : rdk-theme-zte-vmax end --*/
