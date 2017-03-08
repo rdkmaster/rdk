@@ -8,5 +8,7 @@ if [ "" = "$pid" ]; then
 fi
 
 echo "killing rdk process, pid="$pid
-echo "killing rdk process, pid="$pid >> ../logs/log.txt
+echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" >> ../logs/log.txt
+echo "killing rdk process, pid="$pid             >> ../logs/log.txt
+echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" >> ../logs/log.txt
 kill -9 $pid
