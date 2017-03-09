@@ -7,18 +7,20 @@ import com.zte.vmax.rdk.log.AppLogger;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by 00139520 on 16-4-13.
  */
 public class JarHelper extends AbstractAppLoggable {
 
+    private static ConcurrentHashMap<String, RdkClassLoader> appClzLoaderMap = new ConcurrentHashMap<String, RdkClassLoader>();
+
     protected void initLogger() {
         logger = AppLogger.getLogger("JarHelper", appName);
     }
 
-
-    private void loadJars(String jar) {
+    private void loadJars(String jar, RdkClassLoader appClzLoader) {
         jar = FileHelper.fixPath(jar, appName);
 
         File file = new File(jar);
@@ -42,24 +44,24 @@ public class JarHelper extends AbstractAppLoggable {
             if (f.isFile() && f.getAbsolutePath().toLowerCase().endsWith(".jar")) {
                 try {
                     logger.debug("loading: " + f);
-                    RdkClassLoader.addURL(f.toURI().toURL());
+                    appClzLoader.addURL(f.toURI().toURL());
                 } catch (MalformedURLException e) {
                     logger.error(e);
                 }
             }
         }
-
     }
 
     public Class<?> loadClass(String jar, String className) {
-        loadJars(jar);
+        if (!appClzLoaderMap.containsKey(appName)) {
+            appClzLoaderMap.put(appName, new RdkClassLoader(appName));
+        }
+        loadJars(jar, appClzLoaderMap.get(appName));
         try {
-           return RdkClassLoader.loadClass(className);
+            return appClzLoaderMap.get(appName).loadClass(className);
         } catch (Exception e) {
             logger.error("loadClass error: ", e);
             return null;
         }
     }
-
-
 }

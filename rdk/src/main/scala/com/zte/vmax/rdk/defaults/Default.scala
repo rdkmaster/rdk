@@ -27,4 +27,5 @@ object Misc {
 
 object Const {
   val uploadFileDir = "upload_files/"
+  val jdbcDriversDir = "./proc/bin/jdbc/"
 }
