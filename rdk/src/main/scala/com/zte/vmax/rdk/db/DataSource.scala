@@ -27,6 +27,7 @@ object DataSource extends Logger {
   private val TestOnBorrow = KeyAndDefaultValue(".testOnBorrow", false)
   private val RemoveAbandoned = KeyAndDefaultValue(".removeAbandoned", true)
   private val RemoveAbandonedTimeout = KeyAndDefaultValue(".removeAbandonedTimeout", 300)
+  private val ValidationQuery = KeyAndDefaultValue(".validationQuery", "")
 
   private val poolMap = Map[DataSourceKey, DBPool]()
   private val dbName2DSKeyMap = Map[String, DataSourceKey]()
@@ -83,7 +84,8 @@ object DataSource extends Logger {
       getConfigValue[Int](MinEvicIdleTime),
       getConfigValue[Boolean](TestOnBorrow),
       getConfigValue[Boolean](RemoveAbandoned),
-      getConfigValue[Int](RemoveAbandonedTimeout)
+      getConfigValue[Int](RemoveAbandonedTimeout),
+      getConfigValue[String](ValidationQuery)
     )
 
   }

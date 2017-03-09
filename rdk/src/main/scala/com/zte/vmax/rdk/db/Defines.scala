@@ -17,12 +17,14 @@ object Defines {
     * @param removeAbandonedTimeout 回收泄露连接时长(s)
     */
   case class DbPoolInfo(maxWait: Int, initialSize: Int, maxActive: Int, minIdle: Int, maxIdle: Int,
-                        minEvictableIdleTime: Int, testOnBorow: Boolean, removeAbandoned: Boolean, removeAbandonedTimeout: Int) {
+                        minEvictableIdleTime: Int, testOnBorow: Boolean, removeAbandoned: Boolean,
+                        removeAbandonedTimeout: Int,validationQuery:String) {
 
     override def toString: String = {
       s"DbPoolInfo(maxWait: $maxWait, initialSize: $initialSize, " +
         s"maxActive: $maxActive, minIdle: $minIdle, maxIdle: $maxIdle,minEvictableIdleTime: $minEvictableIdleTime, " +
-        s"testOnBorow: $testOnBorow, removeAbandoned: $removeAbandoned, removeAbandonedTimeout: $removeAbandonedTimeout)"
+        s"testOnBorow: $testOnBorow, removeAbandoned: $removeAbandoned, " +
+        s"removeAbandonedTimeout: $removeAbandonedTimeout ,validationQuery=$validationQuery )"
     }
 
   }
