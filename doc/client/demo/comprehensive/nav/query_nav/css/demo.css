@@ -1,11 +1,11 @@
 /*导航模块布局*/
-.nav-left{float: left;margin-top: 7px}
+.nav-left{float: left;margin-top: 15px}
 .nav-right{float: right;margin-right: 10px}
-.nav-icon{vertical-align: bottom}
-.nav-title{display: inline-block;color: #fff;font-size: 16px;  vertical-align: bottom;  margin: 0 5px 0;}
+.nav-img{height: 24px}
+.nav-title{display: inline-block;color: #fff;font-size: 14px;  vertical-align: bottom;  margin: 0 5px 0;height: 24px;line-height: 32px;}
 .nav-wrap{  background-color: #008FD4;  height: 50px; }
 .m-time{  vertical-align: top;margin-left: -3px; }
-.m-time .u-time{border: 1px solid rgba(0,0,0,0.15);margin-top: 2px; height: 270px; width: 210px; padding: 8px 5px 0 5px; background-color: #fff;box-shadow: 0 6px 16px rgba(0,0,0,0.175);border-radius: 0 0 4px 4px;}
+.m-time .u-time{border: 1px solid rgba(0,0,0,0.15);margin-top: 2px; height: 285px; width: 210px; padding: 8px 5px 0 5px; background-color: #fff;box-shadow: 0 6px 16px rgba(0,0,0,0.175);border-radius: 0 0 4px 4px;}
 .m-frequency{display: inline-block; vertical-align: top; margin-left: -3px;}
 .m-kpi{display: inline-block;vertical-align: top;margin-left: -3px;}
 /*btn*/
@@ -16,9 +16,7 @@
 .f-left-line:after{position: absolute;top: 9px;z-index: 1;width: 1px;height: 32px; content: "";background-color:rgba(255,255,255,0.4);}
 .m-btn.f-left-line:after{left: -14px;top: 0;}
 /* icon*/
-.iconfont-e8ca:before{color: #fff;  font-size: 22px;}
-.iconfont-e8c2:before { color: #fff;  font-size: 22px;  }
-.iconfont-e8a1:before{  color: #fff;  font-size: 18px; }
+.iconfont-e8ca:before,.iconfont-e8c2:before{color: #fff;  font-size: 22px;}
 /* 宽度根据需要调整*/
 .rdk-theme-zte-vmax .m-area.rdk-combo-select-module .combo-content{min-width: 170px;}
 .rdk-theme-zte-vmax .m-frequency.rdk-list-selector-module .rdk-dropdown-toggle{min-width: 130px;}
@@ -31,3 +29,4 @@
 .g-align .rdk-list-selector-module .rdk-dropdown-toggle {min-width: 200px;}
 .g-align .rdk-time-module {  display: inline-block; }
 .g-align .rdk-combo-select-module .combo-content-transclude {  background-color: transparent; }
+.g-align .nav-title{font-size: 16px; line-height: initial;}

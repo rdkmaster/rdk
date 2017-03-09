@@ -6,36 +6,20 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main(scope ) {
-        scope.allItems = [
-            { id: 0, label: "江苏省" },
-            { id: 1, label: "浙江省" },
-            { id: 2, label: "广东省" },
-            { id: 3, label: "广西省" },
-            { id: 4, label: "河北省" },
-            { id: 5, label: "河南省" },
-            { id: 6, label: "湖北省" },
-            { id: 7, label: "湖南省" },
-            { id: 8, label: "新疆省" },
-            { id: 9, label: "四川省" },
-            { id: 5, label: "河南省" },
-            { id: 6, label: "湖北省" },
-            { id: 7, label: "湖南省" },
-            { id: 8, label: "新疆省" },
-            { id: 9, label: "四川省" }
+        scope.selectData=[
+            "All Frequency",
+            "LTETDD",
+            "LTEFDD",
+            "[1]2120.0(100)",
+            "[2]2120.0(100)",
+            "[3]2120.0(100)",
+            "[4]2120.0(100)",
+            "[5]2120.0(100)",
+            "[6]2120.0(100)",
+            "[7]2120.0(100)",
+            "[8]2120.0(100)",
+            "[9]2120.0(100)"
         ];
-        scope.selected=[];
-        scope.selected[0]=scope.allItems[0];
-        scope.change =function(){
-            scope.selected[0]=scope.allItems[1];
-        };
-        scope.change2 =function(){
-            scope.allItems = [
-                { id: 0, label: "1111" },
-                { id: 1, label: "2222" },
-                { id: 2, label: "3333" }
-            ];
-            scope.selected=[];
-        }
     }
 
     var controllerName = 'DemoController';

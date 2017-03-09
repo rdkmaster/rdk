@@ -15,7 +15,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                                 <div ng-show="setting.selectGranularity && setting.selectGranularity.length" class="rdk-time-granularity">\
                                     <span ng-repeat="granularityItem in setting.selectGranularity" \
                                     ng-click="changeGranularity(granularityItem.value)" \
-                                    ng-class="{\'rdk-time-active\':active(granularityItem.value)}">\
+                                    ng-class="{\'rdk-time-active\':activeGranularityCls(granularityItem.value)}">\
                                     {{granularityItem.label}}\
                                     </span>\
                                 </div>\
@@ -33,8 +33,9 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         {label: "Week", value: "week"},
                         {label: "Month", value: "month"}
                     ];
-                    scope.setting.language = "zh_cn";
-                    scope.active = function(granularity){
+                    scope.setting.language = Utils.getLocale(scope);
+
+                    scope.activeGranularityCls = function(granularity){
                         return scope.setting.granularity == granularity;
                     };
                     scope.selectedGranularity={};

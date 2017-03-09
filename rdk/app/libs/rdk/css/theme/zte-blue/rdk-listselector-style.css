@@ -23,7 +23,7 @@
     background: #fff;
     padding: 6px 8px 6px 0;
     margin-bottom: 0;
-    min-width: 120px;
+    min-width: 150px;
     font-size: 14px;
     font-weight: normal;
     text-align: left;
@@ -35,7 +35,6 @@
     -ms-user-select: none;
     user-select: none;
 }
-
 .rdk-list-selector-module .rdk-dropdown-toggle:focus{
     border-color: #66afe9;
     outline: 0;
