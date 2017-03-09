@@ -50,6 +50,7 @@ private class DbcpConnectionPool(dbInfo: DatabaseInfo, poolInfo: DbPoolInfo) ext
     bs.setRemoveAbandoned(poolInfo.removeAbandoned)
     //回收泄露连接时长
     bs.setRemoveAbandonedTimeout(poolInfo.removeAbandonedTimeout)
+    bs.setValidationQuery(poolInfo.validationQuery)
     bs
   }
 
