@@ -42,6 +42,7 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                     if (hlazyResize) clearTimeout(hlazyResize);
                     hlazyResize = setTimeout(function(){
                         perfectScroll.update(container);
+                        if(container.querySelector(".ps-scrollbar-y") == null) return;
                         if(container.querySelector(".ps-scrollbar-y").offsetHeight==0)
                         {
                             container.querySelector(".ps-scrollbar-y-rail").style.width=0;
