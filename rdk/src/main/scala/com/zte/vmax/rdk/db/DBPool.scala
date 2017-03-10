@@ -4,8 +4,7 @@ import java.sql.Connection
 import javax.sql.{DataSource => SqlDataSource}
 
 import com.zte.vmax.rdk.db.Defines.{DatabaseInfo, DbPoolInfo}
-
-import com.zte.vmax.rdk.loader.RdkClassLoader
+import com.zte.vmax.rdk.loader.{JDBCDriverClassLoader, RdkClassLoader}
 import com.zte.vmax.rdk.util.Logger
 
 /**
@@ -28,7 +27,7 @@ private class DbcpConnectionPool(dbInfo: DatabaseInfo, poolInfo: DbPoolInfo) ext
 
   def initDataSource: SqlDataSource = {
     val bs: RdkBasicDataSource = new RdkBasicDataSource
-    bs.setDriverClassLoader(RdkClassLoader)
+    bs.setDriverClassLoader(JDBCDriverClassLoader)
     bs.setDriverClassName(dbInfo.driver)
     bs.setUrl(dbInfo.url)
 
