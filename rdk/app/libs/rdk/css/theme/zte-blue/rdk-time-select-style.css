@@ -32,6 +32,7 @@
     padding: 0 10px;
     border: 1px solid #008FD4;
     color: #008FD4;
+    cursor: pointer;
 }
 .rdk-time-granularity > span:not(first-child){
     margin-right: -1px;
