@@ -640,12 +640,13 @@
 
       top = top - containerOffset.top;
       left = left - containerOffset.left;
-
-      this.picker.css({
-        top:    top,
-        left:   left,
-        zIndex: this.zIndex
-      });
+      try {
+        this.picker.css({
+          top:    top,
+          left:   left,
+          zIndex: this.zIndex
+        });
+      }catch (e){}
     },
 
     hour_minute: "^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]",
@@ -995,189 +996,191 @@
       if (target.is('.' + this.icontype)) {
         target = $(target).parent().closest('span, td, th, legend');
       }
-      if (target.length === 1) {
-        if (target.is('.disabled')) {
-          this.element.trigger({
-            type:      'outOfRange',
-            date:      this.viewDate,
-            startDate: this.startDate,
-            endDate:   this.endDate
-          });
-          return;
-        }
-        switch (target[0].nodeName.toLowerCase()) {
-          case 'th':
-            switch (target[0].className) {
-              case 'switch':
-                this.showMode(1);
-                break;
-              case 'prev':
-              case 'next':
-                var dir = DPGlobal.modes[this.viewMode].navStep * (target[0].className == 'prev' ? -1 : 1);
-                switch (this.viewMode) {
-                  case 0:
-                    this.viewDate = this.moveHour(this.viewDate, dir);
-                    break;
-                  case 1:
-                    this.viewDate = this.moveDate(this.viewDate, dir);
-                    break;
-                  case 2:
-                    this.viewDate = this.moveMonth(this.viewDate, dir);
-                    break;
-                  case 3:
-                  case 4:
-                    this.viewDate = this.moveYear(this.viewDate, dir);
-                    break;
-                }
-                this.fill();
-                this.element.trigger({
-                  type:      target[0].className + ':' + this.convertViewModeText(this.viewMode),
-                  date:      this.viewDate,
-                  startDate: this.startDate,
-                  endDate:   this.endDate
-                });
-                break;
-              case 'clear':
-                this.reset();
-                if (this.autoclose) {
-                  this.hide();
-                }
-                break;
-              case 'today':
-                var date = new Date();
-                date = UTCDate(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), 0);
+      try {
+        if (target.length === 1) {
+          if (target.is('.disabled')) {
+            this.element.trigger({
+              type: 'outOfRange',
+              date: this.viewDate,
+              startDate: this.startDate,
+              endDate: this.endDate
+            });
+            return;
+          }
+          switch (target[0].nodeName.toLowerCase()) {
+            case 'th':
+              switch (target[0].className) {
+                case 'switch':
+                  this.showMode(1);
+                  break;
+                case 'prev':
+                case 'next':
+                  var dir = DPGlobal.modes[this.viewMode].navStep * (target[0].className == 'prev' ? -1 : 1);
+                  switch (this.viewMode) {
+                    case 0:
+                      this.viewDate = this.moveHour(this.viewDate, dir);
+                      break;
+                    case 1:
+                      this.viewDate = this.moveDate(this.viewDate, dir);
+                      break;
+                    case 2:
+                      this.viewDate = this.moveMonth(this.viewDate, dir);
+                      break;
+                    case 3:
+                    case 4:
+                      this.viewDate = this.moveYear(this.viewDate, dir);
+                      break;
+                  }
+                  this.fill();
+                  this.element.trigger({
+                    type: target[0].className + ':' + this.convertViewModeText(this.viewMode),
+                    date: this.viewDate,
+                    startDate: this.startDate,
+                    endDate: this.endDate
+                  });
+                  break;
+                case 'clear':
+                  this.reset();
+                  if (this.autoclose) {
+                    this.hide();
+                  }
+                  break;
+                case 'today':
+                  var date = new Date();
+                  date = UTCDate(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), 0);
 
-                // Respect startDate and endDate.
-                if (date < this.startDate) date = this.startDate;
-                else if (date > this.endDate) date = this.endDate;
+                  // Respect startDate and endDate.
+                  if (date < this.startDate) date = this.startDate;
+                  else if (date > this.endDate) date = this.endDate;
 
-                this.viewMode = this.startViewMode;
-                this.showMode(0);
-                this._setDate(date);
-                this.fill();
-                if (this.autoclose) {
-                  this.hide();
-                }
-                break;
-            }
-            break;
-          case 'span':
-            if (!target.is('.disabled')) {
-              var year = this.viewDate.getUTCFullYear(),
-                  month = this.viewDate.getUTCMonth(),
-                  day = this.viewDate.getUTCDate(),
-                  hours = this.viewDate.getUTCHours(),
-                  minutes = this.viewDate.getUTCMinutes(),
-                  seconds = this.viewDate.getUTCSeconds();
+                  this.viewMode = this.startViewMode;
+                  this.showMode(0);
+                  this._setDate(date);
+                  this.fill();
+                  if (this.autoclose) {
+                    this.hide();
+                  }
+                  break;
+              }
+              break;
+            case 'span':
+              if (!target.is('.disabled')) {
+                var year = this.viewDate.getUTCFullYear(),
+                    month = this.viewDate.getUTCMonth(),
+                    day = this.viewDate.getUTCDate(),
+                    hours = this.viewDate.getUTCHours(),
+                    minutes = this.viewDate.getUTCMinutes(),
+                    seconds = this.viewDate.getUTCSeconds();
 
-              if (target.is('.month')) {
-                this.viewDate.setUTCDate(1);
-                month = target.parent().find('span').index(target);
-                day = this.viewDate.getUTCDate();
-                this.viewDate.setUTCMonth(month);
-                this.element.trigger({
-                  type: 'changeMonth',
-                  date: this.viewDate
-                });
-                if (this.viewSelect >= 3) {
-                  this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
-                }
-              } else if (target.is('.year')) {
-                this.viewDate.setUTCDate(1);
-                year = parseInt(target.text(), 10) || 0;
-                this.viewDate.setUTCFullYear(year);
-                this.element.trigger({
-                  type: 'changeYear',
-                  date: this.viewDate
-                });
-                if (this.viewSelect >= 4) {
-                  this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
-                }
-              } else if (target.is('.hour')) {
-                hours = parseInt(target.text(), 10) || 0;
-                if (target.hasClass('hour_am') || target.hasClass('hour_pm')) {
-                  if (hours == 12 && target.hasClass('hour_am')) {
-                    hours = 0;
-                  } else if (hours != 12 && target.hasClass('hour_pm')) {
-                    hours += 12;
+                if (target.is('.month')) {
+                  this.viewDate.setUTCDate(1);
+                  month = target.parent().find('span').index(target);
+                  day = this.viewDate.getUTCDate();
+                  this.viewDate.setUTCMonth(month);
+                  this.element.trigger({
+                    type: 'changeMonth',
+                    date: this.viewDate
+                  });
+                  if (this.viewSelect >= 3) {
+                    this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
+                  }
+                } else if (target.is('.year')) {
+                  this.viewDate.setUTCDate(1);
+                  year = parseInt(target.text(), 10) || 0;
+                  this.viewDate.setUTCFullYear(year);
+                  this.element.trigger({
+                    type: 'changeYear',
+                    date: this.viewDate
+                  });
+                  if (this.viewSelect >= 4) {
+                    this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
+                  }
+                } else if (target.is('.hour')) {
+                  hours = parseInt(target.text(), 10) || 0;
+                  if (target.hasClass('hour_am') || target.hasClass('hour_pm')) {
+                    if (hours == 12 && target.hasClass('hour_am')) {
+                      hours = 0;
+                    } else if (hours != 12 && target.hasClass('hour_pm')) {
+                      hours += 12;
+                    }
+                  }
+                  this.viewDate.setUTCHours(hours);
+                  this.element.trigger({
+                    type: 'changeHour',
+                    date: this.viewDate
+                  });
+                  if (this.viewSelect >= 1) {
+                    this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
+                  }
+                } else if (target.is('.minute')) {
+                  minutes = parseInt(target.text().substr(target.text().indexOf(':') + 1), 10) || 0;
+                  this.viewDate.setUTCMinutes(minutes);
+                  this.element.trigger({
+                    type: 'changeMinute',
+                    date: this.viewDate
+                  });
+                  if (this.viewSelect >= 0) {
+                    this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
                   }
                 }
-                this.viewDate.setUTCHours(hours);
+                if (this.viewMode != 0) {
+                  var oldViewMode = this.viewMode;
+                  this.showMode(-1);
+                  this.fill();
+                  if (oldViewMode == this.viewMode && this.autoclose) {
+                    this.hide();
+                  }
+                } else {
+                  this.fill();
+                  if (this.autoclose) {
+                    this.hide();
+                  }
+                }
+              }
+              break;
+            case 'td':
+              if (target.is('.day') && !target.is('.disabled')) {
+                var day = parseInt(target.text(), 10) || 1;
+                var year = this.viewDate.getUTCFullYear(),
+                    month = this.viewDate.getUTCMonth(),
+                    hours = this.viewDate.getUTCHours(),
+                    minutes = this.viewDate.getUTCMinutes(),
+                    seconds = this.viewDate.getUTCSeconds();
+                if (target.is('.old')) {
+                  if (month === 0) {
+                    month = 11;
+                    year -= 1;
+                  } else {
+                    month -= 1;
+                  }
+                } else if (target.is('.new')) {
+                  if (month == 11) {
+                    month = 0;
+                    year += 1;
+                  } else {
+                    month += 1;
+                  }
+                }
+                this.viewDate.setUTCFullYear(year);
+                this.viewDate.setUTCMonth(month, day);
                 this.element.trigger({
-                  type: 'changeHour',
+                  type: 'changeDay',
                   date: this.viewDate
                 });
-                if (this.viewSelect >= 1) {
-                  this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
-                }
-              } else if (target.is('.minute')) {
-                minutes = parseInt(target.text().substr(target.text().indexOf(':') + 1), 10) || 0;
-                this.viewDate.setUTCMinutes(minutes);
-                this.element.trigger({
-                  type: 'changeMinute',
-                  date: this.viewDate
-                });
-                if (this.viewSelect >= 0) {
+                if (this.viewSelect >= 2) {
                   this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
                 }
               }
-              if (this.viewMode != 0) {
-                var oldViewMode = this.viewMode;
-                this.showMode(-1);
-                this.fill();
-                if (oldViewMode == this.viewMode && this.autoclose) {
-                  this.hide();
-                }
-              } else {
-                this.fill();
-                if (this.autoclose) {
-                  this.hide();
-                }
+              var oldViewMode = this.viewMode;
+              this.showMode(-1);
+              this.fill();
+              if (oldViewMode == this.viewMode && this.autoclose) {
+                this.hide();
               }
-            }
-            break;
-          case 'td':
-            if (target.is('.day') && !target.is('.disabled')) {
-              var day = parseInt(target.text(), 10) || 1;
-              var year = this.viewDate.getUTCFullYear(),
-                  month = this.viewDate.getUTCMonth(),
-                  hours = this.viewDate.getUTCHours(),
-                  minutes = this.viewDate.getUTCMinutes(),
-                  seconds = this.viewDate.getUTCSeconds();
-              if (target.is('.old')) {
-                if (month === 0) {
-                  month = 11;
-                  year -= 1;
-                } else {
-                  month -= 1;
-                }
-              } else if (target.is('.new')) {
-                if (month == 11) {
-                  month = 0;
-                  year += 1;
-                } else {
-                  month += 1;
-                }
-              }
-              this.viewDate.setUTCFullYear(year);
-              this.viewDate.setUTCMonth(month, day);
-              this.element.trigger({
-                type: 'changeDay',
-                date: this.viewDate
-              });
-              if (this.viewSelect >= 2) {
-                this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
-              }
-            }
-            var oldViewMode = this.viewMode;
-            this.showMode(-1);
-            this.fill();
-            if (oldViewMode == this.viewMode && this.autoclose) {
-              this.hide();
-            }
-            break;
+              break;
+          }
         }
-      }
+      }catch (e){}
     },
 
     _setDate: function (date, which) {
