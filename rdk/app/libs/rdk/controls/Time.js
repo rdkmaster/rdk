@@ -61,9 +61,10 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                         function _weekHandle(date) {
                             var formatValue = date;
                             if (scope.option.granularity == "week") {
-                                var formatValue = _getWeekFormat(date);
+                                formatValue = _getWeekFormat(date);
                             }
-                            ngModel.$setViewValue(formatValue);
+                            ngModel.$setViewValue(date);
+                            scope.option.weekValue=formatValue;
                             $(element).val(formatValue);
                         }
 
@@ -92,7 +93,7 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                 };
             }]);
 
-        timeApp.directive('rdkTime', ['PickerConstant', 'TimeMacro', 'TimeFormate', 'TimeUnit', 'Utils', 'TimeUtilService', '$timeout', function(PickerConstant, TimeMacro, TimeFormate, TimeUnit, Utils, TimeUtilService, $timeout) {
+        timeApp.directive('rdkTime', ['PickerConstant', 'TimeMacro', 'TimeFormate', 'TimeUnit', 'Utils', 'TimeUtilService', '$timeout','EventService','EventTypes', function(PickerConstant, TimeMacro, TimeFormate, TimeUnit, Utils, TimeUtilService, $timeout,EventService,EventTypes) {
             var scopeDefine={
                 setting: "=?",
                 label: "=?",
@@ -111,7 +112,7 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                                 ng-if="range" readonly datetimepicker option="endTimeOption">\
                                 <span ng-show="setting.selectGranularity == true" class="granularity" \
                                     ng-bind="selectedGranularity.label" ng-click="focusSelect()"></span>\
-                                <select selectpicker class="selectpicker" ng-model="selectedGranularity" \
+                                <select id="timeSelect{{$id}}" selectpicker class="selectpicker" ng-model="selectedGranularity" \
                                     ng-options="granularity.label for granularity in granularityList" \
                                     ng-show="setting.selectGranularity == true">\
                                 </select>\
@@ -124,8 +125,8 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                         var initValue = [];
                         var initStartDate = "";
                         var initEndDate = "";
+                        var i18n = Utils.getLocale(scope);
                         scope.range = Utils.isTrue(iAttrs.range);
-
                         function getInitValue() {
                             if (angular.isUndefined(scope.setting)) {
                                 scope.setting = {};
@@ -186,7 +187,6 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                             $timeout(updateValue, scope.refreshTimeout);
                         }
                         scope.$on('$destroy', function() {
-                            //console.log("timer destroy");
                             $timeout.cancel(timer);
                         });
 
@@ -261,11 +261,15 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                             if (scope.setting.selectGranularity === true) {
                                 scope.$watch('selectedGranularity', function(newVal, oldVal) {
                                     if (newVal != oldVal && newVal != null) {
+                                        rdk["timeSelect"+scope.$id].refreshSelect();
                                         scope.setting.granularity = scope.selectedGranularity.value;
                                         scope.timeFormat = TimeFormate[Utils.getValueFromKey(TimeUnit, scope.setting.granularity)];
                                         _handleOption();
                                         if (scope.range) {
                                             _handlerGapConditions(scope.condition.startTime);
+                                        }
+                                        if(scope.setting.granularity !=="week"){
+                                            delete scope.setting.weekValue
                                         }
                                     }
                                 }, true);
@@ -288,7 +292,6 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                                 });
 
                             }
-
                             var minWidth;
                             if (scope.range) {
                                 minWidth = scope.setting.selectGranularity ? "407px" : "287px";
@@ -299,29 +302,29 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                         }
 
                         function handleWeekValue() {
-                            function formatWeekValue(str) {
-                                if (angular.isString(str)) {
-                                    var match = str.match(/(\d+).+?(\d+)/);
-                                    var obj = {};
-                                    obj.label = str;
-                                    obj.year = match[1];
-                                    obj.week = match[2];
-                                    return obj;
-                                }
-                                return str;
-
-                            }
                             if (scope.selectedGranularity.value != "week")
                                 return;
                             if (angular.isArray(scope.setting.value)) {
+                                scope.setting.weekValue=[];
                                 for (var i = 0; i < scope.setting.value.length; i++) {
-                                    scope.setting.value[i] = formatWeekValue(scope.setting.value[i]);
-                                };
+                                    if(angular.isString(scope.setting.value[i])){
+                                        scope.setting.weekValue[i] = _getWeekFormat(scope.setting.value[i])
+                                    }
+                                }
                             } else {
-                                scope.setting.value = formatWeekValue(scope.setting.value);
+                                scope.setting.weekValue = _getWeekFormat(scope.setting.value);
                             }
                         }
 
+                        function _getWeekFormat(date) {
+                            date = TimeUtilService.getDateForStringDate(date);
+                            var week = TimeUtilService.getWeekOfYear(date, scope.setting.weekStart);
+                            if (i18n === 'zh_cn') {
+                                return date.getFullYear() + '第' + (week < 10 ? '0' : '') + week + '周';
+                            } else {
+                                return date.getFullYear() + 'Week' + (week < 10 ? '0' : '') + week;
+                            }
+                        }
                         function _handlerGapConditions(conditionStartTime){
                             if (scope.selectedGranularity.gap) {
                                 _handlerGap(conditionStartTime, scope.selectedGranularity.gap);

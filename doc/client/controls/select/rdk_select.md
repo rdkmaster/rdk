@@ -16,3 +16,14 @@
 <live_demo example="controls/select/basic" width="900"></live_demo>
 
 
+# 方法 #
+
+## refreshSelect ##
+
+通过调用`refreshSelect`方法，更新下拉框选择值。
+
+		rdk.xxxId.refreshSelect();
+
+这是一个简单的 `refreshSelect` 例子：
+
+<live_demo example="controls/select/change" width="900"></live_demo>
