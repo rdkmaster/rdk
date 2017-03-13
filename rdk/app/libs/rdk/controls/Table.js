@@ -9,8 +9,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
     tableModule.run(["$templateCache", function($templateCache) {
         $templateCache.put("/src/templates/common.html",
             '<div>\
-            <div class="rdk-table-module rdk-table-search-{{position}}">\
-                <div ng-if="search" class="searchWapper search-position-{{position}}">\
+            <div class="rdk-table-module rdk-table-search-{{searchPosition}}">\
+                <div ng-if="search" class="searchWapper search-position-{{searchPosition}}">\
                     <input type="text" ng-style="width" class="form-control search" placeholder="{{searchPrompt}}" ng-focus="searchFocusHandler()"\
                            ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
                     <i class="glyphicon glyphicon-search search_icon" ng-click="serverSearchHandler()" style="cursor:{{pagingType==\'server\' || pagingType==\'server-auto\' ? \'pointer\' : \'default\'}}"></i>\
@@ -49,8 +49,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         </tbody>\
                     </table>\
                 </div>\
-                <rdk-paging ng-if="pageVisible && pageCtrl && paging && columnDefs.length!=0 && !noData" data-page-size="pageSize" \
-                     data-lang="{{lang}}" data-position="{{position}}">\
+                <rdk-paging ng-if="pageVisible && pageCtrl && paging" data-page-size="pageSize" \
+                     data-lang="{{lang}}" data-search-position="{{searchPosition}}" ng-class="{true:\'visiblePageLine\', false:\'unvisiblePageLine\'}[columnDefs.length!=0 && !noData]">\
                 </rdk-paging>\
                 <div ng-if="showExport && !noData" class="table-export"><rdk_button click="touchExport" icon="iconfont iconfont-e8c9" label="{{exportLabel}}"></rdk_button></div>\
                 <div class="clearfix"></div>\
@@ -60,7 +60,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
         $templateCache.put("/src/templates/paging.html",
             '<div class="pagingLine">\
-                <span class="disabledRecords spanRecords search-{{position}}">{{i18n.total}} {{count}} {{i18n.records}}</span>\
+                <span class="disabledRecords spanRecords search-{{searchPosition}}">{{i18n.total}} {{count}} {{i18n.records}}</span>\
                 <ul class="pagination">\
                     <li ng-class="prevPageDisabled()"> \
                         <a href ng-click="firstPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==0]">\
@@ -455,11 +455,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         "width":scope.searchWidth
                     }
                     
-                    if(scope.search){
-                        scope.position=scope.searchPosition=="bottom"?"bottom": "top"
-                    }else{
-                        scope.position="";
-                    }
                     var curSortIndex;
                     var sortIconStatus=true;
 
@@ -558,6 +553,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                         //启用搜索功能
                         scope.search = (attrs.search == "true") ? true : ((attrs.searchable == "true") ? true : false); //优先attrs.search
+
+                        if(scope.search){
+                            scope.searchPosition = (scope.searchPosition == 'bottom') ? 'bottom' : 'top';
+                        }
 
                         //ux分页样式
                         scope.pageNumber = parseInt(scope.pageNumber) || 0;
@@ -1425,7 +1424,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 count: "=",
                 pageSize: "=",
                 lang: "@",
-                position:"@?"
+                searchPosition:"@?"
             },
             link: function($scope, element, attrs, TableCtrl) {
                 $scope.TableCtrl = TableCtrl;

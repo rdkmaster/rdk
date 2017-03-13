@@ -2,12 +2,14 @@
     position: relative;
     margin: 0 0;
 }
-.rdk-table-module.rdk-table-search-top {
-    padding-top: 32px;
+
+.rdk-table-search-top {
+    text-align: right;
 }
+
 .rdk-table-module .search-position-top {
-    top: 0;
-    right: 0;
+    position: relative !important;
+    display: inline-block;
 }
 .rdk-table-module .search-position-bottom {
     bottom: 0;
@@ -51,7 +53,7 @@
 }
 .rdk-table-module div.btn-group.search_select{
     position: absolute;
-    top: 34px;
+    top: 30px;
     right: 0;
     z-index: 9999;
 }
@@ -328,4 +330,16 @@ i.regular_right,i.regular_left{
 .rdk-table-module .dropdown-menu>li>a:focus{
     background: #3ab1ea;
     color: #fff;
+}
+
+.rdk-table-module .dropdown-menu{
+    margin: 0;
+}
+
+.rdk-table-module .visiblePageLine{
+    visibility: visible;
+}
+
+.rdk-table-module .unvisiblePageLine{
+    visibility: hidden;
 }
