@@ -59,6 +59,7 @@ object AgingCache extends Logger {
       for (entry <- entrySet) {
         val value = entry.getValue
         if (currentTime - value.timeStamp > value.ttl * 1000) {
+          map.remove(entry.getKey)
           val callback = value.callback
           if (!callback.isInstanceOf[Undefined]) {
             val callable = callback.asInstanceOf[ScriptObjectMirror]
@@ -70,7 +71,6 @@ object AgingCache extends Logger {
             }
 
           }
-          map.remove(entry.getKey)
         }
       }
     }
