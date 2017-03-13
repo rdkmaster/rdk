@@ -5,13 +5,15 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ListSelector',
     listSelectorApp.directive('rdkListSelector', ['EventService', 'Utils', 'EventTypes', '$timeout', '$compile',
         function(EventService, Utils, EventTypes, $timeout, $compile) {
             var scopeDefine={
+                id: '@',
                 data: '=',
                 caption:'@?',
                 labelField: '=?',
                 selectedItems: '=?',
                 icon:'@?',
                 defaultOption:"@?",
-                size:"@?"
+                size:"@?",
+                change: '&?'
             };
             return {
                 restrict: 'E',
@@ -33,8 +35,12 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ListSelector',
                                 </div>\
                             </div>',
                 scope: scopeDefine,
-                link: _link
-
+                compile: function(tEle, tAttrs) {
+                    Utils.checkEventHandlers(tAttrs,scopeDefine);
+                    return {
+                        post: _link
+                    }
+                }
             };
             function _link(scope, iEle, iAttrs, ctrl, transclude) {
                 scope.icon = Utils.getValue(scope.icon, iAttrs.icon, "fa fa-angle-down");
@@ -56,6 +62,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ListSelector',
                 scope.selectItem = function(item){
                     scope.inputVal = _handleDate(item);
                     scope.selectedItems[0] = item;
+                    EventService.raiseControlEvent(scope, EventTypes.CHANGE,item);
                 };
                 scope.toggle = function(){
                     scope.openStatus =! scope.openStatus;

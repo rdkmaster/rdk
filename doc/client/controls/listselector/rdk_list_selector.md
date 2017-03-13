@@ -53,3 +53,12 @@
 
 这是一个综合的 `rdk_list_selector` 例子：
 <live_demo example="controls/listselector/setting" width="900"></live_demo>
+
+# 事件 #
+
+如果设置了`id`，即可广播/监听以下事件。
+
+## CHANGE ##
+监听到 `CHANGE` 事件后，点击下拉框选择项时会广播此事件，监听该事件，可以处理选择后的数据。
+
+<live_demo example="controls/listselector/change" width="900"></live_demo>
