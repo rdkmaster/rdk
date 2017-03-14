@@ -173,16 +173,12 @@ object RdkUtil extends Logger {
           Left(new RequestProcessingException(StatusCodes.InternalServerError, detail))
         }
       }
-      case e: Exception => {
+      case e: Throwable => {
         val error: String = "Exception: " + e.getMessage + ", param=" + param + ", service path='" + realJs
         appLogger(app).error(error, e)
         Left(new RequestProcessingException(StatusCodes.InternalServerError,
           e.getMessage + '\n' + e.getStackTraceString))
       }
-      case e: Throwable =>
-        val error: String = "RDK Unexpect Error"
-        appLogger(app).error(error, e)
-        Left(new RdkUnExpectException(e))
     }
   }
 
