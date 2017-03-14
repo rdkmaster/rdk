@@ -43,6 +43,15 @@ object Messages {
 
   case class ExportParam(source: ExportSource, fileType: String, param: AnyRef = null, timeStamp: Long = 0)
 
+  /**
+    * @author 10184092
+    * 用于跟踪rdk未预知的异常或错误
+    */
+  case class RdkUnExpectException(e: Throwable) extends Exception {
+    override def getMessage: String = "RdkUnExpectException:" + e
+  }
+
+
 
   //websocket 消息类型定义
   //websocket 消息头
