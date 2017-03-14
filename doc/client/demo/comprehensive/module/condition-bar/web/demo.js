@@ -8,10 +8,15 @@
     function main(scope) {
         scope.getTime = function() {
             alert(rdk.conBar.child.getTime());
+            console.log(rdk.conBar.child)
         }
         scope.getSelectedProvince = function() {
             var prov = rdk.conBar.child.getSelectedProvince();
+            if(prov){
             alert('label=' + prov.label + ', id=' + prov.id);
+            }else{
+                alert('label=' + "null" + ', id=' + "null");
+            }
         }
     }
 

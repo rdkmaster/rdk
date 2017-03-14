@@ -1,20 +1,20 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.attributes.modal','bootstrap','bootstrap-select','rd.controls.Button',
-        'css!base/css/simple_modal1.css'
+        'rd.controls.Module', 'rd.services.PopupService', 'base/template/sample_module','bootstrap-select',
+        'css!base/css/simple_modal1','rd.controls.Button'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope', 'EventService', main];
-    function main(scope,EventService) {
-        scope.setmodal = function(id, modal, position) {
-            EventService.broadcast(id, modal, position);
-            $('.selectpicker').selectpicker();
-            $('.content>ul>li:nth-child(2)>i').click(function(){
-                $(this).css({'background': '#5395d8',
-                             'color': '#fff'}).siblings('i').css({'background': '#fff',
-                                                             'color': '#999'})
-            })
+    var controllerDefination = ['$scope', 'PopupService', main];
+    function main(scope, PopupService) {
+        var moduleID;
+        scope.load = function(){
+            var sampleUrl = 'template/sample_module.html';
+            var initData = {};
+            var myOption = {
+                modal: false,
+            }
+            moduleID = PopupService.popup(sampleUrl, initData, myOption);
         }
     }
 

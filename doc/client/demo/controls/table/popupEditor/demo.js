@@ -41,21 +41,19 @@
                 {
                     targets : 0,
                     editable : true,
-                    editorRenderer: '<a ng-click="appScope.editName(item, $parent.$index, $index)">{{data.data[item.$index][$index]}}</a>'
+                    editorRenderer: '<a ng-click="appScope.editName(item, $parent.$index, $index)" style="display:inline-block;width:100%;height:1em">{{data.data[item.$index][$index]}}</a>'
                 },
                 {
                     targets : 2,
                     editable : true,
-                    editorRenderer: '<a ng-click="appScope.editHabit(item, $parent.$index, $index)">{{data.data[item.$index][$index]}}</a>'
+                    editorRenderer: '<a ng-click="appScope.editHabit(item, $parent.$index, $index)" ng-style="editStyle" style="display:inline-block;width:100%;height:1em">{{data.data[item.$index][$index]}}</a>'
                 }
             ]
         }
-
         $scope.editName = function(item, row, column) {
             var id = PopupService.popup('mod/name-editor.html',
                 { selected: {'label': $scope.data.data[row][column]} },
                 { controller: 'NameEditorController', showTitle: false });
-
             EventService.register(id, 'edit', function(event, data) {
                 PopupService.removePopup(id);
                 //清空回调函数

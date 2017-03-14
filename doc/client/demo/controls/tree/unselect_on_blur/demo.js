@@ -18,7 +18,7 @@
         });
         //这个是节点的click事件，节点的事件要阻止冒泡！
         $scope.clickFun=function(event, data){
-            event.stopPropagation();
+            //内部已作了阻止冒处理
         }
         //这是用来在失去焦点后的，清空之前的选中信息。
         $scope.unselectFun=function(event, data){

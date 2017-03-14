@@ -131,7 +131,7 @@
 
                 function on_click(event, treeId, treeNode) {
                     event.stopPropagation();
-                    return EventService.raiseControlEvent(scope, EventTypes.CLICK, treeNode, true);
+                    return EventService.raiseControlEvent(scope, EventTypes.CLICK, event, true);
                 }
 
                 function on_dblclick(event, treeId, treeNode) {
