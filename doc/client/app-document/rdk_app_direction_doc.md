@@ -31,8 +31,9 @@
 app开发直接复制html、css、js代码，因demo中控件是基于模板1.0进行开发的，现在已升级为2.0，因此需做相应修改：
 
 > html头部需修改为：
+
 ~~~
-<head>
+    <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
@@ -60,6 +61,7 @@ app开发直接复制html、css、js代码，因demo中控件是基于模板1.0�
 
 > main.js需修改为：
 >注：许多有用的注释这里删除掉了，完整注释代码文件请查看[这里](/rdk/app/example/web/index.html)
+
 ~~~
 (function() {
     var downloadDependency = [
