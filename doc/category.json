@@ -1,0 +1,584 @@
+[
+  {
+    "label": "天龙八部 · 新手必读",
+    "items": [
+      {
+        "label": "前言 · 搭建开发环境",
+        "url": "doc/best_practise/01_dev_env.html",
+        "icon": "fa fa-file"
+      },
+      {
+        "label": "第1步 · 编写第一个应用",
+        "url": "doc/best_practise/02_first_rdk_app.html",
+        "icon": "fa fa-file"
+      },
+      {
+        "label": "第2步 · 使用第一个RDK控件",
+        "url": "doc/best_practise/03_use_first_control.html",
+        "icon": "fa fa-file"
+      },
+      {
+        "label": "第3步 · 完成查询条件栏",
+        "url": "doc/best_practise/04_finish_condition_bar.html",
+        "icon": "fa fa-file"
+      },
+      {
+        "label": "第4步 · 实现第一个RDK服务并调用它",
+        "url": "doc/best_practise/05_first_service.html",
+        "icon": "fa fa-file"
+      },
+      {
+        "label": "第5步 · 将查询得到的数据表格方式呈现",
+        "url": "doc/best_practise/06_show_data_in_table.html",
+        "icon": "fa fa-file"
+      },
+      {
+        "label": "第6步 · 将查询得到的数据以图形方式呈现",
+        "url": "doc/best_practise/07_show_data_in_graph.html",
+        "icon": "fa fa-file"
+      },
+      {
+        "label": "第7步 · 实现页面国际化",
+        "url": "doc/best_practise/08_i18n.html",
+        "icon": "fa fa-file"
+      },
+      {
+        "label": "第8步 · 优化详情对话框",
+        "url": "doc/best_practise/09_detail_dialog.html",
+        "icon": "fa fa-file"
+      }
+    ],
+    "icon": "fa fa-folder-open"
+  },
+  {
+    "label": "应用开发基础 · 环境搭建",
+    "items": [
+      {
+        "label": "应用配置",
+        "url": "doc/manual.html",
+        "icon": "fa fa-file"
+      }
+    ],
+    "icon": "fa fa-folder-open"
+  },
+  {
+    "label": "前端开发 · 控件",
+    "items": [
+      {
+        "label": "前端 · 通用功能",
+        "items": [
+          {
+            "label": "数据源",
+            "url": "doc/client/common/datasource/DataSourceService.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "事件机制",
+            "url": "doc/client/common/event/EventService.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "国际化",
+            "url": "doc/client/common/i18n/i18n.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "对话框&模态框",
+            "url": "doc/client/common/modal/rdk_modal_old.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "滚动条",
+            "url": "doc/client/common/scroll/rdk_scroll.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "文件上传",
+            "url": "doc/client/common/upload.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "文件导出",
+            "url": "doc/client/common/export.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "主题",
+            "url": "doc/client/common/theme/rdk_theme.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "自研符号图标",
+            "url": "rdk/app/libs/iconFonts/fonts/iconfont.html",
+            "icon": "fa fa-paw",
+            "target": "_blank"
+          },
+          {
+            "label": "弹出菜单",
+            "url": "doc/client/common/popupservice/PopupService.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "通知服务",
+            "url": "doc/client/common/notifyservice/NotifyService.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "tooltip",
+            "url": "doc/client/common/tooltip/tooltip.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "其他",
+            "url": "doc/client/common/other.html",
+            "icon": "fa fa-file"
+          }
+        ],
+        "icon": "fa fa-folder-open"
+      },
+      {
+        "label": "前端 · 控件",
+        "items": [
+          {
+            "label": "Alert",
+            "url": "doc/client/common/alert/alert.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "AreaSelect",
+            "url": "doc/client/controls/area/rdk_area.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "BasicSelector",
+            "url": "doc/client/controls/basicselector/rdk_basic_selector.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "Bullet",
+            "url": "doc/client/controls/bullet/bullet.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "Button",
+            "url": "doc/client/controls/button/rdk_button.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "ChartIcon",
+            "url": "doc/client/controls/chartIcon/rdk_chart_icon.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "ComboSelect",
+            "url": "doc/client/controls/comboselect/rdk_comboselect.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "FoldSelector",
+            "url": "doc/client/controls/foldselector/rdk_fold_selector.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "Graph",
+            "url": "doc/client/controls/graph/graph.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "Icon",
+            "url": "doc/client/controls/icon/rdk_icon.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "Input",
+            "url": "doc/client/controls/input/rdk_input.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "Map",
+            "url": "doc/client/controls/map/map.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "Module",
+            "url": "doc/client/controls/module/module.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "NumericInput",
+            "url": "doc/client/controls/numericinput/rdk_numeric_input.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "Progressbar",
+            "url": "doc/client/controls/progressbar/progressbar.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "Scroller",
+            "url": "doc/client/controls/scroller/rdk_scroller.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "Selector",
+            "url": "doc/client/controls/selector/rdk_selector.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "Select",
+            "url": "doc/client/controls/select/rdk_select.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "SingleIndicator",
+            "url": "doc/client/controls/singleindicator/rdk_single_indicator.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "Switch",
+            "url": "doc/client/controls/switch/rdk_switch.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "Table",
+            "url": "doc/client/controls/table/rdk_table.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "TabSelect",
+            "url": "doc/client/controls/tabselect/rdk_tabselect.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "Time",
+            "url": "doc/client/controls/time/rdk_time.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "TimeSelect",
+            "url": "doc/client/controls/timeSelect/rdk_time_select.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "Tree",
+            "url": "doc/client/controls/tree/tree.html",
+            "icon": "fa fa-file"
+          }
+        ],
+        "icon": "fa fa-folder-open"
+      },
+      {
+        "label": "前端 · 容器",
+        "items": [
+          {
+            "label": "Accordion",
+            "url": "doc/client/containers/accordion/rdk_accordion.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "ButtonGroup",
+            "url": "doc/client/containers/buttongroup/rdk_buttongroup.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "Panel",
+            "url": "doc/client/containers/panel/rdk_panel.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "Tab",
+            "url": "doc/client/containers/tab/rdk_tab.html",
+            "icon": "fa fa-file"
+          }
+        ],
+        "icon": "fa fa-folder-open"
+      },
+      {
+        "label": "前端 · 客户端综合性demo",
+        "items": [
+          {
+            "label": "button",
+            "url": "/doc/doc/client/demo/comprehensive/btn/web/index.html",
+            "icon": "fa fa-file"
+          }
+        ],
+        "icon": "fa fa-folder-open"
+      },
+      {
+        "label": "前端 · app开发详细说明文档",
+        "items": [
+          {
+            "label": "Help Document",
+            "url": "doc/client/app-document/rdk_app_direction_doc.html",
+            "icon": "fa fa-file"
+          }
+        ],
+        "icon": "fa fa-folder-open"
+      },
+      {
+        "label": "前端 · 原生HTML标签",
+        "items": [
+          {
+            "label": "h1~h6",
+            "url": "doc/unsupported-yet.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "span",
+            "url": "doc/unsupported-yet.html",
+            "icon": "fa fa-file"
+          }
+        ],
+        "icon": "fa fa-folder-open"
+      },
+      {
+        "label": "前端 · AngularJS",
+        "items": [
+          {
+            "label": "频繁使用",
+            "items": [
+              {
+                "label": "angular.forEach",
+                "url": "http://docs.ngnice.com/api/ng/function/angular.forEach",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "ngClass",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngClass",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "ngClick",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngClick",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "ngDisabled",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngDisabled",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "ngRepeat",
+                "url": "doc/client/common/ng-repeat.html",
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "ngShow",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngShow",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "$timeout",
+                "url": "http://docs.ngnice.com/api/ng/service/$timeout",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              }
+            ],
+            "icon": "fa fa-folder-open"
+          },
+          {
+            "label": "常用",
+            "items": [
+              {
+                "label": "ngBlur",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngBlur",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "ngChange",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngChange",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "ngClick",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngClick",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "ngHide",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngHide",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "ngHref",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngHref",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "ngKeydown",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngKeydown",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "ngModel",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngModel",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "ngSrc",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngSrc",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              }
+            ],
+            "icon": "fa fa-folder-open"
+          },
+          {
+            "label": "重要但不常用",
+            "items": [
+              {
+                "label": "ngController",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngController",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "何为作用域(Scope)",
+                "url": "http://docs.ngnice.com/guide/scope",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "ngClick",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngClick",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "ngHide",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngHide",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "ngHref",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngHref",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "ngKeydown",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngKeydown",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "ngModel",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngModel",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              },
+              {
+                "label": "ngSrc",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngSrc",
+                "target": "_blank",
+                "prefix": true,
+                "icon": "fa fa-file"
+              }
+            ],
+            "icon": "fa fa-folder-open"
+          }
+        ],
+        "icon": "fa fa-folder-open"
+      }
+    ],
+    "icon": "fa fa-folder-open"
+  },
+  {
+    "label": "后端服务 · API",
+    "items": [
+      {
+        "label": "总览",
+        "url": "doc/server/service_api.html",
+        "icon": "fa fa-file"
+      },
+      {
+        "label": "公共配置信息查询服务",
+        "url": "doc/server/common.html",
+        "icon": "fa fa-file"
+      },
+      {
+        "label": "rest请求说明",
+        "url": "doc/server/rdk_rest_service.html",
+        "icon": "fa fa-file"
+      },
+      {
+        "label": "underscor API",
+        "url": "doc/server/underscore_doc_v1_7_0.html",
+        "target": "_blank",
+        "icon": "fa fa-file"
+      },
+      {
+        "label": "文件操作API",
+        "url": "doc/server/service_file_api.html",
+        "icon": "fa fa-file"
+      },
+      {
+        "label": "公共导出服务",
+        "url": "doc/client/common/export.html",
+        "icon": "fa fa-file"
+      },
+      {
+        "label": "消息队列",
+        "items": [
+          {
+            "label": "消息队列API · JS",
+            "url": "doc/server/service_mq_js_api.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "消息队列API · JAVA",
+            "url": "doc/server/service_mq_java_api.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "其他手册",
+            "url": "doc/server/ActiveMQ_menual.chm",
+            "target": "_blank",
+            "icon": "fa fa-file"
+          }
+        ],
+        "icon": "fa fa-folder-open"
+      },
+      {
+        "label": "COMMON包相关",
+        "url": "doc/server/common.html",
+        "icon": "fa fa-file"
+      }
+    ],
+    "icon": "fa fa-folder-open"
+  }
+]
