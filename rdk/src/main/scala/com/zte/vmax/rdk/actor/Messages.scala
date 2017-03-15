@@ -43,7 +43,7 @@ object Messages {
 
   case class ExportParam(source: ExportSource, fileType: String, param: AnyRef = null, timeStamp: Long = 0)
 
-
+  
   //websocket 消息类型定义
   //websocket 消息头
   type WSHead = Array[String]
