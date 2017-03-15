@@ -2,7 +2,6 @@
 #include <GuiEdit.au3>
 #include <WindowsConstants.au3>
 #include <Misc.au3>
-#include <NamedPipes.au3>
 
 #AutoIt3Wrapper_Icon=favicon.ico
 
@@ -222,7 +221,7 @@ Func _init()
 	EndIf
 
 	ToolTip('正在检查 JRE 版本。。。', @DesktopWidth/2, @DesktopHeight/2-50, '', 0, 2)
-	$pid = Run(@ComSpec & " /c " & '"' & $java & '" -version', "", @SW_HIDE, $STDERR_CHILD)
+	Local $pid = Run(@ComSpec & " /c " & '"' & $java & '" -version', "", @SW_HIDE, $STDERR_CHILD)
 	ProcessWaitClose($pid)
 	ToolTip('')
 	Local $version = Number(StringMid(StderrRead($pid), 15, 3))
@@ -284,6 +283,7 @@ Func _getVersion()
 EndFunc
 
 Func _error($msg)
+	If Not IsDeclared("gui") Then Local $gui = -1
 	MsgBox(16+4096, "出错啦！", $msg, 0, $gui)
 	Exit 0
 EndFunc
