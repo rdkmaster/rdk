@@ -61,3 +61,6 @@ i.iconfont {
 i.iconfont-e8c8 {
 	font-size: 20px;
 }
+.glyphicon-search:before {
+	color: #008fd4;
+}
