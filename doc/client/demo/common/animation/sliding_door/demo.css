@@ -1,0 +1,48 @@
+*{
+	margin:0;
+	padding:0;
+	box-sizing: border-box;
+}
+.box{
+	width: 900px;
+	height: 300px;
+	position: relative;
+    overflow: hidden;
+    transition: all 1s;
+    border: 1px solid red;
+    overflow: hidden;
+}
+.item{
+	width: 50%;
+	height: 300px;
+	position: absolute;
+	left: 0;
+	transition: left .5s;
+}
+.glyphicon{
+	width: 20px;
+	height: 20px;
+	color: #333;
+	cursor: pointer;
+	font-style: normal; 
+}
+.item1{
+	background-color: red;
+}
+.item2{
+	background-color: yellow;
+}
+.item3{
+	background-color: blue;
+}
+.item4{
+	background-color: black;
+}
+.item5{
+	background-color: green;
+}
+.selectDiv{
+	width: 100%;
+	left: 0 !important;
+	z-index: 1;
+}
