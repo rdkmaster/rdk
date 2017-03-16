@@ -5,7 +5,7 @@
 	margin:0 auto;
 	margin-top:50px;
 }
-.main{
+.main2{
 	position: relative;
 	width:740px;
 	height: 308px;
@@ -15,6 +15,26 @@
 	padding:8px;
 	border:1px solid #eee;
 	box-shadow: 4px 4px 8px #eee;
+}
+/**表格列说明：
+*1、表头列和其内容列的对齐方式一至;
+*2、文字列向左对齐;
+*3、数字列向右对齐;
+*4、图片列居中对齐;
+*5、以上4点是总的原则，表格的父元素给一个单独有意义的class,以防影响其它表格，
+	其它可以根据具体情况自己设定，如：例如给某一列给一个固定宽度。
+**/
+.main2 .rdk-table-module .rdk-table > tbody > tr > td:not(:last-child) {
+	text-align: left;
+}
+.main2 .rdk-table-module .rdk-table > thead > tr > th:not(:last-child) {
+	text-align: left;
+}
+.main2 .rdk-table-module .rdk-table > tbody > tr > td:nth-child(3), .main2 .rdk-table-module .rdk-table > tbody > tr > td:nth-child(6) {
+	text-align: right;
+}
+.main2 .rdk-table-module .rdk-table > thead > tr > th:nth-child(3), .main2 .rdk-table-module .rdk-table > thead > tr > th:nth-child(6) {
+	text-align: right;
 }
 /*图标设置*/
 button.images_right{
@@ -39,7 +59,7 @@ button.images_right{
     transition: all 0.25s linear
 }
 /*标题样式*/
-div.main >span.title{
+div.main2 >span.title{
 	position:absolute;
 	border: none;
 	top:10px;
@@ -49,7 +69,7 @@ div.main >span.title{
 	line-height: 30px;
 	color: #008FD4;
 }
-.rdk-table-module .pagingLine {
+.main2 .rdk-table-module .pagingLine {
 	position: absolute;
 	width: 100%;
 	top: 260px;

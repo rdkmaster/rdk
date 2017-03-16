@@ -1,7 +1,7 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.controls.Table','css!base/css/simple_tab1','css!rd.styles.IconFonts'
+        'rd.controls.Table','css!base/css/simple_tab2','css!rd.styles.IconFonts'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
@@ -15,8 +15,8 @@
             ]
         }
         function  imagePosition(){
-            var width = parseFloat($('.main').css('width'));
-            var height = parseFloat($('.main').css('height'));//恨据外围 div的长宽给图标自动定位
+            var width = parseFloat($('.main2').css('width'));
+            var height = parseFloat($('.main2').css('height'));//恨据外围 div的长宽给图标自动定位
             $('button.images_right').css({
                 'left':(width-1)+"px",
                 'top':(height/2-32)+"px"
@@ -27,10 +27,10 @@
         scope.iconCondition = true;
         scope.images = function(){
             scope.iconCondition = !scope.iconCondition;
-            if($('.main').hasClass('images_down')){
-                $('.main').removeClass('images_down').addClass('images_up');
+            if($('.main2').hasClass('images_down')){
+                $('.main2').removeClass('images_down').addClass('images_up');
             }else{
-                $('.main').removeClass('images_up').addClass('images_down')
+                $('.main2').removeClass('images_up').addClass('images_down')
             }
         }
     }
