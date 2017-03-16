@@ -776,6 +776,14 @@ var Data = {
     setDataSourceSelector: function (selector) {
         Cache.put(Data.DataSourceSelector, selector)
     },
+
+    // 设置数据源配置
+    setDataSourceConfig: function (jsonObj) {
+        var json = JSON.stringify(jsonObj)
+        java.Config.set(json);
+        Log.warn("update datasource config!changed:" + json)
+        rdk_runtime.reSetDataSource();
+    },
     //启用数据源
     useDataSource: function () {
         var selector = Cache.get(Data.DataSourceSelector);

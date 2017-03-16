@@ -86,7 +86,11 @@ object Config extends ConfigTrait {
   }
 
   def set(key: String, value: String) {
-    config = config.withFallback(ConfigFactory.parseString(s"$key=$value"))
+    config = ConfigFactory.parseString(s"$key=$value").withFallback(config)
+  }
+
+  def set(json: String) {
+    config = ConfigFactory.parseString(json).withFallback(config)
   }
 
   def get(key: String): String = {
