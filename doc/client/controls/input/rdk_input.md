@@ -42,3 +42,13 @@
 
 <live_demo example="controls/input/demo4click" width="900"></live_demo>
 
+# 事件 #
+
+如果设置了`id`，即可广播/监听以下事件。
+
+## blur ##
+输入框失去焦点后触发。
+
+这是 *blur* 使用例子:
+
+<live_demo example="controls/input/basic" width="900"></live_demo>
