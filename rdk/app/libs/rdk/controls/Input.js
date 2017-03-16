@@ -2,10 +2,12 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
     var inputApp = angular.module("rd.controls.Input", ['rd.core']);
     inputApp.directive('rdkInput', ['Utils', 'EventService', 'EventTypes', function(Utils, EventService, EventTypes) {
         var scopeDefine={
+            id:"@?",
             placeholder : "@?", 
             readonly: "@?",
             icon: "=?",
-            click: "&?"
+            click: "&?",
+            blur: "&?"
         };
         return {
             restrict: 'EA',
@@ -13,7 +15,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
             replace: true,
             scope:scopeDefine,
             template: '<div>\
-                     <input type="text" class="form-control" placeholder="{{placeholder}}">\
+                     <input type="text" class="form-control" placeholder="{{placeholder}}"  ng-blur="inpBlurHandler()">\
                  <i class="{{icon}}" \
                    style="position:absolute;right:10px;color:gray;font-size:14px;cursor:pointer"\
                    ng-show="showDelete"></i>\
@@ -72,6 +74,9 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
                     iconElement.onclick = function(event) {
                         EventService.raiseControlEvent(scope, EventTypes.CLICK, inputElement.value, defaultHandler);
                     }
+                    scope.inpBlurHandler=function(){
+                        EventService.raiseControlEvent(scope, EventTypes.BLUR, inputElement.value);
+                    };
 
                     function defaultHandler(){
                         inputElement.value = '';

@@ -4,9 +4,12 @@
         'rd.controls.Input'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope',main];
-    function main(scope ) {
+    var controllerDefination = ['$scope','EventService','EventTypes',main];
+    function main(scope,EventService,EventTypes) {
         scope.age = 11;
+        EventService.register('myInput', EventTypes.BLUR, function(event, data) {//处理被选中的数据
+            alert('blurHandler 填写的内容是 '+ data);
+        })
     }
 
     var controllerName = 'DemoController';
