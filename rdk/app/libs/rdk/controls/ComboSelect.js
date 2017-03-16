@@ -9,6 +9,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 caption: '=?',
                 open: '=?',
                 showClear: '=?',
+                showIcon: '=?',
                 openPolicy:'@?',
                 frozen: '=?',
                 clear: '&?',
@@ -21,11 +22,11 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
 
                 scope: scopeDefine,
                 template:'<div class="rdk-combo-select-module" ng-mouseleave="closeShow()">\
-                              <div class="combo-content" ng-mouseenter="openShow()" ng-click="toggle($event)">\
+                              <div class="combo-content" ng-class="{\'combo-content-open\':open}" ng-mouseenter="openShow()" ng-click="toggle($event)">\
                                   <span class="combo-caption" ng-show="!!caption">{{caption}}</span>\
-                                  <p class="form-control combo-content-theme" ng-class="{\'margin-hide\':!!showClear}" title="{{inputStr}}" \
+                                  <p class="combo-content-theme" ng-class="{\'margin-hide\':!!showClear}" title="{{inputStr}}" \
                                   unselectable="on" ng-model="inputStr">{{inputStr}}</p>\
-                                  <i class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
+                                  <i ng-if="showIcon" class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
                                   <i ng-if="!!inputStr && showClear" class="fa fa-times-circle fa-1 combo-content-close" ng-click="clearData($event)"></i>\
                               </div>\
                               <div class="combo-content-transclude">\
@@ -94,6 +95,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
                 var hasOpen = scope.open = Utils.isTrue(scope.open, false);
                 scope.frozen = Utils.isTrue(scope.frozen, false);
                 scope.showClear = Utils.isTrue(scope.showClear, false);
+                scope.showIcon = Utils.isTrue(scope.showIcon, true);
                 scope.inputStr = Utils.getValue(scope.inputStr, iAttrs.inputStr, '');
                 scope.unfoldedIcon = "fa fa-angle-up";
                 scope.foldedIcon = "fa fa-angle-down";

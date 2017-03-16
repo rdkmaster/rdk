@@ -110,7 +110,8 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
             freezeProvince:"=?",
             showAll:"=?",
             multipleSelect: '=?',
-            multipleArea: '=?'
+            multipleArea: '=?',
+            delimiter: '@?'
         };
         return {
             restrict: 'E',
@@ -152,6 +153,9 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
             var _areaNull = {name:'- -'};//空对象，当数据少于_areaCount时用于填充数据。
             var _areaCount = 6;
             var _provincesInNull=false; //省数据数组里是否存在空对象
+            var _delimiter = Utils.getValue(scope.delimiter, tAttrs.delimiter, ' | ');//数据分割符
+            var _multDelimiter="; "; //复选场景数据分割符
+
             //默认在选择项里显示：全省，全市标签
             scope.showAll=  Utils.isTrue(scope.showAll, true);
             scope.freezeProvince = Utils.isTrue(scope.freezeProvince, true);
@@ -417,28 +421,28 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
             function _simpleDataHandle(){
                 angular.forEach($vm.userArr,function(item){
                     if(!item.freezeProvince){
-                        $vm.resultData +=item.name+' | ';
+                        $vm.resultData +=item.name+_delimiter;
                     }else{
                         !!comboSelectCtrl && comboSelectCtrl.setCaption(item.name);
                     }
                 });
-                $vm.resultData = $vm.resultData.substring(0,$vm.resultData.length-3);
+                $vm.resultData = $vm.resultData.substring(0,$vm.resultData.length-_delimiter.length);
             }
             function _multipleDataHandle(){
                 angular.forEach($vm.userArr,function(item){
                     if(!item.freezeProvince && !angular.isArray(item)){
-                        $vm.resultData +=item.name+' | ';
+                        $vm.resultData +=item.name+_delimiter;
                     }
                     else if(angular.isArray(item)){
                         angular.forEach(item,function(childItem){
-                            $vm.resultData += childItem.name + "; "
+                            $vm.resultData += childItem.name + _multDelimiter
                         })
                     }
                     else{
                         !!comboSelectCtrl && comboSelectCtrl.setCaption(item.name);
                     }
                 });
-                $vm.resultData = $vm.resultData.substring(0,$vm.resultData.length-2);
+                $vm.resultData = $vm.resultData.substring(0,$vm.resultData.length - _multDelimiter.length);
             }
         }
     }])

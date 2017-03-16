@@ -19,3 +19,33 @@
 .rdk-time-select-module .icon-arrow-right:before {
     content: "\e092";
 }
+.rdk-time-granularity{
+    display: flex;
+    justify-content: center;
+
+}
+.rdk-time-granularity > span{
+    font-size: 12px;
+    display: inline-block;
+    height: 26px;
+    line-height: 26px;
+    padding: 0 10px;
+    border: 1px solid #008FD4;
+    color: #008FD4;
+    cursor: pointer;
+}
+.rdk-time-granularity > span:not(first-child){
+    margin-right: -1px;
+}
+.rdk-time-granularity > span:first-child{
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.rdk-time-granularity > span:last-child{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.rdk-time-granularity > span.rdk-time-active{
+    background-color: #008FD4;
+    color: #fff;
+}

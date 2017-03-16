@@ -2,48 +2,39 @@
     position: relative;
     display: inline-block;
 }
-
 .rdk-combo-select-module .combo-caption{
     display: inline-block;
     border-right: 1px #ABABAB solid;
     padding: 0 10px;
-    line-height: 18px;
-    vertical-align: middle;
 }
 
 .rdk-combo-select-module .combo-content{
     position: relative;
     flex-flow: row;
-    align-items:center;
     outline: none;
+    min-width: 150px;
     height: 32px;
     font-family: "微软雅黑", Helvetica, Arial, sans-serif;
     font-size: 14px;
     border-radius: 4px;
-    padding: 0;
+    padding: 5px 0;
 }
-
 .rdk-combo-select-module .combo-content-theme{
     cursor: pointer;
     display: inline-block;
     flex:1;
-    width: 120px;
-    overflow: hidden;
     white-space:nowrap;
-    height: 30px;
     box-shadow: none;
     border: none;
-    padding: 4px 0px;
-    margin: 0px 26px 0px 8px;
+    /*margin: 0 26px 0 8px;*/
+    margin: 0 8px;
 }
 .rdk-combo-select-module .combo-content-icon{
-    right: 5px;
-    position: absolute;
-    top: 5px;
+    padding-right:5px;
     pointer-events: none;
 }
 .rdk-combo-select-module .fa-angle-down:before,.rdk-combo-select-module .fa-angle-up:before {
-     font-size: 18px;
+     font-size: 20px;
 }
 .rdk-combo-select-module .combo-content-transclude{
     min-width: 120px;
@@ -80,3 +71,41 @@
 .rdk-combo-select-module .combo-content .combo-content-icon{
     color: #008FD4;
 }
+/* -- theme style : rdk-theme-zte-vmax start --*/
+.rdk-theme-zte-vmax .rdk-combo-select-module .combo-caption{
+    display: inline-block;
+    height: 16px;
+    color: #fff;
+    font-size: 12px;
+    border-right: 0;
+}
+.rdk-theme-zte-vmax .rdk-combo-select-module .combo-content.combo-content-open{
+    background-color: rgba(0,0,0,.18);
+}
+.rdk-theme-zte-vmax .rdk-combo-select-module .combo-content{
+    display: inline-flex;
+    position: relative;
+    flex-flow: column;
+    min-width: 120px;
+    height: 50px;
+    line-height: 32px;
+    font-size: 14px;
+    /*height: 40px; */
+    /*margin: 10px 0;*/
+    /*line-height: 14px;*/
+    padding: 0;
+    border-radius: 0;
+    border: initial;
+    color: #333;
+    background-color: transparent;
+}
+
+.rdk-theme-zte-vmax .rdk-combo-select-module .combo-content-theme{
+    flex:1;
+    border: none;
+    padding: 2px 10px;
+    margin: 0;
+    color: #fff;
+    background-color: initial;
+}
+/* -- theme style : rdk-theme-zte-vmax end --*/

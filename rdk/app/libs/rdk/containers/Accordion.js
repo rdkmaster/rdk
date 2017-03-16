@@ -147,11 +147,12 @@ define(['angular', 'jquery', 'gsap', 'rd.core', 'css!rd.styles.Accordion',
                 function _setDefaultState(){
                     TweenLite.set($(transcludeDom), 0, {height: 'auto', width: 'auto'});
                     $timeout(function(){
-                        scope.contentHeight = parseInt($(transcludeDom).css('height'), 10) ;
-                        scope.contentWidth  = parseInt($(transcludeDom).css('Width'), 10)  ;
+                        scope.contentHeight = parseInt($(transcludeDom).css('height'), 10);
+                        scope.contentWidth  = parseInt($(transcludeDom).css('Width'), 10);
                         if(scope.contentHeight==0 || scope.contentWidth==0){
-                            //找出隐藏的父元素节点,获取隐藏元素内transcludeDom的size
-                            var parentHideDom = $(transcludeDom).parents().find("div[ng-show]:first")[0];
+                            //找出隐藏的父元素节点,获取隐藏元素内transcludeDom的size combo-content-transclude
+                            //var parentHideDom = $(transcludeDom).parents().find("div[ng-transclude][ng-show]:first")[0];
+                            var parentHideDom = _findParentHideNode(transcludeDom);
                             scope.contentHeight = scope.contentHeight || (!!parentHideDom && Utils.getSize(parentHideDom,transcludeDom).height);
                             scope.contentWidth  = scope.contentWidth || (!!parentHideDom && Utils.getSize(parentHideDom,transcludeDom).width);
                         }
@@ -160,6 +161,13 @@ define(['angular', 'jquery', 'gsap', 'rd.core', 'css!rd.styles.Accordion',
                         _resetDefaultState();
                         scope.firstTimeBln = false;
                     }, 0);
+                }
+
+                function _findParentHideNode(node){
+                    while (node && !node.classList.contains("ng-hide")){
+                        node=node.parentNode;
+                    }
+                    return node;
                 }
 
                 function _resetDefaultState(){

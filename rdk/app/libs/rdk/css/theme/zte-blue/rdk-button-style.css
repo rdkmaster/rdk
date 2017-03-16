@@ -81,3 +81,28 @@
 .rdk-button-down {
 	background:rgba(0,0,0,0.15);
 }
+/* -- theme style : rdk-theme-zte-vmax start --*/
+/*.rdk-theme-zte-vmax .rdk-button-guidance ~ .rdk-button-btn {
+	text-shadow:0 0 0.2em #8df10b, -0 -0 0.2em #8df10b;
+}
+.rdk-theme-zte-vmax .rdk-button-normal ~ .rdk-button-btn {
+	text-shadow:0 0 0.2em #44d6ea, -0 -0 0.2em #44d6ea;
+}*/
+/*.rdk-theme-zte-vmax .rdk-button-btn {*/
+	 /*text-shadow:0 0 0.2em rgba(255,255,255,0.6), -0 -0 0.2em rgba(255,255,255,0.6);*/
+/*}*/
+
+.rdk-theme-zte-vmax .rdk-button-danger{
+	/*background-color: #EEBB22;*/
+}
+.rdk-theme-zte-vmax .rdk-button-normal{
+	/*background-color: #00AFFB;*/
+	background-color: #008FD4;
+	border: 1px solid rgba(255,255,255,0.6);
+	/*box-shadow: 0 0 0.3em #44d6ea, -0px -0px 0.3em #44d6ea;*/
+	/*box-shadow: 0px 0px 5px #fff, -0px -0px 5px #fff;*/
+}
+.rdk-theme-zte-vmax  .rdk-button-comment{
+
+}
+/* -- theme style : rdk-theme-zte-vmax end --*/
