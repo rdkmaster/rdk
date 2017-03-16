@@ -10,7 +10,7 @@ ul,li{
 	margin:0;
 	list-style:none; 
 }
-.main{
+.main4{
 	position: relative;
 	width:740px;
 	height: 380px;
@@ -21,34 +21,47 @@ ul,li{
 	border:1px solid #eee;
 }
 
-
-/*设置td样式 点击时样式*/
-.rdk-table-module .rdk-table > tbody > tr>td:nth-child(1),
-.rdk-table-module .rdk-table > tbody > tr>td:nth-child(2){
+/**表格列说明：
+*1、表头列和其内容列的对齐方式一至;
+*2、文字列向左对齐;
+*3、数字列向右对齐;
+*4、图片列居中对齐;
+*5、以上4点是总的原则，表格的父元素给一个单独有意义的class,以防影响其它表格，
+	其它可以根据具体情况自己设定，如：例如给某一列给一个固定宽度。
+**/
+.main4 .rdk-table-module .rdk-table > tbody > tr>td,
+.main4 .rdk-table-module .rdk-table > thead > tr>th {
+	text-align: left;
+}
+.main4 .rdk-table-module .rdk-table > tbody > tr>td:nth-child(1),
+.main4 .rdk-table-module .rdk-table > tbody > tr>td:nth-child(2){
 	width:100px;
 }
-.rdk-table-module .rdk-table > tbody > tr>td:nth-child(1)>div>div,
-.rdk-table-module .rdk-table > tbody > tr>td:nth-child(2)>div>div{
+.main4 .rdk-table-module .rdk-table > tbody > tr>td:nth-child(1)>div>div,
+.main4 .rdk-table-module .rdk-table > tbody > tr>td:nth-child(2)>div>div{
 	overflow: hidden;
     white-space: nowrap;
     width:100px;
     text-overflow: ellipsis;
 }
-.rdk-table-module .rdk-table > tbody > tr>td:nth-child(3),
-.rdk-table-module .rdk-table > tbody > tr>td:nth-child(4){
+.main4 .rdk-table-module .rdk-table > tbody > tr>td:nth-child(3),
+.main4 .rdk-table-module .rdk-table > thead > tr>th:nth-child(3){
 	text-align:right;
 	width:80px;
 }
-.rdk-table-module .rdk-table > tbody > tr>td:nth-child(6){
+.main4 .rdk-table-module .rdk-table > tbody > tr>td:nth-child(6),
+.main4 .rdk-table-module .rdk-table > thead > tr>th:nth-child(6){
 	text-align:right;
 	width:60px;
 }
-.rdk-table-module .rdk-table > tbody > tr>td:nth-last-child(2){
+.main4 .rdk-table-module .rdk-table > tbody > tr>td:nth-last-child(3)~td,
+.main4 .rdk-table-module .rdk-table > thead > tr>th:nth-last-child(3)~th
+{
 	text-align:center;
 	width: 80px;
 }
 /*标题样式*/
-div.main >div.title{
+.main4 >div.title{
 	border: none;
 	padding-left: 8px;
 	font-size: 14px;
@@ -56,10 +69,10 @@ div.main >div.title{
 	font-style: normal;
 	color: #666;
 }
-div.main >div.title>ul{
+.main4 >div.title>ul{
 	overflow: hidden;
 }
-div.main >div.title>ul>li{
+.main4 >div.title>ul>li{
 	float: left;
 	font-size: 12px;
 	margin-top:5px;
@@ -69,7 +82,7 @@ div.main >div.title>ul>li{
 	margin-right:12px;
 	background-color: #dedede;
 }
-div.main >div.title>ul>li:first-child {
+.main4 >div.title>ul>li:first-child {
 	margin-right: 50px;
 	font-size: 14px;
 	text-align:left; 
@@ -88,7 +101,7 @@ i.iconfont-e8c8:before {
 	font-size: 20px;
 }
 /* 翻页定位 */
-.rdk-table-module .pagingLine {
+.main4 .rdk-table-module .pagingLine {
 	position: absolute;
 	width: 100%;
 	margin:0 auto;
@@ -98,7 +111,7 @@ i.iconfont-e8c8:before {
 .form-control {
 	height: 30px;
 }
-.rdk-table-module .search {
+.main4 .rdk-table-module .search {
 	margin-bottom: 10px;
     margin-top: 2px;
 }
