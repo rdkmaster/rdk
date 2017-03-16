@@ -125,7 +125,7 @@
     function _filter(data, key, field, allField) {
         if (!key) {
             Log.warn('invalid filter key, need at least ONE char!');
-            return;
+            return data.concat();
         }
         key = key.toLowerCase();
         field = !!field ? field : allField;
