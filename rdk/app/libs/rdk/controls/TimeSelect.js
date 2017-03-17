@@ -34,8 +34,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         {label: "Week", value: "week"},
                         {label: "Month", value: "month"}
                     ];
-                    debugger;
-                    scope.setting.language = Utils.getLocale(scope);
+                    scope.language = Utils.getLocale(scope);
 
                     scope.activeGranularityCls = function(granularity){
                         return scope.setting.granularity == granularity;
@@ -170,7 +169,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                     function _getWeekFormat(date) {
                         date = TimeUtilService.getDateForStringDate(date);
                         var week = TimeUtilService.getWeekOfYear(date, scope.setting.weekStart);
-                        if (scope.setting.language === 'zh_cn') {
+                        if (scope.language === 'zh_cn') {
                             return date.getFullYear() + '第' + (week < 10 ? '0' : '') + week + '周';
                         } else {
                             return date.getFullYear() + 'Week' + (week < 10 ? '0' : '') + week;
