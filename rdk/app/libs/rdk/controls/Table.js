@@ -607,7 +607,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 scope.currentPage = scope.data.paging ? (scope.data.paging.currentPage - 1) : 0;
                             }
                             if (ctrl.pageCtrl) {
-                                ctrl.pageCtrl.setPageByTable(scope.currentPage);
+                                $timeout(function(){
+                                    ctrl.pageCtrl.setPageByTable(scope.currentPage);
+                                }, 0);
                             }
                         }, true);
 
