@@ -7,7 +7,7 @@ import com.zte.vmax.rdk.actor.Messages.{DBSession, WSBroadcast}
 import com.zte.vmax.rdk.actor.WebSocketServer
 import com.zte.vmax.rdk.cache.{AgingCache, CacheHelper}
 import com.zte.vmax.rdk.config.Config
-import com.zte.vmax.rdk.db.DataBaseHelper
+import com.zte.vmax.rdk.db.{DataBaseHelper, DataSource}
 import com.zte.vmax.rdk.jsr._
 import com.zte.vmax.rdk.mq.MqHelper
 import com.zte.vmax.rdk.proxy.ProxyManager
@@ -46,6 +46,9 @@ class Runtime(engine: ScriptEngine) extends Logger {
     }
   }
 
+  def reloadDataSource: Unit = {
+    DataSource.init(Config.config)
+  }
   //获取context信息
   def getReqCtxHeaderInfo: String = {
     this.context match {
