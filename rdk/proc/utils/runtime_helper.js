@@ -778,11 +778,11 @@ var Data = {
     },
 
     // 设置数据源配置
-    setDataSourceConfig: function (jsonObj) {
+    setDataSource: function (jsonObj) {
         var json = JSON.stringify(jsonObj)
         java.Config.set(json);
-        Log.warn("update datasource config!changed:" + json)
-        rdk_runtime.reSetDataSource();
+        Log.info("update datasource config!changed:" + json)
+        rdk_runtime.reloadDataSource();
     },
     //启用数据源
     useDataSource: function () {

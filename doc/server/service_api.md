@@ -324,13 +324,13 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 该对象提供了一些和数据库操作有关的方法，比如增删改查功能。
 
 
-#### `Data.setDataSourceConfig()`{#setDataSourceConfig} ####
+#### `Data.setDataSource()`{#setDataSource} ####
 
 用于动态设置数据源配置信息接口。
 
 定义：
   
-    function setDataSourceConfig(jsObject);
+    function setDataSource(jsObject);
 
 参数：
 
@@ -342,7 +342,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 示例：要动态修改datasource.cfg里mysql_test数据库url配置为10.43.149.223数据库，其他不变。
 
-		Data.setDataSourceConfig({"db":{"mysql_test":{"url":"jdbc:gbase://10.43.149.223:5258/zxvmax?user=zxvmax&password=ZXvmax2016&failoverEnable=false&hostList=10.43.149.223"}}})
+		Data.setDataSource({"db":{"mysql_test":{"url":"jdbc:gbase://10.43.149.223:5258/zxvmax?user=zxvmax&password=ZXvmax2016&failoverEnable=false&hostList=10.43.149.223"}}})
 
 
 #### `Data.setDataSourceSelector()`{#setDataSourceSelector} ####

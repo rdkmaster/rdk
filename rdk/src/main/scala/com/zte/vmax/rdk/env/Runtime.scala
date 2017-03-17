@@ -46,7 +46,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
     }
   }
 
-  def reSetDataSource: Unit = {
+  def reloadDataSource: Unit = {
     DataSource.init(Config.config)
   }
   //获取context信息
