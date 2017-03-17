@@ -218,7 +218,7 @@ demo举例如下：
 
 
 ## closeTab ##
-当监听到`CLOSE`事件后，用户可以选择隐藏对应的tab页面。demo同上。
+当监听到`CLOSE`事件后，用户可以选择**隐藏**对应的tab页面，隐藏掉的tab页仍然占着位置，只是UI上看不到而已。
 
 - `rdk.id`中的`id`对应的就是页面里`rdk_tab`控件的`id`值。
 - `index`表示第几个`tab`页，从`0`开始计数。
@@ -231,6 +231,16 @@ demo举例如下：
             rdk.tabID.closeTab(data.tabIndex);
         }
     });
+
+## showTab ##
+对于被close的Tab页，可以调用此方法将其再次显示出来。注意，被destroy的tab页无法恢复。
+
+- `rdk.id`中的`id`对应的就是页面里`rdk_tab`控件的`id`值。
+- `index`表示第几个`tab`页，从`0`开始计数。
+
+使用方法如下：
+
+    rdk.tabID.showTab(tabIndex);
 
 ## getTabs ##
 获得当前所有的tab页信息

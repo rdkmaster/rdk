@@ -47,6 +47,10 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                         scope.closeTab(index);
                     }
 
+                    this.showTab = function(index){
+                        scope.showTab(index);
+                    }
+
                     this.getTabs = function(){
                         return scope.tabs;
                     }
@@ -441,7 +445,33 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                     $(closeLi).css({'display': 'none'});
                     var panelId = scope.tabs[index].tabid;
                     $("#" + panelId).css({'display': 'none'});
-                    _activeTab(index);
+
+                    index = findNextTab(index);
+                    if (index != -1) {
+                        _activeTabByIndex(index);
+                    }
+
+                    function findNextTab(fromIndex) {
+                        var domTabs = element.find("ul").eq(0).find("li");
+                        for (var i = 0; i < scope.tabs.length; i++) {
+                            var idx = (fromIndex + i) % scope.tabs.length;
+                            var tabLi = domTabs.eq(idx);
+                            $(tabLi).css('display');
+                            if ($(tabLi).css('display') != 'none') {
+                                return idx;
+                            }
+                        }
+                        return -1;
+                    }
+
+                }
+
+                scope.showTab = function(index) {
+                    var closeLi = element.find("ul").eq(0).find("li").eq(index);
+                    $(closeLi).css({'display': 'block'});
+                    var panelId = scope.tabs[index].tabid;
+                    $("#" + panelId).css({'display': 'block'});
+                    _activeTabByIndex(index);
                 }
 
                 function _destroy4ControllerScope(index){
