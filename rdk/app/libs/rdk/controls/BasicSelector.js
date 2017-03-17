@@ -28,7 +28,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.BasicSelector',
             return {
                 restrict: 'E',
                 replace: true,
-                template: '<div class="rdk-selector-module" ng-click="stopPropagation()">\
+                template: '<div class="rdk-selector-module" ng-click="stopPropagation($event)">\
                     <div class="search" ng-show="searchable">\
                         <input type="text" class="search-input" ng-model="search[labelField]">\
                         <i class="fa fa-search search-icon"></i>\
@@ -164,7 +164,9 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.BasicSelector',
                     scope.stopPropagation = _stopPropagation;
                 }
 
-                function _stopPropagation(){
+                function _stopPropagation(event){
+                    //注意：event对象火狐兼容性处理需要传入参数$event
+                    event = event || window.event;
                     event.stopPropagation();
                 }
 

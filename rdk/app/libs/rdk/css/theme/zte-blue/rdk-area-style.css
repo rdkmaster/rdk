@@ -207,7 +207,7 @@ ul, ol ,p{margin: 0; padding: 0;}
     background-color: #fff;
     border-bottom: 4px solid #eee;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
 }
 .rdk-theme-zte-vmax .rdk-area-contain .nav-tabs>li {
     float: left;

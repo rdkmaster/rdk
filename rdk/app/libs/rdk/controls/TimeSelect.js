@@ -6,7 +6,8 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
             var scopeDefine={
                 setting: "=?",
                 refreshTimeout: "@?",
-                id:"@?"
+                id:"@?",
+                change:'&?'
             };
             return {
                 restrict: 'E',
@@ -33,6 +34,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         {label: "Week", value: "week"},
                         {label: "Month", value: "month"}
                     ];
+                    debugger;
                     scope.setting.language = Utils.getLocale(scope);
 
                     scope.activeGranularityCls = function(granularity){

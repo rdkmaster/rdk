@@ -1,9 +1,9 @@
 define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ListSelector',
-    'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap','rd.attributes.Scroll'
+    'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap','css!rd.styles.animate','rd.attributes.Scroll'
 ], function() {
     var listSelectorApp = angular.module('rd.controls.ListSelector', ['rd.core','rd.attributes.Scroll']);
-    listSelectorApp.directive('rdkListSelector', ['EventService', 'Utils', 'EventTypes', '$timeout', '$compile',
-        function(EventService, Utils, EventTypes, $timeout, $compile) {
+    listSelectorApp.directive('rdkListSelector', ['EventService', 'Utils', 'EventTypes', '$timeout',
+        function(EventService, Utils, EventTypes, $timeout) {
             var scopeDefine={
                 id: '@',
                 data: '=',
@@ -59,11 +59,21 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ListSelector',
                         $(document).mouseup(_hideDropdown);
                     }
                 }, false);
+
+                var _listModuleDom = iEle[0];
+                var _toggleDom = _listModuleDom.querySelector(".rdk-dropdown-toggle");
+                var _animate = Utils.widthChangeAnimate;
+                scope.$on("listSelectorRender",function(){
+                    _listModuleDom.style.width = _toggleDom.offsetWidth + 'px';
+                });
                 scope.selectItem = function(item){
                     scope.inputVal = _handleDate(item);
                     scope.selectedItems[0] = item;
+                    _animate(_listModuleDom,_toggleDom);
                     EventService.raiseControlEvent(scope, EventTypes.CHANGE,item);
                 };
+
+
                 scope.toggle = function(){
                     scope.openStatus =! scope.openStatus;
                 };

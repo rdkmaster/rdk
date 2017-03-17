@@ -333,6 +333,23 @@
             }
         };
 
+        this.widthChangeAnimate = function(animateDom, widChangeDom){
+            if(!animateDom || !widChangeDom){
+                console.error ("WidthChangeAnimate Method Parameter Error");
+            }
+            animateDom.classList.add('width-change-animate');
+            animateDom.style.overflow="hidden"; //兼容ie11
+            setTimeout(function(){
+                if(animateDom.offsetWidth!=widChangeDom.offsetWidth){
+                    animateDom.style.width = widChangeDom.offsetWidth+'px';
+                }
+                setTimeout(function(){
+                    animateDom.classList.remove('width-change-animate');
+                    animateDom.style.overflow="visible";
+                },500);
+            },0);
+        };
+
         // 下面这几个函数提供了子级控件和父级控件之间的交互通道
         // 子级控件在自身数据有了变化之后，调用 callUpdater 通知父级
         // 通过控件的require属性无法做到任意父子级，因此通过这个方式实现

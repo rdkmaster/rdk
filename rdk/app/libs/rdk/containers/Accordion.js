@@ -164,8 +164,11 @@ define(['angular', 'jquery', 'gsap', 'rd.core', 'css!rd.styles.Accordion',
                 }
 
                 function _findParentHideNode(node){
-                    while (node && !node.classList.contains("ng-hide")){
+                    while (node && !node.classList.contains("ng-hide") && node.nodeName!="BODY"){
                         node=node.parentNode;
+                    }
+                    if(node.nodeName == "BODY"){
+                        return null
                     }
                     return node;
                 }
