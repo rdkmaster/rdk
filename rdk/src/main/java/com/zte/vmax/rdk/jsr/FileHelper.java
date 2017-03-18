@@ -596,7 +596,7 @@ public class FileHelper extends AbstractAppLoggable {
         if (!likeArray(rowContent)) {
             return false;
         }
-        //解析出需要设置样式的单元格
+        //解析出需要设置样式的单元格并放置在map中
         Map<Messages.CellPosition, Messages.CellStyle> cellStylesMap = parseCellStyleToMap(option, sheet);
 
         ArrayList<Integer> ci = toIntList(excludeIndexes);
@@ -618,7 +618,7 @@ public class FileHelper extends AbstractAppLoggable {
                         cellFormat.setBackground(Colour.getInternalColour(cellStyle.background_color())); // 设置单元格的背景颜色
                         cellFormat.setAlignment(Alignment.getAlignment(cellStyle.text_align())); // 设置对齐方式
                     } catch (WriteException e) {
-                        e.printStackTrace();
+                        logger.error("set cell style error:"+e);
                     }
                     label = new Label(j++, rowIndex, cellObj == null ? "" : cellObj.toString(), cellFormat);
                 } else {
