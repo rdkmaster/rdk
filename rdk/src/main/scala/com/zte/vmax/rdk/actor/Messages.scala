@@ -43,7 +43,25 @@ object Messages {
 
   case class ExportParam(source: ExportSource, fileType: String, param: AnyRef = null, timeStamp: Long = 0)
 
-  
+  //用于xls单元格样式模板
+  case class FontStyle(font_family: String, font_size: Int, font_weight: Int, font_color: Int)
+
+  case class CellStyle(background_color: Int, text_align: Int, font: FontStyle)
+
+  case class CellPosition(column: Int, row: Int) {
+    override def equals(obj: scala.Any): Boolean = {
+      if (obj != null &&
+        this.column == obj.asInstanceOf[CellPosition].column &&
+        this.row == obj.asInstanceOf[CellPosition].row)
+        true
+      else
+        false
+    }
+
+    override def hashCode(): Int = {
+      column.hashCode() + row.hashCode()
+    }
+  }
   //websocket 消息类型定义
   //websocket 消息头
   type WSHead = Array[String]

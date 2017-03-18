@@ -2,6 +2,7 @@ package com.zte.vmax.rdk.jsr;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import com.zte.vmax.rdk.actor.Messages;
 import com.zte.vmax.rdk.log.AbstractAppLoggable;
 import com.zte.vmax.rdk.log.AppLogger;
 import com.zte.vmax.rdk.util.RdkUtil;
@@ -9,21 +10,27 @@ import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import jdk.nashorn.internal.runtime.Undefined;
 
 import java.io.*;
+import java.lang.Boolean;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import jxl.Workbook;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-import jxl.write.Label;
+import jxl.format.CellFormat;
+import jxl.format.UnderlineStyle;
+import jxl.write.*;
 import org.json.JSONObject;
 import org.json.XML;
+
+import static jxl.write.WritableFont.ARIAL;
 
 
 /**
  * Created by 10045812 on 16-5-6.
  */
+@SuppressWarnings("deprecation")
 public class FileHelper extends AbstractAppLoggable {
 
     protected void initLogger() {
@@ -82,12 +89,12 @@ public class FileHelper extends AbstractAppLoggable {
                 }
 
                 int c;
-                byte[] b = new byte[1024*5];
+                byte[] b = new byte[1024 * 5];
                 try {
                     while ((c = fin.read(b)) != -1) {
                         fout.write(b, 0, c);
                     }
-                    
+
                     fout.flush();
                 } catch (IOException e) {
                     logger.error("copy file, code 5, detail: " + e.toString());
@@ -146,7 +153,7 @@ public class FileHelper extends AbstractAppLoggable {
         String content = readString(path);
         JSONObject jsonObj = null;
         try {
-            jsonObj = XML.toJSONObject(content.replace("\n","").replace("\r",""));
+            jsonObj = XML.toJSONObject(content.replace("\n", "").replace("\r", ""));
         } catch (Exception e) {
             logger.error("transform json object error," + e);
             return "";
@@ -188,7 +195,7 @@ public class FileHelper extends AbstractAppLoggable {
         return props;
     }
 
-     public boolean ensureFileExists(File file) {
+    public boolean ensureFileExists(File file) {
         File parent = file.isDirectory() ? file : file.getParentFile();
         if (parent != null && !parent.exists()) {
             logger.debug("making parent dirs: " + parent);
@@ -308,7 +315,7 @@ public class FileHelper extends AbstractAppLoggable {
             op.put("encoding", "GBK");
             op.put("append", toBoolean(false));
             op.put("line", 0);
-            op.put("strictQuotes",toBoolean(false));
+            op.put("strictQuotes", toBoolean(false));
             op.put("ignoreLeadingWhiteSpace", toBoolean(false));
             op.put("keepCR", toBoolean(false));
         }
@@ -397,8 +404,11 @@ public class FileHelper extends AbstractAppLoggable {
         HashMap<String, Object> op = new HashMap<>();
         if (option instanceof ScriptObjectMirror) {
             ScriptObjectMirror som = (ScriptObjectMirror) option;
-            boolean append = (Boolean) som.get("append");
+            boolean append = som.containsKey("append") ? (Boolean) som.get("append") : false;
             op.put("append", append);
+            for (String sheetName : content.keySet()) {
+                op.put(sheetName, som.get(sheetName));
+            }
         } else {
             if (!(option instanceof Undefined)) {
                 logger.warn("unsupported option type[" + option.getClass().getName() + "]! ignoring it!");
@@ -450,6 +460,7 @@ public class FileHelper extends AbstractAppLoggable {
             for (int i = 0; i < toWritesheetNums; i++) {
                 String sheetname = toWritesheetNames[i].toString();
                 appendEXCEL(rwb, sheetname, (ScriptObjectMirror) content.get(sheetname), (ScriptObjectMirror) excludeIndexes.get(sheetname), option);
+                spanCell(rwb.getSheet(sheetname), option);
             }
 
             try {
@@ -472,6 +483,7 @@ public class FileHelper extends AbstractAppLoggable {
             for (int i = 0; i < toWritesheetNums; i++) {
                 String sheetname = toWritesheetNames[i].toString();
                 writeEXCEL(rwb, sheetname, i, (ScriptObjectMirror) content.get(sheetname), (ScriptObjectMirror) excludeIndexes.get(sheetname), option);
+                spanCell(rwb.getSheet(sheetname), option);
             }
 
             try {
@@ -486,12 +498,39 @@ public class FileHelper extends AbstractAppLoggable {
         return true;
     }
 
+    private void spanCell(WritableSheet sheet, HashMap<String, Object> option) {
+        //解析出需要合并的单元格
+        if (option.containsKey(sheet.getName()) &&
+                (option.get(sheet.getName()) != null) &&
+                ((ScriptObjectMirror) option.get(sheet.getName())).containsKey("cellSpan") &&
+                (((ScriptObjectMirror) option.get(sheet.getName())).get("cellSpan") != null) &&
+                ((ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get("cellSpan")).size() > 0) {
+
+            ScriptObjectMirror spanMirror = ((ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get("cellSpan"));
+            for (int i = 0; i < ((ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get("cellSpan")).size(); i++) {
+                ScriptObjectMirror span = (ScriptObjectMirror) spanMirror.get(Integer.toString(i));
+
+                int fromCol = Integer.parseInt(span.get("fromCol").toString());
+                int fromRow = Integer.parseInt(span.get("fromRow").toString());
+                int toCol = Integer.parseInt(span.get("toCol").toString());
+                int toRow = Integer.parseInt(span.get("toRow").toString());
+
+                try {
+                    sheet.mergeCells(fromCol, fromRow, toCol, toRow);
+                } catch (WriteException e) {
+                    logger.error("span cell error" + e);
+                }
+            }
+        }
+    }
+
     private boolean writeEXCEL(WritableWorkbook workbook, String sheetname, int sheetindex, ScriptObjectMirror content, ScriptObjectMirror excludeIndexes, HashMap<String, Object> option) {
         WritableSheet sheet = workbook.createSheet(sheetname, sheetindex);
         int length = toInt(content.getMember("length"), 0);
         for (int i = 0; i < length; i++) {
             writeEXCELRow(sheet, i, (ScriptObjectMirror) content.getMember(Integer.toString(i)), excludeIndexes, option);
         }
+
         return true;
     }
 
@@ -522,10 +561,44 @@ public class FileHelper extends AbstractAppLoggable {
         return true;
     }
 
-    private boolean writeEXCELRow(WritableSheet sheet, int rowIndex, ScriptObjectMirror rowContent, ScriptObjectMirror excludeIndexes, Object option) {
+    private Map<Messages.CellPosition, Messages.CellStyle> parseCellStyleToMap(HashMap<String, Object> option, WritableSheet sheet) {
+        Map<Messages.CellPosition, Messages.CellStyle> cellStylesMap = null;
+
+        if (option.containsKey(sheet.getName()) &&
+                (option.get(sheet.getName()) != null) &&
+                ((ScriptObjectMirror) option.get(sheet.getName())).containsKey("styles") &&
+                (((ScriptObjectMirror) option.get(sheet.getName())).get("styles") != null) &&
+                ((ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get("styles")).size() > 0) {
+            cellStylesMap = new HashMap<Messages.CellPosition, Messages.CellStyle>();
+            for (int i = 0; i < ((ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get("styles")).size(); i++) {
+                ScriptObjectMirror cell = (ScriptObjectMirror) ((ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get("styles")).get(Integer.toString(i));
+                ScriptObjectMirror cellpos = (ScriptObjectMirror) cell.get("cell");
+                int col = Integer.parseInt(cellpos.get("col").toString());
+                int row = Integer.parseInt(cellpos.get("row").toString());
+
+                ScriptObjectMirror style = (ScriptObjectMirror) cell.get("style");
+                int bg_color = style.get("background-color") == null ? Colour.WHITE.getValue() : Integer.parseInt(style.get("background-color").toString());
+                int align = style.get("text-align") == null ? Alignment.CENTRE.getValue() : Integer.parseInt(style.get("text-align").toString());
+
+                String font_family = style.get("font-family") == null ? "Arial" : style.get("font-family").toString();
+                int font_size = style.get("font-size") == null ? WritableFont.DEFAULT_POINT_SIZE : Integer.parseInt(style.get("font-size").toString());
+                int font_weight = style.get("font-weight") == null ? 0 : Integer.parseInt(style.get("font-weight").toString());
+                int font_color = style.get("font-color") == null ? Colour.BLACK.getValue() : Integer.parseInt(style.get("font-color").toString());
+
+                cellStylesMap.put(new Messages.CellPosition(col, row), new Messages.CellStyle(bg_color, align, new Messages.FontStyle(font_family, font_size, font_weight, font_color)));
+            }
+        }
+
+        return cellStylesMap;
+    }
+
+    private boolean writeEXCELRow(WritableSheet sheet, int rowIndex, ScriptObjectMirror rowContent, ScriptObjectMirror excludeIndexes, HashMap<String, Object> option) {
         if (!likeArray(rowContent)) {
             return false;
         }
+        //解析出需要设置样式的单元格
+        Map<Messages.CellPosition, Messages.CellStyle> cellStylesMap = parseCellStyleToMap(option, sheet);
+
         ArrayList<Integer> ci = toIntList(excludeIndexes);
         int length = toInt(rowContent.getMember("length"), 0);
         int j = 0;
@@ -533,14 +606,31 @@ public class FileHelper extends AbstractAppLoggable {
             String idx = Integer.toString(i);
             if (rowContent.hasMember(idx) && !ci.contains(i)) {
                 Object cellObj = rowContent.getMember(idx);
-                Label label = new Label(j++, rowIndex, cellObj == null ? "" : cellObj.toString());
+                Label label = null;
+                Messages.CellPosition pos = new Messages.CellPosition(i, rowIndex);
+                if (cellStylesMap != null && cellStylesMap.containsKey(pos)) {
+                    Messages.CellStyle cellStyle = cellStylesMap.get(pos);
+                    WritableFont writeFont = new WritableFont(WritableFont.createFont(cellStyle.font().font_family()), cellStyle.font().font_size(),
+                            (cellStyle.font().font_weight() == 0 ? WritableFont.NO_BOLD : WritableFont.BOLD), false, UnderlineStyle.NO_UNDERLINE,
+                            Colour.getInternalColour(cellStyle.font().font_color()));
+                    WritableCellFormat cellFormat = new WritableCellFormat(writeFont); // 单元格定义
+                    try {
+                        cellFormat.setBackground(Colour.getInternalColour(cellStyle.background_color())); // 设置单元格的背景颜色
+                        cellFormat.setAlignment(Alignment.getAlignment(cellStyle.text_align())); // 设置对齐方式
+                    } catch (WriteException e) {
+                        e.printStackTrace();
+                    }
+                    label = new Label(j++, rowIndex, cellObj == null ? "" : cellObj.toString(), cellFormat);
+                } else {
+                    label = new Label(j++, rowIndex, cellObj == null ? "" : cellObj.toString());
+                }
+
                 try {
                     sheet.addCell(label);
                 } catch (Exception e) {
                     logger.error("addcell error:" + e);
                     return false;
                 }
-
             }
         }
         return true;
@@ -664,3 +754,4 @@ public class FileHelper extends AbstractAppLoggable {
         return path;
     }
 }
+
