@@ -20,7 +20,7 @@
             value: 'now',
             granularity: "month",
             selectGranularity:true,
-            startDate:"2017-01-1 13:30", //可选的开始时间，类型字符串/Date对象
+            startDate:"2016-01-1 13:30", //可选的开始时间，类型字符串/Date对象
             //endDate:"now"  //可选的结束时间，类型字符串/Date对象
         };
 
@@ -93,6 +93,7 @@
         };
         scope.frequencyDate2=[
             "All Frequency",
+            "一项这么长长长。。。。。。。。",
             "LTETDD",
             "LTEFDD",
             "[1]2120.0(100)",

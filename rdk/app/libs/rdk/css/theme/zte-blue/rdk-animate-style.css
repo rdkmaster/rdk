@@ -1,0 +1,9 @@
+.width-change-animate{
+    transition: width .318s ease-in-out;
+    animation:  width-change .5s ease-in-out;
+    -o-animation:width-change .5s ease-in-out;
+}
+@keyframes width-change{
+    0%{overflow: hidden;white-space: nowrap;text-overflow:ellipsis}
+    100%{overflow:visible;white-space: initial;text-overflow:initial}
+}

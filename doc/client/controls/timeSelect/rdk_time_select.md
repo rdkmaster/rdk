@@ -43,5 +43,14 @@
 
 <live_demo example="controls/timeSelect/refresh" width="900"></live_demo>
 
+# 事件 #
 
+如果设置了`id`，即可广播/监听以下事件。
+
+## CHANGE ##
+监听到 `CHANGE` 事件后，点击时间选择项时会广播此事件，监听该事件，可以处理选择后的数据。
+
+这是一个简单的 `rdk_time_select` 结合 `rdk_time_comboselect` 的例子：
+
+<live_demo example="controls/timeSelect/change" width="900"></live_demo>
 

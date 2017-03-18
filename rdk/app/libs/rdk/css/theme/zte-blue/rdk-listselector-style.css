@@ -10,7 +10,7 @@
     color: #008fd4;
     font-size: 20px;
 }
-.rdk-list-selector-module .rdk-dropdown-toggle span{
+.rdk-list-selector-module .rdk-dropdown-toggle>span{
     display: inline-block;
     border-right: 1px #ABABAB solid;
     padding: 0 8px;
@@ -83,8 +83,6 @@
     background: #3ab1ea;
     color: #fff;
 }
-
-
 /* -- theme style : rdk-theme-zte-vmax start --*/
 .rdk-theme-zte-vmax .rdk-list-selector-module .rdk-dropdown-toggle{
     background-color: transparent;
@@ -97,9 +95,9 @@
     font-size: 14px;
     padding: 0;
     border-radius: 0;
-    border: initial;
+    border: 0;
 }
-.rdk-theme-zte-vmax .rdk-list-selector-module .rdk-dropdown-toggle span{
+.rdk-theme-zte-vmax .rdk-list-selector-module .rdk-dropdown-toggle>span{
     margin :0 10px;
     height: 16px;
     border-right: none;
@@ -112,7 +110,7 @@
     color: #fff;
 }
 .rdk-theme-zte-vmax .rdk-list-selector-module .rdk-dropdown-toggle:focus{
-    border-color: initial;
+    border-color: transparent;
     outline: 0;
     box-shadow: none;
 }
@@ -126,3 +124,25 @@
     margin: 2px 0;
 }
 /* -- theme style : rdk-theme-zte-vmax end --*/
+
+/*兼容IE11 : css rule sets go here */
+@media screen and (min-width:0\0) {
+    .rdk-list-selector-module .rdk-dropdown-toggle {
+        display: inline-block;
+    }
+    .rdk-theme-zte-vmax .rdk-list-selector-module .rdk-dropdown-toggle{
+        display: inline-flex;
+    }
+    .rdk-list-selector-module .rdk-dropdown-toggle > span,
+    .rdk-list-selector-module .rdk-dropdown-toggle > p{
+        vertical-align: top;display: inline-block;
+    }
+    .rdk-list-selector-module .rdk-dropdown-toggle > p{
+        min-width: 100px;
+        height: 20px;
+    }
+    .rdk-list-selector-module .rdk-dropdown-toggle{
+        box-sizing: content-box;
+        height: 20px;
+    }
+}

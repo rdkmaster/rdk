@@ -1,5 +1,6 @@
 require.config({
     paths: {
+        "rd.styles.animate": "../rdk/css/theme/zte-blue/rdk-animate-style",
         "rd.styles.Accordion": "../rdk/css/theme/zte-blue/rdk-accordion-style",
         "rd.styles.Alert": "../rdk/css/theme/zte-blue/rdk-Alert-style",
         "rd.styles.Area": "../rdk/css/theme/zte-blue/rdk-area-style",

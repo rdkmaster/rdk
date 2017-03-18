@@ -1,23 +1,24 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'angular', 'rd.controls.TabSelect','css!base/css/demo',
-        'bootstrap','bootstrap-select','css!rd.styles.Bootstrap'
+        'rd.controls.ComboSelect','rd.controls.TimeSelect','css!base/css/time-select'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', 'EventService','EventTypes', main];
-    function main(scope, EventService,EventTypes) {
-        scope.colors = [
-            {name: 'black', shade: 'dark'},
-            {name: 'white', shade: 'light'},
-            {name: 'red', shade: 'dark'},
-            {name: 'blue', shade: 'dark'},
-            {name: 'yellow', shade: 'light'}
-        ];
-      
-        scope.showColor = function() {
-            console.log('My favourate color is ' + scope.myColor1)
-        }
+    function main(scope,EventService,EventTypes ) {
+        //时间配置
+        scope.granularitySet={
+            value: 'now',
+            granularity: "month",
+            selectGranularity:true,
+            startDate:"2016-01-1 13:30", //可选的开始时间，类型字符串/Date对象
+            //endDate:"now"  //可选的结束时间，类型字符串/Date对象
+        };
+        EventService.register('timeID', EventTypes.CHANGE, function(event, data){
+            scope.comboOpenStatus=false;
+            EventService.broadcast('comboID', EventTypes.CHANGE, data);
+        });
+
     }
 
     var controllerName = 'DemoController';
