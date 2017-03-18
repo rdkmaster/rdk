@@ -179,12 +179,19 @@
 - file 字符串。必选，需要保存的文件路径，如果是目录则会报错。可使用[路径宏](relative_path_rule.md)简化路径。
 - content 对象。必选，对象属性名为要写入的sheet名，属性值为[`DataTable()`](service_api.md#dataTable)对象或者二维数组。
 - excludeIndexes 数组，可选，默认值是空数组。排除的列索引，如果content是 `DataTable()` 对象，则此数组的元素可以是字段名。
-- option 对象，可选。写excel文件的选项，目前只支持append属性
+- option 对象，可选。
     - append: 为 `false`（默认）则覆盖原文件（如果存在），为 `true` 则追加到文件的最后；
+    - sheetName: 对象，key为要操作的sheet名，值为json对象，可设置单元格的属性以及单元格合并功能：
+       - styles: 数组，要设置的单元格属性对象数组，其中对象参数及常用值为：
+            - background-color：数值型，单元格背景颜色，默认为黑色（值为32767），常用的还有白（9），红（10），绿（11），蓝（12），黄（13）；
+            - text-align：数值型，默认为左对齐，单元格对齐方式，1（左）/2（中）/3（右）；
+            - font-family：字体，默认为“Arial”，常用的有“Times New Roman”，“Courier New”，“Tahoma”；
+            - font-size：字体大小，默认为10；
+       - cellSpan：数组，要合并的单元格对象数组。其中对象格式为：`{ "fromCol": 起始列, "fromRow": 起始行, "toCol": 终止列, "toRow": 终止行}`
 
 返回：true/false对应写入成功/失败。
 
-示例：写excel文件，其中第一张sheet名为‘sheet1’,内容为一个DataTable矩阵对象，并隐藏‘a’列，第二张sheet名为‘sheet2’，内容为一个二维数组，并隐藏第0列。
+示例一：写excel文件，其中第一张sheet名为‘sheet1’,内容为一个DataTable矩阵对象，并隐藏‘a’列，第二张sheet名为‘sheet2’，内容为一个二维数组，并隐藏第0列。
 
         
         var filestr="data/mydata.xls";//必选
@@ -203,12 +210,67 @@
         var b = File.saveAsEXCEL(filestr,content,excludeindexes,option);    
 
 
+示例二：将示例一中excel的'sheet1'页的第1行第1列元素单元格合并至第1行第2列元素单元格
 
 
+        var filestr="mydata.xls";//必选
 
+        var content={                 //必选
+            'sheet1':new DataTable(['A','B'],['a','b'],[[1,2],[3,4]]),
 
+            'sheet2':
+                [['30','test1'],['20','test2']]
+        };
+
+        var excludeindexes=[];
+
+        var option={
+            "sheet1": {
+                "cellSpan": [
+                    //单元格合并，下标从0开始
+                    { "fromCol": 0, "fromRow": 0, "toCol": 1, "toRow": 0},
+                ]
+            }
+        }
+
+        var b = File.saveAsEXCEL(filestr,content,excludeindexes,option);
         
-        
+示例三：在示例二基础上，需要将第一行第一列元素内容居中，字体颜色设置为红色,单元格背景色设置为蓝色，且加粗
+
+        var filestr="mydata.xls";//必选
+
+                var content={                 //必选
+                    'sheet1':new DataTable(['A','B'],['a','b'],[[1,2],[3,4]]),
+
+                    'sheet2':
+                        [['30','test1'],['20','test2']]
+                };
+
+                var excludeindexes=[];
+
+                var option={
+                    "sheet1": {
+                        "styles": [
+                                    {
+                                        "cell": { "row": "0", "col": "0" },
+                                        "style": {
+                                            //单元格样式
+                                            "background-color": 12,//单元格背景色为蓝色
+                                            "text-align": 2, //内容居中
+                                            "font-weight": "1", //字体加粗
+                                            "font-color": "10" //字体为红色
+                                        }
+                                    }
+                                 ],
+                        "cellSpan": [
+                            //单元格合并，下标从0开始
+                            { "fromCol": 0, "fromRow": 0, "toCol": 1, "toRow": 0},
+                        ]
+                    }
+                }
+
+                var b = File.saveAsEXCEL(filestr,content,excludeindexes,option);
+
 
 ### `File.list()` {#list}###
 
