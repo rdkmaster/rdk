@@ -23,6 +23,14 @@ define([/*  'underscore'   */], function() {
 // attributes 是当前Graph所在的html节点的所有属性集。也是一种辅助数据。
 return function(data, context, GraphService, attributes) {
 return {
+    //tooltip内容设置：
+    /*
+    * 1、没有特殊要求，设置项应该能满足要求（字符串模板和回调函数都行）;
+    * 2、有特殊情况，如：每一条前面的图形标志不用echarts默认的标志，但又没有相关项的设置，怎么办了：
+    *    可以这样处理:用回调函数处理，回调函数可以拿到这个点的所有值（如：颜色，内容），其返回值
+    *    就提示框的内容。而已返回值是支持html标签解析的，所以你可以用html写出设计模板，再将数据放
+    *    到相应的位置就行了。
+    * */
     tooltip : {
         trigger: 'axis',
     },
