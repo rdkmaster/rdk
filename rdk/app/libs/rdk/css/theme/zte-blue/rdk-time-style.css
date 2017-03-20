@@ -84,9 +84,6 @@ input, button, select, textarea {
     top: 5px;
     pointer-events:none;
 }
-.fa-angle-down,.fa-angle-up{
-    font-size:25px;
-}
 .rdk-time-module .time-content span.timeSpan{
     line-height: 27px;
     vertical-align: top;
