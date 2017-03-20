@@ -23,6 +23,20 @@ define([/*  'underscore'   */], function() {
 // attributes 是当前Graph所在的html节点的所有属性集。也是一种辅助数据。
 return function(data, context, GraphService, attributes) {
 return {
+    /*对于有的内容进行换行处理方式*/
+    /*
+    * 在echarts里面配置项里面用到2种内容换行方式;
+    * 1、内容支持html解析,可以用<br>标签换行，如tooltip内容
+    * 2、内容支持js解析,可能用\n转义字符，如title标题
+    * */
+    //tooltip内容设置：
+    /*
+    * 1、没有特殊要求，设置项应该能满足要求（字符串模板和回调函数都行）;
+    * 2、有特殊情况，如：每一条前面的图形标志不用echarts默认的标志，但又没有相关项的设置，怎么办了：
+    *    可以这样处理:用回调函数处理，回调函数可以拿到这个点的所有值（如：颜色，内容），其返回值
+    *    就是提示框的内容。而返回值是支持html标签解析的，所以你可以用html写出设计模板，再将数据放
+    *    到相应的位置就行了。
+    * */
     tooltip : {
         trigger: 'axis',
     },
@@ -90,6 +104,11 @@ return {
         },
 		
     ],
+    /*双数字轴和数据对应那个数字轴设置*/
+    /*
+    * 数字轴的位置设置：yAxis.position设置为"right"，表示在右侧;
+    * 数据显示相对应的数字轴：yAxisIndex：1，表示对应第2个数字轴;
+    * */
     yAxis : [
         {
              // name: '掉话次数',

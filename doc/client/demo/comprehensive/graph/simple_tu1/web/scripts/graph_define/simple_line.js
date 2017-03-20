@@ -64,6 +64,13 @@ return {
         top:60
     },
 	calculable : true,
+    /*当某天无数据不补零，同时不连线的效果实现*/
+     /*
+     *以x轴为类目轴为例:如下
+     *坐标轴 刻度标签 设显示间隔:xAxis.axisLabel.interval根据具体情况设置标签显示间隔;
+     *坐标轴 刻度 的显示间隔:xAxis.axisTick.interval设置全部显示为0;
+     *标志图形全部显示:series.showAllSymbol设置为true,
+     * */
     xAxis : [
         {
             type : 'category', boundaryGap : false,
