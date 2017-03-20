@@ -183,7 +183,8 @@
     - append: 为 `false`（默认）则覆盖原文件（如果存在），为 `true` 则追加到文件的最后；
     - sheetName: 对象，key为要操作的sheet名，值为json对象，可设置单元格的属性以及单元格合并功能：
        - styles: 数组，要设置的单元格属性对象数组，其中对象参数及常用值为：
-            - background-color：数值型，单元格背景颜色，默认为黑色（值为32767），常用的还有白（9），红（10），绿（11），蓝（12），黄（13）；
+            - background-color：数值型，单元格背景颜色，默认为黑色（值为32767），支持的所有颜色列表及对应id值如下（id,颜色）：
+                 （9, "white"），（8, "black"），(10, "red")，（11, "bright green"），（12, "blue"），（13, "yellow"），（14, "pink"），（15, "turquoise"），（16, "dark red"），（17, "green"），（18, "dark blue"），（19, "dark yellow"），（20, "violet"），（21, "teal"），（22, "grey 25%"），（23, "grey 50%"），（24, "periwinkle"），（25, "plum"），（26, "ivory"），（27, "light turquoise"），（28, "dark purple"），（29, "coral"），（30, "ocean blue"），（31, "ice blue"），（32, "dark blue"），（33, "pink"），（34, "yellow"），（35, "turqoise"），（36, "violet"），（37, "dark red"），（38, "teal"），（39, "blue"），（40, "sky blue"），（41, "light turquoise"），（42, "light green"），（43, "very light yellow"），（44, "pale blue"），（45, "rose"），（46, "lavender"），（47, "tan"），（48, "light blue"），（49, "aqua"），（50, "lime"），（51, "gold"），（52, "light orange"），（53, "orange"），（54, "blue grey"），（55, "grey 40%"），（56, "dark teal"），（57, "sea green"），（58, "dark green"），（59, "olive green"），（60, "brown"），（61, "plum"），（62, "indigo"），（63, "grey 80%"）
             - text-align：字符串，默认为左对齐，单元格对齐方式，left/centre/right；
             - font-family：字体，默认为“Arial”，常用的有“Times New Roman”，“Courier New”，“Tahoma”；
             - font-size：字体大小，默认为10；
@@ -256,7 +257,7 @@
                                         "style": {
                                             //单元格样式
                                             "background-color": 12,//单元格背景色为蓝色
-                                            "text-align": 2, //内容居中
+                                            "text-align": "centre", //内容居中
                                             "font-weight": "1", //字体加粗
                                             "font-color": "10" //字体为红色
                                         }
