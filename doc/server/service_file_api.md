@@ -179,12 +179,20 @@
 - file 字符串。必选，需要保存的文件路径，如果是目录则会报错。可使用[路径宏](relative_path_rule.md)简化路径。
 - content 对象。必选，对象属性名为要写入的sheet名，属性值为[`DataTable()`](service_api.md#dataTable)对象或者二维数组。
 - excludeIndexes 数组，可选，默认值是空数组。排除的列索引，如果content是 `DataTable()` 对象，则此数组的元素可以是字段名。
-- option 对象，可选。写excel文件的选项，目前只支持append属性
+- option 对象，可选。
     - append: 为 `false`（默认）则覆盖原文件（如果存在），为 `true` 则追加到文件的最后；
+    - sheetName: 对象，key为要操作的sheet名，值为json对象，可设置单元格的属性以及单元格合并功能：
+       - styles: 数组，要设置的单元格属性对象数组，其中对象参数及常用值为：
+            - background-color：数值型，单元格背景颜色，默认为黑色（值为32767），支持的所有颜色列表及对应id值如下（id,颜色）：
+                 （9, "white"），（8, "black"），(10, "red")，（11, "bright green"），（12, "blue"），（13, "yellow"），（14, "pink"），（15, "turquoise"），（16, "dark red"），（17, "green"），（18, "dark blue"），（19, "dark yellow"），（20, "violet"），（21, "teal"），（22, "grey 25%"），（23, "grey 50%"），（24, "periwinkle"），（25, "plum"），（26, "ivory"），（27, "light turquoise"），（28, "dark purple"），（29, "coral"），（30, "ocean blue"），（31, "ice blue"），（32, "dark blue"），（33, "pink"），（34, "yellow"），（35, "turqoise"），（36, "violet"），（37, "dark red"），（38, "teal"），（39, "blue"），（40, "sky blue"），（41, "light turquoise"），（42, "light green"），（43, "very light yellow"），（44, "pale blue"），（45, "rose"），（46, "lavender"），（47, "tan"），（48, "light blue"），（49, "aqua"），（50, "lime"），（51, "gold"），（52, "light orange"），（53, "orange"），（54, "blue grey"），（55, "grey 40%"），（56, "dark teal"），（57, "sea green"），（58, "dark green"），（59, "olive green"），（60, "brown"），（61, "plum"），（62, "indigo"），（63, "grey 80%"）
+            - text-align：字符串，默认为左对齐，单元格对齐方式，left/centre/right；
+            - font-family：字体，默认为“Arial”，常用的有“Times New Roman”，“Courier New”，“Tahoma”；
+            - font-size：字体大小，默认为10；
+       - cellSpan：数组，要合并的单元格对象数组。其中对象格式为：`{ "fromCol": 起始列, "fromRow": 起始行, "toCol": 终止列, "toRow": 终止行}`
 
 返回：true/false对应写入成功/失败。
 
-示例：写excel文件，其中第一张sheet名为‘sheet1’,内容为一个DataTable矩阵对象，并隐藏‘a’列，第二张sheet名为‘sheet2’，内容为一个二维数组，并隐藏第0列。
+示例一：写excel文件，其中第一张sheet名为‘sheet1’,内容为一个DataTable矩阵对象，并隐藏‘a’列，第二张sheet名为‘sheet2’，内容为一个二维数组，并隐藏第0列。
 
         
         var filestr="data/mydata.xls";//必选
@@ -203,12 +211,67 @@
         var b = File.saveAsEXCEL(filestr,content,excludeindexes,option);    
 
 
+示例二：将示例一中excel的'sheet1'页的第1行第1列元素单元格合并至第1行第2列元素单元格
 
 
+        var filestr="mydata.xls";//必选
 
+        var content={                 //必选
+            'sheet1':new DataTable(['A','B'],['a','b'],[[1,2],[3,4]]),
 
+            'sheet2':
+                [['30','test1'],['20','test2']]
+        };
+
+        var excludeindexes=[];
+
+        var option={
+            "sheet1": {
+                "cellSpan": [
+                    //单元格合并，下标从0开始
+                    { "fromCol": 0, "fromRow": 0, "toCol": 1, "toRow": 0},
+                ]
+            }
+        }
+
+        var b = File.saveAsEXCEL(filestr,content,excludeindexes,option);
         
-        
+示例三：在示例二基础上，需要将第一行第一列元素内容居中，字体颜色设置为红色,单元格背景色设置为蓝色，且加粗
+
+        var filestr="mydata.xls";//必选
+
+                var content={                 //必选
+                    'sheet1':new DataTable(['A','B'],['a','b'],[[1,2],[3,4]]),
+
+                    'sheet2':
+                        [['30','test1'],['20','test2']]
+                };
+
+                var excludeindexes=[];
+
+                var option={
+                    "sheet1": {
+                        "styles": [
+                                    {
+                                        "cell": { "row": "0", "col": "0" },
+                                        "style": {
+                                            //单元格样式
+                                            "background-color": 12,//单元格背景色为蓝色
+                                            "text-align": "centre", //内容居中
+                                            "font-weight": "1", //字体加粗
+                                            "font-color": "10" //字体为红色
+                                        }
+                                    }
+                                 ],
+                        "cellSpan": [
+                            //单元格合并，下标从0开始
+                            { "fromCol": 0, "fromRow": 0, "toCol": 1, "toRow": 0},
+                        ]
+                    }
+                }
+
+                var b = File.saveAsEXCEL(filestr,content,excludeindexes,option);
+
 
 ### `File.list()` {#list}###
 

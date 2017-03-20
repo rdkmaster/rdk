@@ -9,21 +9,23 @@ import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import jdk.nashorn.internal.runtime.Undefined;
 
 import java.io.*;
+import java.lang.Boolean;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import jxl.Workbook;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-import jxl.write.Label;
+import jxl.format.UnderlineStyle;
+import jxl.write.*;
 import org.json.JSONObject;
 import org.json.XML;
+
 
 
 /**
  * Created by 10045812 on 16-5-6.
  */
+@SuppressWarnings("deprecation")
 public class FileHelper extends AbstractAppLoggable {
 
     protected void initLogger() {
@@ -82,12 +84,12 @@ public class FileHelper extends AbstractAppLoggable {
                 }
 
                 int c;
-                byte[] b = new byte[1024*5];
+                byte[] b = new byte[1024 * 5];
                 try {
                     while ((c = fin.read(b)) != -1) {
                         fout.write(b, 0, c);
                     }
-                    
+
                     fout.flush();
                 } catch (IOException e) {
                     logger.error("copy file, code 5, detail: " + e.toString());
@@ -146,7 +148,7 @@ public class FileHelper extends AbstractAppLoggable {
         String content = readString(path);
         JSONObject jsonObj = null;
         try {
-            jsonObj = XML.toJSONObject(content.replace("\n","").replace("\r",""));
+            jsonObj = XML.toJSONObject(content.replace("\n", "").replace("\r", ""));
         } catch (Exception e) {
             logger.error("transform json object error," + e);
             return "";
@@ -188,7 +190,7 @@ public class FileHelper extends AbstractAppLoggable {
         return props;
     }
 
-     public boolean ensureFileExists(File file) {
+    public boolean ensureFileExists(File file) {
         File parent = file.isDirectory() ? file : file.getParentFile();
         if (parent != null && !parent.exists()) {
             logger.debug("making parent dirs: " + parent);
@@ -308,7 +310,7 @@ public class FileHelper extends AbstractAppLoggable {
             op.put("encoding", "GBK");
             op.put("append", toBoolean(false));
             op.put("line", 0);
-            op.put("strictQuotes",toBoolean(false));
+            op.put("strictQuotes", toBoolean(false));
             op.put("ignoreLeadingWhiteSpace", toBoolean(false));
             op.put("keepCR", toBoolean(false));
         }
@@ -397,8 +399,11 @@ public class FileHelper extends AbstractAppLoggable {
         HashMap<String, Object> op = new HashMap<>();
         if (option instanceof ScriptObjectMirror) {
             ScriptObjectMirror som = (ScriptObjectMirror) option;
-            boolean append = (Boolean) som.get("append");
+            boolean append = som.containsKey("append") ? (Boolean) som.get("append") : false;
             op.put("append", append);
+            for (String sheetName : content.keySet()) {
+                op.put(sheetName, som.get(sheetName));
+            }
         } else {
             if (!(option instanceof Undefined)) {
                 logger.warn("unsupported option type[" + option.getClass().getName() + "]! ignoring it!");
@@ -450,6 +455,7 @@ public class FileHelper extends AbstractAppLoggable {
             for (int i = 0; i < toWritesheetNums; i++) {
                 String sheetname = toWritesheetNames[i].toString();
                 appendEXCEL(rwb, sheetname, (ScriptObjectMirror) content.get(sheetname), (ScriptObjectMirror) excludeIndexes.get(sheetname), option);
+                spanCell(rwb.getSheet(sheetname), option);
             }
 
             try {
@@ -472,6 +478,7 @@ public class FileHelper extends AbstractAppLoggable {
             for (int i = 0; i < toWritesheetNums; i++) {
                 String sheetname = toWritesheetNames[i].toString();
                 writeEXCEL(rwb, sheetname, i, (ScriptObjectMirror) content.get(sheetname), (ScriptObjectMirror) excludeIndexes.get(sheetname), option);
+                spanCell(rwb.getSheet(sheetname), option);
             }
 
             try {
@@ -486,12 +493,42 @@ public class FileHelper extends AbstractAppLoggable {
         return true;
     }
 
+    private boolean isOpsContainKeyOfSheet(WritableSheet sheet, HashMap<String, Object> option, String key) {
+        return option.containsKey(sheet.getName()) &&
+                (option.get(sheet.getName()) != null) &&
+                ((ScriptObjectMirror) option.get(sheet.getName())).containsKey(key) &&
+                (((ScriptObjectMirror) option.get(sheet.getName())).get(key) != null) &&
+                ((ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get(key)).size() > 0;
+    }
+
+    private void spanCell(WritableSheet sheet, HashMap<String, Object> option) {
+        //解析出需要合并的单元格
+        if (isOpsContainKeyOfSheet(sheet, option, "cellSpan")) {
+            ScriptObjectMirror spanMirror = ((ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get("cellSpan"));
+            for (int i = 0; i < spanMirror.size(); i++) {
+                ScriptObjectMirror span = (ScriptObjectMirror) spanMirror.get(Integer.toString(i));
+
+                int fromCol = Integer.parseInt(span.get("fromCol").toString());
+                int fromRow = Integer.parseInt(span.get("fromRow").toString());
+                int toCol = Integer.parseInt(span.get("toCol").toString());
+                int toRow = Integer.parseInt(span.get("toRow").toString());
+
+                try {
+                    sheet.mergeCells(fromCol, fromRow, toCol, toRow);
+                } catch (WriteException e) {
+                    logger.error("span cell error" + e);
+                }
+            }
+        }
+    }
+
     private boolean writeEXCEL(WritableWorkbook workbook, String sheetname, int sheetindex, ScriptObjectMirror content, ScriptObjectMirror excludeIndexes, HashMap<String, Object> option) {
         WritableSheet sheet = workbook.createSheet(sheetname, sheetindex);
         int length = toInt(content.getMember("length"), 0);
         for (int i = 0; i < length; i++) {
             writeEXCELRow(sheet, i, (ScriptObjectMirror) content.getMember(Integer.toString(i)), excludeIndexes, option);
         }
+
         return true;
     }
 
@@ -522,10 +559,55 @@ public class FileHelper extends AbstractAppLoggable {
         return true;
     }
 
-    private boolean writeEXCELRow(WritableSheet sheet, int rowIndex, ScriptObjectMirror rowContent, ScriptObjectMirror excludeIndexes, Object option) {
+    private Map<CellPosition, CellStyle> parseCellStyleToMap(HashMap<String, Object> option, WritableSheet sheet) {
+        Map<CellPosition, CellStyle> cellStylesMap = null;
+
+        if (isOpsContainKeyOfSheet(sheet, option, "styles")) {
+            cellStylesMap = new HashMap<CellPosition, CellStyle>();
+            ScriptObjectMirror stylesMirror = (ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get("styles");
+            for (int i = 0; i < stylesMirror.size(); i++) {
+                ScriptObjectMirror cell = (ScriptObjectMirror) stylesMirror.get(Integer.toString(i));
+                ScriptObjectMirror cellpos = (ScriptObjectMirror) cell.get("cell");
+                int col = Integer.parseInt(cellpos.get("col").toString());
+                int row = Integer.parseInt(cellpos.get("row").toString());
+
+                ScriptObjectMirror style = (ScriptObjectMirror) cell.get("style");
+                int bg_color = style.get("background-color") == null ? Colour.WHITE.getValue() : Integer.parseInt(style.get("background-color").toString());
+
+                int align = Alignment.LEFT.getValue();
+                if (style.get("text-align") != null) {
+                    switch (style.get("text-align").toString()) {
+                        case "left":
+                            align = Alignment.LEFT.getValue();
+                            break;
+                        case "centre":
+                            align = Alignment.CENTRE.getValue();
+                            break;
+                        case "right":
+                            align = Alignment.RIGHT.getValue();
+                            break;
+                    }
+                }
+
+                String font_family = style.get("font-family") == null ? "Arial" : style.get("font-family").toString();
+                int font_size = style.get("font-size") == null ? WritableFont.DEFAULT_POINT_SIZE : Integer.parseInt(style.get("font-size").toString());
+                int font_weight = style.get("font-weight") == null ? 0 : Integer.parseInt(style.get("font-weight").toString());
+                int font_color = style.get("font-color") == null ? Colour.BLACK.getValue() : Integer.parseInt(style.get("font-color").toString());
+
+                cellStylesMap.put(new CellPosition(col, row), new CellStyle(bg_color, align, new FontStyle(font_family, font_size, font_weight, font_color)));
+            }
+        }
+
+        return cellStylesMap;
+    }
+
+    private boolean writeEXCELRow(WritableSheet sheet, int rowIndex, ScriptObjectMirror rowContent, ScriptObjectMirror excludeIndexes, HashMap<String, Object> option) {
         if (!likeArray(rowContent)) {
             return false;
         }
+        //解析出需要设置样式的单元格并放置在map中
+        Map<CellPosition, CellStyle> cellStylesMap = parseCellStyleToMap(option, sheet);
+
         ArrayList<Integer> ci = toIntList(excludeIndexes);
         int length = toInt(rowContent.getMember("length"), 0);
         int j = 0;
@@ -533,14 +615,31 @@ public class FileHelper extends AbstractAppLoggable {
             String idx = Integer.toString(i);
             if (rowContent.hasMember(idx) && !ci.contains(i)) {
                 Object cellObj = rowContent.getMember(idx);
-                Label label = new Label(j++, rowIndex, cellObj == null ? "" : cellObj.toString());
+                Label label = null;
+                CellPosition pos = new CellPosition(i, rowIndex);
+                if (cellStylesMap != null && cellStylesMap.containsKey(pos)) {
+                    CellStyle cellStyle = cellStylesMap.get(pos);
+                    WritableFont writeFont = new WritableFont(WritableFont.createFont(cellStyle.getFont().getFont_family()), cellStyle.getFont().getFont_size(),
+                            (cellStyle.getFont().getFont_weight() == 0 ? WritableFont.NO_BOLD : WritableFont.BOLD), false, UnderlineStyle.NO_UNDERLINE,
+                            Colour.getInternalColour(cellStyle.getFont().getFont_color()));
+                    WritableCellFormat cellFormat = new WritableCellFormat(writeFont); // 单元格定义
+                    try {
+                        cellFormat.setBackground(Colour.getInternalColour(cellStyle.getBackground_color())); // 设置单元格的背景颜色
+                        cellFormat.setAlignment(Alignment.getAlignment(cellStyle.getText_align())); // 设置对齐方式
+                    } catch (WriteException e) {
+                        logger.error("set cell style error:" + e);
+                    }
+                    label = new Label(j++, rowIndex, cellObj == null ? "" : cellObj.toString(), cellFormat);
+                } else {
+                    label = new Label(j++, rowIndex, cellObj == null ? "" : cellObj.toString());
+                }
+
                 try {
                     sheet.addCell(label);
                 } catch (Exception e) {
                     logger.error("addcell error:" + e);
                     return false;
                 }
-
             }
         }
         return true;
@@ -663,4 +762,90 @@ public class FileHelper extends AbstractAppLoggable {
 
         return path;
     }
+
+    //用于xls单元格样式模板
+    private class FontStyle {
+        private String font_family;
+        private int font_size;
+        private int font_weight;
+        private int font_color;
+
+        public FontStyle(String font_family, int font_size, int font_weight, int font_color) {
+            this.font_family = font_family;
+            this.font_size = font_size;
+            this.font_weight = font_weight;
+            this.font_color = font_color;
+        }
+
+        public String getFont_family() {
+            return font_family;
+        }
+
+        public int getFont_size() {
+            return font_size;
+        }
+
+        public int getFont_weight() {
+            return font_weight;
+        }
+
+        public int getFont_color() {
+            return font_color;
+        }
+    }
+
+    private class CellStyle {
+        private int background_color;
+        private int text_align;
+        private FontStyle font;
+
+        public CellStyle(int background_color, int text_align, FontStyle font) {
+            this.background_color = background_color;
+            this.text_align = text_align;
+            this.font = font;
+        }
+
+        public int getBackground_color() {
+            return background_color;
+        }
+
+        public int getText_align() {
+            return text_align;
+        }
+
+        public FontStyle getFont() {
+            return font;
+        }
+
+    }
+
+    private class CellPosition {
+        private int column;
+        private int row;
+
+        public CellPosition(int column, int row) {
+            this.column = column;
+            this.row = row;
+        }
+
+        public int getColumn() {
+            return column;
+        }
+
+        public int getRow() {
+            return row;
+        }
+
+        public boolean equals(Object obj) {
+            return (obj != null &&
+                    this.column == ((CellPosition) obj).column &&
+                    this.row == ((CellPosition) obj).row) ? true : false;
+
+        }
+
+        public int hashCode() {
+            return ("col" + column + "row" + row).hashCode();
+        }
+    }
 }
+
