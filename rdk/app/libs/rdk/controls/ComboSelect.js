@@ -1,4 +1,4 @@
-define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect','css!rd.styles.animate',
+define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect',
     'css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
     var comboModule = angular.module('rd.controls.ComboSelect', ['rd.core']);
     comboModule.directive('rdkComboSelect', ['Utils','EventService', 'EventTypes', 'RDKConst', '$timeout',
@@ -22,14 +22,12 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect','css!rd.styl
 
                 scope: scopeDefine,
                 template:'<div class="rdk-combo-select-module" ng-mouseleave="closeShow()">\
-                              <div class="rdk-combo-animate">\
-                                  <div class="combo-content" ng-class="{\'combo-content-open\':open}" ng-mouseenter="openShow()" ng-click="toggle($event)">\
-                                      <span class="combo-caption" ng-show="!!caption">{{caption}}</span>\
-                                      <p class="combo-content-theme" ng-class="{\'margin-hide\':!!showClear}" title="{{inputStr}}" \
-                                      unselectable="on" ng-model="inputStr">{{inputStr}}</p>\
-                                      <i ng-if="showIcon" class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
-                                      <i ng-if="!!inputStr && showClear" class="fa fa-times-circle fa-1 combo-content-close" ng-click="clearData($event)"></i>\
-                                  </div>\
+                              <div class="combo-content" ng-class="{\'combo-content-open\':open}" ng-mouseenter="openShow()" ng-click="toggle($event)">\
+                                  <span class="combo-caption" ng-show="!!caption">{{caption}}</span>\
+                                  <p class="combo-content-theme" ng-class="{\'margin-hide\':!!showClear}" title="{{inputStr}}" \
+                                  unselectable="on" ng-model="inputStr">{{inputStr}}</p>\
+                                  <i ng-if="showIcon" class="{{open?unfoldedIcon:foldedIcon}} combo-content-icon"></i>\
+                                  <i ng-if="!!inputStr && showClear" class="fa fa-times-circle fa-1 combo-content-close" ng-click="clearData($event)"></i>\
                               </div>\
                               <div class="combo-content-transclude">\
                                   <div ng-transclude ng-show="open"></div>\
@@ -60,6 +58,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect','css!rd.styl
                             return data;
                         }
                         scope.inputStr = str;
+                        //todo:width change
+                        if(false){scope.animate();}
                     });
                     Utils.publish(scope, this);
                     this.changeOpenStatus = function(){
@@ -72,7 +72,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect','css!rd.styl
 
                     this.setValue = function(data){
                         scope.inputStr = data;
-                        scope.animate();
+                        //todo:width change
+                        if(false){scope.animate();}
                     };
                     this.getValue = function() {
                         return scope.inputStr;
@@ -107,8 +108,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect','css!rd.styl
                 scope.closeShow = _closeShow;
                 scope.openShow = _openShow;
                 scope.isSelect = false;
-                var _comboAnimateDom = iEle[0].querySelector(".rdk-combo-animate");
-                var _comboContentDom = _comboAnimateDom.querySelector(".combo-content");
+                //var _comboAnimateDom = iEle[0].querySelector(".rdk-combo-animate");
+                //var _comboContentDom = _comboAnimateDom.querySelector(".combo-content");
                 var _animate = Utils.widthChangeAnimate;
                 scope.animate = function(){
                     _animate(_comboAnimateDom,_comboContentDom);
@@ -116,13 +117,10 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect','css!rd.styl
                 if(scope.id) {
                     EventService.register(scope.id, EventTypes.CHANGE, function(event, data) {
                         scope.inputStr = data;
-                        scope.animate();
+                        //todo:width change
+                        if(false){scope.animate();}
                     });
                 }
-
-                $timeout(function(){
-                    _comboAnimateDom.style.width = _comboContentDom.offsetWidth +'px';
-                },0);
 
                 $(document).mouseup(_hideDropdown);
 

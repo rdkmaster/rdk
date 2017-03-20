@@ -2,41 +2,48 @@
     position: relative;
     display: inline-block;
 }
+
 .rdk-combo-select-module .combo-caption{
     display: inline-block;
     border-right: 1px #ABABAB solid;
     padding: 0 10px;
+    line-height: 18px;
+    vertical-align: middle;
 }
+
 .rdk-combo-select-module .combo-content{
     position: relative;
     flex-flow: row;
+    align-items:center;
     outline: none;
-    min-width: 120px;
     height: 32px;
     font-family: "微软雅黑", Helvetica, Arial, sans-serif;
     font-size: 14px;
     border-radius: 4px;
-    padding: 5px 0;
-    display: inline-flex;
-    white-space: nowrap;
+    padding: 0;
 }
+
 .rdk-combo-select-module .combo-content-theme{
     cursor: pointer;
     display: inline-block;
     flex:1;
-    min-width: 120px;
+    width: 120px;
+    overflow: hidden;
     white-space:nowrap;
+    height: 30px;
     box-shadow: none;
     border: none;
-    padding: 0 10px;
-    margin: 0;
+    padding: 4px 0px;
+    margin: 0px 26px 0px 8px;
 }
 .rdk-combo-select-module .combo-content-icon{
-    padding-right:5px;
+    right: 5px;
+    position: absolute;
+    top: 5px;
     pointer-events: none;
 }
 .rdk-combo-select-module .fa-angle-down:before,.rdk-combo-select-module .fa-angle-up:before {
-     font-size: 20px;
+    font-size: 18px;
 }
 .rdk-combo-select-module .combo-content-transclude{
     min-width: 120px;
@@ -65,6 +72,7 @@
     border: 1px solid #d9d9d9;
     color: #333;
     background-color: white;
+    display: flex;
 }
 .rdk-combo-select-module .combo-content .combo-content-theme{
     background-color: white;
@@ -72,6 +80,7 @@
 .rdk-combo-select-module .combo-content .combo-content-icon{
     color: #008FD4;
 }
+
 /* -- theme style : rdk-theme-zte-vmax start --*/
 .rdk-theme-zte-vmax .rdk-combo-select-module .combo-caption{
     display: inline-block;
