@@ -88,6 +88,7 @@
     color: #fff;
     font-size: 12px;
     border-right: 0;
+    line-height: 32px;
 }
 .rdk-theme-zte-vmax .rdk-combo-select-module .combo-content.combo-content-open{
     background-color: rgba(0,0,0,.18);
@@ -96,6 +97,7 @@
     display: inline-flex;
     position: relative;
     flex-flow: column;
+    align-items:flex-start;
     min-width: 120px;
     height: 50px;
     line-height: 32px;
