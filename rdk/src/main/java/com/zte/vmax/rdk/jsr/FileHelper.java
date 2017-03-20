@@ -2,7 +2,6 @@ package com.zte.vmax.rdk.jsr;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
-import com.zte.vmax.rdk.actor.Messages;
 import com.zte.vmax.rdk.log.AbstractAppLoggable;
 import com.zte.vmax.rdk.log.AppLogger;
 import com.zte.vmax.rdk.util.RdkUtil;
@@ -11,20 +10,16 @@ import jdk.nashorn.internal.runtime.Undefined;
 
 import java.io.*;
 import java.lang.Boolean;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import jxl.Workbook;
-import jxl.format.CellFormat;
 import jxl.format.UnderlineStyle;
 import jxl.write.*;
 import org.json.JSONObject;
 import org.json.XML;
 
-import static jxl.write.WritableFont.ARIAL;
 
 
 /**
@@ -498,16 +493,19 @@ public class FileHelper extends AbstractAppLoggable {
         return true;
     }
 
+    private boolean isOpsContainKeyOfSheet(WritableSheet sheet, HashMap<String, Object> option, String key) {
+        return option.containsKey(sheet.getName()) &&
+                (option.get(sheet.getName()) != null) &&
+                ((ScriptObjectMirror) option.get(sheet.getName())).containsKey(key) &&
+                (((ScriptObjectMirror) option.get(sheet.getName())).get(key) != null) &&
+                ((ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get(key)).size() > 0;
+    }
+
     private void spanCell(WritableSheet sheet, HashMap<String, Object> option) {
         //解析出需要合并的单元格
-        if (option.containsKey(sheet.getName()) &&
-                (option.get(sheet.getName()) != null) &&
-                ((ScriptObjectMirror) option.get(sheet.getName())).containsKey("cellSpan") &&
-                (((ScriptObjectMirror) option.get(sheet.getName())).get("cellSpan") != null) &&
-                ((ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get("cellSpan")).size() > 0) {
-
+        if (isOpsContainKeyOfSheet(sheet, option, "cellSpan")) {
             ScriptObjectMirror spanMirror = ((ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get("cellSpan"));
-            for (int i = 0; i < ((ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get("cellSpan")).size(); i++) {
+            for (int i = 0; i < spanMirror.size(); i++) {
                 ScriptObjectMirror span = (ScriptObjectMirror) spanMirror.get(Integer.toString(i));
 
                 int fromCol = Integer.parseInt(span.get("fromCol").toString());
@@ -561,31 +559,42 @@ public class FileHelper extends AbstractAppLoggable {
         return true;
     }
 
-    private Map<Messages.CellPosition, Messages.CellStyle> parseCellStyleToMap(HashMap<String, Object> option, WritableSheet sheet) {
-        Map<Messages.CellPosition, Messages.CellStyle> cellStylesMap = null;
+    private Map<CellPosition, CellStyle> parseCellStyleToMap(HashMap<String, Object> option, WritableSheet sheet) {
+        Map<CellPosition, CellStyle> cellStylesMap = null;
 
-        if (option.containsKey(sheet.getName()) &&
-                (option.get(sheet.getName()) != null) &&
-                ((ScriptObjectMirror) option.get(sheet.getName())).containsKey("styles") &&
-                (((ScriptObjectMirror) option.get(sheet.getName())).get("styles") != null) &&
-                ((ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get("styles")).size() > 0) {
-            cellStylesMap = new HashMap<Messages.CellPosition, Messages.CellStyle>();
-            for (int i = 0; i < ((ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get("styles")).size(); i++) {
-                ScriptObjectMirror cell = (ScriptObjectMirror) ((ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get("styles")).get(Integer.toString(i));
+        if (isOpsContainKeyOfSheet(sheet, option, "styles")) {
+            cellStylesMap = new HashMap<CellPosition, CellStyle>();
+            ScriptObjectMirror stylesMirror = (ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get("styles");
+            for (int i = 0; i < stylesMirror.size(); i++) {
+                ScriptObjectMirror cell = (ScriptObjectMirror) stylesMirror.get(Integer.toString(i));
                 ScriptObjectMirror cellpos = (ScriptObjectMirror) cell.get("cell");
                 int col = Integer.parseInt(cellpos.get("col").toString());
                 int row = Integer.parseInt(cellpos.get("row").toString());
 
                 ScriptObjectMirror style = (ScriptObjectMirror) cell.get("style");
                 int bg_color = style.get("background-color") == null ? Colour.WHITE.getValue() : Integer.parseInt(style.get("background-color").toString());
-                int align = style.get("text-align") == null ? Alignment.CENTRE.getValue() : Integer.parseInt(style.get("text-align").toString());
+
+                int align = Alignment.LEFT.getValue();
+                if (style.get("text-align") != null) {
+                    switch (style.get("text-align").toString()) {
+                        case "left":
+                            align = Alignment.LEFT.getValue();
+                            break;
+                        case "centre":
+                            align = Alignment.CENTRE.getValue();
+                            break;
+                        case "right":
+                            align = Alignment.RIGHT.getValue();
+                            break;
+                    }
+                }
 
                 String font_family = style.get("font-family") == null ? "Arial" : style.get("font-family").toString();
                 int font_size = style.get("font-size") == null ? WritableFont.DEFAULT_POINT_SIZE : Integer.parseInt(style.get("font-size").toString());
                 int font_weight = style.get("font-weight") == null ? 0 : Integer.parseInt(style.get("font-weight").toString());
                 int font_color = style.get("font-color") == null ? Colour.BLACK.getValue() : Integer.parseInt(style.get("font-color").toString());
 
-                cellStylesMap.put(new Messages.CellPosition(col, row), new Messages.CellStyle(bg_color, align, new Messages.FontStyle(font_family, font_size, font_weight, font_color)));
+                cellStylesMap.put(new CellPosition(col, row), new CellStyle(bg_color, align, new FontStyle(font_family, font_size, font_weight, font_color)));
             }
         }
 
@@ -597,7 +606,7 @@ public class FileHelper extends AbstractAppLoggable {
             return false;
         }
         //解析出需要设置样式的单元格并放置在map中
-        Map<Messages.CellPosition, Messages.CellStyle> cellStylesMap = parseCellStyleToMap(option, sheet);
+        Map<CellPosition, CellStyle> cellStylesMap = parseCellStyleToMap(option, sheet);
 
         ArrayList<Integer> ci = toIntList(excludeIndexes);
         int length = toInt(rowContent.getMember("length"), 0);
@@ -607,18 +616,18 @@ public class FileHelper extends AbstractAppLoggable {
             if (rowContent.hasMember(idx) && !ci.contains(i)) {
                 Object cellObj = rowContent.getMember(idx);
                 Label label = null;
-                Messages.CellPosition pos = new Messages.CellPosition(i, rowIndex);
+                CellPosition pos = new CellPosition(i, rowIndex);
                 if (cellStylesMap != null && cellStylesMap.containsKey(pos)) {
-                    Messages.CellStyle cellStyle = cellStylesMap.get(pos);
-                    WritableFont writeFont = new WritableFont(WritableFont.createFont(cellStyle.font().font_family()), cellStyle.font().font_size(),
-                            (cellStyle.font().font_weight() == 0 ? WritableFont.NO_BOLD : WritableFont.BOLD), false, UnderlineStyle.NO_UNDERLINE,
-                            Colour.getInternalColour(cellStyle.font().font_color()));
+                    CellStyle cellStyle = cellStylesMap.get(pos);
+                    WritableFont writeFont = new WritableFont(WritableFont.createFont(cellStyle.getFont().getFont_family()), cellStyle.getFont().getFont_size(),
+                            (cellStyle.getFont().getFont_weight() == 0 ? WritableFont.NO_BOLD : WritableFont.BOLD), false, UnderlineStyle.NO_UNDERLINE,
+                            Colour.getInternalColour(cellStyle.getFont().getFont_color()));
                     WritableCellFormat cellFormat = new WritableCellFormat(writeFont); // 单元格定义
                     try {
-                        cellFormat.setBackground(Colour.getInternalColour(cellStyle.background_color())); // 设置单元格的背景颜色
-                        cellFormat.setAlignment(Alignment.getAlignment(cellStyle.text_align())); // 设置对齐方式
+                        cellFormat.setBackground(Colour.getInternalColour(cellStyle.getBackground_color())); // 设置单元格的背景颜色
+                        cellFormat.setAlignment(Alignment.getAlignment(cellStyle.getText_align())); // 设置对齐方式
                     } catch (WriteException e) {
-                        logger.error("set cell style error:"+e);
+                        logger.error("set cell style error:" + e);
                     }
                     label = new Label(j++, rowIndex, cellObj == null ? "" : cellObj.toString(), cellFormat);
                 } else {
@@ -752,6 +761,91 @@ public class FileHelper extends AbstractAppLoggable {
         }
 
         return path;
+    }
+
+    //用于xls单元格样式模板
+    private class FontStyle {
+        private String font_family;
+        private int font_size;
+        private int font_weight;
+        private int font_color;
+
+        public FontStyle(String font_family, int font_size, int font_weight, int font_color) {
+            this.font_family = font_family;
+            this.font_size = font_size;
+            this.font_weight = font_weight;
+            this.font_color = font_color;
+        }
+
+        public String getFont_family() {
+            return font_family;
+        }
+
+        public int getFont_size() {
+            return font_size;
+        }
+
+        public int getFont_weight() {
+            return font_weight;
+        }
+
+        public int getFont_color() {
+            return font_color;
+        }
+    }
+
+    private class CellStyle {
+        private int background_color;
+        private int text_align;
+        private FontStyle font;
+
+        public CellStyle(int background_color, int text_align, FontStyle font) {
+            this.background_color = background_color;
+            this.text_align = text_align;
+            this.font = font;
+        }
+
+        public int getBackground_color() {
+            return background_color;
+        }
+
+        public int getText_align() {
+            return text_align;
+        }
+
+        public FontStyle getFont() {
+            return font;
+        }
+
+    }
+
+    private class CellPosition {
+        private int column;
+        private int row;
+
+        public CellPosition(int column, int row) {
+            this.column = column;
+            this.row = row;
+        }
+
+        public int getColumn() {
+            return column;
+        }
+
+        public int getRow() {
+            return row;
+        }
+
+        public boolean equals(Object obj) {
+            return (obj != null &&
+                    this.column == ((CellPosition) obj).column &&
+                    this.row == ((CellPosition) obj).row) ? true : false;
+
+        }
+
+        public int hashCode() {
+            return ("col" + column + "row" + row).hashCode();
+        }
     }
 }
 

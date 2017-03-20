@@ -184,7 +184,7 @@
     - sheetName: 对象，key为要操作的sheet名，值为json对象，可设置单元格的属性以及单元格合并功能：
        - styles: 数组，要设置的单元格属性对象数组，其中对象参数及常用值为：
             - background-color：数值型，单元格背景颜色，默认为黑色（值为32767），常用的还有白（9），红（10），绿（11），蓝（12），黄（13）；
-            - text-align：数值型，默认为左对齐，单元格对齐方式，1（左）/2（中）/3（右）；
+            - text-align：字符串，默认为左对齐，单元格对齐方式，left/centre/right；
             - font-family：字体，默认为“Arial”，常用的有“Times New Roman”，“Courier New”，“Tahoma”；
             - font-size：字体大小，默认为10；
        - cellSpan：数组，要合并的单元格对象数组。其中对象格式为：`{ "fromCol": 起始列, "fromRow": 起始行, "toCol": 终止列, "toRow": 终止行}`
