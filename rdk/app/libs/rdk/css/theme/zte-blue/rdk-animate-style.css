@@ -4,6 +4,6 @@
     -o-animation:width-change .5s ease-in-out;
 }
 @keyframes width-change{
-    0%{overflow: hidden;white-space: nowrap;text-overflow:ellipsis}
-    100%{overflow:visible;white-space: initial;text-overflow:initial}
+    0%{overflow: hidden;white-space: nowrap;}
+    100%{overflow:visible;}
 }
