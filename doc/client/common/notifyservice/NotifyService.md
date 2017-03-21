@@ -6,9 +6,9 @@
 
 这是使用NotifyService的基础实例：
 <live_demo example="common/notifyservice/basic" ></live_demo>
-<font color=green>提示：</font> 可多次提示
 
-*NotifyService* 提供了两个可调用的方法：
+
+<font color=green>提示：</font> *NotifyService* 提供了两个可调用的方法：
 
 ## notify ##
 
@@ -18,14 +18,14 @@
 
 ### 入参说明
 
-1. message json对象，必选。是需要显示的内容。
+    1. message json对象，必选。是需要显示的内容。
 
 		{
 			title: '',			//提示框的标题
 			message: ''			//提示框的内容，可以是字符串，可以是html字符串，也可以是用户模块url
 		}
 
-2. option json对象，可选。option的结构为：
+    2. option json对象，可选。option的结构为：
 
 		{
 		    position: '',		//提示框显示的位置，缺省默认right，显示在页面的右上侧
