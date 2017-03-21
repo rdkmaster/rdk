@@ -41,7 +41,7 @@
     outline:none !important;
     box-shadow: none;.
 }
-div.bootstrap-select.btn-group .btn .filter-option {
+.rdk-time-module div.bootstrap-select.btn-group .btn .filter-option {
     overflow: visible;
     left: 2px;
     right: 25px;
