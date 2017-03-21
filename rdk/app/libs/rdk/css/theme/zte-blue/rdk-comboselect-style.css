@@ -27,7 +27,7 @@
     cursor: pointer;
     display: inline-block;
     flex:1;
-    width: 120px;
+    min-width: 120px;
     overflow: hidden;
     white-space:nowrap;
     height: 30px;
@@ -116,6 +116,8 @@
     margin: 0;
     color: #fff;
     background-color: transparent;
+    overflow: visible;
+    min-width: 120px;
 }
 /* -- theme style : rdk-theme-zte-vmax end --*/
 

@@ -341,7 +341,7 @@
             animateDom.style.overflow="hidden"; //兼容ie11
             setTimeout(function(){
                 if(animateDom.offsetWidth!=widChangeDom.offsetWidth){
-                    animateDom.style.width = widChangeDom.offsetWidth+'px';
+                    animateDom.style.width = _this.getStyle(widChangeDom,"width");
                 }
                 setTimeout(function(){
                     animateDom.classList.remove('width-change-animate');
@@ -481,6 +481,11 @@
                             }else{
                                 scope.$emit(attr.onFinishRender);
                             }
+                        }, 0);
+                    }
+                    else if(attr.onFinishRender == "domRenderFinished"){
+                        $timeout(function() {
+                            scope.$emit(attr.onFinishRender);
                         }, 0);
                     }
                 }

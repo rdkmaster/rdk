@@ -51,6 +51,16 @@
 详细示例：
 <live_demo example="controls/comboselect/clear" width="605"></live_demo>
 
+## is_animate <binding></binding>##
+>支持类型：布尔型
+
+`is_animate` 缺省时默认值为`false`，宽度动态增加不会动画效果
+
+`is_animate` 设置成 `true` 时，宽度随着内容自适应。
+
+详细示例：
+<live_demo example="controls/comboselect/isAnimate" width="605"></live_demo>
+
 >## id ##
 >支持类型：字符串
 

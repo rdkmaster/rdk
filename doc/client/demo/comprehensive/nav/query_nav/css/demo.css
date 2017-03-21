@@ -21,7 +21,7 @@
 /* icon*/
 .iconfont-e8ca:before,.iconfont-e8c2:before{color: #fff;  font-size: 22px;}
 /* 宽度根据需要调整*/
-.rdk-theme-zte-vmax .m-area.rdk-combo-select-module .combo-content{min-width: 110px;}
+.rdk-theme-zte-vmax .m-area.rdk-combo-select-module .combo-content{min-width: 155px;}
 .rdk-theme-zte-vmax .m-frequency.rdk-list-selector-module .rdk-dropdown-toggle{min-width: 130px;}
 /* 主题一 demo 样式调整：对比软银导航栏两者是否兼容*/
 .g-align {padding: 10px 0;}
@@ -29,6 +29,7 @@
 .g-align .m-btn{margin-top: 1px;}
 .g-align .nav-left{margin-top:-2px}
 .g-align .m-frequency,.g-align .m-kpi{margin: 0 10px;}
+.g-align .m-area.rdk-combo-select-module{width: 200px;}
 .g-align .rdk-list-selector-module .rdk-dropdown-toggle {min-width: 200px;}
 .g-align .rdk-time-module {  display: inline-block; }
 .g-align .rdk-combo-select-module .combo-content-transclude {  background-color: transparent; }
