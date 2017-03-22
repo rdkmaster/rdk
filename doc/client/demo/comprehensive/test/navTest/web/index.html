@@ -34,5 +34,16 @@
 <!-- rdk-loading 样式只能在body节点添加一次，其他节点不要添加 -->
 <body ng-controller='RootController' class="rdk-loading">
 <rdk_module id="m" initialized="load" ready="setTitle" controller="DemoController"></rdk_module>
+<div class="sidebar">
+    <div class="sidebarTitle"><rdk_icon icon="img/HOME.png" label="Main"></rdk_icon></div>
+    <rdk_tab>
+        <div title="Statistic">
+            <p>RDK最突出的特点就是易用！</p>
+        </div>
+        <div title="Cell">
+
+        </div>
+    </rdk_tab>
+</div>
 </body>
 </html>

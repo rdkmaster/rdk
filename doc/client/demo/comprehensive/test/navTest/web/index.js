@@ -6,7 +6,7 @@
 (function() {
     var imports = [
         'base/demo',
-        'rd.controls.Module'
+        'rd.controls.Module','css!base/css/sidebar','rd.containers.Tab','rd.controls.Icon'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', 'DataSourceService', main];
