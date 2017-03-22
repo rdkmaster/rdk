@@ -111,6 +111,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                 scope.removeableTabs=false;
                 scope.moveStep= Utils.getValue(scope.moveStep, attrs.moveStep, 3); //移动个数
 
+                var tabsWrapDom = element[0].querySelector(".rdk-tabs-wrap");
                 var tabsDom = element[0].querySelector(".title");
                 var tabItems=null;
                 var offsetMax=0; //最大偏移量
@@ -219,18 +220,21 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                 }, 0);
                 function _setTabsWidth(){  //设置tabs容器宽度,判断显示移动按钮
                     tabItems =element[0].querySelector(".title").querySelectorAll("li");
+                    //tabsDom ul元素绝对定位，父元素需要设置高度
+                    tabsWrapDom.style.height=tabItems[0].offsetHeight +8 +'px'; //8px 下面三角形的高度
                     var total=0;
                     for(var i= 0 , len=tabItems.length ; i<len ; i++)
                     {
-                        total+=tabItems[i].offsetWidth;
+                        //total+=tabItems[i].offsetWidth; //offsetWidth计算有误差
+                        total+=(+Utils.getStyle(tabItems[i],"width").replace(/(px)|%/,""));
                     }
-                    totalOffsetWidth=total;
+                    totalOffsetWidth=Math.ceil(total);
                     if(totalOffsetWidth <= tabsDom.parentNode.offsetWidth){
-                        tabsDom.style.width = tabsDom.parentNode.offsetWidth;
+                        tabsDom.style.width = tabsDom.parentNode.offsetWidth+"px";
                     }else{
                         tabsDom.style.width = totalOffsetWidth + len + 10+"px"; //10校验误差 //len为每个tab项都有1px右边距
                     }
-                    offsetMax = totalOffsetWidth+10-tabsDom.parentNode.offsetWidth;
+                    offsetMax = totalOffsetWidth + len + 10 - tabsDom.parentNode.offsetWidth;
                     pageIndexMax = Math.ceil(len/_step);
                     if(offsetMax > 0){
                         scope.removeableTabs=true;
@@ -242,13 +246,16 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                 //重新计算最大偏移量
                 scope.$watch("removeableTabs", function(newVal, oldVal) {
                     $timeout(function() {
-                        offsetMax=totalOffsetWidth+10-tabsDom.parentNode.offsetWidth;
+                        var moveDom =element[0].querySelector(".move-wrap");
+                        offsetMax=totalOffsetWidth+ moveDom.offsetWidth - tabsDom.parentNode.offsetWidth;
+                        if(!newVal){ //move 按钮消失后重新设定tabsDom宽度 :弹性布局可更好的解决
+                            tabsDom.style.width = tabsDom.parentNode.offsetWidth+"px";
+                        }
                     },0)
                 });
-                scope.$watch("tabs", function(newVal, oldVal) {
-                    _setTabsWidth();
-                },true);
-                var off = scope.$on('ngRepeatFinished', function(){
+                //注意：不能watch tabs,渲染器功能会导致监听不断执行
+                //scope.$watch("tabs", function(newVal, oldVal) {_setTabsWidth();},true);
+                scope.$on('ngRepeatFinished', function(){
                     _appendTab();
                     _updateDraggable();
                     _addFeature();
@@ -308,13 +315,13 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                     scope.protect=true;
                 });
                 function _selectedTabHandler(index){
-                    _tabsHandler(); 
+                    _tabsHandler();
                     _activeTabByIndex(index);
                 }
 
                 function _tabsHandler(){
                     var tabs = $(dom).tabs();
-                    tabs.tabs("refresh"); 
+                    tabs.tabs("refresh");
                     if(tabs.find("ul").eq(0).find("li").length == 0){
                         tabs.find("ul").addClass('noborder');
                         tabs.find(".content").addClass('noborder');
@@ -438,6 +445,8 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                     scope.removeableTabs && _destroyTabChangeOffset(index);
                     $("#" + panelId).remove();
                     _activeTab(index);
+                    //删掉Tab后重定义宽度
+                    $timeout(_setTabsWidth, 0);
                 }
 
                 scope.closeTab = function(index){
