@@ -5,6 +5,7 @@
 .nav-left .nav-img{height: 24px;width: 24px;margin-top: 4px}
 .nav-title{display: inline-block;color: #fff;font-size: 14px;  vertical-align: bottom;  margin: 0 5px 0;height: 24px;line-height: 24px;}
 .nav-wrap{  background-color: #008FD4;  height: 50px; }
+.gis {position: absolute;  top: 50px;  bottom: 0;left:0;right:0;background-color: #eee;font-size: 60px;text-align: center;vertical-align: middle}
 .m-time{  vertical-align: top;margin-left: -1px; }
 .m-time .u-time{border: 1px solid rgba(0,0,0,0.15);margin-top: 2px; height: 285px; width: 210px; padding: 8px 5px 0 5px; background-color: #fff;box-shadow: 0 6px 16px rgba(0,0,0,0.175);border-radius: 0 0 4px 4px;}
 .m-frequency{display: inline-block; vertical-align: top; margin-left: -1px;}

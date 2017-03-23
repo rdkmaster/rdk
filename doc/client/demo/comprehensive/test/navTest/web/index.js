@@ -6,13 +6,13 @@
 (function() {
     var imports = [
         'base/demo',
-        'rd.controls.Module','css!base/css/sidebar','rd.containers.Tab','rd.controls.Icon'
+        'rd.controls.Module','css!base/css/sidebar','rd.containers.Tab','rd.controls.Icon',
+        'rd.controls.Table','rd.controls.Graph'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', 'DataSourceService', main];
     function main(scope, DataSourceService) {
         imports.helper.initDataSourceService(DataSourceService);
-
         scope.load = function() {
             rdk.m.loadModule({}, 'demo.html');
         }
@@ -22,8 +22,29 @@
             var demoUrl = location.pathname.match(/\/doc\/client\/demo\/(.*)\//)[1];
             document.title = dom.length == 0 ? demoUrl : $(dom[0]).attr('doc_title');
         }
-    };
+        scope.setting = {
+            "columnDefs" :[
+                {
+                    title : "详单",
 
+                    render : '<i class="iconfont iconfont-e8b7"></i>'
+                },
+                {
+                    title : "得分趋势",
+                    render : '<i class="iconfont iconfont-e8c8"></i>'
+                }
+            ]
+        }
+        var sidebarHeight = $('.sidebar').height();
+        var sidebarBtnHeight = $('.sidebarBtn').height();
+        $('.sidebarBtn').css({
+            "top":(sidebarHeight-sidebarBtnHeight)/2+'px',
+        });
+        scope.iconCondition = true;
+        scope.sideBarBtn = function(){
+            scope.iconCondition = !scope.iconCondition
+        }
+    }
     require.config({paths:{helper: '/doc/tools/doc_js/doc_app_helper'}});
     imports.push({ url: 'blockUI', alias: 'blockUI' });
     imports.push({ url: 'helper', alias: 'helper' });
