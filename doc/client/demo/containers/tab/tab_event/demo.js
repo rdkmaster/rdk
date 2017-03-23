@@ -31,15 +31,15 @@
             }, 200);
 
             scope.selectedTab1 = function() {
-                EventService.broadcast('tab1', EventTypes.TAB_SELECT, 1);
+                EventService.broadcast('tab1', EventTypes.TAB_SELECT, 0);
             }
 
             scope.selectedTab2 = function() {
-                EventService.broadcast('tab1', EventTypes.TAB_SELECT, 2);
+                EventService.broadcast('tab1', EventTypes.TAB_SELECT, 1);
             }
 
             scope.selectedTab3 = function() {
-                EventService.broadcast('tab1', EventTypes.TAB_SELECT, 3);
+                EventService.broadcast('tab1', EventTypes.TAB_SELECT, 2);
             }
     }
 
