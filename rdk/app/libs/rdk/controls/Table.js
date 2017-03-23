@@ -301,6 +301,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     }
                 };
 
+                this.resetCurrentPage = function(){
+                    scope.currentPage = 0;
+                }          
+
                 this.getTablePageNumber = function() {
                     return scope.pageNumber;
                 }
