@@ -1052,6 +1052,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     }
 
                     function _isAllChecked(){
+                        if(scope.currentPageData.length == 0) return false;
                         for(var i=0; i<scope.currentPageData.length; i++){
                             if(!scope.currentPageData[i].checked) return false;
                         }
@@ -1182,6 +1183,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         }
 
                         scope.destData = _convertToObject(scope.data);
+                        if((scope.destData.length == 0) && (scope.addCheckBox)){
+                            ctrl.setChecked([]);
+                        }
                         scope.columnDefs = [];
                         scope.groupFields = undefined;
                         //预留以实现自定义列的Group
