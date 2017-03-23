@@ -221,7 +221,8 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                 function _setTabsWidth(){  //设置tabs容器宽度,判断显示移动按钮
                     tabItems =element[0].querySelector(".title").querySelectorAll("li");
                     //tabsDom ul元素绝对定位，父元素需要设置高度
-                    tabsWrapDom.style.height=tabItems[0].offsetHeight +8 +'px'; //8px 下面三角形的高度
+                    var visibleItems =scope.showItems && scope.showItems.length ? scope.showItems[0] : 0;
+                    tabsWrapDom.style.height=tabItems[visibleItems].offsetHeight +8 +'px'; //8px 下面三角形的高度
                     var total=0;
                     for(var i= 0 , len=tabItems.length ; i<len ; i++)
                     {

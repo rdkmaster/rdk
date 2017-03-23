@@ -115,6 +115,7 @@
 /*tabs wrap*/
 .rdk-tab-module .rdk-tabs-wrap{
     width: 100%;
+    min-height: 42px;
     overflow: hidden;
     position: relative;
 }
