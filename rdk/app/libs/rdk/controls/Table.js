@@ -116,12 +116,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
         })
         .filter('fieldfilter', function(){
             return function(data, searchFields, globalSearch){
-                if(globalSearch){
-                    console.log(data);
-                    console.log(searchFields);
-                    console.log(globalSearch);
-                    debugger;
-                }
                 if((!searchFields)||(searchFields.length != 1)) return data;
                 var array = [];
                 angular.forEach(data, function(obj){
