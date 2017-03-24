@@ -30,7 +30,6 @@ return {
         itemGap:10,
         top: 30,
         left: 30,
-        selectedMode: false,
         textStyle: {
             color: '#434343',
             fontSize: 12,
@@ -92,7 +91,6 @@ return {
         center : ['30%', '70%'],
         avoidLabelOverlap: false,
         hoverAnimation:false,
-        selectedMode: 'single',
         labelLine: {
             normal: {
                 show: false
