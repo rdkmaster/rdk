@@ -1,0 +1,24 @@
+body,p,h1,h2,h3,h4,h5,h6{margin:0;}
+ul,ol{list-type:none; margin:0; padding:0;}
+.clearfix { 
+  *zoom: 1; 
+} 
+.clearfix:before, 
+
+.clearfix:after { 
+  display: table; 
+  line-height: 0; 
+  content: ""; 
+} 
+.clearfix:after { 
+  clear: both; 
+} 
+.child{
+	width: 100px;
+	height: 100px;
+	float: left;
+	background-color: blue;
+}
+.box{
+	border:20px solid red;
+}
