@@ -21,7 +21,7 @@
 /* icon*/
 .iconfont-e8ca:before,.iconfont-e8c2:before{color: #fff;  font-size: 22px;}
 /* 宽度根据需要调整*/
-.rdk-theme-zte-vmax .m-area.rdk-combo-select-module .combo-content{min-width: 155px;}
+.rdk-theme-zte-vmax .m-area.rdk-combo-select-module .combo-content{min-width: 120px;}
 .rdk-theme-zte-vmax .m-frequency.rdk-list-selector-module .rdk-dropdown-toggle{min-width: 130px;}
 /* 主题一 demo 样式调整：对比软银导航栏两者是否兼容*/
 .g-align {padding: 10px 0;}

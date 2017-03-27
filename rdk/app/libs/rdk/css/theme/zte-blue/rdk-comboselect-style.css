@@ -22,12 +22,12 @@
     border-radius: 4px;
     padding: 0;
 }
-
+.rdk-combo-select-module .width-fixed{width: 120px;}
+.rdk-combo-select-module .width-changed{min-width: 120px;}
 .rdk-combo-select-module .combo-content-theme{
     cursor: pointer;
     display: inline-block;
     flex:1;
-    min-width: 120px;
     overflow: hidden;
     white-space:nowrap;
     height: 30px;
@@ -117,7 +117,6 @@
     color: #fff;
     background-color: transparent;
     overflow: visible;
-    min-width: 120px;
 }
 /* -- theme style : rdk-theme-zte-vmax end --*/
 

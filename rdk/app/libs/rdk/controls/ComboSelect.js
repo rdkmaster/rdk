@@ -110,10 +110,11 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect','css!rd.styl
                 scope.closeShow = _closeShow;
                 scope.openShow = _openShow;
                 scope.isSelect = false;
-
+                var _textDom = iEle[0].querySelector(".combo-content-theme");
                 if(scope.isAnimate){
                     var _comboAnimateDom = iEle[0].querySelector(".rdk-combo-animate");
                     var _comboContentDom = _comboAnimateDom.querySelector(".combo-content");
+                    _textDom.classList.add("width-changed");
                     _comboContentDom.style.display="inline-flex";
                     var _animate = Utils.widthChangeAnimate;
                     scope.animate = function(){
@@ -123,6 +124,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect','css!rd.styl
                     function _initWidth(){
                         _comboAnimateDom.style.width = Utils.getStyle(_comboContentDom,"width");
                     }
+                }else{
+                    _textDom.classList.add("width-fixed");
                 }
 
                 if(scope.id) {
