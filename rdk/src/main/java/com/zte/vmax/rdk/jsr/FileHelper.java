@@ -400,13 +400,13 @@ public class FileHelper extends AbstractAppLoggable {
         HashMap<String, Object> op = new HashMap<>();
         if (option instanceof ScriptObjectMirror) {
             ScriptObjectMirror som = (ScriptObjectMirror) option;
+            for (String key : som.keySet()) {
+                    op.put(key, som.get(key));
+            }
             boolean append = som.containsKey("append") ? (Boolean) som.get("append") : false;
             op.put("append", append);
             String encoding = som.containsKey("encoding") ?  som.get("encoding").toString() : "UTF-8";
             op.put("encoding", encoding);
-            for (String key : som.keySet()) {
-                    op.put(key, som.get(key));
-            }
         } else {
             if (!(option instanceof Undefined)) {
                 logger.warn("unsupported option type[" + option.getClass().getName() + "]! ignoring it!");
