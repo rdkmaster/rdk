@@ -10,8 +10,8 @@
         'rd.controls.Table','rd.controls.Graph'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope', 'DataSourceService', main];
-    function main(scope, DataSourceService) {
+    var controllerDefination = ['$scope', 'DataSourceService','EventService', main];
+    function main(scope, DataSourceService,EventService) {
         imports.helper.initDataSourceService(DataSourceService);
         scope.load = function() {
             rdk.m.loadModule({}, 'demo.html');
@@ -35,15 +35,24 @@
                 }
             ]
         }
-        var sidebarHeight = $('.sidebar').height();
-        var sidebarBtnHeight = $('.sidebarBtn').height();
-        $('.sidebarBtn').css({
-            "top":(sidebarHeight-sidebarBtnHeight)/2+'px',
+        function sidebarSize(){
+            var sidebarHeight = $('.sidebar').height();
+            var sidebarBtnHeight = $('.sidebarBtn').height();
+            $('.sidebarBtn').css({
+                "top":(sidebarHeight-sidebarBtnHeight)/2+'px',
+            });
+        }
+        $(window).resize(function() {          //当浏览器大小变化时
+            sidebarSize()
+        });
+        EventService.register('EventService', 'ready', function() {
+            sidebarSize();
         });
         scope.iconCondition = true;
         scope.sideBarBtn = function(){
             scope.iconCondition = !scope.iconCondition
         }
+
     }
     require.config({paths:{helper: '/doc/tools/doc_js/doc_app_helper'}});
     imports.push({ url: 'blockUI', alias: 'blockUI' });

@@ -1,16 +1,25 @@
+html,body {
+    height: 100%;
+}
+.bottomBox {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    height: calc(100% - 54px);
+}
 .sidebar {
     position: absolute;
-    top: 50px;
+    top: 0;
     bottom: 0;
     box-sizing: border-box;
-    width: 750px;
+    width: 705px;
     background-color: #fff;
     border-right:1px solid #eee;
     webkit-box-shadow: 0 0 5px #666;
     -moz-box-shadow: 0 0 5px #666;
     box-shadow: 0 0 5px #666;
 }
-.sidebar .sidebarTitle {
+.bottomBox .sidebarTitle {
     margin: 10px;
     margin-bottom: 0;
 }
@@ -24,10 +33,10 @@
     right:-14px;
 }
 .sidebarOut {
-    -webkit-transform:translateX(-750px) ;
-    -moz-transform:translateX(-750px);
-    -ms-transform:translateX(-750px);
-    transform:translateX(-750px);
+    -webkit-transform:translateX(-705px) ;
+    -moz-transform:translateX(-705px);
+    -ms-transform:translateX(-705px);
+    transform:translateX(-705px);
 
 }
 .sidebar .sidebarBtn .iconfont {
@@ -40,37 +49,37 @@
 .a-fadeinL{-webkit-animation:fadeinL 2s;-moz-animation:fadeinL 2s;-ms-animation:fadeinL 2s;animation:fadeinL 2s;animation-fill-mode:forwards}
 .a-fadeoutL{-webkit-animation:fadeoutL 2s;-moz-animation:fadeoutL 2s;-ms-animation:fadeoutL 2s;animation:fadeoutL 2s;animation-fill-mode:forwards}
 @-webkit-keyframes fadeinL{
-    0%{opacity:0;-webkit-transform:translateX(-750px);}
+    0%{opacity:0;-webkit-transform:translateX(-705px);}
     100%{opacity:1;-webkit-transform:translateX(0);}
 }
 @-moz-keyframes fadeinL{
-    0%{opacity:0;-moz-transform:translateX(-750px);}
+    0%{opacity:0;-moz-transform:translateX(-705px);}
     100%{opacity:1;-moz-transform:translateX(0);}
 }
 @-ms-keyframes fadeinL{
-    0%{opacity:0;-ms-transform:translateX(-750px);}
+    0%{opacity:0;-ms-transform:translateX(-705px);}
     100%{opacity:1;-ms-transform:translateX(0);}
 }
 @keyframes fadeinL{
-    0%{opacity:0;transform:translateX(-750px);}
+    0%{opacity:0;transform:translateX(-705px);}
     100%{opacity:1;transform:translateX(0);}
 }
 /*进入*/
 @-webkit-keyframes fadeoutL{
     0%{-webkit-transform:translateX(0);}
-    100%{-webkit-transform:translateX(-750px);}
+    100%{-webkit-transform:translateX(-705px);}
 }
 @-moz-keyframes fadeoutL{
     0%{-moz-transform:translateX(0);}
-    100%{-moz-transform:translateX(-750px);}
+    100%{-moz-transform:translateX(-705px);}
 }
 @-ms-keyframes fadeoutL{
     0%{-ms-transform:translateX(0);}
-    100%{-ms-transform:translateX(-750px);}
+    100%{-ms-transform:translateX(-705px);}
 }
 @keyframes fadeoutL{
     0%{transform:translateX(0);}
-    100%{transform:translateX(-750px);}
+    100%{transform:translateX(-705px);}
 }
 /*表格*/
 .sidebar .rdk-table-module .rdk-table > tbody > tr>td,
@@ -177,5 +186,8 @@ thead.ng-scope>tr >th{
 .sidebar .pagination {
     position:absolute;
     left:248px;
+}
+.graph {
+    overflow: auto;
 }
 
