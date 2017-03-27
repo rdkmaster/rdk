@@ -11,7 +11,7 @@
             </ul>
         </div>
     </div>
-    <div id="pie_child" style="width:350px; display:inline-block;">
+    <div id="pie_child" style="width:350px; display:block;">
         <div ng-show="showNumber==$index" ng-repeat="item in [1,2,3,4]">
             <rdk_graph height="250" ds="dsGraph{{item}}" ds_url="mock/data{{item}}.json" ds_query_if="ready"
             graph_define="scripts/graph_define/simple_line{{item}}.js" ></rdk_graph>

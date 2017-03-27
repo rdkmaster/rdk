@@ -9,8 +9,13 @@
         var option;
         EventService.register('pie', 'graph_update', function(event,data){
            option=data.option;
+            rdk.pie.chart.on('click', function (params) {
+                for(var i=0;i<option.series[0].data.length;i++){
+                    option.series[0].data[i].selected = i==params.dataIndex?true:false
+                }
+                rdk.pie.chart.setOption(option)
+            })
         });
-
         scope.clickNumber=null;
         scope.showNumber=0;
         scope.showDetail = false;
@@ -22,14 +27,9 @@
                 scope.clickNumber=0;
                 scope.showNumber=null;
             }
-
-            if(data.data.selected=false){
-                option.series.selectedMode="";
-            }
         });
         scope.numClick=function($event){
             scope.clickNumber=$event.target.getAttribute('data');
-            console.log( scope.clickNumber )
         }
     }
 
