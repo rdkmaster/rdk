@@ -1,0 +1,38 @@
+/*导航模块布局*/
+*{margin:0;padding:0}
+.nav-left{float: left;margin-top: 8px}
+.nav-right{float: right;margin-right: 10px;}
+.nav-left img{background-color: transparent;margin:0;border:none;border-radius: initial;width:initial;height:initial }
+.nav-left .nav-img{height: 24px;width: 24px;margin-top: 4px}
+.nav-title{display: inline-block;color: #fff;font-size: 14px;  vertical-align: bottom;  margin: 0 5px 0;height: 24px;line-height: 24px;}
+.nav-wrap{  background-color: #008FD4;  height: 50px; }
+.gis {width: 100%;height: 100%;background-color: #eee;font-size: 60px;text-align: center;vertical-align: middle}
+.m-time{  vertical-align: top;margin-left: -1px; }
+.m-time .u-time{border: 1px solid rgba(0,0,0,0.15);margin-top: 2px; height: 285px; width: 210px; padding: 8px 5px 0 5px; background-color: #fff;box-shadow: 0 6px 16px rgba(0,0,0,0.175);border-radius: 0 0 4px 4px;}
+.m-frequency{display: inline-block; vertical-align: top; margin-left: -1px;}
+.m-kpi{display: inline-block;vertical-align: top;margin-left: -1px;}
+/*btn*/
+.m-btn{vertical-align: top; margin: 10px 0;  position: relative;}
+.margin-10{margin-left:10px;  margin-right:10px;}
+.m-btn .rdk-button-guidance ~ .rdk-button-btn{width: 61px;}
+/*f-left-line 功能：在标签前面划条线*/
+.f-left-line{position: relative}
+/*.f-left-line{border-left: 1px solid rgba(255,255,255,0.4);}*/
+.f-left-line:before{font-size:0;position: absolute;left:0;top: 9px;z-index: 1;width: 0;height: 32px; content: "";border-left:1px solid rgba(255,255,255,0.4);}
+.f-right-line:before{position: absolute;right: 228px;top: 9px;z-index: 1;width: 1px;height: 32px; content: "";background-color:rgba(255,255,255,0.4);}
+.m-btn.f-left-line:before{left: -11px;top: 0;}
+/* icon*/
+.iconfont-e8ca:before,.iconfont-e8c2:before{color: #fff;  font-size: 22px;}
+/* 宽度根据需要调整*/
+.rdk-theme-zte-vmax .m-area.rdk-combo-select-module .combo-content{min-width: 110px;}
+.rdk-theme-zte-vmax .m-frequency.rdk-list-selector-module .rdk-dropdown-toggle{min-width: 130px;}
+/* 主题一 demo 样式调整：对比软银导航栏两者是否兼容*/
+.g-align {padding: 10px 0;}
+.g-align .rdk-list-selector-module .rdk-dropdown-toggle {padding: 5px 8px 5px 0;}
+.g-align .m-btn{margin-top: 1px;}
+.g-align .nav-left{margin-top:-2px}
+.g-align .m-frequency,.g-align .m-kpi{margin: 0 10px;}
+.g-align .rdk-list-selector-module .rdk-dropdown-toggle {min-width: 200px;}
+.g-align .rdk-time-module {  display: inline-block; }
+.g-align .rdk-combo-select-module .combo-content-transclude {  background-color: transparent; }
+.g-align .nav-title{font-size: 16px; line-height: initial;}

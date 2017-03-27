@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<!--
+===============================
+    这些代码不重要，可无视
+===============================
+-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+    <title>loading demo...</title>
+
+    <!-- fix-from -->
+    <!--
+        这个区域中的代码将被替换掉，请不要在这里添加任何有用代码
+        fix-from 和 fix-to 是两个重要标志位，请勿改动
+    -->
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/loading.css">
+    <script data-main="/rdk/app/libs/rdk/rdk.js" src="/rdk/app/libs/requirejs/require.js" rdk-app="index">
+    </script>
+
+    <!-- 上面两行会被自动替换为下面两行 -->
+    <!--
+    <link rel="stylesheet" type="text/css" href="main.min.css">
+    <script data-main="main.min" src="/rdk/app/libs/requirejs/require.min.js"></script>
+    -->
+
+    <!-- fix-to -->
+
+</head>
+
+<!-- rdk-loading 样式只能在body节点添加一次，其他节点不要添加 -->
+<body ng-controller='RootController' class="rdk-loading">
+<rdk_module id="m" initialized="load" ready="setTitle" controller="DemoController"></rdk_module>
+<div class="bottomBox">
+    <div class="gis">gis放置区</div>
+    <div class="sidebar"  ng-class="{true:'a-fadeinL',false:'a-fadeoutL sidebarOut'}[iconCondition]">
+        <div class="sidebarTitle"><rdk_icon icon="./img/HOME.png" label="Main"></rdk_icon></div>
+        <rdk_tab>
+            <div title="Cell" class="rdk-page-theme-long">
+                <rdk_table ds="ds_table" ds-url="data/table_paging.json" ds_query_if="ready" page-size="8" setting="setting" page_number ="4">
+                </rdk_table>
+                <rdk_button  label="导出" icon="iconfont iconfont-e8c9" toggle="true"></rdk_button>
+            </div>
+            <div title="Statistic" class="graph">
+                    <rdk_graph ds="dsGraphLine" ds_url="data/line.json" ds_query_if="ready"
+                               graph_define="scripts/graph_line.js"  width='580' height="290">
+                    </rdk_graph>
+                    <rdk_graph ds="dsGraphBar" ds_url="data/bar.json" ds_query_if="ready"
+                               graph_define="scripts/graph_bar.js"  width="580" height="290">
+                    </rdk_graph>
+            </div>
+        </rdk_tab>
+        <div class="sidebarBtn" ng-click="sideBarBtn()">
+        <i ng-class="{true:'iconfont iconfont-e8c6',false:'iconfont iconfont-e8b2'}[iconCondition]"></i>
+        </div>
+    </div>
+</div>
+</body>
+</html>
