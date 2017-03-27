@@ -14,8 +14,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jxl.Sheet;
-import jxl.Workbook;
+import jxl.*;
 import jxl.format.UnderlineStyle;
 import jxl.read.biff.BiffException;
 import jxl.write.*;
@@ -403,21 +402,43 @@ public class FileHelper extends AbstractAppLoggable {
             ScriptObjectMirror som = (ScriptObjectMirror) option;
             boolean append = som.containsKey("append") ? (Boolean) som.get("append") : false;
             op.put("append", append);
-//            for (String sheetName : content.keySet()) {
-//                op.put(sheetName, som.get(sheetName));
-//            }
+            String encoding = som.containsKey("encoding") ?  som.get("encoding").toString() : "UTF-8";
+            op.put("encoding", encoding);
             for (String key : som.keySet()) {
-                if (!"append".equals(key)) {
                     op.put(key, som.get(key));
-                }
             }
         } else {
             if (!(option instanceof Undefined)) {
                 logger.warn("unsupported option type[" + option.getClass().getName() + "]! ignoring it!");
             }
             op.put("append", false);
+            op.put("encoding", "UTF-8");
         }
         return op;
+    }
+
+    private boolean isMergeCell(Sheet sheet, Cell cell) {
+        //获取所有的合并单元格
+        Range[] ranges = sheet.getMergedCells();
+        if (ranges.length == 0) {
+            return false;
+        }
+        for (Range range : ranges) {
+            int startRow = range.getTopLeft().getRow();
+            int startCol = range.getTopLeft().getColumn();
+            int endRow = range.getBottomRight().getRow();
+            int endCol = range.getBottomRight().getColumn();
+
+            if (cell.getColumn() > endCol || cell.getColumn() < startCol
+                    || cell.getRow() < startRow || cell.getRow() > endRow) {
+                return false;
+            }
+
+            if (range.getTopLeft().equals(cell)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public String readExcel(String fileStr, Object option) {
@@ -430,7 +451,9 @@ public class FileHelper extends AbstractAppLoggable {
         Map<String, List<List<String>>> excelContent = new HashMap();
         try {
             fis = new FileInputStream(fileStr);
-            rwb = Workbook.getWorkbook(fis);
+            WorkbookSettings workbookSettings = new WorkbookSettings();
+            workbookSettings.setEncoding(op.get("encoding").toString());
+            rwb = Workbook.getWorkbook(fis,workbookSettings);
             String[] sheetNames = rwb.getSheetNames();
             for (String sheetName : sheetNames) {
                 List<List<String>> content = new ArrayList();
@@ -438,7 +461,8 @@ public class FileHelper extends AbstractAppLoggable {
                 for (int row = 0; row < sheet.getRows(); row++) {
                     List<String> rowLst = new ArrayList();
                     for (int col = 0; col < sheet.getColumns(); col++) {
-                        rowLst.add(sheet.getCell(col, row).getContents());
+                        Cell cell = sheet.getCell(col, row);
+                        rowLst.add(isMergeCell(sheet, cell) ? "" : cell.getContents());
                     }
                     content.add(rowLst);
                 }
@@ -467,21 +491,7 @@ public class FileHelper extends AbstractAppLoggable {
         return RdkUtil.toJsonString(excelContent);
     }
     public boolean saveAsEXCEL(String file, ScriptObjectMirror content, ScriptObjectMirror excludeIndexes, Object option) {
-        HashMap<String, Object> op = new HashMap<>();
-        if (option instanceof ScriptObjectMirror) {
-            ScriptObjectMirror som = (ScriptObjectMirror) option;
-            boolean append = som.containsKey("append") ? (Boolean) som.get("append") : false;
-            op.put("append", append);
-            for (String sheetName : content.keySet()) {
-                op.put(sheetName, som.get(sheetName));
-            }
-        } else {
-            if (!(option instanceof Undefined)) {
-                logger.warn("unsupported option type[" + option.getClass().getName() + "]! ignoring it!");
-            }
-            op.put("append", false);
-        }
-        return saveAsEXCEL(file, content, excludeIndexes, op);
+        return saveAsEXCEL(file, content, excludeIndexes, parseExcelOptionFromScript(option));
     }
 
     public boolean saveAsEXCEL(String fileStr, ScriptObjectMirror content, ScriptObjectMirror excludeIndexes, HashMap<String, Object> option) {
@@ -503,6 +513,10 @@ public class FileHelper extends AbstractAppLoggable {
 
         boolean append = (boolean) option.get("append");
 
+        WorkbookSettings workbookSettings = new WorkbookSettings();
+
+        workbookSettings.setEncoding(option.get("encoding").toString());
+
         WritableWorkbook rwb = null;
 
         Workbook wb = null;
@@ -511,7 +525,7 @@ public class FileHelper extends AbstractAppLoggable {
 
         if (append) {   //追加
             try {
-                wb = Workbook.getWorkbook(file);
+                wb = Workbook.getWorkbook(file,workbookSettings);
                 rwb = Workbook.createWorkbook(file, wb);
             } catch (Exception e) {
                 logger.warn("can not find workbook:" + file + ",will create new workbook:" + e);
@@ -541,7 +555,7 @@ public class FileHelper extends AbstractAppLoggable {
             }
         } else {        //复写
             try {
-                rwb = Workbook.createWorkbook(file);
+                rwb = Workbook.createWorkbook(file,workbookSettings);
             } catch (Exception e) {
                 logger.error("create workbook error:" + e);
                 return false;

@@ -89,6 +89,30 @@
         //按GBK编码方式来读
        File.readCSV("app/example/server/dialog_settings.csv",{"encoding":"GBK"})  
 
+### `File.readExcel()` {#readExcel}###
+
+定义：
+
+    function readExcel(path,option);
+
+参数：
+
+- path 字符串。需要读取的文件路径，如果是目录则会报错。可使用[路径宏](relative_path_rule.md)简化路径。
+
+- option 对象，可选。读excel文件的选项，支持下面的配置项：
+    - encoding: 按指定的字符集编码来读，默认值utf-8。常用备选的是GBK/gb2312。
+
+返回：返回一个json格式的js对象
+
+说明：读取失败返回null,被合并的单元格用空字符串占位。
+
+示例： 解析excel文件并返回对应json对象。
+        //使用宏路径
+       File.readCSV("$svr/dialog_settings.xls")
+        //普通路径
+       File.readCSV("app/example/server/dialog_settings.xls")   
+        //按GBK编码方式来读
+       File.readCSV("app/example/server/dialog_settings.xls",{"encoding":"GBK"})  
 
 ### `File.save()` {#save}###
 
@@ -181,6 +205,7 @@
 - excludeIndexes 数组，可选，默认值是空数组。排除的列索引，如果content是 `DataTable()` 对象，则此数组的元素可以是字段名。
 - option 对象，可选。
     - append: 为 `false`（默认）则覆盖原文件（如果存在），为 `true` 则追加到文件的最后；
+    - encoding: 按指定的字符集编码来读，默认值utf-8。常用备选的是GBK/gb2312；
     - sheetName: 对象，key为要操作的sheet名，值为json对象，可设置单元格的属性以及单元格合并功能：
        - styles: 数组，要设置的单元格属性对象数组，其中对象参数及常用值为：
             - background-color：数值型，单元格背景颜色，默认为黑色（值为32767），支持的所有颜色列表及对应id值如下（id,颜色）：
