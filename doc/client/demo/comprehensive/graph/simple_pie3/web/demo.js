@@ -11,12 +11,7 @@
            option=data.option;
             rdk.pie.chart.on('click', function (params) {
                 for(var i=0;i<option.series[0].data.length;i++){
-                    if(i==params.dataIndex){
-
-                        option.series[0].data[i].selected=true;
-                    }else{
-                        option.series[0].data[i].selected=false;
-                    }
+                    option.series[0].data[i].selected = i==params.dataIndex?true:false
                 }
                 rdk.pie.chart.setOption(option)
             })
