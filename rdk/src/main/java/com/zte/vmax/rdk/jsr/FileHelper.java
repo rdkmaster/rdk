@@ -14,8 +14,10 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import jxl.Sheet;
 import jxl.Workbook;
 import jxl.format.UnderlineStyle;
+import jxl.read.biff.BiffException;
 import jxl.write.*;
 import org.json.JSONObject;
 import org.json.XML;
@@ -395,6 +397,73 @@ public class FileHelper extends AbstractAppLoggable {
         return true;
     }
 
+    private HashMap<String, Object> parseExcelOptionFromScript(Object option) {
+        HashMap<String, Object> op = new HashMap<>();
+        if (option instanceof ScriptObjectMirror) {
+            ScriptObjectMirror som = (ScriptObjectMirror) option;
+            boolean append = som.containsKey("append") ? (Boolean) som.get("append") : false;
+            op.put("append", append);
+//            for (String sheetName : content.keySet()) {
+//                op.put(sheetName, som.get(sheetName));
+//            }
+            for (String key : som.keySet()) {
+                if (!"append".equals(key)) {
+                    op.put(key, som.get(key));
+                }
+            }
+        } else {
+            if (!(option instanceof Undefined)) {
+                logger.warn("unsupported option type[" + option.getClass().getName() + "]! ignoring it!");
+            }
+            op.put("append", false);
+        }
+        return op;
+    }
+
+    public String readExcel(String fileStr, Object option) {
+        HashMap<String, Object> op = parseExcelOptionFromScript(option);
+        fileStr = fixPath(fileStr, appName);
+        InputStream fis = null;
+        Workbook rwb = null;
+        Map<String, List<List<String>>> excelContent = new HashMap();
+        try {
+            fis = new FileInputStream(fileStr);
+            rwb = Workbook.getWorkbook(fis);
+            String[] sheetNames = rwb.getSheetNames();
+            for (String sheetName : sheetNames) {
+                List<List<String>> content = new ArrayList();
+                Sheet sheet = rwb.getSheet(sheetName);
+                for (int row = 0; row < sheet.getRows(); row++) {
+                    List<String> rowLst = new ArrayList();
+                    for (int col = 0; col < sheet.getColumns(); col++) {
+                        rowLst.add(sheet.getCell(col, row).getContents());
+                    }
+                    content.add(rowLst);
+                }
+                excelContent.put(sheetName, content);
+            }
+        } catch (FileNotFoundException e) {
+            logger.error("can not find file:" + e);
+            return null;
+        } catch (IOException e) {
+            logger.error("IO exception:" + e);
+            return null;
+        } catch (BiffException e) {
+            logger.error("BiffException:" + e);
+            return null;
+        } finally {
+            if (rwb != null) {
+                rwb.close();
+            }
+            if (fis != null)
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    logger.error("close file inputStream error:" + e);
+                }
+        }
+        return RdkUtil.toJsonString(excelContent);
+    }
     public boolean saveAsEXCEL(String file, ScriptObjectMirror content, ScriptObjectMirror excludeIndexes, Object option) {
         HashMap<String, Object> op = new HashMap<>();
         if (option instanceof ScriptObjectMirror) {
@@ -847,5 +916,6 @@ public class FileHelper extends AbstractAppLoggable {
             return ("col" + column + "row" + row).hashCode();
         }
     }
+
 }
 
