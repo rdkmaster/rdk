@@ -395,6 +395,16 @@ var File = {
         }
         return JSON.parse(result);
     },
+    readExcel:function (path, option) {
+    if (!path) {
+        log("invalid file path:", path);
+        return null;
+    }
+    path = path.toString();
+    log("reading file as string:", path);
+    var result = rdk_runtime.fileHelper().readExcel(path, option)
+    return JSON.parse(result);
+},
     save: function (file, content, append, encoding) {
         if (!file) {
             log("invalid file path:", file);

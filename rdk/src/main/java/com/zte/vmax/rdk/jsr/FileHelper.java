@@ -422,7 +422,9 @@ public class FileHelper extends AbstractAppLoggable {
 
     public String readExcel(String fileStr, Object option) {
         HashMap<String, Object> op = parseExcelOptionFromScript(option);
+
         fileStr = fixPath(fileStr, appName);
+
         InputStream fis = null;
         Workbook rwb = null;
         Map<String, List<List<String>>> excelContent = new HashMap();
