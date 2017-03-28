@@ -127,6 +127,14 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 return array;
             }
         })
+        //页面中获取过滤后的数组长度
+        .filter('size', function() {
+            return function (items) {
+                if (!items)
+                    return 0;
+                return items.length
+            }
+        })
         .directive('rdkRowParser', function($compile, $parse) {
             return {
                 restrict: 'A',
@@ -433,8 +441,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 var searchFieldFilter = "";
                 searchFieldFilter = " | fieldfilter: searchFields : globalSearch";
 
+                var filterCount = "";
+                filterCount = "$filtered = (destData| filter:globalSearch) | offset: currentPage:pageSize |limitTo: pageSize | fieldfilter: searchFields : globalSearch |size";
+
                 if (tAttributes.pagingType !== "server" && tAttributes.pagingType !== "server-auto") {
-                    tElement.find("rdk-paging").attr("count", "$filtered.length");
+                    tElement.find("rdk-paging").attr("count", filterCount);
                     tElement[0].querySelector(".rowTr").setAttribute("ng-repeat", "item in $filtered = (destData" + rowFilter + ")" + pagingFilter + searchFieldFilter);
                 } else {
                     tElement.find("rdk-paging").attr("count", "data.paging.totalRecord");
@@ -1439,7 +1450,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
             link: function($scope, element, attrs, TableCtrl) {
                 $scope.TableCtrl = TableCtrl;
                 $scope.TableCtrl.pageCtrl = $scope;
-
                 /*paging国际化处理*/
                 $scope.appScope = getTableAppScope();
                 initializePagingI18n();
