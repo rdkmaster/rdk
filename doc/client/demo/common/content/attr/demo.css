@@ -1,0 +1,3 @@
+a:before{
+	content: '这是rdk的链接:' attr(href);
+}

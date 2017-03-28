@@ -1,0 +1,11 @@
+ul{list-type:none;}
+li{list-style-type: none;}
+ul{
+	counter-reset: counter;
+}
+li{
+	counter-increment: counter;
+}
+li:before{
+	content: counters(counter,'.',cjk-ideographic) ' ';
+}

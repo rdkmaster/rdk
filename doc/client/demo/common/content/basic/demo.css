@@ -1,0 +1,3 @@
+.box:before{
+	content: '这是基础的用法！';
+}
