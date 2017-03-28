@@ -1,0 +1,12 @@
+body,p,h1,h2,h3,h4,h5,h6{margin:0;}
+ul,ol{list-type:none; margin:0; padding:0;}
+.child{
+	width: 100px;
+	height: 100px;
+	float: left;
+	background-color: blue;
+}
+.box{
+	overflow:scroll; 
+	border:20px solid red;
+}
