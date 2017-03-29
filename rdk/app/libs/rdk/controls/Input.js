@@ -14,7 +14,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
             require: '?ngModel',
             replace: true,
             scope:scopeDefine,
-            template: '<div>\
+            template: '<div class="rdk-input-module">\
                      <input type="text" class="form-control" placeholder="{{placeholder}}"  ng-blur="inpBlurHandler()">\
                  <i class="{{icon}}" \
                    style="position:absolute;right:10px;color:gray;font-size:14px;cursor:pointer"\
@@ -39,7 +39,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
                     $(iconElement).css("top", (parseInt($(inputElement).css("height")) - 14) / 2);
                     $(iconElement).css("right", 10 - parseInt($(inputElement).css("margin-left")));
 
-                    scope.$watch("readonly", function(newVal, oldVal){   
+                    scope.$watch("readonly", function(newVal, oldVal){
                         if(newVal == 'true') {
                             $(iElement[0]).find("input").attr("readOnly", true);
                             scope.showDelete = false;
@@ -47,8 +47,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
                         } else {
                             $(iElement[0]).find("input").removeAttr("readOnly");
                             $(inputElement).attr("unselectable", "off");
-                        }      
-                    }, false);                    
+                        }
+                    }, false);
 
                     var updateModel = function(inputValue) {
                         scope.$apply(function() {
