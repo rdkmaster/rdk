@@ -1,0 +1,12 @@
+.box tbody{
+	counter-reset: section;
+}
+.box tbody>tr{
+	counter-increment: section;
+}
+.box tbody>tr>td:first-child:before{
+	content:'第' counter(section) '名  :  ';
+}
+.box tbody>tr>td:first-child>div{
+	display: inline-block;
+}

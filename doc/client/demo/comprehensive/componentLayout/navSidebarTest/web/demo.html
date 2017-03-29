@@ -1,0 +1,25 @@
+<div>
+    <div class="nav-wrap g-align">
+        <div class="nav-left">
+            <img src="./img/u229.png" alt="vmax">
+            <img class="nav-img" src="./img/HOME.png" alt="vmax">
+            <p class="nav-title">NQV / Status</p>
+        </div>
+        <div class="nav-right">
+            <ds id="dsProv2" url="$svr/scripts/areaServiceProv.js"></ds>
+            <ds id="dsCity2" url="$svr/scripts/areaServiceCity.js"></ds>
+            <ds id="dsArea2" url="$svr/scripts/areaServiceArea.js"></ds>
+            <rdk_icon icon="iconfont iconfont-e8ca"></rdk_icon>
+            <rdk_combo_select  caption="'Area'">
+                <rdk-area-select ds_province="dsProv2" ds_city="dsCity2" ds_area="dsArea2" area-data="test"></rdk-area-select>
+            </rdk_combo_select>
+            <rdk_icon icon="iconfont iconfont-e8c2"></rdk_icon>
+            <rdk_time class="m-time" setting="timeSetting" label=""></rdk_time>
+            <rdk_list_selector  class="m-frequency" size="12" caption="Frequency"  data="frequencyDate2" selected-items="selected2" label-field="label">
+            </rdk_list_selector>
+            <rdk_module class="m-kpi" id="mKPI2" initialized="loadmKPI2" ready="mKPIReady2" controller="mKPIController"></rdk_module>
+            <rdk_button class="m-btn" type="guidance" label="Query"></rdk_button>
+            <rdk_button class="m-btn" type="normal" label="Compare"></rdk_button>
+        </div>
+    </div>
+</div>

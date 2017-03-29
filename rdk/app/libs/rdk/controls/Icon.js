@@ -14,7 +14,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.IconCss', 'css!rd.styles.
         template: '<div class="rdk-icon-module" style="display: inline-block">\
                     <span style="{{getCursorStyle()}}" ng-click="clickHandler()"> \
                       <i ng-if="!isImage" class="{{icon}}"></i>\
-                      <img ng-show="isImage" ng-src="{{icon}}" style="width:1em; height: 1em;">{{label}}\
+                      <img ng-if="isImage" ng-src="{{icon}}" style="width:1em; height: 1em;">{{label}}\
                     </span>\
                   </div>',
         compile: function(tEle, tAttrs) {

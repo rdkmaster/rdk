@@ -343,10 +343,13 @@
             if(!animateDom || !widChangeDom){
                 console.error ("WidthChangeAnimate Method Parameter Error");
             }
-            animateDom.classList.add('width-change-animate');
             //animateDom.parentNode.classList.add('clear-shake');
             var isIE = _this.isIE();
-            isIE && animateDom.classList.add('width-change-animate-ie');
+            if(isIE){
+                animateDom.classList.add('width-change-animate-ie');
+            }else{
+                animateDom.classList.add('width-change-animate');
+            }
             setTimeout(function(){
                 if(animateDom.offsetWidth!=widChangeDom.offsetWidth){
                     animateDom.style.width = _this.getStyle(widChangeDom,"width");
@@ -354,7 +357,7 @@
                 setTimeout(function(){
                     animateDom.classList.remove('width-change-animate');
                    // animateDom.parentNode.classList.remove('clear-shake');
-                    isIE && animateDom.classList.remove('width-change-animate-ie');
+                    animateDom.classList.remove('width-change-animate-ie');
                 },500);
             },0);
         };
