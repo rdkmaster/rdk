@@ -97,3 +97,28 @@ content结合'before'或者'after'可以使元素多出2个子元素，before对
 
 详细示例：
 <live_demo example="common/content/advanced" width="900" height="400"></live_demo>
+
+### 6.布局
+因为content和:before伪元素结合相当于给父元素添加一个子元素，我们就可以利用这个子元素在不改变html结构的同事，做到一些对布局方面的改变，比如这里就是利用content做到让大小不固定的图片在父元素中水平垂直居中。代码如下：
+
+		.box{
+			width: 100px;
+			height: 100px;
+			background-color: #ccc;
+			text-align: center;
+			font-size: 0;
+		}
+		.box:before{
+			content: 'content';
+			display: inline-block;
+			overflow: hidden;
+			width: 0;
+			height: 100%;
+			vertical-align: middle;
+		}
+		img{
+			vertical-align: middle;
+		}
+
+详细示例：
+<live_demo example="common/content/layout" width="900" height="400"></live_demo>
