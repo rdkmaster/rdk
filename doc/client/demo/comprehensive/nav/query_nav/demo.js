@@ -216,7 +216,7 @@
                         {label: "AFSSFWQ", groupId:2},
                         {label: "AGXZZXC", groupId:3},
                         {label: "FWRQWRQWD", groupId:4},
-                        {label: "BASDSDW", groupId:5}
+                        {label: "一项这么长长长。。。。。。。。", groupId:5}
                     ],
                     highLight: [{label: "RSRP", groupId:1}]
                 },

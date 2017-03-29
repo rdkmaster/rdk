@@ -14,7 +14,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect','css!rd.styl
                 frozen: '=?',
                 clear: '&?',
                 childChange: '&?',
-                isAnimate:'=?'
+                adaptContentWidth:'=?'
             };
             return {
                 restrict: 'E',
@@ -61,7 +61,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect','css!rd.styl
                             return data;
                         }
                         scope.inputStr = str;
-                        if(scope.isAnimate){scope.animate();}
+                        if(scope.adaptContentWidth){scope.animate();}
                     });
                     Utils.publish(scope, this);
                     this.changeOpenStatus = function(){
@@ -74,7 +74,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect','css!rd.styl
 
                     this.setValue = function(data){
                         scope.inputStr = data;
-                        if(scope.isAnimate){scope.animate();}
+                        if(scope.adaptContentWidth){scope.animate();}
                     };
                     this.getValue = function() {
                         return scope.inputStr;
@@ -101,7 +101,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect','css!rd.styl
                 scope.frozen = Utils.isTrue(scope.frozen, false);
                 scope.showClear = Utils.isTrue(scope.showClear, false);
                 scope.showIcon = Utils.isTrue(scope.showIcon, true);
-                scope.isAnimate = Utils.isTrue(scope.isAnimate, false);
+                scope.adaptContentWidth = Utils.isTrue(scope.adaptContentWidth, false);
                 scope.inputStr = Utils.getValue(scope.inputStr, iAttrs.inputStr, '');
                 scope.unfoldedIcon = "fa fa-angle-up";
                 scope.foldedIcon = "fa fa-angle-down";
@@ -111,11 +111,14 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect','css!rd.styl
                 scope.openShow = _openShow;
                 scope.isSelect = false;
                 var _textDom = iEle[0].querySelector(".combo-content-theme");
-                if(scope.isAnimate){
+                if(scope.adaptContentWidth){
                     var _comboAnimateDom = iEle[0].querySelector(".rdk-combo-animate");
                     var _comboContentDom = _comboAnimateDom.querySelector(".combo-content");
                     _textDom.classList.add("width-changed");
-                    _comboContentDom.style.display="inline-flex";
+                    var isIE = Utils.isIE();
+                    if(!isIE){
+                        _comboContentDom.style.display="inline-flex";
+                    }
                     var _animate = Utils.widthChangeAnimate;
                     scope.animate = function(){
                         _animate(_comboAnimateDom,_comboContentDom);
@@ -131,7 +134,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect','css!rd.styl
                 if(scope.id) {
                     EventService.register(scope.id, EventTypes.CHANGE, function(event, data) {
                         scope.inputStr = data;
-                        if(scope.isAnimate){scope.animate();}
+                        if(scope.adaptContentWidth){scope.animate();}
                     });
                 }
 

@@ -51,15 +51,15 @@
 详细示例：
 <live_demo example="controls/comboselect/clear" width="605"></live_demo>
 
-## is_animate <binding></binding>##
+## adapt_content_width <binding></binding>##
 >支持类型：布尔型
 
-`is_animate` 缺省时默认值为`false`，宽度动态增加不会动画效果
+`adapt_content_width` 缺省时默认值为`false`，comboselect宽度固定（默认120px）
 
-`is_animate` 设置成 `true` 时，宽度随着内容自适应。
+`adapt_content_width` 设置成 `true` 时，comboselect宽度（默认最小宽度120px）随着内容自适应增长。
 
 详细示例：
-<live_demo example="controls/comboselect/isAnimate" width="605"></live_demo>
+<live_demo example="controls/comboselect/adaptContentWidth" width="605"></live_demo>
 
 >## id ##
 >支持类型：字符串

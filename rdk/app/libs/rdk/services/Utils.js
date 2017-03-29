@@ -314,7 +314,13 @@
         };
 
         this.getStyle = function(element, styleName) {
-            return element.style[styleName] ? element.style[styleName] : element.currentStyle ? element.currentStyle[styleName] : window.getComputedStyle(element, null)[styleName];
+            var result = element.style[styleName] ? element.style[styleName] : element.currentStyle ? element.currentStyle[styleName] : window.getComputedStyle(element, null)[styleName];
+            //ie下有可能会返回 auto.......
+            if( (styleName =="width" || styleName =="height") && result =="auto"){
+                var property="offset"+styleName[0].toUpperCase()+styleName.slice(1);
+                return element[property]+"px"
+            }
+            return result
         };
 
         this.setStyle = function(element, obj){
@@ -338,14 +344,17 @@
                 console.error ("WidthChangeAnimate Method Parameter Error");
             }
             animateDom.classList.add('width-change-animate');
-            animateDom.style.overflow="hidden"; //兼容ie11
+            //animateDom.parentNode.classList.add('clear-shake');
+            var isIE = _this.isIE();
+            isIE && animateDom.classList.add('width-change-animate-ie');
             setTimeout(function(){
                 if(animateDom.offsetWidth!=widChangeDom.offsetWidth){
                     animateDom.style.width = _this.getStyle(widChangeDom,"width");
                 }
                 setTimeout(function(){
                     animateDom.classList.remove('width-change-animate');
-                    animateDom.style.overflow="visible";
+                   // animateDom.parentNode.classList.remove('clear-shake');
+                    isIE && animateDom.classList.remove('width-change-animate-ie');
                 },500);
             },0);
         };
