@@ -129,14 +129,10 @@
     }
     .rdk-combo-select-module .combo-content > span,
     .rdk-combo-select-module .combo-content > p{
-        vertical-align: top;display: inline-block;
+        vertical-align: middle;display: inline-block;
     }
     .rdk-combo-select-module .combo-content > p{
         min-width: 100px;
-        height: 20px;
     }
-    .rdk-combo-select-module .combo-content{
-        box-sizing: content-box;
-        height: 20px;
-    }
+
 }
