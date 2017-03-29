@@ -29,8 +29,7 @@
 .g-align .m-btn{margin-top: 1px;}
 .g-align .nav-left{margin-top:-2px}
 .g-align .m-frequency,.g-align .m-kpi{margin: 0 10px;}
-.g-align .m-area.rdk-combo-select-module{width: 200px;}
-.g-align .rdk-list-selector-module .rdk-dropdown-toggle {min-width: 200px;}
+.g-align .rdk-list-selector-module .rdk-dropdown-toggle {min-width: 180px;}
 .g-align .rdk-time-module {  display: inline-block; }
 .g-align .rdk-combo-select-module .combo-content-transclude {  background-color: transparent; }
 .g-align .nav-title{font-size: 16px; line-height: initial;}
