@@ -16,8 +16,11 @@
     border: 1px solid #ddd;
     margin: 0 .2em;
 }
-.rdk-tab-module .tabs>.show-content {
-    display:block;
+.rdk-tab-module .tabs>.content.hidden-content{
+    visibility: hidden;
+}
+.rdk-tab-module .tabs>.content.show-content {
+    visibility: visible;
 }
 .ui-tabs .ui-tabs-nav li {
     margin: 1px 1px 0 0;
