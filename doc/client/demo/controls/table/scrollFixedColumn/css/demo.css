@@ -1,0 +1,20 @@
+.red{
+    color: red !important;
+}
+.table_wrap{
+    display: flex;
+}
+.table1 .rdk-table-module{
+    width: 450px;
+}
+.table1 .rdk-table-module .table-export{
+    right: -100px;
+}
+.table2 .rdk-table-module{
+    width: 100px;
+}
+
+.iconfont-e8b7{
+    color: #008FD4;
+    font-size: 19px;
+}

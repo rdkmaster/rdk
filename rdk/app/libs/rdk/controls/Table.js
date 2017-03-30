@@ -1,10 +1,10 @@
 define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
     'rd.services.DataSourceService', "css!rd.styles.Table", 'css!rd.styles.FontAwesome',
     'css!rd.styles.Bootstrap','rd.controls.Button','css!rd.styles.IconFonts',
-    'bootstrap-select','bootstrap'
+    'bootstrap-select','bootstrap','rd.attributes.Scroll'
 ], function() {
 
-    var tableModule = angular.module('rd.controls.Table', ['rd.core','rd.controls.Button']);
+    var tableModule = angular.module('rd.controls.Table', ['rd.core','rd.controls.Button','rd.attributes.Scroll']);
 
     tableModule.run(["$templateCache", function($templateCache) {
         $templateCache.put("/src/templates/common.html",
@@ -22,8 +22,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         </select>\
                     </div>\
                </div>\
-               <div class="wrapper" style="{{scrollStyle}}">\
-                    <table class="rdk-table">\
+               <div class="wrapper" ng-style="{{scrollStyle}}">\
+                    <table class="rdk-table" >\
                         <thead ng-if="!noHeader">\
                             <tr>\
                                 <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
@@ -311,7 +311,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                 this.resetCurrentPage = function(){
                     scope.currentPage = 0;
-                }          
+                }
 
                 this.getTablePageNumber = function() {
                     return scope.pageNumber;
@@ -451,6 +451,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     tElement.find("rdk-paging").attr("count", "data.paging.totalRecord");
                     tElement[0].querySelector(".rowTr").setAttribute("ng-repeat", "item in $filtered = destData");
                 }
+                if(tAttributes.scroll=="rdk-scroll"){
+                    tElement[0].querySelector(".wrapper").setAttribute("rdk-scroll","");
+                }
 
                 return function link(scope, element, attrs, ctrl) {
 
@@ -469,7 +472,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     scope.width = {
                         "width":scope.searchWidth
                     }
-                    
+
                     var curSortIndex;
                     var sortIconStatus=true;
 
@@ -479,6 +482,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             console.error('Table with server as pagingType must provide ds attribute');
                             return;
                         }
+
+
 
                         if (scope.proxyDs) {
                             EventService.register(scope.proxyDs, EventTypes.BEFORE_QUERY, function(event, data) {
@@ -530,7 +535,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                                 return config;
                             }
-                            
+
                         };
 
                         //分页栏是否展现
@@ -969,7 +974,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     }
 
                     function _afterFixHeader(){
-                        if(scope.setting && scope.setting.scrollX) {
+                        if(scope.setting && scope.setting.scrollX && attrs.scroll!=="rdk-scroll") {
                             var handDragElement = element[0].querySelector(".sticky-wrap");//拖动产生在这层
                             $(handDragElement).addClass("sticky-wrap-overflow");
                         }
@@ -1206,12 +1211,14 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         //预留以实现自定义列的Group
                         scope.groupTargets = undefined;
                         //scrollStyle
-                        if (scope.setting && scope.setting.scrollX) {
+                        if (scope.setting && scope.setting.scrollX && attrs.scroll!=="rdk-scroll") {
+                            console.error("style style style");
                             scope.scrollStyle = "overflow:auto;width:100%;";
                             first = true;
                             $(element.find("tbody")).touchEvent("swipe", "detouch");
                             $(element.find("tbody")).touchEvent("swipe", "touch", _move);
                         }
+
                         _produceColumnDefs();
                         _produceVisibleColumnDefsCount();
                         _pageCtrlShow();
