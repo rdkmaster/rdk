@@ -82,7 +82,7 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                                             <i ng-class="{\'disabled\':isMove(+1)}" ng-click="changeTabs(+1)"  class="move fa fa-caret-right"></i>\
                                         </div>\
                                     </div>\
-                                    <div ng-transclude class="content" ng-class="{\'show-content\': protect}" rdk_scroll> </div>\
+                                    <div ng-transclude class="content" ng-class="{ true:\'show-content\',false:\'hidden-content\'}[protect]" rdk_scroll> </div>\
                                 </div>\
                         </div>';
                 },
