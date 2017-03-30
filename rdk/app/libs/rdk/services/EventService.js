@@ -23,6 +23,7 @@
         GRAPH_READY: "graph_ready",
         GRAPH_UPDATE: "graph_update",
         UPDATE_GRAPH: "update_graph",
+        GRANULARITY_CHANGE:"granularity_change",
 
         CLICK: "click",
         OPEN: "open",

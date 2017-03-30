@@ -125,5 +125,15 @@ inday/inweek/inmonth/inyear 和具体的 1d,2w,3m,4y。
 # 支持国际化 #
 <live_demo example="controls/time/i18n" width="900"></live_demo>
 
+# 事件 #
 
+如果设置了`id`，即可广播/监听以下事件。
+
+## granularity_change ##
+
+时间粒度改变后会发出 `granularityChange` 事件。
+
+这是一个简单的 `granularityChange` 事件的例子：
+
+<live_demo example="controls/time/granularityChange" width="900"></live_demo>
 
