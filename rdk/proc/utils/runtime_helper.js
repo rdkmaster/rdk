@@ -40,7 +40,9 @@ var java = {
 
     FileHelper: Java.type('com.zte.vmax.rdk.jsr.FileHelper'),
     RegFileFilter: Java.type('com.zte.vmax.rdk.util.RegFileFilter'),
-    Config: Java.type('com.zte.vmax.rdk.config.Config')
+    Config: Java.type('com.zte.vmax.rdk.config.Config'),
+
+    HashMap:Java.type('java.util.HashMap')
 };
 
 var mq = {
@@ -719,36 +721,39 @@ var Mapper = {
                 defaultValue === undefined ? key : defaultValue;
         }
     },
-
+    fromHashMap: function (javaMap, defaultValue) {
+        return function (key) {
+            return javaMap && javaMap.containsKey(key) ? javaMap.get(key) :
+                defaultValue === undefined ? key : defaultValue;
+        }
+    },
     //from sql or dataTable 可合并
     from_sql: function (sql, keyName, valueName, defaultValue) {
         Log.warn("function deprecated,please use Mapper.fromSql()");
         return Mapper.fromSql(sql, keyName, valueName, defaultValue);
     },
     fromSql: function (sql, keyName, valueName, defaultValue) {
-        return Mapper.fromObject(Mapper.mkMap(sql, keyName, valueName), defaultValue);
+        return Mapper.fromHashMap(Mapper.mkMap(sql, keyName, valueName), defaultValue);
     },
     from_datatable: function (dataTable, keyName, valueName, defaultValue) {
         Log.warn("function deprecated,please use Mapper.fromDataTable()");
         return Mapper.fromDataTable(dataTable, keyName, valueName, defaultValue);
     },
     fromDataTable: function (dataTable, keyName, valueName, defaultValue) {
-        return Mapper.fromObject(Mapper.mkMap(dataTable, keyName, valueName), defaultValue);
+        return Mapper.fromHashMap(Mapper.mkMap(dataTable, keyName, valueName), defaultValue);
     },
     mkMap: function (param, keyName, valueName) {
-        var map = {};
+        var map = new java.HashMap();
         if (_.isString(param)) {
             param = Data.fetch(param, 20000);
         }
-
         var data = param.data;
         var field = param.field;
         var keyIndex = field.indexOf(keyName);
         var valueIndex = field.indexOf(valueName);
         for (var row = 0; row < data.length; row++) {
-            map[data[row][keyIndex]] = data[row][valueIndex];
+            map.put(data[row][keyIndex],data[row][valueIndex]) ;
         }
-
         return map;
     }
 }
