@@ -1079,10 +1079,9 @@ function isMatrix(data) {
 }
 
 function kv(map, defaultValue) {
-    if(map instanceof java.HashMap){
-        return Mapper.fromHashMap(map,defaultValue);
-    }else{
-        return Mapper.fromObject(map,defaultValue);
+    return function (key, row, index) {
+        return map && _.isDefined(key) && map.hasOwnProperty(key) ? map[key] :
+            defaultValue === undefined ? key : defaultValue;
     }
 }
 
