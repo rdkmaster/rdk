@@ -1,9 +1,26 @@
 .width-change-animate{
     transition: width .318s ease-in-out;
-    animation:  width-change .5s ease-in-out;
-    -o-animation:width-change .5s ease-in-out;
+    animation:width-change .5s ease-in-out;
+}
+.width-change-animate-ie{
+    transition: width .318s ease-in-out;
+    animation:width-change-ie .5s ease-in-out;
+}
+.rdk-theme-zte-vmax .width-change-animate,.rdk-theme-zte-vmax .width-change-animate-ie{
+    transition: width .318s ease-in-out;
+    overflow: hidden;
+    animation:width-change .5s ease-in-out;
 }
 @keyframes width-change{
     0%{overflow: hidden;white-space: nowrap;}
+    50%{overflow: hidden;white-space: nowrap;}
     100%{overflow:visible;}
 }
+@keyframes width-change-ie{
+    0%{opacity: 0}
+    25%{opacity: 0}
+    50%{opacity: 0.1}
+    85%{opacity: 0.8}
+    100%{opacity: 1}
+}
+
