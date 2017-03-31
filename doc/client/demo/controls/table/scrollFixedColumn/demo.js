@@ -9,11 +9,12 @@
         $scope.setting1 = {
             scrollX : true,
             "columnDefs" :[
-                {targets : 0, class : "red"},
+                {targets : 0, class : "red1"},
             ]
         }
         $scope.setting2 = {
             scrollX : true,
+            highLight:true,
             "columnDefs" :[
                 {targets : 0, visible : false},
                 {targets : 1, visible : false},
@@ -31,7 +32,7 @@
         }
 
         $scope.click = function(item){
-            alert(angular.toJson(item));
+            console.log(angular.toJson(item));
         }
 
 

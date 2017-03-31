@@ -820,6 +820,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         };
 
                         scope.ifRowHighLight = function(item,type,columnDef){
+                            if(scope.setting.highLight){
+                                return
+                            }
                             if(type==="click"){
                                 if(!columnDef){
                                     return Utils.contains(scope.selectedModel.rows,item,true)!=-1 && scope.selectedModel.cols.length==0;
@@ -835,6 +838,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
                         };
                         scope.setSelected = function(item, event) {
+                            if(scope.setting.highLight){
+                                return
+                            }
                             if(event!=null){
                                 scope.selectedModel = _setRowHighLight(item,event.target);
                             }else{
@@ -843,6 +849,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             EventService.raiseControlEvent(scope, 'select', item);
                         };
                         scope.setHovered = function(item, event) {
+                            if(scope.setting.highLight){
+                                return
+                            }
                             scope.hoveredModel = _setRowHighLight(item,event.target);
                         };
                         scope.clearHovered = function() {
