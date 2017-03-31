@@ -747,7 +747,6 @@ var Mapper = {
         if (_.isString(param)) {
             param = Data.fetch(param, 20000);
         }
-        log(param)
         var data = param.data;
         var field = param.field;
         var keyIndex = field.indexOf(keyName);
