@@ -26,7 +26,7 @@ import org.json.XML;
 /**
  * Created by 10045812 on 16-5-6.
  */
-@SuppressWarnings("deprecation")
+@SuppressWarnings(value={"unchecked", "deprecation"})
 public class FileHelper extends AbstractAppLoggable {
 
     protected void initLogger() {
