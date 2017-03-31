@@ -210,7 +210,7 @@ Func _startRDK()
 EndFunc
 
 Func _init()
-	$java = @WorkingDir & '\proc\bin\jre\bin\java.exe'
+	$java = @WorkingDir & '\rdk\proc\bin\jre\bin\java.exe'
 	If Not FileExists($java) Then $java = EnvGet ( "JAVA_HOME" ) & '\bin\java.exe'
 
 	If Not FileExists($java) Then
@@ -283,7 +283,7 @@ Func _getVersion()
 EndFunc
 
 Func _error($msg)
-	If Not IsDeclared("gui") Then Local $gui = -1
+	If Not IsDeclared("gui") Then Local $gui = 0
 	MsgBox(16+4096, "出错啦！", $msg, 0, $gui)
 	Exit 0
 EndFunc
