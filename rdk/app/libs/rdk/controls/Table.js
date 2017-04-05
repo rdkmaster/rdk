@@ -484,6 +484,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             EventService.register(scope.proxyDs, EventTypes.BEFORE_QUERY, function(event, data) {
                                 curSortIndex=-1; //重置排序索引
                                 scope.baseCondition = data.condition;
+                                scope.sortField = undefined;    //重新发起查询后需要重置sort
                             });
 
                             if (scope.pagingType == 'server-auto') {
