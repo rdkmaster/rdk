@@ -1,27 +1,21 @@
 ## 新增功能
-- !628 数据库连接有效性校验
-- #636 软银风格导航查询栏开发
-- #637 新增rdk-list-selector控件
-- #642 rdk需捕获js服务执行未处理的异常和错误
-- !639 滑动门动画效果demo
-- #646 rdk-input增加blur事件
-- #648, !654 动态修改数据源配置功能接口, 支持动态设置数据源服务 
-- #647 tab支持showTab配合closeTab使用
-- #647 list-selector控件增加动画效果
-- #649 导出excel api可以设置单元格格式并支持合并单元格
+- !663 resetCurrentPage
+- !667 修改comboselect width支持固定和可变两种场景!
+- 增加了多个css使用技巧文章
+- #659 【需求】支持读取excel文件（xls或xlsx）
+- #661 Time控件在用户切换粒度之后，发出一个granularityChange事件出来
+- !681 优化缓存存放数据机制，大幅减少内存消耗
 
 
 ## 修改功能
-- !618 表格无数据时，搜索框的位置不正确修复
-- #630 rdk-scroll异常保护
-- !631 使用特定classloader负责加载jdbc驱动；按应用区分classloader
-- !633 AgingCacheActor在超时调用callback的时候，先remove key，再调用callback
-- !645 避免在前端给的搜索关键字长度是0时出500错误码
+- 无
 
 ## 修复故障
-- #624 rdk_time组件时间段选择问题
-- #623 time时间粒度显示，不支持双向绑定，当用js改变粒度时，页面上粒度不会改变！
-- #604 time 控件切换时间控制台有报错
-- #640 Data.fetchFirstCell()方法返回的字符串会在字符串两端加上双引号
-- !640 start在环境异常时挂死
-- !649 表格页码更新没有即时生效
+- #657 全选数据后后端搜索无数据时需重置选择状态
+- #658 隐藏了这个元素还在，以至找不到路径而报错
+- #645 修改tab渲染器BUG
+- #654 time样式和table冲突 time-basic-style加上 .rdk-time-module前缀
+- #655 table的前端搜索，第一次搜索到数据，第二次切换搜索源。没有数据，但是会显示条数。
+- #660 tab的item项不支持百分比来修改；tab的显示与隐藏由Jquery去控制,取消display:none属性！
+- !680 start.exe获取jre位置错误
+- !682 查询第一把后，进行排序和翻页操作。 从表格中钻取到新的表格，相当于重新发起了一次查询，排序信息没清空。
