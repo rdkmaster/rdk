@@ -217,10 +217,9 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   def fetch_first_cell(sql: String): String = {
     val option = DataBaseHelper.fetch(useDbSession, sql, 1)
-    option.map(it => {
-      if (it.data.length >= 1) Some(objectToJson(it.data(0)(0))) else None
-    }).flatten getOrElse objectToJson("null")
-
+    option.flatMap(it =>
+      if (it.data.length >= 1) Some(it.data(0)(0)) else None
+    ).getOrElse("null")
   }
 
   def executeUpdate(appName: String, sql: String): Int = {
