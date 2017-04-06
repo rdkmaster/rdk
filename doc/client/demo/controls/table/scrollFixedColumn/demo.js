@@ -14,7 +14,7 @@
         }
         $scope.setting2 = {
             scrollX : true,
-            highLight:true,
+            noHighLight:true,
             "columnDefs" :[
                 {targets : 0, visible : false},
                 {targets : 1, visible : false},

@@ -820,7 +820,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         };
 
                         scope.ifRowHighLight = function(item,type,columnDef){
-                            if(scope.setting.highLight){
+                            if(scope.setting.noHighLight){
                                 return
                             }
                             if(type==="click"){
@@ -838,7 +838,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
                         };
                         scope.setSelected = function(item, event) {
-                            if(scope.setting.highLight){
+                            if(scope.setting.noHighLight){
                                 return
                             }
                             if(event!=null){
@@ -849,7 +849,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             EventService.raiseControlEvent(scope, 'select', item);
                         };
                         scope.setHovered = function(item, event) {
-                            if(scope.setting.highLight){
+                            if(scope.setting.noHighLight){
                                 return
                             }
                             scope.hoveredModel = _setRowHighLight(item,event.target);
@@ -1221,7 +1221,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         scope.groupTargets = undefined;
                         //scrollStyle
                         if (scope.setting && scope.setting.scrollX && attrs.scroll!=="rdk-scroll") {
-                            console.error("style style style");
                             scope.scrollStyle = "overflow:auto;width:100%;";
                             first = true;
                             $(element.find("tbody")).touchEvent("swipe", "detouch");

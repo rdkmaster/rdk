@@ -372,6 +372,10 @@ cells 为 改变的行列信息的数组信息
 详细举例如下
 <live_demo example="controls/table/rowSpan"></live_demo>
 
+### 设置行高亮效果 ###
+通过`setting`中的`noHighLight` 属性控制。`noHighLight` 缺省时默认为`false`，表示表格行选择和悬浮状态有高亮效果。
+`noHighLight` 可设置成 true 取消表格的高亮效果。
+
 
 ## 复选框列 add_check_box ##
 >支持类型：布尔型
