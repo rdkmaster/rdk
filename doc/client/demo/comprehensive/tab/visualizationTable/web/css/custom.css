@@ -1,0 +1,217 @@
+html, body{
+    height:100%;
+}
+.visualizationTable {
+    position: absolute;
+    left:0;
+    width: 600px;
+    height:100%;
+    -webkit-backface-visibility: hidden;
+    -moz-transition: left 1s ease-in-out; /* Firefox 4 */
+    -webkit-transition: left 1s ease-in-out; /* Safari 和 Chrome */
+    -o-transition: left 1s ease-in-out; /* Opera */
+    transition: left 1s ease-in-out;
+    -webkit-box-shadow:0 4px 4px 1px rgba(0,0,0,.5);
+    -moz-box-shadow:  0 4px 4px 1px rgba(0,0,0,.5);
+    box-shadow:  0 4px 4px 1px rgba(0,0,0,.5);
+}
+.visualizationTable .visualizationTableTitle {
+    margin-bottom: 10px;
+}
+.visualizationTable .visualizationTableTitle i {
+    color:#41addc;
+}
+.visualizationTable .visualizationTableTitle img {
+    margin:10px 5px 0 10px;
+    background-color: #41addc;
+    vertical-align: bottom;
+}
+.visualizationTable .rdk-tab-module .move-wrap {
+    display: none;
+}
+.visualizationTable .rdk-tab-module .ui-widget-header {
+    border-bottom: 2px solid #e5e5e5;
+}
+.visualizationTable .sidebarBtn .iconfont {
+    font-size: 72px;
+}
+.visualizationTable .sidebarBtn {
+    position: absolute;
+    top:350px;
+    left:600px;
+}
+.visualizationTable .ui-widget-content {
+    margin:0;
+}
+.visualizationTable .ui-tabs .ui-tabs-nav {
+    padding: 0;
+}
+.visualizationTable .rdk-tab-module .tabs>.content {
+height: -moz-calc(100% - 42px);
+height: -webkit-calc(100% - 42px);
+height: calc(100% - 42px);
+}
+.visualizationTable .rdk-table-module {
+    height: 100%;
+}
+.rdk-tab-module .ui-widget-content {
+    height:100%
+}
+.visualizationTable .ui-tabs .ui-tabs-panel,.inlineTab .ui-tabs .ui-tabs-panel {
+    padding:0;
+}
+.visualizationTable .rdk-table-module .rdk-table > thead > tr > th {
+    border-bottom:1px solid #41addc;
+    border-top: none;
+    color: #434343;
+}
+.visualizationTable .rdk-table-module .rdk-table thead>tr {
+    background-color:#fff;
+}
+.ui-tabs .ui-tabs-nav {
+    width: 100% !important;
+}
+.ui-tabs .ui-tabs-nav {
+    display: flex;
+}
+.inlineTab .ui-tabs .ui-tabs-nav{
+    display:initial;
+}
+.ui-tabs .ui-tabs-nav li {
+    padding-left:0;
+    padding-right:0;
+    margin-left:0;
+    margin-right:0;
+    flex:1;
+    color:#666
+}
+.inlineTab .rdk-tab-module .rdk-tabs-wrap {
+    margin-top: 10px;
+    margin-bottom: 7px;
+}
+.inlineTab .inlineTabTitle {
+    color: #0084f4;
+}
+.inlineTab .rdk-tab-module .bottom_line {
+    display: none;
+}
+.inlineTab .ui-tabs .ui-widget-content {
+   padding: 0 20px;
+}
+.inlineTab .ui-tabs .ui-tabs-nav li {
+    width:80px;
+    color: #41addc;
+    flex:none;
+}
+.inlineTab .rdk-tab-module .tabs>.content {
+    margin:0;
+}
+.inlineTab .rdk-tab-module .ui-widget-header {
+    border-bottom: none;
+}
+.inlineTab .rdk-tab-module .ui-tabs .ui-tabs-nav li + li a{
+    border-left:none;
+}
+.inlineTab .rdk-tab-module .title li a.selected {
+    background-color: #41addc;
+    color: #fff
+}
+.inlineTab .rdk-tab-module .ui-tabs .ui-tabs-nav li a{
+    line-height: 26px;
+    padding:0;
+    border-radius: initial;
+    border:1px solid #41addc;
+    font-size: 12px;
+}
+.rdk-tab-module .tabs>.content {
+    margin:0;
+}
+.inlineTab .rdk-tab-module,.visualizationTable .rdk-tab-module {
+    margin:0;
+}
+.inlineTab .ui-tabs .ui-tabs-nav {
+    display: flex;
+    justify-content:center;
+}
+.inlineTab .ui-tabs .ui-tabs-nav li:first-child a{
+    border-bottom-left-radius:3px;
+    border-top-left-radius:3px;
+}
+.inlineTab .ui-tabs .ui-tabs-nav li:last-child a{
+    border-bottom-right-radius:3px;
+    border-top-right-radius:3px;
+}
+/*inlineTab 表格样式*/
+.inlineTab .rdk-table-module .rdk-table tr td,
+.inlineTab .rdk-table-module .rdk-table tr th{
+    border-right:none;
+    border-left:none;
+}
+.inlineTab .rdk-table-module .rdk-table > thead > tr > th ,
+.visualizationTable .rdk-table-module .rdk-table > thead > tr > th{
+    border-bottom:1px solid #41addc;
+    border-top: none;
+    color: #434343;
+}
+.inlineTab .rdk-table-module .rdk-table thead>tr,
+.inlineTab .rdk-table-module .rdk-table > tbody > tr:not(.row-span):nth-child(even),
+.visualizationTable .rdk-table-module .rdk-table thead>tr,
+.visualizationTable .rdk-table-module .rdk-table > tbody > tr:not(.row-span):nth-child(even){
+    background-color: #fff;
+}
+.inlineTab .rdk-table-module .rdk-table thead>tr,
+.visualizationTable .rdk-table-module .rdk-table thead>tr{
+    background-color: rgba(51,51,51,.05);
+}
+.inlineTab .rdk-table-module .rdk-table > thead > tr > th:first-child,
+.inlineTab .rdk-table-module .rdk-table > tbody > tr > td:first-child {
+    text-align: left;
+}
+.visualizationTable .rdk-table-module .rdk-table tr td,
+.visualizationTable .rdk-table-module .rdk-table tr th{
+    border-right:none;
+    border-left:none;
+}
+/*导出*/
+.exportTable {
+    position: absolute;
+    bottom:0;
+    right:0;
+}
+.rdk-table-module .search-position-bottom {
+    bottom: 6px;
+}
+.visualizationTable .rdk-table-module .wrapper {
+    height: 690px;
+}
+.inlineTab .rdk-table-module .wrapper {
+    height: 100%;
+}
+.rdk-table-module .visiblePageLine {
+    position: absolute;
+    bottom: 6px;
+    left: 164px;
+}
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+    float:none;
+    display: inline-block;
+    width:100%;
+    text-align: center;
+}
+.rdk-tab-module .tabs>.content {
+    border: none;
+}
+.inlineTab .ui-tabs .ui-tabs-nav li {
+    display: inline-block;
+}
+i.iconfont {
+    color: #41addc;
+    font-size: 16px;
+}
+i.iconfont-e8c8 {
+    font-size: 20px;
+}
+
+.iconfont-e8c9:before {
+    color:#fff;
+}

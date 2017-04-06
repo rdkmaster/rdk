@@ -1,0 +1,16 @@
+<div class="visualizationTable">
+    <div class="visualizationTableTitle">
+        <img src="img/HOME.png" alt="">Statistic&nbsp;<i>/&nbsp;RSRP</i>
+    </div>
+    <rdk_tab draggable="false">
+        <div title="Statistic">
+            <rdk_module id="m-statistic"  url="template/statistic.html"></rdk_module>
+        </div>
+        <div title="Cell Problems">
+            <rdk_module id="m-cellProb"   url="template/cellproblems.html"></rdk_module>
+        </div>
+    </rdk_tab>
+    <div class="sidebarBtn" ng-click="sideBarBtn()">
+        <i ng-class="{true:'iconfont iconfont-e8c6',false:'iconfont iconfont-e8b2'}[iconCondition]"></i>
+    </div>
+</div>
