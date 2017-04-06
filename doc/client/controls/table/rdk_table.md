@@ -474,6 +474,14 @@ cells 为 改变的行列信息的数组信息
 `show_export`值为false时，表示不显示导出按钮，其为默认值;
 `show_export`值为true时，表示显示导出按钮;
 
+## scroll ##
+>支持类型：字符串
+
+通过设置`scroll`属性的值给表格增加RDK的滚动条。`scroll`="rdk-scroll"
+
+详细示例如下:
+<live_demo example="controls/table/scrollFixedColumn"></live_demo>
+
 ## export_label ##
 >支持类型：字符串
 

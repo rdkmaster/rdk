@@ -6,14 +6,8 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main($scope) {
-        $scope.setting1 = {
-            scrollX : true,
-            "columnDefs" :[
-                {targets : 0, class : "red1"},
-            ]
-        }
+        $scope.setting1 = {};
         $scope.setting2 = {
-            scrollX : true,
             noHighLight:true,
             "columnDefs" :[
                 {targets : 0, visible : false},
