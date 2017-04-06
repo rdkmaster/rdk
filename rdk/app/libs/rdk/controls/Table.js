@@ -451,7 +451,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     tElement.find("rdk-paging").attr("count", "data.paging.totalRecord");
                     tElement[0].querySelector(".rowTr").setAttribute("ng-repeat", "item in $filtered = destData");
                 }
-                if(tAttributes.scroll=="rdk-scroll"){
+
+                if(tAttributes.customScroll=="rdk-scroll" && tAttributes.rdkScroll == null){
                     tElement[0].querySelector(".wrapper").setAttribute("rdk-scroll","");
                 }
 
@@ -594,6 +595,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         $timeout(function(){
                             scope.floatableHeader = Utils.isTrue(scope.floatableHeader, true);
                         }, 0);
+
+                        scope.selectable=angular.isDefined(scope.setting) && angular.isDefined(scope.setting.selectable) ? scope.setting.selectable:true;
 
                         scope.compileHeads={};//需要被编译的表头对象
                         _searchGapClick();//只要有search
@@ -820,7 +823,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         };
 
                         scope.ifRowHighLight = function(item,type,columnDef){
-                            if(scope.setting.noHighLight){
+                            if(!scope.selectable){
                                 return
                             }
                             if(type==="click"){
@@ -838,7 +841,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
                         };
                         scope.setSelected = function(item, event) {
-                            if(scope.setting.noHighLight){
+                            if(!scope.selectable){
                                 return
                             }
                             if(event!=null){
@@ -849,7 +852,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             EventService.raiseControlEvent(scope, 'select', item);
                         };
                         scope.setHovered = function(item, event) {
-                            if(scope.setting.noHighLight){
+                            if(!scope.selectable){
                                 return
                             }
                             scope.hoveredModel = _setRowHighLight(item,event.target);
@@ -983,7 +986,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     }
 
                     function _afterFixHeader(){
-                        if(scope.setting && scope.setting.scrollX && attrs.scroll!=="rdk-scroll") {
+                        if(scope.setting && scope.setting.scrollX && attrs.customScroll!=="rdk-scroll") {
                             var handDragElement = element[0].querySelector(".sticky-wrap");//拖动产生在这层
                             $(handDragElement).addClass("sticky-wrap-overflow");
                         }
@@ -1220,7 +1223,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         //预留以实现自定义列的Group
                         scope.groupTargets = undefined;
                         //scrollStyle
-                        if (scope.setting && scope.setting.scrollX && attrs.scroll!=="rdk-scroll") {
+                        if (scope.setting && scope.setting.scrollX && attrs.customScroll!=="rdk-scroll") {
                             scope.scrollStyle = "overflow:auto;width:100%;";
                             first = true;
                             $(element.find("tbody")).touchEvent("swipe", "detouch");

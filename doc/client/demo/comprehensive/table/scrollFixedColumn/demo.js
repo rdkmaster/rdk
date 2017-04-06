@@ -8,7 +8,7 @@
     function main($scope) {
         $scope.setting1 = {};
         $scope.setting2 = {
-            noHighLight:true,
+            selectable:false,
             "columnDefs" :[
                 {targets : 0, visible : false},
                 {targets : 1, visible : false},
