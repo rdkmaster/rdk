@@ -11,6 +11,13 @@
 
   `steps` 是所有步骤的集合，可以是某个`数据源`的id。
 
+    <rdk_steps
+        steps="[{ title: "register", status: 'process' },
+                { title: "login", status: 'wait' }, ...]">
+    </rdk_steps>
+
+>`steps`集合中每个对象的`title`属性是必须的，`status`属性枚举值有 enum:'wait','process','finish','error',除了`error` `status`需要根据实际情况手动设置，其余状态会根据步骤索引自动更新
+
 ## active_step ##
 > 支持类型：字符串
 

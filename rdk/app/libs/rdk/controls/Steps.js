@@ -95,11 +95,7 @@ define(['angular','rd.core', 'css!rd.styles.Steps','css!rd.styles.FontAwesome'],
             scope.isCurStepActive=false;
             scope.appScope=Utils.findAppScope(scope);
             scope.$watch("appScope.activeStep",function(newVal,oldVal){
-                if(scope.activeStep==newVal){
-                    scope.isCurStepActive=true
-                }else{
-                    scope.isCurStepActive=false;
-                }
+                scope.isCurStepActive=scope.activeStep==newVal
             });
         }
     }]);
