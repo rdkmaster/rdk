@@ -23,24 +23,24 @@ ul,li{
 	line-height: 30px;
 }
 /*********右上角关闭按钮样式**********/
-.rdk-popupservice-dialog .ui-state-hover .ui-icon,
 .rdk-popupservice-dialog .ui-state-focus .ui-icon,
 .rdk-popupservice-dialog .ui-state-default .ui-icon {
-	height: 14px;
-	width: 14px;
-	margin-top: -7px;
-	margin-left: -7px;
-	background: #FFF url(../images/close.png) no-repeat 1px 1px ;
+	height: 20px;
+	width: 20px;
+	margin-top: -10px;
+	margin-left: -10px;
+	background: #fff  url(../images/close.png) no-repeat 0px 0px;
+}
+.rdk-popupservice-dialog .ui-state-hover .ui-icon {
+	background-color: rgba(0,143,208,0.1);
 }
 .rdk-popupservice-dialog {
 	width: 250px!important;
 	box-shadow: rgba(0,0,0,.1) 4px 4px 10px;
 }
 .ui-dialog .ui-dialog-titlebar-close {
-	height: 14px;
-	width: 14px;
 	right: 10px;
-	margin-top:-7px;
+	margin-top:-10px;
 }
 .ui-dialog .ui-dialog-title{
 	margin: 0;
