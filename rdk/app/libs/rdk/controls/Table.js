@@ -673,7 +673,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 destObj.display="none";
                             }
                             destObj.width = columnDef.width;
-                            destObj.cursor = 'move';
+                            if(scope.setting && scope.setting.scrollX){
+                                destObj.cursor = 'move';
+                            }
                             return destObj;
                         }
 
