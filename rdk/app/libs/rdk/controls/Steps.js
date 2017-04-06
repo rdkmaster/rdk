@@ -81,7 +81,7 @@ define(['angular','rd.core', 'css!rd.styles.Steps','css!rd.styles.FontAwesome'],
     }]);
     stepsApp.directive('rdkStepsContent', ['Utils','EventService', 'EventTypes',function factory(Utils,EventService,EventTypes) {
         var scopeDefine={
-            stepIndex:"=?" //设置活动步骤,默认0索引
+            activeStep:"=?" //设置活动步骤,默认0索引
         };
         return {
             restrict: 'AE',
@@ -94,9 +94,8 @@ define(['angular','rd.core', 'css!rd.styles.Steps','css!rd.styles.FontAwesome'],
         function _link(scope,element,attrs,rdkStepsContrller) {
             scope.isCurStepActive=false;
             scope.appScope=Utils.findAppScope(scope);
-            scope.activeStep=scope.appScope.activeStep;
             scope.$watch("appScope.activeStep",function(newVal,oldVal){
-                if(scope.stepIndex==newVal){
+                if(scope.activeStep==newVal){
                     scope.isCurStepActive=true
                 }else{
                     scope.isCurStepActive=false;
