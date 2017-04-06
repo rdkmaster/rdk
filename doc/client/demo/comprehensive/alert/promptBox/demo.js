@@ -12,6 +12,7 @@
             var sampleUrl = 'template/prompt_module.html';
             var initData = {};
             var myOption = {
+                modal: false
             }
             moduleID = PopupService.popup(sampleUrl, initData, myOption);
         }
