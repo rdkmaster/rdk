@@ -799,6 +799,13 @@ var Data = {
         Log.info("update datasource config!changed:" + json)
         rdk_runtime.reloadDataSource();
     },
+
+    //根据数据源名删除数据源
+    removeDataSource: function (dbName) {
+        Log.info("remove datasource:"+dbName);
+        rdk_runtime.removeDBInfoByName(dbName);
+    },
+
     //启用数据源
     useDataSource: function () {
         var selector = Cache.get(Data.DataSourceSelector);

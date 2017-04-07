@@ -49,6 +49,10 @@ class Runtime(engine: ScriptEngine) extends Logger {
   def reloadDataSource: Unit = {
     DataSource.init(Config.config)
   }
+
+  def removeDBInfoByName(dbName: String) = {
+    DataSource.removeDBInfoByName(dbName)
+  }
   //获取context信息
   def getReqCtxHeaderInfo: String = {
     this.context match {
