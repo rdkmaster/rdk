@@ -802,7 +802,8 @@ var Data = {
 
     //根据数据源名删除数据源
     removeDataSource: function (dbName) {
-        Log.info("remove datasource:"+dbName);
+        Log.info("remove datasource:" + dbName);
+        java.Config.withoutPath(dbName);
         rdk_runtime.removeDBInfoByName(dbName);
     },
 

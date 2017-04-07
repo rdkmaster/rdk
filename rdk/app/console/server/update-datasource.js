@@ -28,7 +28,6 @@
                 return "request error!" + request;
             }
             var dbName = "db." +reqLst[1];
-            java.Config.withoutPath(dbName);
             Data.removeDataSource(dbName);
         }
     }
