@@ -29,6 +29,7 @@
             }
             var dbName = "db." +reqLst[1];
             Data.removeDataSource(dbName);
+            return 'ok';
         }
     }
 })();
