@@ -441,8 +441,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 var searchFieldFilter = "";
                 searchFieldFilter = " | fieldfilter: searchFields : globalSearch";
 
-                var filterCount = "";
-                filterCount = "$filtered = (destData| filter:globalSearch) | offset: currentPage:pageSize |limitTo: pageSize | fieldfilter: searchFields : globalSearch |size";
+                var filterCount  = "";
+                filterCount = "$filtered.length";
 
                 if (tAttributes.pagingType !== "server" && tAttributes.pagingType !== "server-auto") {
                     tElement.find("rdk-paging").attr("count", filterCount);

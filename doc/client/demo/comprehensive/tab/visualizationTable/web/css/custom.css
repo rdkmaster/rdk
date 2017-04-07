@@ -29,6 +29,9 @@ html, body{
 .visualizationTable .rdk-tab-module .move-wrap {
     display: none;
 }
+.visualizationTable .ui-helper-reset {
+    line-height: normal;
+}
 .visualizationTable .rdk-tab-module .ui-widget-header {
     border-bottom: 2px solid #e5e5e5;
 }
@@ -42,14 +45,19 @@ html, body{
 }
 .visualizationTable .ui-widget-content {
     margin:0;
+    padding: 0;
+}
+.visualizationTable .ui-widget-content .tableContent {
+    margin-top: 18px;
 }
 .visualizationTable .ui-tabs .ui-tabs-nav {
     padding: 0;
 }
 .visualizationTable .rdk-tab-module .tabs>.content {
-height: -moz-calc(100% - 42px);
-height: -webkit-calc(100% - 42px);
-height: calc(100% - 42px);
+    height: -moz-calc(100% - 42px);
+    height: -webkit-calc(100% - 42px);
+    height: calc(100% - 42px);
+    margin: 0 20px;
 }
 .visualizationTable .rdk-table-module {
     height: 100%;
@@ -94,9 +102,6 @@ height: calc(100% - 42px);
 }
 .inlineTab .rdk-tab-module .bottom_line {
     display: none;
-}
-.inlineTab .ui-tabs .ui-widget-content {
-   padding: 0 20px;
 }
 .inlineTab .ui-tabs .ui-tabs-nav li {
     width:80px;
@@ -154,18 +159,16 @@ height: calc(100% - 42px);
     color: #434343;
 }
 .inlineTab .rdk-table-module .rdk-table thead>tr,
-.inlineTab .rdk-table-module .rdk-table > tbody > tr:not(.row-span):nth-child(even),
-.visualizationTable .rdk-table-module .rdk-table thead>tr,
-.visualizationTable .rdk-table-module .rdk-table > tbody > tr:not(.row-span):nth-child(even){
-    background-color: #fff;
-}
-.inlineTab .rdk-table-module .rdk-table thead>tr,
 .visualizationTable .rdk-table-module .rdk-table thead>tr{
     background-color: rgba(51,51,51,.05);
 }
 .inlineTab .rdk-table-module .rdk-table > thead > tr > th:first-child,
 .inlineTab .rdk-table-module .rdk-table > tbody > tr > td:first-child {
     text-align: left;
+}
+.inlineTab .rdk-table-module .rdk-table > tbody > tr:not(.row-span):nth-child(even),
+.visualizationTable .rdk-table-module .rdk-table > tbody > tr:not(.row-span):nth-child(even){
+    background-color: rgba(187,187,187,0.08);
 }
 .visualizationTable .rdk-table-module .rdk-table tr td,
 .visualizationTable .rdk-table-module .rdk-table tr th{
@@ -182,7 +185,7 @@ height: calc(100% - 42px);
     bottom: 6px;
 }
 .visualizationTable .rdk-table-module .wrapper {
-    height: 690px;
+    height: 666px;
 }
 .inlineTab .rdk-table-module .wrapper {
     height: 100%;
