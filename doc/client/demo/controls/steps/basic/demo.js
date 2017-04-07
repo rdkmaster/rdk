@@ -8,9 +8,9 @@
     function main(scope) {
         scope.avtiveStepIndex=0;
         scope.steps=[
-            {title:"Select campaign",status:"finish"},
-            {title:"Create an ad group",status:"finish"},
-            {title:"Create an ad",status:"finish"},
+            {title:"Select campaign"},
+            {title:"Create an ad group"},
+            {title:"Create an ad"},
             {title:"Finish over"}
         ]
         scope.nextStepHandler = function(event,data) {
