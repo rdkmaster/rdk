@@ -1,10 +1,10 @@
 define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
     'rd.services.DataSourceService', "css!rd.styles.Table", 'css!rd.styles.FontAwesome',
     'css!rd.styles.Bootstrap','rd.controls.Button','css!rd.styles.IconFonts',
-    'bootstrap-select','bootstrap'
+    'bootstrap-select','bootstrap','rd.attributes.Scroll'
 ], function() {
 
-    var tableModule = angular.module('rd.controls.Table', ['rd.core','rd.controls.Button']);
+    var tableModule = angular.module('rd.controls.Table', ['rd.core','rd.controls.Button','rd.attributes.Scroll']);
 
     tableModule.run(["$templateCache", function($templateCache) {
         $templateCache.put("/src/templates/common.html",
@@ -22,8 +22,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         </select>\
                     </div>\
                </div>\
-               <div class="wrapper" style="{{scrollStyle}}">\
-                    <table class="rdk-table">\
+               <div class="wrapper" ng-style="{{scrollStyle}}">\
+                    <table class="rdk-table" >\
                         <thead ng-if="!noHeader">\
                             <tr>\
                                 <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
@@ -311,7 +311,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                 this.resetCurrentPage = function(){
                     scope.currentPage = 0;
-                }          
+                }
 
                 this.getTablePageNumber = function() {
                     return scope.pageNumber;
@@ -452,6 +452,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     tElement[0].querySelector(".rowTr").setAttribute("ng-repeat", "item in $filtered = destData");
                 }
 
+                if(tAttributes.customScroll=="rdk-scroll" && tAttributes.rdkScroll == null){
+                    tElement[0].querySelector(".wrapper").setAttribute("rdk-scroll","");
+                }
+
                 return function link(scope, element, attrs, ctrl) {
 
                     scope.getRowSpan = function(itemRowSpan, item) {
@@ -469,7 +473,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     scope.width = {
                         "width":scope.searchWidth
                     }
-                    
+
                     var curSortIndex;
                     var sortIconStatus=true;
 
@@ -479,6 +483,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             console.error('Table with server as pagingType must provide ds attribute');
                             return;
                         }
+
+
 
                         if (scope.proxyDs) {
                             EventService.register(scope.proxyDs, EventTypes.BEFORE_QUERY, function(event, data) {
@@ -531,7 +537,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                                 return config;
                             }
-                            
+
                         };
 
                         //分页栏是否展现
@@ -590,6 +596,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         $timeout(function(){
                             scope.floatableHeader = Utils.isTrue(scope.floatableHeader, true);
                         }, 0);
+
+                        scope.selectable=angular.isDefined(scope.setting) && angular.isDefined(scope.setting.selectable) ? scope.setting.selectable:true;
 
                         scope.compileHeads={};//需要被编译的表头对象
                         _searchGapClick();//只要有search
@@ -666,7 +674,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 destObj.display="none";
                             }
                             destObj.width = columnDef.width;
-                            destObj.cursor = 'move';
+                            if(scope.setting && scope.setting.scrollX){
+                                destObj.cursor = 'move';
+                            }
                             return destObj;
                         }
 
@@ -816,6 +826,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         };
 
                         scope.ifRowHighLight = function(item,type,columnDef){
+                            if(!scope.selectable){
+                                return
+                            }
                             if(type==="click"){
                                 if(!columnDef){
                                     return Utils.contains(scope.selectedModel.rows,item,true)!=-1 && scope.selectedModel.cols.length==0;
@@ -831,6 +844,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
                         };
                         scope.setSelected = function(item, event) {
+                            if(!scope.selectable){
+                                return
+                            }
                             if(event!=null){
                                 scope.selectedModel = _setRowHighLight(item,event.target);
                             }else{
@@ -839,6 +855,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             EventService.raiseControlEvent(scope, 'select', item);
                         };
                         scope.setHovered = function(item, event) {
+                            if(!scope.selectable){
+                                return
+                            }
                             scope.hoveredModel = _setRowHighLight(item,event.target);
                         };
                         scope.clearHovered = function() {
@@ -970,7 +989,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     }
 
                     function _afterFixHeader(){
-                        if(scope.setting && scope.setting.scrollX) {
+                        if(scope.setting && scope.setting.scrollX && attrs.customScroll!=="rdk-scroll") {
                             var handDragElement = element[0].querySelector(".sticky-wrap");//拖动产生在这层
                             $(handDragElement).addClass("sticky-wrap-overflow");
                         }
@@ -1207,12 +1226,13 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         //预留以实现自定义列的Group
                         scope.groupTargets = undefined;
                         //scrollStyle
-                        if (scope.setting && scope.setting.scrollX) {
+                        if (scope.setting && scope.setting.scrollX && attrs.customScroll!=="rdk-scroll") {
                             scope.scrollStyle = "overflow:auto;width:100%;";
                             first = true;
                             $(element.find("tbody")).touchEvent("swipe", "detouch");
                             $(element.find("tbody")).touchEvent("swipe", "touch", _move);
                         }
+
                         _produceColumnDefs();
                         _produceVisibleColumnDefsCount();
                         _pageCtrlShow();
