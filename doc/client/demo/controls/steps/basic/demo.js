@@ -8,9 +8,9 @@
     function main(scope) {
         scope.avtiveStepIndex=0;
         scope.steps=[
-            {title:"Select campaign"},
-            {title:"Create an ad group"},
-            {title:"Create an ad"},
+            {title:"Select campaign",status:"finish"},
+            {title:"Create an ad group",status:"finish"},
+            {title:"Create an ad",status:"finish"},
             {title:"Finish over"}
         ]
         scope.nextStepHandler = function(event,data) {
@@ -19,29 +19,12 @@
                 return
             }
             scope.avtiveStepIndex++;
-
             scope.steps[0].status="error";
         };
         scope.preStepHandler = function(event,data) {
             console.log("preStepHandler");
-
             scope.avtiveStepIndex--;
         };
-        scope.change=function(){
-            scope.steps=[
-                {title:"register"},
-                {title:"login"},
-                {title:"out login"}
-            ]
-        }
-        var obj={};
-        scope.change2=function(){
-            obj.a=1;
-        }
-        scope.change3=function(){
-            debugger;
-            obj.a=2;
-        }
     }
 
     var controllerName = 'DemoController';
