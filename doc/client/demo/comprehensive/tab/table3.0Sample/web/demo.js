@@ -11,7 +11,7 @@
                 {
                     title : "操作",
                     targets:6,
-                    render : '<i class="iconfont iconfont-e8b7"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="iconfont iconfont-e8c8"></i>'                }
+                    render : '<i class="iconfont iconfont-e8b7"></i>' }
             ]
         }
     }

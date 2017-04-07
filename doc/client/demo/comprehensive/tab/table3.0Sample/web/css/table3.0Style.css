@@ -9,6 +9,9 @@
 .tableSample .rdk-table-module .rdk-table > tbody > tr > td:nth-child(6) {
     text-align: right;
 }
+.tableSample .rdk-table-module .rdk-table > tbody > tr > td:last-child {
+    text-align: center;
+}
 .tableSample i.iconfont {
     color: #008fd4;
     font-size: 16px;
