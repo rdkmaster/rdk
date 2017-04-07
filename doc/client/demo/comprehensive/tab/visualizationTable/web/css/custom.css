@@ -18,6 +18,9 @@ html, body{
 .visualizationTable .visualizationTableTitle {
     margin-bottom: 10px;
 }
+.visualizationTable .rdk-tab-module .bottom_line {
+    height: 2px;
+}
 .visualizationTable .visualizationTableTitle i {
     color:#41addc;
 }
