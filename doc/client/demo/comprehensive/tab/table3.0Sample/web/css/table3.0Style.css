@@ -1,1 +1,18 @@
-
+.tableSample {
+    width: 680px;
+    margin: 60px;
+}
+.rdk-table-module .rdk-table > tbody > tr > td {
+    text-align: left;
+}
+.rdk-table-module .rdk-table > tbody > tr > td:nth-child(3),
+.rdk-table-module .rdk-table > tbody > tr > td:nth-child(6) {
+    text-align: right;
+}
+.tableSample i.iconfont {
+    color: #008fd4;
+    font-size: 16px;
+}
+.tableSample i.iconfont-e8c8 {
+    font-size: 20px;
+}
