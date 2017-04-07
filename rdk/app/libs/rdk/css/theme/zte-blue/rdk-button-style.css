@@ -18,11 +18,12 @@
 	position: relative;
 	z-index: 50;
 	height: 30px;
+	line-height: 30px;
 	border-radius: 4px;
 	font-size:14px;
 	text-align: center;
 	white-space:nowrap;
-	padding:0px 16px;
+	padding:0 16px;
 	font-family: 'Microsoft YaHei';
 	cursor:pointer;
 	outline:none;
@@ -37,8 +38,8 @@
     height:100%;
     border-radius: 5px;
     position:absolute;
-    top: 0px;
-    left:0px;
+    top: 0;
+    left:0;
     z-index: 30;
 }
 .rdk-button-enabled{
