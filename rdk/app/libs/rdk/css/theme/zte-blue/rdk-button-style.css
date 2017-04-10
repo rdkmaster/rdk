@@ -82,6 +82,25 @@
 .rdk-button-down {
 	background:rgba(0,0,0,0.15);
 }
+.rdk-theme-zte-vmax .rdk-button-shade {
+	background-color: #fff;
+}
+.rdk-theme-zte-vmax .rdk-button-btn {
+	color: #008FD4;
+	border: 1px solid #ccc;
+}
+.rdk-theme-zte-vmax .rdk-shade-opacity {
+	background-color: #fff;
+	border: 1px solid #3c9fcb
+}
+.rdk-theme-zte-vmax .rdk-button-selected{
+	background-color: #fff;
+	border: 1px solid #3793bb
+}
+.rdk-theme-zte-vmax .rdk-button-enabled {
+	background-color: #fff;
+	color: #ccc;
+}
 /* -- theme style : rdk-theme-zte-vmax start --*/
 /*.rdk-theme-zte-vmax .rdk-button-guidance ~ .rdk-button-btn {
 	text-shadow:0 0 0.2em #8df10b, -0 -0 0.2em #8df10b;
