@@ -2,14 +2,18 @@
     width: 680px;
     margin: 60px;
 }
-.tableSample .rdk-table-module .rdk-table > tbody > tr > td {
+.tableSample .rdk-table-module .rdk-table > tbody > tr > td,
+.tableSample .rdk-table-module .rdk-table > thead > tr > th{
     text-align: left;
 }
 .tableSample .rdk-table-module .rdk-table > tbody > tr > td:nth-child(3),
-.tableSample .rdk-table-module .rdk-table > tbody > tr > td:nth-child(6) {
+.tableSample .rdk-table-module .rdk-table > thead > tr > th:nth-child(3),
+.tableSample .rdk-table-module .rdk-table > tbody > tr > td:nth-child(6),
+.tableSample .rdk-table-module .rdk-table > thead > tr > th:nth-child(6) {
     text-align: right;
 }
-.tableSample .rdk-table-module .rdk-table > tbody > tr > td:last-child {
+.tableSample .rdk-table-module .rdk-table > tbody > tr > td:last-child,
+.tableSample .rdk-table-module .rdk-table > thead > tr > th:last-child {
     text-align: center;
 }
 .tableSample i.iconfont {
@@ -18,23 +22,4 @@
 }
 .tableSample i.iconfont-e8c8 {
     font-size: 20px;
-}
-.tableSample .rdk-table-module .rdk-table thead>tr {
-    background-color:#fff;
-}
-.tableSample .rdk-table-module .rdk-table > thead > tr > th{
-    border-bottom:1px solid #41addc;
-    border-top: none;
-    color: #434343;
-}
-.tableSample .rdk-table-module .rdk-table thead>tr{
-    background-color: rgba(51,51,51,.05);
-}
-.tableSample .rdk-table-module .rdk-table > tbody > tr:not(.row-span):nth-child(even){
-    background-color: rgba(187,187,187,0.08);
-}
-.tableSample .rdk-table-module .rdk-table tr td,
-.tableSample .rdk-table-module .rdk-table tr th{
-    border-right:none;
-    border-left:none;
 }

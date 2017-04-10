@@ -349,3 +349,22 @@ i.regular_right,i.regular_left{
 .rdk-table-module .unvisiblePageLine{
     visibility: hidden;
 }
+.rdk-theme-zte-vmax .rdk-table-module .rdk-table thead>tr {
+    background-color:#fff;
+}
+.rdk-theme-zte-vmax .rdk-table-module .rdk-table > thead > tr > th{
+    border-bottom:1px solid #41addc;
+    border-top: none;
+    color: #434343;
+}
+.rdk-theme-zte-vmax .rdk-table-module .rdk-table thead>tr{
+    background-color: rgba(51,51,51,.05);
+}
+.rdk-theme-zte-vmax .rdk-table-module .rdk-table > tbody > tr:not(.row-span):nth-child(even){
+    background-color: rgba(187,187,187,0.08);
+}
+.rdk-theme-zte-vmax .rdk-table-module .rdk-table tr td,
+.rdk-theme-zte-vmax .rdk-table-module .rdk-table tr th{
+    border-right:none;
+    border-left:none;
+}
