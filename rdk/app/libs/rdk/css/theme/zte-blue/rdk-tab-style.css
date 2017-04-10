@@ -149,3 +149,23 @@
     color: #cdcdcd;
     cursor: default;
 }
+.rdk-theme-zte-vmax .move-wrap {
+    display: none;
+}
+.rdk-theme-zte-vmax .rdk-tab-module .rdk-tabs-wrap .title {
+    display: flex;
+}
+.rdk-theme-zte-vmax .ui-tabs .ui-tabs-nav li {
+    flex:1;
+    text-align: center;
+}
+.rdk-theme-zte-vmax .ui-tabs .ui-tabs-nav li a {
+    width: 100%;
+    display: inline-block;
+}
+.rdk-theme-zte-vmax .rdk-tab-module .tabs>.content {
+    border: none;
+}
+.rdk-theme-zte-vmax .rdk-tab-module .bottom_line {
+    height : 2px;
+}
