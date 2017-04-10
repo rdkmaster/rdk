@@ -824,6 +824,9 @@ var Data = {
         var dataObj = JSON.parse(rdk_runtime.fetchWithDataSource(dataSource, sql, maxLine));
         return new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data);
     },
+    allowNullToString: function (strict) {
+        Cache.put("#_#allowNullToString#_#", !strict);
+    },
     fetch: function (sql, maxLine) {
         if (!maxLine || !_.isDefined(maxLine)) {
             Log.warn("param maxLine empty,set maxLine=4000");
