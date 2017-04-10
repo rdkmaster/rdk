@@ -107,6 +107,10 @@
     border: 0;
     color: #333;
     background-color: transparent;
+    user-select:none;
+    -moz-user-select:none;
+    -webkit-user-select:none;
+    -ms-user-select:none;
 }
 
 .rdk-theme-zte-vmax .rdk-combo-select-module .combo-content-theme{
@@ -129,6 +133,9 @@
     }
     .rdk-theme-zte-vmax .rdk-combo-select-module .combo-content{
         display: inline-flex;
+    }
+    .rdk-theme-zte-vmax .rdk-combo-select-module .combo-content-theme{
+        flex: auto;
     }
     .rdk-combo-select-module .combo-content > span,
     .rdk-combo-select-module .combo-content > p{
