@@ -63,6 +63,9 @@
 .rdk-button-normal {
 	background: #5395d8;
 }
+.rdk-button-default {
+	background: #41addc;
+}
 .rdk-button-danger {
 	background: #e78f4e
 }
