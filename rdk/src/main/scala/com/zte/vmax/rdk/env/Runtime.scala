@@ -195,12 +195,23 @@ class Runtime(engine: ScriptEngine) extends Logger {
   }
 
   def fetch(sql: String, maxLine: Int): String = {
-    val data = DataBaseHelper.fetch(useDbSession, sql, maxLine)
+    var data: Option[DataTable] = None
+    if (cacheGet("#_#allowNullToString#_#").asInstanceOf[Boolean]) {
+      data = DataBaseHelper.fetch(useDbSession, sql, maxLine, null)
+    } else {
+      data = DataBaseHelper.fetch(useDbSession, sql, maxLine)
+    }
+
     objectToJson(data getOrElse "null") //转json？
   }
 
   def fetchWithDataSource(dataSource: String, sql: String, maxLine: Int): String = {
-    val data = DataBaseHelper.fetch(DBSession(application, Some(dataSource)), sql, maxLine)
+    var data: Option[DataTable] = None
+    if (cacheGet("#_#allowNullToString#_#").asInstanceOf[Boolean]) {
+      data = DataBaseHelper.fetch(DBSession(application, Some(dataSource)), sql, maxLine, null)
+    } else {
+      data = DataBaseHelper.fetch(DBSession(application, Some(dataSource)), sql, maxLine)
+    }
     objectToJson(data getOrElse "null")
   }
 
