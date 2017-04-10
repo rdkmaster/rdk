@@ -85,22 +85,22 @@
 .rdk-button-down {
 	background:rgba(0,0,0,0.15);
 }
-.rdk-theme-zte-vmax .rdk-button-shade {
+.rdk-button-white {
 	background-color: #fff;
 }
-.rdk-theme-zte-vmax .rdk-button-btn {
+.rdk-button-white + .rdk-button-btn {
 	color: #008FD4;
 	border: 1px solid #ccc;
 }
-.rdk-theme-zte-vmax .rdk-shade-opacity {
+.rdk-button-white + .rdk-shade-opacity {
 	background-color: #fff;
 	border: 1px solid #3c9fcb
 }
-.rdk-theme-zte-vmax .rdk-button-selected{
+.rdk-button-white + .rdk-button-selected{
 	background-color: #fff;
 	border: 1px solid #3793bb
 }
-.rdk-theme-zte-vmax .rdk-button-enabled {
+.rdk-button-white + .rdk-button-enabled {
 	background-color: #fff;
 	color: #ccc;
 }
