@@ -3,11 +3,6 @@
 	margin: 0 10px 20px 10px;
 	min-width: 80px;
 }
-.ui-dialog .ui-dialog-titlebar-close {
-	height: 14px;
-	width: 14px;
-	right: 10px;
-}
 .rdk-popupservice-content .rdk-alert-btnLine .rdk-alert-yes {
 	background: #f6f6f6;
 	border: 1px solid #ddd;

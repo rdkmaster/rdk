@@ -82,14 +82,6 @@ div.ui-dialog .ui-dialog-content{
 }
 .rdk-popupservice-dialog .ui-widget-header {
 	color:#008fd4;
-	background-color: #eaeaea;
-}
-.rdk-popupservice-dialog  .ui-state-default, .rdk-popupservice-dialog  .ui-widget-content .ui-state-default,
-.rdk-popupservice-dialog  .ui-widget-header .ui-state-default {
-	border: 1px solid #eaeaea;
-}
-.rdk-popupservice-dialog  .ui-button-icon-primary {
-	background-color:  #eaeaea;
 }
 .rdk-alert-yes ,.rdk-alert-ok{
 	background: #85c56c;
