@@ -1,0 +1,77 @@
+<div caption="Compare Configuration">
+    <rdk_steps steps="steps" active-step="avtiveStepIndex"></rdk_steps>
+
+    <p class="discretion">{{compareDiscretion}}</p>
+
+    <rdk_steps_content active-step="0">
+        <div class="step-content-item">
+            <img src="images/KPI-blue.png" alt="" style="width:52px;height: 32px">
+            <div class="step-content-item-text">
+                <span>KPI</span>
+                <span>对比区域内各个指标间的优劣</span>
+            </div>
+        </div>
+        <div class="step-content-item">
+            <img src="images/time-gray.png" alt="" style="width:52px;height: 32px">
+            <div class="step-content-item-text">
+                <span>Time</span>
+                <span>对比不同时间内指标的变化</span>
+            </div>
+        </div>
+        <div class="step-content-item">
+            <img src="images/EARFCN-gray.png" alt="" style="width:52px;height: 32px">
+            <div class="step-content-item-text">
+                <span>EARFCN</span>
+                <span>对比不同频点中指标的差异</span>
+            </div>
+        </div>
+        <div class="step-content-item">
+            <img src="images/operator-gray.png" alt="" style="width:52px;height: 32px">
+            <div class="step-content-item-text">
+                <span>Operator</span>
+                <span>对比不同运营商之间的差异</span>
+            </div>
+        </div>
+    </rdk_steps_content>
+    <rdk_steps_content active-step="1">
+        <div class="configuration-btn">
+            <rdk_button click= "addCompareWindowHandler" label=" + Add Compare Window" type="default"></rdk_button>
+            <rdk_button click= "addDifferenceWindowHandler" label=" + Add Difference Window" type="default"></rdk_button>
+        </div>
+        <div class="configuration-wrap">
+            <h3 class="configuration-title">
+                <img src="images/mainwindowicon.png" alt="">
+                <p>Main Window</p>
+                <img src="images/gearicon-blue.png" alt="">
+            </h3>
+            <div class="configuration-content">
+                <div class="active">
+                    <span>KPI</span>
+                    <p>RSRP</p>
+                </div>
+                <div>
+                    <span>Time</span>
+                    <p>2016-02-22</p>
+                </div>
+                <div>
+                    <span>EARFCN</span>
+                    <p>[38]2585.0</p>
+                </div>
+                <div>
+                    <span>Operator</span>
+                    <p>ZTE</p>
+                </div>
+            </div>
+        </div>
+    </rdk_steps_content>
+    <rdk_steps_content active-step="2">
+
+    </rdk_steps_content>
+
+    <div class="compare-btn">
+        <rdk_button ng-if="avtiveStepIndex==0" click= "cancelStepHandler" label="Cancel"  type="white"></rdk_button>
+        <rdk_button ng-if="avtiveStepIndex!==0" click= "backStepHandler" label="Back"  type="white"></rdk_button>
+        <rdk_button ng-if="avtiveStepIndex!==steps.length-1" click= "nextStepHandler" type="default" label="Next"></rdk_button>
+        <rdk_button ng-if="avtiveStepIndex==steps.length-1" click= "finishStepHandler" type="default" label="Compare"></rdk_button>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+.content-item{
+    border: 1px solid #ccc;
+    margin: 0 4px;
+    height: 100px;
+    width: 770px;
+    line-height: 100px;
+}
+.btn-wrap{
+    float: right;
+    margin: 10px 25px;
+}
+.rdk-button-btn{
+    width: 80px;
+    text-align: center;
+}
