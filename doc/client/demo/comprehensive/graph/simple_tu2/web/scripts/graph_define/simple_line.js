@@ -187,6 +187,7 @@ return {
     series : [
         {
             name: data.rowDescriptor[0],animation:true,
+            type:'bar',
             data: data.data[0],showAllSymbol :true,
             legendHoverLink:false,
 			itemStyle : { 
@@ -194,14 +195,15 @@ return {
                         label : {show: false, position: 'top'},
                         barBorderColor:colors[0],
                         color:colors[0],
-                        barBorderRadius: 0,
+                        barBorderRadius: 0
                     }
                 },
             barCategoryGap:'15%',//控制条形柱间的间距
-            type:'bar'
+            barMaxWidth:20,
         },
         {
             name: data.rowDescriptor[1],animation:true,
+            type:'line',
             symbolSize:[5,5],
 			itemStyle : { 
                 normal: {
@@ -212,7 +214,6 @@ return {
             smooth: false,
             data: data.data[1],showAllSymbol :true,
             hoverAnimation:false,
-            type:'line'
         }
     ]
 };
