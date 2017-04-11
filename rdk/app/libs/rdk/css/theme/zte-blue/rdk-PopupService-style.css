@@ -4,9 +4,6 @@
 	box-shadow: rgba(0,0,0,.4) 1px 1px 5px 0px;
 	outline: #d3d3d3;
 }
-.ui-dialog {
-	overflow: inherit;
-}
 .ui-corner-all {
 	border-radius: 0;
 	border-top-left-radius: 4px;
@@ -88,8 +85,8 @@
 .rdk-popupservice-dialog .ui-dialog {
 	overflow: inherit;
 }
-.rdk-popupservice-dialog .ui-dialog .ui-dialog-content{
-	overflow: visible;
+.ui-dialog {
+	overflow: inherit;
 }
 .rdk-popupservice-dialog .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
 	background: none;
