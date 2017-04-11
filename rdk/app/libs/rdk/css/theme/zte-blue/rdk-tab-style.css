@@ -168,4 +168,8 @@
 }
 .rdk-theme-zte-vmax .rdk-tab-module .bottom_line {
     height : 2px;
+    bottom:-1px;
+}
+.rdk-theme-zte-vmax .rdk-tab-module .ui-widget-header {
+    border-bottom: 2px solid #bbb;
 }
