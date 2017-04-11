@@ -92,7 +92,10 @@ ul,li{
 	color: #008fd4
 }
 .alertContent button:hover {
-	border: 1px solid #3c9fcb;
+	border: 1px solid #9bc9dd;
+}
+.alertContent button:active {
+	border: 1px solid #3793bb;
 }
 .alertContent button:focus {
 	outline: none;

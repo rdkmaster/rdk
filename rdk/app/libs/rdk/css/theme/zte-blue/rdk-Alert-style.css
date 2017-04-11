@@ -16,22 +16,27 @@ div,p,button {
 	text-align: left;
     display: inline-block;
 }
-div.rdk-popupservice-dialog .ui-widget-header {
-	height: 34px;
-	padding: 0px 5px 0px 7px;
-	border-radius: 0;
-	border: none;
+.rdk-popupservice-dialog.ui-corner-all {
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0
 }
-div.rdk-popupservice-dialog .ui-widget-header .ui-dialog-title {
-	line-height: 30px;
-	padding: 0;
+.rdk-popupservice-dialog .ui-widget-header {
+	color:#008fd4;
+	background-color: #f2f2f2;
+	font-size: 14px;
+	height: 34px;
+	line-height: 34px;
+	border-bottom: none;
+	padding: 0 10px 0 5px;
+}
+.rdk-popupservice-dialog .ui-widget-header .ui-dialog-title{
+	margin: 0;
+}
+.ui-widget-overlay{
+	background: rgba(0,0,0,.2);
 }
 .rdk-popupservice-dialog  .ui-button-text {
 	display: none;
-}
-.rdk-popupservice-dialog  .ui-dialog .ui-dialog-titlebar-close {
-	width: 18px;
-	height: 18px;
 }
 .rdk-popupservice-dialog.ui-dialog{
 	padding: 0;
@@ -40,18 +45,9 @@ div.rdk-popupservice-dialog .ui-widget-header .ui-dialog-title {
 .rdk-popupservice-dialog .ui-dialog-titlebar-close:focus {
 	outline: none;
 }
-.rdk-popupservice-dialog .ui-state-hover .ui-icon,
-.rdk-popupservice-dialog .ui-state-focus .ui-icon,
-.rdk-popupservice-dialog .ui-state-default .ui-icon {
-    background-image: url("../../../../jquery-ui/css/images/ui-icons_222222_256x240.png");
-    height: 18px;
-    width: 18px;
-    margin-top: -9px;
-    margin-left: -9px;
-}
 div.ui-dialog .ui-dialog-content{
 	padding: 0;
-	background-color: #f6f6f6
+	background-color: #fff
 }
 .rdk-alert-left {
 	text-align: left;
@@ -67,19 +63,22 @@ div.ui-dialog .ui-dialog-content{
 	border-radius: 5px;
 	margin: 0 13px 20px 13px;
 }
+.rdk-alert-tableImg {
+	padding-top: 20px;
+	background:#fff;
+}
 .rdk-alert-tableImg >img {
 	height:42px;
 	width:42px;
 	border:none;
 	display: block;
 	margin:0 auto;
-	margin-top: 20px;
 }
 
 /*  todo  */
 
 .rdk-popupservice-dialog .ui-widget-content{
-	background-color: #f6f6f6;
+	background-color: #fff;
 }
 .rdk-popupservice-dialog .ui-widget-header {
 	color:#008fd4;
@@ -120,7 +119,7 @@ div.ui-dialog .ui-dialog-content{
 	color: #fff;
 }
 .rdk-alert-tableImg >img {
-	background:#f6f6f6;
+	background:#fff;
 }
 .rdk-alert-svrMsgBtn:focus{
 	border:1px solid #fff;

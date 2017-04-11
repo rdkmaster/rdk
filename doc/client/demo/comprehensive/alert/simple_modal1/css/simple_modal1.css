@@ -14,55 +14,12 @@ ul,li{
 	padding: 0 !important;
 	background: #f6f6f6 !important
 }
-/*********右上角关闭按钮样式**********/
-.rdk-popupservice-dialog .ui-state-hover .ui-icon,
-.rdk-popupservice-dialog .ui-state-focus .ui-icon,
-.rdk-popupservice-dialog .ui-state-default .ui-icon {
-	height: 14px;
-	width: 14px;
-	margin-top: -7px;
-	margin-left: -7px;
-	background: #eaeaea url(../images/close.png) no-repeat -1px -1px ;
-}
-.ui-dialog .ui-dialog-titlebar-close {
-	height: 14px;
-	width: 14px;
-	right: 10px;
-	margin-top:-7px;
-}
-.ui-dialog .ui-dialog-title{
-	font-size:14px;
-	color:#008fd4;
-}
-.ui-widget-header {
-	border-bottom: none;
-}
-.ui-corner-all {
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0
-}
-.ui-dialog .ui-dialog-titlebar-close {
-	padding: 0;
-}
-.ui-button-icon-only .ui-button-text {
-	padding: 0;
-}
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-	background: #eee;
-	border: none;
-}
-.ui-state-default:focus, .ui-widget-content .ui-state-default:focus {
-	border: none;
-	outline: none;
-}
 .content {
 	height: 100%;
 	border-bottom: 1px solid transparent;
 	border-top:1px solid transparent;
 }
-.ui-dialog {
-	overflow: inherit;
-}
+
 /*******容器内部子样式********/
 .content>ul>li>span{
 	display:inline-block;

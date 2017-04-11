@@ -2,7 +2,8 @@
 	padding: 0;
 	margin: 0;
     border-radius: 5px;
-    box-shadow: black 1px 1px 10px;
+	box-shadow: rgba(0,0,0,.4) 1px 1px 5px 0px;
+	outline: #d3d3d3;
 }
 
 .rdk-popupservice-dialog .rdk-popupservice-titlebar{
@@ -27,4 +28,55 @@
 	height: 5px;
 	padding: 0;
 	z-index: 9999;
+}
+.rdk-popupservice-dialog .ui-state-focus .ui-icon,
+.rdk-popupservice-dialog .ui-state-default .ui-icon {
+	height: 20px;
+	width: 20px;
+	margin-top: -10px;
+	margin-left: -10px;
+	background: url(../../img/close.png) no-repeat 0 0;
+}
+.rdk-popupservice-dialog .ui-state-hover .ui-icon {
+	background-color: rgba(0,143,208,0.1);
+}
+.rdk-popupservice-dialog .ui-dialog .ui-dialog-titlebar-close {
+	right: 10px;
+	margin-top:-10px;
+}
+.rdk-popupservice-dialog .ui-dialog .ui-dialog-title{
+	margin: 0;
+	padding-left: 20px;
+	font-size: 12px;
+	color:#434343;
+}
+.rdk-popupservice-dialog .ui-widget-header {
+	border-bottom: none;
+}
+.rdk-popupservice-dialog .rdk-popupservice-dialog .ui-corner-all {
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0
+}
+.rdk-popupservice-dialog .ui-dialog .ui-dialog-titlebar-close {
+	padding: 0;
+}
+.rdk-popupservice-dialog .ui-button-icon-only .ui-button-text {
+	padding: 0;
+}
+.rdk-popupservice-dialog .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+	background: #eee;
+	border: none;
+}
+.rdk-popupservice-dialog .ui-state-default:focus, .ui-widget-content .ui-state-default:focus {
+	border: none;
+	outline: none;
+}
+.rdk-popupservice-dialog .ui-dialog {
+	overflow: inherit;
+}
+.rdk-popupservice-dialog .ui-dialog .ui-dialog-content{
+	overflow: visible;
+}
+.rdk-popupservice-dialog .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+	background: none;
 }
