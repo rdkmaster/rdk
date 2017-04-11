@@ -81,6 +81,26 @@
                 element.classList.remove("left-animate");
             },500)
         }
+
+        scope.selectItem = function(event){
+            var e=event || window.event;
+            var target = e.target || e.srcElement;
+            while(!target.classList.contains("step-content-item") ){
+                target = target.parentNode;
+            }
+            if(target.classList.contains("step-content-item")){
+                target.classList.add("active-item")
+            }
+        }
+        function _findParentScrollNode(node){
+            while (node && !node.classList.contains("rdk-scroll") && node.nodeName!="BODY"){
+                node=node.parentNode;
+            }
+            if(node.nodeName == "BODY"){
+                return null
+            }
+            return node;
+        }
     }
     var controllerName = 'DemoController';
     var controllerName2 = 'CompareWindowCtrl';

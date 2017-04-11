@@ -7,8 +7,11 @@ img,p{margin: 0;padding: 0}
     padding: 10px;
     width: inherit;
     margin-bottom: 10px;
-    border: 1px solid #008FD4;
+    border: 1px solid #cbcbcb;
     border-radius: 6px;
+}
+.step-content-item.active-item{
+    border: 1px solid #008FD4;
 }
 .step-content-item img{
     display: inline-block;
