@@ -19,7 +19,9 @@ html, body{
     margin-bottom: 10px;
 }
 .visualizationTable .rdk-tab-module .bottom_line {
-    height: 2px;
+    height: 3px;
+    background-color: #41addc;
+    bottom: -2px;
 }
 .visualizationTable .visualizationTableTitle i {
     color:#41addc;
@@ -36,7 +38,13 @@ html, body{
     line-height: normal;
 }
 .visualizationTable .rdk-tab-module .ui-widget-header {
-    border-bottom: 2px solid #e5e5e5;
+    border-bottom: 3px solid #e5e5e5;
+}
+.visualizationTable .rdk-tab-module .bottom_line em {
+    border-top-color: #41addc
+}
+.visualizationTable .rdk-tab-module .bottom_line em:focus {
+    outline: none;
 }
 .visualizationTable .sidebarBtn .iconfont {
     font-size: 72px;
@@ -96,9 +104,11 @@ html, body{
     flex:1;
     color:#666
 }
+.ui-tabs .ui-tabs-nav li:focus {
+    outline: none;
+}
 .inlineTab .rdk-tab-module .rdk-tabs-wrap {
     margin-top: 10px;
-    margin-bottom: 7px;
 }
 .inlineTab .inlineTabTitle {
     color: #0084f4;
