@@ -22,6 +22,21 @@ define([/*  'underscore'   */], function() {
 
 // attributes 是当前Graph所在的html节点的所有属性集。也是一种辅助数据。
 return function(data, context, GraphService, attributes) {
+    var sampleColors = ["#54acd5","#f99660","#a4bf6a","#ec6d6d","#f7b913","#8ac9b6","#bea5c8","#01c5c2","#a17660"];
+    var vmaxColors = ['#41addc', '#bea5c8', '#85c56c', '#f99660', '#ffc20e', '#ec6d6d', '#8ac9b6', '#585eaa', '#b22c46', '#96582a'];
+    function GetRequest() {
+        var url = location.search; //获取url中"?"符后的字串
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for(var i = 0; i < strs.length; i ++) {
+                theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+    var  colors = GetRequest().vmax==3.0?vmaxColors:sampleColors;
 return {
     /*对于有的内容进行换行处理方式*/
     /*
@@ -113,7 +128,7 @@ return {
         {
              // name: '掉话次数',
              nameTextStyle:{
-                color:'#54acd5',
+                color:colors[0],
                 fontSize:10,
                 fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
                 fontWeight: 'normal',
@@ -124,7 +139,7 @@ return {
 					fontSize:10,
 					fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
 					fontWeight: 'normal',
-					color: '#54acd5',
+					color: colors[0],
                 },
                 formatter: function(params){
                     return  params.toFixed(1)==0 ? "" : params.toFixed(1)
@@ -137,7 +152,7 @@ return {
              axisLine: {
                 show:true,
                 lineStyle: {
-                    color: '#54acd5'
+                    color: colors[0]
                 }
             }
         },
@@ -152,19 +167,19 @@ return {
 					fontSize:10,
 					fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
 					fontWeight: 'normal',
-					color: '#f99660' 
+					color: colors[1] 
 				},
                 formatter: function(params){
                         return  params.toFixed(1)==0 ? "" : params.toFixed(1)
                     }             
 			},
             nameTextStyle:{
-               color:'#f99660',
+               color:colors[1],
                fontStyle:'10px'
              },
             axisLine: {
                 lineStyle: {
-                    color: '#f99660',
+                    color: colors[1],
                 }
             },  
         }
@@ -172,32 +187,33 @@ return {
     series : [
         {
             name: data.rowDescriptor[0],animation:true,
+            type:'bar',
             data: data.data[0],showAllSymbol :true,
             legendHoverLink:false,
 			itemStyle : { 
                     normal: {
                         label : {show: false, position: 'top'},
-                        barBorderColor:'#54acd5',
-                        color:'#54acd5',
+                        barBorderColor:colors[0],
+                        color:colors[0],
                         barBorderRadius: 0
                     }
                 },
             barCategoryGap:'15%',//控制条形柱间的间距
-            type:'bar'
+            barMaxWidth:20,
         },
         {
             name: data.rowDescriptor[1],animation:true,
+            type:'line',
             symbolSize:[5,5],
 			itemStyle : { 
                 normal: {
-                    color:'#f99660',
+                    color:colors[1],
                 }
             },
             yAxisIndex: 1,
             smooth: false,
             data: data.data[1],showAllSymbol :true,
             hoverAnimation:false,
-            type:'line'
         }
     ]
 };
