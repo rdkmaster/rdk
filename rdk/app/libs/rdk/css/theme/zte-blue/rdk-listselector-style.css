@@ -102,20 +102,23 @@
     height: 16px;
     border-right: none;
     padding: 0;
-    color: #fff;
+    color: #4c4c4c;
     font-size: 12px;
 }
 .rdk-theme-zte-vmax .rdk-list-selector-module .rdk-dropdown-toggle p{
     padding: 1px 0;
-    color: #fff;
+    color: #000;
 }
 .rdk-theme-zte-vmax .rdk-list-selector-module .rdk-dropdown-toggle:focus{
     border-color: transparent;
     outline: 0;
     box-shadow: none;
 }
+.rdk-theme-zte-vmax .rdk-list-selector-module .rdk-dropdown-toggle:hover{
+    background-color: #d8d8d8;
+}
 .rdk-theme-zte-vmax .rdk-list-selector-module .rdk-dropdown-toggle.open{
-    background-color: rgba(0,0,0,.18);
+    background-color:  #cfcfcf;
     box-shadow:none;
 }
 .rdk-theme-zte-vmax .rdk-list-selector-module .rdk-selector-content{

@@ -1,0 +1,58 @@
+.m-compare-time-tools{
+    background-color: #41addc;
+    height: 30px;
+    color: #fff;
+    padding: 0 10px;
+    font-size: 12px;
+    display: inline-flex;
+    border-radius: 4px;
+}
+.u-time .u-time-select{
+    border: 1px solid rgba(0,0,0,0.15);
+    margin-top: 2px;
+    height: 285px;
+    width: 210px;
+    padding: 8px 5px 0 5px;
+    background-color: #fff;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.175);
+    border-radius: 0 0 4px 4px;
+}
+/*rdk 控件样式布局调节*/
+.rdk-theme-zte-vmax .rdk-combo-select-module .combo-content{
+    flex-flow: row;height: 30px;
+}
+.rdk-theme-zte-vmax .rdk-combo-select-module .combo-content-theme{
+    padding: 0;line-height: 31px;font-size: 12px;
+}
+.rdk-theme-zte-vmax .rdk-combo-select-module .width-fixed{
+    width: 90px;
+}
+.rdk-theme-zte-vmax .rdk-combo-select-module .combo-caption{
+    line-height: 31px;padding-left: 6px;padding-right: 12px;
+}
+.rdk-theme-zte-vmax .rdk-combo-select-module .combo-content .combo-content-icon{
+    color: #fff;
+}
+.rdk-theme-zte-vmax .rdk-combo-select-module .combo-content-icon {
+    top: 6px;
+    right:2px;
+}
+.rdk-theme-zte-vmax .rdk-combo-select-module .combo-content-transclude {
+    left: 8px;
+}
+.rdk-theme-zte-vmax .rdk-combo-select-module .combo-content.combo-content-open {
+    background-color: transparent;
+}
+.rdk-theme-zte-vmax .rdk-combo-select-module .combo-caption {
+    padding-left: 10px;
+}
+/*icon*/
+.right-icon.rdk-icon-module img{width: 16px !important;height: 16px !important;cursor: pointer}
+.left-icon{  background-color: #008FD4;border-radius: 4px;  }
+.rdk-icon-module{  width: 20px;height: 20px;margin: 5px 0;text-align: center;  }
+/*f-left-line 功能：在标签前面划条线*/
+.f-left-line{position: relative;}
+.right-icon.f-left-line{margin-left: 20px}
+.f-left-line:before{font-size:0;position:absolute;left: -10px;top: 0;  z-index: 1;  width: 0;  height: 20px;  content: ""; border-left: 1px solid #008fd4;}
+/*f-round 功能：在标签前面划圆点*/
+.f-round:before{ font-size: 0;  position: absolute;  left: 111px;  top: 15px;  z-index: 1;  width: 2px;  height: 2px;  border-radius: 2px;  content: "";  background-color: #fff;}

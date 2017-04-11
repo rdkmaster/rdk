@@ -85,13 +85,16 @@
 .rdk-theme-zte-vmax .rdk-combo-select-module .combo-caption{
     display: inline-block;
     height: 16px;
-    color: #fff;
+    color: #4c4c4c;
     font-size: 12px;
     border-right: 0;
     line-height: 32px;
 }
+.rdk-theme-zte-vmax .rdk-combo-select-module .combo-content:hover{
+    background-color: #d8d8d8;
+}
 .rdk-theme-zte-vmax .rdk-combo-select-module .combo-content.combo-content-open{
-    background-color: rgba(0,0,0,.18);
+    background-color: #cfcfcf;
 }
 .rdk-theme-zte-vmax .rdk-combo-select-module .combo-content{
     display: inline-flex;
@@ -114,7 +117,7 @@
     border: none;
     padding: 2px 10px;
     margin: 0;
-    color: #fff;
+    color: #000;
     background-color: transparent;
     overflow: visible;
 }
