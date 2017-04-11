@@ -6,74 +6,29 @@
 ul,li{
 	list-style:none;
 }
+.rdk-popupservice-dialog {
+	width : 250px!important;
+}
 .modalcss{
 	font-size: 12px;
-	padding: 0;
+	padding: 0 ;
 	font-family: '微软雅黑';
 	z-index: 1001;
 	padding: 0 !important;
 }
-.rdk-popupservice-dialog .rdk-popupservice-titlebar i {
+
+.subText,.rdk-popupservice-dialog .ui-widget-header {
+	padding: 0 10px;
+	font-size: 14px;
+	font-weight: bold;
+	background-color: #f4f6f8;
+	color: #434343;
+}
+.ui-dialog .ui-dialog-title {
 	margin: 0;
 }
-.rdk-popupservice-dialog .rdk-popupservice-titlebar {
-	padding: 0;
-	border-bottom: 1px solid #41addc;
-	background-color: #fff;
-	line-height: 30px;
-}
-/*********右上角关闭按钮样式**********/
-.rdk-popupservice-dialog .ui-state-focus .ui-icon,
-.rdk-popupservice-dialog .ui-state-default .ui-icon {
-	height: 20px;
-	width: 20px;
-	margin-top: -10px;
-	margin-left: -10px;
-	background: #fff  url(../images/close.png) no-repeat 0px 0px;
-}
-.rdk-popupservice-dialog .ui-state-hover .ui-icon {
-	background-color: rgba(0,143,208,0.1);
-}
-.rdk-popupservice-dialog {
-	width: 250px!important;
-	box-shadow: rgba(0,0,0,.1) 4px 4px 10px;
-}
-.ui-dialog .ui-dialog-titlebar-close {
-	right: 10px;
-	margin-top:-10px;
-}
-.ui-dialog .ui-dialog-title{
-	margin: 0;
+.subText {
 	padding-left: 20px;
-	font-size: 12px;
-	color:#434343;
-}
-.ui-widget-header {
-	border-bottom: none;
-}
-.ui-corner-all {
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0
-}
-.ui-dialog .ui-dialog-titlebar-close {
-	padding: 0;
-}
-.ui-button-icon-only .ui-button-text {
-	padding: 0;
-}
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-	background: #eee;
-	border: none;
-}
-.ui-state-default:focus, .ui-widget-content .ui-state-default:focus {
-	border: none;
-	outline: none;
-}
-.ui-dialog {
-	overflow: inherit;
-}
-.ui-dialog .ui-dialog-content{
-	overflow: visible;
 }
 /*******容器内部子样式********/
 .alertContent {
@@ -131,17 +86,20 @@ ul,li{
 	margin-right: 16px;
 }
 .listContent li {
-	line-height: 30px;
+	height: 50px;
+	padding: 0 20px 0 20px;
+	border-bottom: 1px solid #f5f5f5;
 }
-.listContent ul li:nth-child(2n+1) {
-	background-color: rgba(204,204,204,.2);
+.listContent li p {
+	margin: 0;
+	line-height: 25px;
+	font-size: 12px;
+}
+.listContent li span {
+	font-size: 14px;
 }
 .listContent ul {
 	margin: 0;
 }
-.listContent li span {
-	display: inline-block;
-	width: 80px;
-	text-align: right;
-}
+
 

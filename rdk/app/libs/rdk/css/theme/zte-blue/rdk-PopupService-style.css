@@ -1,11 +1,17 @@
 .rdk-popupservice-dialog{
 	padding: 0;
 	margin: 0;
-    border-radius: 5px;
 	box-shadow: rgba(0,0,0,.4) 1px 1px 5px 0px;
 	outline: #d3d3d3;
 }
-
+.ui-dialog {
+	overflow: inherit;
+}
+.ui-corner-all {
+	border-radius: 0;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
 .rdk-popupservice-dialog .rdk-popupservice-titlebar{
 	padding: 6px 2px;
 }
@@ -29,6 +35,14 @@
 	padding: 0;
 	z-index: 9999;
 }
+.rdk-popupservice-dialog .ui-widget-header {
+	color: #008fd4;
+	background-color: #f2f2f2;
+	font-size: 14px;
+	line-height: 34px;
+	border-bottom: none;
+	padding: 0 10px 0 5px;
+}
 .rdk-popupservice-dialog .ui-state-focus .ui-icon,
 .rdk-popupservice-dialog .ui-state-default .ui-icon {
 	height: 20px;
@@ -44,14 +58,14 @@
 	right: 10px;
 	margin-top:-10px;
 }
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
+
+}
 .rdk-popupservice-dialog .ui-dialog .ui-dialog-title{
 	margin: 0;
 	padding-left: 20px;
 	font-size: 12px;
 	color:#434343;
-}
-.rdk-popupservice-dialog .ui-widget-header {
-	border-bottom: none;
 }
 .rdk-popupservice-dialog .rdk-popupservice-dialog .ui-corner-all {
 	border-bottom-right-radius: 0;

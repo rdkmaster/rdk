@@ -9,7 +9,6 @@
         scope.clickHandler = function() {
             Alert.confirm('信息确认请注意认请注意认请注意认请注意认请注意认请注意认请注意认请注意', '确认提示',  ButtonTypes.NO + ButtonTypes.YES , callbackHandler);
         }
-
         function callbackHandler(val) {
             if (val == ButtonTypes.YES) {
                 alert('call back YES');
