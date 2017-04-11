@@ -1,7 +1,7 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.controls.Steps','rd.controls.Button','css!base/css/demo'
+        'rd.controls.Steps','rd.controls.Button'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
@@ -12,7 +12,7 @@
             {title:"Create an ad group"},
             {title:"Create an ad"},
             {title:"Finish over"}
-        ]
+        ];
         scope.nextStepHandler = function(event,data) {
             if(scope.avtiveStepIndex>=scope.steps.length){
                 return
