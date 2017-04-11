@@ -94,9 +94,9 @@
 }
 .rdk-button-white + .rdk-shade-opacity {
 	background-color: #fff;
-	border: 1px solid #3c9fcb
+	border: 1px solid #9bc9dd
 }
-.rdk-button-white + .rdk-button-selected{
+.rdk-button-white + .rdk-button-down {
 	background-color: #fff;
 	border: 1px solid #3793bb
 }
