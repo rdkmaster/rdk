@@ -62,6 +62,10 @@
 				repositionStickyHead = function (event) {
 					var element = event.currentTarget;
 
+					if(element == $t.get(0).offsetParent || (element && $(element).css("overflow")=="hidden")){
+						return;
+					}
+                 
 					var offsetTop;
 					if(element.location != self.location){//是否顶级窗口
 						offsetTop = getAbsPoint($t.get(0)) - getAbsPoint(element);//t相对于element的top
@@ -106,6 +110,7 @@
 								opacity: 1,
 								top: $(element).scrollTop() - offsetTop
 							});
+
 						} else {
 							// When top of viewport is above or below table
 							$stickyHead.add($stickyInsct).css({
