@@ -194,7 +194,7 @@ return {
                         label : {show: false, position: 'top'},
                         barBorderColor:colors[0],
                         color:colors[0],
-                        barBorderRadius: 0
+                        barBorderRadius: 0,
                     }
                 },
             barCategoryGap:'15%',//控制条形柱间的间距

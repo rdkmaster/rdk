@@ -23,7 +23,7 @@ define([/*  'underscore'   */], function() {
 // attributes 是当前Graph所在的html节点的所有属性集。也是一种辅助数据。
 return function(data, context, GraphService, attributes) {
     var sampleColors = ["#54acd5","#f99660","#a4bf6a","#ec6d6d","#f7b913","#8ac9b6","#bea5c8","#01c5c2","#a17660"];
-    var vmaxColors = ['#41addc', '#bea5c8', '#8ac9b6', '#f99660', '#85c56c', '#ec6d6d', '#f7b913', '#8b4637', '#c94344'];
+    var vmaxColors = ['#41addc', '#bea5c8', '#85c56c', '#f99660', '#ffc20e', '#ec6d6d', '#8ac9b6', '#585eaa', '#b22c46', '#96582a'];
     function GetRequest() {
         var url = location.search; //获取url中"?"符后的字串
         var theRequest = new Object();
