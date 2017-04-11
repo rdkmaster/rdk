@@ -2,8 +2,8 @@ package com.zte.vmax.rdk.config
 
 import java.io.File
 
-import com.typesafe.config.ConfigFactory
-import com.zte.vmax.rdk.util.{RdkUtil, Logger}
+import com.typesafe.config.{Config, ConfigFactory}
+import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 
 trait ConfigTrait extends Logger {
   var config: com.typesafe.config.Config = null
@@ -97,5 +97,12 @@ object Config extends ConfigTrait {
     return get(key, null)
   }
 
+  def getConfig(key: String): Config = {
+    return config.getConfig(key);
+  }
+
+  def withoutPath(path: String) = {
+    config = config.withoutPath(path);
+  }
 
 }
