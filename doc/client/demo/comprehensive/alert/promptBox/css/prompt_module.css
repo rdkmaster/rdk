@@ -65,11 +65,11 @@ ul,li{
 	border: 1px solid #3793bb;
 }
 .alertContent button:first-child {
-	margin-left: 20px;
+	margin-left: 22px;
 }
 .alertContent button:last-child{
 	float: right;
-	margin-right: 20px;
+	margin-right: 22px;
 }
 .alertContent button img {
 	float:left;
