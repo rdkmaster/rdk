@@ -6,6 +6,7 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', 'Alert', 'ButtonTypes', main];
     function main(scope, Alert, ButtonTypes) {
+        imports.i18n.$init(scope);
         scope.clickHandler = function() {
             Alert.confirm('信息确认请注意', '确认提示', ButtonTypes.YES + ButtonTypes.NO + ButtonTypes.CANCEL, callbackHandler);
         }

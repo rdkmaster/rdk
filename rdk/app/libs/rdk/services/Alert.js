@@ -36,6 +36,7 @@ define(['angular', 'jquery', 'rd.services.PopupService', 'rd.services.EventServi
 
         function _initializeAlertI18nData(){
             var myLang = Utils.getLocale($rootScope.$$childHead);
+            console.log($rootScope.$$childHead)
             if(myLang == 'zh-cn' || myLang == 'zh_cn'){
                 myI18n = {
                     'yes': '是',
