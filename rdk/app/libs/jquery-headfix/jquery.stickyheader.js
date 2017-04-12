@@ -75,10 +75,10 @@
 					}
 
 					if($(element).scrollTop() == 0){//排序时，需要把排序列置上层
-						$(".sticky-thead").css("visibility", "hidden");
+						$stickyHead.css("visibility", "hidden");
 					}
 					else{
-						$(".sticky-thead").css("visibility", "visible");
+						$stickyHead.css("visibility", "visible");
 					}
 
 					// Return value of calculated allowance
@@ -161,7 +161,7 @@
 					return y; 
 				}
 
-				handlePosition = function(e){
+			 var handlePosition = function(e){
 					setWidths();
 					repositionStickyHead(e);
 					repositionStickyCol();
@@ -169,13 +169,13 @@
 
 			setWidths();
 			if($w.scrollTop() == 0){
-				$(".sticky-thead").css("visibility", "hidden");
+				$stickyHead.css("visibility", "hidden");
 			}
 
 			$w.load(setWidths).resize($.debounce(250, function ($event) {
-				handlePosition($event);
+				  handlePosition($event);
 			})).scroll($.throttle(250, function($event){
-				handlePosition($event);
+				  handlePosition($event);
 			}));
 
 			$.each($t.parents(), function(i, element){
