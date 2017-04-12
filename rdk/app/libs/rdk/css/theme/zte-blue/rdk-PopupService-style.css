@@ -6,8 +6,6 @@
 }
 .ui-corner-all {
 	border-radius: 0;
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
 }
 .rdk-popupservice-dialog .rdk-popupservice-titlebar{
 	padding: 6px 2px;
