@@ -368,3 +368,9 @@ i.regular_right,i.regular_left{
     border-right:none;
     border-left:none;
 }
+.rdk-theme-zte-vmax .rdk-table-module .rdk-table > tbody > tr > td {
+    padding: 5px 14px;
+}
+.rdk-theme-zte-vmax .rdk-table-module .rdk-table > thead> tr > th {
+    padding: 5px 14px;
+}
