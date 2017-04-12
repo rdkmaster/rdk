@@ -62,7 +62,7 @@
 				repositionStickyHead = function (event) {
 					var element = event.currentTarget;
 
-					if(element == $t.get(0).offsetParent || (element && $(element).css("overflow")=="hidden")){
+					if(element == $t.get(0).offsetParent || ( element && element != window && element.Infinity!="Infinity" && $(element).css("overflow")=="hidden")){
 						return;
 					}
                  
@@ -161,35 +161,33 @@
 					return y; 
 				}
 
+				handlePosition = function(e){
+					setWidths();
+					repositionStickyHead(e);
+					repositionStickyCol();
+				}
+
 			setWidths();
 			if($w.scrollTop() == 0){
 				$(".sticky-thead").css("visibility", "hidden");
 			}
 
-			// $t.parent('.sticky-wrap').scroll($.throttle(250, function() {
-			// 	repositionStickyHead();
-			// 	repositionStickyCol();
-			// }));
-
 			$w.load(setWidths).resize($.debounce(250, function ($event) {
-				setWidths();
-				repositionStickyHead($event);
-				repositionStickyCol();
+				handlePosition($event);
 			})).scroll($.throttle(250, function($event){
-				setWidths();
-				repositionStickyHead($event);
-				repositionStickyCol();
+				handlePosition($event);
 			}));
 
 			$.each($t.parents(), function(i, element){
 				if(element.location != self.location){
 					$(element).scroll($.throttle(250, function($event) {
-						setWidths();
-						repositionStickyHead($event);
-						repositionStickyCol();
+						handlePosition($event);
 					}));
 				}
-			})
+				if(i == $t.parents().length-1){
+					handlePosition({currentTarget:window});
+				}
+			});
 		}
    }
 })(jQuery);
