@@ -1,10 +1,10 @@
 img,p{margin: 0;padding: 0}
 #compare .ui-dialog-content{
-    padding: 10px 20px;
+    padding: 12px 20px;
 }
 .step-content-item{
     height: 64px;
-    padding: 10px;
+    padding: 10px 14px;
     width: inherit;
     margin-bottom: 10px;
     border: 1px solid #cbcbcb;
@@ -15,8 +15,10 @@ img,p{margin: 0;padding: 0}
 }
 .step-content-item img{
     display: inline-block;
-    vertical-align: bottom;
-    margin-right: 6px;
+    vertical-align: top;
+    margin-right: 10px;
+    width: 38px;
+    height: 38px;
 }
 .step-content-item-text{
     display: inline-flex;
@@ -37,7 +39,7 @@ img,p{margin: 0;padding: 0}
 }
 /*第2个dialog*/
 .configuration-btn{
-    margin-bottom: 14px;
+    margin-bottom: 4px;
 }
 .configuration-btn .rdk-button-wrap:not(:last-child){
     margin-right: 8px;
