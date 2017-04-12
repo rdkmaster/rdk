@@ -480,7 +480,25 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
         Data.useDataSource("hbase");                   
         log(Data.fetch("SELECT * FROM dim_ne",5000)); //查询hbase数据库
 
+#### `Data.allowNullToString()` {#allowNullToString} ####
 
+该函数提供了一个开关，以控制[Data.fetch](#fetch)和[Data.fetchWithDataSource](#fetchWithDataSource)对空数据的处理。
+
+定义：
+   
+    function allowNullToString(strict);
+
+参数：
+
+- strict: 布尔类型，true/false，设为ture或者不调用，则fetch返回遇到空值则将其转为空字符串"null"；设为false，则fetch返回为js null对象。
+
+返回：
+
+ undefined
+
+说明：
+
+可以在应用的init.js中调用此函数以统一控制。     
    		
 #### `Data.fetch()` {#fetch} ####
 
@@ -543,6 +561,8 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 返回：
  
   数据的第一行第一列，字符串类型
+
+说明：空数据返回js null对象  
 
 
 #### `Data.batchFetch()` ####
