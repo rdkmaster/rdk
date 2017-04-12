@@ -3,32 +3,25 @@
 	margin: 0 10px 20px 10px;
 	min-width: 80px;
 }
-.rdk-popupservice-dialog .ui-state-hover .ui-icon,
-.rdk-popupservice-dialog .ui-state-focus .ui-icon,
-.rdk-popupservice-dialog .ui-state-default .ui-icon {
-	height: 14px;
-	width: 14px;
-	margin-top: -7px;
-	margin-left: -7px;
-	background: #eaeaea url(../images/close.png) no-repeat -1px -1px ;
+.rdk-alert-no {
+	background-color: #41addc;
 }
-.ui-dialog .ui-dialog-titlebar-close {
-	height: 14px;
-	width: 14px;
-	right: 10px;
-	margin-top:-7px;
+.rdk-alert-no:hover {
+	background-color:#3c9fcb;
 }
-.rdk-popupservice-content .rdk-alert-btnLine .rdk-alert-yes {
-	background: #f6f6f6;
-	border: 1px solid #ddd;
-	color: #5395d8;
+.rdk-alert-no:active {
+	background-color: #3793bb;
 }
-.rdk-alert-yes:focus {
-	border:1px solid #f6f6f6;
+.rdk-alert-yes {
+	border: 1px solid #ccc;
+	background-color: #fff;
+	color:#004fd4;
 }
 .rdk-alert-yes:hover {
-	background: #e8e8e8;
+	border: 1px solid #9bc9dd;
+	background-color: #fff;
 }
 .rdk-alert-yes:active {
-	background: #e0e0e0;
+	border: 1px solid #3793bb;
+	background-color: #fff;
 }

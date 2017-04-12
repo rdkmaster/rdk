@@ -125,3 +125,36 @@ div.ui-dialog .ui-dialog-content{
 .rdk-alert-svrMsgBtn:focus{
 	border:1px solid #fff;
 }
+.rdk-theme-zte-vmax .rdk-alert-svrMsgBtn{
+	padding: 0 16px;
+	margin: 0 10px 20px 10px;
+	min-width: 80px;
+}
+.rdk-theme-zte-vmax .rdk-alert-no {
+	background-color: #41addc;
+}
+.rdk-theme-zte-vmax .rdk-alert-no:hover {
+	background-color:#3c9fcb;
+}
+.rdk-theme-zte-vmax .rdk-alert-no:active {
+	background-color: #3793bb;
+}
+.rdk-theme-zte-vmax .rdk-alert-yes {
+	border: 1px solid #ccc;
+	background-color: #fff;
+	color:#004fd4;
+}
+.rdk-theme-zte-vmax .rdk-alert-yes:hover {
+	border: 1px solid #9bc9dd;
+	background-color: #fff;
+}
+.rdk-theme-zte-vmax .rdk-alert-yes:active {
+	border: 1px solid #3793bb;
+	background-color: #fff;
+}
+.rdk-theme-zte-vmax div.ui-dialog .ui-dialog-content {
+	background-color: #fff;
+}
+.rdk-theme-zte-vmax .rdk-alert-tableImg >img {
+	background-color: #fff;
+}

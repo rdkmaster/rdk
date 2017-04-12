@@ -18,9 +18,10 @@ define(['rd.modules.i18n'],
                     alert_cancel: 'CANCEL',
                 },
                 "zh_CN": {
-                    alert_yes: '点下赞成',
-                    alert_no: '点下反对',
-                    alert_ok: '点下就确定',
+                    alert_yes: '否',
+                    alert_no: '是',
+                    alert_ok: '取消',
+                    alert_cancel: '取消'
                 }
             }
             //======================= 结束 =======================
