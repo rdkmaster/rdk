@@ -167,9 +167,19 @@
     border: none;
 }
 .rdk-theme-zte-vmax .rdk-tab-module .bottom_line {
-    height : 2px;
-    bottom:-1px;
+    height : 3px;
+    bottom:-2px;
+}
+.rdk-theme-zte-vmax .ui-tabs .ui-tabs-nav {
+    padding: 0;
+    width: 100%!important;
 }
 .rdk-theme-zte-vmax .rdk-tab-module .ui-widget-header {
-    border-bottom: 2px solid #bbb;
+    border-bottom: 3px solid #bbb;
+}
+.rdk-theme-zte-vmax .rdk-tab-module .tabs>.content {
+    margin: 0 .2em;
+}
+.rdk-theme-zte-vmax .rdk-tab-module {
+    margin: 0;
 }
