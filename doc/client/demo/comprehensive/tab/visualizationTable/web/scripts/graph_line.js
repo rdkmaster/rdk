@@ -30,7 +30,7 @@ return {
         textStyle: {
             fontSize: 14,
             fontWeight:'normal',
-            color: '#41addc',
+            color: '#008fd4',
             fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
         },
         top:38

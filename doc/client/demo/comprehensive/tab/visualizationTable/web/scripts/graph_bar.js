@@ -48,7 +48,7 @@ return {
             fontSize:14,
             fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
             fontWeight: 'normal',
-            color: '#41addc'
+            color: '#008fd4'
         },
     },
     grid:{
