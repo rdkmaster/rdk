@@ -53,7 +53,7 @@ return {
     },
     grid:{
         left:45,
-        right:45,
+        right:34,
         top:86,
         bottom:40,
 		show:true,
@@ -70,8 +70,8 @@ return {
             fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
             fontWeight: 'normal'
         },
-        itemWidth:20,//设置icon长高
-        itemHeight:10
+        itemWidth:25,//设置icon长高
+        itemHeight:6
     },
     xAxis : [
         {

@@ -45,7 +45,7 @@ return {
     legend: {
         data: data.rowDescriptor,
         itemWidth:25,//设置icon长高
-        itemHeight:5,
+        itemHeight:6,
         top:55,
         right:38,
         inactiveColor:"#bbb",
@@ -58,7 +58,7 @@ return {
     },
     grid:{
         left:45,
-        right:45,
+        right:34,
         top:86,
         bottom:20,
     },
