@@ -486,11 +486,13 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 定义：
    
-    function allowNullToString(strict);
+    function allowNullToString(allow);
 
 参数：
 
-- strict: 布尔类型，true/false，设为ture或者不调用，则fetch返回遇到空值则将其转为空字符串"null"；设为false，则fetch返回为js null对象。
+- allow: 布尔类型，true/false
+    - 设为ture或者不调用，则fetch返回遇到空值则将其转为**字符串** `"null"`
+    - 设为false，则fetch返回为js null对象
 
 返回：
 
