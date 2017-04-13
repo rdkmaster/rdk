@@ -159,7 +159,7 @@
 - excludeIndexes 数组，可选，默认值是false。排除的列索引，如果content是 `matrix()` 的返回值，则此数组的元素可以是字段名。
 - option 对象，可选。写csv文件的选项，支持下面的配置项：
     - separator: csv分列字符，默认值是英文逗号（`,`），常用的有 `\t`。
-    - quoteChar: 包围单元格字符串的字符，默认值是双引号（`"`），如果不需要包围字符，可以给一个空格。
+    - quoteChar: 包围单元格字符串的字符，默认值是双引号（`"`），如果不需要包围字符，可以给 `String.fromCharCode(0)`。
     - escapeChar: 转义字符，默认值为（`'`）。
     - lineEnd: 换行字符，默认值是 `\n`
     - encoding: 写入文件的字符集编码，默认值是GBK。常用备选的是utf-8/gb2312/gbk。注：Excel只认GBK编码的csv文件，utf-8编码的csv文件在Excel中打开中文会有乱码，所以如果是打算用Excel打开的csv文件，使用默认值编码即可。给其他功能写的csv文件，请根据实际情况选择正确的编码以避免中文乱码。
