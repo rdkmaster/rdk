@@ -912,13 +912,17 @@ var Data = {
         Log.warn("function deprecated,please use Data.batchFetch()");
         return Data.batchFetch(sqlArray, maxLine, timeout);
     },
-    executeUpdate: function (sql) {
+    executeUpdate: function (sql,ifErrorInfo) {
+        if (!_.isDefined(ifErrorInfo)) {
+            ifErrorInfo = false;
+        }
+
         if (_.isString(sql)) {
-            return rdk_runtime.executeUpdate(rdk_runtime.application(), sql);
+            return JSON.parse(rdk_runtime.executeUpdate(rdk_runtime.application(), sql, ifErrorInfo));
         }
 
         if (_.isArray(sql)) {
-            return JSON.parse(rdk_runtime.batchExecuteUpdate(rdk_runtime.application(), sql));
+            return JSON.parse(rdk_runtime.batchExecuteUpdate(rdk_runtime.application(), sql, ifErrorInfo));
         }
 
         Log.error("String or Array[String] param required!");

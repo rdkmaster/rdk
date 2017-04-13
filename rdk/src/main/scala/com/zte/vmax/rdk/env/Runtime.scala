@@ -14,6 +14,7 @@ import com.zte.vmax.rdk.proxy.ProxyManager
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 import jdk.nashorn.api.scripting.ScriptObjectMirror
 import com.zte.vmax.rdk.actor.Messages._
+import com.zte.vmax.rdk.db.DataBaseHelper.DBError
 import spray.http.MediaTypes
 
 /**
@@ -234,8 +235,8 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   def fetch_first_cell(sql: String): String = {
     DataBaseHelper.fetch(useDbSession, sql, 1) match {
-      case Some(any) => {
-        any match{
+      case Some(dataOrError) => {
+        dataOrError match {
           case it: DataTable => if (it.data.length >= 1) it.data(0)(0) else null
           case _ => null
         }
@@ -244,16 +245,32 @@ class Runtime(engine: ScriptEngine) extends Logger {
     }
   }
 
-  def executeUpdate(appName: String, sql: String): Int = {
-    val affectNums: Option[Int] = DataBaseHelper.executeUpdate(useDbSession, sql)
-    affectNums.getOrElse(0)
+  def executeUpdate(appName: String, sql: String, ifErrorInfo: Boolean): Any = {
+    DataBaseHelper.executeUpdate(useDbSession, sql) match {
+      case Some(dataOrError) => {
+        dataOrError match {
+          case num: Int => num
+          case error: DBError =>
+            if (ifErrorInfo) objectToJson(error) else 0
+        }
+      }
+      case _ => 0
+    }
   }
 
-  def batchExecuteUpdate(appName: String, sqlArr: ScriptObjectMirror): String = {
+  def batchExecuteUpdate(appName: String, sqlArr: ScriptObjectMirror, ifErrorInfo: Boolean): Any = {
     val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
-    val res = DataBaseHelper.batchExecuteUpdate(useDbSession, lst.toList)
-    val ret: List[Int] = if (res.nonEmpty) res.get else Nil
-    objectToJson(ret.toArray)
+    DataBaseHelper.batchExecuteUpdate(useDbSession, lst.toList) match {
+      case Some(dataOrError) => {
+        dataOrError.head match {
+          case num: Integer => objectToJson(dataOrError.toArray)
+          case error: DBError if ifErrorInfo => objectToJson(error)
+          case _ => objectToJson(Array.apply())
+        }
+      }
+      case _ =>
+    }
+
   }
 
   /**
