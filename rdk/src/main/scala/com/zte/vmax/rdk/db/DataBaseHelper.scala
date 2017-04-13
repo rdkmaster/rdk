@@ -18,7 +18,7 @@ import scala.concurrent.{Await, Future}
   */
 object DataBaseHelper extends Logger {
 
-
+  case class DBError(error: String)
   /**
     * 查询数据
     *
@@ -104,7 +104,7 @@ object DataBaseHelper extends Logger {
     * @param timeout 超时时间（秒）
     * @return 数据表集合
     */
-  def batchFetch(session: DBSession, sqlArr: List[String], maxLine: Long, timeout: Long): List[Option[DataTable]] = {
+  def batchFetch(session: DBSession, sqlArr: List[String], maxLine: Long, timeout: Long): List[Option[Any]] = {
     if (sqlArr.isEmpty) {
       return Nil
     }
@@ -116,9 +116,9 @@ object DataBaseHelper extends Logger {
       Future {
         try{
           fetch(session, sql, maxLine)
-        }catch{
-          case ex=>
-            Some()
+        } catch {
+          case ex: Throwable =>
+            Some(DBError(ex.toString))
         }
 
       }(ec)

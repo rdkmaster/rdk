@@ -878,7 +878,13 @@ var Data = {
         var dataTableArray = [];
         var dataObj = JSON.parse(rdk_runtime.batchFetch(sqlArray, maxLine, timeout));
         for (idx in dataObj) {
-            dataTableArray.push(new DataTable(i18n(dataObj[idx].fieldNames), dataObj[idx].fieldNames, dataObj[idx].data))
+            var res = dataObj[idx];
+            if(res.hasOwnProperty("error")){
+                dataTableArray.push(res);
+            }else{
+                dataTableArray.push(new DataTable(i18n(res.fieldNames), res.fieldNames, res.data));
+            }
+
         }
         return dataTableArray;
     },
