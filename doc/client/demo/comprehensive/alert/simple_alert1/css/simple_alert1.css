@@ -25,3 +25,8 @@
 	border: 1px solid #3793bb;
 	background-color: #fff;
 }
+.rdk-popupservice-dialog {
+	width: inherit!important;
+	min-width: 400px!important;
+	max-width: 508px!important;
+}
