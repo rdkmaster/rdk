@@ -830,7 +830,10 @@ var Data = {
         }
 
         var dataObj = JSON.parse(rdk_runtime.fetchWithDataSource(dataSource, sql, maxLine));
-        return new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data);
+        if (!dataObj.hasOwnProperty("error")) {
+            dataObj = new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data)
+        }
+        return dataObj;
     },
     allowNullToString: function (strict) {
         Cache.put("#_#allowNullToString#_#", !strict);
@@ -904,7 +907,13 @@ var Data = {
         var dataTableArray = [];
         var dataObj = JSON.parse(rdk_runtime.batchFetchWithDataSource(dataSource, sqlArray, maxLine, timeout));
         for (idx in dataObj) {
-            dataTableArray.push(new DataTable(i18n(dataObj[idx].fieldNames), dataObj[idx].fieldNames, dataObj[idx].data))
+            var res = dataObj[idx];
+            if(res.hasOwnProperty("error")){
+                dataTableArray.push(res);
+            }else{
+                dataTableArray.push(new DataTable(i18n(res.fieldNames), res.fieldNames, res.data));
+            }
+
         }
         return dataTableArray;
     },
