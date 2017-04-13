@@ -56,12 +56,8 @@ object DataBaseHelper extends Logger {
         appLogger(session.appName).debug(s"fetch->$sql (${System.currentTimeMillis - currentTime} ms)")
         Some(DataTable(fieldNames, fieldTypes, dataArray.toArray))
       }
-      catch {
-        case e: Throwable =>
-          appLogger(session.appName).error("fetch data error", e)
-          RdkUtil.safeClose(connection)
-          None
-
+      finally {
+        RdkUtil.safeClose(connection)
       }).flatten
 
 

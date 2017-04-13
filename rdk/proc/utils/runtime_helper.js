@@ -846,8 +846,13 @@ var Data = {
             return;
         }
 
-        var dataObj = JSON.parse(rdk_runtime.fetch(sql, maxLine));
-        return new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data);
+        try {
+            var dataObj = JSON.parse(rdk_runtime.fetch(sql, maxLine));
+            return new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data);
+        } catch (e) {
+            return {error: e.toString()};
+        }
+
     },
     fetch_first_cell: function (sql) {
         Log.warn("function deprecated,please use Data.fetchFirstCell()");
