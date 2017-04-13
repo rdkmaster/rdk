@@ -117,13 +117,7 @@ object DataBaseHelper extends Logger {
     implicit val myTimeout = Timeout(timeout seconds)
     val result = sqlArr.map(sql => {
       Future {
-        try{
           fetch(session, sql, maxLine)
-        } catch {
-          case ex: Throwable =>
-            Some(DBError(ex.toString))
-        }
-
       }(ec)
     })
 
