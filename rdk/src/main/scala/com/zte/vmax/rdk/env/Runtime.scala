@@ -199,18 +199,17 @@ class Runtime(engine: ScriptEngine) extends Logger {
   }
 
   def fetch(sql: String, maxLine: Int): String = {
-    var data: Option[DataTable] = None
+    var data: Option[AnyRef] = None
     if (cacheGet("#_#allowNullToString#_#").asInstanceOf[Boolean]) {
       data = DataBaseHelper.fetch(useDbSession, sql, maxLine, null)
     } else {
       data = DataBaseHelper.fetch(useDbSession, sql, maxLine)
     }
-
     objectToJson(data getOrElse "null") //转json？
   }
 
   def fetchWithDataSource(dataSource: String, sql: String, maxLine: Int): String = {
-    var data: Option[DataTable] = None
+    var data: Option[AnyRef] = None
     if (cacheGet("#_#allowNullToString#_#").asInstanceOf[Boolean]) {
       data = DataBaseHelper.fetch(DBSession(application, Some(dataSource)), sql, maxLine, null)
     } else {
@@ -234,10 +233,15 @@ class Runtime(engine: ScriptEngine) extends Logger {
   }
 
   def fetch_first_cell(sql: String): String = {
-    val option = DataBaseHelper.fetch(useDbSession, sql, 1)
-    option.flatMap(it =>
-      if (it.data.length >= 1) Some(it.data(0)(0)) else None
-    ).getOrElse("null")
+    DataBaseHelper.fetch(useDbSession, sql, 1) match {
+      case Some(any) => {
+        any match{
+          case it: DataTable => if (it.data.length >= 1) it.data(0)(0) else null
+          case _ => null
+        }
+      }
+      case _ => null
+    }
   }
 
   def executeUpdate(appName: String, sql: String): Int = {

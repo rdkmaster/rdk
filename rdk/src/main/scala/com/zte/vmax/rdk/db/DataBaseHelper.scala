@@ -26,7 +26,7 @@ object DataBaseHelper extends Logger {
     * @param maxLine 返回的最大行数
     * @return
     */
-  def fetch(session: DBSession, sql: String, maxLine: Long, nullToString: String = "null"): Option[DataTable] = {
+  def fetch(session: DBSession, sql: String, maxLine: Long, nullToString: String = "null"): Option[AnyRef] = {
 
     getConnection(session).map(connection =>
       try {
@@ -56,8 +56,11 @@ object DataBaseHelper extends Logger {
         appLogger(session.appName).debug(s"fetch->$sql (${System.currentTimeMillis - currentTime} ms)")
         Some(DataTable(fieldNames, fieldTypes, dataArray.toArray))
       }
-      finally {
-        RdkUtil.safeClose(connection)
+      catch {
+        case e: Throwable =>
+          RdkUtil.safeClose(connection)
+          Some(DBError(e.toString))
+
       }).flatten
 
 
@@ -104,7 +107,7 @@ object DataBaseHelper extends Logger {
     * @param timeout 超时时间（秒）
     * @return 数据表集合
     */
-  def batchFetch(session: DBSession, sqlArr: List[String], maxLine: Long, timeout: Long): List[Option[Any]] = {
+  def batchFetch(session: DBSession, sqlArr: List[String], maxLine: Long, timeout: Long): List[Option[AnyRef]] = {
     if (sqlArr.isEmpty) {
       return Nil
     }
