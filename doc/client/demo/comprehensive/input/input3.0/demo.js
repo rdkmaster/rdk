@@ -25,9 +25,8 @@
           }
         })
         EventService.register('myInput', EventTypes.CHANGE, function(event, data) {
-            if(data.length==0){
-                scope.error=false;
-            }
+            scope.iconFont=''
+            scope.error=false;
           })
         scope.clickHandler = function(event, data){
             scope.province = data;
