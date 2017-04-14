@@ -349,6 +349,39 @@ i.regular_right,i.regular_left{
 .rdk-table-module .unvisiblePageLine{
     visibility: hidden;
 }
+
+/*跳转分页 pageGoTo html template*/
+.rdk-table-module .page-contain > li > a, .rdk-table-module .page-contain > li > span {
+    padding: 0 6px;
+}
+.rdk-table-module .page-contain .pagination{
+    display: inline-flex;
+    align-items: center;
+}
+.rdk-table-module .page-contain .fa{
+    color: #008FD4;
+    font-size: 16px;
+}
+.rdk-table-module .page-contain .disabledRecords .fa{
+    color: #999;
+}
+.rdk-table-module .page-contain .regularRecords input{
+    color: #333;
+    width: 34px;
+    height: 26px;
+    border-radius: 4px;
+    outline: 0;
+    border: 1px solid #bbb;
+    text-align: center;
+}
+.rdk-table-module .page-contain .regularRecords input:hover{
+    border: 1px solid rgba(0,143,212,0.6);
+}
+.rdk-table-module .page-contain .regularRecords input:focus{
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 4px rgba(0,143,212,0.6);
+}
+
+/* vmax :3.0 风格 start */
 .rdk-theme-zte-vmax .rdk-table-module .rdk-table thead>tr {
     background-color:#fff;
 }
@@ -374,3 +407,20 @@ i.regular_right,i.regular_left{
 .rdk-theme-zte-vmax .rdk-table-module .rdk-table > thead> tr > th {
     padding: 5px 14px;
 }
+.rdk-theme-zte-vmax .rdk-table-module .search-position-bottom .search_icon{
+    left:6px;
+    right: 0;
+    width: 14px;
+}
+.rdk-theme-zte-vmax .rdk-table-module .searchWapper input{
+    padding: 6px 12px 6px 24px;
+    border-color: transparent;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0);
+}
+.rdk-theme-zte-vmax .rdk-table-module .searchWapper input.border-style{
+    border-color: rgba(0,143,212,0.6)
+}
+.rdk-theme-zte-vmax .rdk-table-module .pagingLine .search-bottom{
+    float: left;
+}
+/* vmax :3.0 风格 end */
