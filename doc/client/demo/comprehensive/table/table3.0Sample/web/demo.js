@@ -1,7 +1,7 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.controls.Table','css!base/css/table3.0Style','css!rd.styles.IconFonts'
+        'rd.controls.Table','css!base/css/table3.0Style','css!rd.styles.IconFonts','rd.attributes.theme'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
@@ -11,7 +11,7 @@
                 {
                     title : "操作",
                     targets:6,
-                    render : '<i class="iconfont iconfont-e8b7"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="iconfont iconfont-e8c8"></i>'                }
+                    render : '<i class="iconfont iconfont-e8b7"></i>' }
             ]
         }
     }
