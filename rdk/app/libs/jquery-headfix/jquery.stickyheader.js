@@ -66,7 +66,7 @@
 						return;
 					}
 
-					if( element && element != window && element.Infinity!="Infinity" && $(element).hasClass("ps-active-x")){
+					if( element && element != window && element.Infinity!="Infinity" && $(element).hasClass("ps-active-x")&&$(element).hasClass("wrapper")){
 						return;
 					}
                  
