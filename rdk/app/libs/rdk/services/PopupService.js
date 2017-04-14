@@ -1,7 +1,6 @@
 ﻿define(['angular', 'rd.core', 'jquery-ui', 'rd.controls.Module', 'css!rd.styles.FontAwesome', 'css!rd.styles.PopupService'], function(){
     var popupModule = angular.module('rd.services.PopupService', ['rd.controls.Module']);
     popupModule.service('PopupService', ['$rootScope', 'EventService', 'EventTypes', 'Utils', '$compile', '$timeout', function($rootScope, EventService, EventTypes, Utils, $compile, $timeout){
-
         this.popup = function(module, initData, option){
             if(option == undefined) option = {};
             var moduleFractionStr = '<rdk_module load_on_ready="false"></rdk_module>';
@@ -74,8 +73,11 @@
 
                 $('#'+popupModuleID).css({'display': ''});
             }
-        }
-
+        };
+        this.widget=function(id){
+            if(id == undefined) return;
+            return $('#'+id).dialog("widget");
+        };
         this.removePopup = function(id) {
             var popupModuleID = id;
             if(popupModuleID == undefined) return;
@@ -87,7 +89,7 @@
                 popupModuleID = $('#'+id).children('.ui-dialog-content').attr('id');
             }
             _destroyPopupModule(popupModuleID);
-        }
+        };
 
         function _destroyPopupModule(popupModuleID){
             $('#'+popupModuleID).remove();

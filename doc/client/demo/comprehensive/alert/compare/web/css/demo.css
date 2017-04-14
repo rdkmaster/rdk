@@ -1,0 +1,110 @@
+img,p{margin: 0;padding: 0}
+#compare .ui-dialog-content{
+    padding: 12px 20px;
+}
+.step-content-item{
+    height: 64px;
+    padding: 10px 14px;
+    width: inherit;
+    margin-bottom: 10px;
+    border: 1px solid #cbcbcb;
+    border-radius: 6px;
+}
+.step-content-item.active-item{
+    border: 1px solid #008FD4;
+}
+.step-content-item img{
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 10px;
+    width: 38px;
+    height: 38px;
+}
+.step-content-item-text{
+    display: inline-flex;
+    flex-flow: column;
+    font-size: 12px;
+}
+.discretion{
+    color: #999;
+    font-size: 12px;
+    margin-bottom: 14px;
+}
+.compare-btn{
+    margin-top: 10px;
+    float: right;
+}
+.compare-btn .rdk-button-wrap:not(:last-child){
+    margin-right: 5px;
+}
+/*第2个dialog*/
+.configuration-btn{
+    margin-bottom: 4px;
+}
+.configuration-btn .rdk-button-wrap:not(:last-child){
+    margin-right: 8px;
+}
+.configuration-wrap{
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.configuration-wrap .configuration-title{
+    display: flex;
+    justify-content: flex-start;
+    height: 40px;
+    font-size: 12px;
+    margin: 0;
+    padding: 12px 12px;
+    border-bottom: 1px solid #ccc;
+}
+.configuration-wrap .configuration-title p{
+    padding: 0 10px;
+    flex: 1;
+    color: #999;
+    line-height: 18px;
+}
+.configuration-wrap .configuration-title img{
+    width:16px;
+    height: 16px;
+}
+.configuration-wrap .configuration-content{
+    padding: 6px 12px;
+    color: #999;
+}
+.configuration-wrap .configuration-content .active{
+    color: #008FD4;
+}
+.configuration-wrap .configuration-content span{
+    font-size: 12px;
+}
+.configuration-wrap .configuration-content p{
+    font-size: 14px;
+}
+.configuration-wrap .configuration-content div{
+    margin: 2px 0;
+}
+/*rdk 控件样式布局修改*/
+.rdk-steps-module {
+    padding: 5px 20px 0 20px;
+}
+.rdk-steps-module .rdk-steps-item span>span {
+    min-width: 100px;
+}
+.rdk-steps-module .rdk-steps-item:first-child span{
+    margin-left: 0;
+}
+.rdk-steps-module .rdk-steps-item:last-child span{
+    margin-right: 0;
+}
+.rdk-steps-module .rdk-steps-item:first-child span>span{
+    left: -185%;
+}
+.rdk-steps-module .rdk-steps-item:last-child span>span{
+    left: -200%;
+}
+.left-animate{
+    transition: left .368s;
+}
+

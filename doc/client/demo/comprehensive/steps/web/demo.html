@@ -1,0 +1,8 @@
+<div style="width:800px;">
+    <rdk_steps steps="steps" active-step="avtiveStepIndex"></rdk_steps>
+    <div class="btn-wrap">
+        <rdk_button click= "preStepHandler" label="Pre" type="white"></rdk_button>
+        <rdk_button ng-if="avtiveStepIndex<steps.length-1" click= "nextStepHandler" type="default" label="Next"></rdk_button>
+        <rdk_button ng-if="avtiveStepIndex>=steps.length-1" click= "nextStepHandler" type="default" label="Finsh"></rdk_button>
+    </div>
+</div>
