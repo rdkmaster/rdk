@@ -492,19 +492,24 @@ cells 为 改变的行列信息的数组信息
 
 
 ## page_number ##
->支持类型：数值
+>支持类型：number
 
-表格分页样式目前支持两种：
+表格分页样式目前支持3种：
 
 - `page_number = "0"` 时，分页栏展现成 `上一页 1/8 下一页`格式。
-- `page_number` 设置成非零数值时，分页栏展示阿拉伯数字的分页。例如 `上一页 4 5 6 7 下一页`。
+- `page_number = "-1"` 时，分页栏展现成 `<< < 1/8 > >>`格式，并且可以手动输入页数进行跳转
+- `page_number` 设置成非零正整数时，分页栏展示阿拉伯数字的分页。例如 `上一页 4 5 6 7 下一页`。
+
 
 缺省 `page_number` 时，默认为 `0`，采用第一种分页样式展示。
 
 缺省 `page_number` 或者 `page_number = "0"` 时的详细示例如下：
 <live_demo example="controls/table/demo4PageNumber0"></live_demo>
 
-`page_number` 非零数值时的详细示例如下：
+`page_number = "-1"` 时的详细示例如下：
+<live_demo example="controls/table/demo4PageNumber1"></live_demo>
+
+`page_number` 非零正整数时的详细示例如下：
 <live_demo example="controls/table/demo4PageNumber"></live_demo>
 
 ## floatable_header ##
