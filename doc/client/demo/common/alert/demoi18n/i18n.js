@@ -2,8 +2,6 @@ define(['rd.modules.i18n'],
     function(i18n) {
 
         //默认语言环境，在获取语言服务失败时使用
-        var defaultLocale = 'zh_CN';
-
         return i18n.init(
 
 
@@ -14,27 +12,17 @@ define(['rd.modules.i18n'],
 
             {
                 "en_US": {
-                    welcome: 'Your RDK application is ready!',
-                    wait: 'Please wait for a moment...',
-                    lang: 'Current language is {0}',
-
-                    alert_yes: 'YES...',
-                    alert_no: 'NO...',
-                    alert_ok: 'OK...',
-                    alert_cancel: 'CANCEL...',
+                    alert_yes: 'YES',
+                    alert_no: 'NO',
+                    alert_ok: 'OK',
+                    alert_cancel: 'CANCEL',
                 },
                 "zh_CN": {
-                    welcome: '你的 RDK 应用可以正常工作了！',
-                    wait: '正在查询，请稍候...',
-                    lang: '当前的语言环境是 {0}',
-
                     alert_yes: '点下赞成',
                     alert_no: '点下反对',
                     alert_ok: '点下就确定',
                 }
             }
-
-
             //======================= 结束 =======================
 
             , "zh_CN")

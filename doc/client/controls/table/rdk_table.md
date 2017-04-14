@@ -372,6 +372,10 @@ cells 为 改变的行列信息的数组信息
 详细举例如下
 <live_demo example="controls/table/rowSpan"></live_demo>
 
+### 设置行选中 ###
+通过`setting`中的`selectable` 属性控制。`selectable` 缺省时默认为`true`，表示表格行可以被选中，选择和悬浮状态有高亮效果。
+`selectable` 可设置成 false 表格的行不可被选中。
+
 
 ## 复选框列 add_check_box ##
 >支持类型：布尔型
@@ -469,6 +473,14 @@ cells 为 改变的行列信息的数组信息
 
 `show_export`值为false时，表示不显示导出按钮，其为默认值;
 `show_export`值为true时，表示显示导出按钮;
+
+## custom_scroll ##
+>支持类型：字符串
+
+通过设置`custom_scroll`属性的值给表格增加RDK的滚动条。`custom_scroll`="rdk-scroll"
+
+详细示例如下:
+<live_demo example="controls/table/customScroll"></live_demo>
 
 ## export_label ##
 >支持类型：字符串

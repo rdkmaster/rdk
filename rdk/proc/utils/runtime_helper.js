@@ -799,6 +799,14 @@ var Data = {
         Log.info("update datasource config!changed:" + json)
         rdk_runtime.reloadDataSource();
     },
+
+    //根据数据源名删除数据源
+    removeDataSource: function (dbName) {
+        Log.info("remove datasource:" + dbName);
+        java.Config.withoutPath(dbName);
+        rdk_runtime.removeDBInfoByName(dbName);
+    },
+
     //启用数据源
     useDataSource: function () {
         var selector = Cache.get(Data.DataSourceSelector);
@@ -823,6 +831,9 @@ var Data = {
 
         var dataObj = JSON.parse(rdk_runtime.fetchWithDataSource(dataSource, sql, maxLine));
         return new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data);
+    },
+    allowNullToString: function (strict) {
+        Cache.put("#_#allowNullToString#_#", !strict);
     },
     fetch: function (sql, maxLine) {
         if (!maxLine || !_.isDefined(maxLine)) {
