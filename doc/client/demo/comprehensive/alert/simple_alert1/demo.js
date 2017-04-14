@@ -7,7 +7,7 @@
     var controllerDefination = ['$scope', 'Alert', 'ButtonTypes', main];
     function main(scope, Alert, ButtonTypes) {
         scope.clickHandler = function() {
-            Alert.confirm('信息确认请注意认请注意认请注意认请注意认请注意认请注意认请注意认请注意', '确认提示',  ButtonTypes.NO + ButtonTypes.YES , callbackHandler);
+            Alert.confirm('认请注意认请注意认请注意', '确认提示',  ButtonTypes.NO + ButtonTypes.YES , callbackHandler);
         }
 
         function callbackHandler(val) {
