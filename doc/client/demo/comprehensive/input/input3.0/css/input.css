@@ -1,0 +1,56 @@
+.inputContent {
+    margin:50px 100px;
+    -moz-user-select:none;/*火狐*/
+    -webkit-user-select:none;/*webkit浏览器*/
+    -ms-user-select:none;/*IE10*/
+    user-select:none;
+}
+.inputContent .fa-check-circle:before {
+    color:green;
+    font-size: 18px;
+}
+.inputContent .fa-close {
+    width:18px;
+    height:18px;
+    border-radius: 9px;
+    background-color: red;
+}
+.inputContent .fa-close:before{
+    position: relative;
+    top:2px;
+    left:3px;
+    color:#fff;
+}
+.inputContent .error{
+    display: inline-block;
+    padding: 4px 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    background-color: #d9eff8;
+    border: 1px solid #b3def1;
+    line-height: 18px;
+}
+.inputContent .error:before {
+    content: '';
+    width:8px;
+    height:8px;
+    position: absolute;
+    transform: rotate(45deg);
+    margin-top:-8px;
+    border:1px solid #b3def1;
+    border-right: none;
+    border-bottom:none;
+    background-color: #d9eff8;
+}
+.inputContent .errorState {
+    border:1px solid red;
+    box-shadow: none;
+}
+.inputContent .errorState:hover {
+    border:1px solid red;
+    box-shadow: none;
+}
+.inputContent .errorState:focus {
+    border-color: rgba(0,143,212,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 2px rgba(0,143,212,0.6);
+}

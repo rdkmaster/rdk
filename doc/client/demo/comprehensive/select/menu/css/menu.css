@@ -112,6 +112,9 @@
     float: right;
     margin-right: 5px;
 }
+.selected-item:before {
+    content:''
+}
 
 
 
