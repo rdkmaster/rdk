@@ -921,6 +921,9 @@ var Data = {
         Log.warn("function deprecated,please use Data.batchFetch()");
         return Data.batchFetch(sqlArray, maxLine, timeout);
     },
+    update: function (sql) {
+        return Data.executeUpdate(sql, true);
+    },
     executeUpdate: function (sql,ifErrorInfo) {
         if (!_.isDefined(ifErrorInfo)) {
             ifErrorInfo = false;
