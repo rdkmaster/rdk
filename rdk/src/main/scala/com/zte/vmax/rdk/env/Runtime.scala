@@ -237,7 +237,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
     DataBaseHelper.fetch(useDbSession, sql, 1) match {
       case Some(dataOrError) => {
         dataOrError match {
-          case it: DataTable => if (it.data.length >= 1) it.data(0)(0) else null
+          case it: DataTable if (it.data.length >= 1) => it.data(0)(0)
           case _ => null
         }
       }
@@ -250,8 +250,8 @@ class Runtime(engine: ScriptEngine) extends Logger {
       case Some(dataOrError) => {
         dataOrError match {
           case num: Int => num
-          case error: DBError =>
-            if (ifErrorInfo) objectToJson(error) else 0
+          case error: DBError if (ifErrorInfo) => objectToJson(error)
+          case _ => 0
         }
       }
       case _ => 0
