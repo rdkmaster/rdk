@@ -502,6 +502,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
  [DataTable对象](#dataTable)
 
+
 说明：异常时返回{"error":""}对象，属性error里包含具体的错误信息。
 
 
@@ -617,7 +618,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
     function executeUpdate(sql);
 
-说明：执行数据库增删改功能
+执行数据库增删改功能
 
 参数：
 
@@ -628,8 +629,10 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  
    参数为一个sql字符串时，函数返回该sql执行返回的受影响记录数对应的字符串；
    参数为sql数组时，函数返回该sql数组分别执行返回的受影响记录数对应的字符串数组。
+
  
 说明：无论入参是单个sql还是sql数组，sql执行错误时会返回 {"error":""}对象，属性error里包第一个出错sql的具体信息，此过程是事务处理过程，只要出错就会回滚事务。
+
 
 ### `require() ` ###
 
