@@ -819,26 +819,22 @@ var Data = {
         }
     },
     fetchWithDataSource: function (dataSource, sql, maxLine) {
-        if (!maxLine || !_.isDefined(maxLine)) {
-            Log.warn("param maxLine empty,set maxLine=4000");
-            maxLine = 4000;
-        }
-
-        if (!_.isNumber(maxLine)) {
-            Log.error("maxLine must be a number!");
-            return;
-        }
-
-        var dataObj = JSON.parse(rdk_runtime.fetchWithDataSource(dataSource, sql, maxLine));
-        if (!dataObj.hasOwnProperty("error")) {
-            dataObj = new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data)
-        }
-        return dataObj;
+        return Data._ifFetchWithDataSource(dataSource, sql, maxLine, true);
     },
     allowNullToString: function (strict) {
         Cache.put("#_#allowNullToString#_#", !strict);
     },
     fetch: function (sql, maxLine) {
+        return Data._ifFetchWithDataSource(sql, maxLine, null, false);
+    },
+    _ifFetchWithDataSource: function (arg1, arg2, arg3, withDataSource) {
+        var dataSource = arg1;
+        var sql = arg2;
+        var maxLine = arg3;
+        if (!withDataSource) {
+            sql = arg1;
+            maxLine = arg2;
+        }
         if (!maxLine || !_.isDefined(maxLine)) {
             Log.warn("param maxLine empty,set maxLine=4000");
             maxLine = 4000;
@@ -849,12 +845,17 @@ var Data = {
             return;
         }
 
-        var dataObj = JSON.parse(rdk_runtime.fetch(sql, maxLine));
+        var dataObj = null;
+        if (!withDataSource) {
+            dataObj = JSON.parse(rdk_runtime.fetch(sql, maxLine));
+        } else {
+            dataObj = JSON.parse(rdk_runtime.fetchWithDataSource(dataSource, sql, maxLine))
+        }
+
         if (!dataObj.hasOwnProperty("error")) {
             dataObj = new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data)
         }
         return dataObj;
-
     },
     fetch_first_cell: function (sql) {
         Log.warn("function deprecated,please use Data.fetchFirstCell()");
@@ -864,34 +865,21 @@ var Data = {
         return rdk_runtime.fetch_first_cell(sql);
     },
     batchFetch: function (sqlArray, maxLine, timeout) {  //并发实现
-
-        if (!sqlArray || !_.isArray(sqlArray)) {
-            Log.error("Array param required! " + sqlArray);
-            return;
-        }
-        if (maxLine === undefined) {
-            Log.warn("param maxLine empty,set maxLine=4000");
-            maxLine = 4000;
-        }
-        if (timeout === undefined) {
-            Log.warn("param timeout empty,set timeout=30");
-            timeout = 30;
-        }
-        var dataTableArray = [];
-        var dataObj = JSON.parse(rdk_runtime.batchFetch(sqlArray, maxLine, timeout));
-        for (idx in dataObj) {
-            var res = dataObj[idx];
-            if(res.hasOwnProperty("error")){
-                dataTableArray.push(res);
-            }else{
-                dataTableArray.push(new DataTable(i18n(res.fieldNames), res.fieldNames, res.data));
-            }
-
-        }
-        return dataTableArray;
+        return Data._ifBatchFetchWithDataSource(sqlArray, maxLine, timeout, null, false);
     },
     batchFetchWithDataSource: function (dataSource, sqlArray, maxLine, timeout) {
-
+        return Data._ifBatchFetchWithDataSource(dataSource, sqlArray, maxLine, timeout, true);
+    },
+    _ifBatchFetchWithDataSource: function (arg1, arg2, arg3, arg4, withDataSource) {
+        var dataSource = arg1;
+        var sqlArray = arg2;
+        var maxLine = arg3;
+        var timeout = arg4;
+        if (!withDataSource) {
+            sqlArray = arg1;
+            maxLine = arg2;
+            timeout = arg3;
+        }
         if (!sqlArray || !_.isArray(sqlArray)) {
             Log.error("Array param required! " + sqlArray);
             return;
@@ -905,17 +893,24 @@ var Data = {
             timeout = 30;
         }
         var dataTableArray = [];
-        var dataObj = JSON.parse(rdk_runtime.batchFetchWithDataSource(dataSource, sqlArray, maxLine, timeout));
+        var dataObj = null;
+        if (!withDataSource) {
+            dataObj = JSON.parse(rdk_runtime.batchFetch(sqlArray, maxLine, timeout));
+        } else {
+            dataObj = JSON.parse(rdk_runtime.batchFetchWithDataSource(dataSource, sqlArray, maxLine, timeout));
+        }
+
         for (idx in dataObj) {
             var res = dataObj[idx];
-            if(res.hasOwnProperty("error")){
+            if (res.hasOwnProperty("error")) {
                 dataTableArray.push(res);
-            }else{
+            } else {
                 dataTableArray.push(new DataTable(i18n(res.fieldNames), res.fieldNames, res.data));
             }
 
         }
         return dataTableArray;
+
     },
     batch_fetch: function (sqlArray, maxLine, timeout) {  //并发实现
         Log.warn("function deprecated,please use Data.batchFetch()");

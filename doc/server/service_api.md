@@ -526,6 +526,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
  [DataTable对象](#dataTable)
 
+
 说明：异常时返回{"error":""}对象，属性error里包含具体的错误信息。 
 
 示例：查询`proc/conf/datasource.cfg`文件中db目录下mysql标记对应的数据库
@@ -573,6 +574,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  
   [DataTable对象](#dataTable)数组
 
+
 说明：若其中某个sql执行异常则，则返回数组对应的该异常sql会返回{"error":""}对象，属性error里包含此sql具体的错误信息。  
 
 示例：
@@ -602,6 +604,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  
   [DataTable对象](#dataTable)数组
 
+
 说明：若其中某个sql执行异常则，则返回数组对应的该异常sql会返回{"error":""}对象，属性error里包含此sql具体的错误信息。    
 
 示例：
@@ -616,7 +619,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 定义：
 
-    function executeUpdate(sql);
+    function update(sql);
 
 执行数据库增删改功能
 
