@@ -1,0 +1,17 @@
+<rdk_combo_select frozen="false"  id="comboID@{{$moduleId}}" open="combOpen" caption="'KPI'" show_clear="false" show-icon="false">
+    <div class="main">
+        <div class="main-border">
+            <div class="main-search"  id="name@{{$moduleId}}">
+                <input id="input@{{$moduleId}}" type="text" ng-model="searchVal" ng-change="myFunc(searchVal)" >
+                <i class="fa fa-search search-icon"></i>
+            </div>
+            <div rdk-scroll style="height: 300px">
+                <div>
+                    <rdk_accordion  change="changeHandler()"  open="Open" caption="item.topic" ng-repeat="item in items track by $index" on-finish-render>
+                        <rdk_basic_selector  selected-items="item.highLight" editable="false" searchable="false" child_change="selected2string" change="selectorChanged" class="rdk_selector_style"  multiple_select="basicMultiple"  data="item.subTopic" ></rdk_basic_selector>
+                    </rdk_accordion>
+                </div>
+            </div>
+        </div>
+    </div>
+</rdk_combo_select>
