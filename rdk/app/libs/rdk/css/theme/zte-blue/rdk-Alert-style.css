@@ -16,6 +16,9 @@ div,p,button {
 	text-align: left;
     display: inline-block;
 }
+.ui-widget-overlay {
+	background: rgba(0, 0, 0, .2);
+}
 .rdk-popupservice-dialog input {
 	border: none
 }
@@ -30,32 +33,9 @@ div.rdk-popupservice-dialog .ui-widget-header .ui-dialog-title {
 	margin: 0;
 	line-height: 30px;
 }
-.rdk-popupservice-dialog  .ui-button-text {
-	display: none;
-}
-.rdk-popupservice-dialog  .ui-dialog .ui-dialog-titlebar-close {
-	width: 18px;
-	height: 18px;
-}
-.rdk-popupservice-dialog.ui-dialog{
-	padding: 0;
-	background-color: #eaeaea
-}
-.rdk-popupservice-dialog .ui-dialog-titlebar-close:focus {
-	outline: none;
-}
-.rdk-popupservice-dialog .ui-state-hover .ui-icon,
-.rdk-popupservice-dialog .ui-state-focus .ui-icon,
-.rdk-popupservice-dialog .ui-state-default .ui-icon {
-    background-image: url("../../../../jquery-ui/css/images/ui-icons_222222_256x240.png");
-    height: 18px;
-    width: 18px;
-    margin-top: -9px;
-    margin-left: -9px;
-}
 div.ui-dialog .ui-dialog-content{
 	padding: 0;
-	background-color: #f6f6f6
+	background-color: #fff
 }
 .rdk-alert-left {
 	text-align: left;
@@ -71,30 +51,20 @@ div.ui-dialog .ui-dialog-content{
 	border-radius: 5px;
 	margin: 0 13px 20px 13px;
 }
+.rdk-alert-tableImg {
+	padding-top: 20px;
+	background:#fff;
+}
 .rdk-alert-tableImg >img {
 	height:42px;
 	width:42px;
 	border:none;
 	display: block;
 	margin:0 auto;
-	margin-top: 10px;
 }
-
 /*  todo  */
-
 .rdk-popupservice-dialog .ui-widget-content{
-	background-color: #f6f6f6;
-}
-.rdk-popupservice-dialog .ui-widget-header {
-	color:#008fd4;
-	background-color: #eaeaea;
-}
-.rdk-popupservice-dialog  .ui-state-default, .rdk-popupservice-dialog  .ui-widget-content .ui-state-default,
-.rdk-popupservice-dialog  .ui-widget-header .ui-state-default {
-	border: 1px solid #eaeaea;
-}
-.rdk-popupservice-dialog  .ui-button-icon-primary {
-	background-color:  #eaeaea;
+	background-color: #fff;
 }
 .rdk-alert-yes ,.rdk-alert-ok{
 	background: #85c56c;
@@ -124,7 +94,7 @@ div.ui-dialog .ui-dialog-content{
 	color: #fff;
 }
 .rdk-alert-tableImg >img {
-	background:#f6f6f6;
+	background:#fff;
 }
 .rdk-theme-zte-vmax .rdk-alert-svrMsgBtn{
 	padding: 0 16px;

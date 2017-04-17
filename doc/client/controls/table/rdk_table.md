@@ -376,6 +376,11 @@ cells 为 改变的行列信息的数组信息
 通过`setting`中的`selectable` 属性控制。`selectable` 缺省时默认为`true`，表示表格行可以被选中，选择和悬浮状态有高亮效果。
 `selectable` 可设置成 false 表格的行不可被选中。
 
+### 动态列实现宽表 ###
+如果表格的列特别多，一下子全部显示出来，会导致页面卡顿，这个时候可以通过动态列的方式来模拟宽表，请看这个demo，这个表格一共有200列
+
+<live_demo example="controls/table/dynamic-column"></live_demo>
+
 
 ## 复选框列 add_check_box ##
 >支持类型：布尔型

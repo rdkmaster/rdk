@@ -523,6 +523,9 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  [DataTable对象](#dataTable)
 
 
+说明：异常时返回{"error":""}对象，属性error里包含具体的错误信息。
+
+
  #### `Data.fetchWithDataSource()` {#fetchWithDataSource} ####
 
 该函数提供了根据自定义数据源查询数据库数据的安全方法。
@@ -542,6 +545,9 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 返回：
 
  [DataTable对象](#dataTable)
+
+
+说明：异常时返回{"error":""}对象，属性error里包含具体的错误信息。 
 
 示例：查询`proc/conf/datasource.cfg`文件中db目录下mysql标记对应的数据库
 
@@ -590,6 +596,9 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  
   [DataTable对象](#dataTable)数组
 
+
+说明：若其中某个sql执行异常则，则返回数组对应的该异常sql会返回{"error":""}对象，属性error里包含此sql具体的错误信息。  
+
 示例：
 
     Data.batchFetch(['select * from dim_ne;','select * from dim_comm_city'],4000,10);
@@ -617,21 +626,24 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  
   [DataTable对象](#dataTable)数组
 
+
+说明：若其中某个sql执行异常则，则返回数组对应的该异常sql会返回{"error":""}对象，属性error里包含此sql具体的错误信息。    
+
 示例：
 
 并发查询`proc/conf/datasource.cfg`文件中db目录下mysql标记对应的数据库表：
      	
         Data.batchFetchWithDataSource("mysql",['select * from dim_ne;','select * from dim_comm_city']); //查询mysql数据库
 
-#### `Data.executeUpdate()` ####
+#### `Data.update()` ####
 
 该函数提供了可并发完成数据库增删改功能。
 
 定义：
 
-    function executeUpdate(sql);
+    function update(sql);
 
-说明：执行数据库增删改功能
+执行数据库增删改功能
 
 参数：
 
@@ -642,7 +654,10 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  
    参数为一个sql字符串时，函数返回该sql执行返回的受影响记录数对应的字符串；
    参数为sql数组时，函数返回该sql数组分别执行返回的受影响记录数对应的字符串数组。
+
  
+说明：无论入参是单个sql还是sql数组，sql执行错误时会返回 {"error":""}对象，属性error里包第一个出错sql的具体信息，此过程是事务处理过程，只要出错就会回滚事务。
+
 
 ### `require() ` ###
 
