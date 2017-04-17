@@ -590,9 +590,7 @@ var Rest = {
         }
         url += param;
 
-        var res = rdk_runtime.restHelper().get(url, option, ifErrorInfo);
-
-        return Rest._getRestResult(res,ifErrorInfo);
+        return Rest._getRestResult(rdk_runtime.restHelper().get(url, option, ifErrorInfo), ifErrorInfo);
     },
     post: function (url, param, option, ifErrorInfo) {
         if (!_.isDefined(ifErrorInfo)) {
@@ -603,9 +601,8 @@ var Rest = {
         } else if (_.isObject(param)) {
             param = JSON.stringify(param);
         }
-        var res = rdk_runtime.restHelper().post(url, param, option, ifErrorInfo);
 
-        return Rest._getRestResult(res,ifErrorInfo);
+        return Rest._getRestResult(rdk_runtime.restHelper().post(url, param, option, ifErrorInfo), ifErrorInfo);
     },
     delete: function (url, param, option, ifErrorInfo) {
         if (!_.isDefined(ifErrorInfo)) {
@@ -616,9 +613,8 @@ var Rest = {
         } else if (_.isObject(param)) {
             param = JSON.stringify(param);
         }
-        var res = rdk_runtime.restHelper().delete(url, param, option, ifErrorInfo);
 
-        return Rest._getRestResult(res,ifErrorInfo);
+        return Rest._getRestResult(rdk_runtime.restHelper().delete(url, param, option, ifErrorInfo), ifErrorInfo);
     },
     put: function (url, param, option, ifErrorInfo) {
         if (!_.isDefined(ifErrorInfo)) {
@@ -629,16 +625,15 @@ var Rest = {
         } else if (_.isObject(param)) {
             param = JSON.stringify(param);
         }
-        var res = rdk_runtime.restHelper().put(url, param, option, ifErrorInfo);
 
-        return Rest._getRestResult(res,ifErrorInfo);
+        return Rest._getRestResult(rdk_runtime.restHelper().put(url, param, option, ifErrorInfo), ifErrorInfo);
     },
-    _getRestResult:function(res,ifErrorInfo){
-        if(ifErrorInfo){
+    _getRestResult: function (res, ifErrorInfo) {
+        if (ifErrorInfo) {
             var resObj = JSON.parse(res)
             if (resObj.hasOwnProperty("rdkRestError")) {
                 return resObj;
-            }else{
+            } else {
                 return res;
             }
         }
