@@ -42,6 +42,10 @@
 
 <live_demo example="controls/input/demo4click" width="900"></live_demo>
 
+# 方法 #
+## `getValue()`
+<live_demo example="controls/input/get-value" width="900"></live_demo>
+
 # 事件 #
 
 如果设置了`id`，即可广播/监听以下事件。
