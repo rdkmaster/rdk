@@ -551,7 +551,10 @@ function _listFiles(files, path, pattern, recursive) {
 ///////////////////////////////////////////////////////////////////////
 
 var Rest = {
-    get: function (url, param, option) {
+    get: function (url, param, option, ifErrorInfo) {
+        if (!_.isDefined(ifErrorInfo)) {
+            ifErrorInfo = false;
+        }
         if (arguments.length == 2) {
             //同时支持 Rest.get(url, option) 和 Rest.get(url, param, option) 两个方式
             option = param;
@@ -587,31 +590,64 @@ var Rest = {
         }
         url += param;
 
-        return rdk_runtime.restHelper().get(url, option);
+        var res = rdk_runtime.restHelper().get(url, option, ifErrorInfo);
+        var resObj = JSON.parse(res)
+        if (resObj.hasOwnProperty("rdkRestError")) {
+            res = resObj
+        }
+
+        return res;
     },
-    post: function (url, param, option) {
+    post: function (url, param, option, ifErrorInfo) {
+        if (!_.isDefined(ifErrorInfo)) {
+            ifErrorInfo = false;
+        }
         if (_.isUndefined(param)) {
             param = "";
         } else if (_.isObject(param)) {
             param = JSON.stringify(param);
         }
-        return rdk_runtime.restHelper().post(url, param, option);
+        var res = rdk_runtime.restHelper().post(url, param, option, ifErrorInfo);
+        var resObj = JSON.parse(res)
+        if (resObj.hasOwnProperty("rdkRestError")) {
+            res = resObj
+        }
+
+        return res;
     },
-    delete: function (url, param, option) {
+    delete: function (url, param, option, ifErrorInfo) {
+        if (!_.isDefined(ifErrorInfo)) {
+            ifErrorInfo = false;
+        }
         if (_.isUndefined(param)) {
             param = "";
         } else if (_.isObject(param)) {
             param = JSON.stringify(param);
         }
-        return rdk_runtime.restHelper().delete(url, param, option);
+        var res = rdk_runtime.restHelper().delete(url, param, option, ifErrorInfo);
+        var resObj = JSON.parse(res)
+        if (resObj.hasOwnProperty("rdkRestError")) {
+            res = resObj
+        }
+
+        return res;
     },
-    put: function (url, param, option) {
+    put: function (url, param, option, ifErrorInfo) {
+        if (!_.isDefined(ifErrorInfo)) {
+            ifErrorInfo = false;
+        }
         if (_.isUndefined(param)) {
             param = "";
         } else if (_.isObject(param)) {
             param = JSON.stringify(param);
         }
-        return rdk_runtime.restHelper().put(url, param, option);
+        var res = rdk_runtime.restHelper().put(url, param, option, ifErrorInfo);
+        var resObj = JSON.parse(res)
+        if (resObj.hasOwnProperty("rdkRestError")) {
+            res = resObj
+        }
+
+        return res;
     },
     encodeURIExt: function(uri) {
         return !uri ? uri : encodeURI(uri.toString()).

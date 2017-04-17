@@ -3,6 +3,7 @@ package com.zte.vmax.rdk.jsr;
 import com.zte.vmax.rdk.log.AbstractAppLoggable;
 import com.zte.vmax.rdk.log.AppLogger;
 import com.zte.vmax.rdk.config.Config;
+import com.zte.vmax.rdk.util.RdkUtil;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import jdk.nashorn.internal.runtime.Undefined;
 
@@ -23,25 +24,33 @@ public class RestHelper extends AbstractAppLoggable {
         logger = AppLogger.getLogger("RestHelper", appName);
     }
 
+    private class RestError {
+        private String rdkRestError;
+
+        RestError(String rdkRestError) {
+            this.rdkRestError = rdkRestError;
+        }
+    }
+
     private static Pattern URL_PTN = Pattern.compile("^http://.+", Pattern.CASE_INSENSITIVE);
 
-    public String get(String url, Object option) {
-        return commonRest(url, null, option, "GET");
+    public String get(String url, Object option, boolean ifErrorInfo) {
+        return commonRest(url, null, option, "GET", ifErrorInfo);
     }
 
-    public String post(String url, String param, Object option) {
-        return commonRest(url, param, option, "POST");
+    public String post(String url, String param, Object option, boolean ifErrorInfo) {
+        return commonRest(url, param, option, "POST", ifErrorInfo);
     }
 
-    public String delete(String url, String param, Object option) {
-        return commonRest(url, param, option, "DELETE");
+    public String delete(String url, String param, Object option, boolean ifErrorInfo) {
+        return commonRest(url, param, option, "DELETE", ifErrorInfo);
     }
 
-    public String put(String url, String param, Object option) {
-        return commonRest(url, param, option, "PUT");
+    public String put(String url, String param, Object option, boolean ifErrorInfo) {
+        return commonRest(url, param, option, "PUT", ifErrorInfo);
     }
 
-    private String commonRest(String url, String param, Object option, String method) {
+    private String commonRest(String url, String param, Object option, String method, boolean ifErrorInfo) {
         url = url.trim();
         Matcher m = URL_PTN.matcher(url);
         if (!m.find()) {
@@ -60,7 +69,7 @@ public class RestHelper extends AbstractAppLoggable {
             oUrl = new URL(url);
         } catch (MalformedURLException e) {
             logger.error("Malformed URL", e);
-            return null;
+            return ifErrorInfo ? RdkUtil.toJsonString(new RestError(e.toString())) : null;
         }
 
         //打开restful链接
@@ -69,7 +78,7 @@ public class RestHelper extends AbstractAppLoggable {
             conn = (HttpURLConnection) oUrl.openConnection();
         } catch (IOException e) {
             logger.error("can not open connection", e);
-            return null;
+            return ifErrorInfo ? RdkUtil.toJsonString(new RestError(e.toString())) : null;
         }
 
         setRequestProperties(conn, option);
@@ -84,7 +93,7 @@ public class RestHelper extends AbstractAppLoggable {
             conn.setRequestMethod(method);
         } catch (ProtocolException e) {
             logger.error("Invalid protocol", e);
-            return null;
+            return ifErrorInfo ? RdkUtil.toJsonString(new RestError(e.toString())) : null;
         }
 
         if (!method.equals("GET")) {
@@ -102,7 +111,7 @@ public class RestHelper extends AbstractAppLoggable {
                 out.flush();
             } catch (Exception e) {
                 logger.error("write queryString error", e);
-                return null;
+                return ifErrorInfo ? RdkUtil.toJsonString(new RestError(e.toString())) : null;
             } finally {
                 if (out != null) {
                     out.close();
@@ -124,7 +133,7 @@ public class RestHelper extends AbstractAppLoggable {
             }
         } catch (IOException e) {
             logger.error("get input stream or read data error:", e);
-            return null;
+            return ifErrorInfo ? RdkUtil.toJsonString(new RestError(e.toString())) : null;
         } finally {
             try {
                 if (baos != null) {
