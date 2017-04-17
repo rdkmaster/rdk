@@ -94,7 +94,7 @@ ul,li{
 }
 .listContent li {
 	height: 50px;
-	padding: 0 10px 0 10px;
+	padding: 0 10px 0 20px;
 	border-bottom: 1px solid #f5f5f5;
 }
 .listContent ul li:last-child{
