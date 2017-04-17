@@ -358,11 +358,12 @@ i.regular_right,i.regular_left{
     display: inline-flex;
     align-items: center;
 }
-.rdk-table-module .page-contain .fa{
+.rdk-table-module .page-contain .iconfont{
     color: #008FD4;
     font-size: 16px;
+    vertical-align: sub;
 }
-.rdk-table-module .page-contain .disabledRecords .fa{
+.rdk-table-module .page-contain .disabledRecords .iconfont{
     color: #999;
 }
 .rdk-table-module .page-contain .regularRecords input{

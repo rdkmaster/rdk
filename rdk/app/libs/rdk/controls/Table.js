@@ -97,12 +97,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 <ul class="pagination">\
                     <li ng-class="prevPageDisabled()"> \
                         <a href ng-click="firstPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==0]">\
-                            <i class="fa fa-step-backward" aria-hidden="true"></i>\
+                            <i class="iconfont iconfont-e8e1" aria-hidden="true"></i>\
                         </a>\
                     </li>\
                     <li ng-class="prevPageDisabled()">\
                         <a href ng-click= "prevPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==0]">\
-                            <i class="fa fa-angle-left" aria-hidden="true"></i>\
+                            <i class="iconfont iconfont-e8df" aria-hidden="true"></i>\
                         </a>\
                     </li>\
                     <li>\
@@ -112,12 +112,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     </li>\
                     <li ng-class="nextPageDisabled()"> \
                         <a href ng-click="nextPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==pageCount()]">\
-                             <i class="fa fa-angle-right" aria-hidden="true"></i>\
+                             <i class="iconfont iconfont-e8e0" aria-hidden="true"></i>\
                         </a>\
                     </li>\
                     <li ng-class="nextPageDisabled()"> \
                         <a href ng-click="lastPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==pageCount()]">\
-                            <i class="fa fa-step-forward" aria-hidden="true"></i>\
+                            <i class="iconfont iconfont-e8e2" aria-hidden="true"></i>\
                         </a>\
                     </li>\
                 </ul>\
