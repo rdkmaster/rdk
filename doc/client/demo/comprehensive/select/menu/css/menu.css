@@ -74,6 +74,21 @@
     right: 20px;
     top: 12px;
 }
+.main .rdk-accordion-module .content .selector li {
+    background-image: url(../images/normal.png);
+    background-repeat: no-repeat;
+    background-position: 20px 7px; ;
+}
+.main .rdk-accordion-module .content .selector li:hover{
+    background-image: url(../images/hover.png);
+    background-repeat: no-repeat;
+    background-position: 20px 7px; ;
+}
+.main .rdk-accordion-module .content .selector li.selected-item{
+    background-image: url(../images/selected.png);
+    background-repeat: no-repeat;
+    background-position: 20px 7px; ;
+}
 .rdk-selector-module .original-item:hover, .rdk-selector-module .selected-item:hover {
     background-color: #e2eef9;
 }
@@ -84,7 +99,7 @@
     border-radius: 0;
     margin: 2px 0;
     padding: 3px;
-    padding-left: 20px;
+    padding-left: 40px;
 }
 .rdk-selector-module .selected-item {
     background-color: #cde4fa !important;
@@ -111,6 +126,13 @@
 .rdk-accordion-module .theme .fa {
     float: right;
     margin-right: 5px;
+    /*//adfasdfasdf*/
+}
+.mutil {
+    height:29px;width: 40px;position: absolute;top:1px;left:1px
+}
+.seletor11{
+    background-color: green!important;
 }
 
 

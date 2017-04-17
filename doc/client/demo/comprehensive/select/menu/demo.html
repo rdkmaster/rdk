@@ -9,7 +9,8 @@
                 <div rdk-scroll style="height: 300px">
                     <div>
                         <rdk_accordion  change="changeHandler()"  open="Open" caption="item.topic" ng-repeat="item in items track by $index" on-finish-render>
-                            <rdk_basic_selector  selected-items="item.highLight" editable="false" searchable="false" child_change="selected2string" change="selectorChanged" class="rdk_selector_style"  multiple_select="basicMultiple"  data="item.subTopic" ></rdk_basic_selector>
+                            <div class="mutil" ng-click="fun($index,$event)"></div>
+                            <rdk_basic_selector id="{{'selector'+($index+1)}}"  selected-items="item.highLight" editable="false" searchable="false" child_change="selected2string" change="selectorChanged" class="rdk_selector_style"  multiple_select="basicMultiple"  data="item.subTopic" ></rdk_basic_selector>
                         </rdk_accordion>
                     </div>
                 </div>

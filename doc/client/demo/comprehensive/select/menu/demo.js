@@ -78,65 +78,76 @@
                 scope.Open=false;
             }
         });
-    }
+        scope.fun=function(index,event) {
+            if (!$(".seletor1"+(index+1)).length) {
+                $(event.target).addClass( "seletor1" + (index + 1))
+                var len = scope.items.length;
+                var label = '';
+                selectedLists = [];
+                for (var i = 0; i < len; i++) {
+                    if (i == index) {
+                        scope.items[i].highLight = scope.items[i].subTopic
+                    }
+                    selectedLists = selectedLists.concat(scope.items[i].highLight)
+                }
+                angular.forEach(selectedLists, function (labelVal) {
+                    if (label == "") {
+                        label = labelVal.label
+                    } else {
+                        label += ',' + labelVal.label;
+                    }
+                })
+                EventService.broadcast('comboID', EventTypes.CHANGE, label);
 
+            }else{
+                $(".seletor1"+(index+1)).removeClass(".seletor1"+(index+1))
+            }
+        }
+    }
     rdk.$ngModule.service("Data",function(){
         return {
             data: [
                 {
-                    id:1,
+                    id:'selector1',
                     topic:"省份",
                     subTopic:[{
                         label: "江省",
-                        groupId:1
                     }, {
                         label: "江山省",
-                        groupId:1
                     }, {
                         label: "河南",
-                        groupId:1
                     }],
                     highLight: []
                 },
                 {
-                    id:2,
+                    id:'selector2',
                     topic:"排序字段",
                     subTopic:[{
                         label: "江苏省",
-                        groupId:2
                     }, {
                         label: "浙江省",
-                        groupId:2
                     }, {
                         label: "河南省",
-                        groupId:2
                     }],
                     highLight: []
                 },
                 {
-                    id:3,
+                    id:'selector3',
                     topic: "短消息",
                     subTopic: [{
                         label: '10',
-                        groupId:3
                     }, {
                         label: "南江省",
-                        groupId:3
                     }, {
                         label: '5',
-                        groupId:3
                     },{
                         label: '15',
-                        groupId:3
                     }, {
                         label: "南省",
-                        groupId:3
                     }, {
                         label: '150',
-                        groupId:3
                     },{
                         label: '20',
-                        groupId:3
                     }],
                     highLight: []
                 }
