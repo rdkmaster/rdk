@@ -1,0 +1,23 @@
+.box{
+	text-align:justify;
+	font-size: 0;
+}
+.box:after{
+	content:"";
+	display:inline-block; 
+	width:100%; 
+	height:0; 
+	overflow:hidden;
+}
+.list{ 
+	display:inline-block; 
+	vertical-align:top;
+	font-size: 20px;
+}
+
+.pct20{width:20%;}
+.pct50{width:50%;}
+
+ /*text-align */
+.tr{text-align:right;}
+
