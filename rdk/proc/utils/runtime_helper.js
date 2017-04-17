@@ -591,12 +591,8 @@ var Rest = {
         url += param;
 
         var res = rdk_runtime.restHelper().get(url, option, ifErrorInfo);
-        var resObj = JSON.parse(res)
-        if (resObj.hasOwnProperty("rdkRestError")) {
-            res = resObj
-        }
 
-        return res;
+        return Rest._getRestResult(res,ifErrorInfo);
     },
     post: function (url, param, option, ifErrorInfo) {
         if (!_.isDefined(ifErrorInfo)) {
@@ -608,12 +604,8 @@ var Rest = {
             param = JSON.stringify(param);
         }
         var res = rdk_runtime.restHelper().post(url, param, option, ifErrorInfo);
-        var resObj = JSON.parse(res)
-        if (resObj.hasOwnProperty("rdkRestError")) {
-            res = resObj
-        }
 
-        return res;
+        return Rest._getRestResult(res,ifErrorInfo);
     },
     delete: function (url, param, option, ifErrorInfo) {
         if (!_.isDefined(ifErrorInfo)) {
@@ -625,12 +617,8 @@ var Rest = {
             param = JSON.stringify(param);
         }
         var res = rdk_runtime.restHelper().delete(url, param, option, ifErrorInfo);
-        var resObj = JSON.parse(res)
-        if (resObj.hasOwnProperty("rdkRestError")) {
-            res = resObj
-        }
 
-        return res;
+        return Rest._getRestResult(res,ifErrorInfo);
     },
     put: function (url, param, option, ifErrorInfo) {
         if (!_.isDefined(ifErrorInfo)) {
@@ -642,11 +630,18 @@ var Rest = {
             param = JSON.stringify(param);
         }
         var res = rdk_runtime.restHelper().put(url, param, option, ifErrorInfo);
-        var resObj = JSON.parse(res)
-        if (resObj.hasOwnProperty("rdkRestError")) {
-            res = resObj
-        }
 
+        return Rest._getRestResult(res,ifErrorInfo);
+    },
+    _getRestResult:function(res,ifErrorInfo){
+        if(ifErrorInfo){
+            var resObj = JSON.parse(res)
+            if (resObj.hasOwnProperty("rdkRestError")) {
+                return resObj;
+            }else{
+                return res;
+            }
+        }
         return res;
     },
     encodeURIExt: function(uri) {
