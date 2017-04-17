@@ -1620,9 +1620,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 $scope.inpPageVal = $scope.currentPage+1;
                 $scope.gotoPageHandle=function(event){
                     var e = event || window.event;
-                    $scope.inpPageVal=$scope.inpPageVal.replace(/\D/g,'');
+                    $scope.inpPageVal=$scope.inpPageVal.toString().replace(/\D/g,'');
                     if($scope.inpPageVal!="" && $scope.inpPageVal<=0){
-                        $scope.inpPageVal=1
+                        $scope.inpPageVal=1;
                     }
                     else if($scope.inpPageVal>$scope.pageCount()+1){
                         $scope.inpPageVal = $scope.pageCount()+1;
