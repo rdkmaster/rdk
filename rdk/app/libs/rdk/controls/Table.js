@@ -512,6 +512,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                     var curSortIndex;
                     var sortIconStatus=true;
+                    var _totalCount;
 
                     function getTotalCount(){
                         return scope.$eval(filterCount);
@@ -631,7 +632,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         //后端排序开关
                         scope.serverSortCache = false;
 
-                        //表头开关
+                        //表头开关,总记录数获取
                         $timeout(function(){
                             scope.floatableHeader = Utils.isTrue(scope.floatableHeader, true);
                         }, 0);
@@ -671,6 +672,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             scope.searchMouseEnterHandler =function(){
                                 scope.searchPrompt="Search";
                             };
+                            $timeout(function(){
+                                _totalCount = getTotalCount();
+                                scope.searchPrompt="Total "+ _totalCount + " Records";
+                            },0);
                         }else{
                             scope.searchPrompt="Search";
                         }
@@ -1006,10 +1011,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             _reSetTableAddHeaders();
                             _fixTableHeader();
 
-                            if(attrs.pageNumber=="-1" && attrs.searchPosition =="bottom"){
-                                _totalCount = getTotalCount();
-                                scope.searchPrompt="Total "+ _totalCount + " Records";
-                            }
                             scope.refreshSingleCurrentPage();
                             _serverSortResponse();//后端排序，刷新后的响应
                             scope.$watch("selectedIndex", function(newVal, oldVal) { //根据selectedIndex高亮显示
@@ -1628,7 +1629,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         $scope.inpPageVal = $scope.pageCount()+1;
                     }
                     if(e && e.keyCode==13){ // enter 键
-                        $scope.gotoPage($scope.inpPageVal-1);
+                        !!$scope.inpPageVal && $scope.gotoPage($scope.inpPageVal-1);
                     }
                 };
                 $scope.pageBlurHandle=function(){

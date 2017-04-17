@@ -351,7 +351,7 @@ i.regular_right,i.regular_left{
 }
 
 /*跳转分页 pageGoTo html template*/
-.rdk-table-module .page-contain > li > a, .rdk-table-module .page-contain > li > span {
+.rdk-table-module .page-contain > ul > li > a, .rdk-table-module .page-contain > ul > li > span {
     padding: 0 6px;
 }
 .rdk-table-module .page-contain .pagination{
