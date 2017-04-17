@@ -1,7 +1,7 @@
 define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
     'rd.services.DataSourceService', "css!rd.styles.Table", 'css!rd.styles.FontAwesome',
     'css!rd.styles.Bootstrap','rd.controls.Button','css!rd.styles.IconFonts',
-    'bootstrap-select','bootstrap','rd.attributes.Scroll'
+    'bootstrap-select','bootstrap','rd.attributes.Scroll',"rd.attributes.Resize"
 ], function() {
 
     var tableModule = angular.module('rd.controls.Table', ['rd.core','rd.controls.Button','rd.attributes.Scroll']);
@@ -23,7 +23,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     </div>\
                </div>\
                <div class="wrapper" ng-style="{{scrollStyle}}">\
-                    <table class="rdk-table" >\
+                    <table class="rdk-table" style="table-layout: fixed;" resizeable mode="tableMode2"  id="myTable">\
                         <thead ng-if="!noHeader">\
                             <tr>\
                                 <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
@@ -463,6 +463,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     }
 
                     _init();
+                    scope.tableMode2 =  "OverflowResizer";
                     scope.searchPrompt="Search";
                     scope.showExport = Utils.isTrue(scope.showExport, false);
                     scope.searchWidth = Utils.getValue(scope.searchWidth, attrs.searchWidth, "168px");
