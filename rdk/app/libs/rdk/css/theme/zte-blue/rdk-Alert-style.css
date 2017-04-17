@@ -16,22 +16,6 @@ div,p,button {
 	text-align: left;
     display: inline-block;
 }
-.rdk-popupservice-dialog.ui-corner-all {
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0
-}
-.rdk-popupservice-dialog .ui-widget-header {
-	color:#008fd4;
-	background-color: #f2f2f2;
-	font-size: 14px;
-	height: 34px;
-	line-height: 34px;
-	border-bottom: none;
-	padding: 0 10px 0 5px;
-}
-.rdk-popupservice-dialog .ui-widget-header .ui-dialog-title{
-	margin: 0;
-}
 .ui-widget-overlay {
 	background: rgba(0, 0, 0, .2);
 }
@@ -48,16 +32,6 @@ div.rdk-popupservice-dialog .ui-widget-header .ui-dialog-title {
 	padding: 0;
 	margin: 0;
 	line-height: 30px;
-}
-.rdk-popupservice-dialog  .ui-button-text {
-	display: none;
-}
-.rdk-popupservice-dialog.ui-dialog{
-	padding: 0;
-	background-color: #eaeaea
-}
-.rdk-popupservice-dialog .ui-dialog-titlebar-close:focus {
-	outline: none;
 }
 div.ui-dialog .ui-dialog-content{
 	padding: 0;
@@ -91,9 +65,6 @@ div.ui-dialog .ui-dialog-content{
 /*  todo  */
 .rdk-popupservice-dialog .ui-widget-content{
 	background-color: #fff;
-}
-.rdk-popupservice-dialog .ui-widget-header {
-	color:#008fd4;
 }
 .rdk-alert-yes ,.rdk-alert-ok{
 	background: #85c56c;

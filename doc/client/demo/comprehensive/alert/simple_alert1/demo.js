@@ -1,7 +1,7 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.services.Alert', 'css!base/css/simple_alert1'
+        'rd.services.Alert', 'css!base/css/simple_alert1','rd.controls.Button'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', 'Alert', 'ButtonTypes', main];
