@@ -1,7 +1,7 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.controls.Input','css!base/css/input'
+        'rd.controls.Input','css!base/css/input','css!rd.styles.IconFonts'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope','EventService','EventTypes', main];
@@ -11,17 +11,16 @@
         scope.province = '';
         scope.iconFont=''
         EventService.register('myInput', EventTypes.BLUR, function(event, data) {
-            console.log(data,event)
           if(allprovinces.indexOf(data)!=-1|| data.length==0){
               scope.error=false;
               $(".inputContent input").removeClass('errorState')
               if(allprovinces.indexOf(data)!=-1) {
-                  scope.iconFont='fa fa-check-circle'
+                  scope.iconFont='iconfont  iconfont-e8e4'
               }
           }else{
               $(".inputContent input").addClass('errorState')
               scope.error=true;
-              scope.iconFont='fa fa-close'
+              scope.iconFont='iconfont  iconfont-e8e3'
           }
         })
         EventService.register('myInput', EventTypes.CHANGE, function(event, data) {

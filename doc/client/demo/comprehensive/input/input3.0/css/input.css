@@ -4,22 +4,18 @@
     -webkit-user-select:none;/*webkit浏览器*/
     -ms-user-select:none;/*IE10*/
     user-select:none;
-}
-.inputContent .fa-check-circle:before {
+}.inputContent .iconfont-e8e3:before,
+ .inputContent .iconfont-e8e4:before {
+     position: relative;
+     top:-5px;
+     left:5px;
+     font-size: 18px;
+ }
+.inputContent .iconfont-e8e4:before {
     color:green;
-    font-size: 18px;
 }
-.inputContent .fa-close {
-    width:18px;
-    height:18px;
-    border-radius: 9px;
-    background-color: red;
-}
-.inputContent .fa-close:before{
-    position: relative;
-    top:2px;
-    left:3px;
-    color:#fff;
+.inputContent .iconfont-e8e3:before{
+    color:red;
 }
 .inputContent .error{
     display: inline-block;
