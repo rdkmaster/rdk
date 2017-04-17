@@ -662,6 +662,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         scope.$watch("globalSearch", function(newVal, oldVal) {
                             if (newVal != oldVal) {
                                 if (scope.pagingType == "server" || scope.pagingType == "server-auto") return; //#115
+                                ctrl.setChecked([]);
                                 if (ctrl.pageCtrl) {
                                     ctrl.pageCtrl.firstPage();
                                 }
