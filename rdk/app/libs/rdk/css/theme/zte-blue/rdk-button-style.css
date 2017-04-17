@@ -56,6 +56,7 @@
 .rdk-button-btn{
 	background: rgba(0,0,0,0);
 	color:#ffffff;
+	border: 1px solid transparent;
 }
 .rdk-button-shade {
     background-color: #5395d8;
@@ -86,14 +87,14 @@
 	background:rgba(0,0,0,0.15);
 }
 .rdk-button-white {
-	background-color: #fff;
+	background-color: transparent;
 }
 .rdk-button-white + .rdk-button-btn {
 	color: #008FD4;
 	border: 1px solid #ccc;
 }
 .rdk-button-white + .rdk-shade-opacity {
-	background-color: #fff;
+	background-color: rgba(255,255,255,0.4);
 	border: 1px solid #9bc9dd
 }
 .rdk-button-white + .rdk-button-down {
