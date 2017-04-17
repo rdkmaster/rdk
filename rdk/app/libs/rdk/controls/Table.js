@@ -632,7 +632,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         //后端排序开关
                         scope.serverSortCache = false;
 
-                        //表头开关,总记录数获取
+                        //表头开关
                         $timeout(function(){
                             scope.floatableHeader = Utils.isTrue(scope.floatableHeader, true);
                         }, 0);
