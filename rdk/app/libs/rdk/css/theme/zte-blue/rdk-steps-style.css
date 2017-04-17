@@ -11,7 +11,7 @@
     flex: 0 0 auto;
 }
 .rdk-steps-module .rdk-steps-item>span{
-    height: 70px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -29,7 +29,7 @@
     text-align: center;
     position: absolute;
     left: -360%;
-    top: -4px;
+    top: -12px;
     white-space: nowrap;
     min-width: 180px;
     color: #333;
