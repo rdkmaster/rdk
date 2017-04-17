@@ -22,6 +22,13 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
                    ng-show="showDelete"></i>\
                  <div style="clear:both"></div>\
                 </div>',
+            controller: ['$scope', function(scope) {
+                Utils.publish(scope, this);
+
+                this.getValue = function() {
+                    return scope.inputContent;
+                }
+            }],
             compile: function(tElement, tAttrs, transclude) {
                 Utils.checkEventHandlers(tAttrs,scopeDefine);
                 return function(scope, iElement, iAttrs, ngModel) {
