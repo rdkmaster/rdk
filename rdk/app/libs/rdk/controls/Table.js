@@ -4,7 +4,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
     'bootstrap-select','bootstrap','rd.attributes.Scroll',"rd.attributes.Resize"
 ], function() {
 
-    var tableModule = angular.module('rd.controls.Table', ['rd.core','rd.controls.Button','rd.attributes.Scroll']);
+    var tableModule = angular.module('rd.controls.Table', ['rd.core','rd.controls.Button','rd.attributes.Scroll','rd.attributes.Resize']);
 
     tableModule.run(["$templateCache", function($templateCache) {
         $templateCache.put("/src/templates/common.html",
@@ -23,7 +23,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     </div>\
                </div>\
                <div class="wrapper" ng-style="{{scrollStyle}}">\
-                    <table class="rdk-table" style="table-layout: fixed;" resizeable mode="tableMode2"  id="myTable">\
+                    <table class="rdk-table" style="table-layout: fixed;" resizeable mode="tableMode2"  id="rdkTable{{$id}}">\
                         <thead ng-if="!noHeader">\
                             <tr>\
                                 <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
@@ -53,7 +53,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                      data-lang="{{lang}}" data-search-position="{{searchPosition}}" ng-class="{true:\'visiblePageLine\', false:\'unvisiblePageLine\'}[columnDefs.length!=0 && !noData]">\
                 </rdk-paging>\
                 <div ng-if="showExport && !noData" class="table-export"><rdk_button click="touchExport" icon="iconfont iconfont-e8c9" label="{{exportLabel}}"></rdk_button></div>\
-                <div class="clearfix"></div>\
+                <div class="clearfix" on-finish-render="domRenderFormParentToChild"></div>\
             </div>\
             </div>'
         );
@@ -454,6 +454,19 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                 if(tAttributes.customScroll=="rdk-scroll" && tAttributes.rdkScroll == null){
                     tElement[0].querySelector(".wrapper").setAttribute("rdk-scroll","");
+                }
+
+                if(!!tAttributes.resizeable){
+                    var tableElement=tElement[0].querySelector(".rdk-table");
+                    tableElement.setAttribute("resizeable","");
+                    tableElement.setAttribute("mode",tAttributes.resizeable);
+                    tableElement.setAttribute("id","rdkTable{{$id}}");
+                    if(tAttributes.resizeable=="OverflowResizer"){
+                        tableElement.style.tableLayout="fixed";
+                        tElement[0].querySelector(".rdk-table thead>tr>th").classList.add("overflow-resizer");
+
+                    }
+                    //style="table-layout: fixed;" resizeable mode="tableMode2"  id="rdkTable{{$id}}"
                 }
 
                 return function link(scope, element, attrs, ctrl) {

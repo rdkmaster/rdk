@@ -28,7 +28,8 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
             };
             function _link(scope, iElement,iAttrs)
             {
-                setTimeout(function(){
+                //setTimeout(function(){ },6000);
+                    console.error("rdkScroll");
                 var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
                 var hlazyResize=null;
                 var container = iElement[0];
@@ -129,7 +130,7 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                     }
                     return node;
                 }
-                },5000)
+
             }
         }]);
 

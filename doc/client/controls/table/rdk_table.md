@@ -450,6 +450,20 @@ cells 为 改变的行列信息的数组信息
 `searchable`前端过滤示例：
 <live_demo example="controls/table/searchable"></live_demo>
 
+## resizeable ##
+>支持类型：字符串
+
+`resizeable` 功能同 `search`。保留`search`属性是为了向下兼容。
+
+`resizeable=`示例：
+<live_demo example="controls/table/searchable"></live_demo>
+
+`resizeable=`示例：
+<live_demo example="controls/table/searchable"></live_demo>
+
+`resizeable=`示例：
+<live_demo example="controls/table/searchable"></live_demo>
+
 ## search_pattern ##
 >支持类型：正则表达式
 

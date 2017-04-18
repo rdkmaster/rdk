@@ -16,7 +16,13 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
         var cache = null;
 
         function link(scope, element, attr) {
-            setTimeout(function(){
+            scope.$on("domRenderFormParentToChild",init);
+            console.error("resizeable");
+            console.error(scope);
+            //setTimeout(function(){},5000);
+
+            function init(){
+                console.error("resizeable init");
                 // Set global reference to table
                 table = element;
                 debugger;
@@ -34,7 +40,7 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
 
                 // Watch for mode changes and update all
                 watchModeChange(table, attr, scope);
-            },3000)
+            }
 
         }
 
@@ -514,9 +520,9 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
 
         OverflowResizer.prototype.setup = function() {
             // Allow overflow in this mode
-            $(this.container).css({
-                overflow: 'auto'
-            });
+            //$(this.container).css({
+            //    overflow: 'auto'
+            //});
         };
 
         OverflowResizer.prototype.onTableReady = function() {
