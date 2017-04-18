@@ -72,7 +72,7 @@ ul,li{
 }
 .content>ul>li:nth-child(2)>i:nth-last-child(2){
 	border-top-left-radius: 4px;
-	background: #5395d8;
+	background: #41addc;
 	color: #fff;
 	border-right: none;
 	border-bottom-left-radius: 4px;
