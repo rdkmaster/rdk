@@ -50,7 +50,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     </table>\
                 </div>\
                 <rdk-paging ng-if="pageVisible && pageCtrl && paging" data-page-size="pageSize" \
-                     data-lang="{{lang}}" data-search-position="{{searchPosition}}" ng-class="{true:\'visiblePageLine\', false:\'unvisiblePageLine\'}[columnDefs.length!=0 && !noData]">\
+                     data-lang="{{lang}}" current-page="currentPage" data-search-position="{{searchPosition}}" ng-class="{true:\'visiblePageLine\', false:\'unvisiblePageLine\'}[columnDefs.length!=0 && !noData]">\
                 </rdk-paging>\
                 <div ng-if="showExport && !noData" class="table-export"><rdk_button click="touchExport" icon="iconfont iconfont-e8c9" label="{{exportLabel}}"></rdk_button></div>\
                 <div class="clearfix"></div>\
@@ -1513,7 +1513,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
     }]);
 
 
-    tableModule.directive('rdkPaging', ['$compile', function($compile) {
+    tableModule.directive('rdkPaging', ['Utils', function(Utils) {
         return {
             restrict: 'E',
             replace: true,
@@ -1529,7 +1529,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 count: "=",
                 pageSize: "=",
                 lang: "@",
-                searchPosition:"@?"
+                searchPosition:"@?",
+                currentPage:"="
             },
             link: function($scope, element, attrs, TableCtrl) {
                 $scope.TableCtrl = TableCtrl;
@@ -1539,7 +1540,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 initializePagingI18n();
                 refreshPagingI18n();
 
-                $scope.currentPage = 0;
+                $scope.currentPage = Utils.getValue($scope.currentPage, attrs.currentPage, 0);
 
                 $scope.pageNumber = getPageNumber();
 
