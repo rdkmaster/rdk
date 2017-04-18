@@ -9,7 +9,6 @@
     function main(scope, EventService, EventTypes, Data, $timeout) {
         scope.combOpen = false;
         scope.items = Data.data;
-        scope.basicMultiple = true;
         scope.Open=false;
         var selectedLists=[];
         scope.myFunc = function(searchVal) {//过滤
@@ -37,19 +36,6 @@
         scope.selected2string = function(selected, context) {
             var label='';
             var len = scope.items.length;
-            if(scope.basicMultiple===true) {//多选
-                selectedLists=[];
-                for(var j=0;j<len;j++){
-                    selectedLists=selectedLists.concat(scope.items[j].highLight)
-                }
-                angular.forEach(selectedLists,function(labelVal){
-                    if(label==""){
-                        label=labelVal.label
-                    }else {
-                        label += ',' + labelVal.label;
-                    }
-                })
-            }else{//单选
                 label=selected[0].label;
                 selectedLists=[];
                 selectedLists.push(selected[0]);
@@ -57,7 +43,6 @@
                 for(var i=0 ;i<len;i++){
                     scope.items[i].highLight=selectedLists
                 }
-            }
             EventService.broadcast('comboID', EventTypes.CHANGE, label);
         };
         EventService.register('comboID',EventTypes.CLEAR, function(){

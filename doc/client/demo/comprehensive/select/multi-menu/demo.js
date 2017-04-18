@@ -11,19 +11,6 @@
         scope.items = Data.data;
         scope.Open=false
         var selectedLists=[];
-        scope.$apply(function(){
-            for (var i = 0; i < scope.items.length; i++) {
-                (function (i) {
-                    EventService.register('selector' + (i + 1), EventTypes.CHANGE, function (content, selected) {
-                        if (scope.items[i].subTopic.length == selected.length) {
-                            $(".Mselecter" + (i + 1)).addClass("seletor")
-                        } else {
-                            $(".Mselecter" + (i + 1)).removeClass("seletor")
-                        }
-                    })
-                })(i)
-            }
-        })
         for (var i = 0; i < scope.items.length; i++) {
             (function (i) {
                 EventService.register('selector' + (i + 1), EventTypes.CHANGE, function (content, selected) {
