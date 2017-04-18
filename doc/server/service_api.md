@@ -692,7 +692,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 定义：
 
-	function get(url, param, option); 
+	function get(url, param, option, ifErrorInfo); 
 
 说明：在后端代码中调用其他的rest服务并返回其应答数据。
 
@@ -701,6 +701,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 - url: 目标服务的url。
 - param: 传递给rest服务的参数
 - option: 本次请求的参数
+- ifErrorInfo:可选，布尔型。控制请求异常时返回异常对象(格式：{"rdkRestError":""})还是null,未设置则返回null。
 
 说明：
 
@@ -730,7 +731,7 @@ option的结构如下：
 
 定义：
 
-    function put(url, param, option);
+    function put(url, param, option, ifErrorInfo);
 
 说明：在后端代码中调用其他的put服务并返回其应答数据。
 
@@ -739,6 +740,7 @@ option的结构如下：
 - url: 目标服务的url，必选。
 - param: 目标服务的请求参数字符串或者json对象，可选。
 - option: 本次请求的参数，同get参数option，可选。
+- ifErrorInfo:可选，布尔型。控制请求异常时返回异常对象(格式：{"rdkRestError":""})还是null,未设置则返回null。
 
 返回：该服务的返回值。    
 
@@ -746,7 +748,7 @@ option的结构如下：
 
 定义：
 
-    function post(url, param, option);
+    function post(url, param, option, ifErrorInfo);
 
 说明：在后端代码中调用其他的post服务并返回其应答数据。
 
@@ -755,6 +757,7 @@ option的结构如下：
 - url: 目标服务的url，必选。
 - param: 目标服务的请求参数字符串或者json对象，可选。
 - option: 本次请求的参数，同get参数option，可选。
+- ifErrorInfo:可选，布尔型。控制请求异常时返回异常对象(格式：{"rdkRestError":""})还是null,未设置则返回null。
 
 返回：该服务的返回值。
 
@@ -762,7 +765,7 @@ option的结构如下：
 
 定义：
 
-    function delete(url, param, option);
+    function delete(url, param, option, ifErrorInfo);
 
 说明：在后端代码中调用其他的delete服务并返回其应答数据。
 
@@ -771,6 +774,7 @@ option的结构如下：
 - url: 目标服务的url，必选。
 - param: 目标服务的请求参数字符串或者json对象，可选。
 - option: 本次请求的参数，同get参数option，可选。
+- ifErrorInfo:可选，布尔型。控制请求异常时返回异常对象(格式：{"rdkRestError":""})还是null,未设置则返回null。
 
 返回：该服务的返回值。
 
