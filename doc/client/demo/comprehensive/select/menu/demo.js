@@ -10,19 +10,8 @@
         scope.combOpen = false;
         scope.items = Data.data;
         scope.basicMultiple = true;
-        scope.Open=false
+        scope.Open=false;
         var selectedLists=[];
-        for(var i=0;i<scope.items.length;i++){
-            (function(i){
-                EventService.register('selector'+(i+1),EventTypes.CHANGE,function(content,selected){
-                    if(scope.items[i].subTopic.length==selected.length){
-                        $(".Mselecter"+(i+1)).addClass("seletor")
-                    }else{
-                        $(".Mselecter"+(i+1)).removeClass("seletor")
-                    }
-                })
-            })(i)
-        }
         scope.myFunc = function(searchVal) {//过滤
             var len = Data.data.length;
                 var rateArrs=[];
@@ -45,7 +34,7 @@
                 }
                 scope.items=rateArrs;
         };
-        scope.selected2string = function(selected) {
+        scope.selected2string = function(selected, context) {
             var label='';
             var len = scope.items.length;
             if(scope.basicMultiple===true) {//多选
@@ -53,6 +42,13 @@
                 for(var j=0;j<len;j++){
                     selectedLists=selectedLists.concat(scope.items[j].highLight)
                 }
+                angular.forEach(selectedLists,function(labelVal){
+                    if(label==""){
+                        label=labelVal.label
+                    }else {
+                        label += ',' + labelVal.label;
+                    }
+                })
             }else{//单选
                 label=selected[0].label;
                 selectedLists=[];
@@ -62,17 +58,12 @@
                     scope.items[i].highLight=selectedLists
                 }
             }
-            angular.forEach(selectedLists,function(labelVal){
-                label=Lfang(labelVal,label)
-            })
             EventService.broadcast('comboID', EventTypes.CHANGE, label);
         };
         EventService.register('comboID',EventTypes.CLEAR, function(){
-
             var len=scope.items.length;
             selectedLists=[];
             for(var i=0;i<len;i++){
-                if($(".seletor1"+(i+1))){$(".Mselecter"+(i+1)).removeClass("seletor")};
                 scope.items[i].highLight=[];
             }
         });
@@ -87,87 +78,65 @@
                 scope.Open=false;
             }
         });
-        //全选
-        function Lfang(labelVal,label){
-            if (label == "") {
-                label = labelVal.label
-            } else {
-                label += ',' + labelVal.label;
-            }
-            return label
-        }
-        scope.fun=function(index,event) {
-            var len = scope.items.length;
-            var label = '';
-            selectedLists = [];
-            if (!$(event.target).hasClass('seletor')) {
-                $(event.target).addClass( "seletor")
-                for (var i = 0; i < len; i++) {
-                    if (i == index) {
-                        scope.items[i].highLight = scope.items[i].subTopic
-                    }
-                    selectedLists = selectedLists.concat(scope.items[i].highLight)
-                }
-            }else{
-                $(event.target).removeClass("seletor");
-                for (var i = 0; i < len; i++) {
-                    if (i == index) {
-                        scope.items[i].highLight =[];
-                    }
-                    selectedLists = selectedLists.concat(scope.items[i].highLight)
-                }
-            }
-            angular.forEach(selectedLists, function (labelVal) {
-                label=Lfang(labelVal,label)
-            })
-            EventService.broadcast('comboID', EventTypes.CHANGE, label);
-
-        }
     }
+
     rdk.$ngModule.service("Data",function(){
         return {
             data: [
                 {
-                    id:'selector1',
+                    id:1,
                     topic:"省份",
                     subTopic:[{
                         label: "江省",
+                        groupId:1
                     }, {
                         label: "江山省",
+                        groupId:1
                     }, {
                         label: "河南",
+                        groupId:1
                     }],
                     highLight: []
                 },
                 {
-                    id:'selector2',
+                    id:2,
                     topic:"排序字段",
                     subTopic:[{
                         label: "江苏省",
+                        groupId:2
                     }, {
                         label: "浙江省",
+                        groupId:2
                     }, {
                         label: "河南省",
+                        groupId:2
                     }],
                     highLight: []
                 },
                 {
-                    id:'selector3',
+                    id:3,
                     topic: "短消息",
                     subTopic: [{
                         label: '10',
+                        groupId:3
                     }, {
                         label: "南江省",
+                        groupId:3
                     }, {
                         label: '5',
+                        groupId:3
                     },{
                         label: '15',
+                        groupId:3
                     }, {
                         label: "南省",
+                        groupId:3
                     }, {
                         label: '150',
+                        groupId:3
                     },{
                         label: '20',
+                        groupId:3
                     }],
                     highLight: []
                 }

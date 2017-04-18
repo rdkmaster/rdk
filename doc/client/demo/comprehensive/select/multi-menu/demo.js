@@ -9,12 +9,9 @@
     function main(scope, EventService, EventTypes, Data, $timeout) {
         scope.combOpen = false;
         scope.items = Data.data;
-        scope.basicMultiple = false;
         scope.Open=false
         var selectedLists=[];
-        if(basicMultiple) {
-            $('.main.selector li,.main .selector li:hover').css('background-image','none')
-            $('.rdk-accordion-module .theme').css('padding-left', '25px')
+        scope.$apply(function(){
             for (var i = 0; i < scope.items.length; i++) {
                 (function (i) {
                     EventService.register('selector' + (i + 1), EventTypes.CHANGE, function (content, selected) {
@@ -26,6 +23,17 @@
                     })
                 })(i)
             }
+        })
+        for (var i = 0; i < scope.items.length; i++) {
+            (function (i) {
+                EventService.register('selector' + (i + 1), EventTypes.CHANGE, function (content, selected) {
+                    if (scope.items[i].subTopic.length == selected.length) {
+                        $(".Mselecter" + (i + 1)).addClass("seletor")
+                    } else {
+                        $(".Mselecter" + (i + 1)).removeClass("seletor")
+                    }
+                })
+            })(i)
         }
         scope.myFunc = function(searchVal) {//过滤
             var len = Data.data.length;
@@ -52,28 +60,16 @@
         scope.selected2string = function(selected) {
             var label='';
             var len = scope.items.length;
-            if(scope.basicMultiple===true) {//多选
-                selectedLists=[];
-                for(var j=0;j<len;j++){
-                    selectedLists=selectedLists.concat(scope.items[j].highLight)
-                }
-                angular.forEach(selectedLists,function(labelVal){
-                    label=Lfang(labelVal,label)
-                })
-            }else{//单选
-                $('.main .rdk-accordion-module .content .selector li,.main .rdk-accordion-module .content .selector li:hover').css('background-image','none')
-                label=selected[0].label;
-                selectedLists=[];
-                selectedLists.push(selected[0]);
-                var len = scope.items.length;
-                for(var i=0 ;i<len;i++){
-                    scope.items[i].highLight=selectedLists
-                }
+            selectedLists=[];
+            for(var j=0;j<len;j++){
+                selectedLists=selectedLists.concat(scope.items[j].highLight)
             }
-            EventService.broadcast('comboID', EventTypes.CHANGE, label);
+            angular.forEach(selectedLists,function(labelVal){
+                label=Lfang(labelVal,label)
+            })
+        EventService.broadcast('comboID', EventTypes.CHANGE, label);
         };
         EventService.register('comboID',EventTypes.CLEAR, function(){
-
             var len=scope.items.length;
             selectedLists=[];
             for(var i=0;i<len;i++){
