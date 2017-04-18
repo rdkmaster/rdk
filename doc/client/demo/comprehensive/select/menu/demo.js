@@ -10,8 +10,19 @@
         scope.combOpen = false;
         scope.items = Data.data;
         scope.basicMultiple = true;
-        scope.Open=false;
+        scope.Open=false
         var selectedLists=[];
+        for(var i=0;i<scope.items.length;i++){
+            (function(i){
+                EventService.register('selector'+(i+1),EventTypes.CHANGE,function(content,selected){
+                    if(scope.items[i].subTopic.length==selected.length){
+                        $(".layoutBox .mutil:nth-of-type("+(i+1)+")").addClass("seletor1" + (i + 1))
+                    }else{
+                        $(".layoutBox .mutil:nth-of-type("+(i+1)+")").removeClass("seletor1" + (i + 1))
+                    }
+                })
+            })(i)
+        }
         scope.myFunc = function(searchVal) {//过滤
             var len = Data.data.length;
                 var rateArrs=[];
@@ -34,7 +45,7 @@
                 }
                 scope.items=rateArrs;
         };
-        scope.selected2string = function(selected, context) {
+        scope.selected2string = function(selected) {
             var label='';
             var len = scope.items.length;
             if(scope.basicMultiple===true) {//多选
@@ -42,13 +53,6 @@
                 for(var j=0;j<len;j++){
                     selectedLists=selectedLists.concat(scope.items[j].highLight)
                 }
-                angular.forEach(selectedLists,function(labelVal){
-                    if(label==""){
-                        label=labelVal.label
-                    }else {
-                        label += ',' + labelVal.label;
-                    }
-                })
             }else{//单选
                 label=selected[0].label;
                 selectedLists=[];
@@ -58,12 +62,21 @@
                     scope.items[i].highLight=selectedLists
                 }
             }
+            angular.forEach(selectedLists,function(labelVal){
+                if (label == "") {
+                    label = labelVal.label
+                } else {
+                    label += ',' + labelVal.label;
+                }
+            })
             EventService.broadcast('comboID', EventTypes.CHANGE, label);
         };
         EventService.register('comboID',EventTypes.CLEAR, function(){
+
             var len=scope.items.length;
             selectedLists=[];
             for(var i=0;i<len;i++){
+                if($(".seletor1"+(i+1))){$(".seletor1"+(i+1)).removeClass("seletor1"+(i+1))};
                 scope.items[i].highLight=[];
             }
         });
@@ -78,30 +91,37 @@
                 scope.Open=false;
             }
         });
+        //全选
         scope.fun=function(index,event) {
+            var len = scope.items.length;
+            var label = '';
+            selectedLists = [];
             if (!$(".seletor1"+(index+1)).length) {
                 $(event.target).addClass( "seletor1" + (index + 1))
-                var len = scope.items.length;
-                var label = '';
-                selectedLists = [];
                 for (var i = 0; i < len; i++) {
                     if (i == index) {
                         scope.items[i].highLight = scope.items[i].subTopic
                     }
                     selectedLists = selectedLists.concat(scope.items[i].highLight)
                 }
-                angular.forEach(selectedLists, function (labelVal) {
-                    if (label == "") {
-                        label = labelVal.label
-                    } else {
-                        label += ',' + labelVal.label;
-                    }
-                })
-                EventService.broadcast('comboID', EventTypes.CHANGE, label);
-
             }else{
-                $(".seletor1"+(index+1)).removeClass(".seletor1"+(index+1))
+                $(".seletor1"+(index+1)).removeClass("seletor1"+(index+1));
+                for (var i = 0; i < len; i++) {
+                    if (i == index) {
+                        scope.items[i].highLight =[];
+                    }
+                    selectedLists = selectedLists.concat(scope.items[i].highLight)
+                }
             }
+            angular.forEach(selectedLists, function (labelVal) {
+                if (label == "") {
+                    label = labelVal.label
+                } else {
+                    label += ',' + labelVal.label;
+                }
+            })
+            EventService.broadcast('comboID', EventTypes.CHANGE, label);
+
         }
     }
     rdk.$ngModule.service("Data",function(){
