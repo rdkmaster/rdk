@@ -16,9 +16,9 @@
             (function(i){
                 EventService.register('selector'+(i+1),EventTypes.CHANGE,function(content,selected){
                     if(scope.items[i].subTopic.length==selected.length){
-                        $(".layoutBox .mutil:nth-of-type("+(i+1)+")").addClass("seletor1" + (i + 1))
+                        $(".Mselecter"+(i+1)).addClass("seletor")
                     }else{
-                        $(".layoutBox .mutil:nth-of-type("+(i+1)+")").removeClass("seletor1" + (i + 1))
+                        $(".Mselecter"+(i+1)).removeClass("seletor")
                     }
                 })
             })(i)
@@ -63,11 +63,7 @@
                 }
             }
             angular.forEach(selectedLists,function(labelVal){
-                if (label == "") {
-                    label = labelVal.label
-                } else {
-                    label += ',' + labelVal.label;
-                }
+                label=Lfang(labelVal,label)
             })
             EventService.broadcast('comboID', EventTypes.CHANGE, label);
         };
@@ -76,7 +72,7 @@
             var len=scope.items.length;
             selectedLists=[];
             for(var i=0;i<len;i++){
-                if($(".seletor1"+(i+1))){$(".seletor1"+(i+1)).removeClass("seletor1"+(i+1))};
+                if($(".seletor1"+(i+1))){$(".Mselecter"+(i+1)).removeClass("seletor")};
                 scope.items[i].highLight=[];
             }
         });
@@ -92,12 +88,20 @@
             }
         });
         //全选
+        function Lfang(labelVal,label){
+            if (label == "") {
+                label = labelVal.label
+            } else {
+                label += ',' + labelVal.label;
+            }
+            return label
+        }
         scope.fun=function(index,event) {
             var len = scope.items.length;
             var label = '';
             selectedLists = [];
-            if (!$(".seletor1"+(index+1)).length) {
-                $(event.target).addClass( "seletor1" + (index + 1))
+            if (!$(event.target).hasClass('seletor')) {
+                $(event.target).addClass( "seletor")
                 for (var i = 0; i < len; i++) {
                     if (i == index) {
                         scope.items[i].highLight = scope.items[i].subTopic
@@ -105,7 +109,7 @@
                     selectedLists = selectedLists.concat(scope.items[i].highLight)
                 }
             }else{
-                $(".seletor1"+(index+1)).removeClass("seletor1"+(index+1));
+                $(event.target).removeClass("seletor");
                 for (var i = 0; i < len; i++) {
                     if (i == index) {
                         scope.items[i].highLight =[];
@@ -114,11 +118,7 @@
                 }
             }
             angular.forEach(selectedLists, function (labelVal) {
-                if (label == "") {
-                    label = labelVal.label
-                } else {
-                    label += ',' + labelVal.label;
-                }
+                label=Lfang(labelVal,label)
             })
             EventService.broadcast('comboID', EventTypes.CHANGE, label);
 
