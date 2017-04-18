@@ -12,6 +12,10 @@
     border-radius: 4px;
     margin-top: 2px;
     box-shadow: rgba(0, 0, 0, 0.172549) 0px 6px 16px;
+    -moz-user-select:none;/*火狐*/
+    -webkit-user-select:none;/*webkit浏览器*/
+    -ms-user-select:none;/*IE10*/
+    user-select:none;
     font-family: "微软雅黑", Helvetica, Arial, sans-serif;
 }
 .select-state{
