@@ -7,8 +7,8 @@ table.resize tr th .handle {
     height: 100%;
     position: absolute;
     top: 0;
-    right: 0px;
-    cursor: ew-resize !important;
+    right: 0;
+    cursor:url("/rdk/app/libs/rdk/css/img/ew-resize.cur"),default !important;
 }
 table.resize tr th .handle.active {
     border-right: 1px dotted #000;

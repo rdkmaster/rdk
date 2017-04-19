@@ -16,16 +16,14 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
         var cache = null;
 
         function link(scope, element, attr) {
+
             scope.$on("domRenderFormParentToChild",init);
-            console.error("resizeable");
-            console.error(scope);
-            //setTimeout(function(){},5000);
 
             function init(){
-                console.error("resizeable init");
                 // Set global reference to table
+              
                 table = element;
-                debugger;
+
                 // Set global reference to container
                 container = scope.container ? $(scope.container) : $(table).parent();
 
@@ -70,7 +68,7 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
 
         function resetTable(table) {
             $(table).outerWidth('100%');
-            $(table).find('th').width('auto');
+            //$(table).find('th').width('auto');
         }
 
         function deleteHandles(table) {
@@ -111,12 +109,13 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
         }
 
         function setColumnSizes(cache) {
+
             if (!cache) {
                 resetTable(table);
                 return;
             }
 
-            $(table).width('auto');
+            $(table).width('100%');
 
             ctrlColumns.each(function(index, column){
                 var id = $(column).attr('id');
@@ -124,7 +123,7 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
                 $(column).css({ width: cacheWidth });
             })
 
-            resizer.onTableReady();
+            //resizer.onTableReady();
         }
 
         function initHandle(table, column) {
@@ -149,10 +148,11 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
             // This event starts the dragging
             $(handle).mousedown(function(event) {
                 if (isFirstDrag) {
+                    isFirstDrag = false;
                     resizer.onFirstDrag(column, handle);
                     resizer.onTableReady();
-                    isFirstDrag = false;
                 }
+
 
                 var optional = {}
                 if (resizer.intervene) {
@@ -527,9 +527,8 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
 
         OverflowResizer.prototype.onTableReady = function() {
             // For mode overflow, make table as small as possible
-            debugger;
-            console.error("$(this.table).width()=",$(this.table[0].parentNode).width());
-            $(this.table).width($(this.table[0].parentNode).width());
+            //$(this.table).width($(this.table[0].parentNode).width());
+            $(this.table).width(1);
         };
 
         // Return constructor

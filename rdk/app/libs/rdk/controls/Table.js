@@ -23,7 +23,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     </div>\
                </div>\
                <div class="wrapper" ng-style="{{scrollStyle}}">\
-                    <table class="rdk-table" style="table-layout: fixed;" resizeable mode="tableMode2"  id="rdkTable{{$id}}">\
+                    <table class="rdk-table resize" style="table-layout: fixed;" resizeable mode="resizeMode"  id="rdkTablerrQQ999{{$id}}">\
                         <thead ng-if="!noHeader">\
                             <tr>\
                                 <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
@@ -470,13 +470,13 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 }
 
                 return function link(scope, element, attrs, ctrl) {
-
+                    console.error("table link here");
                     scope.getRowSpan = function(itemRowSpan, item) {
                         return itemRowSpan && itemRowSpan[item["targets"]] ? itemRowSpan[item["targets"]] : 1;
                     }
 
                     _init();
-                    scope.tableMode2 =  "OverflowResizer";
+                    scope.resizeMode =  "OverflowResizer";
                     scope.searchPrompt="Search";
                     scope.showExport = Utils.isTrue(scope.showExport, false);
                     scope.searchWidth = Utils.getValue(scope.searchWidth, attrs.searchWidth, "168px");
@@ -963,7 +963,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             scope.allChecked = isChecked;//双绑没生效，后面用dom找
                             _resetTotalCheckedDom(isChecked);
                         }
-
+                        var isFirstBroadCast=true;
                         scope.$on('ngRepeatFinished', function() {
                             _reSetTableAddHeaders();
                             _fixTableHeader();
@@ -977,6 +977,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                     }
                                 }
                             }, true);
+                            if(isFirstBroadCast){
+                                scope.$broadcast("domRenderFormParentToChild");
+                                isFirstBroadCast=false;
+                            }
                         });
                         scope.$on('tableHeadNgRepeatFinished', function() {
                             _reSetTableHeaders(); //重定义表头

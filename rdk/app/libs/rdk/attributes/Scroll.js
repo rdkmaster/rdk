@@ -28,8 +28,6 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
             };
             function _link(scope, iElement,iAttrs)
             {
-                //setTimeout(function(){ },6000);
-                    console.error("rdkScroll");
                 var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
                 var hlazyResize=null;
                 var container = iElement[0];
@@ -41,7 +39,6 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                 //获取滚动槽的样式宽度
                 var railOffsetWidth=Utils.getStyle(container.querySelector(".ps-scrollbar-y-rail"),"width");
                 perfectScroll.lazyResize=function(){  //DOM元素内容不确定是否加载完，滚动条进行延时加载处理
-                    console.log("55551321");
                     if (hlazyResize) clearTimeout(hlazyResize);
                     hlazyResize = setTimeout(function(){
                         perfectScroll.update(container);
@@ -49,9 +46,8 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                         var scrollBarYRail = container.querySelector(".ps-scrollbar-y-rail");
                         if(scrollBarY == null) return;
                         scrollBarY.offsetHeight==0 ? scrollBarYRail.style.width=0 : scrollBarYRail.style.width=railOffsetWidth;
-                    },50);
+                    },0);
                 };
-                //setInterval(perfectScroll.lazyResize,1000);
 
                 perfectScroll.lazyResize();
 
@@ -130,7 +126,6 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                     }
                     return node;
                 }
-
             }
         }]);
 

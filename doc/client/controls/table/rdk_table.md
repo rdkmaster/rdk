@@ -453,6 +453,10 @@ cells 为 改变的行列信息的数组信息
 ## resizeable ##
 >支持类型：字符串
 
+BasicResizer:Only the two adjecent cell are resized when dragging a handler. Cell widths are always in percentage
+FixedResizer:First columns is width auto. Subsequent column sizes are never changed after resizing
+OverflowResizer:Table may expand out of its container, adding scrollbars. Columns are always the same size after resizing
+
 `resizeable` 功能同 `search`。保留`search`属性是为了向下兼容。
 
 `resizeable=`示例：

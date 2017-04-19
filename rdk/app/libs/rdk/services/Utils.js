@@ -500,11 +500,6 @@
                             scope.$emit(attr.onFinishRender);
                         }, 0);
                     }
-                    else if(attr.onFinishRender == "domRenderFormParentToChild"){
-                        $timeout(function() {
-                            scope.$broadcast(attr.onFinishRender);
-                        }, 0);
-                    }
                 }
             }
         }])
