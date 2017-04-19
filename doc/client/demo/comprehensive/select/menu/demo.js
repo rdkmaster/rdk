@@ -10,6 +10,7 @@
         scope.combOpen = false;
         scope.items = Data.data;
         scope.Open=false;
+        var label='';
         var selectedLists=[];
         scope.myFunc = function(searchVal) {//过滤
             var len = Data.data.length;
@@ -33,17 +34,19 @@
                 }
                 scope.items=rateArrs;
         };
-        scope.selected2string = function(selected, context) {
-            var label='';
+        scope.selected2string = function(selected,f,g) {
+            scope.combOpen=false;
             var len = scope.items.length;
-                label=selected[0].label;
-                selectedLists=[];
+            if(selected.length) {
+                label = selected[0].label;
+                selectedLists = [];
                 selectedLists.push(selected[0]);
-                var len = scope.items.length;
-                for(var i=0 ;i<len;i++){
-                    scope.items[i].highLight=selectedLists
+                for (var i = 0; i < len; i++) {
+                    scope.items[i].highLight = selectedLists
                 }
+            }
             EventService.broadcast('comboID', EventTypes.CHANGE, label);
+
         };
         EventService.register('comboID',EventTypes.CLEAR, function(){
             var len=scope.items.length;
