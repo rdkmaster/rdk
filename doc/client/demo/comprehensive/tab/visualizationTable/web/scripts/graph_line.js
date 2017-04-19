@@ -46,7 +46,7 @@ return {
         data: data.rowDescriptor,
         itemWidth:25,//设置icon长高
         itemHeight:6,
-        top:55,
+        top:45,
         right:38,
         inactiveColor:"#bbb",
         textStyle:{

@@ -54,7 +54,7 @@ return {
     grid:{
         left:45,
         right:34,
-        top:86,
+        top:70,
         bottom:40,
 		show:true,
         borderWidth:1

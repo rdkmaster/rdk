@@ -48,6 +48,7 @@ html, body{
 }
 .visualizationTable .sidebarBtn .iconfont {
     font-size: 72px;
+    cursor: pointer;
 }
 .visualizationTable .sidebarBtn {
     position: absolute;
@@ -63,12 +64,6 @@ html, body{
 }
 .visualizationTable .ui-tabs .ui-tabs-nav {
     padding: 0;
-}
-.visualizationTable .rdk-table-module {
-    height: 100%;
-}
-.rdk-tab-module .ui-widget-content {
-    height:100%
 }
 .visualizationTable .ui-tabs .ui-tabs-panel,.inlineTab .ui-tabs .ui-tabs-panel {
     padding:0;
@@ -132,7 +127,7 @@ html, body{
 .inlineTab .rdk-tab-module .ui-tabs .ui-tabs-nav li a{
     line-height: 26px;
     padding:0;
-    border-radius: initial;
+    border-radius: 0;/*initial这个IE11有问题*/
     border:1px solid #41addc;
     font-size: 12px;
 }
@@ -193,7 +188,7 @@ html, body{
     bottom: 6px;
 }
 .visualizationTable .rdk-table-module .wrapper {
-    height: 666px;
+    height: 656px;
 }
 .inlineTab .rdk-table-module .wrapper {
     height: 100%;
