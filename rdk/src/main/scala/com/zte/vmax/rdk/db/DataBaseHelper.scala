@@ -18,7 +18,7 @@ import scala.concurrent.{Await, Future}
   */
 object DataBaseHelper extends Logger {
 
-
+  case class DBError(error: String)
   /**
     * 查询数据
     *
@@ -26,7 +26,7 @@ object DataBaseHelper extends Logger {
     * @param maxLine 返回的最大行数
     * @return
     */
-  def fetch(session: DBSession, sql: String, maxLine: Long, nullToString: String = "null"): Option[DataTable] = {
+  def fetch(session: DBSession, sql: String, maxLine: Long, nullToString: String = "null"): Option[AnyRef] = {
 
     getConnection(session).map(connection =>
       try {
@@ -60,8 +60,7 @@ object DataBaseHelper extends Logger {
         case e: Throwable =>
           appLogger(session.appName).error("fetch data error", e)
           RdkUtil.safeClose(connection)
-          None
-
+          Some(DBError(e.toString))
       }).flatten
 
 
@@ -108,7 +107,7 @@ object DataBaseHelper extends Logger {
     * @param timeout 超时时间（秒）
     * @return 数据表集合
     */
-  def batchFetch(session: DBSession, sqlArr: List[String], maxLine: Long, timeout: Long): List[Option[DataTable]] = {
+  def batchFetch(session: DBSession, sqlArr: List[String], maxLine: Long, timeout: Long): List[Option[AnyRef]] = {
     if (sqlArr.isEmpty) {
       return Nil
     }
@@ -134,11 +133,8 @@ object DataBaseHelper extends Logger {
     * @param sql 待执行的sql语句
     * @return 执行成功返回true，否则false
     */
-  def executeUpdate(session: DBSession, sql: String): Option[Int] = {
-    batchExecuteUpdate(session, sql :: Nil).map(_ match {
-      case head :: _ => head
-      case Nil => 0
-    })
+  def executeUpdate(session: DBSession, sql: String): Option[Any] = {
+    batchExecuteUpdate(session, sql :: Nil).map(_.head)
   }
 
 
@@ -148,7 +144,7 @@ object DataBaseHelper extends Logger {
     * @param sqlArr 待执行的sql语句数组
     * @return 全部执行执行成功返回int列表，其中每个元素即为相应的sql执行结果，否则None
     */
-  def batchExecuteUpdate(session: DBSession, sqlArr: List[String]): Option[List[Int]] = {
+  def batchExecuteUpdate(session: DBSession, sqlArr: List[String]): Option[List[Any]] = {
     getConnection(session).map(connection =>
       try {
         val currentTime = System.currentTimeMillis()
@@ -166,7 +162,7 @@ object DataBaseHelper extends Logger {
           appLogger(session.appName).error(e.getMessage)
           connection.rollback()
           RdkUtil.safeClose(connection)
-          Nil
+          List(DBError(e.toString))
       })
 
   }

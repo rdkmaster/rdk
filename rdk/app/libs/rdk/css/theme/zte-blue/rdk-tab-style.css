@@ -15,10 +15,12 @@
 .rdk-tab-module .tabs>.content{
     border: 1px solid #ddd;
     margin: 0 .2em;
-    visibility:hidden;
 }
-.rdk-tab-module .tabs>.show-content {
-    visibility:visible;
+.rdk-tab-module .tabs>.content.hidden-content{
+    visibility: hidden;
+}
+.rdk-tab-module .tabs>.content.show-content {
+    visibility: visible;
 }
 .ui-tabs .ui-tabs-nav li {
     margin: 1px 1px 0 0;
@@ -59,7 +61,7 @@
 }
 .rdk-tab-module .bottom_line em{
     position:absolute;
-    bottom:-4px;
+    bottom:-3px;
     left:50%;
     margin-left:-2px;
     transform: translateX(-50%);
@@ -146,4 +148,38 @@
 .rdk-tab-module .tabs i.move.disabled{
     color: #cdcdcd;
     cursor: default;
+}
+.rdk-theme-zte-vmax .move-wrap {
+    display: none;
+}
+.rdk-theme-zte-vmax .rdk-tab-module .rdk-tabs-wrap .title {
+    display: flex;
+}
+.rdk-theme-zte-vmax .ui-tabs .ui-tabs-nav li {
+    flex:1;
+    text-align: center;
+}
+.rdk-theme-zte-vmax .ui-tabs .ui-tabs-nav li a {
+    width: 100%;
+    display: inline-block;
+}
+.rdk-theme-zte-vmax .rdk-tab-module .tabs>.content {
+    border: none;
+}
+.rdk-theme-zte-vmax .rdk-tab-module .bottom_line {
+    height : 3px;
+    bottom:-2px;
+}
+.rdk-theme-zte-vmax .ui-tabs .ui-tabs-nav {
+    padding: 0;
+    width: 100%!important;
+}
+.rdk-theme-zte-vmax .rdk-tab-module .ui-widget-header {
+    border-bottom: 3px solid #bbb;
+}
+.rdk-theme-zte-vmax .rdk-tab-module .tabs>.content {
+    margin: 0 .2em;
+}
+.rdk-theme-zte-vmax .rdk-tab-module {
+    margin: 0;
 }

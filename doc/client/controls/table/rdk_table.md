@@ -372,6 +372,15 @@ cells 为 改变的行列信息的数组信息
 详细举例如下
 <live_demo example="controls/table/rowSpan"></live_demo>
 
+### 设置行选中 ###
+通过`setting`中的`selectable` 属性控制。`selectable` 缺省时默认为`true`，表示表格行可以被选中，选择和悬浮状态有高亮效果。
+`selectable` 可设置成 false 表格的行不可被选中。
+
+### 动态列实现宽表 ###
+如果表格的列特别多，一下子全部显示出来，会导致页面卡顿，这个时候可以通过动态列的方式来模拟宽表，请看这个demo，这个表格一共有200列
+
+<live_demo example="controls/table/dynamic-column"></live_demo>
+
 
 ## 复选框列 add_check_box ##
 >支持类型：布尔型
@@ -470,6 +479,14 @@ cells 为 改变的行列信息的数组信息
 `show_export`值为false时，表示不显示导出按钮，其为默认值;
 `show_export`值为true时，表示显示导出按钮;
 
+## custom_scroll ##
+>支持类型：字符串
+
+通过设置`custom_scroll`属性的值给表格增加RDK的滚动条。`custom_scroll`="rdk-scroll"
+
+详细示例如下:
+<live_demo example="controls/table/customScroll"></live_demo>
+
 ## export_label ##
 >支持类型：字符串
 
@@ -480,19 +497,24 @@ cells 为 改变的行列信息的数组信息
 
 
 ## page_number ##
->支持类型：数值
+>支持类型：number
 
-表格分页样式目前支持两种：
+表格分页样式目前支持3种：
 
 - `page_number = "0"` 时，分页栏展现成 `上一页 1/8 下一页`格式。
-- `page_number` 设置成非零数值时，分页栏展示阿拉伯数字的分页。例如 `上一页 4 5 6 7 下一页`。
+- `page_number = "-1"` 时，分页栏展现成 `<< < 1/8 > >>`格式，并且可以手动输入页数进行跳转
+- `page_number` 设置成非零正整数时，分页栏展示阿拉伯数字的分页。例如 `上一页 4 5 6 7 下一页`。
+
 
 缺省 `page_number` 时，默认为 `0`，采用第一种分页样式展示。
 
 缺省 `page_number` 或者 `page_number = "0"` 时的详细示例如下：
 <live_demo example="controls/table/demo4PageNumber0"></live_demo>
 
-`page_number` 非零数值时的详细示例如下：
+`page_number = "-1"` 时的详细示例如下：
+<live_demo example="controls/table/demo4PageNumber1"></live_demo>
+
+`page_number` 非零正整数时的详细示例如下：
 <live_demo example="controls/table/demo4PageNumber"></live_demo>
 
 ## floatable_header ##

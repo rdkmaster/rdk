@@ -13,7 +13,7 @@
             url: function(treeId, node) {
                 //由于这个demo的运行环境比较复杂导致这个url比实际开发时的url要复杂一些
                 //实际开发时的url类似这样  /rdk/service/app/example/server/my_service?p={"param":$param}
-                var url = '/rdk/service/app/common/relay?p={"param":{"script":"..' + location.pathname
+                var url = '/rdk/service/app/common/relay?p={"param":{"service":"..' + location.pathname
                         + 'mock/data.js","param":$param},"app":"common"}';
                 var obj = { key: node.key, name: node.name };
                 return encodeURI(url.replace('$param', JSON.stringify(obj)));

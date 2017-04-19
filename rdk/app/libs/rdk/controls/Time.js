@@ -95,9 +95,11 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
 
         timeApp.directive('rdkTime', ['PickerConstant', 'TimeMacro', 'TimeFormate', 'TimeUnit', 'Utils', 'TimeUtilService', '$timeout','EventService','EventTypes', function(PickerConstant, TimeMacro, TimeFormate, TimeUnit, Utils, TimeUtilService, $timeout,EventService,EventTypes) {
             var scopeDefine={
+                id:"@?",
                 setting: "=?",
                 label: "=?",
-                refreshTimeout: "@?"
+                refreshTimeout: "@?",
+                granularityChange:'&?'
             };
             return {
                 restrict: 'E',
@@ -112,7 +114,7 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                                 ng-if="range" readonly datetimepicker option="endTimeOption">\
                                 <span ng-show="setting.selectGranularity == true" class="granularity" \
                                     ng-bind="selectedGranularity.label" ng-click="focusSelect()"></span>\
-                                <select id="timeSelect{{$id}}" selectpicker class="selectpicker" ng-model="selectedGranularity" \
+                                <select id="timeSelect{{$id}}" selectpicker class="selectpicker" ng-change="granularityChangeEvt()" ng-model="selectedGranularity" \
                                     ng-options="granularity.label for granularity in granularityList" \
                                     ng-show="setting.selectGranularity == true">\
                                 </select>\
@@ -271,8 +273,13 @@ define(['rd.core','rd.controls.TimeBasic', 'css!rd.styles.Time'],
                                         if(scope.setting.granularity !=="week"){
                                             delete scope.setting.weekValue
                                         }
+                                        //$digest频繁触发
+                                        //EventService.raiseControlEvent(scope, EventTypes.GRANULARITY_CHANGE, newVal);
                                     }
                                 }, true);
+                                scope.granularityChangeEvt=function(){
+                                    EventService.raiseControlEvent(scope, EventTypes.GRANULARITY_CHANGE, scope.selectedGranularity);
+                                }
                             };
 
                             scope.$watch('condition.startTime', function(newVal, oldVal) {

@@ -7,6 +7,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
             readonly: "@?",
             icon: "=?",
             click: "&?",
+            change: "&?",
             blur: "&?"
         };
         return {
@@ -14,13 +15,20 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
             require: '?ngModel',
             replace: true,
             scope:scopeDefine,
-            template: '<div>\
-                     <input type="text" class="form-control" placeholder="{{placeholder}}"  ng-blur="inpBlurHandler()">\
+            template: '<div class="rdk-input-module">\
+                     <input type="text" class="form-control" placeholder="{{placeholder}}" ng-change="inpChangeHandler()" ng-model="inputContent"  ng-blur="inpBlurHandler()">\
                  <i class="{{icon}}" \
                    style="position:absolute;right:10px;color:gray;font-size:14px;cursor:pointer"\
                    ng-show="showDelete"></i>\
                  <div style="clear:both"></div>\
                 </div>',
+            controller: ['$scope', function(scope) {
+                Utils.publish(scope, this);
+
+                this.getValue = function() {
+                    return scope.inputContent;
+                }
+            }],
             compile: function(tElement, tAttrs, transclude) {
                 Utils.checkEventHandlers(tAttrs,scopeDefine);
                 return function(scope, iElement, iAttrs, ngModel) {
@@ -39,7 +47,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
                     $(iconElement).css("top", (parseInt($(inputElement).css("height")) - 14) / 2);
                     $(iconElement).css("right", 10 - parseInt($(inputElement).css("margin-left")));
 
-                    scope.$watch("readonly", function(newVal, oldVal){   
+                    scope.$watch("readonly", function(newVal, oldVal){
                         if(newVal == 'true') {
                             $(iElement[0]).find("input").attr("readOnly", true);
                             scope.showDelete = false;
@@ -47,8 +55,8 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
                         } else {
                             $(iElement[0]).find("input").removeAttr("readOnly");
                             $(inputElement).attr("unselectable", "off");
-                        }      
-                    }, false);                    
+                        }
+                    }, false);
 
                     var updateModel = function(inputValue) {
                         scope.$apply(function() {
@@ -76,6 +84,9 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
                     }
                     scope.inpBlurHandler=function(){
                         EventService.raiseControlEvent(scope, EventTypes.BLUR, inputElement.value);
+                    };
+                    scope.inpChangeHandler=function(){
+                        EventService.raiseControlEvent(scope, EventTypes.CHANGE, inputElement.value);
                     };
 
                     function defaultHandler(){

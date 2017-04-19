@@ -62,6 +62,14 @@
 				repositionStickyHead = function (event) {
 					var element = event.currentTarget;
 
+					if(element == $t.get(0).offsetParent){
+						return;
+					}
+
+					if( element && element != window && element.Infinity!="Infinity" && $(element).hasClass("ps-active-x")&&$(element).hasClass("wrapper")){
+						return;
+					}
+                 
 					var offsetTop;
 					if(element.location != self.location){//是否顶级窗口
 						offsetTop = getAbsPoint($t.get(0)) - getAbsPoint(element);//t相对于element的top
@@ -71,10 +79,10 @@
 					}
 
 					if($(element).scrollTop() == 0){//排序时，需要把排序列置上层
-						$(".sticky-thead").css("visibility", "hidden");
+						$stickyHead.css("visibility", "hidden");
 					}
 					else{
-						$(".sticky-thead").css("visibility", "visible");
+						$stickyHead.css("visibility", "visible");
 					}
 
 					// Return value of calculated allowance
@@ -106,6 +114,7 @@
 								opacity: 1,
 								top: $(element).scrollTop() - offsetTop
 							});
+
 						} else {
 							// When top of viewport is above or below table
 							$stickyHead.add($stickyInsct).css({
@@ -156,35 +165,33 @@
 					return y; 
 				}
 
+			 var handlePosition = function(e){
+					setWidths();
+					repositionStickyHead(e);
+					repositionStickyCol();
+				}
+
 			setWidths();
 			if($w.scrollTop() == 0){
-				$(".sticky-thead").css("visibility", "hidden");
+				$stickyHead.css("visibility", "hidden");
 			}
 
-			// $t.parent('.sticky-wrap').scroll($.throttle(250, function() {
-			// 	repositionStickyHead();
-			// 	repositionStickyCol();
-			// }));
-
 			$w.load(setWidths).resize($.debounce(250, function ($event) {
-				setWidths();
-				repositionStickyHead($event);
-				repositionStickyCol();
+				  handlePosition($event);
 			})).scroll($.throttle(250, function($event){
-				setWidths();
-				repositionStickyHead($event);
-				repositionStickyCol();
+				  handlePosition($event);
 			}));
 
 			$.each($t.parents(), function(i, element){
 				if(element.location != self.location){
 					$(element).scroll($.throttle(250, function($event) {
-						setWidths();
-						repositionStickyHead($event);
-						repositionStickyCol();
+						handlePosition($event);
 					}));
 				}
-			})
+				if(i == $t.parents().length-1){
+					handlePosition({currentTarget:window});
+				}
+			});
 		}
    }
 })(jQuery);

@@ -1,0 +1,18 @@
+.box{
+	width: 100px;
+	height: 100px;
+	background-color: #ccc;
+	text-align: center;
+	font-size: 0;
+}
+.box:before{
+	content: 'content';
+	display: inline-block;
+	overflow: hidden;
+	width: 0;
+	height: 100%;
+	vertical-align: middle;
+}
+img{
+	vertical-align: middle;
+}

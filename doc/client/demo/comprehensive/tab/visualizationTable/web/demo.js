@@ -12,7 +12,6 @@
         function visualizationTableSize(){
             var visualizationTableHeight = $('.visualizationTable').height();
             var sidebarBtnHeight = $('.sidebarBtn').height();
-            console.log(visualizationTableHeight)
             $('.sidebarBtn').css({
                 "top":(visualizationTableHeight-sidebarBtnHeight)/2+'px',
             });

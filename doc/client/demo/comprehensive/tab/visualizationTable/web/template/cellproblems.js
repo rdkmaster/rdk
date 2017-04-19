@@ -7,13 +7,12 @@
 
     //参考 main.js 中同名变量的说明
     var imports = [
-        'rd.controls.Table',{ url: 'base/scripts/i18n',  alias: 'i18n'}
+        'rd.controls.Table'
     ];
     var extraModules = [ ];
 
     var controllerDefination = ['$scope', main];
     function main(scope) {
-        imports.i18n.$init(scope)
         console.log(scope)
         scope.setting = {
             "columnDefs": [

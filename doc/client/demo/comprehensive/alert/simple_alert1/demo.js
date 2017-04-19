@@ -1,15 +1,14 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.services.Alert', 'css!base/css/simple_alert1'
+        'rd.services.Alert', 'css!base/css/simple_alert1','rd.controls.Button'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', 'Alert', 'ButtonTypes', main];
     function main(scope, Alert, ButtonTypes) {
         scope.clickHandler = function() {
-            Alert.confirm('信息确认请注意认请注意认请注意认请注意认请注意认请注意认请注意认请注意', '确认提示',  ButtonTypes.NO + ButtonTypes.YES , callbackHandler);
+            Alert.confirm('认请注意认请注意认请注意', '确认提示',  ButtonTypes.NO + ButtonTypes.YES , callbackHandler);
         }
-
         function callbackHandler(val) {
             if (val == ButtonTypes.YES) {
                 alert('call back YES');

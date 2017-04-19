@@ -60,6 +60,7 @@ require.config({
         "rd.controls.ScoreIndicator": "../rdk/controls/ScoreIndicator",
         "rd.controls.Scroller": "../rdk/controls/Scroller",
         "rd.controls.Selector": "../rdk/controls/Selector",
+        "rd.controls.Steps": "../rdk/controls/Steps",
         "rd.controls.SingleIndicator": "../rdk/controls/SingleIndicator",
         "rd.controls.Table": "../rdk/controls/Table",
         "rd.controls.TabSelect": "../rdk/controls/TabSelect",

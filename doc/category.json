@@ -330,8 +330,27 @@
           }
         ],
         "icon": "fa fa-folder-open"
-      },
-      {
+      },{
+        "label": "css小技巧",
+        "items": [
+          {
+              "label": "清除浮动的常用方法",
+              "url": "doc/client/common/clear/clear.html",
+              "icon": "fa fa-file"
+          },
+          {
+              "label": "content的使用",
+              "url": "doc/client/common/content/content.html",
+              "icon": "fa fa-file"
+          },
+          {
+              "label": "两端对齐的布局方式及使用场景",
+              "url": "doc/client/common/justify/justify.html",
+              "icon": "fa fa-file"
+          }
+        ],
+        "icon": "fa fa-folder-open"
+      },{
         "label": "前端 · AngularJS",
         "items": [
           {

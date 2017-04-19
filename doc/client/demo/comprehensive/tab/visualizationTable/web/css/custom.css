@@ -161,6 +161,13 @@ html, body{
     border-top: none;
     color: rgba(41,78 ,122,1);
 }
+.visualizationTable .rdk-table-module .pagingLine .search-bottom {
+    display: none;
+}
+.visualizationTable .rdk-table-module .pagination > li > a,
+.visualizationTable .rdk-table-module .pagination > li > span {
+    margin: 10px 0 4px;
+}
 .inlineTab .rdk-table-module .rdk-table thead>tr,
 .visualizationTable .rdk-table-module .rdk-table thead>tr{
     background-color: rgba(41,78 ,122,.05);
@@ -188,16 +195,16 @@ html, body{
     bottom: 6px;
 }
 .visualizationTable .rdk-table-module .wrapper {
-    height: 656px;
+    height: 620px;
 }
 .inlineTab .rdk-table-module .wrapper {
     height: 100%;
 }
-.rdk-table-module .visiblePageLine {
-    position: absolute;
-    bottom: 6px;
-    left: 164px;
-}
+/*.rdk-table-module .visiblePageLine {*/
+    /*position: absolute;*/
+    /*bottom: 6px;*/
+    /*left: 1px;*/
+/*}*/
 .ui-tabs .ui-tabs-nav .ui-tabs-anchor {
     float:none;
     display: inline-block;

@@ -43,7 +43,7 @@ return {
     title:{
         text:'Distribution Chart',
         textAlign:'left',
-        top:38,
+        top:25,
         textStyle:{
             fontSize:14,
             fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
@@ -61,7 +61,7 @@ return {
         },
     legend: {
         data: data.rowDescriptor,
-        top:55,
+        top:45,
         left:'center',
         inactiveColor: "#bbb",
         textStyle:{
@@ -81,7 +81,7 @@ return {
             axisLabel:{
                 interval:4,//类轴网格设置
                 textStyle: { 
-                        fontSize:10,
+                        fontSize:12,
                         fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
                         fontWeight: 'normal',
                         color: '#666' 
@@ -115,14 +115,14 @@ return {
              name: 'Number',
              nameTextStyle:{
                 color:'#bbb',
-                fontSize:10,
+                fontSize:12,
                 fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
                 fontWeight: 'normal',
             },
 			axisLabel : {
 				//show:true,
 				textStyle: { 
-					fontSize:10,
+					fontSize:12,
 					fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
 					fontWeight: 'normal',
 					color: '#54acd5',
@@ -151,13 +151,13 @@ return {
             position:'right',
             nameTextStyle:{
                 color:'#bbb',
-                fontSize:10,
+                fontSize:12,
                 fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
                 fontWeight: 'normal',
             },
             axisLabel : {//标签名样式
 				textStyle: { 
-					fontSize:10,
+					fontSize:12,
 					fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
 					fontWeight: 'normal',
 					color: '#f99660' 

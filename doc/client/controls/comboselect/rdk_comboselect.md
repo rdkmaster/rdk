@@ -51,6 +51,16 @@
 详细示例：
 <live_demo example="controls/comboselect/clear" width="605"></live_demo>
 
+## adapt_content_width <binding></binding>##
+>支持类型：布尔型
+
+`adapt_content_width` 缺省时默认值为`false`，comboselect宽度固定（默认120px）
+
+`adapt_content_width` 设置成 `true` 时，comboselect宽度（默认最小宽度120px）随着内容自适应增长。
+
+详细示例：
+<live_demo example="controls/comboselect/adaptContentWidth" width="605"></live_demo>
+
 >## id ##
 >支持类型：字符串
 
