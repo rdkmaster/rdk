@@ -34,7 +34,7 @@
                 }
                 scope.items=rateArrs;
         };
-        scope.selected2string = function(selected,f,g) {
+        scope.selected2string = function(selected) {
             scope.combOpen=false;
             var len = scope.items.length;
             if(selected.length) {
