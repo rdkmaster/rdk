@@ -699,6 +699,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 if (angular.isDefined(attrs.id)) {
                                     EventService.broadcast(attrs.id, EventTypes.PAGING_DATA_CHANGE, newVal);
                                 }
+                                _resetCurrentPageData(newVal);
                             }
                         }, true);
 
@@ -1028,6 +1029,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                     };
                     //END INIT
+
+                    function _resetCurrentPageData(newVal){
+                        scope.currentPageData = newVal.concat();
+                    }
 
                     function _fixTableHeader(){
                         _beforeFixHeader();
