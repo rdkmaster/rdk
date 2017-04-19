@@ -65,7 +65,7 @@
 .sub-title-content .content{
     padding:0 .8em;
 }
-.sub-title-content a.selected title_renderer{
+.sub-title-content a.selected .title_renderer{
 	border-bottom:1px solid #008FD4;
 	padding:3px 0;
 }
