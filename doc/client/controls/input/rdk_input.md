@@ -52,3 +52,10 @@
 这是 *blur* 使用例子:
 
 <live_demo example="controls/input/basic" width="900"></live_demo>
+
+## change ##
+输入框内容变化后触发。
+
+这是 *change* 使用例子:
+
+<live_demo example="controls/input/change" width="900"></live_demo>
