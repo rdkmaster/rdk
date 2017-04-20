@@ -12,7 +12,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
             <div class="rdk-table-module rdk-table-search-{{searchPosition}}">\
                 <div ng-if="search" class="searchWapper search-position-{{searchPosition}}">\
                     <input type="text" ng-style="width" class="form-control search" placeholder="{{searchPrompt}}" ng-focus="searchFocusHandler()"\
-                           ng-keyup="keyPressHandler($event)" ng-model="$parent.globalSearch">\
+                           ng-keyup="keyPressHandler($event)" ng-class="{\'border-style\':$parent.globalSearch!=\'\' && $parent.globalSearch!=null}" ng-model="$parent.globalSearch" ng-mouseenter="searchMouseEnterHandler()" ng-mouseleave="searchMouseLeaveHandler()">\
                     <i class="glyphicon glyphicon-search search_icon" ng-click="serverSearchHandler()" style="cursor:{{pagingType==\'server\' || pagingType==\'server-auto\' ? \'pointer\' : \'default\'}}"></i>\
                     <div ng-show="($parent.globalSearch && searchFocus)?true:false">\
                         <select selectpicker="{{columnDefs.length}}" ng-model="val" ng-change="selectChangeHandler(val)"\
@@ -50,7 +50,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     </table>\
                 </div>\
                 <rdk-paging ng-if="pageVisible && pageCtrl && paging" data-page-size="pageSize" \
-                     data-lang="{{lang}}" data-search-position="{{searchPosition}}" ng-class="{true:\'visiblePageLine\', false:\'unvisiblePageLine\'}[columnDefs.length!=0 && !noData]">\
+                     data-lang="{{lang}}" current-page="currentPage" data-search-position="{{searchPosition}}" ng-class="{true:\'visiblePageLine\', false:\'unvisiblePageLine\'}[columnDefs.length!=0 && !noData]">\
                 </rdk-paging>\
                 <div ng-if="showExport && !noData" class="table-export"><rdk_button click="touchExport" icon="iconfont iconfont-e8c9" label="{{exportLabel}}"></rdk_button></div>\
                 <div class="clearfix" on-finish-render="domRenderFormParentToChild"></div>\
@@ -86,6 +86,38 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     <li ng-class="nextPageDisabled()"> \
                         <a href ng-click="lastPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==pageCount()]">\
                             {{i18n.last}}\
+                        </a>\
+                    </li>\
+                </ul>\
+            </div> '
+        );
+        $templateCache.put("/src/templates/pagingGoTo.html",
+            '<div class="pagingLine page-contain">\
+                <span class="disabledRecords spanRecords search-{{searchPosition}}">{{i18n.total}} {{count}} {{i18n.records}}</span>\
+                <ul class="pagination">\
+                    <li ng-class="prevPageDisabled()"> \
+                        <a href ng-click="firstPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==0]">\
+                            <i class="iconfont iconfont-e8e1" aria-hidden="true"></i>\
+                        </a>\
+                    </li>\
+                    <li ng-class="prevPageDisabled()">\
+                        <a href ng-click= "prevPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==0]">\
+                            <i class="iconfont iconfont-e8df" aria-hidden="true"></i>\
+                        </a>\
+                    </li>\
+                    <li>\
+                        <span class="regularRecords">\
+                        <input type="text"  class="regular_left" ng-model="inpPageVal" ng-keydown="test()" ng-keyup="gotoPageHandle($event)" ng-blur="pageBlurHandle()">\
+                        <i class="regular_right">  /  {{pageCount()+1}}</i></span>\
+                    </li>\
+                    <li ng-class="nextPageDisabled()"> \
+                        <a href ng-click="nextPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==pageCount()]">\
+                             <i class="iconfont iconfont-e8e0" aria-hidden="true"></i>\
+                        </a>\
+                    </li>\
+                    <li ng-class="nextPageDisabled()"> \
+                        <a href ng-click="lastPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==pageCount()]">\
+                            <i class="iconfont iconfont-e8e2" aria-hidden="true"></i>\
                         </a>\
                     </li>\
                 </ul>\
@@ -442,7 +474,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 searchFieldFilter = " | fieldfilter: searchFields : globalSearch";
 
                 var filterCount = "";
-                filterCount = "$filtered.length";
+
+                //filterCount = "$filtered = (destData| filter:globalSearch) | offset: currentPage:pageSize |limitTo: pageSize | fieldfilter: searchFields : globalSearch |size";
+                filterCount = "$filtered = (destData| filter:globalSearch) | fieldfilter: searchFields : globalSearch |size";
 
                 if (tAttributes.pagingType !== "server" && tAttributes.pagingType !== "server-auto") {
                     tElement.find("rdk-paging").attr("count", filterCount);
@@ -454,6 +488,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                 if(tAttributes.customScroll=="rdk-scroll" && tAttributes.rdkScroll == null){
                     tElement[0].querySelector(".wrapper").setAttribute("rdk-scroll","");
+                }
+
+                if(tAttributes.pageNumber === "-1"){
+                    tElement.find("rdk-paging").attr("page-goto", true);
                 }
 
                 if(!!tAttributes.resizeable){
@@ -468,16 +506,15 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     }
                     //style="table-layout: fixed;" resizeable mode="tableMode2"  id="rdkTable{{$id}}"
                 }
-
                 return function link(scope, element, attrs, ctrl) {
-                    console.error("table link here");
                     scope.getRowSpan = function(itemRowSpan, item) {
                         return itemRowSpan && itemRowSpan[item["targets"]] ? itemRowSpan[item["targets"]] : 1;
                     }
 
                     _init();
+
                     scope.resizeMode =  "OverflowResizer";
-                    scope.searchPrompt="Search";
+
                     scope.showExport = Utils.isTrue(scope.showExport, false);
                     scope.searchWidth = Utils.getValue(scope.searchWidth, attrs.searchWidth, "168px");
                     scope.exportLabel = Utils.getValue(scope.exportLabel, attrs.exportLabel, "");
@@ -490,6 +527,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                     var curSortIndex;
                     var sortIconStatus=true;
+                    var _totalCount;
+
+                    function getTotalCount(){
+                        return scope.$eval(filterCount);
+                    }
+
 
                     function _init() {
 
@@ -497,8 +540,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             console.error('Table with server as pagingType must provide ds attribute');
                             return;
                         }
-
-
 
                         if (scope.proxyDs) {
                             EventService.register(scope.proxyDs, EventTypes.BEFORE_QUERY, function(event, data) {
@@ -636,7 +677,24 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                         scope.searchFocusHandler = function(){
                             scope.searchFocus = true;
+                        };
+                        //搜索框在底部时，搜索框遮住了总记录数
+                        if(attrs.pageNumber=="-1" && attrs.searchPosition =="bottom")
+                        {
+                            scope.searchMouseLeaveHandler =function(){
+                                scope.searchPrompt="Total "+ _totalCount + " Records";
+                            };
+                            scope.searchMouseEnterHandler =function(){
+                                scope.searchPrompt="Search";
+                            };
+                            $timeout(function(){
+                                _totalCount = getTotalCount();
+                                scope.searchPrompt="Total "+ _totalCount + " Records";
+                            },0);
+                        }else{
+                            scope.searchPrompt="Search";
                         }
+
                         scope.$watch("data", function(newVal, oldVal) {
                             if($.isEmptyObject(newVal)) return;
                             scope.currentPage = 0;
@@ -656,6 +714,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 if (angular.isDefined(attrs.id)) {
                                     EventService.broadcast(attrs.id, EventTypes.PAGING_DATA_CHANGE, newVal);
                                 }
+                                _resetCurrentPageData(newVal);
                             }
                         }, true);
 
@@ -676,6 +735,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         scope.$watch("globalSearch", function(newVal, oldVal) {
                             if (newVal != oldVal) {
                                 if (scope.pagingType == "server" || scope.pagingType == "server-auto") return; //#115
+                                ctrl.setChecked([]);
                                 if (ctrl.pageCtrl) {
                                     ctrl.pageCtrl.firstPage();
                                 }
@@ -988,6 +1048,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                     };
                     //END INIT
+
+                    function _resetCurrentPageData(newVal){
+                        scope.currentPageData = newVal.concat();
+                    }
 
                     function _fixTableHeader(){
                         _beforeFixHeader();
@@ -1474,17 +1538,24 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
     }]);
 
 
-    tableModule.directive('rdkPaging', ['$compile', function($compile) {
+    tableModule.directive('rdkPaging', ['Utils', function(Utils) {
         return {
             restrict: 'E',
             replace: true,
-            templateUrl: '/src/templates/paging.html',
+            templateUrl: function(elem, attr){
+                if(attr.pageGoto=="true"){
+                    return '/src/templates/pagingGoTo.html';
+                }else{
+                    return '/src/templates/paging.html'
+                }
+            },
             require: "^rdkTable",
             scope: {
                 count: "=",
                 pageSize: "=",
                 lang: "@",
-                searchPosition:"@?"
+                searchPosition:"@?",
+                currentPage:"="
             },
             link: function($scope, element, attrs, TableCtrl) {
                 $scope.TableCtrl = TableCtrl;
@@ -1494,7 +1565,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 initializePagingI18n();
                 refreshPagingI18n();
 
-                $scope.currentPage = 0;
+                $scope.currentPage = Utils.getValue($scope.currentPage, attrs.currentPage, 0);
 
                 $scope.pageNumber = getPageNumber();
 
@@ -1567,7 +1638,32 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     if ($scope.currentPage == $scope.pageCount()) return;
                     $scope.currentPage = $scope.pageCount();
                     $scope.setCurrentPageToTable();
-                }
+                };
+                $scope.gotoPage = function(pageVal) {
+                    if (pageVal==null) return;
+                    $scope.currentPage = pageVal;
+                    $scope.setCurrentPageToTable();
+                };
+                $scope.inpPageVal = $scope.currentPage+1;
+                $scope.gotoPageHandle=function(event){
+                    var e = event || window.event;
+                    $scope.inpPageVal=$scope.inpPageVal.toString().replace(/\D/g,'');
+                    if($scope.inpPageVal!="" && $scope.inpPageVal<=0){
+                        $scope.inpPageVal=1;
+                    }
+                    else if($scope.inpPageVal>$scope.pageCount()+1){
+                        $scope.inpPageVal = $scope.pageCount()+1;
+                    }
+                    if(e && e.keyCode==13){ // enter 键
+                        !!$scope.inpPageVal && $scope.gotoPage($scope.inpPageVal-1);
+                    }
+                };
+                $scope.pageBlurHandle=function(){
+                    $scope.inpPageVal=$scope.currentPage+1;
+                };
+                $scope.$watch('currentPage',function(newVal,oldVal){
+                    $scope.inpPageVal = newVal+1;
+                });
 
                 $scope.setCurrentPageToTable = function() {
                     $scope.TableCtrl.setCurrentPage($scope.currentPage);

@@ -1,0 +1,23 @@
+/*导航模块布局*/
+.nav-left{float: left;margin-top: 11px}
+.nav-right{float: right;margin-right: 10px;display: inline-flex}
+.nav-title{display: inline-block;color: #000;font-size: 14px;  vertical-align: bottom;  margin: 0 5px 0;height: 24px;line-height: 28px;}
+.nav-wrap{  background-color: #e6e6e6;  height: 50px; border-bottom: 1px solid #c9c9c9}
+.m-time{  vertical-align: top;margin-left: -1px; }
+.m-frequency{display: inline-block; vertical-align: top; margin-left: -1px;}
+.m-kpi{display: inline-block;vertical-align: top;margin-left: -1px;}
+/* icon*/
+.iconfont-e8ca:before,.iconfont-e8c2:before{color: #fff;  font-size: 22px;}
+/* 主题一 demo 样式调整：对比软银导航栏两者是否兼容*/
+.g-align {padding: 10px 0;}
+.g-align.nav-wrap{  background-color: #008FD4;  height: 50px; }
+.g-align .rdk-list-selector-module .rdk-dropdown-toggle {padding: 5px 8px 5px 0;}
+.g-align .m-btn{margin-top: 1px;}
+.g-align .nav-left{margin-top:-2px}
+.g-align .m-frequency,.g-align .m-kpi{margin: 0 10px;}
+.g-align .rdk-list-selector-module .rdk-dropdown-toggle {min-width: 180px;}
+.g-align .rdk-time-module {  display: inline-block; }
+.g-align .rdk-combo-select-module .combo-content-transclude {  background-color: transparent; }
+.g-align .nav-title{font-size: 16px; line-height: initial;}
+
+

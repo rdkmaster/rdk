@@ -551,7 +551,10 @@ function _listFiles(files, path, pattern, recursive) {
 ///////////////////////////////////////////////////////////////////////
 
 var Rest = {
-    get: function (url, param, option) {
+    get: function (url, param, option, needErrorInfo) {
+        if (!_.isDefined(needErrorInfo)) {
+            needErrorInfo = false;
+        }
         if (arguments.length == 2) {
             //同时支持 Rest.get(url, option) 和 Rest.get(url, param, option) 两个方式
             option = param;
@@ -587,31 +590,54 @@ var Rest = {
         }
         url += param;
 
-        return rdk_runtime.restHelper().get(url, option);
+        return Rest._getRestResult(rdk_runtime.restHelper().get(url, option, needErrorInfo), needErrorInfo);
     },
-    post: function (url, param, option) {
+    post: function (url, param, option, needErrorInfo) {
+        if (!_.isDefined(needErrorInfo)) {
+            needErrorInfo = false;
+        }
         if (_.isUndefined(param)) {
             param = "";
         } else if (_.isObject(param)) {
             param = JSON.stringify(param);
         }
-        return rdk_runtime.restHelper().post(url, param, option);
+
+        return Rest._getRestResult(rdk_runtime.restHelper().post(url, param, option, needErrorInfo), needErrorInfo);
     },
-    delete: function (url, param, option) {
+    delete: function (url, param, option, needErrorInfo) {
+        if (!_.isDefined(needErrorInfo)) {
+            needErrorInfo = false;
+        }
         if (_.isUndefined(param)) {
             param = "";
         } else if (_.isObject(param)) {
             param = JSON.stringify(param);
         }
-        return rdk_runtime.restHelper().delete(url, param, option);
+
+        return Rest._getRestResult(rdk_runtime.restHelper().delete(url, param, option, needErrorInfo), needErrorInfo);
     },
-    put: function (url, param, option) {
+    put: function (url, param, option, needErrorInfo) {
+        if (!_.isDefined(needErrorInfo)) {
+            needErrorInfo = false;
+        }
         if (_.isUndefined(param)) {
             param = "";
         } else if (_.isObject(param)) {
             param = JSON.stringify(param);
         }
-        return rdk_runtime.restHelper().put(url, param, option);
+
+        return Rest._getRestResult(rdk_runtime.restHelper().put(url, param, option, needErrorInfo), needErrorInfo);
+    },
+    _getRestResult: function (res, needErrorInfo) {
+        if (needErrorInfo) {
+            var resObj = JSON.parse(res)
+            if (resObj.hasOwnProperty("rdkRestError")) {
+                return resObj;
+            } else {
+                return res;
+            }
+        }
+        return res;
     },
     encodeURIExt: function(uri) {
         return !uri ? uri : encodeURI(uri.toString()).
@@ -819,23 +845,22 @@ var Data = {
         }
     },
     fetchWithDataSource: function (dataSource, sql, maxLine) {
-        if (!maxLine || !_.isDefined(maxLine)) {
-            Log.warn("param maxLine empty,set maxLine=4000");
-            maxLine = 4000;
-        }
-
-        if (!_.isNumber(maxLine)) {
-            Log.error("maxLine must be a number!");
-            return;
-        }
-
-        var dataObj = JSON.parse(rdk_runtime.fetchWithDataSource(dataSource, sql, maxLine));
-        return new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data);
+        return Data._ifFetchWithDataSource(dataSource, sql, maxLine, true);
     },
     allowNullToString: function (strict) {
         Cache.put("#_#allowNullToString#_#", !strict);
     },
     fetch: function (sql, maxLine) {
+        return Data._ifFetchWithDataSource(sql, maxLine, null, false);
+    },
+    _ifFetchWithDataSource: function (arg1, arg2, arg3, withDataSource) {
+        var dataSource = arg1;
+        var sql = arg2;
+        var maxLine = arg3;
+        if (!withDataSource) {
+            sql = arg1;
+            maxLine = arg2;
+        }
         if (!maxLine || !_.isDefined(maxLine)) {
             Log.warn("param maxLine empty,set maxLine=4000");
             maxLine = 4000;
@@ -846,8 +871,17 @@ var Data = {
             return;
         }
 
-        var dataObj = JSON.parse(rdk_runtime.fetch(sql, maxLine));
-        return new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data);
+        var dataObj = null;
+        if (!withDataSource) {
+            dataObj = JSON.parse(rdk_runtime.fetch(sql, maxLine));
+        } else {
+            dataObj = JSON.parse(rdk_runtime.fetchWithDataSource(dataSource, sql, maxLine))
+        }
+
+        if (!dataObj.hasOwnProperty("error")) {
+            dataObj = new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data)
+        }
+        return dataObj;
     },
     fetch_first_cell: function (sql) {
         Log.warn("function deprecated,please use Data.fetchFirstCell()");
@@ -857,28 +891,21 @@ var Data = {
         return rdk_runtime.fetch_first_cell(sql);
     },
     batchFetch: function (sqlArray, maxLine, timeout) {  //并发实现
-
-        if (!sqlArray || !_.isArray(sqlArray)) {
-            Log.error("Array param required! " + sqlArray);
-            return;
-        }
-        if (maxLine === undefined) {
-            Log.warn("param maxLine empty,set maxLine=4000");
-            maxLine = 4000;
-        }
-        if (timeout === undefined) {
-            Log.warn("param timeout empty,set timeout=30");
-            timeout = 30;
-        }
-        var dataTableArray = [];
-        var dataObj = JSON.parse(rdk_runtime.batchFetch(sqlArray, maxLine, timeout));
-        for (idx in dataObj) {
-            dataTableArray.push(new DataTable(i18n(dataObj[idx].fieldNames), dataObj[idx].fieldNames, dataObj[idx].data))
-        }
-        return dataTableArray;
+        return Data._ifBatchFetchWithDataSource(sqlArray, maxLine, timeout, null, false);
     },
     batchFetchWithDataSource: function (dataSource, sqlArray, maxLine, timeout) {
-
+        return Data._ifBatchFetchWithDataSource(dataSource, sqlArray, maxLine, timeout, true);
+    },
+    _ifBatchFetchWithDataSource: function (arg1, arg2, arg3, arg4, withDataSource) {
+        var dataSource = arg1;
+        var sqlArray = arg2;
+        var maxLine = arg3;
+        var timeout = arg4;
+        if (!withDataSource) {
+            sqlArray = arg1;
+            maxLine = arg2;
+            timeout = arg3;
+        }
         if (!sqlArray || !_.isArray(sqlArray)) {
             Log.error("Array param required! " + sqlArray);
             return;
@@ -892,23 +919,43 @@ var Data = {
             timeout = 30;
         }
         var dataTableArray = [];
-        var dataObj = JSON.parse(rdk_runtime.batchFetchWithDataSource(dataSource, sqlArray, maxLine, timeout));
+        var dataObj = null;
+        if (!withDataSource) {
+            dataObj = JSON.parse(rdk_runtime.batchFetch(sqlArray, maxLine, timeout));
+        } else {
+            dataObj = JSON.parse(rdk_runtime.batchFetchWithDataSource(dataSource, sqlArray, maxLine, timeout));
+        }
+
         for (idx in dataObj) {
-            dataTableArray.push(new DataTable(i18n(dataObj[idx].fieldNames), dataObj[idx].fieldNames, dataObj[idx].data))
+            var res = dataObj[idx];
+            if (res.hasOwnProperty("error")) {
+                dataTableArray.push(res);
+            } else {
+                dataTableArray.push(new DataTable(i18n(res.fieldNames), res.fieldNames, res.data));
+            }
+
         }
         return dataTableArray;
+
     },
     batch_fetch: function (sqlArray, maxLine, timeout) {  //并发实现
         Log.warn("function deprecated,please use Data.batchFetch()");
         return Data.batchFetch(sqlArray, maxLine, timeout);
     },
-    executeUpdate: function (sql) {
+    update: function (sql) {
+        return Data.executeUpdate(sql, true);
+    },
+    executeUpdate: function (sql,ifErrorInfo) {
+        if (!_.isDefined(ifErrorInfo)) {
+            ifErrorInfo = false;
+        }
+
         if (_.isString(sql)) {
-            return rdk_runtime.executeUpdate(rdk_runtime.application(), sql);
+            return JSON.parse(rdk_runtime.executeUpdate(rdk_runtime.application(), sql, ifErrorInfo));
         }
 
         if (_.isArray(sql)) {
-            return JSON.parse(rdk_runtime.batchExecuteUpdate(rdk_runtime.application(), sql));
+            return JSON.parse(rdk_runtime.batchExecuteUpdate(rdk_runtime.application(), sql, ifErrorInfo));
         }
 
         Log.error("String or Array[String] param required!");

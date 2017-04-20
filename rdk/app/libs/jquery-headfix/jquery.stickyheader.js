@@ -62,7 +62,11 @@
 				repositionStickyHead = function (event) {
 					var element = event.currentTarget;
 
-					if(element == $t.get(0).offsetParent || ( element && element != window && element.Infinity!="Infinity" && $(element).css("overflow")=="hidden")){
+					if(element == $t.get(0).offsetParent){
+						return;
+					}
+
+					if( element && element != window && element.Infinity!="Infinity" && $(element).hasClass("ps-active-x")&&$(element).hasClass("wrapper")){
 						return;
 					}
                  

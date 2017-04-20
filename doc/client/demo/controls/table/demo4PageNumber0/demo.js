@@ -6,6 +6,17 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main($scope) {
+        $scope.change = function() {
+            rdk.tb.resetCurrentPage();
+        }
+        $scope.change2 = function() {
+            rdk.tb.setCurrentPage(2);
+        }
+        $scope.get = function() {
+            debugger;
+            console.log(rdk.tb.getTablePageNumber());
+        }
+
     }
 
     var controllerName = 'DemoController';

@@ -1,0 +1,25 @@
+<div rdk-theme="rdk-theme-zte-vmax">
+    <div  class="nav-wrap rdk-zte-gray">
+        <div class="nav-left">
+            <img src="./img/VMAX-LOGO.svg" alt="vmax">
+            <img class="nav-img"  src="./img/Visualization.svg" alt="home">
+            <p class="nav-title">NQV / Status</p>
+        </div>
+        <div class="nav-right">
+            <rdk_combo_select adapt-content-width="true" class="m-area f-left-line" caption="'Area'" show-icon="false">
+                <rdk-area-select ds_province="dsProv" ds_city="dsCity" ds_area="dsArea" area-data="vmaxArea" delimiter=","></rdk-area-select>
+            </rdk_combo_select>
+            <rdk_combo_select   class="m-time f-left-line" id="comboID" caption="'Time'"  open="comboOpenStatus" show-icon="false">
+                <rdk_time_select class="u-time" id="selectorID" setting="granularitySet"></rdk_time_select>
+            </rdk_combo_select>
+            <rdk_list_selector class="m-frequency f-left-line" size="12" caption="Frequency" icon="false" data="frequencyDate" selected-items="frequencySelected" label-field="label">
+            </rdk_list_selector>
+            <rdk_module class="m-kpi f-left-line" id="mKPI" initialized="loadmKPI" ready="mKPIReady" controller="mKPIController"></rdk_module>
+            <rdk_button class="m-btn f-left-line margin-10" type="default" label="Query"></rdk_button>
+            <rdk_button class="m-btn" type="white" label="Compare"></rdk_button>
+        </div>
+    </div>
+    <ds id="dsProv" url="$svr/mock/areaServiceProv.js"></ds>
+    <ds id="dsCity" url="$svr/mock/areaServiceCity.js"></ds>
+    <ds id="dsArea" url="$svr/mock/areaServiceArea.js"></ds>
+</div>

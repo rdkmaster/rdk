@@ -1,0 +1,23 @@
+/*导航模块布局*/
+.nav-left{float: left;margin-top: 11px}
+.nav-right{float: right;margin-right: 10px;display: inline-flex}
+.nav-img{height: 28px;width: 28px;background-size: contain;margin-left: 22px}
+.nav-title{display: inline-block;color: #000;font-size: 14px;  vertical-align: bottom;  margin: 0 5px 0;height: 24px;line-height: 28px;}
+.nav-wrap{height: 50px; border-bottom: 1px solid #c9c9c9}
+.m-time{  vertical-align: top;margin-left: -1px; }
+.m-time .u-time{border: 1px solid rgba(0,0,0,0.15);margin-top: 2px; height: 285px; width: 210px; padding: 8px 5px 0 5px; background-color: #fff;box-shadow: 0 6px 16px rgba(0,0,0,0.175);border-radius: 0 0 4px 4px;}
+.m-frequency{display: inline-block; vertical-align: top; margin-left: -1px;}
+.m-kpi{display: inline-block;vertical-align: top;margin-left: -1px;}
+/*btn*/
+.m-btn{vertical-align: top; margin: 10px 0;  position: relative;}
+.margin-10{margin-left:10px;  margin-right:10px;}
+.m-btn .rdk-button-guidance ~ .rdk-button-btn{width: 61px;}
+/*f-left-line 功能：在标签前面划条线*/
+.f-left-line{position: relative}
+/*.f-left-line{border-left: 1px solid rgba(255,255,255,0.4);}*/
+.f-left-line:before{font-size:0;position: absolute;left:0;top: 9px;z-index: 1;width: 0;height: 32px; content: "";border-left:1px solid #c9c9c9;}
+.f-right-line:before{position: absolute;right: 228px;top: 9px;z-index: 1;width: 1px;height: 32px; content: "";background-color:#c9c9c9;}
+.m-btn.f-left-line:before{left: -11px;top: 0;}
+/* 宽度根据需要调整*/
+.rdk-theme-zte-vmax .m-area.rdk-combo-select-module .combo-content{min-width: 120px;}
+.rdk-theme-zte-vmax .m-frequency.rdk-list-selector-module .rdk-dropdown-toggle{min-width: 130px;}

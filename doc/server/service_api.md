@@ -523,6 +523,9 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  [DataTable对象](#dataTable)
 
 
+说明：异常时返回{"error":""}对象，属性error里包含具体的错误信息。
+
+
  #### `Data.fetchWithDataSource()` {#fetchWithDataSource} ####
 
 该函数提供了根据自定义数据源查询数据库数据的安全方法。
@@ -542,6 +545,9 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 返回：
 
  [DataTable对象](#dataTable)
+
+
+说明：异常时返回{"error":""}对象，属性error里包含具体的错误信息。 
 
 示例：查询`proc/conf/datasource.cfg`文件中db目录下mysql标记对应的数据库
 
@@ -590,6 +596,9 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  
   [DataTable对象](#dataTable)数组
 
+
+说明：若其中某个sql执行异常则，则返回数组对应的该异常sql会返回{"error":""}对象，属性error里包含此sql具体的错误信息。  
+
 示例：
 
     Data.batchFetch(['select * from dim_ne;','select * from dim_comm_city'],4000,10);
@@ -617,21 +626,24 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  
   [DataTable对象](#dataTable)数组
 
+
+说明：若其中某个sql执行异常则，则返回数组对应的该异常sql会返回{"error":""}对象，属性error里包含此sql具体的错误信息。    
+
 示例：
 
 并发查询`proc/conf/datasource.cfg`文件中db目录下mysql标记对应的数据库表：
      	
         Data.batchFetchWithDataSource("mysql",['select * from dim_ne;','select * from dim_comm_city']); //查询mysql数据库
 
-#### `Data.executeUpdate()` ####
+#### `Data.update()` ####
 
 该函数提供了可并发完成数据库增删改功能。
 
 定义：
 
-    function executeUpdate(sql);
+    function update(sql);
 
-说明：执行数据库增删改功能
+执行数据库增删改功能
 
 参数：
 
@@ -642,7 +654,10 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
  
    参数为一个sql字符串时，函数返回该sql执行返回的受影响记录数对应的字符串；
    参数为sql数组时，函数返回该sql数组分别执行返回的受影响记录数对应的字符串数组。
+
  
+说明：无论入参是单个sql还是sql数组，sql执行错误时会返回 {"error":""}对象，属性error里包第一个出错sql的具体信息，此过程是事务处理过程，只要出错就会回滚事务。
+
 
 ### `require() ` ###
 
@@ -677,7 +692,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 
 定义：
 
-	function get(url, param, option); 
+	function get(url, param, option, needErrorInfo); 
 
 说明：在后端代码中调用其他的rest服务并返回其应答数据。
 
@@ -686,6 +701,7 @@ header和field都是一维数组，data是一个二维数组。data的值对应�
 - url: 目标服务的url。
 - param: 传递给rest服务的参数
 - option: 本次请求的参数
+- needErrorInfo:可选，布尔型。控制请求异常时返回异常对象(格式：{"rdkRestError":""})还是null,未设置则返回null。
 
 说明：
 
@@ -715,7 +731,7 @@ option的结构如下：
 
 定义：
 
-    function put(url, param, option);
+    function put(url, param, option, needErrorInfo);
 
 说明：在后端代码中调用其他的put服务并返回其应答数据。
 
@@ -724,6 +740,7 @@ option的结构如下：
 - url: 目标服务的url，必选。
 - param: 目标服务的请求参数字符串或者json对象，可选。
 - option: 本次请求的参数，同get参数option，可选。
+- needErrorInfo:可选，布尔型。控制请求异常时返回异常对象(格式：{"rdkRestError":""})还是null,未设置则返回null。
 
 返回：该服务的返回值。    
 
@@ -731,7 +748,7 @@ option的结构如下：
 
 定义：
 
-    function post(url, param, option);
+    function post(url, param, option, needErrorInfo);
 
 说明：在后端代码中调用其他的post服务并返回其应答数据。
 
@@ -740,6 +757,7 @@ option的结构如下：
 - url: 目标服务的url，必选。
 - param: 目标服务的请求参数字符串或者json对象，可选。
 - option: 本次请求的参数，同get参数option，可选。
+- needErrorInfo:可选，布尔型。控制请求异常时返回异常对象(格式：{"rdkRestError":""})还是null,未设置则返回null。
 
 返回：该服务的返回值。
 
@@ -747,7 +765,7 @@ option的结构如下：
 
 定义：
 
-    function delete(url, param, option);
+    function delete(url, param, option, needErrorInfo);
 
 说明：在后端代码中调用其他的delete服务并返回其应答数据。
 
@@ -756,6 +774,7 @@ option的结构如下：
 - url: 目标服务的url，必选。
 - param: 目标服务的请求参数字符串或者json对象，可选。
 - option: 本次请求的参数，同get参数option，可选。
+- needErrorInfo:可选，布尔型。控制请求异常时返回异常对象(格式：{"rdkRestError":""})还是null,未设置则返回null。
 
 返回：该服务的返回值。
 
