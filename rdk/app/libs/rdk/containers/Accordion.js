@@ -47,7 +47,7 @@ define(['angular', 'jquery', 'gsap', 'rd.core', 'css!rd.styles.Accordion',
                                     ng-repeat="button in buttons"\
                                     ng-click="clickHandler(button.callback, button, id, $event)"\
                                     ng-mouseover=getTooltips($event,button.tooltips,button.label)>\
-                                    <img class="imgShape" ng-src="{{button.icon}}">{{button.label}}\
+                                    <img ng-if="!!button.icon" class="imgShape" ng-src="{{button.icon}}">{{button.label}}\
                                 </a>\
                             </div>\
                         </div>\
