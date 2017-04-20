@@ -23,7 +23,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     </div>\
                </div>\
                <div class="wrapper" ng-style="{{scrollStyle}}">\
-                    <table class="rdk-table resize" style="table-layout: fixed;" resizeable mode="resizeMode"  id="rdkTablerrQQ999{{$id}}">\
+                    <table class="rdk-table">\
                         <thead ng-if="!noHeader">\
                             <tr>\
                                 <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
@@ -321,7 +321,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
             searchPosition:"@?",
             searchWidth:"@?",
             exportLabel:"@?",
-            showExport:"=?"
+            showExport:"=?",
+            resize:"@?",
         };
         return {
             restrict: 'EA',
@@ -494,18 +495,14 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     tElement.find("rdk-paging").attr("page-goto", true);
                 }
 
-                if(!!tAttributes.resizeable){
+                if(!!tAttributes.resize){
                     var tableElement=tElement[0].querySelector(".rdk-table");
                     tableElement.setAttribute("resizeable","");
-                    tableElement.setAttribute("mode",tAttributes.resizeable);
+                    tableElement.setAttribute("mode","resizeMode");
                     tableElement.setAttribute("id","rdkTable{{$id}}");
-                    if(tAttributes.resizeable=="OverflowResizer"){
-                        tableElement.style.tableLayout="fixed";
-                        tElement[0].querySelector(".rdk-table thead>tr>th").classList.add("overflow-resizer");
-
-                    }
-                    //style="table-layout: fixed;" resizeable mode="tableMode2"  id="rdkTable{{$id}}"
+                    tableElement.style.tableLayout="fixed";
                 }
+
                 return function link(scope, element, attrs, ctrl) {
                     scope.getRowSpan = function(itemRowSpan, item) {
                         return itemRowSpan && itemRowSpan[item["targets"]] ? itemRowSpan[item["targets"]] : 1;
@@ -513,11 +510,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                     _init();
 
-                    scope.resizeMode =  "OverflowResizer";
-
                     scope.showExport = Utils.isTrue(scope.showExport, false);
                     scope.searchWidth = Utils.getValue(scope.searchWidth, attrs.searchWidth, "168px");
                     scope.exportLabel = Utils.getValue(scope.exportLabel, attrs.exportLabel, "");
+                    scope.resizeMode = Utils.getValue(scope.resize, attrs.resize, "BasicResizer");
+
                     scope.touchExport = function() {
                         EventService.raiseControlEvent(scope, EventTypes.EXPORT, null)
                     };
@@ -1037,8 +1034,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                     }
                                 }
                             }, true);
-                            if(isFirstBroadCast){
-                                scope.$broadcast("domRenderFormParentToChild");
+                            if(attrs.resize && isFirstBroadCast){
+                                EventService.broadcast('rdkTable_'+scope.$id, EventTypes.READY,null);
                                 isFirstBroadCast=false;
                             }
                         });

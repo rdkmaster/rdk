@@ -390,24 +390,26 @@ i.regular_right,i.regular_left{
 .rdk-theme-zte-vmax .rdk-table-module .rdk-table > thead > tr > th{
     border-bottom:1px solid #41addc;
     border-top: none;
-    color: rgb(41,78 ,122);
+    color: #294e79;
 }
 .rdk-theme-zte-vmax .rdk-table-module .rdk-table thead>tr{
-    background-color: rgba(41,78 ,122,.05);
+    background-color: #f4f6f8;
 }
 .rdk-theme-zte-vmax .rdk-table-module .rdk-table > tbody > tr:not(.row-span):nth-child(even){
-    background-color: rgba(187,187,187,0.08);
+    background-color: #f8f8f8;
 }
 .rdk-theme-zte-vmax .rdk-table-module .rdk-table tr td,
 .rdk-theme-zte-vmax .rdk-table-module .rdk-table tr th{
-    border-right:none;
-    border-left:none;
+    border:none;
 }
 .rdk-theme-zte-vmax .rdk-table-module .rdk-table > tbody > tr > td {
     padding: 5px 14px;
 }
 .rdk-theme-zte-vmax .rdk-table-module .rdk-table > thead> tr > th {
     padding: 5px 14px;
+}
+.rdk-theme-zte-vmax .rdk-table-module .rdk-table tr{
+    border-bottom: 1px solid #dcdcdc;
 }
 .rdk-theme-zte-vmax .rdk-table-module .search-position-bottom .search_icon{
     left:6px;
@@ -433,3 +435,17 @@ i.regular_right,i.regular_left{
     float: left;
 }
 /* vmax :3.0 风格 end */
+
+/* table col resizeable start */
+.rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize > thead > tr > th{
+    border-right: 1px solid #e6e6e6;
+}
+.rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize > thead > tr > th:last-child{
+    border-right: none;
+}
+.rdk-table-module .rdk-table.resize > thead > tr > th,
+.rdk-table-module .rdk-table.resize > tbody > tr > td > div >div{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

@@ -1,7 +1,7 @@
 define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
     var rdkTableResize  = angular.module("rd.attributes.Resize", []);
 
-    rdkTableResize.directive('resizeable', ['resizeStorage', '$injector', function(resizeStorage, $injector) {
+    rdkTableResize.directive('resizeable', ['resizeStorage', '$injector','EventService','EventTypes', function(resizeStorage, $injector,EventService,EventTypes) {
 
         var mode;
 
@@ -16,12 +16,11 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
         var cache = null;
 
         function link(scope, element, attr) {
-
-            scope.$on("domRenderFormParentToChild",init);
+            var id = !!attr.id && attr.id.replace(/(\d+)/g,function(val){return "_"+val});
+            EventService.register(id, EventTypes.READY, init);
 
             function init(){
                 // Set global reference to table
-              
                 table = element;
 
                 // Set global reference to container
@@ -34,12 +33,11 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
                 initialiseAll(table, attr, scope);
 
                 // Bind utility functions to scope object
-                bindUtilityFunctions(table, attr, scope)
+                bindUtilityFunctions(table, attr, scope);
 
                 // Watch for mode changes and update all
                 watchModeChange(table, attr, scope);
             }
-
         }
 
         function bindUtilityFunctions(table, attr, scope) {
