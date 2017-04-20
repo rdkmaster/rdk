@@ -23,7 +23,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     </div>\
                </div>\
                <div class="wrapper" ng-style="{{scrollStyle}}">\
-                    <table class="rdk-table">\
+                    <table class="rdk-table" >\
                         <thead ng-if="!noHeader">\
                             <tr>\
                                 <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
@@ -53,7 +53,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                      data-lang="{{lang}}" current-page="currentPage" data-search-position="{{searchPosition}}" ng-class="{true:\'visiblePageLine\', false:\'unvisiblePageLine\'}[columnDefs.length!=0 && !noData]">\
                 </rdk-paging>\
                 <div ng-if="showExport && !noData" class="table-export"><rdk_button click="touchExport" icon="iconfont iconfont-e8c9" label="{{exportLabel}}"></rdk_button></div>\
-                <div class="clearfix" on-finish-render="domRenderFormParentToChild"></div>\
+                <div class="clearfix"></div>\
             </div>\
             </div>'
         );
