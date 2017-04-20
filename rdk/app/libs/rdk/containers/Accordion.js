@@ -73,10 +73,10 @@ define(['angular', 'jquery', 'gsap', 'rd.core', 'css!rd.styles.Accordion',
                 transclude(transcludeScope, function(clone,innerScope) {
                     for (var key in clone){
                         if(clone[key].innerHTML != undefined && clone[key].tagName == "HEADER_RENDERER"){
-                            $(iEle.find(".theme").html("")).append(clone[key].innerHTML);
+                            $(iEle[0]).find(".theme").html('').append(clone[key].innerHTML);
                         }
                         if(clone[key].innerHTML !=undefined && clone[key].tagName != "HEADER_RENDERER"){
-                            $(iEle.find(".content")).append(clone[key]);
+                            $(iEle[0]).find(".content").append(clone[key]);
                         }
                     };
                 }); 
