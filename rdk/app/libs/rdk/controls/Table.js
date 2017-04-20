@@ -524,12 +524,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                     var curSortIndex;
                     var sortIconStatus=true;
-                    var _totalCount;
-
-                    function getTotalCount(){
-                        return scope.$eval(filterCount);
-                    }
-
 
                     function _init() {
 
@@ -679,15 +673,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         if(attrs.pageNumber=="-1" && attrs.searchPosition =="bottom")
                         {
                             scope.searchMouseLeaveHandler =function(){
-                                scope.searchPrompt="Total "+ _totalCount + " Records";
+                                scope.searchPrompt="Total "+ scope.data.data.length + " Records";
                             };
                             scope.searchMouseEnterHandler =function(){
                                 scope.searchPrompt="Search";
                             };
-                            $timeout(function(){
-                                _totalCount = getTotalCount();
-                                scope.searchPrompt="Total "+ _totalCount + " Records";
-                            },0);
+
                         }else{
                             scope.searchPrompt="Search";
                         }
@@ -1024,7 +1015,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         scope.$on('ngRepeatFinished', function() {
                             _reSetTableAddHeaders();
                             _fixTableHeader();
-
                             scope.refreshSingleCurrentPage();
                             _serverSortResponse();//后端排序，刷新后的响应
                             scope.$watch("selectedIndex", function(newVal, oldVal) { //根据selectedIndex高亮显示
@@ -1034,6 +1024,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                     }
                                 }
                             }, true);
+                            if(attrs.pageNumber=="-1" && attrs.searchPosition =="bottom"){
+                                scope.searchPrompt="Total "+ scope.data.data.length + " Records";
+                            }
                             if(attrs.resize && isFirstBroadCast){
                                 EventService.broadcast('rdkTable_'+scope.$id, EventTypes.READY,null);
                                 isFirstBroadCast=false;
