@@ -1,7 +1,7 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.services.Alert', { url: 'base/i18n',  alias: 'i18n'  }
+        'rd.services.Alert'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', 'Alert', 'ButtonTypes', main];
@@ -9,7 +9,6 @@
         scope.clickHandler = function() {
             Alert.confirm('信息确认请注意', '确认提示', ButtonTypes.YES + ButtonTypes.NO + ButtonTypes.CANCEL, callbackHandler);
         }
-
         function callbackHandler(val) {
             if (val == ButtonTypes.YES) {
                 alert('call back YES');

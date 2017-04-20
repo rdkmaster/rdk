@@ -14,6 +14,7 @@ import com.zte.vmax.rdk.proxy.ProxyManager
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 import jdk.nashorn.api.scripting.ScriptObjectMirror
 import com.zte.vmax.rdk.actor.Messages._
+import com.zte.vmax.rdk.db.DataBaseHelper.DBError
 import spray.http.MediaTypes
 
 /**
@@ -48,6 +49,10 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   def reloadDataSource: Unit = {
     DataSource.init(Config.config)
+  }
+
+  def removeDBInfoByName(dbName: String) = {
+    DataSource.removeDBInfoByName(dbName)
   }
   //获取context信息
   def getReqCtxHeaderInfo: String = {
@@ -195,12 +200,22 @@ class Runtime(engine: ScriptEngine) extends Logger {
   }
 
   def fetch(sql: String, maxLine: Int): String = {
-    val data = DataBaseHelper.fetch(useDbSession, sql, maxLine)
+    var data: Option[AnyRef] = None
+    if (cacheGet("#_#allowNullToString#_#").asInstanceOf[Boolean]) {
+      data = DataBaseHelper.fetch(useDbSession, sql, maxLine, null)
+    } else {
+      data = DataBaseHelper.fetch(useDbSession, sql, maxLine)
+    }
     objectToJson(data getOrElse "null") //转json？
   }
 
   def fetchWithDataSource(dataSource: String, sql: String, maxLine: Int): String = {
-    val data = DataBaseHelper.fetch(DBSession(application, Some(dataSource)), sql, maxLine)
+    var data: Option[AnyRef] = None
+    if (cacheGet("#_#allowNullToString#_#").asInstanceOf[Boolean]) {
+      data = DataBaseHelper.fetch(DBSession(application, Some(dataSource)), sql, maxLine, null)
+    } else {
+      data = DataBaseHelper.fetch(DBSession(application, Some(dataSource)), sql, maxLine)
+    }
     objectToJson(data getOrElse "null")
   }
 
@@ -219,22 +234,43 @@ class Runtime(engine: ScriptEngine) extends Logger {
   }
 
   def fetch_first_cell(sql: String): String = {
-    val option = DataBaseHelper.fetch(useDbSession, sql, 1)
-    option.flatMap(it =>
-      if (it.data.length >= 1) Some(it.data(0)(0)) else None
-    ).getOrElse("null")
+    DataBaseHelper.fetch(useDbSession, sql, 1) match {
+      case Some(dataOrError) => {
+        dataOrError match {
+          case it: DataTable if (it.data.length >= 1) => it.data(0)(0)
+          case _ => null
+        }
+      }
+      case _ => null
+    }
   }
 
-  def executeUpdate(appName: String, sql: String): Int = {
-    val affectNums: Option[Int] = DataBaseHelper.executeUpdate(useDbSession, sql)
-    affectNums.getOrElse(0)
+  def executeUpdate(appName: String, sql: String, ifErrorInfo: Boolean): Any = {
+    DataBaseHelper.executeUpdate(useDbSession, sql) match {
+      case Some(dataOrError) => {
+        dataOrError match {
+          case num: Int => num
+          case error: DBError if (ifErrorInfo) => objectToJson(error)
+          case _ => 0
+        }
+      }
+      case _ => 0
+    }
   }
 
-  def batchExecuteUpdate(appName: String, sqlArr: ScriptObjectMirror): String = {
+  def batchExecuteUpdate(appName: String, sqlArr: ScriptObjectMirror, ifErrorInfo: Boolean): Any = {
     val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
-    val res = DataBaseHelper.batchExecuteUpdate(useDbSession, lst.toList)
-    val ret: List[Int] = if (res.nonEmpty) res.get else Nil
-    objectToJson(ret.toArray)
+    DataBaseHelper.batchExecuteUpdate(useDbSession, lst.toList) match {
+      case Some(dataOrError) => {
+        dataOrError.head match {
+          case num: Integer => objectToJson(dataOrError.toArray)
+          case error: DBError if ifErrorInfo => objectToJson(error)
+          case _ => objectToJson(Array.apply())
+        }
+      }
+      case _ =>
+    }
+
   }
 
   /**

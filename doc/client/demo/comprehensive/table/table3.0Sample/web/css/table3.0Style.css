@@ -1,0 +1,25 @@
+.tableSample {
+    width: 680px;
+    margin: 60px;
+}
+.tableSample .rdk-table-module .rdk-table > tbody > tr > td,
+.tableSample .rdk-table-module .rdk-table > thead > tr > th{
+    text-align: left;
+}
+.tableSample .rdk-table-module .rdk-table > tbody > tr > td:nth-child(3),
+.tableSample .rdk-table-module .rdk-table > thead > tr > th:nth-child(3),
+.tableSample .rdk-table-module .rdk-table > tbody > tr > td:nth-child(6),
+.tableSample .rdk-table-module .rdk-table > thead > tr > th:nth-child(6) {
+    text-align: right;
+}
+.tableSample .rdk-table-module .rdk-table > tbody > tr > td:last-child,
+.tableSample .rdk-table-module .rdk-table > thead > tr > th:last-child {
+    text-align: center;
+}
+.tableSample i.iconfont {
+    color: #008fd4;
+    font-size: 16px;
+}
+.tableSample i.iconfont-e8c8 {
+    font-size: 20px;
+}

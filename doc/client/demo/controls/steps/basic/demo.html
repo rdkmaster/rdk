@@ -1,0 +1,13 @@
+<div style="width:800px;">
+    <rdk_steps steps="steps" active-step="avtiveStepIndex"></rdk_steps>
+    <rdk_steps_content active-step="0" class="content-item">Select campaign ...ing</rdk_steps_content>
+    <rdk_steps_content active-step="1" class="content-item">Create an ad group ...ing</rdk_steps_content>
+    <rdk_steps_content active-step="2" class="content-item">Create an ad ...ing</rdk_steps_content>
+    <rdk_steps_content active-step="3" class="content-item">finish ...ing</rdk_steps_content>
+    <div ng-if="avtiveStepIndex>=steps.length" class="content-item">All finish</div>
+    <div class="btn-wrap">
+        <rdk_button click= "preStepHandler" label="Pre" type="guidance"></rdk_button>
+        <rdk_button ng-if="avtiveStepIndex<steps.length-1" click= "nextStepHandler" label="Next"></rdk_button>
+        <rdk_button ng-if="avtiveStepIndex>=steps.length-1" click= "nextStepHandler" label="Finsh"></rdk_button>
+    </div>
+</div>

@@ -36,24 +36,15 @@ Alert 服务用于弹出提示信息的对话框，可能包含消息、标题�
  - “确定”对应数值`4`，即 `ButtonTypes.OK`
  - “取消”对应数值`8`，即 `ButtonTypes.CANCEL`
 
-例如，参数`button`设置成`11`，表示是 `YES/NO/CANCEL` 的组合。界面出现的是 `是/否/取消` 三个按钮。参数`button`设置成`5`，表示是 `YES/OK` 的组合。界面出现的是 `是/确定` 两个按钮。以此类推。
+例如:参数`button`设置成`11`，表示是 `YES/NO/CANCEL` 的组合。界面出现的是 `是/否/取消` 三个按钮。
+      参数`button`设置成`5`，表示是 `YES/OK` 的组合。界面出现的是 `是/确定` 两个按钮。以此类推。
 
-`button`设置成 `空字符串` 或者`null` 时，调用`confirm`方法时默认有`是/否/取消`三个按钮，调用另外三个方法时默认只有`确定`按钮。
+`button`设置成 `空字符串` 或者`null` 时，调用`confirm`方法时默认有`是/否/取消`三个按钮。
 
-四种按钮中的文字内容是可以改动的,方法如下：
-在打开在main.js同目录下的国际化文件i18n.js,这个文件还要引入进index.html页面里，怎么引入可以查看国际化文件怎么引入，打开找到如下代码
-
-"zh_CN": {
-                    welcome: '你的 RDK 应用可以正常工作了！',
-                    wait: '正在查询，请稍候...',
-                    lang: '当前的语言环境是 {0}',
-
-                    alert_yes: '是',
-                    alert_no: '否',
-                    alert_ok: '确定',
-                    alert_cancel: '取消',
-                }                
- 找到对应的按钮如 ButtonTypes.YES对应`alert_yes`,改变其文字就可以改变对应按钮的文字内容,如alert_yes的值改为'点下赞成'，那么ButtonTypes.YES按钮的文字内容也变成了'点下赞成'，详细示例:
+四种按钮中的文字内容是可以改动的。方法如下：
+创建一个国际化文件i18n.js,里面四个参数对应相应的四种按钮,
+如 ButtonTypes.YES对应`alert_yes`,改变其文字就可以改变对应按钮的文字内容。<br>
+注意：国际化文件要在根控制里调用。具体用法见下事例：
 
  <live_demo example="common/alert/demoi18n" width="900" height="400"></live_demo>
 

@@ -1,0 +1,19 @@
+<div style="margin:10px;display:inline-block;position:relative">
+    <rdk_combo_select frozen="false" id="comboID" open="combOpen" show_clear="true">
+        <div class="main"  >
+            <div class="main-border">
+                <div class="main-search" ng-show="true" id="name">
+                    <input id="input" type="text" ng-model="searchVal" ng-change="myFunc(searchVal)" placeholder="例：四川省">
+                    <i class="fa fa-search search-icon"></i>
+                </div>
+                <div rdk-scroll style="height: 300px">
+                    <div class="layoutBox">
+                        <rdk_accordion  change="changeHandler()"  open="Open" caption="item.topic" ng-repeat="item in items track by $index" on-finish-render>
+                            <div class="mutil Mselecter{{$index+1}}" ng-click="fun($index,$event)"></div>
+                            <rdk_basic_selector id="{{item.id}}"  selected-items="item.highLight" editable="false" searchable="false" child_change="selected2string" class="rdk_selector_style"  multiple_select="true"  data="item.subTopic" ></rdk_basic_selector>
+                        </rdk_accordion>
+                    </div>
+                </div>
+        </div>
+    </rdk_combo_select>
+</div>

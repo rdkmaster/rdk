@@ -1,0 +1,32 @@
+.table_wrap{
+    display: inline-flex;
+}
+.table-moved .rdk-table-module{
+    width: 450px;
+}
+.table-moved .rdk-table-module .table-export{
+    right: -100px;
+}
+.table-moved .rdk-table-module .wrapper{
+    height: 280px;
+}
+.table-fixed{
+    padding-left: 2px;
+    overflow: hidden;
+}
+.table-fixed .rdk-table-module{
+    width: 100px;
+    box-shadow: -2px -0 4px rgba(0,0,0,0.175);
+}
+.table-fixed .rdk-table-module .searchWapper{
+    display: none;
+}
+.table-fixed .rdk-table-module .iconfont{
+    cursor: pointer;
+}
+.iconfont-e8b7{
+    color: #008FD4;
+    display: block;
+    height: 20px;
+    font-size: 19px;
+}

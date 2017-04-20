@@ -1,0 +1,12 @@
+.nav-wrap {
+    height: 50px;
+    border-bottom: 1px solid #c9c9c9
+}
+
+.input-width-60 .rdk-combo-select-module .combo-content-theme {
+    width: 60px;
+}
+
+.input-width-180 .rdk-combo-select-module .combo-content-theme {
+    width: 180px;
+}

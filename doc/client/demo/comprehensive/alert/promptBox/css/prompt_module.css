@@ -1,0 +1,115 @@
+
+* {
+	margin:0; 
+	padding:0;
+}
+ul,li{
+	list-style:none;
+}
+.rdk-popupservice-dialog {
+	width : 240px!important;
+}
+.modalcss{
+	font-size: 12px;
+	padding: 0 ;
+	font-family: '微软雅黑';
+	z-index: 1001;
+	padding: 0 !important;
+}
+
+.subText,.rdk-popupservice-dialog .ui-widget-header {
+	font-size: 14px;
+	font-weight: bold;
+	line-height: normal;
+	background-color: #f4f6f8;
+	color: #434343;
+}
+.rdk-popupservice-dialog .ui-widget-header {
+	padding: 10px 10px 0 0;
+}
+.ui-dialog .ui-dialog-title {
+	margin: 0;
+}
+.subText {
+	margin: 0;
+	padding-left: 10px;
+	padding-right: 25px;
+	padding-bottom: 10px;
+	word-break: break-all
+}
+/*******容器内部子样式********/
+.alertContent {
+	height: 50px;
+	border-bottom: 1px solid transparent;
+	border-top:1px solid transparent;
+}
+.alertContent button {
+	width: 90px;
+	height: 30px;
+	margin-top: 10px;
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	background-color: #fff;
+	font-size: 14px;
+	color: #008fd4
+}
+.alertContent button:hover {
+	border: 1px solid #9bc9dd;
+}
+.alertContent button:active {
+	border: 1px solid #3793bb;
+}
+.alertContent button:focus {
+	outline: none;
+}
+.alertContent button:active {
+	border: 1px solid #3793bb;
+}
+.alertContent button:first-child {
+	margin-left: 22px;
+}
+.alertContent button:last-child{
+	float: right;
+	margin-right: 22px;
+}
+.alertContent button img {
+	float:left;
+	width: auto;
+	height: auto;
+	margin: 0;
+	margin-left: 10px;
+	margin-top: 3px;
+	border-radius: 0;
+	border: none;
+}
+.alertContent button:first-child img {
+	margin-left: 16px;
+}
+.alertContent button span {
+	float: right;
+	margin-right: 10px;
+}
+.alertContent button:first-child span {
+	margin-right: 16px;
+}
+.listContent li {
+	height: 50px;
+	padding: 0 10px 0 20px;
+	border-bottom: 1px solid #f5f5f5;
+}
+.listContent ul li:last-child{
+	border-bottom: 1px solid #e2e2e2;
+}
+.listContent li p {
+	margin: 0;
+	line-height: 25px;
+	font-size: 12px;
+}
+.listContent li span {
+	font-size: 14px;
+}
+.listContent ul {
+	margin: 0;
+}
+
+

@@ -7,6 +7,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
             readonly: "@?",
             icon: "=?",
             click: "&?",
+            change: "&?",
             blur: "&?"
         };
         return {
@@ -15,12 +16,19 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
             replace: true,
             scope:scopeDefine,
             template: '<div class="rdk-input-module">\
-                     <input type="text" class="form-control" placeholder="{{placeholder}}"  ng-blur="inpBlurHandler()">\
+                     <input type="text" class="form-control" placeholder="{{placeholder}}" ng-change="inpChangeHandler()" ng-model="inputContent"  ng-blur="inpBlurHandler()">\
                  <i class="{{icon}}" \
                    style="position:absolute;right:10px;color:gray;font-size:14px;cursor:pointer"\
                    ng-show="showDelete"></i>\
                  <div style="clear:both"></div>\
                 </div>',
+            controller: ['$scope', function(scope) {
+                Utils.publish(scope, this);
+
+                this.getValue = function() {
+                    return scope.inputContent;
+                }
+            }],
             compile: function(tElement, tAttrs, transclude) {
                 Utils.checkEventHandlers(tAttrs,scopeDefine);
                 return function(scope, iElement, iAttrs, ngModel) {
@@ -76,6 +84,9 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
                     }
                     scope.inpBlurHandler=function(){
                         EventService.raiseControlEvent(scope, EventTypes.BLUR, inputElement.value);
+                    };
+                    scope.inpChangeHandler=function(){
+                        EventService.raiseControlEvent(scope, EventTypes.CHANGE, inputElement.value);
                     };
 
                     function defaultHandler(){

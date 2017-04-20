@@ -31,9 +31,10 @@
     overflow: hidden;
     white-space:nowrap;
     height: 30px;
+    line-height: 30px;
     box-shadow: none;
     border: none;
-    padding: 4px 0px;
+    padding: 0;
     margin: 0px 26px 0px 8px;
 }
 .rdk-combo-select-module .combo-content-icon{
@@ -85,13 +86,16 @@
 .rdk-theme-zte-vmax .rdk-combo-select-module .combo-caption{
     display: inline-block;
     height: 16px;
-    color: #fff;
+    color: #4c4c4c;
     font-size: 12px;
     border-right: 0;
     line-height: 32px;
 }
+.rdk-theme-zte-vmax .rdk-combo-select-module .combo-content:hover{
+    background-color: #d8d8d8;
+}
 .rdk-theme-zte-vmax .rdk-combo-select-module .combo-content.combo-content-open{
-    background-color: rgba(0,0,0,.18);
+    background-color: #cfcfcf;
 }
 .rdk-theme-zte-vmax .rdk-combo-select-module .combo-content{
     display: inline-flex;
@@ -107,6 +111,10 @@
     border: 0;
     color: #333;
     background-color: transparent;
+    user-select:none;
+    -moz-user-select:none;
+    -webkit-user-select:none;
+    -ms-user-select:none;
 }
 
 .rdk-theme-zte-vmax .rdk-combo-select-module .combo-content-theme{
@@ -114,7 +122,7 @@
     border: none;
     padding: 2px 10px;
     margin: 0;
-    color: #fff;
+    color: #000;
     background-color: transparent;
     overflow: visible;
 }
@@ -129,6 +137,9 @@
     }
     .rdk-theme-zte-vmax .rdk-combo-select-module .combo-content{
         display: inline-flex;
+    }
+    .rdk-theme-zte-vmax .rdk-combo-select-module .combo-content-theme{
+        flex: auto;
     }
     .rdk-combo-select-module .combo-content > span,
     .rdk-combo-select-module .combo-content > p{

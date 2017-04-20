@@ -1,0 +1,71 @@
+.rdk-steps-module{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 32px;
+    font-family:"微软雅黑", Helvetica, Arial, sans-serif
+}
+.rdk-steps-module .rdk-steps-item{
+    flex: 0 0 auto;
+}
+.rdk-steps-module .rdk-steps-item>span{
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 12px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 12px;
+    margin-right: 12px;
+    font-weight: 500;
+}
+.rdk-steps-module .rdk-steps-item span{
+    position: relative;
+}
+.rdk-steps-module .rdk-steps-item span>span{
+    text-align: center;
+    position: absolute;
+    left: -360%;
+    top: -12px;
+    white-space: nowrap;
+    min-width: 180px;
+    color: #333;
+}
+.rdk-steps-module .rdk-steps-item>span.step-status-wait{
+    color: #bbb;
+    cursor: not-allowed;
+}
+.rdk-steps-module .rdk-steps-item>span.step-status-process{
+    color: #333;
+    cursor:default;
+}
+.rdk-steps-module .rdk-steps-item>span.step-status-finish{
+    color: #333;
+}
+.rdk-steps-module .rdk-steps-item>span.step-status-error{
+    color: #e67976;
+}
+/*steps-icon*/
+.rdk-steps-module .rdk-steps-item .step-icon{
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    border-radius: 22px;
+    font-style: normal;
+    text-align: center;
+    color: #fff;
+}
+.rdk-steps-module .rdk-steps-item .step-status-wait .step-icon{  background-color: #bbb;  }
+.rdk-steps-module .rdk-steps-item .step-status-process .step-icon{  background-color: #41addc;  }
+.rdk-steps-module .rdk-steps-item .step-status-finish .step-icon{  background-color: #7aca6d;  }
+.rdk-steps-module .rdk-steps-item .step-status-error .step-icon{  background-color: #e67976;  }
+/*steps-line*/
+.rdk-steps-module .rdk-step-line {  flex: 1 1 auto;  }
+.rdk-steps-module .step-status-wait + .rdk-step-line span{  border-color: #bbb;  }
+.rdk-steps-module .step-status-process + .rdk-step-line span{  border-color: #41addc;  }
+.rdk-steps-module .step-status-finish + .rdk-step-line span{  border-color: #7aca6d;  }
+.rdk-steps-module .step-status-error + .rdk-step-line span{  border-color: #e67976;  }
+.rdk-steps-module .rdk-step-line span{  display: block;  border-top-style: solid;  border-top-width: 1px;  }

@@ -1,0 +1,29 @@
+.box{
+	width:50%; 
+	padding:20px; 
+	margin:20px auto; 
+	background-color:#f0f3f9; 
+	text-align:justify;
+	font-size: 0;
+}
+.box:after{
+	content:"";
+	display:inline-block; 
+	width:100%; 
+	height:0; 
+	overflow:hidden;
+}
+.list{ 
+	display:inline-block; 
+	vertical-align:top;
+	font-size: 12px;
+}
+
+.pct20{width:20%;}
+.pct50{width:50%;}
+
+/* text-align */
+.tc{text-align:center;}
+.tr{text-align:right;}
+.tl{text-align:left;}
+.tj{text-align:justify;}

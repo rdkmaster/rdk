@@ -18,11 +18,12 @@
 	position: relative;
 	z-index: 50;
 	height: 30px;
+	line-height: 30px;
 	border-radius: 4px;
 	font-size:14px;
 	text-align: center;
 	white-space:nowrap;
-	padding:0px 16px;
+	padding:0 16px;
 	font-family: 'Microsoft YaHei';
 	cursor:pointer;
 	outline:none;
@@ -37,8 +38,8 @@
     height:100%;
     border-radius: 5px;
     position:absolute;
-    top: 0px;
-    left:0px;
+    top: 0;
+    left:0;
     z-index: 30;
 }
 .rdk-button-enabled{
@@ -55,12 +56,16 @@
 .rdk-button-btn{
 	background: rgba(0,0,0,0);
 	color:#ffffff;
+	border: 1px solid transparent;
 }
 .rdk-button-shade {
     background-color: #5395d8;
 }
 .rdk-button-normal {
 	background: #5395d8;
+}
+.rdk-button-default {
+	background: #41addc;
 }
 .rdk-button-danger {
 	background: #e78f4e
@@ -80,6 +85,25 @@
 }
 .rdk-button-down {
 	background:rgba(0,0,0,0.15);
+}
+.rdk-button-white {
+	background-color: transparent;
+}
+.rdk-button-white + .rdk-button-btn {
+	color: #008FD4;
+	border: 1px solid #ccc;
+}
+.rdk-button-white + .rdk-shade-opacity {
+	background-color: rgba(255,255,255,0.4);
+	border: 1px solid #9bc9dd
+}
+.rdk-button-white + .rdk-button-down {
+	background-color: #fff;
+	border: 1px solid #3793bb
+}
+.rdk-button-white + .rdk-button-enabled {
+	background-color: #fff;
+	color: #ccc;
 }
 /* -- theme style : rdk-theme-zte-vmax start --*/
 /*.rdk-theme-zte-vmax .rdk-button-guidance ~ .rdk-button-btn {

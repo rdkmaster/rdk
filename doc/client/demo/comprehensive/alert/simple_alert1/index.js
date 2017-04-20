@@ -6,13 +6,14 @@
 (function() {
     var imports = [
         'base/demo',
-        'rd.controls.Module'
+        'rd.controls.Module',
+        { url: 'base/i18n', alias: 'i18n' }
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope', 'DataSourceService', main];
-    function main(scope, DataSourceService) {
+    var controllerDefination = ['$scope','DataSourceService', main];
+    function main(scope,DataSourceService) {
         imports.helper.initDataSourceService(DataSourceService);
-
+        imports.i18n.$init(scope);
         scope.load = function() {
             rdk.m.loadModule({}, 'demo.html');
         }

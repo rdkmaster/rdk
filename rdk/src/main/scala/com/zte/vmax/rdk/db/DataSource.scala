@@ -100,5 +100,12 @@ object DataSource extends Logger {
     dbName2DSKeyMap.get(fixedName).flatMap(poolMap.get(_))
   }
 
+  /**
+    * 根据数据源名字，删除数据源对象及其对应的连接池对象
+    */
+  def removeDBInfoByName(dbName:String)={
+    dbName2DSKeyMap.get(dbName).map(poolMap.remove(_))
+    dbName2DSKeyMap.remove(dbName)
+  }
 
 }
