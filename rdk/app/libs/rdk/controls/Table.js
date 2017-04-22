@@ -473,7 +473,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 var searchFieldFilter = "";
                 searchFieldFilter = " | fieldfilter: searchFields : globalSearch";
 
-                var filterCount  = "";
+                var filterCount = "";
                 //filterCount = "$filtered = (destData| filter:globalSearch) | offset: currentPage:pageSize |limitTo: pageSize | fieldfilter: searchFields : globalSearch |size";
                 filterCount = "$filtered = (destData| filter:globalSearch) | fieldfilter: searchFields : globalSearch |size";
 
