@@ -97,7 +97,10 @@ var Log = {
         var message = _arg2string(arguments);
         rdk_runtime.jsLogger().error(message);
     },
-    operateLog: function (userOpInfo) {
+    operateLog: function (userOpInfo, operateLogScript) {
+        if (!_.isDefined(operateLogScript)) {
+            operateLogScript = java.Config.get('extension.operateLog')
+        }
         var reqCtxHeaderInfo = Request.getContextHeader()
         if (!reqCtxHeaderInfo) {
             Log.error("NoneContext call!");
@@ -105,7 +108,7 @@ var Log = {
         }
         var userOpFunc = null;
         try {
-            userOpFunc = load(java.Config.get('extension.operateLog'));
+            userOpFunc = load(operateLogScript);
         } catch (e) {
             Log.error("load operateLog script error:" + e);
             return false;
