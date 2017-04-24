@@ -1,48 +1,12 @@
-function authenticate(params, callback) {
-    var http = new window.XMLHttpRequest();
-    http.open("POST", "/web/res/web-common/login");
-    http.setRequestHeader("Content-Type", "application/json");
 
-    http.onreadystatechange = function() {
-        if(http.readyState == 4 && http.status == 200) {
-            callback(JSON.parse(http.responseText));
-        }
-        if (http.status == 404) {
-            callback({result:0});
-        }
-
-        console.log('http.readyState=' + http.readyState)
-    };
-    http.send(JSON.stringify(params));
-}
-
-function checkLogin() {
-
-    console.log('cookie:', document.cookie )
-    var http = new window.XMLHttpRequest();
-    http.open("GET", "/web/rest/web-common/common?action=getUserName");
-    http.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-
-    http.onreadystatechange = function(res) {
-        if(http.readyState == 4 && http.status == 200 && http.responseText.length != 0) {
-            console.log( 'res',res)
-            window.location.href = '/rdk/app/portal/web/index.html';
-        }
-        if (http.status == 404) {
-        }
-    };
-    http.send(null);
-
-}
-
-var LoginHandler = function() {
+var AuthenticateImplement = function() {
 
     var processLoginResult = function(data,params,errorMsgDom,tipsDom,connMsgDom){
         var ErrResult_LOGIN_SUCCESS = 0;
-        var ErrResult_LOGIN_FAILURE = 4;
         var ErrResult_LOGIN_SUCCESS_WARN = 1;
         var ErrResult_LOGIN_SUCCESS_PASSWORD_WARN = 2;
         var ErrResult_LOGIN_SUCCESS_PASSWORD_MUSTCHANGE = 3;
+        var ErrResult_LOGIN_FAILURE = 4;
         var ErrResult_LOGIN_SERV_ERROR = -1;
 
         // 自定义的登录首页.
@@ -108,18 +72,47 @@ var LoginHandler = function() {
         }
     }
 
-    return {
+    function changePassword(params, errors) {
+        window.alert(errors.message,toHomePage);
+    };
 
-        login : function(params,errorMsgDom,tipsDom,connMsgDom){
+
+    var ict_framework_aes_a1 = "9763853428462486";
+    var ict_framework_aes_a2 = "9763853428462486";
+
+    function encrypt(word) {
+        var a1 = CryptoJS.enc.Utf8.parse(ict_framework_aes_a1);   
+        var a2 = CryptoJS.enc.Utf8.parse(ict_framework_aes_a2);   
+        var srcs = CryptoJS.enc.Utf8.parse(word);  
+        var encrypted = CryptoJS.AES.encrypt(srcs, a1, { iv: a2,mode:CryptoJS.mode.CBC});  
+        return encrypted.toString();  
+    }
+
+    return {
+        authenticate : function(params,errorMsgDom,tipsDom,connMsgDom){
+            params.password = encrypt(password);
+            params.isEncypted = true;
             $.post("/web/res/web-common/login",params,function(data){
                 processLoginResult(data,params,errorMsgDom,tipsDom,connMsgDom);
             },"json");
+        },
+        checkAuthenticate: function() {
+            console.log('cookie:', document.cookie )
+            var http = new window.XMLHttpRequest();
+            http.open("GET", "/web/rest/web-common/common?action=getUserName");
+            http.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+
+            http.onreadystatechange = function(res) {
+                if(http.readyState == 4 && http.status == 200 && http.responseText.length != 0) {
+                    console.log( 'res',res)
+                    window.location.href = '/rdk/app/portal/web/index.html';
+                }
+                if (http.status == 404) {
+                }
+            };
+            http.send(null);
         }
 
     }
 
 }();
-
-function changePassword(params, errors) {
-    window.alert(errors.message,toHomePage);
-};
