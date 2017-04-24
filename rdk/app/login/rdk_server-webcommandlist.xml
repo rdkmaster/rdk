@@ -1,0 +1,51 @@
+<server>
+   <!-- command-list 元素说明:
+       i18n-file 属性指定相关的国际化文件名（不带路弿
+   -->
+	<webcommand-list i18n-file="ums-server/procs/ppus/rdk_server.ppu/rdk_server-webapp.pmu/rdk_server.par/conf/rdk_server-i18n.xml" >
+    <!--webcommand 一个webcommand元素描述了一个URL的相关属性，其具体属性解释如下：
+        urlﺿ表示操作的urlﺿ
+        regex：用于获取url中资源的正则表达式，如果URL中不带资源，可以不配置；
+        pseudocode：是url的助记符,体现在操作日志的详细信息䶿
+        desc-key: 属性是命令码描述的国际化key, 而对应国际化值在command-list属性中指明的国际化文件中配置的。；
+        operation: url的操作码
+        actor-id：处理url的actor ID
+        msg-class：统一通讯生成的消息类县
+        msg-code：统一通讯生成的消息码
+
+        logﺿ属性是表示当执行该条命令的时候是否记录日志，只有在配置了actor-id属性后才生效，只能卿true"（默认值）⾿false"、值之一
+        "true" 表示记录日志⾿
+        "false"表示不记录日志⾿
+        customized-log-class: 应用自定义的日志记录类名，必须是LogTransfer的实现类，只是在应用自定义记录操作日志记录时需要配置，如果使用AOS统一通信记录日志时可以不配置，只有在配置了actor-id属性且log配置为true时才生效
+    -->
+    <!--
+        <webcommand url="/dap/res/web-rap/{respath:.+}/GET" operation="GlobalOperation" />
+        <webcommand url="/dap/res/web-rap/{respath:.+}/POST" operation="GlobalOperation" />
+        -->
+		  <webcommand url="/{respath:.+}/GET" operation="CustomProcess" />
+		  <webcommand url="/{respath:.+}/POST" operation="CustomProcess" />
+		  <webcommand url="/{respath:.+}/PUT" operation="CustomProcess" />
+		  <webcommand url="/{respath:.+}/DELETE" operation="CustomProcess" />
+		  <webcommand url="/debug/GET" operation="CustomProcess" />
+
+		  <webcommand url="/rdk_server/{respath:.+}/GET" operation="CustomProcess" />
+		  <webcommand url="/rdk_server/{respath:.+}/POST" operation="CustomProcess" />
+		  <webcommand url="/rdk_server/{respath:.+}/PUT" operation="CustomProcess" />
+		  <webcommand url="/rdk_server/{respath:.+}/DELETE" operation="CustomProcess" />
+		  <webcommand url="/rdk_server/debug/GET" operation="CustomProcess" />
+
+		  <webcommand url="/rdk_server/app/{respath:.+}/GET" operation="GlobalOperation" />
+		  <webcommand url="/rdk_server/app/{respath:.+}/POST" operation="GlobalOperation" />
+
+          <!-- for sign in -->
+          <webcommand url="/rdk_server/app/portal/web/css/{respath:.+}/GET" operation="CustomProcess" />
+          <webcommand url="/rdk_server/app/portal/web/css/{respath:.+}/GET" operation="CustomProcess" />
+          <!-- <webcommand url="/rdk_server/app/portal/web/scripts/{respath:.+}/GET" operation="CustomProcess" /> -->
+          <!-- <webcommand url="/rdk_server/app/portal/web/scripts/{respath:.+}/POST" operation="CustomProcess" /> -->
+          <webcommand url="/rdk_server/app/libs/iconFonts/css/iconfont.css/GET" operation="CustomProcess" />
+          <webcommand url="/rdk_server/app/libs/iconFonts/css/iconfont.css/POST" operation="CustomProcess" />
+          <webcommand url="/rdk_server/app/login/{respath:.+}/GET" operation="CustomProcess" />
+          <webcommand url="/rdk_server/app/login/{respath:.+}/POST" operation="CustomProcess" />
+
+  </webcommand-list>
+</server>
