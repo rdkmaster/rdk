@@ -1,0 +1,26 @@
+{
+            "data": [
+
+                [
+                    "All Mesh",
+                    "--%",
+                    "--",
+                    "--"
+                ],
+                [
+                    "Indoor Mesh",
+                    "--%",
+                    "--",
+                    "--"
+                ],
+                [
+                    "Undefined Mesh",
+                    "--%",
+                    "--",
+                    "--"
+                ]
+            ],
+            "field": ["name", "position", "salary", "start_date"],
+            "header": ["MeshType", "WeakMeshRatio", "WeakMeshNum", "TotalMeshNum"],
+            "paging" :{"totalRecord":14,"currentPage":1,"pageSize":5}
+        }

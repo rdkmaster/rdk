@@ -1,0 +1,6 @@
+<div class="panel-wrap rdk-theme-zte-vmax" ng-class="{'wrap-animation':panelStatus}">
+    <button ng-click="clkShowPanel()" class="btn-show rdk-icon iconfont" ng-class="{true:'iconfont-e8c3',false:'iconfont-e8bb'}[panelStatus]"></button>
+    <rdk_panel title="'华城小区'" class="rdk-panel rdk-panel-theme-blue" ng-class="{'panel-up':panelStatus,'panel-down':!panelStatus}" show-title="true" height="280" width="580">
+        <rdk_table class="content" rdk-scroll ds="dsTable" ds-url="data/data.json" ds_query_if="ready" paging-visible="false" setting="settingPanel"></rdk_table>
+    </rdk_panel>
+</div>

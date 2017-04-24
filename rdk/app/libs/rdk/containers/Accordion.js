@@ -47,7 +47,7 @@ define(['angular', 'jquery', 'gsap', 'rd.core', 'css!rd.styles.Accordion',
                                     ng-repeat="button in buttons"\
                                     ng-click="clickHandler(button.callback, button, id, $event)"\
                                     ng-mouseover=getTooltips($event,button.tooltips,button.label)>\
-                                    <img class="imgShape" ng-src="{{button.icon}}">{{button.label}}\
+                                    <img ng-if="!!button.icon" class="imgShape" ng-src="{{button.icon}}">{{button.label}}\
                                 </a>\
                             </div>\
                         </div>\
@@ -73,10 +73,10 @@ define(['angular', 'jquery', 'gsap', 'rd.core', 'css!rd.styles.Accordion',
                 transclude(transcludeScope, function(clone,innerScope) {
                     for (var key in clone){
                         if(clone[key].innerHTML != undefined && clone[key].tagName == "HEADER_RENDERER"){
-                            $(iEle.find(".theme").html("")).append(clone[key].innerHTML);
+                            $(iEle[0]).find(".theme").html('').append(clone[key].innerHTML);
                         }
                         if(clone[key].innerHTML !=undefined && clone[key].tagName != "HEADER_RENDERER"){
-                            $(iEle.find(".content")).append(clone[key]);
+                            $(iEle[0]).find(".content").append(clone[key]);
                         }
                     };
                 }); 
