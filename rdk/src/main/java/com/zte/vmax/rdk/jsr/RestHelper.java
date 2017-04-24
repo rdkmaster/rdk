@@ -32,7 +32,7 @@ public class RestHelper extends AbstractAppLoggable {
         }
     }
 
-    private static Pattern URL_PTN = Pattern.compile("^http://.+", Pattern.CASE_INSENSITIVE);
+    private static Pattern URL_PTN = Pattern.compile("^https?://.+", Pattern.CASE_INSENSITIVE);
 
     public String get(String url, Object option, boolean ifErrorInfo) {
         return commonRest(url, null, option, "GET", ifErrorInfo);
