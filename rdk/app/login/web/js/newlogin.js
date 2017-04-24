@@ -71,16 +71,9 @@ var Login = function () {
                     // 如果点击记住密码,则记住用户的信息
                     saveUserInfo();
 
-                    // $('.inputWarningShadow').removeClass('inputWarningShadow');
-
                     var params = {};
                     params["username"] =$("#inputUserName").val();
-                    var sourcePass = $("#inputPassword").val();
-                    var pass = Tools.ict_framework_func1(sourcePass);
-
-                    params["password"] = pass;
-                    params["isEncypted"]  = true;
-
+                    params["password"] = sourcePass;
                     AuthenticateImplement.authenticate(params,
                             $("#com_zte_ums_ict_portal_login_userPassword"),
                             $("#nameOrpwdError"),
