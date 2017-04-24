@@ -81,16 +81,16 @@ var AuthenticateImplement = function() {
     var ict_framework_aes_a2 = "9763853428462486";
 
     function encrypt(word) {
-        var a1 = CryptoJS.enc.Utf8.parse(ict_framework_aes_a1);   
-        var a2 = CryptoJS.enc.Utf8.parse(ict_framework_aes_a2);   
-        var srcs = CryptoJS.enc.Utf8.parse(word);  
-        var encrypted = CryptoJS.AES.encrypt(srcs, a1, { iv: a2,mode:CryptoJS.mode.CBC});  
-        return encrypted.toString();  
+        var a1 = CryptoJS.enc.Utf8.parse(ict_framework_aes_a1);
+        var a2 = CryptoJS.enc.Utf8.parse(ict_framework_aes_a2);
+        var srcs = CryptoJS.enc.Utf8.parse(word);
+        var encrypted = CryptoJS.AES.encrypt(srcs, a1, { iv: a2,mode:CryptoJS.mode.CBC});
+        return encrypted.toString();
     }
 
     return {
         authenticate : function(params,errorMsgDom,tipsDom,connMsgDom){
-            params.password = encrypt(password);
+            params.password = encrypt(params.password);
             params.isEncypted = true;
             $.post("/web/res/web-common/login",params,function(data){
                 processLoginResult(data,params,errorMsgDom,tipsDom,connMsgDom);

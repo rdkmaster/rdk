@@ -73,6 +73,7 @@ var Login = function () {
 
                     var params = {};
                     params["username"] =$("#inputUserName").val();
+                    var sourcePass = $("#inputPassword").val();
                     params["password"] = sourcePass;
                     AuthenticateImplement.authenticate(params,
                             $("#com_zte_ums_ict_portal_login_userPassword"),
