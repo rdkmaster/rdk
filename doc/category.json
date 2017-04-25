@@ -84,7 +84,7 @@
           },
           {
             "label": "对话框&模态框",
-            "url": "doc/client/common/modal/rdk_modal_old.html",
+            "url": "doc/client/common/popupservice/PopupService.html",
             "icon": "fa fa-file"
           },
           {
