@@ -56,11 +56,26 @@ define(['jquery', 'bootstrap',
                     return Math.ceil((dayOfYear - firstWeekDays) / 7) + 1;
                 },
                 getDateForStringDate: function(dateStr){
-                    dateStr = dateStr.replace(/-/g,"/");
-                    var arr = dateStr.split('/');//new Date带-参数时
-                    if(arr.length == 2) dateStr = dateStr + '/01';//month时处理
-                    return new Date(dateStr);
+                    if(angular.isString(dateStr)){
+                        dateStr = dateStr.replace(/-/g,"/");
+                         var arr = dateStr.split('/');//new Date带-参数时
+                        if(arr.length == 2) dateStr = dateStr + '/01';//month时处理
+                        return new Date(dateStr);
+                    }
+                    return dateStr;   
                 },
+
+                checkIfMacro : function(timeMacro){
+                    if (angular.isString(timeMacro)) {
+                        var isLetter = /^[a-z]/i;
+                        timeMacro = timeMacro.toLowerCase();
+                         if (isLetter.test(timeMacro)) {
+                            return true;
+                         }
+                    }
+                    return false;
+                },
+
                 getTimeMacroCalculate:function(timeMacro){
                     if (angular.isString(timeMacro)) {
                         var isLetter = /^[a-z]/i;
