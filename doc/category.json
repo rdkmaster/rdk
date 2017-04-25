@@ -294,12 +294,83 @@
         "icon": "fa fa-folder-open"
       },
       {
-        "label": "前端 · 客户端综合性demo",
-        "items": [
+        "label": "应用示例demo", "type": "folder", "open": true,
+       " icon": "../img/folder.png",
+        "module": [
           {
-            "label": "button",
-            "url": "/doc/client/demo/comprehensive/btn/web/index.html",
-            "icon": "fa fa-file"
+            "label": "搜索筛选",
+            "doc": "client/common/ApplicationExample/SearchFilter.html",
+            "icon": "../img/link.png"
+          },
+          {
+            "label": "tab",
+            "doc": "client/common/ApplicationExample/tab.html",
+            "icon": "../img/link.png"
+          },
+          {
+            "label": "按钮",
+            "doc": "client/common/ApplicationExample/button.html",
+            "icon": "../img/link.png"
+          },
+          {
+            "label": "模态框",
+            "doc": "client/common/ApplicationExample/ModalDialog.html",
+            "icon": "../img/link.png"
+          },
+          {
+            "label": "表格",
+          "  doc": "client/common/ApplicationExample/table.html",
+           " icon": "../img/link.png"
+          },
+          {
+            "label": "输入框",
+          "  doc": "client/common/ApplicationExample/InputBox.html",
+           " icon": "../img/link.png"
+          },
+          {
+            "label": "下拉框",
+          "  doc": "client/common/ApplicationExample/menu.html",
+           " icon": "../img/link.png"
+          },
+          {
+            "label": "翻页",
+            "doc": "client/common/ApplicationExample/page.html",
+            "icon": "../img/link.png"
+          },
+          {
+            "label": "步骤条",
+            "doc": "client/common/ApplicationExample/steps.html",
+            "icon": "../img/link.png"
+          },
+          {
+            "label": "地区时间",
+            "doc": "client/common/ApplicationExample/InTheTime.html",
+            "icon": "../img/link.png"
+          },
+          {
+            "label": "滚动条",
+            "doc": "client/common/ApplicationExample/scroll.html",
+            "icon": "../img/link.png"
+          },
+          {
+            "label": "导航",
+            "doc": "client/common/ApplicationExample/nav.html",
+            "icon": "../img/link.png"
+          },
+          {
+            "label": "对比",
+            "doc": "client/common/ApplicationExample/contrast.html",
+            "icon": "../img/link.png"
+          },
+          {
+            "label": "图形",
+            "doc": "client/common/ApplicationExample/graph.html",
+            "icon": "../img/link.png"
+          },
+          {
+            "label": "综合示例",
+            "doc": "client/common/ApplicationExample/comprehensive.html",
+            "icon": "../img/link.png"
           }
         ],
         "icon": "fa fa-folder-open"
