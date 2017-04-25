@@ -8,8 +8,14 @@ table.resize tr th .handle {
     position: absolute;
     top: 0;
     right: 0;
-    cursor:url("/rdk/app/libs/rdk/css/img/ew-resize.cur"),default !important;
+    cursor:url("/rdk/app/libs/rdk/css/img/ew-resize.cur"),auto !important;
 }
 table.resize tr th .handle.active {
     border-right: 1px dotted #000;
+}
+/*兼容IE11 : css rule sets go here */
+@media screen and (min-width:0\0) {
+    table.resize tr th .handle {
+        cursor:ew-resize !important;
+    }
 }
