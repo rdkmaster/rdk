@@ -214,7 +214,7 @@ tab的`div`模板带有该属性时，该`div`对应的tab页面会出现关闭�
 
 demo举例如下：
 
-<live_demo example="containers/tab/demo4deletetab" width="800"></live_demo>
+<live_demo example="containers/tab/demo4deleteTab" width="800"></live_demo>
 
 
 ## closeTab ##
