@@ -379,7 +379,7 @@
         "items": [
           {
             "label": "Help urlument",
-            "url": "doc/client/app-urlument/rdk_app_direction_doc.html",
+            "url": "doc/client/app-document/rdk_app_direction_doc.html",
             "icon": "fa fa-file"
           }
         ],
