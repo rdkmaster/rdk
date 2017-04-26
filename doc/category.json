@@ -294,81 +294,81 @@
         "icon": "fa fa-folder-open"
       },
       {
-        "label": "应用示例demo",
+        "label": "前端.应用示例demo",
         "items": [
           {
             "label": "搜索筛选",
-            "url": "client/common/ApplicationExample/SearchFilter.html",
+            "url": "doc/client/common/ApplicationExample/SearchFilter.html",
             "icon": "fa fa-file"
           },
           {
             "label": "tab",
-            "url": "client/common/ApplicationExample/tab.html",
+            "url": "doc/client/common/ApplicationExample/tab.html",
             "icon": "fa fa-file"
           },
           {
             "label": "按钮",
-            "url": "client/common/ApplicationExample/button.html",
+            "url": "doc/client/common/ApplicationExample/button.html",
             "icon": "fa fa-file"
           },
           {
             "label": "模态框",
-            "url": "client/common/ApplicationExample/ModalDialog.html",
+            "url": "doc/client/common/ApplicationExample/ModalDialog.html",
             "icon": "fa fa-file"
           },
           {
             "label": "表格",
-          "  url": "client/common/ApplicationExample/table.html",
+          "  url": "doc/client/common/ApplicationExample/table.html",
            " icon": "fa fa-file"
           },
           {
             "label": "输入框",
-          "  url": "client/common/ApplicationExample/InputBox.html",
+          "  url": "doc/client/common/ApplicationExample/InputBox.html",
            " icon": "fa fa-file"
           },
           {
             "label": "下拉框",
-          "  url": "client/common/ApplicationExample/menu.html",
+          "  url": "doc/client/common/ApplicationExample/menu.html",
            " icon": "fa fa-file"
           },
           {
             "label": "翻页",
-            "url": "client/common/ApplicationExample/page.html",
+            "url": "doc/client/common/ApplicationExample/page.html",
             "icon": "fa fa-file"
           },
           {
             "label": "步骤条",
-            "url": "client/common/ApplicationExample/steps.html",
+            "url": "doc/client/common/ApplicationExample/steps.html",
             "icon": "fa fa-file"
           },
           {
             "label": "地区时间",
-            "url": "client/common/ApplicationExample/InTheTime.html",
+            "url": "doc/client/common/ApplicationExample/InTheTime.html",
             "icon": "fa fa-file"
           },
           {
             "label": "滚动条",
-            "url": "client/common/ApplicationExample/scroll.html",
+            "url": "doc/client/common/ApplicationExample/scroll.html",
             "icon": "fa fa-file"
           },
           {
             "label": "导航",
-            "url": "client/common/ApplicationExample/nav.html",
+            "url": "doc/client/common/ApplicationExample/nav.html",
             "icon": "fa fa-file"
           },
           {
             "label": "对比",
-            "url": "client/common/ApplicationExample/contrast.html",
+            "url": "doc/client/common/ApplicationExample/contrast.html",
             "icon": "fa fa-file"
           },
           {
             "label": "图形",
-            "url": "client/common/ApplicationExample/graph.html",
+            "url": "doc/client/common/ApplicationExample/graph.html",
             "icon": "fa fa-file"
           },
           {
             "label": "综合示例",
-            "url": "client/common/ApplicationExample/comprehensive.html",
+            "url": "doc/client/common/ApplicationExample/comprehensive.html",
             "icon": "fa fa-file"
           }
         ],
@@ -379,7 +379,7 @@
         "items": [
           {
             "label": "Help urlument",
-            "url": "doc/client/app-urlument/rdk_app_direction_url.html",
+            "url": "doc/client/app-urlument/rdk_app_direction_doc.html",
             "icon": "fa fa-file"
           }
         ],
