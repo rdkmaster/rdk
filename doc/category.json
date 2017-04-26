@@ -378,7 +378,7 @@
         "label": "前端 · app开发详细说明文档",
         "items": [
           {
-            "label": "Help urlument",
+            "label": "Help document",
             "url": "doc/client/app-document/rdk_app_direction_doc.html",
             "icon": "fa fa-file"
           }
