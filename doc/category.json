@@ -428,28 +428,28 @@
             "items": [
               {
                 "label": "angular.forEach",
-                "url": "http://urls.ngnice.com/api/ng/function/angular.forEach",
+                "url": "http://docs.ngnice.com/api/ng/function/angular.forEach",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
               },
               {
                 "label": "ngClass",
-                "url": "http://urls.ngnice.com/api/ng/directive/ngClass",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngClass",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
               },
               {
                 "label": "ngClick",
-                "url": "http://urls.ngnice.com/api/ng/directive/ngClick",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngClick",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
               },
               {
                 "label": "ngDisabled",
-                "url": "http://urls.ngnice.com/api/ng/directive/ngDisabled",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngDisabled",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
@@ -461,14 +461,14 @@
               },
               {
                 "label": "ngShow",
-                "url": "http://urls.ngnice.com/api/ng/directive/ngShow",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngShow",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
               },
               {
                 "label": "$timeout",
-                "url": "http://urls.ngnice.com/api/ng/service/$timeout",
+                "url": "http://docs.ngnice.com/api/ng/service/$timeout",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
@@ -481,56 +481,56 @@
             "items": [
               {
                 "label": "ngBlur",
-                "url": "http://urls.ngnice.com/api/ng/directive/ngBlur",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngBlur",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
               },
               {
                 "label": "ngChange",
-                "url": "http://urls.ngnice.com/api/ng/directive/ngChange",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngChange",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
               },
               {
                 "label": "ngClick",
-                "url": "http://urls.ngnice.com/api/ng/directive/ngClick",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngClick",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
               },
               {
                 "label": "ngHide",
-                "url": "http://urls.ngnice.com/api/ng/directive/ngHide",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngHide",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
               },
               {
                 "label": "ngHref",
-                "url": "http://urls.ngnice.com/api/ng/directive/ngHref",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngHref",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
               },
               {
                 "label": "ngKeydown",
-                "url": "http://urls.ngnice.com/api/ng/directive/ngKeydown",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngKeydown",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
               },
               {
                 "label": "ngModel",
-                "url": "http://urls.ngnice.com/api/ng/directive/ngModel",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngModel",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
               },
               {
                 "label": "ngSrc",
-                "url": "http://urls.ngnice.com/api/ng/directive/ngSrc",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngSrc",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
@@ -543,56 +543,56 @@
             "items": [
               {
                 "label": "ngController",
-                "url": "http://urls.ngnice.com/api/ng/directive/ngController",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngController",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
               },
               {
                 "label": "何为作用域(Scope)",
-                "url": "http://urls.ngnice.com/guide/scope",
+                "url": "http://docs.ngnice.com/guide/scope",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
               },
               {
                 "label": "ngClick",
-                "url": "http://urls.ngnice.com/api/ng/directive/ngClick",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngClick",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
               },
               {
                 "label": "ngHide",
-                "url": "http://urls.ngnice.com/api/ng/directive/ngHide",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngHide",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
               },
               {
                 "label": "ngHref",
-                "url": "http://urls.ngnice.com/api/ng/directive/ngHref",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngHref",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
               },
               {
                 "label": "ngKeydown",
-                "url": "http://urls.ngnice.com/api/ng/directive/ngKeydown",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngKeydown",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
               },
               {
                 "label": "ngModel",
-                "url": "http://urls.ngnice.com/api/ng/directive/ngModel",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngModel",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
               },
               {
                 "label": "ngSrc",
-                "url": "http://urls.ngnice.com/api/ng/directive/ngSrc",
+                "url": "http://docs.ngnice.com/api/ng/directive/ngSrc",
                 "target": "_blank",
                 "prefix": true,
                 "icon": "fa fa-file"
@@ -626,7 +626,7 @@
       },
       {
         "label": "underscor API",
-        "url": "doc/server/underscore_url_v1_7_0.html",
+        "url": "doc/server/underscore_doc_v1_7_0.html",
         "target": "_blank",
         "icon": "fa fa-file"
       },
