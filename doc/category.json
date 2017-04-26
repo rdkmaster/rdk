@@ -294,11 +294,81 @@
         "icon": "fa fa-folder-open"
       },
       {
-        "label": "前端 · 客户端综合性demo",
+        "label": "前端 · 应用示例demo",
         "items": [
           {
-            "label": "button",
-            "url": "/doc/client/demo/comprehensive/btn/web/index.html",
+            "label": "搜索筛选",
+            "url": "doc/client/common/ApplicationExample/SearchFilter.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "tab",
+            "url": "doc/client/common/ApplicationExample/tab.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "按钮",
+            "url": "doc/client/common/ApplicationExample/button.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "模态框",
+            "url": "doc/client/common/ApplicationExample/ModalDialog.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "表格",
+          "  url": "doc/client/common/ApplicationExample/table.html",
+           " icon": "fa fa-file"
+          },
+          {
+            "label": "输入框",
+          "  url": "doc/client/common/ApplicationExample/InputBox.html",
+           " icon": "fa fa-file"
+          },
+          {
+            "label": "下拉框",
+          "  url": "doc/client/common/ApplicationExample/menu.html",
+           " icon": "fa fa-file"
+          },
+          {
+            "label": "翻页",
+            "url": "doc/client/common/ApplicationExample/page.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "步骤条",
+            "url": "doc/client/common/ApplicationExample/steps.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "地区时间",
+            "url": "doc/client/common/ApplicationExample/InTheTime.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "滚动条",
+            "url": "doc/client/common/ApplicationExample/scroll.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "导航",
+            "url": "doc/client/common/ApplicationExample/nav.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "对比",
+            "url": "doc/client/common/ApplicationExample/contrast.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "图形",
+            "url": "doc/client/common/ApplicationExample/graph.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "综合示例",
+            "url": "doc/client/common/ApplicationExample/comprehensive.html",
             "icon": "fa fa-file"
           }
         ],

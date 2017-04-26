@@ -11,16 +11,10 @@
         }
         function callbackHandler(val) {
             if (val == ButtonTypes.YES) {
-                alert('call back YES');
-            }
-            if (val == ButtonTypes.NO) {
                 alert('call back NO');
             }
-            if (val == ButtonTypes.OK) {
-                alert('call back OK');
-            }
-            if (val == ButtonTypes.CANCEL) {
-                alert('call back CANCEL');
+            if (val == ButtonTypes.NO) {
+                alert('call back YES');
             }
         }
     }
