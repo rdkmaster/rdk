@@ -22,9 +22,8 @@
     padding: 4px 10px;
     margin-top: 8px;
     border-radius: 4px;
-    background-color: #d9eff8;
-    border: 1px solid #b3def1;
-    color: #008fd4;
+    background-color: #fdd;
+    color: #f00;
     line-height: 18px;
 }
 .inputContent .error:before {
@@ -34,10 +33,9 @@
     position: absolute;
     transform: rotate(45deg);
     margin-top:-8px;
-    border:1px solid #b3def1;
     border-right: none;
     border-bottom:none;
-    background-color: #d9eff8;
+    background-color: #fdd;
 }
 .inputContent .errorState {
     border:1px solid red;
