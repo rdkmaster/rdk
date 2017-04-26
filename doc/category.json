@@ -4,47 +4,47 @@
     "items": [
       {
         "label": "前言 · 搭建开发环境",
-        "url": "url/best_practise/01_dev_env.html",
+        "url": "doc/best_practise/01_dev_env.html",
         "icon": "fa fa-file"
       },
       {
         "label": "第1步 · 编写第一个应用",
-        "url": "url/best_practise/02_first_rdk_app.html",
+        "url": "doc/best_practise/02_first_rdk_app.html",
         "icon": "fa fa-file"
       },
       {
         "label": "第2步 · 使用第一个RDK控件",
-        "url": "url/best_practise/03_use_first_control.html",
+        "url": "doc/best_practise/03_use_first_control.html",
         "icon": "fa fa-file"
       },
       {
         "label": "第3步 · 完成查询条件栏",
-        "url": "url/best_practise/04_finish_condition_bar.html",
+        "url": "doc/best_practise/04_finish_condition_bar.html",
         "icon": "fa fa-file"
       },
       {
         "label": "第4步 · 实现第一个RDK服务并调用它",
-        "url": "url/best_practise/05_first_service.html",
+        "url": "doc/best_practise/05_first_service.html",
         "icon": "fa fa-file"
       },
       {
         "label": "第5步 · 将查询得到的数据表格方式呈现",
-        "url": "url/best_practise/06_show_data_in_table.html",
+        "url": "doc/best_practise/06_show_data_in_table.html",
         "icon": "fa fa-file"
       },
       {
         "label": "第6步 · 将查询得到的数据以图形方式呈现",
-        "url": "url/best_practise/07_show_data_in_graph.html",
+        "url": "doc/best_practise/07_show_data_in_graph.html",
         "icon": "fa fa-file"
       },
       {
         "label": "第7步 · 实现页面国际化",
-        "url": "url/best_practise/08_i18n.html",
+        "url": "doc/best_practise/08_i18n.html",
         "icon": "fa fa-file"
       },
       {
         "label": "第8步 · 优化详情对话框",
-        "url": "url/best_practise/09_detail_dialog.html",
+        "url": "doc/best_practise/09_detail_dialog.html",
         "icon": "fa fa-file"
       }
     ],
@@ -55,7 +55,7 @@
     "items": [
       {
         "label": "应用配置",
-        "url": "url/manual.html",
+        "url": "doc/manual.html",
         "icon": "fa fa-file"
       }
     ],
@@ -69,42 +69,42 @@
         "items": [
           {
             "label": "数据源",
-            "url": "url/client/common/datasource/DataSourceService.html",
+            "url": "doc/client/common/datasource/DataSourceService.html",
             "icon": "fa fa-file"
           },
           {
             "label": "事件机制",
-            "url": "url/client/common/event/EventService.html",
+            "url": "doc/client/common/event/EventService.html",
             "icon": "fa fa-file"
           },
           {
             "label": "国际化",
-            "url": "url/client/common/i18n/i18n.html",
+            "url": "doc/client/common/i18n/i18n.html",
             "icon": "fa fa-file"
           },
           {
             "label": "对话框&模态框",
-            "url": "url/client/common/modal/rdk_modal_old.html",
+            "url": "doc/client/common/modal/rdk_modal_old.html",
             "icon": "fa fa-file"
           },
           {
             "label": "滚动条",
-            "url": "url/client/common/scroll/rdk_scroll.html",
+            "url": "doc/client/common/scroll/rdk_scroll.html",
             "icon": "fa fa-file"
           },
           {
             "label": "文件上传",
-            "url": "url/client/common/upload.html",
+            "url": "doc/client/common/upload.html",
             "icon": "fa fa-file"
           },
           {
             "label": "文件导出",
-            "url": "url/client/common/export.html",
+            "url": "doc/client/common/export.html",
             "icon": "fa fa-file"
           },
           {
             "label": "主题",
-            "url": "url/client/common/theme/rdk_theme.html",
+            "url": "doc/client/common/theme/rdk_theme.html",
             "icon": "fa fa-file"
           },
           {
@@ -115,22 +115,22 @@
           },
           {
             "label": "弹出菜单",
-            "url": "url/client/common/popupservice/PopupService.html",
+            "url": "doc/client/common/popupservice/PopupService.html",
             "icon": "fa fa-file"
           },
           {
             "label": "通知服务",
-            "url": "url/client/common/notifyservice/NotifyService.html",
+            "url": "doc/client/common/notifyservice/NotifyService.html",
             "icon": "fa fa-file"
           },
           {
             "label": "tooltip",
-            "url": "url/client/common/tooltip/tooltip.html",
+            "url": "doc/client/common/tooltip/tooltip.html",
             "icon": "fa fa-file"
           },
           {
             "label": "其他",
-            "url": "url/client/common/other.html",
+            "url": "doc/client/common/other.html",
             "icon": "fa fa-file"
           }
         ],
@@ -141,127 +141,127 @@
         "items": [
           {
             "label": "Alert",
-            "url": "url/client/common/alert/alert.html",
+            "url": "doc/client/common/alert/alert.html",
             "icon": "fa fa-file"
           },
           {
             "label": "AreaSelect",
-            "url": "url/client/controls/area/rdk_area.html",
+            "url": "doc/client/controls/area/rdk_area.html",
             "icon": "fa fa-file"
           },
           {
             "label": "BasicSelector",
-            "url": "url/client/controls/basicselector/rdk_basic_selector.html",
+            "url": "doc/client/controls/basicselector/rdk_basic_selector.html",
             "icon": "fa fa-file"
           },
           {
             "label": "Bullet",
-            "url": "url/client/controls/bullet/bullet.html",
+            "url": "doc/client/controls/bullet/bullet.html",
             "icon": "fa fa-file"
           },
           {
             "label": "Button",
-            "url": "url/client/controls/button/rdk_button.html",
+            "url": "doc/client/controls/button/rdk_button.html",
             "icon": "fa fa-file"
           },
           {
             "label": "ChartIcon",
-            "url": "url/client/controls/chartIcon/rdk_chart_icon.html",
+            "url": "doc/client/controls/chartIcon/rdk_chart_icon.html",
             "icon": "fa fa-file"
           },
           {
             "label": "ComboSelect",
-            "url": "url/client/controls/comboselect/rdk_comboselect.html",
+            "url": "doc/client/controls/comboselect/rdk_comboselect.html",
             "icon": "fa fa-file"
           },
           {
             "label": "FoldSelector",
-            "url": "url/client/controls/foldselector/rdk_fold_selector.html",
+            "url": "doc/client/controls/foldselector/rdk_fold_selector.html",
             "icon": "fa fa-file"
           },
           {
             "label": "Graph",
-            "url": "url/client/controls/graph/graph.html",
+            "url": "doc/client/controls/graph/graph.html",
             "icon": "fa fa-file"
           },
           {
             "label": "Icon",
-            "url": "url/client/controls/icon/rdk_icon.html",
+            "url": "doc/client/controls/icon/rdk_icon.html",
             "icon": "fa fa-file"
           },
           {
             "label": "Input",
-            "url": "url/client/controls/input/rdk_input.html",
+            "url": "doc/client/controls/input/rdk_input.html",
             "icon": "fa fa-file"
           },
           {
             "label": "Map",
-            "url": "url/client/controls/map/map.html",
+            "url": "doc/client/controls/map/map.html",
             "icon": "fa fa-file"
           },
           {
             "label": "Module",
-            "url": "url/client/controls/module/module.html",
+            "url": "doc/client/controls/module/module.html",
             "icon": "fa fa-file"
           },
           {
             "label": "NumericInput",
-            "url": "url/client/controls/numericinput/rdk_numeric_input.html",
+            "url": "doc/client/controls/numericinput/rdk_numeric_input.html",
             "icon": "fa fa-file"
           },
           {
             "label": "Progressbar",
-            "url": "url/client/controls/progressbar/progressbar.html",
+            "url": "doc/client/controls/progressbar/progressbar.html",
             "icon": "fa fa-file"
           },
           {
             "label": "Scroller",
-            "url": "url/client/controls/scroller/rdk_scroller.html",
+            "url": "doc/client/controls/scroller/rdk_scroller.html",
             "icon": "fa fa-file"
           },
           {
             "label": "Selector",
-            "url": "url/client/controls/selector/rdk_selector.html",
+            "url": "doc/client/controls/selector/rdk_selector.html",
             "icon": "fa fa-file"
           },
           {
             "label": "Select",
-            "url": "url/client/controls/select/rdk_select.html",
+            "url": "doc/client/controls/select/rdk_select.html",
             "icon": "fa fa-file"
           },
           {
             "label": "SingleIndicator",
-            "url": "url/client/controls/singleindicator/rdk_single_indicator.html",
+            "url": "doc/client/controls/singleindicator/rdk_single_indicator.html",
             "icon": "fa fa-file"
           },
           {
             "label": "Switch",
-            "url": "url/client/controls/switch/rdk_switch.html",
+            "url": "doc/client/controls/switch/rdk_switch.html",
             "icon": "fa fa-file"
           },
           {
             "label": "Table",
-            "url": "url/client/controls/table/rdk_table.html",
+            "url": "doc/client/controls/table/rdk_table.html",
             "icon": "fa fa-file"
           },
           {
             "label": "TabSelect",
-            "url": "url/client/controls/tabselect/rdk_tabselect.html",
+            "url": "doc/client/controls/tabselect/rdk_tabselect.html",
             "icon": "fa fa-file"
           },
           {
             "label": "Time",
-            "url": "url/client/controls/time/rdk_time.html",
+            "url": "doc/client/controls/time/rdk_time.html",
             "icon": "fa fa-file"
           },
           {
             "label": "TimeSelect",
-            "url": "url/client/controls/timeSelect/rdk_time_select.html",
+            "url": "doc/client/controls/timeSelect/rdk_time_select.html",
             "icon": "fa fa-file"
           },
           {
             "label": "Tree",
-            "url": "url/client/controls/tree/tree.html",
+            "url": "doc/client/controls/tree/tree.html",
             "icon": "fa fa-file"
           }
         ],
@@ -272,22 +272,22 @@
         "items": [
           {
             "label": "Accordion",
-            "url": "url/client/containers/accordion/rdk_accordion.html",
+            "url": "doc/client/containers/accordion/rdk_accordion.html",
             "icon": "fa fa-file"
           },
           {
             "label": "ButtonGroup",
-            "url": "url/client/containers/buttongroup/rdk_buttongroup.html",
+            "url": "doc/client/containers/buttongroup/rdk_buttongroup.html",
             "icon": "fa fa-file"
           },
           {
             "label": "Panel",
-            "url": "url/client/containers/panel/rdk_panel.html",
+            "url": "doc/client/containers/panel/rdk_panel.html",
             "icon": "fa fa-file"
           },
           {
             "label": "Tab",
-            "url": "url/client/containers/tab/rdk_tab.html",
+            "url": "doc/client/containers/tab/rdk_tab.html",
             "icon": "fa fa-file"
           }
         ],
@@ -379,7 +379,7 @@
         "items": [
           {
             "label": "Help urlument",
-            "url": "url/client/app-urlument/rdk_app_direction_url.html",
+            "url": "doc/client/app-urlument/rdk_app_direction_url.html",
             "icon": "fa fa-file"
           }
         ],
@@ -390,12 +390,12 @@
         "items": [
           {
             "label": "h1~h6",
-            "url": "url/unsupported-yet.html",
+            "url": "doc/unsupported-yet.html",
             "icon": "fa fa-file"
           },
           {
             "label": "span",
-            "url": "url/unsupported-yet.html",
+            "url": "doc/unsupported-yet.html",
             "icon": "fa fa-file"
           }
         ],
@@ -405,17 +405,17 @@
         "items": [
           {
               "label": "清除浮动的常用方法",
-              "url": "url/client/common/clear/clear.html",
+              "url": "doc/client/common/clear/clear.html",
               "icon": "fa fa-file"
           },
           {
               "label": "content的使用",
-              "url": "url/client/common/content/content.html",
+              "url": "doc/client/common/content/content.html",
               "icon": "fa fa-file"
           },
           {
               "label": "两端对齐的布局方式及使用场景",
-              "url": "url/client/common/justify/justify.html",
+              "url": "doc/client/common/justify/justify.html",
               "icon": "fa fa-file"
           }
         ],
@@ -456,7 +456,7 @@
               },
               {
                 "label": "ngRepeat",
-                "url": "url/client/common/ng-repeat.html",
+                "url": "doc/client/common/ng-repeat.html",
                 "icon": "fa fa-file"
               },
               {
@@ -611,33 +611,33 @@
     "items": [
       {
         "label": "总览",
-        "url": "url/server/service_api.html",
+        "url": "doc/server/service_api.html",
         "icon": "fa fa-file"
       },
       {
         "label": "公共配置信息查询服务",
-        "url": "url/server/common.html",
+        "url": "doc/server/common.html",
         "icon": "fa fa-file"
       },
       {
         "label": "rest请求说明",
-        "url": "url/server/rdk_rest_service.html",
+        "url": "doc/server/rdk_rest_service.html",
         "icon": "fa fa-file"
       },
       {
         "label": "underscor API",
-        "url": "url/server/underscore_url_v1_7_0.html",
+        "url": "doc/server/underscore_url_v1_7_0.html",
         "target": "_blank",
         "icon": "fa fa-file"
       },
       {
         "label": "文件操作API",
-        "url": "url/server/service_file_api.html",
+        "url": "doc/server/service_file_api.html",
         "icon": "fa fa-file"
       },
       {
         "label": "公共导出服务",
-        "url": "url/client/common/export.html",
+        "url": "doc/client/common/export.html",
         "icon": "fa fa-file"
       },
       {
@@ -645,17 +645,17 @@
         "items": [
           {
             "label": "消息队列API · JS",
-            "url": "url/server/service_mq_js_api.html",
+            "url": "doc/server/service_mq_js_api.html",
             "icon": "fa fa-file"
           },
           {
             "label": "消息队列API · JAVA",
-            "url": "url/server/service_mq_java_api.html",
+            "url": "doc/server/service_mq_java_api.html",
             "icon": "fa fa-file"
           },
           {
             "label": "其他手册",
-            "url": "url/server/ActiveMQ_menual.chm",
+            "url": "doc/server/ActiveMQ_menual.chm",
             "target": "_blank",
             "icon": "fa fa-file"
           }
@@ -664,7 +664,7 @@
       },
       {
         "label": "COMMON包相关",
-        "url": "url/server/common.html",
+        "url": "doc/server/common.html",
         "icon": "fa fa-file"
       }
     ],
