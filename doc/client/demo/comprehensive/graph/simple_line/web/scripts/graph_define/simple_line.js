@@ -58,10 +58,54 @@ return function(data, context, GraphService, attributes) {
         xAxis: {
             type: 'category',
             boundaryGap: false,
+            axisLabel:{//标签设置
+                textStyle:{
+                    color:"#666",
+                    fontSize:12,
+                    fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
+                    fontWeight: 'normal'
+                }
+            },
+            axisLine: {//轴线设置
+                show : true,
+                lineStyle : {
+                    color: '#ccc',
+                    width : 1
+                }
+            },
+            splitLine:{//设置网格
+                show: true,
+                interval:0,
+                lineStyle:{
+                    color:"#e5e5e5"
+                }
+            },
+            scale:true,
             data: data.header
         },
         yAxis: {
-            type: 'value'
+            type: 'value',
+            splitLine:{//网格样式
+                lineStyle:{
+                    color:"#e5e5e5"
+                }
+            },
+            axisLabel:{//标签设置
+                interval:4,
+                textStyle:{
+                    color:"#666",
+                    fontSize:10,
+                    fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
+                    fontWeight: 'normal'
+                }
+            },
+            axisLine: {
+                show : true,
+                lineStyle : {
+                    color: '#ccc',
+                    width : 1
+                }
+            }
         },
         series: [
             {
