@@ -58,7 +58,7 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                         'childList': true,
                         'attributes':true,
                         'characterData':true,
-                        'subtree': !Utils.isIE(),
+                        'subtree': true,
                         'attributeOldValue':true
                     };
                     //观察子节点变动,更新滚动条,

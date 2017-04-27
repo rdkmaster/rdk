@@ -33,6 +33,6 @@ require.config({
         "rd.styles.NumericInput": "../rdk/css/theme/zte-blue/rdk-numericinput-style",
         "rd.styles.NotifyService": "../rdk/css/theme/zte-blue/rd-NotifyService-style",
         "rd.styles.MenuService": "../rdk/css/theme/zte-blue/rd-MenuService-style",
-        "rd.styles.tableResize": "../rdk/css/theme/zte-blue/table-resize",
+        "rd.styles.tableResize": "../rdk/css/theme/zte-blue/rdk-table-resize-style",
     }
 });
