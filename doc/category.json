@@ -318,18 +318,18 @@
           },
           {
             "label": "表格",
-          "  url": "doc/client/common/ApplicationExample/table.html",
-           " icon": "fa fa-file"
+            "url": "doc/client/common/ApplicationExample/table.html",
+            "icon": "fa fa-file"
           },
           {
             "label": "输入框",
-          "  url": "doc/client/common/ApplicationExample/InputBox.html",
-           " icon": "fa fa-file"
+            "url": "doc/client/common/ApplicationExample/InputBox.html",
+            "icon": "fa fa-file"
           },
           {
             "label": "下拉框",
-          "  url": "doc/client/common/ApplicationExample/menu.html",
-           " icon": "fa fa-file"
+            "url": "doc/client/common/ApplicationExample/menu.html",
+            "icon": "fa fa-file"
           },
           {
             "label": "翻页",
