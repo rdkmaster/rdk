@@ -2,6 +2,28 @@
     var testServiceFilePath="../test/server/test/"
     return {
 
+        Cache_get:function(request, script){
+            Cache.put("test","cachetest");
+            return Cache.get("test");
+        },
+        Cache_del:function(request, script){
+             Cache.del("test");
+             return Cache.get("test");
+        },
+        Cache_clear:function(request, script){
+             Cache.put("test","cachetest");
+             Cache.clear();
+             return Cache.get("test");
+        },
+        Cache_gobal_get:function(request, script){
+             Cache.global.put("test","cachetest");
+             return Cache.global.get("test");
+        },
+        Cache_gobal_del:function(request, script){
+             Cache.global.del("test");
+             return Cache.global.get("test");
+        },
+
 		file_readXml:function(request, script){
 			return file.readXml(testServiceFilePath+"dialog_settings.xml")
 		},
