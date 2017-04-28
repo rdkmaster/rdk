@@ -39,7 +39,8 @@ div.datetimepicker th.switch {
     color: #666666;
 }
 .datetimepicker .active{
-    background-image: -webkit-gradient(linear,0 0,0 100%,from(#008fd4),to(#008fd4)) !important;
+    background-color: #3ab1ea;
+    color: #fff;
 }
 [class*=" datetimepicker-dropdown"]:before {
     border-bottom-color: rgba(0,0,0,0.2);
