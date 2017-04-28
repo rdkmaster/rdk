@@ -128,3 +128,11 @@
 .rdk-time-select-module + .color-tips>span:last-child:before{
     background-color:  #b8e3f7;
 }
+/*兼容IE11 : css rule sets go here */
+@media screen and (min-width:0\0) {
+    /* 备注：IE11对于table中列的宽高表现不一致*/
+    .rdk-time-select-module .datetimepicker  .datetimepicker-days td, .rdk-time-select-module .datetimepicker .datetimepicker-days th{
+        width: 29px;
+        height: 30px;
+    }
+}

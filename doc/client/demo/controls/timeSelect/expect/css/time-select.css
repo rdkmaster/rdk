@@ -7,7 +7,11 @@
     background-color: #fff;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.175);
     border-radius: 0 0 4px 4px;
+    position: relative;
 }
-.rdk-time-select-module .datetimepicker{
-    min-height: 245px;
+
+.rdk-time-select-module + .color-tips{
+    position: absolute;
+    width: 95%;
+    bottom: 5px;
 }
