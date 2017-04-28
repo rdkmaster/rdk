@@ -317,6 +317,11 @@
             "icon": "fa fa-file"
           },
           {
+            "label": "提示信息",
+            "url": "doc/client/common/ApplicationExample/tooltip.html",
+            "icon": "fa fa-file"
+          },
+          {
             "label": "表格",
           "  url": "doc/client/common/ApplicationExample/table.html",
            " icon": "fa fa-file"
