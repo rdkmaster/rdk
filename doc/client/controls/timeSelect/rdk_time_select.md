@@ -31,11 +31,31 @@
             granularity: "quarter",  //粒度，类型枚举，备选date/week/month/hour/quarter，默认值是date
             weekStart:"0",          //属性，周开始设置，类型0~6数字。默认值是0
             startDate:"2016-01-01", //可选的开始时间，类型字符串/Date对象
-            endDate:"now"  //可选的结束时间，类型字符串/Date对象
+            endDate:"now"  //可选的结束时间，类型字符串/Date对象,
+            expectSelectedDate:[...] //可设置推荐的时间区间，引导用户选择
 	    }
 
 <live_demo example="controls/timeSelect/setting" width="900"></live_demo>
 
+### expectSelectedDate ###
+> 支持类型：数组
+
+`expectSelectedDate` 用于可设置推荐的时间区间，引导用户选择。
+
+        expectSelectedDate:[
+            {
+                year:'2016',
+                expectStartDate:{month:'3','day':"5"},
+                expectEndDate:{month:'3','day':"27"}
+            },
+            {
+                year:'2017',
+                expectStartDate:{month:'2','day':"14"},
+                expectEndDate:{month:'3','day':"4"}
+            }
+        ]
+
+<live_demo example="controls/timeSelect/expect" width="900"></live_demo>
 
 ## refresh_timeout ##
 
