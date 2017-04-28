@@ -23,4 +23,7 @@ program_root=`cd "$DIRNAME"/; pwd`
 classPath="$program_root/proc/bin/lib/*"
 
 echo "RDK Server is starting..."
+if [ ! -e proc/logs/errors.log ]; then
+	touch proc/logs/errors.log
+fi
 $JAVA_HOME/bin/java $jvm_opts -Dfile.encoding=UTF-8 -D$rdk_flag -classpath "$classPath" com.zte.vmax.rdk.Run 2>> proc/logs/errors.log &
