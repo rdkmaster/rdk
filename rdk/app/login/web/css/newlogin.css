@@ -1,0 +1,381 @@
+html {
+    height: 100%;
+}
+
+input::-ms-clear {
+    display: none;
+}
+
+.bodyBg {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 18vh;
+    box-sizing: border-box;
+    min-height: 520px;
+    background-image: url(../image/loginbg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select:none;
+}
+
+.logoContainer {
+    width: 290px;
+    text-align: center;
+    margin-bottom: 20px;
+    z-index: 999;
+}
+
+.logoContainer .logoImg {
+    background-image: url(../image/logo.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 160px;
+    height: 60px;
+    margin: auto;
+    opacity: .8;
+}
+
+.logoContainer .logoTitle {
+    color: #4c4c4c;
+    font-size: 16px;
+}
+
+.ballContainer {
+/*    position: absolute;
+    width: 300vh;
+    height: 300vh;
+    overflow: hidden;
+    border-radius: 150vh;
+    transition: all .8s;
+    left: -120vh;
+    top: -100vh;
+    z-index: 1;
+    opacity: 0.3;
+    */
+    position: absolute;
+    width: 100vh;
+    height: 100vh;
+    overflow: hidden;
+    transition: all .8s;
+    left: calc(50vw - 50vh);
+    top: 72vh;
+    z-index: 1;
+}
+
+/*.ballImg {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.3;
+}*/
+.ballImg {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.7;
+    animation: ballRotate 360s linear infinite;
+}
+
+@keyframes ballRotate{
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+.trangleZone {
+    position: absolute;
+    /*left: 0;*/
+    bottom: 0;
+    height: 28vh;
+    width: 30vw;
+    background: transparent;
+}
+
+.leftZone {
+    left: 0;
+}
+
+.rightZone {
+    right: 0;
+}
+
+.trangleMotion {
+    /*width: 30px;*/
+    width: 100%;
+    height: 100%;
+    position: absolute;
+
+    animation: tMotion 5s ease infinite;
+}
+
+.svgContainer {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    opacity: 0.5;
+}
+
+.leftZone .svgContainer:first-child {
+    left: 10%;
+    top: 10%;
+    height: 15px;
+    width: 15px;
+    transform:  rotate(30deg);
+}
+
+.leftZone .svgContainer:nth-child(2) {
+    left: 50%;
+    top: 50%;
+    height: 22.5px;
+    width: 22.5px;
+    transform:  rotate(45deg);
+}
+
+.leftZone .svgContainer:nth-child(3) {
+    right: 10%;
+    top: 20%;
+    transform: rotate(-30deg);
+}
+
+
+.leftZone .svgContainer:first-child .trangleMotion {
+    /*animation-delay:1s;*/
+}
+
+.leftZone .svgContainer:nth-child(2) .trangleMotion{
+    animation-delay:1s;
+}
+
+.leftZone .svgContainer:nth-child(3) .trangleMotion{
+    animation-delay:2s;
+}
+
+.rightZone .svgContainer:first-child {
+    left: 10%;
+    top: 30%;
+    height: 24px;
+    width: 24px;
+    transform: rotate(30deg);
+}
+
+.rightZone .svgContainer:nth-child(2) {
+    left: 50%;
+    top: 0%;
+    height: 12px;
+    width: 12px;
+    transform: rotate(-30deg);
+}
+
+.rightZone .svgContainer:nth-child(3) {
+    right: 10%;
+    top: 60%;
+    width: 45px;
+    height: 45px;
+    transform: rotate(30deg);
+}
+
+.rightZone .svgContainer:first-child .trangleMotion {
+    animation-delay:.5s;
+}
+
+.rightZone .svgContainer:nth-child(2) .trangleMotion{
+    animation-delay:1.5s;
+}
+
+.rightZone .svgContainer:nth-child(3) .trangleMotion{
+    animation-delay:2.5s;
+}
+
+#particles-right, #particles-left {
+    height: 100%;
+}
+
+
+@keyframes tMotion {
+    from,to {
+        transform: none;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+.ballCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 900px;
+    height: 900px;
+    border-radius: 450px;
+    overflow: hidden;
+    z-index: 2;
+    opacity: 0.8;
+}
+#particles-js1.ballCanvas {
+    width: 212.2vh;
+    height: 212.2vh;
+    left: 43.9vh;
+    top: 43.9vh;
+    border-radius: 0;
+}
+
+.login .copyRight {
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    bottom: 20px;
+}
+
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    /* width: 20vw; */
+    width: 290px;
+    min-width: 120px;
+    z-index: 999;
+
+    position: relative;
+}
+
+.inputContainer {
+    width: 100%;
+    position: relative;
+    /*opacity: 0.7;*/
+    text-align: center;
+}
+
+.inputContainer > img {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: 28px;
+    left: 10px;
+}
+
+.loginContainer input {
+    margin: 20px 0;
+    border-radius: 4px;
+    /* border: 1px solid rgba(55,55,55,.3); */
+    /*border: 1px solid rgba(160,160,162,.3);*/
+    border: 1px solid #a7a5a7;
+    /* background: rgb(177, 179, 182); */
+    background: rgba(55, 55, 55,0.2);
+    /* opacity: 0.8; */
+    font-family: Microsoft Yahei,Arial;
+    font-size: 14px;
+    outline: none;
+
+    width: calc(100% - 4px);
+    height: 40px;
+    box-sizing: border-box;
+    padding: 10px 44px !important;
+
+    color: #363636;
+}
+
+.inputContainer > input::-webkit-input-placeholder { /* WebKit browsers */
+    color:rgba(255,255,255,1);
+}
+.inputContainer > input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:rgba(255,255,255,1);
+}
+.inputContainer > input::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:rgba(255,255,255,1);
+}
+.inputContainer > input:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:rgba(255,255,255,1);
+}
+
+.rememberContainer {
+    margin: 12px 0;
+    display: flex;
+    align-items: center;
+}
+
+.rememberContainer > span{
+    line-height: 26px;
+    margin-left: 10px;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.loginContainer  input[type=checkbox] {
+        -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    vertical-align: bottom;
+    background-color: rgba(55,55,55,0.3);
+    border: 1px solid rgb(53, 177, 236);;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+    box-shadow: none;
+    border-radius: 4px;
+    border: none;
+
+    opacity: 1;
+
+    padding: 0 !important;
+}
+
+.loginContainer  input[type=checkbox]:checked::after {
+    content: url(../image/remember.svg);
+    display: block;
+    position: absolute;
+    top: -20%;
+    left: -25%;
+    transform: scale(0.8);
+}
+
+.loginContainer  input[type=checkbox]:focus {
+    outline: none;
+    border-color: rgb(53, 177, 236);
+}
+
+.loginBtn {
+    background: rgb(0, 144, 215);
+    color: white;
+    border: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    height: 40px;
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 4px;
+    width: calc(100% - 4px);
+    line-height: 18px;
+}
+
+.loginContainer input:focus {
+    border:1px solid #008fd4;
+    box-shadow: 0 0 2px 0px #008fd4;
+}
+
+.toolTipsContainer {
+    position: absolute;
+    top: 70px;
+    left: 10px;
+    color: #ff0000;
+    font-size: 12px;
+}
+
+.loginAccept {
+    text-align: center;
+}

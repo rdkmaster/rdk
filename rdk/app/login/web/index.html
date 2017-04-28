@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title id="com_zte_ums_ict_portal_login_title" data-i18n="com_zte_ums_ict_portal_login_title"></title>
+
+    <!-- 图标 -->
+    <link rel="shortcut icon" href="./image/vmax_logo.gif">
+
+    <link rel="stylesheet" type="text/css" href="./css/login.css">
+    <link rel="stylesheet" type="text/css" href="./css/newlogin.css">
+
+<body class="bodyBg">
+    <div class="login">
+
+        <div class="logoContainer" style="">
+            <div class="logoImg"></div>
+            <span class="logoTitle">Value Multi Analysis eXpert</span>
+        </div>
+        <div class="ballContainer">
+            <img src="./image/ball.svg" class="ballImg">
+            <!-- <div id="particles-js1" class="ballCanvas"></div> -->
+        </div>
+
+        <div class="trangleZone leftZone">
+            <div class="svgContainer"><img src="./image/hole.svg" class="trangleMotion"></div>
+            <div class="svgContainer"><img src="./image/hole.svg" class="trangleMotion"></div>
+            <div class="svgContainer"><img src="./image/hole.svg" class="trangleMotion"></div>
+            <div id="particles-left"></div>
+        </div>
+
+        <div class="trangleZone rightZone">
+            <div class="svgContainer"><img src="./image/hole.svg" class="trangleMotion"></div>
+            <div class="svgContainer"><img src="./image/hole.svg" class="trangleMotion"></div>
+            <div class="svgContainer"><img src="./image/hole.svg" class="trangleMotion"></div>
+            <div id="particles-right"></div>
+        </div>
+
+        <div class="loginContainer" >
+            <div class="toolTipsContainer">
+                <div class="display-hide tips" id="nameOrpwdError" tipstatus="normal">
+                    <div id="com_zte_ums_ict_portal_login_userPassword" data-i18n="com_zte_ums_ict_portal_login_userPassword" style="display:inline">
+
+                    </div>
+                    <div class="errorTipClose"></div>
+                </div>
+                <div class="display-hide tips" id="loginConnError" tipstatus="normal">
+                    <div id="com_zte_ums_ict_portal_login_serv_error" data-i18n="com_zte_ums_ict_portal_login_serv_error" style="display:inline">
+                    </div>
+                    <div class="errorTipClose"></div>
+                </div>
+                <div class="requireInfo">
+
+                </div>
+            </div>
+            <form novalidate="novalidate" class="login-form loginContainer" method="post" id="fm1" action="./login">
+                <div class="loginUser inputContainer">
+                    <img src="./image/username.svg">
+                    <input type="text" id="inputUserName"  autocomplete="off" name="username" data-i18n="com_zte_ums_ict_portal_login_username_placeholder">
+                </div>
+                <div class="loginPassword inputContainer" >
+                    <img src="./image/lock.svg">
+                    <input type="password" name="password" autocomplete="off" id="inputPassword" data-i18n="com_zte_ums_ict_portal_login_password_placeholder">
+                </div>
+                <div class="loginRemeber rememberContainer">
+                    <input type="checkbox" name="remember">
+                    <span data-i18n="com_zte_ums_ict_portal_login_rememberMe" id="com_zte_ums_ict_portal_login_rememberMe"></span>
+                </div>
+                <div class="loginAccept">
+                    <button type="submit" class="signInBtn initState loginBtn" id="submitBtn" data-i18n="com_zte_ums_ict_portal_login_lable"></button>
+                </div>
+            </form>
+        </div>
+
+        <div class="copyright">
+             <span id="com_zte_ums_ict_portal_login_companyName" data-i18n="com_zte_ums_ict_portal_login_companyName"></span>.
+        </div>
+
+    </div>
+
+    <div class="motionBackground" >
+
+    </div>
+
+    <script type="text/javascript" src="/rdk/app/libs/jquery/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="/rdk/app/libs/jquery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="./libs/jquery.i18n.properties-min-1.0.9.js"></script>
+    <script type="text/javascript" src="./libs/store/store.js"></script>
+    <script type="text/javascript" src="./libs/aes.js"></script>
+    <script type="text/javascript" src="./libs/jquery.cokie.min.js"></script>
+    <script type="text/javascript" src="./libs/backstretch/jquery.backstretch.min.js"></script>
+    <script type="text/javascript" src="./libs/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="./libs/particles.js"></script>
+    <script type="text/javascript" src="./js/authenticate.js"></script>
+    <!-- <script type="text/javascript" src="./js/index.js"></script> -->
+    <script type="text/javascript" src="./js/newlogin.js"></script>
+    <script type="text/javascript" src="./js/particlesapp.js"></script>
+
+</body>
+</html>

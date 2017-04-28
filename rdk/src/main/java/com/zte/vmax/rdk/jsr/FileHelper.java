@@ -10,6 +10,9 @@ import jdk.nashorn.internal.runtime.Undefined;
 
 import java.io.*;
 import java.lang.Boolean;
+import java.nio.ByteBuffer;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,11 +25,10 @@ import org.json.JSONObject;
 import org.json.XML;
 
 
-
 /**
  * Created by 10045812 on 16-5-6.
  */
-@SuppressWarnings(value={"unchecked", "deprecation"})
+@SuppressWarnings(value = {"unchecked", "deprecation"})
 public class FileHelper extends AbstractAppLoggable {
 
     protected void initLogger() {
@@ -61,48 +63,43 @@ public class FileHelper extends AbstractAppLoggable {
             files = in.listFiles();
         }
 
-        FileInputStream fin = null;
-        FileOutputStream fout = null;
+        FileChannel finChannel = null;
+        FileChannel foutChannel = null;
         for (int i = 0; i < files.length; i++) {
             if (files[i].isFile()) {
                 try {
-                    fin = new FileInputStream(files[i]);
+                    finChannel = new FileInputStream(files[i]).getChannel();
                 } catch (FileNotFoundException e) {
                     logger.error("copy file, code 3, detail: " + e.toString());
                     return 3;
                 }
 
                 try {
-                    fout = new FileOutputStream(new File(cpTo + "/" + files[i].getName()));
+                    foutChannel = new FileOutputStream(new File(cpTo + "/" + files[i].getName())).getChannel();
                 } catch (FileNotFoundException e) {
                     logger.error("copy file, code 4, detail: " + e.toString());
                     try {
-                        fin.close();
+                        finChannel.close();
                     } catch (Exception ee) {
                         logger.error("close fin error, detail: " + ee.toString());
                     }
                     return 4;
                 }
 
-                int c;
-                byte[] b = new byte[1024 * 5];
                 try {
-                    while ((c = fin.read(b)) != -1) {
-                        fout.write(b, 0, c);
-                    }
-
-                    fout.flush();
+                    MappedByteBuffer mbb = finChannel.map(FileChannel.MapMode.READ_ONLY, 0, finChannel.size());
+                    foutChannel.write(mbb);
                 } catch (IOException e) {
                     logger.error("copy file, code 5, detail: " + e.toString());
                     return 5;
                 } finally {
                     try {
-                        fin.close();
+                        finChannel.close();
                     } catch (Exception e) {
                         logger.error("close fin error, detail: " + e.toString());
                     }
                     try {
-                        fout.close();
+                        foutChannel.close();
                     } catch (Exception e) {
                         logger.error("close fout error, detail: " + e.toString());
                     }
@@ -228,18 +225,18 @@ public class FileHelper extends AbstractAppLoggable {
             return false;
         }
 
-        OutputStreamWriter write = null;
+        FileChannel fouChanel = null;
         try {
             logger.debug("writing file: " + fileStr);
-            write = new OutputStreamWriter(new FileOutputStream(file, append == 1), toEncoding(encoding));
-            write.append(fileContent);
+            fouChanel = new FileOutputStream(file, append == 1).getChannel();
+            fouChanel.write(ByteBuffer.wrap(fileContent.getBytes(toEncoding(encoding))));
         } catch (Exception e) {
             logger.error("write file[" + fileStr + "] error", e);
             return false;
         } finally {
             try {
-                if (write != null) {
-                    write.close();
+                if (fouChanel != null) {
+                    fouChanel.close();
                 }
             } catch (Exception e) {
                 logger.error("close writer error", e);
@@ -401,11 +398,11 @@ public class FileHelper extends AbstractAppLoggable {
         if (option instanceof ScriptObjectMirror) {
             ScriptObjectMirror som = (ScriptObjectMirror) option;
             for (String key : som.keySet()) {
-                    op.put(key, som.get(key));
+                op.put(key, som.get(key));
             }
             boolean append = som.containsKey("append") ? (Boolean) som.get("append") : false;
             op.put("append", append);
-            String encoding = som.containsKey("encoding") ?  som.get("encoding").toString() : "UTF-8";
+            String encoding = som.containsKey("encoding") ? som.get("encoding").toString() : "UTF-8";
             op.put("encoding", encoding);
         } else {
             if (!(option instanceof Undefined)) {
@@ -453,7 +450,7 @@ public class FileHelper extends AbstractAppLoggable {
             fis = new FileInputStream(fileStr);
             WorkbookSettings workbookSettings = new WorkbookSettings();
             workbookSettings.setEncoding(op.get("encoding").toString());
-            rwb = Workbook.getWorkbook(fis,workbookSettings);
+            rwb = Workbook.getWorkbook(fis, workbookSettings);
             String[] sheetNames = rwb.getSheetNames();
             for (String sheetName : sheetNames) {
                 List<List<String>> content = new ArrayList();
@@ -490,6 +487,7 @@ public class FileHelper extends AbstractAppLoggable {
         }
         return RdkUtil.toJsonString(excelContent);
     }
+
     public boolean saveAsEXCEL(String file, ScriptObjectMirror content, ScriptObjectMirror excludeIndexes, Object option) {
         return saveAsEXCEL(file, content, excludeIndexes, parseExcelOptionFromScript(option));
     }
@@ -525,7 +523,7 @@ public class FileHelper extends AbstractAppLoggable {
 
         if (append) {   //追加
             try {
-                wb = Workbook.getWorkbook(file,workbookSettings);
+                wb = Workbook.getWorkbook(file, workbookSettings);
                 rwb = Workbook.createWorkbook(file, wb);
             } catch (Exception e) {
                 logger.warn("can not find workbook:" + file + ",will create new workbook:" + e);
@@ -555,7 +553,7 @@ public class FileHelper extends AbstractAppLoggable {
             }
         } else {        //复写
             try {
-                rwb = Workbook.createWorkbook(file,workbookSettings);
+                rwb = Workbook.createWorkbook(file, workbookSettings);
             } catch (Exception e) {
                 logger.error("create workbook error:" + e);
                 return false;

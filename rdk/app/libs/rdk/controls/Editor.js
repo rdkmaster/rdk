@@ -57,8 +57,12 @@ function(CodeMirror) {
 
                 var appScope = Utils.findAppScope(scope);
                 //注册codemirror发出的事件
+                var initCursorPos={"ch":0,"line":0};
                 CodeMirror.on(scope.editor, 'change', function() {
                     scope.value = scope.editor.doc.getValue();
+                    currentCursorPos=scope.editor.doc.getCursor();
+                    initCursorPos=(currentCursorPos.ch==0&&currentCursorPos.line==0)?initCursorPos:currentCursorPos;
+                    scope.editor.doc.setCursor(initCursorPos);
                     EventService.raiseControlEvent(scope, EventTypes.CHANGE, scope.value);
                 });
 
