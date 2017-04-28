@@ -53,6 +53,8 @@
 					.find('tr').each(function (i) {
 						$stickyCol.find('tr').eq(i).height($(this).height());
 					});
+					//兼容IE11
+					$stickyHead.css("tableLayout", "fixed");
 
 					// Set width of sticky table head
 					$stickyHead.width($t.width());
