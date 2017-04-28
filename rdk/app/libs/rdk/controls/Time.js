@@ -392,7 +392,7 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                             }
                             scope.endTimeOption.endDate = TimeUtilService.dateFormate(endTime, scope.timeFormat);
 
-                            if ((TimeUtilService.getDateForStringDate(endTimeCache) > TimeUtilService.getDateForStringDate(beginTime)) && (TimeUtilService.getDateForStringDate(endTimeCache) < limitTime)) {
+                             if ((TimeUtilService.getDateForStringDate(endTimeCache) > TimeUtilService.getDateForStringDate(beginTime)) && (TimeUtilService.getDateForStringDate(endTimeCache) < limitTime) && (TimeUtilService.getDateForStringDate(endTimeCache)<endTime)) {
                                 scope.condition.endTime = endTimeCache;
                             } else {
                                 scope.condition.endTime = endTime;
