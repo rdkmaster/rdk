@@ -80,16 +80,16 @@ rdk为应用提供可扩展的日志上报功能。
 
 定义：
 
-	function Log.operateLog(userOpInfo); 
+	function Log.operateLog(userOpInfo,operateLogScript); 
 	
 参数：
 
 - userOpInfo 一个js对象。必选。它具体的数据结构，由实现写操作日志的脚本决定。
-	 
+- operateLogScript 字符串。可选。自定义操作日志服务文件位置。	 
 
 返回：true/false。
 
-说明：rdk将自动调用应用配置操作日志脚本，配置路径位于**proc/conf/rdk.cfg**，用户需配置**extension.operateLog** 属性以告知rdk应用操作日志服务所在位置，应用可按自己的业务来实现日志上报，具体可参考[Vmax操作日志的实现](vmaxOperateLog.js)。
+说明：operateLogScript不设置时，rdk将自动调用默认的应用配置Vmax操作日志脚本，配置路径位于**proc/conf/rdk.cfg**，用户需配置**extension.operateLog** 属性以告知rdk应用操作日志服务所在位置，应用可按自己的业务来实现日志上报，具体可参考[Vmax操作日志的实现](vmaxOperateLog.js)。
 
 示例：
 
