@@ -139,7 +139,6 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         } else {
                             scope.setting.startDate = Utils.getValue(TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(scope.setting.startDate), scope.timeFormat), undefined, null);
                         }
-                        debugger;
                         if (angular.isUndefined(scope.setting.endDate) || !scope.setting.endDate) {
                             scope.setting.endDate = Utils.getValue(TimeUtilService.getTimeMacroCalculate(scope.setting.endDate), undefined, null);
                         } else {
@@ -173,16 +172,100 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         _setWeekStyle();
                     }
 
+                    function handleWeekValue() {
+                        if (scope.selectedGranularity.value != "week"){
+                            return;
+                        }
+                        scope.setting.weekValue = _getWeekFormat(scope.setting.value);
+                    }
+                    function _getWeekFormat(date) {
+                        date = TimeUtilService.getDateForStringDate(date);
+                        var week = TimeUtilService.getWeekOfYear(date, scope.setting.weekStart);
+                        if (scope.language === 'zh_cn') {
+                            return date.getFullYear() + '第' + (week < 10 ? '0' : '') + week + '周';
+                        } else {
+                            return date.getFullYear() + 'Week' + (week < 10 ? '0' : '') + week;
+                        }
+                    }
+                    function _generateOption() {
+                        var option = {};
+                        option.minuteStep = null;
+                        option.format = scope.timeFormat;
+                        option.initialDate = scope.setting.value;
+                        option.autoclose = 1;
+                        option.forceParse = 0;
+                        option.weekStart = scope.setting.weekStart;
+                        option.language = Utils.getLocale(scope);
+                        option.granularity = scope.selectedGranularity.value;
+                        if (scope.setting.endDate) {
+                            option.endDate = scope.setting.endDate;
+                        } else {
+                            option.endDate = new Date();
+                        }
+                        if (scope.setting.startDate) {
+                            option.startDate = scope.setting.startDate;
+                        }
+                        switch (scope.selectedGranularity.value) {
+                            case TimeUnit.QUARTER:
+                                option.startView = PickerConstant.HOUR;
+                                option.minView = PickerConstant.HOUR;
+                                option.minuteStep = 15;
+                                break;
+                            case TimeUnit.HOUR:
+                                option.startView = PickerConstant.DAY;
+                                option.minView = PickerConstant.DAY;
+                                break;
+                            case TimeUnit.DAY:
+                                option.startView = PickerConstant.MONTH;
+                                option.minView = PickerConstant.MONTH;
+                                break;
+                            case TimeUnit.WEEK:
+                                option.startView = PickerConstant.MONTH;
+                                option.minView = PickerConstant.MONTH;
+                                break;
+                            case TimeUnit.MONTH:
+                                option.startView = PickerConstant.YEAR;
+                                option.minView = PickerConstant.YEAR;
+                                break;
+                            default:
+                                option.startView = PickerConstant.DAY;
+                                option.minView = PickerConstant.DAY;
+                                break;
+                        }
+                        return option;
+                    }
+
+                    function _datetimepicker(domNode,option){
+                        !!datetimepicker && datetimepicker.datetimepicker('remove');
+                        datetimepicker = $(domNode).datetimepicker(option);
+                        datetimepicker.datetimepicker('update');//增加个隐藏的input节点目的:解决没法更新时间的BUG
+                        datetimepicker.on('changeDate', function(ev) {
+                            _setExpectDate();
+                            _setWeekStyle();
+                            scope.$apply(function() {
+                                scope.setting.value = TimeUtilService.dateFormate(new Date(ev.date.valueOf()), scope.startTimeOption.format);
+                                EventService.raiseControlEvent(scope, EventTypes.CHANGE, scope.setting.weekValue || scope.setting.value);
+                            });
+                        })
+                    }
+
+                    function _setWeekStyle(){
+                        if (scope.selectedGranularity.value == "week") {
+                            handleWeekValue();
+                            setTimeout(function () {
+                                var trDom = iElement[0].querySelector(".datetimepicker .datetimepicker-days>table>tbody>tr>td.active").parentNode;
+                                trDom.classList.add("active");
+                            }, 0)
+                        }
+                    }
+
                     function _setExpectDate(){
-                        console.log("_setExpectDate");
-                        debugger;
                         if(!(scope.setting && scope.setting.expectSelectedDate)){
                             return
                         }
-
                         var  vaildExpectDate =  typeof vaildExpectDate=='undefined'?_vaildExpectDate():vaildExpectDate;
                         if(!vaildExpectDate){
-                            console.error("setting expectSelectedDate is error");
+                            console.error("setting property of expectSelectedDate format error!");
                             return
                         }
                         scope.hasExpect=true;
@@ -345,93 +428,6 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         result.month=charToNum[val[0].trim()];
                         result.year=val[1].trim();
                         return result;
-                    }
-
-                    function handleWeekValue() {
-                        if (scope.selectedGranularity.value != "week"){
-                            return;
-                        }
-                        scope.setting.weekValue = _getWeekFormat(scope.setting.value);
-                    }
-                    function _getWeekFormat(date) {
-                        date = TimeUtilService.getDateForStringDate(date);
-                        var week = TimeUtilService.getWeekOfYear(date, scope.setting.weekStart);
-                        if (scope.language === 'zh_cn') {
-                            return date.getFullYear() + '第' + (week < 10 ? '0' : '') + week + '周';
-                        } else {
-                            return date.getFullYear() + 'Week' + (week < 10 ? '0' : '') + week;
-                        }
-                    }
-                    function _generateOption() {
-                        var option = {};
-                        option.minuteStep = null;
-                        option.format = scope.timeFormat;
-                        option.initialDate = scope.setting.value;
-                        option.autoclose = 1;
-                        option.forceParse = 0;
-                        option.weekStart = scope.setting.weekStart;
-                        option.language = Utils.getLocale(scope);
-                        option.granularity = scope.selectedGranularity.value;
-                        if (scope.setting.endDate) {
-                            option.endDate = scope.setting.endDate;
-                        } else {
-                            option.endDate = new Date();
-                        }
-                        if (scope.setting.startDate) {
-                            option.startDate = scope.setting.startDate;
-                        }
-                        switch (scope.selectedGranularity.value) {
-                            case TimeUnit.QUARTER:
-                                option.startView = PickerConstant.HOUR;
-                                option.minView = PickerConstant.HOUR;
-                                option.minuteStep = 15;
-                                break;
-                            case TimeUnit.HOUR:
-                                option.startView = PickerConstant.DAY;
-                                option.minView = PickerConstant.DAY;
-                                break;
-                            case TimeUnit.DAY:
-                                option.startView = PickerConstant.MONTH;
-                                option.minView = PickerConstant.MONTH;
-                                break;
-                            case TimeUnit.WEEK:
-                                option.startView = PickerConstant.MONTH;
-                                option.minView = PickerConstant.MONTH;
-                                break;
-                            case TimeUnit.MONTH:
-                                option.startView = PickerConstant.YEAR;
-                                option.minView = PickerConstant.YEAR;
-                                break;
-                            default:
-                                option.startView = PickerConstant.DAY;
-                                option.minView = PickerConstant.DAY;
-                                break;
-                        }
-                        return option;
-                    }
-                    function _setWeekStyle(){
-                        if (scope.selectedGranularity.value == "week") {
-                            handleWeekValue();
-                            setTimeout(function () {
-                                var trDom = iElement[0].querySelector(".datetimepicker .datetimepicker-days>table>tbody>tr>td.active").parentNode;
-                                trDom.classList.add("active");
-                            }, 0)
-                        }
-                    }
-                    function _datetimepicker(domNode,option){
-                        !!datetimepicker && datetimepicker.datetimepicker('remove');
-                        datetimepicker = $(domNode).datetimepicker(option);
-                        datetimepicker.datetimepicker('update');//增加个隐藏的input节点目的:解决没法更新时间的BUG
-                        datetimepicker.on('changeDate', function(ev) {
-
-                            _setExpectDate();
-                            _setWeekStyle();
-
-                            scope.$apply(function() {
-                                scope.setting.value = TimeUtilService.dateFormate(new Date(ev.date.valueOf()), scope.startTimeOption.format);
-                                EventService.raiseControlEvent(scope, EventTypes.CHANGE, scope.setting.weekValue || scope.setting.value);
-                            });
-                        })
                     }
                 }
             };
