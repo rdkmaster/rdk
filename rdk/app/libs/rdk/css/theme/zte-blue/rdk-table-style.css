@@ -449,3 +449,9 @@ i.regular_right,i.regular_left{
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+/*兼容IE11 : css rule sets go here */
+@media screen and (min-width:0\0) {
+    .rdk-table-module .rdk-table.sticky-thead{
+        table-layout: fixed;
+    }
+}
