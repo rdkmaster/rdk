@@ -304,6 +304,9 @@ var I18n = {
             val = val.replace(new RegExp("\\{" + (i - 1) + "\\}", "g"), arguments[i]);
         }
         return val;
+    },
+    locale: function() {
+        return rdk_runtime.locale();
     }
 }
 //兼容以前代码
