@@ -63,6 +63,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                             initValue = scope.setting.value;
                         }
                         initStartDate = scope.setting.startDate;
+                        debugger;
                         initEndDate = scope.setting.endDate;
                     }
 
@@ -139,7 +140,9 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         } else {
                             scope.setting.startDate = Utils.getValue(TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(scope.setting.startDate), scope.timeFormat), undefined, null);
                         }
+                        debugger;
                         if (angular.isUndefined(scope.setting.endDate) || !scope.setting.endDate) {
+                            debugger;
                             scope.setting.endDate = Utils.getValue(TimeUtilService.getTimeMacroCalculate(scope.setting.endDate), undefined, null);
                         } else {
                             scope.setting.endDate = Utils.getValue(TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(scope.setting.endDate), scope.timeFormat), undefined, null);
@@ -277,18 +280,20 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
 
                         var yearsNode=_getDatePickerNode("years");
 
-                        _searchDateForYear(scope.setting.expectSelectedDate,yearsNode);
+                        var expectSelectedDate = _parseExpectDate(scope.setting.expectSelectedDate);
+
+                        _searchDateForYear(expectSelectedDate,yearsNode);
 
                         var monthsNode=_getDatePickerNode("months");
                         var monthsHeadNode=_getDatePickerNode("months",true);
 
-                        _searchDateForMonth(scope.setting.expectSelectedDate,monthsNode,monthsHeadNode);
+                        _searchDateForMonth(expectSelectedDate,monthsNode,monthsHeadNode);
 
                         var daysNode=_getDatePickerNode("days");
                         var daysHeadNode=_getDatePickerNode("days",true);
 
-                        var daysObj=parseDay(daysHeadNode.innerText);
-                        _searchDateForDay(scope.setting.expectSelectedDate,daysNode,daysObj);
+                        var daysObj=_parseDay(daysHeadNode.innerText);
+                        _searchDateForDay(expectSelectedDate,daysNode,daysObj);
                     }
 
                     function _bindEventHandler(){
@@ -315,119 +320,146 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         }
                         return iElement[0].querySelectorAll(selector);
                     }
-                    function _searchDateForYear(targetArr,DateArr){
-                        for (var i= 0,iLen=targetArr.length ; i<iLen ; i++)
+                    function _searchDateForYear(targetObj,DateArr){
+                        for (var j= 0, jLen=DateArr.length; j<jLen; j++)
                         {
+                            if(targetObj.startDate.year==DateArr[j].innerText){
+                                if(!DateArr[j].classList.contains("disabled")){
+                                    DateArr[j].classList.add("expect-day");
+                                }
+                            }
+                        }
+                    }
+                    function _searchDateForMonth(targetObj,DateArr,headVal){
+                        if(targetObj.startDate.year==headVal.innerText){
                             for (var j= 0, jLen=DateArr.length; j<jLen; j++)
                             {
-                                if(targetArr[i].year==DateArr[j].innerText){
-                                    if(!DateArr[j].classList.contains("disabled")){
+                                if(targetObj.startDate.month==_parseMonth(DateArr[j].innerText)
+                                    || targetObj.endDate.month==_parseMonth(DateArr[j].innerText))
+                                {
+                                    if(!DateArr[j].classList.contains("disabled"))
+                                    {
                                         DateArr[j].classList.add("expect-day");
                                     }
                                 }
                             }
                         }
                     }
-                    function _searchDateForMonth(targetArr,DateArr,headVal){
-                        for (var i= 0,iLen=targetArr.length ; i<iLen ; i++)
+                    function _searchDateForDay(targetObj,DateArr,headVal){
+                        if(targetObj.startDate.year==headVal.year &&
+                            (targetObj.startDate.month==headVal.month || targetObj.endDate.month==headVal.month))
                         {
-                            if(targetArr[i].year==headVal.innerText){
-                                for (var j= 0, jLen=DateArr.length; j<jLen; j++)
-                                {
-                                    if(targetArr[i].expectStartDate.month==parseMonth(DateArr[j].innerText)
-                                        || targetArr[i].expectEndDate.month==parseMonth(DateArr[j].innerText))
-                                    {
-                                        if(!DateArr[j].classList.contains("disabled"))
+                            for (var j= 0, jLen=DateArr.length; j<jLen; j++)
+                            {
+                                if(+targetObj.startDate.month!=+targetObj.endDate.month){
+                                    if(!DateArr[j].classList.contains("old") && !DateArr[j].classList.contains("new")){
+                                        if((targetObj.startDate.month==headVal.month && +DateArr[j].innerText>=+targetObj.startDate.day)
+                                            || targetObj.endDate.month==headVal.month && +DateArr[j].innerText<=+targetObj.endDate.day)
                                         {
                                             DateArr[j].classList.add("expect-day");
                                         }
+                                        if(+DateArr[j].innerText == targetObj.startDate.day){
+                                            DateArr[j].classList.add("border-left");
+                                        }
+                                    }
+                                    else  if(DateArr[j].classList.contains("new")){
+                                        if(targetObj.startDate.month==headVal.month && +DateArr[j].innerText<=+targetObj.endDate.day)
+                                        {
+                                            DateArr[j].classList.add("expect-day");
+                                        }
+                                        if(+DateArr[j].innerText == targetObj.endDate.day){
+                                            DateArr[j].classList.add("border-right");
+                                        }
+                                    }else if(DateArr[j].classList.contains("old")){
+                                        if(targetObj.endDate.month==headVal.month && +DateArr[j].innerText>=+targetObj.startDate.day){
+                                            DateArr[j].classList.add("expect-day");
+                                        }
+                                    }
+                                }else{
+                                    if(!DateArr[j].classList.contains("old") && !DateArr[j].classList.contains("new")){
+                                        if(+DateArr[j].innerText >= +targetObj.startDate.day && +DateArr[j].innerText <= +targetObj.endDate.day){
+                                            DateArr[j].classList.add("expect-day");
+                                        }
+                                        if(+DateArr[j].innerText == targetObj.startDate.day){
+                                            DateArr[j].classList.add("border-left");
+                                        }
+                                        else if(+DateArr[j].innerText == targetObj.endDate.day){
+                                            DateArr[j].classList.add("border-right");
+                                        }
                                     }
                                 }
                             }
-                        }
                     }
-                    function _searchDateForDay(targetArr,DateArr,headVal){
-                        for (var i= 0,iLen=targetArr.length ; i<iLen ; i++)
-                        {
-                            if(targetArr[i].year==headVal.year &&
-                                (targetArr[i].expectStartDate.month==headVal.month || targetArr[i].expectEndDate.month==headVal.month)){
-                                for (var j= 0, jLen=DateArr.length; j<jLen; j++)
-                                {
-                                    if(+targetArr[i].expectStartDate.month!=+targetArr[i].expectEndDate.month){
-                                        if(!DateArr[j].classList.contains("old") && !DateArr[j].classList.contains("new")){
-                                            if((targetArr[i].expectStartDate.month==headVal.month && +DateArr[j].innerText>=+targetArr[i].expectStartDate.day)
-                                                || targetArr[i].expectEndDate.month==headVal.month && +DateArr[j].innerText<=+targetArr[i].expectEndDate.day)
-                                            {
-                                                DateArr[j].classList.add("expect-day");
-                                            }
-                                            if(+DateArr[j].innerText == targetArr[i].expectStartDate.day){
-                                                DateArr[j].classList.add("border-left");
-                                            }
-                                        }
-                                        else  if(DateArr[j].classList.contains("new")){
-                                            if(targetArr[i].expectStartDate.month==headVal.month && +DateArr[j].innerText<=+targetArr[i].expectEndDate.day)
-                                            {
-                                                DateArr[j].classList.add("expect-day");
-                                            }
-                                            if(+DateArr[j].innerText == targetArr[i].expectEndDate.day){
-                                                DateArr[j].classList.add("border-right");
-                                            }
-                                        }else if(DateArr[j].classList.contains("old")){
-                                            if(targetArr[i].expectEndDate.month==headVal.month && +DateArr[j].innerText>=+targetArr[i].expectStartDate.day){
-                                                DateArr[j].classList.add("expect-day");
-                                            }
-                                        }
-                                    }else{
-                                        if(!DateArr[j].classList.contains("old") && !DateArr[j].classList.contains("new")){
-                                            if(+DateArr[j].innerText >= +targetArr[i].expectStartDate.day && +DateArr[j].innerText <= +targetArr[i].expectEndDate.day){
-                                                DateArr[j].classList.add("expect-day");
-                                            }
-                                            if(+DateArr[j].innerText == targetArr[i].expectStartDate.day){
-                                                DateArr[j].classList.add("border-left");
-                                            }
-                                            else if(+DateArr[j].innerText == targetArr[i].expectEndDate.day){
-                                                DateArr[j].classList.add("border-right");
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
                     }
 
                     function _vaildExpectDate(){
-
                         var expectSelectedDate = scope.setting.expectSelectedDate;
                         if(expectSelectedDate.length==0){
                             return false
-                        }else{
-                            for(var i= 0,len=expectSelectedDate.length;i<len;i++){
-                                if(!expectSelectedDate[i].hasOwnProperty("year")){
-                                    return false
-                                }
-                                if(!(expectSelectedDate[i].hasOwnProperty("expectStartDate")
-                                    && expectSelectedDate[i].hasOwnProperty("expectEndDate"))){
-                                    return false
-                                }else{
-                                    if(!(expectSelectedDate[i].expectStartDate.hasOwnProperty("month")
-                                        && expectSelectedDate[i].expectStartDate.hasOwnProperty("day"))){
-                                        return false
-                                    }
-                                }
-                            }
+                        }else if(expectSelectedDate.length>2){
+                            console.error("setting property of expectSelectedDate only start time to end time");
+                            return false
                         }
+                        //else{
+                        //    for(var i= 0,len=expectSelectedDate.length;i<len;i++){
+                        //        if(!expectSelectedDate[i].hasOwnProperty("year")){
+                        //            return false
+                        //        }
+                        //        if(!(expectSelectedDate[i].hasOwnProperty("expectStartDate")
+                        //            && expectSelectedDate[i].hasOwnProperty("expectEndDate"))){
+                        //            return false
+                        //        }else{
+                        //            if(!(expectSelectedDate[i].expectStartDate.hasOwnProperty("month")
+                        //                && expectSelectedDate[i].expectStartDate.hasOwnProperty("day"))){
+                        //                return false
+                        //            }
+                        //        }
+                        //    }
+                        //}
                         return true
                     }
 
-                    function parseMonth(val){
+                    function _parseMonth(val){
                         return charToNum[val.replace("月",'')];
                     }
-                    function parseDay(val){
+                    function _parseDay(val){
                         var result={};
                         val = val.split("月");
                         result.month=charToNum[val[0].trim()];
                         result.year=val[1].trim();
                         return result;
+                    }
+
+
+
+                    function _parseExpectDate(dateArr){
+                        var expectDateObj={};
+                        var labels = ['startDate','endDate'];
+                        var len = dateArr.length;
+                        for(var i= 0;i<len;i++){
+                            if (angular.isString(dateArr[i])){
+                                var obj={};
+                                if(dateArr[i].indexOf("now")!=-1){
+                                    var str = TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(dateArr[i]), scope.timeFormat);
+                                    obj = _dateStrToObj(str);
+                                }else{
+                                    obj = _dateStrToObj(dateArr[i]);
+                                }
+                            }
+                            expectDateObj[labels[i]]=obj;
+                        }
+                        if(expectDateObj.startDate.year != expectDateObj.endDate.year){ //不支持跨年设置
+                            throw "setting property of expectSelectedDate format error!";
+                        }
+                        return expectDateObj;
+                    }
+
+                    function _dateStrToObj(dateStr){
+                        var arr = dateStr.split("-");
+                        var obj = {};
+                        obj.year = +arr[0];
+                        obj.month = +arr[1];
+                        obj.day = +arr[2];
                     }
                 }
             };
