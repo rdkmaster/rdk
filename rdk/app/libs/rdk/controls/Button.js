@@ -12,7 +12,8 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                 enabled:'=?',
                 toggle:'=?',
                 tooltip:'@?',
-                type:'@?'
+                type:'@?',
+                resetType:"@?"
             };
             return {
                 restrict: 'E',
@@ -91,7 +92,7 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                     }
                     scope.$mouseUP = function(){
                         scope.downUp = false;
-                        //每次点击还原
+                        //点击后还原type
                         if(scope.resetType=="true"){
                             scope.type=remember;
                         }

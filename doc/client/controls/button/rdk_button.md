@@ -72,4 +72,20 @@ type 表示按钮的不用样式，目前只有5种样式，分别为 normal,dan
 
 <live_demo example="controls/button/type" width="900"></live_demo>
 
+## reset-type ##
+> 支持类型：字符串。
 
+`reset-type` 为`true`时表示按钮类型在动态变化后，按钮再点击后会还原初始`type`,缺省时为`false`。
+
+详细示例参考如下`setType`示例说明。
+
+# 方法 #
+
+## setType(type) ##
+
+方法名：`setType` 用于动态设置按钮类型，改变按钮颜色
+
+参数：`type` 需要设置的类型值，参数为空时还原按钮初始类型。
+
+详细示例如下：
+<live_demo example="controls/button/setType" width="900"></live_demo>

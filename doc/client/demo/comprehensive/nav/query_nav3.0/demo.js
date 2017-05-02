@@ -14,6 +14,9 @@
             city:{name:"深圳",code:"2"},
             area:{name:"南山区",code:"3"}
         };
+
+        scope.default="default";
+        scope.white="white";
         //时间配置
         scope.granularitySet={
             value: 'now',
@@ -58,6 +61,30 @@
         scope.loadmKPI = function() {
             rdk.mKPI.loadModule({}, './template/menu.html');
         };
+        //按钮动画--动画方案改成了type的动态变化
+        var watchQueue = [];//监听导航条件队列
+        watchQueue.push("vmaxArea"); //监听地区值
+        watchQueue.push("granularitySet.value"); //监听时间值
+        watchQueue.push("frequencySelected"); //监听下拉框值
+        var watchStr="[" + watchQueue.join() + "]";
+        var ready=false;
+        //下面延时部分不可实际使用，可以在实际开发中等内容区域加载完毕在进行监听,用RxJS处理异步事件流更佳
+        $timeout(function(){
+            ready=true;
+            !!rdk.queryBtnId && rdk.queryBtnId.setType(); //还原按钮queryBtn type
+        },1000);
+        scope.$watch(watchStr,function(){ //导航栏查询条件的改变重新启动Query按钮动画
+            if(ready){
+                !!rdk.queryBtnId && rdk.queryBtnId.setType("default");
+            }
+        },true);
+        //comboIDmKPI 是模块id和模块里下拉框控件id="comboID"的拼接
+        //模板内部的id建议以 id="xxxx{{$moduleId}}"的形式创建,不要带@等特殊符合，否则rdk.id无法获取控件实例
+        EventService.register('comboIDmKPI', EventTypes.CHANGE, function() {
+            if(ready){
+                !!rdk.queryBtnId && rdk.queryBtnId.setType("default");
+            }
+        });
     }
     var mKPIControllerDefination = ['$scope', 'EventService', 'EventTypes', 'Data', '$timeout', mKPImain];
     function mKPImain(scope, EventService, EventTypes, Data, $timeout) {
@@ -113,9 +140,9 @@
                 }
                 scope.combOpen = false;
             }
-            EventService.broadcast('comboID@'+scope.$moduleId, EventTypes.CHANGE, label);
+            EventService.broadcast('comboID'+scope.$moduleId, EventTypes.CHANGE, label);
         };
-        EventService.register('comboID@'+scope.$moduleId,EventTypes.CLEAR, function(){
+        EventService.register('comboID'+scope.$moduleId,EventTypes.CLEAR, function(){
             var len=scope.items.length;
             selectedLists=[];
             for(var i=0;i<len;i++){
@@ -126,7 +153,7 @@
         EventService.register(scope.$moduleId, 'ready', function() {
             _initKpiFn();
             scope.$watch('combOpen',  function(newValue) {
-                var inputDom = document.getElementById("input@"+scope.$moduleId);
+                var inputDom = document.getElementById("input"+scope.$moduleId);
                 if(newValue===true){
                     $timeout(function(){
                         scope.Open=true;
@@ -146,7 +173,7 @@
                     _initKpiVal += scope.items[i].highLight[j].label;
                 }
             }
-            EventService.broadcast('comboID@'+scope.$moduleId, EventTypes.CHANGE, _initKpiVal);
+            EventService.broadcast('comboID'+scope.$moduleId, EventTypes.CHANGE, _initKpiVal);
         }
     }
 
