@@ -12,7 +12,8 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                 enabled:'=?',
                 toggle:'=?',
                 tooltip:'@?',
-                type:'@?'
+                type:'@?',
+                resetType:"@?"
             };
             return {
                 restrict: 'E',
@@ -29,11 +30,24 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                                 </div>\
                            </div>',
                 scope:scopeDefine,
+                controller: ['$scope', function(scope){
+                    Utils.publish(scope, this);
+                    var originType;
+                    this.setType = function(type){
+                        originType = !!originType ? originType : scope.type;
+                        if(type==null){
+                            scope.type=originType;
+                        }else{
+                            scope.type=type;
+                        }
+                    }
+                }],
                 link: function(scope,ele, attr) {
                     Utils.checkEventHandlers(attr,scopeDefine);
                     scope.label = Utils.getValue(scope.label, attr.label, '');
                     scope.icon = Utils.getValue(scope.icon, attr.icon, false);
                     scope.enabled = Utils.getValue(scope.enabled, attr.enabled ,true);
+                    var originType = scope.type;
                     scope.setSelected=function($event){
                         if(!scope.enabled){
                             return;
@@ -45,7 +59,7 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                             }
                             EventService.raiseControlEvent(scope, EventTypes.CLICK, $event);
                         }, 0);
-                    }
+                    };
                     scope.$stopPro=function($event){
                         if(!scope.enabled){
                          $event.stopPropagation();
@@ -78,6 +92,10 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                     }
                     scope.$mouseUP = function(){
                         scope.downUp = false;
+                        //点击后还原type
+                        if(scope.resetType=="true"){
+                            scope.type=originType;
+                        }
                     }
                     /* 禁用时样式 */
                     scope.paddingHide = !!scope.icon&&scope.icon!="false"&&!!scope.label
