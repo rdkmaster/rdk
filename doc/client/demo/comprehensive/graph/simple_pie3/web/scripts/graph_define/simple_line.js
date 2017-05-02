@@ -79,18 +79,12 @@ return {
                 }
             }
         },
-        itemStyle: {
-            normal: {
-                // color: 各异,
-                borderColor: '#fff',
-                borderWidth: 1,
-            }
-        },
         type:'pie',
         radius: ['45', '63'],
         center : ['30%', '70%'],
         avoidLabelOverlap: false,
         hoverAnimation:false,
+        animation:true,
         labelLine: {
             normal: {
                 show: false
@@ -100,12 +94,18 @@ return {
                     name: data.data[0].name,
                     value: data.data[0].value,
                     selected:true,
-                    itemStyle:{normal: {color: '#f99660'}}
+                    itemStyle:{
+                        normal: {
+                            color: '#f99660',
+                            shadowColor: '#f99660',
+                            shadowBlur: 12.5
+                        }
+                    }
                 }, {
                     name: data.data[1].name,
                     value: data.data[1].value,
                     itemStyle:{normal: {color: '#a4bf6a'}}
-                }, {
+                },{
                     name: data.data[2].name,
                     value: data.data[2].value,
                     itemStyle:{normal: {color: '#8ac9b6'}}
