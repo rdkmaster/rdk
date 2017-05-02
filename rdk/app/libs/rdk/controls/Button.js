@@ -32,11 +32,11 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                 scope:scopeDefine,
                 controller: ['$scope', function(scope){
                     Utils.publish(scope, this);
-                    var remember;
+                    var originType;
                     this.setType = function(type){
-                        remember = !!remember ? remember : scope.type;
+                        originType = !!originType ? originType : scope.type;
                         if(type==null){
-                            scope.type=remember;
+                            scope.type=originType;
                         }else{
                             scope.type=type;
                         }
@@ -47,7 +47,7 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                     scope.label = Utils.getValue(scope.label, attr.label, '');
                     scope.icon = Utils.getValue(scope.icon, attr.icon, false);
                     scope.enabled = Utils.getValue(scope.enabled, attr.enabled ,true);
-                    var remember = scope.type;
+                    var originType = scope.type;
                     scope.setSelected=function($event){
                         if(!scope.enabled){
                             return;
@@ -94,7 +94,7 @@ define(['rd.core', 'css!rd.styles.Button','css!rd.styles.FontAwesome'
                         scope.downUp = false;
                         //点击后还原type
                         if(scope.resetType=="true"){
-                            scope.type=remember;
+                            scope.type=originType;
                         }
                     }
                     /* 禁用时样式 */
