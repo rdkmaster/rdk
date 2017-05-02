@@ -10,6 +10,11 @@
         scope.clickHandler = function() {
             alert(userInfo)
         };
+
+        scope.change=function(type){
+            rdk.myBtn.setType(type);
+            rdk.myBtn2.setType(type);
+        }
     }
 
     var controllerName = 'DemoController';
