@@ -12,8 +12,9 @@
 			$t
 			.addClass('sticky-enabled')
 			.css({
-				margin: 0,
-				width: '100%'
+				margin: 0
+				//move set width Reason:not set width by style,Adjust the width of table with resize function
+				//width: '100%'
 			}).wrap('<div class="sticky-wrap"/>');
 
 			if($t.hasClass('overflow-y')) $t.removeClass('overflow-y').parent().addClass('overflow-y');

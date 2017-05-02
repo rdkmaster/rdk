@@ -46,7 +46,7 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                         var scrollBarYRail = container.querySelector(".ps-scrollbar-y-rail");
                         if(scrollBarY == null) return;
                         scrollBarY.offsetHeight==0 ? scrollBarYRail.style.width=0 : scrollBarYRail.style.width=railOffsetWidth;
-                    },50);
+                    },0);
                 };
 
                 perfectScroll.lazyResize();
@@ -58,7 +58,7 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                         'childList': true,
                         'attributes':true,
                         'characterData':true,
-                        'subtree': !Utils.isIE(),
+                        'subtree': true,
                         'attributeOldValue':true
                     };
                     //观察子节点变动,更新滚动条,

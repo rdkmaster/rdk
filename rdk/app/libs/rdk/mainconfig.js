@@ -33,7 +33,7 @@ require.config({
         "rd.attributes.Scroll": "../rdk/attributes/Scroll",
         "rd.attributes.Tooltip": "../rdk/attributes/Tooltip",
         "rd.attributes.theme": "../rdk/attributes/theme",
-
+        "rd.attributes.Resize": "../rdk/attributes/TableResize",
         "rd.containers.Accordion": "../rdk/containers/Accordion",
         "rd.containers.Accordions": "../rdk/containers/Accordions",
         "rd.containers.ButtonGroup": "../rdk/containers/ButtonGroup",

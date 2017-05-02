@@ -1,10 +1,10 @@
 define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
     'rd.services.DataSourceService', "css!rd.styles.Table", 'css!rd.styles.FontAwesome',
     'css!rd.styles.Bootstrap','rd.controls.Button','css!rd.styles.IconFonts',
-    'bootstrap-select','bootstrap','rd.attributes.Scroll'
+    'bootstrap-select','bootstrap','rd.attributes.Scroll',"rd.attributes.Resize"
 ], function() {
 
-    var tableModule = angular.module('rd.controls.Table', ['rd.core','rd.controls.Button','rd.attributes.Scroll']);
+    var tableModule = angular.module('rd.controls.Table', ['rd.core','rd.controls.Button','rd.attributes.Scroll','rd.attributes.Resize']);
 
     tableModule.run(["$templateCache", function($templateCache) {
         $templateCache.put("/src/templates/common.html",
@@ -321,7 +321,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
             searchPosition:"@?",
             searchWidth:"@?",
             exportLabel:"@?",
-            showExport:"=?"
+            showExport:"=?",
+            resize:"@?",
         };
         return {
             restrict: 'EA',
@@ -489,11 +490,20 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 if(tAttributes.customScroll=="rdk-scroll" && tAttributes.rdkScroll == null){
                     tElement[0].querySelector(".wrapper").setAttribute("rdk-scroll","");
                 }
+
                 if(tAttributes.pageNumber === "-1"){
                     tElement.find("rdk-paging").attr("page-goto", true);
                 }
-                return function link(scope, element, attrs, ctrl) {
 
+                if(!!tAttributes.resize){
+                    var tableElement=tElement[0].querySelector(".rdk-table");
+                    tableElement.setAttribute("resizeable","");
+                    tableElement.setAttribute("mode","resizeMode");
+                    tableElement.setAttribute("id","rdkTable{{$id}}");
+                    tableElement.style.tableLayout="fixed";
+                }
+
+                return function link(scope, element, attrs, ctrl) {
                     scope.getRowSpan = function(itemRowSpan, item) {
                         return itemRowSpan && itemRowSpan[item["targets"]] ? itemRowSpan[item["targets"]] : 1;
                     }
@@ -503,6 +513,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     scope.showExport = Utils.isTrue(scope.showExport, false);
                     scope.searchWidth = Utils.getValue(scope.searchWidth, attrs.searchWidth, "168px");
                     scope.exportLabel = Utils.getValue(scope.exportLabel, attrs.exportLabel, "");
+                    scope.resizeMode = Utils.getValue(scope.resize, attrs.resize, "BasicResizer");
+
                     scope.touchExport = function() {
                         EventService.raiseControlEvent(scope, EventTypes.EXPORT, null)
                     };
@@ -512,12 +524,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                     var curSortIndex;
                     var sortIconStatus=true;
-                    var _totalCount;
-
-                    function getTotalCount(){
-                        return scope.$eval(filterCount);
-                    }
-
 
                     function _init() {
 
@@ -667,15 +673,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         if(attrs.pageNumber=="-1" && attrs.searchPosition =="bottom")
                         {
                             scope.searchMouseLeaveHandler =function(){
-                                scope.searchPrompt="Total "+ _totalCount + " Records";
+                                scope.searchPrompt="Total "+ scope.data.data.length + " Records";
                             };
                             scope.searchMouseEnterHandler =function(){
                                 scope.searchPrompt="Search";
                             };
-                            $timeout(function(){
-                                _totalCount = getTotalCount();
-                                scope.searchPrompt="Total "+ _totalCount + " Records";
-                            },0);
+
                         }else{
                             scope.searchPrompt="Search";
                         }
@@ -1008,11 +1011,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             scope.allChecked = isChecked;//双绑没生效，后面用dom找
                             _resetTotalCheckedDom(isChecked);
                         }
-
+                        var isFirstBroadCast=true;
                         scope.$on('ngRepeatFinished', function() {
                             _reSetTableAddHeaders();
                             _fixTableHeader();
-
                             scope.refreshSingleCurrentPage();
                             _serverSortResponse();//后端排序，刷新后的响应
                             scope.$watch("selectedIndex", function(newVal, oldVal) { //根据selectedIndex高亮显示
@@ -1022,6 +1024,13 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                     }
                                 }
                             }, true);
+                            if(attrs.pageNumber=="-1" && attrs.searchPosition =="bottom"){
+                                scope.searchPrompt="Total "+ scope.data.data.length + " Records";
+                            }
+                            if(attrs.resize && isFirstBroadCast){
+                                EventService.broadcast('rdkTable_'+scope.$id, EventTypes.READY,null);
+                                isFirstBroadCast=false;
+                            }
                         });
                         scope.$on('tableHeadNgRepeatFinished', function() {
                             _reSetTableHeaders(); //重定义表头
