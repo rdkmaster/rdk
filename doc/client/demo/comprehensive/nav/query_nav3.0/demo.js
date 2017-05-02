@@ -14,9 +14,6 @@
             city:{name:"深圳",code:"2"},
             area:{name:"南山区",code:"3"}
         };
-
-        scope.default="default";
-        scope.white="white";
         //时间配置
         scope.granularitySet={
             value: 'now',
