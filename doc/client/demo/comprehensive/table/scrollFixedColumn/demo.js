@@ -4,8 +4,12 @@
         'rd.controls.Table','css!base/css/demo','rd.attributes.theme'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope', main];
-    function main($scope) {
+    var controllerDefination = ['$scope','RdkTableService', main];
+    function main($scope,RdkTableService) {
+
+        //连接表1，和表2....，连接的表格将同步table1的行为
+        RdkTableService.union('tableHost',['tableBak']);
+
         $scope.setting1 = {};
         $scope.setting2 = {
             selectable:false,
@@ -26,9 +30,8 @@
         }
 
         $scope.click = function(item){
-            console.log(angular.toJson(item));
+            alert(angular.toJson(item));
         }
-
 
         $scope.data = {};
         $scope.data.header = ["CellKey", "HOReqNum", "HOFailNum", "HOInFailNum", "HOOutFailNum", "S1FailNum", "X2FailNum", "eNBFailNum"];
@@ -37,7 +40,7 @@
 
         function testData(){
             var data=[];
-            for(var i=0;i<8;i++){
+            for(var i=0;i<80;i++){
                 var testData=[];
                 for(var j=0;j<8;j++){
                     testData.push(i+''+j);

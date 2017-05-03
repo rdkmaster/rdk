@@ -295,7 +295,23 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 }
             }
         });
-
+    tableModule.factory("RdkTableService", ['EventService', 'EventTypes',function(EventService,EventTypes){
+        return{
+            union:function(hostId,backupArr){
+                EventService.register(hostId, EventTypes.PAGING_DATA_CHANGE, function(event, data){
+                    var globalSearch =rdk[hostId].getGlobalSearch();
+                    angular.forEach(backupArr,function(item){
+                        rdk[item].setGlobalSearch(globalSearch);
+                    })
+                });
+                EventService.register(hostId, EventTypes.PAGING_NUMBER_CHANGE, function(event, data){
+                    angular.forEach(backupArr,function(item){
+                        rdk[item].setCurrentPage(data);
+                    })
+                });
+            }
+        }
+    }]);
     tableModule.directive('rdkTable', ['DataSourceService', 'EventService', 'EventTypes', 'Utils', '$timeout', '$compile',function(DataSourceService, EventService, EventTypes, Utils, $timeout,$compile) {
         var scopeDefine={
             id: '@',
@@ -363,6 +379,15 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         ctrl.pageCtrl.setPage(scope.currentPage);
                     }, 0);
                 }
+
+                this.getGlobalSearch = function(){
+                    if(!scope.search) return;
+                    return scope.globalSearch;
+                };
+
+                this.getCurrentPage = function(){
+                    return scope.currentPage;
+                };
 
                 this.getTableAppScope = function() {
                     return scope.appScope;
@@ -706,6 +731,13 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
                         }, true);
 
+                        scope.$watch("currentPage", function(newVal, oldVal) {
+                            if (newVal) {
+                                if (angular.isDefined(attrs.id)) {
+                                    EventService.broadcast(attrs.id, EventTypes.PAGING_NUMBER_CHANGE, newVal);
+                                }
+                            }
+                        }, true);
 
                         scope.$watch("setting.columnDefs", function(newVal, oldVal) {
                             if (newVal != oldVal) {

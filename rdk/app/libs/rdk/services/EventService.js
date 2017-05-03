@@ -55,6 +55,7 @@
         DATA_CHANGE:"data_change",
         DOUBLE_CLICK: "double_click",
         PAGING_DATA_CHANGE:"paging_data_change",
+        PAGING_NUMBER_CHANGE:"paging_number_change",
 
         BEFORE_EXPAND:"before_expand",
         BEFORE_COLLAPSE:"before_collapse",

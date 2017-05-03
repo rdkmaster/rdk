@@ -632,6 +632,23 @@ cells 为 改变的行列信息的数组信息
 #方法 #
 暂无
 
+# 服务 #
+## RdkTableService ##
+
+`rdkTableService` 服务中的方法
+
+### union(tableId,array) ###
+
+方法功能： 用于连接多个表的行为;
+
+参数说明：
+
+`tableId`：Type：字符串；Details：表id,此表的翻页，搜索等行为都会同步更新到array参数集合中的表
+
+`array`：Type:字符串数组；Details：表id的集合，每个表都会同步tableId的行为
+
+详细示列可以参考综合应用示例demo/表格/示例三
+
 # 样式 #
 
 ### 表的整体属性 ###
