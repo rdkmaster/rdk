@@ -29,6 +29,7 @@
 	    $scope.setting = {
             value: 'now-2h', //当前选中的时间value,支持双向绑定
             granularity: "quarter",  //粒度，类型枚举，备选date/week/month/hour/quarter，默认值是date
+            selectGranularity:true,  //显示选择粒度
             weekStart:"0",          //属性，周开始设置，类型0~6数字。默认值是0
             startDate:"2016-01-01", //可选的开始时间，类型字符串/Date对象
             endDate:"now"  //可选的结束时间，类型字符串/Date对象,
@@ -36,6 +37,20 @@
 	    }
 
 <live_demo example="controls/timeSelect/setting" width="900"></live_demo>
+
+### selectGranularity ###
+> 支持类型：数组或布尔类型
+
+`selectGranularity` 用于设置粒度选择。缺省时默认为`false`不显示粒度选择。当selectGranularity设置为`true`时显示粒度选择。
+默认选择的粒度为`date/week/month`,可以自由设置粒度数组，改变默认粒度选择
+
+            selectGranularity=[
+                {label: "Day", value: "date"},
+                {label: "Week", value: "week"},
+                {label: "Month", value: "month"}
+            ];
+
+<live_demo example="controls/timeSelect/expect" width="900"></live_demo>
 
 ### expectSelectedDate ###
 > 支持类型：数组
