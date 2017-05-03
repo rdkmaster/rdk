@@ -14,10 +14,6 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                 link: function(scope, element, attrs, ngModel) {
                     if (!ngModel) return;
 
-                    if (scope.option == undefined) {
-                        scope.option = {};
-                    }
-
                     scope.visible = false;
 
                     $(element).click(function() {
@@ -78,10 +74,14 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                     }
 
                     function _init() {
-                        if (scope.option.realFormat) {
+					    if(scope.option){
+							if (scope.option.realFormat) {
                             if (!scope.option.realValue) {
                                 scope.option.realValue = TimeUtilService.dateFormate(TimeUtilService.getDateForStringDate($(element).val()), scope.option.realFormat);
                             }
+							if(scope.option.realValue == ""){
+							   return;
+							}
                             scope.option.realValue = TimeUtilService.dateFormate(TimeUtilService.getDateForStringDate(scope.option.realValue), scope.option.realFormat);
                             $(element).val(scope.option.realValue);
                             ngModel.$setViewValue(scope.option.realValue);
@@ -100,10 +100,7 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                                 scope.visible = false;
                             });
                         });
-
-
-
-
+						}
                     }
                 }
             };
