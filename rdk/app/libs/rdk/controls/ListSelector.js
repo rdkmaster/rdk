@@ -13,17 +13,18 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ListSelector',
                 icon:'@?',
                 defaultOption:"@?",
                 size:"@?",
-                change: '&?'
+                change: '&?',
+                frozen:'=?'
             };
             return {
                 restrict: 'E',
                 replace: true,
                 template: '<div class="rdk-list-selector-module">\
-                                <div class="rdk-dropdown-toggle" ng-click="toggle($event)" tabindex="0" ng-class="{\'open\':openStatus}">\
+                                <div class="rdk-dropdown-toggle" ng-click="toggle($event)" tabindex="0" ng-class="{\'open\':openStatus,\'frozen\':frozen}">\
                                     <span ng-if="!!caption">{{caption}}</span>\
                                     <p class="select-input">{{inputVal}}</p>\
                                     <i ng-if="icon!==\'false\'" ng-class="icon" class="rdk-dropdown-icon" aria-hidden="true"></i>\
-                                    <div class="rdk-selector-content rdk-scroll" ng-show="openStatus">\
+                                    <div class="rdk-selector-content rdk-scroll" ng-show="openStatus && !frozen">\
                                         <ul rdk-scroll>\
                                             <li ng-if="!!defaultOption" ng-click="selectItem(defaultOption)"><a ng-class="{selected:activeSelectedItem(defaultOption)}">{{defaultOption}}</a></li>\
                                             <li ng-repeat="item in data track by $index" on-finish-render="listSelectorRender"\
@@ -47,6 +48,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ListSelector',
                 scope.size = Utils.getValue(scope.size, iAttrs.size, 0);
                 scope.selectedItems =Utils.getValue(scope.selectedItems, []);
                 scope.inputVal = Utils.getValue(scope.defaultOption, iAttrs.defaultOption, null);
+                scope.frozen = Utils.isTrue(scope.frozen, false);
                 scope.$watch("selectedItems",function(newVal){
                     scope.inputVal = _handleDate(newVal[0]);
                 },true);
@@ -73,8 +75,10 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ListSelector',
                     EventService.raiseControlEvent(scope, EventTypes.CHANGE,item);
                 };
 
-
                 scope.toggle = function(){
+                    if(scope.frozen){
+                        return
+                    }
                     scope.openStatus =! scope.openStatus;
                 };
                 scope.showData = _handleDate;

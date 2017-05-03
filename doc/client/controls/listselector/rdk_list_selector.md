@@ -54,6 +54,13 @@
 这是一个综合的 `rdk_list_selector` 例子：
 <live_demo example="controls/listselector/setting" width="900"></live_demo>
 
+## frozen ##
+> 支持类型：布尔
+
+`frozen`为`true`时冻结下拉框，不可选择，缺省时默认为`false`.
+
+<live_demo example="controls/listselector/frozen" width="900"></live_demo>
+
 # 事件 #
 
 如果设置了`id`，即可广播/监听以下事件。
