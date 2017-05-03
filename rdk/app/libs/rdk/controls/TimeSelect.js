@@ -63,7 +63,6 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                             initValue = scope.setting.value;
                         }
                         initStartDate = scope.setting.startDate;
-                        debugger;
                         initEndDate = scope.setting.endDate;
                     }
 
@@ -140,9 +139,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         } else {
                             scope.setting.startDate = Utils.getValue(TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(scope.setting.startDate), scope.timeFormat), undefined, null);
                         }
-                        debugger;
                         if (angular.isUndefined(scope.setting.endDate) || !scope.setting.endDate) {
-                            debugger;
                             scope.setting.endDate = Utils.getValue(TimeUtilService.getTimeMacroCalculate(scope.setting.endDate), undefined, null);
                         } else {
                             scope.setting.endDate = Utils.getValue(TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(scope.setting.endDate), scope.timeFormat), undefined, null);
@@ -278,9 +275,9 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
 
                     function _expectDateHandler(){
 
-                        var yearsNode=_getDatePickerNode("years");
-
                         var expectSelectedDate = _parseExpectDate(scope.setting.expectSelectedDate);
+
+                        var yearsNode=_getDatePickerNode("years");
 
                         _searchDateForYear(expectSelectedDate,yearsNode);
 
@@ -293,6 +290,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         var daysHeadNode=_getDatePickerNode("days",true);
 
                         var daysObj=_parseDay(daysHeadNode.innerText);
+
                         _searchDateForDay(expectSelectedDate,daysNode,daysObj);
                     }
 
@@ -389,7 +387,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                                     }
                                 }
                             }
-                    }
+                        }
                     }
 
                     function _vaildExpectDate(){
@@ -400,22 +398,6 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                             console.error("setting property of expectSelectedDate only start time to end time");
                             return false
                         }
-                        //else{
-                        //    for(var i= 0,len=expectSelectedDate.length;i<len;i++){
-                        //        if(!expectSelectedDate[i].hasOwnProperty("year")){
-                        //            return false
-                        //        }
-                        //        if(!(expectSelectedDate[i].hasOwnProperty("expectStartDate")
-                        //            && expectSelectedDate[i].hasOwnProperty("expectEndDate"))){
-                        //            return false
-                        //        }else{
-                        //            if(!(expectSelectedDate[i].expectStartDate.hasOwnProperty("month")
-                        //                && expectSelectedDate[i].expectStartDate.hasOwnProperty("day"))){
-                        //                return false
-                        //            }
-                        //        }
-                        //    }
-                        //}
                         return true
                     }
 
@@ -429,8 +411,6 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         result.year=val[1].trim();
                         return result;
                     }
-
-
 
                     function _parseExpectDate(dateArr){
                         var expectDateObj={};
@@ -460,6 +440,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         obj.year = +arr[0];
                         obj.month = +arr[1];
                         obj.day = +arr[2];
+                        return obj;
                     }
                 }
             };

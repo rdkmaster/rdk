@@ -8,25 +8,12 @@
     function main(scope,EventService,EventTypes ) {
         //时间配置
         scope.granularitySet={
-            value: '2017-02-1',
+            value: '2017-5-1',
             granularity: "date",
             selectGranularity:true,
             startDate:"2016-01-1 13:30", //可选的开始时间，类型字符串/Date对象
-            endDate:"now+20d",  //可选的结束时间，类型字符串/Date对象
-            //expectSelectedDate:[
-            //    {
-            //        year:'2016',
-            //        expectStartDate:{month:'3','day':"5"},
-            //        expectEndDate:{month:'3','day':"27"}
-            //    },
-            //    {
-            //        year:'2017',
-            //        expectStartDate:{month:'2','day':"14"},
-            //        expectEndDate:{month:'3','day':"4"}
-            //    }
-            //],
+            endDate:"now+30d",  //可选的结束时间，类型字符串/Date对象
             expectSelectedDate:["now","now+10d"]
-
         };
 
         EventService.register('timeID', EventTypes.CHANGE, function(event, data){

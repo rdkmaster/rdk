@@ -32,7 +32,7 @@
             weekStart:"0",          //属性，周开始设置，类型0~6数字。默认值是0
             startDate:"2016-01-01", //可选的开始时间，类型字符串/Date对象
             endDate:"now"  //可选的结束时间，类型字符串/Date对象,
-            expectSelectedDate:[...] //可设置推荐的时间区间，引导用户选择
+            expectSelectedDate:["startDateTime","endDateTime"] //可设置推荐的时间区间，引导用户选择
 	    }
 
 <live_demo example="controls/timeSelect/setting" width="900"></live_demo>
@@ -42,18 +42,10 @@
 
 `expectSelectedDate` 用于可设置推荐的时间区间，引导用户选择。
 
-        expectSelectedDate:[
-            {
-                year:'2016',
-                expectStartDate:{month:'3','day':"5"},
-                expectEndDate:{month:'3','day':"27"}
-            },
-            {
-                year:'2017',
-                expectStartDate:{month:'2','day':"14"},
-                expectEndDate:{month:'3','day':"4"}
-            }
-        ]
+`expectSelectedDate`中支持 `now` 代表当前时间。`now + 10d` 代表当前时间向后追溯10天。
+
+        expectSelectedDate:["2017-5-1","2017-5-5"]
+        expectSelectedDate:["now","now+10d"]
 
 <live_demo example="controls/timeSelect/expect" width="900"></live_demo>
 
