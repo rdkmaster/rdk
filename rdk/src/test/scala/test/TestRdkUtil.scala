@@ -104,23 +104,23 @@ class RdkUtilTest extends FunSpec with Matchers{
       describe("check pass function handleJsRequest()"){
          val runtime: Runtime = Runtime.newInstance
         it("script return string type"){
-          RdkUtil.handleJsRequest(runtime,null,ConstForTest.testRelayFilePath+"testForhandleJsRequest_returnStr.js",null,null,"get").fold(ex=>ex,v=> v should be("return string"))
+          RdkUtil.handleJsRequest(runtime,null,ConstForTest.testRelayFilePath+"testForhandleJsRequest_returnStr.js",null,null,"get").right.get.content should be("return string")
         }
 
         it("script return obj type"){
-          RdkUtil.handleJsRequest(runtime,null,ConstForTest.testRelayFilePath+"testForhandleJsRequest_returnObj.js",null,null,"get").fold(ex=>ex,v=> v should be(s"""{"head":"header","body":"message"}"""))
+          RdkUtil.handleJsRequest(runtime,null,ConstForTest.testRelayFilePath+"testForhandleJsRequest_returnObj.js",null,null,"get").right.get.content should be(s"""{"head":"header","body":"message"}""")
         }
 
         it("callable defined post"){
-          RdkUtil.handleJsRequest(runtime,null,ConstForTest.testRelayFilePath+"testForhandleJsRequest_callableDefined_post.js",null,null,"post").fold(ex=>ex,v=> v should be("return post function"))
+          RdkUtil.handleJsRequest(runtime,null,ConstForTest.testRelayFilePath+"testForhandleJsRequest_callableDefined_post.js",null,null,"post").right.get.content should be("return post function")
         }
 
         it("callable defined delete"){
-          RdkUtil.handleJsRequest(runtime,null,ConstForTest.testRelayFilePath+"testForhandleJsRequest_callableDefined_delete.js",null,null,"delete").fold(ex=>ex,v=> v should be("return delete function"))
+          RdkUtil.handleJsRequest(runtime,null,ConstForTest.testRelayFilePath+"testForhandleJsRequest_callableDefined_delete.js",null,null,"delete").right.get.content should be("return delete function")
         }
 
         it("callable defined put"){
-          RdkUtil.handleJsRequest(runtime,null,ConstForTest.testRelayFilePath+"testForhandleJsRequest_callableDefined_put.js",null,null,"put").fold(ex=>ex,v=> v should be("return put function"))
+          RdkUtil.handleJsRequest(runtime,null,ConstForTest.testRelayFilePath+"testForhandleJsRequest_callableDefined_put.js",null,null,"put").right.get.content should be("return put function") 
         }
       }
 

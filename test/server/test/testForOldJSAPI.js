@@ -23,15 +23,36 @@
              Cache.global.del("test");
              return Cache.global.get("test");
         },
+        Cache_aging_get:function(request, script){
+             Cache.aging.put("test","cachetest",1);
+             return Cache.aging.get("test");
+        },
+         Cache_aging_del:function(request, script){
+             Cache.aging.del("test");
+             return Cache.aging.get("test");
+        },
 
-		file_readXml:function(request, script){
-			return file.readXml(testServiceFilePath+"dialog_settings.xml")
-		},
         file_loadProperty:function(request, script){
             var properties=file.loadProperty(testServiceFilePath+"conf1.propertites");
             var uump=properties.getProperty("conf");
             return uump;
         },
+        file_readString:function(request, script){
+            return File.readString(testServiceFilePath+"test.txt")
+        },
+      
+
+		file_readXml:function(request, script){
+			return file.readXml(testServiceFilePath+"dialog_settings.xml")
+		},
+      
+        file_readCSV:function(request, script){
+            return file.readCSV(testServiceFilePath+"test.csv")
+        },
+        file_readExcel:function(request, script){
+            return file.readExcel(testServiceFilePath+"test.xls")
+        },
+
 
         file_loadPropertyerror:function(request, script){
             return file.loadProperty();

@@ -70,14 +70,28 @@ class TestJsAPI extends FunSpec with Matchers {
       RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "Cache_clear").right.get.content should be("null")
       RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "Cache_gobal_get").right.get.content should be("cachetest")
       RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "Cache_gobal_del").right.get.content should be("null")
-
+      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "Cache_aging_get").right.get.content should be("cachetest")
+      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "Cache_aging_del").right.get.content should be("null")
     }
 
     it("File functions=> test cases passed!") {
       RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_loadProperty").right.get.content should be("conf1")
+
       RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null, "file_loadPropertyerror").right.get.content should be("false")
+
+      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null,
+        "file_readString").right.get.content.contains("abc") should be(true)
+
       RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null,
         "file_readXml").right.get.content.contains("orderedProviders") should be(true)
+
+      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null,
+        "file_readCSV").right.get.content.contains("网元") should be(true)
+
+      RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null,
+        "file_readExcel").right.get.content.contains("B") should be(true)
+
+
       RdkUtil.handleJsRequest(runtime, null, ConstForTest.testRelayFilePath + "testForOldJSAPI.js", null, null,
         "file_save")
       new File(ConstForTest.testRelayFilePath + "save.txt").exists() should be(true)
