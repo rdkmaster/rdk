@@ -120,7 +120,7 @@ class RdkUtilTest extends FunSpec with Matchers{
         }
 
         it("callable defined put"){
-          RdkUtil.handleJsRequest(runtime,null,ConstForTest.testRelayFilePath+"testForhandleJsRequest_callableDefined_put.js",null,null,"put").right.get.content should be("return put function") 
+          RdkUtil.handleJsRequest(runtime,null,ConstForTest.testRelayFilePath+"testForhandleJsRequest_callableDefined_put.js",null,null,"put").right.get.content should be("return put function")
         }
       }
 
