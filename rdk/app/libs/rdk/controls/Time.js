@@ -313,7 +313,9 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                                 _handlerGap(conditionStartTime, scope.selectedGranularity.gap);
                             }
                             if (scope.selectedGranularity.value == "week") {
-							    _handlerGap(scope.startTimeOption.realValue?scope.startTimeOption.realValue:conditionStartTime, scope.selectedGranularity.gap);
+							    if(scope.selectedGranularity.gap){
+									_handlerGap(scope.startTimeOption.realValue?scope.startTimeOption.realValue:conditionStartTime, scope.selectedGranularity.gap);
+								}
                                 scope.endTimeOption.startDate = scope.startTimeOption.realValue? scope.startTimeOption.realValue:conditionStartTime;
                             } else {
                                 scope.endTimeOption.startDate = conditionStartTime;
@@ -379,7 +381,7 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                             }
                             scope.endTimeOption.endDate = TimeUtilService.dateFormate(endTime, scope.timeFormat);
 
-                             if ((TimeUtilService.getDateForStringDate(endTimeCache) > TimeUtilService.getDateForStringDate(beginTime)) && (TimeUtilService.getDateForStringDate(endTimeCache) < limitTime) && (TimeUtilService.getDateForStringDate(endTimeCache)<endTime)) {
+                             if ((TimeUtilService.getDateForStringDate(endTimeCache) >= TimeUtilService.getDateForStringDate(beginTime)) && (TimeUtilService.getDateForStringDate(endTimeCache) <= limitTime) && (TimeUtilService.getDateForStringDate(endTimeCache)<=endTime)) {
                                 scope.condition.endTime = endTimeCache;
                             } else {
                                 scope.condition.endTime = endTime;
