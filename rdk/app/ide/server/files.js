@@ -36,7 +36,7 @@
 	}
 	
 	function _post(request) {
-
+		return _put(request);
 	}
 	
 	function _del(request) {
