@@ -438,8 +438,8 @@ i.regular_right,i.regular_left{
 
 /* table col resizeable start */
 /* sticky-thead 是指浮动表头的样式 */
-.rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize,
-.rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize + .rdk-table.sticky-thead{
+.rdk-table-module .rdk-table.resize,
+.rdk-table-module .rdk-table.resize + .rdk-table.sticky-thead{
     table-layout: fixed;
 }
 .rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize > thead > tr > th,
