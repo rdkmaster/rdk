@@ -37,8 +37,6 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                         scope.$watchGroup(["option.granularity", "option.startDate", "option.endDate"], function(newVal, oldVal) {
                             $(element).datetimepicker('remove');
                             _init();
-                            console.log("watch---");
-                            console.log(scope.option);
                         }, false);
 
                         scope.$watch('option.realValue', function(newVal, oldVal) {
