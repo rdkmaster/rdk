@@ -112,23 +112,17 @@ inday/inweek/inmonth/inyear 和具体的 1d,2w,3m,4y。
 
 时间粒度选择下拉框内容。目前只支持上述设置。
 
-### refresh_timeout ###
-
-用于设置时间刷新的间隔。主要针对value、startDate或endDate设置为`now`或`now-2h`等需要不时刷新的场景，默认为0，不刷新。
-
-<live_demo example="controls/time/refresh" width="900"></live_demo>
-
 以下是时间控件的综合使用例子：
 
 <live_demo example="controls/time/showGranularity" width="900"></live_demo>
 
-### frozen ###
+### disabled ###
 
 > 支持类型：布尔
 
-`frozen`为`true`时冻结时间选择，缺省时默认为`false`.
+`disabled`为`true`时冻结时间选择，缺省时默认为`false`.
 
-<live_demo example="controls/time/frozen" width="900"></live_demo>
+<live_demo example="controls/time/disabled" width="900"></live_demo>
 
 # 支持国际化 #
 <live_demo example="controls/time/i18n" width="900"></live_demo>
