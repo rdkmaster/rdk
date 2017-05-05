@@ -22,20 +22,38 @@ define(['echarts'], function(echarts) {
 
 // attributes 是当前Graph所在的html节点的所有属性集。也是一种辅助数据。
 return function(data, context, GraphService, attributes) {
-
+var allSeries=[],
+    len = data.data.length;
+    if(data.data.length){
+        for(var i=0;i<len;i++){
+            allSeries[i] = {};
+            allSeries[i].name =data.header[i];
+            allSeries[i].type = 'bar';
+            allSeries[i].stack = '总量';
+            allSeries[i].barWidth = 15;
+            allSeries[i].itemStyle = {"normal":{"barBorderRadius":0}};
+            allSeries[i].data = data.data[i]
+        }
+    }
+console.log(allSeries)
 return{
     tooltip : {
         trigger: 'axis',
         position: function (point, params, dom, rect, size) {
             // 固定在顶部
-            return [point[0], point[1]];
+            return [point[0]+15, point[1]+15];
         }
     },
     legend: {
         data: ['hot', 'instrument','parallel','rader','simple','boxplots','bubblegraduent','funnelplot','mulberryfigure','rectangletree' ,
         'relationalgraph','simplebar','componentlayout','comprehensive','containers'],
+        itemHeight:8,
+        itemGap:8,
+        width: '95%',
+        itemWidth: 16,
+        left:'center',
         formatter: function (name) {
-            return echarts.format.truncateText(name, 60, '14px Microsoft Yahei', '…');
+            return echarts.format.truncateText(name, 50, '14px Microsoft Yahei', '…');
         },
         tooltip: {
             show: true
@@ -53,141 +71,12 @@ return{
             rotate:30,
             interval:0
         },
-        data: data.header
+        data: ["2017.3.1","2017.3.2","2017.3.3","2017.3.4","2017.3.5","2017.3.6","2017.3.7","2017.3.8","2017.3.9","2017.3.10","2017.3.11","2017.3.12","2017.3.13","2017.3.14","2017.3.15"]
     },
     yAxis: {
         type: 'value',
 
     },
-    series: [
-        {
-            name: 'hot',
-            type: 'bar',
-            stack: '总量',
-            barWidth:25,
-            itemStyle:{normal:{barBorderRadius:0}},
-            //label: {
-            //    normal: {
-            //        show: true,
-            //        position: 'insideRight'
-            //    }
-            //},
-            data: [120, 102, 201, 134, 190, 230, 120, 132, 181, 134, 90, 260, 192, 101, 184]
-        },
-        {
-            name: 'instrument',
-            type: 'bar',
-            stack: '总量',
-            barWidth:25,
-            itemStyle:{normal:{barBorderRadius:0}},
-            data: [120, 132, 101, 134, 90, 230, 210, 132, 101, 134, 240, 130, 132, 101, 194]
-        },
-        {
-            name: 'parallel',
-            type: 'bar',
-            stack: '总量',
-            barWidth:25,
-            itemStyle:{normal:{barBorderRadius:0}},
-            data: [220, 182, 191, 234, 290, 330, 310, 132, 234, 190, 130, 130, 132, 201, 234]
-        },
-        {
-            name: 'rader',
-            type: 'bar',
-            stack: '总量',
-            barWidth:25,
-            itemStyle:{normal:{barBorderRadius:0}},
-            data: [150, 212, 201, 154, 190, 130, 210, 132, 101, 194, 234, 190, 130, 201, 134]
-        },
-        {
-            name: 'simple',
-            type: 'bar',
-            stack: '总量',
-            barWidth:25,
-            itemStyle:{normal:{barBorderRadius:0}},
-            data: [150, 212, 201, 154, 190, 130, 210, 132, 101, 194, 234, 190, 130, 201, 134]
-        },
-        {
-            name: 'bubblegraduent',
-            type: 'bar',
-            stack: '总量',
-            barWidth:25,
-            itemStyle:{normal:{barBorderRadius:0}},
-            data: [220, 232, 201,234, 234, 190, 130, 132, 101, 234, 300, 230, 232, 201, 134]
-        },
-        {
-            name: 'boxplots',
-            type: 'bar',
-            stack: '总量',
-            barWidth:25,
-            itemStyle:{normal:{barBorderRadius:0}},
-            data: [220, 232, 201,234, 190, 130, 120, 234, 190, 130, 300, 230, 232, 201, 134]
-        },
-        {
-            name: 'funnelplot',
-            type: 'bar',
-            stack: '总量',
-            barWidth:25,
-            itemStyle:{normal:{barBorderRadius:0}},
-            data: [220, 232, 201,234, 190, 130, 120, 132, 101, 234, 300, 230, 232, 201, 134]
-        },
-        {
-            name: 'mulberryfigure',
-            type: 'bar',
-            stack: '总量',
-            barWidth:25,
-            itemStyle:{normal:{barBorderRadius:0}},
-            data: [220, 232, 234, 190, 130, 130, 120, 132, 101, 234, 300, 230, 232, 201, 134]
-        },
-        {
-            name: 'rectangletree',
-            type: 'bar',
-            stack: '总量',
-            barWidth:25,
-            itemStyle:{normal:{barBorderRadius:0}},
-            data: [220, 232, 201,234, 190, 234, 190, 130, 101, 234, 234, 190, 130, 201, 134]
-        },
-        {
-            name: 'relationalgraph',
-            type: 'bar',
-            stack: '总量',
-            barWidth:25,
-            itemStyle:{normal:{barBorderRadius:0}},
-            data: [220, 232, 201,234, 190, 130, 234, 190, 130,234, 300, 230, 232, 201, 134]
-        },
-        {
-            name: 'simplebar',
-            type: 'bar',
-            stack: '总量',
-            barWidth:25,
-            itemStyle:{normal:{barBorderRadius:0}},
-            data: [220, 232, 201,234, 190, 130, 120, 132, 101, 234, 190, 130, 232, 201, 134]
-        },
-        {
-            name: 'componentlayout',
-            type: 'bar',
-            stack: '总量',
-            barWidth:25,
-            itemStyle:{normal:{barBorderRadius:0}},
-            data: [220, 232, 201,234, 234, 190, 130, 132, 101, 234, 300, 230, 232, 201, 134]
-        },
-        {
-            name: 'comprehensive',
-            type: 'bar',
-            stack: '总量',
-            barWidth:25,
-            itemStyle:{normal:{barBorderRadius:0}},
-            data: [220, 232, 234, 190, 130, 130, 120, 132, 101, 234, 190, 130, 232, 201, 134]
-        },
-        {
-            name: 'containers',
-            type: 'bar',
-            stack: '总量',
-            barWidth:25,
-            itemStyle:{normal:{barBorderRadius:0}},
-            data: [220, 232, 201,234, 234, 190, 130, 132, 101, 234, 300, 234, 190, 130, 134]
-        }
-    ]
+    series: allSeries
 };
-
-
 }});
