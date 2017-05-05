@@ -8,7 +8,7 @@
     function main(scope ) {
         scope.frozen=true;
         scope.change=function(){
-            scope.frozen = !scope.frozen;
+            scope.disabled = !scope.disabled;
         };
 
         scope.selectData=[

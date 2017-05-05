@@ -43,10 +43,10 @@
 .rdk-list-selector-module .rdk-dropdown-toggle.open{
     box-shadow: inset 0 3px 5px rgba(0,0,0,0.125);
 }
-.rdk-list-selector-module .rdk-dropdown-toggle.frozen{
+.rdk-list-selector-module .rdk-dropdown-toggle.disabled{
     cursor:not-allowed
 }
-.rdk-list-selector-module .rdk-dropdown-toggle.frozen:focus{
+.rdk-list-selector-module .rdk-dropdown-toggle.disabled:focus{
     border-color: #ccc;
     box-shadow: none;
 }
