@@ -1,7 +1,7 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.controls.Graph', 'css!base/css/custom'
+        'rd.controls.Graph'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];

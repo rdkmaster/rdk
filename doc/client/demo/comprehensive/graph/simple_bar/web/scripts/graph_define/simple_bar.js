@@ -7,7 +7,7 @@
 //           ...
 //        });
 
-define([], function() {
+define(['echarts'], function(echarts) {
 
 // data 是Graph的输入数据。
 // 使用data参数时，请务必保持只读
@@ -26,86 +26,165 @@ return function(data, context, GraphService, attributes) {
 return{
     tooltip : {
         trigger: 'axis',
-        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        position: function (point, params, dom, rect, size) {
+            // 固定在顶部
+            return [point[0], point[1]];
         }
     },
     legend: {
-        data: ['直接访问', '邮件营销','联盟广告','视频广告','搜索引擎']
+        data: ['hot', 'instrument','parallel','rader','simple','boxplots','bubblegraduent','funnelplot','mulberryfigure','rectangletree' ,
+        'relationalgraph','simplebar','componentlayout','comprehensive','containers'],
+        formatter: function (name) {
+            return echarts.format.truncateText(name, 60, '14px Microsoft Yahei', '…');
+        },
+        tooltip: {
+            show: true
+        }
     },
     grid: {
         left: '3%',
         right: '4%',
-        bottom: '3%',
+        bottom: '10%',
         containLabel: true
     },
     xAxis:  {
-        type: 'value'
+        type: 'category',
+        axisLabel:{
+            rotate:30,
+            interval:0
+        },
+        data: data.header
     },
     yAxis: {
-        type: 'category',
-        data: ['周一','周二','周三','周四','周五','周六','周日']
+        type: 'value',
+
     },
     series: [
         {
-            name: '直接访问',
+            name: 'hot',
             type: 'bar',
             stack: '总量',
-            label: {
-                normal: {
-                    show: true,
-                    position: 'insideRight'
-                }
-            },
-            data: [320, 302, 301, 334, 390, 330, 320]
+            barWidth:25,
+            itemStyle:{normal:{barBorderRadius:0}},
+            //label: {
+            //    normal: {
+            //        show: true,
+            //        position: 'insideRight'
+            //    }
+            //},
+            data: [120, 102, 201, 134, 190, 230, 120, 132, 181, 134, 90, 260, 192, 101, 184]
         },
         {
-            name: '邮件营销',
+            name: 'instrument',
             type: 'bar',
             stack: '总量',
-            label: {
-                normal: {
-                    show: true,
-                    position: 'insideRight'
-                }
-            },
-            data: [120, 132, 101, 134, 90, 230, 210]
+            barWidth:25,
+            itemStyle:{normal:{barBorderRadius:0}},
+            data: [120, 132, 101, 134, 90, 230, 210, 132, 101, 134, 240, 130, 132, 101, 194]
         },
         {
-            name: '联盟广告',
+            name: 'parallel',
             type: 'bar',
             stack: '总量',
-            label: {
-                normal: {
-                    show: true,
-                    position: 'insideRight'
-                }
-            },
-            data: [220, 182, 191, 234, 290, 330, 310]
+            barWidth:25,
+            itemStyle:{normal:{barBorderRadius:0}},
+            data: [220, 182, 191, 234, 290, 330, 310, 132, 234, 190, 130, 130, 132, 201, 234]
         },
         {
-            name: '视频广告',
+            name: 'rader',
             type: 'bar',
             stack: '总量',
-            label: {
-                normal: {
-                    show: true,
-                    position: 'insideRight'
-                }
-            },
-            data: [150, 212, 201, 154, 190, 330, 410]
+            barWidth:25,
+            itemStyle:{normal:{barBorderRadius:0}},
+            data: [150, 212, 201, 154, 190, 130, 210, 132, 101, 194, 234, 190, 130, 201, 134]
         },
         {
-            name: '搜索引擎',
+            name: 'simple',
             type: 'bar',
             stack: '总量',
-            label: {
-                normal: {
-                    show: true,
-                    position: 'insideRight'
-                }
-            },
-            data: [820, 832, 901, 934, 1290, 1330, 1320]
+            barWidth:25,
+            itemStyle:{normal:{barBorderRadius:0}},
+            data: [150, 212, 201, 154, 190, 130, 210, 132, 101, 194, 234, 190, 130, 201, 134]
+        },
+        {
+            name: 'bubblegraduent',
+            type: 'bar',
+            stack: '总量',
+            barWidth:25,
+            itemStyle:{normal:{barBorderRadius:0}},
+            data: [220, 232, 201,234, 234, 190, 130, 132, 101, 234, 300, 230, 232, 201, 134]
+        },
+        {
+            name: 'boxplots',
+            type: 'bar',
+            stack: '总量',
+            barWidth:25,
+            itemStyle:{normal:{barBorderRadius:0}},
+            data: [220, 232, 201,234, 190, 130, 120, 234, 190, 130, 300, 230, 232, 201, 134]
+        },
+        {
+            name: 'funnelplot',
+            type: 'bar',
+            stack: '总量',
+            barWidth:25,
+            itemStyle:{normal:{barBorderRadius:0}},
+            data: [220, 232, 201,234, 190, 130, 120, 132, 101, 234, 300, 230, 232, 201, 134]
+        },
+        {
+            name: 'mulberryfigure',
+            type: 'bar',
+            stack: '总量',
+            barWidth:25,
+            itemStyle:{normal:{barBorderRadius:0}},
+            data: [220, 232, 234, 190, 130, 130, 120, 132, 101, 234, 300, 230, 232, 201, 134]
+        },
+        {
+            name: 'rectangletree',
+            type: 'bar',
+            stack: '总量',
+            barWidth:25,
+            itemStyle:{normal:{barBorderRadius:0}},
+            data: [220, 232, 201,234, 190, 234, 190, 130, 101, 234, 234, 190, 130, 201, 134]
+        },
+        {
+            name: 'relationalgraph',
+            type: 'bar',
+            stack: '总量',
+            barWidth:25,
+            itemStyle:{normal:{barBorderRadius:0}},
+            data: [220, 232, 201,234, 190, 130, 234, 190, 130,234, 300, 230, 232, 201, 134]
+        },
+        {
+            name: 'simplebar',
+            type: 'bar',
+            stack: '总量',
+            barWidth:25,
+            itemStyle:{normal:{barBorderRadius:0}},
+            data: [220, 232, 201,234, 190, 130, 120, 132, 101, 234, 190, 130, 232, 201, 134]
+        },
+        {
+            name: 'componentlayout',
+            type: 'bar',
+            stack: '总量',
+            barWidth:25,
+            itemStyle:{normal:{barBorderRadius:0}},
+            data: [220, 232, 201,234, 234, 190, 130, 132, 101, 234, 300, 230, 232, 201, 134]
+        },
+        {
+            name: 'comprehensive',
+            type: 'bar',
+            stack: '总量',
+            barWidth:25,
+            itemStyle:{normal:{barBorderRadius:0}},
+            data: [220, 232, 234, 190, 130, 130, 120, 132, 101, 234, 190, 130, 232, 201, 134]
+        },
+        {
+            name: 'containers',
+            type: 'bar',
+            stack: '总量',
+            barWidth:25,
+            itemStyle:{normal:{barBorderRadius:0}},
+            data: [220, 232, 201,234, 234, 190, 130, 132, 101, 234, 300, 234, 190, 130, 134]
         }
     ]
 };
