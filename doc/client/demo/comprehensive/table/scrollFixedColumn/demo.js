@@ -4,11 +4,8 @@
         'rd.controls.Table','css!base/css/demo','rd.attributes.theme'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope','RdkTableService', main];
-    function main($scope,RdkTableService) {
-
-        //连接表1，和表2....，连接的表格将同步table1的行为
-        RdkTableService.union('tableHost',['tableBak']);
+    var controllerDefination = ['$scope','EventService','EventTypes', main];
+    function main($scope,EventService,EventTypes) {
 
         $scope.setting1 = {};
         $scope.setting2 = {
@@ -31,7 +28,17 @@
 
         $scope.click = function(item){
             alert(angular.toJson(item));
-        }
+        };
+
+        // 同步两个表(tableHost,tableBak)的行为
+        EventService.register('tableHost', EventTypes.PAGING_DATA_CHANGE, function(event, data){
+            var globalSearch =rdk.tableHost.getGlobalSearch();
+            rdk.tableBak.setGlobalSearch(globalSearch);
+        });
+        EventService.register('tableHost', EventTypes.PAGING_NUMBER_CHANGE, function(event, data){
+            rdk.tableBak.setCurrentPage(data);
+        });
+
 
         $scope.data = {};
         $scope.data.header = ["CellKey", "HOReqNum", "HOFailNum", "HOInFailNum", "HOOutFailNum", "S1FailNum", "X2FailNum", "eNBFailNum"];

@@ -295,23 +295,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 }
             }
         });
-    tableModule.factory("RdkTableService", ['EventService', 'EventTypes',function(EventService,EventTypes){
-        return{
-            union:function(hostId,backupArr){
-                EventService.register(hostId, EventTypes.PAGING_DATA_CHANGE, function(event, data){
-                    var globalSearch =rdk[hostId].getGlobalSearch();
-                    angular.forEach(backupArr,function(item){
-                        rdk[item].setGlobalSearch(globalSearch);
-                    })
-                });
-                EventService.register(hostId, EventTypes.PAGING_NUMBER_CHANGE, function(event, data){
-                    angular.forEach(backupArr,function(item){
-                        rdk[item].setCurrentPage(data);
-                    })
-                });
-            }
-        }
-    }]);
     tableModule.directive('rdkTable', ['DataSourceService', 'EventService', 'EventTypes', 'Utils', '$timeout', '$compile',function(DataSourceService, EventService, EventTypes, Utils, $timeout,$compile) {
         var scopeDefine={
             id: '@',
