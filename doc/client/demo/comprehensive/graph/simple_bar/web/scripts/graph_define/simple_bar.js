@@ -35,7 +35,6 @@ var allSeries=[],
             allSeries[i].data = data.data[i]
         }
     }
-console.log(allSeries)
 return{
     tooltip : {
         trigger: 'axis',
