@@ -99,6 +99,20 @@ multiple_select设置为true多选时可以设置此属性，为true则可以跨
 详细示例如下：
 <live_demo example="controls/area/setting" width="600"></live_demo>
 
+## showAllProvince ##
+
+在`showAll` 设置为`false` 时可以设置此属性，表示在选择项里显示：全省（特殊标签项）
+
+
+## showAllCity ##
+
+在`showAll` 设置为`false` 时可以设置此属性，表示在选择项里显示：全市（特殊标签项）
+
+
+详细示例如下：
+<live_demo example="controls/area/showAll" width="600"></live_demo>
+
+
 # 事件 #
 
 如果设置了id，即可广播/监听以下事件。
