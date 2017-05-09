@@ -38,6 +38,9 @@
 ### 示例十二
 <live_demo example="comprehensive/graph/simple_line/web" width="900" height="400"></live_demo>
 
+### 示例十三
+<live_demo example="comprehensive/graph/simple_bar/web" width="900" height="400"></live_demo>
+
 
 
 
