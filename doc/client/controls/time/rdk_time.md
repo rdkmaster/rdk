@@ -116,6 +116,14 @@ inday/inweek/inmonth/inyear 和具体的 1d,2w,3m,4y。
 
 <live_demo example="controls/time/showGranularity" width="900"></live_demo>
 
+### disabled ###
+
+> 支持类型：布尔
+
+`disabled`为`true`时冻结时间选择，缺省时默认为`false`.
+
+<live_demo example="controls/time/disabled" width="900"></live_demo>
+
 # 支持国际化 #
 <live_demo example="controls/time/i18n" width="900"></live_demo>
 

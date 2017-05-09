@@ -110,25 +110,28 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                 setting: "=?",
                 label: "=?",
                 refreshTimeout: "@?",
-                granularityChange: '&?'
+                granularityChange:'&?',
+                disabled:"=?"
             };
             return {
                 restrict: 'E',
                 replace: true,
                 template: '<div class="rdk-time-module">\
-                            <span>{{label}}</span>\
-                            <div class="time-content">\
-                                <input class="form-control startTime" ng-model="condition.startTime" unselectable="on" type="text" \
-                                 readonly datetimepicker option="startTimeOption" focus="handle()">\
-                                <span class="timeSpan" ng-if="range">-</span>\
-                                <input class="form-control endTime" ng-model="condition.endTime" type="text" \
-                                ng-if="range" readonly datetimepicker option="endTimeOption" focus="handle()">\
-                                <span ng-show="setting.selectGranularity == true" class="granularity" \
-                                    ng-bind="selectedGranularity.label" ng-click="focusSelect()"></span>\
-                                <select id="timeSelect{{$id}}" selectpicker class="selectpicker" ng-change="granularityChangeEvt()" ng-model="selectedGranularity" \
-                                    ng-options="granularity.label for granularity in granularityList" \
-                                    ng-show="setting.selectGranularity == true">\
-                                </select>\
+                            <div ng-class="{\'disabled-cursor\':disabled}">\
+                                <span>{{label}}</span>\
+                                <div class="time-content"  ng-class="{\'disabled\':disabled}">\
+                                    <input class="form-control startTime"  ng-model="condition.startTime" unselectable="on" type="text" \
+                                     readonly datetimepicker option="startTimeOption">\
+                                    <span class="timeSpan" ng-if="range">-</span>\
+                                    <input class="form-control endTime" ng-model="condition.endTime" type="text" \
+                                    ng-if="range" readonly datetimepicker option="endTimeOption">\
+                                    <span ng-show="setting.selectGranularity == true" class="granularity" \
+                                        ng-bind="selectedGranularity.label" ng-click="focusSelect()"></span>\
+                                    <select id="timeSelect{{$id}}" selectpicker class="selectpicker" ng-change="granularityChangeEvt()" ng-model="selectedGranularity" \
+                                        ng-options="granularity.label for granularity in granularityList" \
+                                        ng-show="setting.selectGranularity == true">\
+                                    </select>\
+                                </div>\
                             </div>\
                         </div>',
                 scope: scopeDefine,
@@ -137,7 +140,7 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                     return function link(scope, iElement, iAttrs) {
                         var i18n = Utils.getLocale(scope);
                         scope.range = Utils.isTrue(iAttrs.range);
-
+                        scope.disabled = Utils.isTrue(scope.disabled, false);
                         scope.handle = function() {
                             _init();
                         }

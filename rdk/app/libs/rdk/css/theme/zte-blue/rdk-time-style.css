@@ -125,6 +125,14 @@ input, button, select, textarea {
     width: 140px;
     font-family: arial;
 }
+.rdk-time-module .disabled-cursor{
+    cursor:not-allowed;
+    width: inherit;
+    display: inline-block;
+}
+.rdk-time-module .disabled-cursor .disabled{
+    pointer-events: none;
+}
 /*todo :theme colors*/
 
 .rdk-time-module .time-content {
