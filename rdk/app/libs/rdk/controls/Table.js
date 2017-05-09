@@ -295,7 +295,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 }
             }
         });
-
     tableModule.directive('rdkTable', ['DataSourceService', 'EventService', 'EventTypes', 'Utils', '$timeout', '$compile',function(DataSourceService, EventService, EventTypes, Utils, $timeout,$compile) {
         var scopeDefine={
             id: '@',
@@ -363,6 +362,15 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         ctrl.pageCtrl.setPage(scope.currentPage);
                     }, 0);
                 }
+
+                this.getGlobalSearch = function(){
+                    if(!scope.search) return;
+                    return scope.globalSearch;
+                };
+
+                this.getCurrentPage = function(){
+                    return scope.currentPage;
+                };
 
                 this.getTableAppScope = function() {
                     return scope.appScope;
@@ -706,6 +714,13 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
                         }, true);
 
+                        scope.$watch("currentPage", function(newVal, oldVal) {
+                            if (newVal) {
+                                if (angular.isDefined(attrs.id)) {
+                                    EventService.broadcast(attrs.id, EventTypes.PAGING_NUMBER_CHANGE, newVal);
+                                }
+                            }
+                        }, true);
 
                         scope.$watch("setting.columnDefs", function(newVal, oldVal) {
                             if (newVal != oldVal) {

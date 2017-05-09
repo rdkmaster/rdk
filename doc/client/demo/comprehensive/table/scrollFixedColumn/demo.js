@@ -4,8 +4,9 @@
         'rd.controls.Table','css!base/css/demo','rd.attributes.theme'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope', main];
-    function main($scope) {
+    var controllerDefination = ['$scope','EventService','EventTypes', main];
+    function main($scope,EventService,EventTypes) {
+
         $scope.setting1 = {};
         $scope.setting2 = {
             selectable:false,
@@ -26,8 +27,17 @@
         }
 
         $scope.click = function(item){
-            console.log(angular.toJson(item));
-        }
+            alert(angular.toJson(item));
+        };
+
+        // 同步两个表(tableHost,tableBak)的行为
+        EventService.register('tableHost', EventTypes.PAGING_DATA_CHANGE, function(event, data){
+            var globalSearch =rdk.tableHost.getGlobalSearch();
+            rdk.tableBak.setGlobalSearch(globalSearch);
+        });
+        EventService.register('tableHost', EventTypes.PAGING_NUMBER_CHANGE, function(event, data){
+            rdk.tableBak.setCurrentPage(data);
+        });
 
 
         $scope.data = {};
@@ -37,7 +47,7 @@
 
         function testData(){
             var data=[];
-            for(var i=0;i<8;i++){
+            for(var i=0;i<80;i++){
                 var testData=[];
                 for(var j=0;j<8;j++){
                     testData.push(i+''+j);
