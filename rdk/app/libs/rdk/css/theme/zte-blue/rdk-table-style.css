@@ -437,21 +437,24 @@ i.regular_right,i.regular_left{
 /* vmax :3.0 风格 end */
 
 /* table col resizeable start */
-.rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize > thead > tr > th{
+/* sticky-thead 是指浮动表头的样式 */
+.rdk-table-module .rdk-table.resize,
+.rdk-table-module .rdk-table.resize + .rdk-table.sticky-thead{
+    table-layout: fixed;
+}
+.rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize > thead > tr > th,
+.rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize + .rdk-table.sticky-thead > thead > tr > th{
     border-right: 1px solid #e6e6e6;
 }
-.rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize > thead > tr > th:last-child{
+.rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize > thead > tr > th:last-child,
+.rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize + .rdk-table.sticky-thead > thead > tr > th:last-child{
     border-right: none;
 }
 .rdk-table-module .rdk-table.resize > thead > tr > th,
+.rdk-table-module .rdk-table.resize + .rdk-table.sticky-thead > thead > tr > th,
 .rdk-table-module .rdk-table.resize > tbody > tr > td > div >div{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-/*兼容IE11 : css rule sets go here */
-@media screen and (min-width:0\0) {
-    .rdk-table-module .rdk-table.sticky-thead{
-        table-layout: fixed;
-    }
-}
+/* table col resizeable end */
