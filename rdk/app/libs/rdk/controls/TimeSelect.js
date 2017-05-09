@@ -359,6 +359,9 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                                         if(+DateArr[j].innerText == targetObj.startDate.day){
                                             DateArr[j].classList.add("border-left");
                                         }
+                                        if(+DateArr[j].innerText == targetObj.endDate.day){
+                                            DateArr[j].classList.add("border-right");
+                                        }
                                     }
                                     else  if(DateArr[j].classList.contains("new")){
                                         if(targetObj.startDate.month==headVal.month && +DateArr[j].innerText<=+targetObj.endDate.day)
