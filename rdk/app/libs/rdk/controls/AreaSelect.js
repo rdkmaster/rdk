@@ -73,7 +73,7 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
                         </div>\
                         <div class="rdk-area-panel" ng-show="$vm.activeTab == 2">\
                             <ul>\
-                                <li ng-if="showAll" ng-click="$vm.selectAllProOrCity(\'全省\')" class="all-label"><a>全省</a></li>\
+                                <li ng-if="showAll || showAllProvince" ng-click="$vm.selectAllProOrCity(\'全省\')" class="all-label"><a>全省</a></li>\
                                 <li ng-repeat="city in $vm.dsCitys.data.data">\
                                     <a ng-click="$vm.clkCityNextLvOpen(city,1)" ng-class="{selected:$vm.activeCurItemClass(city,1)}">{{city.name}}</a>\
                                 </li>\
@@ -81,7 +81,7 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
                         </div>\
                         <div class="rdk-area-panel" ng-show="$vm.activeTab == 3">\
                             <ul>\
-                                <li ng-if="showAll" ng-click="$vm.selectAllProOrCity(\'全市\')" class="all-label"><a>全市</a></li>\
+                                <li ng-if="showAll || showAllCity" ng-click="$vm.selectAllProOrCity(\'全市\')" class="all-label"><a>全市</a></li>\
                                 <li ng-repeat="area in $vm.dsAreas.data.data" ng-click="$vm.changeSelected(area,2)">\
                                     <span ng-if="multipleSelect" class="rdk-area-checkbox" >\
                                     <i ng-show="$vm.activeCurItemClass(area,2)" class="fa fa-check icon-selected"></i>\
@@ -109,6 +109,8 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
             areaLabel:'@?',
             freezeProvince:"=?",
             showAll:"=?",
+            showAllProvince:"=?",
+            showAllCity:"=?",
             multipleSelect: '=?',
             multipleArea: '=?',
             delimiter: '@?'
@@ -158,6 +160,8 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
 
             //默认在选择项里显示：全省，全市标签
             scope.showAll=  Utils.isTrue(scope.showAll, true);
+            scope.showAllProvince=  Utils.isTrue(scope.showAllProvince, false);
+            scope.showAllCity=  Utils.isTrue(scope.showAllCity, false);
             scope.freezeProvince = Utils.isTrue(scope.freezeProvince, true);
             scope.multipleSelect = Utils.isTrue(scope.multipleSelect,tAttrs.multipleSelect, false);
             scope.multipleArea = Utils.isTrue(scope.multipleArea,tAttrs.multipleArea, false);
