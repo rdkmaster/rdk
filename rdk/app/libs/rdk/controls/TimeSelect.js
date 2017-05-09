@@ -381,7 +381,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                                         if(+DateArr[j].innerText == targetObj.startDate.day){
                                             DateArr[j].classList.add("border-left");
                                         }
-                                        else if(+DateArr[j].innerText == targetObj.endDate.day){
+                                        if(+DateArr[j].innerText == targetObj.endDate.day){
                                             DateArr[j].classList.add("border-right");
                                         }
                                     }
