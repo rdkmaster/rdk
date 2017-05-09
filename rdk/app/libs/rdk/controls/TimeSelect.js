@@ -20,9 +20,14 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                                     {{granularityItem.label}}\
                                     </span>\
                                 </div>\
-                            <div class="rdk-time-select-module">\
-                               <input ng-show="false" ng-model="setting.value"  type="text">\
-                           </div></div>',
+                                <div class="rdk-time-select-module">\
+                                    <input ng-show="false" ng-model="setting.value"  type="text">\
+                                </div>\
+                                <div ng-if="hasExpect" class="color-tips">\
+                                    <span>Selected</span>\
+                                    <span>Recommended</span>\
+                                </div>\
+                            </div>',
                 scope:scopeDefine,
                 link:function(scope, iElement, iAttrs) {
                     var initValue = [];
@@ -34,7 +39,11 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         {label: "Week", value: "week"},
                         {label: "Month", value: "month"}
                     ];
+                    var charToNum = {一:1, 二:2, 三:3, 四:4, 五:5, 六:6, 七:7, 八:8, 九:9, 十:10, 十一:11, 十二:12};
+
                     scope.language = Utils.getLocale(scope);
+
+                    scope.hasExpect=false;
 
                     scope.activeGranularityCls = function(granularity){
                         return scope.setting.granularity == granularity;
@@ -113,7 +122,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         if (angular.isUndefined(scope.setting)) {
                             scope.setting = {};
                         }
-                        scope.setting.weekValue = null;
+                        scope.setting.weekValue =  null;
                         scope.setting.selectGranularity = Utils.getValue(scope.setting.selectGranularity, undefined, false);
                         scope.setting.selectGranularity = scope.setting.selectGranularity && (angular.isArray(scope.setting.selectGranularity) ? scope.setting.selectGranularity : defaultGranularity);
                         scope.setting.granularity = Utils.getValue(scope.setting.granularity, undefined, TimeUnit.DAY);
@@ -159,7 +168,10 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         scope.condition.startTime = scope.setting.value;
                         _datetimepicker(iElement[0].querySelector(".rdk-time-select-module"),scope.startTimeOption);
 
+                        _setExpectDate();
+                        _setWeekStyle();
                     }
+
                     function handleWeekValue() {
                         if (scope.selectedGranularity.value != "week"){
                             return;
@@ -222,16 +234,216 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         }
                         return option;
                     }
+
                     function _datetimepicker(domNode,option){
                         !!datetimepicker && datetimepicker.datetimepicker('remove');
                         datetimepicker = $(domNode).datetimepicker(option);
                         datetimepicker.datetimepicker('update');//增加个隐藏的input节点目的:解决没法更新时间的BUG
                         datetimepicker.on('changeDate', function(ev) {
+                            _setExpectDate();
+                            _setWeekStyle();
                             scope.$apply(function() {
                                 scope.setting.value = TimeUtilService.dateFormate(new Date(ev.date.valueOf()), scope.startTimeOption.format);
                                 EventService.raiseControlEvent(scope, EventTypes.CHANGE, scope.setting.weekValue || scope.setting.value);
                             });
                         })
+                    }
+
+                    function _setWeekStyle(){
+                        if (scope.selectedGranularity.value == "week") {
+                            handleWeekValue();
+                            setTimeout(function () {
+                                var trDom = iElement[0].querySelector(".datetimepicker .datetimepicker-days>table>tbody>tr>td.active").parentNode;
+                                trDom.classList.add("active");
+                            }, 0)
+                        }
+                    }
+
+                    function _setExpectDate(){
+                        if(!(scope.setting && scope.setting.expectSelectedDate)){
+                            return
+                        }
+                        var  vaildExpectDate =  typeof vaildExpectDate=='undefined'?_vaildExpectDate():vaildExpectDate;
+                        if(!vaildExpectDate){
+                            console.error("setting property of expectSelectedDate format error!");
+                            return
+                        }
+                        scope.hasExpect=true;
+                        _expectDateHandler();
+                        _bindEventHandler();
+                    }
+
+                    function _expectDateHandler(){
+
+                        var expectSelectedDate = _parseExpectDate(scope.setting.expectSelectedDate);
+
+                        var yearsNode=_getDatePickerNode("years");
+
+                        _searchDateForYear(expectSelectedDate,yearsNode);
+
+                        var monthsNode=_getDatePickerNode("months");
+                        var monthsHeadNode=_getDatePickerNode("months",true);
+
+                        _searchDateForMonth(expectSelectedDate,monthsNode,monthsHeadNode);
+
+                        var daysNode=_getDatePickerNode("days");
+                        var daysHeadNode=_getDatePickerNode("days",true);
+
+                        var daysObj=_parseDay(daysHeadNode.innerText);
+
+                        _searchDateForDay(expectSelectedDate,daysNode,daysObj);
+                    }
+
+                    function _bindEventHandler(){
+                        var datetimepickerDom=iElement[0].querySelector(".rdk-time-select-module .datetimepicker");
+                        $(datetimepickerDom).on("click",function(){
+                            setTimeout(_expectDateHandler,0);
+                        });
+                    }
+
+                    function _getDatePickerNode(granularity,headVal){
+                        var selectorBefore=".rdk-time-select-module .datetimepicker .datetimepicker-";
+                        var selectorAfter=">table>tbody>tr>";
+                        var nodeName="";
+                        if (granularity=="years" || granularity=="months"){
+                            nodeName="td>span";
+                        }else{
+                            nodeName="td";
+                        }
+                        var selector=selectorBefore+granularity+selectorAfter+nodeName;
+                        if(!!headVal){
+                            var theadNode=">table>thead>tr>th.switch[colspan]";
+                            selector=selectorBefore+granularity+theadNode;
+                            return iElement[0].querySelector(selector);
+                        }
+                        return iElement[0].querySelectorAll(selector);
+                    }
+                    function _searchDateForYear(targetObj,DateArr){
+                        for (var j= 0, jLen=DateArr.length; j<jLen; j++)
+                        {
+                            if(targetObj.startDate.year==DateArr[j].innerText){
+                                if(!DateArr[j].classList.contains("disabled")){
+                                    DateArr[j].classList.add("expect-day");
+                                }
+                            }
+                        }
+                    }
+                    function _searchDateForMonth(targetObj,DateArr,headVal){
+                        if(targetObj.startDate.year==headVal.innerText){
+                            for (var j= 0, jLen=DateArr.length; j<jLen; j++)
+                            {
+                                if(targetObj.startDate.month==_parseMonth(DateArr[j].innerText)
+                                    || targetObj.endDate.month==_parseMonth(DateArr[j].innerText))
+                                {
+                                    if(!DateArr[j].classList.contains("disabled"))
+                                    {
+                                        DateArr[j].classList.add("expect-day");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    function _searchDateForDay(targetObj,DateArr,headVal){
+                        if(targetObj.startDate.year==headVal.year &&
+                            (targetObj.startDate.month==headVal.month || targetObj.endDate.month==headVal.month))
+                        {
+                            for (var j= 0, jLen=DateArr.length; j<jLen; j++)
+                            {
+                                if(+targetObj.startDate.month!=+targetObj.endDate.month){
+                                    if(!DateArr[j].classList.contains("old") && !DateArr[j].classList.contains("new")){
+                                        if((targetObj.startDate.month==headVal.month && +DateArr[j].innerText>=+targetObj.startDate.day)
+                                            || targetObj.endDate.month==headVal.month && +DateArr[j].innerText<=+targetObj.endDate.day)
+                                        {
+                                            DateArr[j].classList.add("expect-day");
+                                        }
+                                        if(+DateArr[j].innerText == targetObj.startDate.day){
+                                            DateArr[j].classList.add("border-left");
+                                        }
+                                        if(+DateArr[j].innerText == targetObj.endDate.day){
+                                            DateArr[j].classList.add("border-right");
+                                        }
+                                    }
+                                    else  if(DateArr[j].classList.contains("new")){
+                                        if(targetObj.startDate.month==headVal.month && +DateArr[j].innerText<=+targetObj.endDate.day)
+                                        {
+                                            DateArr[j].classList.add("expect-day");
+                                        }
+                                        if(+DateArr[j].innerText == targetObj.endDate.day){
+                                            DateArr[j].classList.add("border-right");
+                                        }
+                                    }else if(DateArr[j].classList.contains("old")){
+                                        if(targetObj.endDate.month==headVal.month && +DateArr[j].innerText>=+targetObj.startDate.day){
+                                            DateArr[j].classList.add("expect-day");
+                                        }
+                                    }
+                                }else{
+                                    if(!DateArr[j].classList.contains("old") && !DateArr[j].classList.contains("new")){
+                                        if(+DateArr[j].innerText >= +targetObj.startDate.day && +DateArr[j].innerText <= +targetObj.endDate.day){
+                                            DateArr[j].classList.add("expect-day");
+                                        }
+                                        if(+DateArr[j].innerText == targetObj.startDate.day){
+                                            DateArr[j].classList.add("border-left");
+                                        }
+                                        if(+DateArr[j].innerText == targetObj.endDate.day){
+                                            DateArr[j].classList.add("border-right");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    function _vaildExpectDate(){
+                        var expectSelectedDate = scope.setting.expectSelectedDate;
+                        if(expectSelectedDate.length==0){
+                            return false
+                        }else if(expectSelectedDate.length>2){
+                            console.error("setting property of expectSelectedDate only start time to end time");
+                            return false
+                        }
+                        return true
+                    }
+
+                    function _parseMonth(val){
+                        return charToNum[val.replace("月",'')];
+                    }
+                    function _parseDay(val){
+                        var result={};
+                        val = val.split("月");
+                        result.month=charToNum[val[0].trim()];
+                        result.year=val[1].trim();
+                        return result;
+                    }
+
+                    function _parseExpectDate(dateArr){
+                        var expectDateObj={};
+                        var labels = ['startDate','endDate'];
+                        var len = dateArr.length;
+                        for(var i= 0;i<len;i++){
+                            if (angular.isString(dateArr[i])){
+                                var obj={};
+                                if(dateArr[i].indexOf("now")!=-1){
+                                    var str = TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(dateArr[i]), scope.timeFormat);
+                                    obj = _dateStrToObj(str);
+                                }else{
+                                    obj = _dateStrToObj(dateArr[i]);
+                                }
+                            }
+                            expectDateObj[labels[i]]=obj;
+                        }
+                        if(expectDateObj.startDate.year != expectDateObj.endDate.year){ //不支持跨年设置
+                            throw "setting property of expectSelectedDate format error!";
+                        }
+                        return expectDateObj;
+                    }
+
+                    function _dateStrToObj(dateStr){
+                        var arr = dateStr.split("-");
+                        var obj = {};
+                        obj.year = +arr[0];
+                        obj.month = +arr[1];
+                        obj.day = +arr[2];
+                        return obj;
                     }
                 }
             };
