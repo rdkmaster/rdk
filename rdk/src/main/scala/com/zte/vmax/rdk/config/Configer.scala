@@ -21,10 +21,12 @@ trait ConfigTrait extends Logger {
     */
   def setConfigFiles(files: String*): Unit = {
     logger.debug(s"config home: $configHome")
-    config = files.toList.map(load).reduce((a, b) => a.withFallback(b)).withFallback(VmaxConfiger.getConfig).resolve()
+    config = files.toList.map(load).reduce((a, b) => a.withFallback(b))
+    config = config.withFallback(DefaultConfiger.getConfig).resolve()
     //注册默认的数据源(gbase)
-    val vmaxGbaseDataSource = s"""db.default.url="${VmaxConfiger.getGbaseUrl}" """
-    config = config.withFallback(ConfigFactory.parseString(vmaxGbaseDataSource)).resolve()
+    val defaultGbaseDataSource =
+      s"""db.default.url="${DefaultConfiger.getGbaseUrl}" """
+    config = config.withFallback(ConfigFactory.parseString(defaultGbaseDataSource)).resolve()
   }
 
   protected def load(file: String): com.typesafe.config.Config = {
@@ -58,7 +60,8 @@ object Config extends ConfigTrait {
     //前面文件中的配置项优先
     setConfigFiles(
       "rdk.cfg",
-      "datasource.cfg"
+      "datasource.cfg",
+      "extension.cfg"
     )
   }
 
