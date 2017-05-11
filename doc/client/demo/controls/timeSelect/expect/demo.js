@@ -1,11 +1,14 @@
 (function() {
     // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
     var imports = [
-        'rd.controls.ComboSelect','rd.controls.TimeSelect','css!base/css/time-select'
+        { url: 'base/i18n', alias: 'i18n' },'rd.controls.ComboSelect','rd.controls.TimeSelect','css!base/css/time-select'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', 'EventService','EventTypes', main];
     function main(scope,EventService,EventTypes ) {
+
+        imports.i18n.$init(scope);
+
         //时间配置
         scope.granularitySet={
             value: '2017-5-1',
