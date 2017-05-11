@@ -40,6 +40,8 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         {label: "Month", value: "month"}
                     ];
                     var charToNum = {一:1, 二:2, 三:3, 四:4, 五:5, 六:6, 七:7, 八:8, 九:9, 十:10, 十一:11, 十二:12};
+                    var enUsSimpleToNum = {Jan:1, Feb:2, Mar:3, Apr:4, May:5, Jun:6, Jul:7, Aug:8, Sep:9, Oct:10, Nov:11, Dec:12};
+                    var enUsToNum = {January:1, February:2, March:3, April:4, May:5, June:6, July:7, August:8, September:9, October:10, November:11, December:12};
 
                     scope.language = Utils.getLocale(scope);
 
@@ -170,6 +172,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
 
                         _setExpectDate();
                         _setWeekStyle();
+                        _bindEventHandler(_setWeekStyle);
                     }
 
                     function handleWeekValue() {
@@ -270,7 +273,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         }
                         scope.hasExpect=true;
                         _expectDateHandler();
-                        _bindEventHandler();
+                        _bindEventHandler(_expectDateHandler);
                     }
 
                     function _expectDateHandler(){
@@ -294,10 +297,10 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         _searchDateForDay(expectSelectedDate,daysNode,daysObj);
                     }
 
-                    function _bindEventHandler(){
+                    function _bindEventHandler(eventHandlerFn){
                         var datetimepickerDom=iElement[0].querySelector(".rdk-time-select-module .datetimepicker");
                         $(datetimepickerDom).on("click",function(){
-                            setTimeout(_expectDateHandler,0);
+                            setTimeout(eventHandlerFn,0);
                         });
                     }
 
@@ -405,13 +408,22 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                     }
 
                     function _parseMonth(val){
-                        return charToNum[val.replace("月",'')];
+                        if(scope.language.toLowerCase()=="zh_cn"){
+                            return charToNum[val.replace("月",'')];
+                        }
+                        return enUsSimpleToNum[val];
                     }
                     function _parseDay(val){
                         var result={};
-                        val = val.split("月");
-                        result.month=charToNum[val[0].trim()];
-                        result.year=val[1].trim();
+                        if(scope.language.toLowerCase()=="zh_cn"){
+                            val = val.split("月");
+                            result.month=charToNum[val[0].trim()];
+                            result.year=val[1].trim();
+                        }else{
+                            val = val.split(/\s+/);
+                            result.month=enUsToNum[val[0]];
+                            result.year=val[1];
+                        }
                         return result;
                     }
 
