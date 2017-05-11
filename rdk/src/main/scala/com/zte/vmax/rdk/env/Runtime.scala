@@ -28,7 +28,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
 
   implicit var application: String = ""
-  val locale: String = Config.get("ums.locale") match{
+  val locale: String = Config.get(Config.get("extension.locale.key")) match{
     case ""=>"zh_CN"
     case x =>x
   }

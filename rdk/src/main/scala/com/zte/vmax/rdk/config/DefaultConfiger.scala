@@ -10,12 +10,7 @@ import com.zte.vmax.rdk.util.Logger
   * Created by 10054860 on 2016/9/26.
   * 读取vmax系统的配置文件
   */
-object VmaxConfiger extends Logger {
-
-  private val ICT_BASE: String = "../../../../../.."
-  private val `serviceaddress.properties`: String = ICT_BASE + "/utils/vmax-conf/serviceaddress.properties"
-  private val `deploy-console.properties`: String = ICT_BASE + "/utils/console/works/console1/conf/deploy-console.properties"
-  private val `deploy-usf.properties`: String = ICT_BASE + "/works/global/deploy/deploy-usf.properties"
+object DefaultConfiger extends Logger {
 
   /**
     * 从配置文件读取属性值
@@ -39,7 +34,7 @@ object VmaxConfiger extends Logger {
   }
 
   /**
-    * 构造vmax数据看jdbc url（gbase）
+    * 构造rdk 默认jdbc url（gbase）
     *
     * @return
     */
@@ -64,7 +59,7 @@ object VmaxConfiger extends Logger {
   }
 
   /**
-    * 获取VMAX配置的参数，包括
+    * 从proc/conf/extension.cfg文件属性项获取默认配置的参数，包括
     * local.ip
     * ums.local
     * database.gbase.hostList
@@ -73,20 +68,20 @@ object VmaxConfiger extends Logger {
     * @return
     */
   def getConfig: TypeSafeConfig = {
-    val gbHost = getKey(`serviceaddress.properties`, "vmaxcn.gbasehost")
-    val localIp = getKey(`deploy-console.properties`, "console.main.ip")
-    val lang = getKey(`deploy-usf.properties`, "ums.locale")
-    val vmaxDbCfg =
+    val gbHost = getKey(Config.get("extension.gbase.host.config"), Config.get("extension.gbase.host.key"))
+    val localIp = getKey(Config.get("extension.http.server.ip.config"), Config.get("extension.http.server.ip.key"))
+    val lang = getKey(Config.get("extension.locale.config"),Config.get("extension.locale.key"))
+    val defaultDbCfg =
       s"""
          |local.ip="${localIp}"
-         |ums.locale="${lang}"
+         |${Config.get("extension.locale.key")}="${lang}"
          |database.gbase.hostList="${gbHost}"
          |db.default.driver=com.gbase.jdbc.Driver
          |#连接池
          |db.default.poolRef=pool.default
       """.stripMargin
     //
-    ConfigFactory parseString vmaxDbCfg
+    ConfigFactory parseString defaultDbCfg
 
   }
 
