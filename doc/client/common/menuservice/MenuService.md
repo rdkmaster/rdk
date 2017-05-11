@@ -112,7 +112,8 @@
 
 ## SELECT ##
 
- *MenuService* 菜单支持 *SELECT* 回调。单击菜单某一选项，会触发 *moduleID* 的 *EventTypes.SELECT* 事件。用户只需要在主函数中注册监听该事件即可。
+ *MenuService* 菜单支持 *SELECT* 和 *CLICK* 回调。单击菜单某一选项，会触发 *moduleID* 的 *EventTypes.SELECT* 和 *CLICK* 事件。用户只需要在主函数中注册监听该事件即可。
+ *SELECT* 事件的data 返回选择的 item的label  *CLICK* 事件的data 返回选择的 item 
 
         var moduleID;
 		scope.load = function(event){
