@@ -1028,7 +1028,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         }
                         var isFirstBroadCast=true;
                         scope.$on('ngRepeatFinished', function() {
-                            _reSetTableAddHeaders();
                             _fixTableHeader();
                             scope.refreshSingleCurrentPage();
                             _serverSortResponse();//后端排序，刷新后的响应
@@ -1048,7 +1047,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
                         });
                         scope.$on('tableHeadNgRepeatFinished', function() {
-                            _reSetTableHeaders(); //重定义表头
+                            _reSetTableAddHeaders(); //多级表头
+                            _reSetTableHeaders(); //自定义表头
                         });
 
                     };
