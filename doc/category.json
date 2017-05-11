@@ -310,16 +310,19 @@
           {
             "label":"API",
             "url":"http://10.9.233.35:10087/webgis/default/developer/js_api/index.html#a1_1",
+            "prefix": true,
             "icon": "fa fa-file"
           },
           {
             "label":"GisServer",
             "url":"http://10.9.233.35:10087/webgis/default/Giserver/GisServer.html",
+            "prefix": true,
             "icon": "fa fa-file"
           },
           {
             "label":"GisApply",
             "url":"http://10.9.233.35:10087/webgis/default/developer/demo/index.html#mapDisplay-initMap",
+            "prefix": true,
             "icon": "fa fa-file"
           }
         ]
