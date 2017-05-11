@@ -53,18 +53,12 @@ return {
     *    到相应的位置就行了。
     * */
     tooltip : {
-        trigger: 'axis',
+        trigger: 'axis'
     },
     title:{
         text:'掉话排行',
         textAlign:'left',
-        top:20,
-        textStyle:{
-            fontSize:14,
-            fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
-            fontWeight: 'normal',
-            color: '#008fd4' 
-        },
+        top:20
     },
     grid:{
         left:45,
@@ -78,12 +72,6 @@ return {
         top:20,
         right:43,
         inactiveColor: "#bbb",
-        textStyle:{
-            color:'#333',
-            fontSize:12,
-            fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
-            fontWeight: 'normal'
-        },
         itemWidth:20,//设置icon长高
         itemHeight:10
     },
@@ -93,30 +81,17 @@ return {
             boundaryGap : true,
 			position:'bottom',
             axisLabel:{
-                interval:4,//类轴网格设置
-                textStyle: { 
-                        fontSize:10,
-                        fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
-                        fontWeight: 'normal',
+                interval:4,//坐标轴文本标签
+                textStyle: {
                         color: '#666' 
                 }       
             },
-			axisLine: {//轴线设置
-				show:true,
-                lineStyle: {
-                    color: '#cccccc',
-                }
-            },  
             splitLine:{//网格相关设置
                 show: true,
-                interval:0,
-                lineStyle:{
-                color:"#e5e5e5"
-                }
-
+                interval:0
            },
             data : data.header
-        },
+        }
 		
     ],
     /*双数字轴和数据对应那个数字轴设置*/
@@ -129,16 +104,9 @@ return {
              // name: '掉话次数',
              nameTextStyle:{
                 color:colors[0],
-                fontSize:10,
-                fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
-                fontWeight: 'normal',
             },
 			axisLabel : {
-				//show:true,
-				textStyle: { 
-					fontSize:10,
-					fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
-					fontWeight: 'normal',
+				textStyle: {
 					color: colors[0],
                 },
                 formatter: function(params){
@@ -150,23 +118,17 @@ return {
             type : 'value',
             // splitNumber:4,
              axisLine: {
-                show:true,
                 lineStyle: {
                     color: colors[0]
                 }
             }
         },
-        {   
-            // name: '掉话率(%)',
+        {
             type : 'value',
-            // max:1.2,
 			splitLine: {show:false},
             position:'right',
             axisLabel : {//标签名样式
-				textStyle: { 
-					fontSize:10,
-					fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
-					fontWeight: 'normal',
+				textStyle: {
 					color: colors[1] 
 				},
                 formatter: function(params){
@@ -175,7 +137,6 @@ return {
 			},
             nameTextStyle:{
                color:colors[1],
-               fontStyle:'10px'
              },
             axisLine: {
                 lineStyle: {
@@ -192,10 +153,8 @@ return {
             legendHoverLink:false,
 			itemStyle : { 
                     normal: {
-                        label : {show: false, position: 'top'},
                         barBorderColor:colors[0],
                         color:colors[0],
-                        barBorderRadius: 0
                     }
                 },
             barCategoryGap:'15%',//控制条形柱间的间距

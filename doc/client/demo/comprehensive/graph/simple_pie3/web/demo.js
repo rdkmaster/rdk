@@ -11,8 +11,6 @@
            option=data.option;
             rdk.pie.chart.on('click', function (params) {
                 for(var i=0;i<option.series[0].data.length;i++){
-                    option.series[0].data[i].itemStyle.normal.shadowColor = i==params.dataIndex?option.series[0].data[i].itemStyle.normal.color:null;
-                    option.series[0].data[i].itemStyle.normal.shadowBlur = i==params.dataIndex?12.5:0;
                     option.series[0].data[i].selected = i==params.dataIndex?true:false
                 }
                 rdk.pie.chart.setOption(option)

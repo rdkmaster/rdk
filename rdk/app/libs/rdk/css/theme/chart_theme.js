@@ -11,6 +11,12 @@ define(function() {
          //         '#1e90ff','#ff6347','#7b68ee','#00fa9a','#ffd700',
          //         '#6699FF','#ff6666','#3cb371','#b8860b','#30e0e0'],
          // 图表标题
+        textStyle: {
+            fontWeight: 'normal',
+            fontStyle: 'normal',
+            fontFamily: '微软雅黑, Arial, Verdana, sans-serif',
+            fontFamily2: 'microsoft yahei', // IE8- 字体模糊并且不支持不同字体混排，额外指定一份
+        },
          title: {
              x: 'center', // 水平安放位置，默认为左对齐，可选为：
              // 'center' ¦ 'left' ¦ 'right'
@@ -26,10 +32,10 @@ define(function() {
              // 接受数组分别设定上右下左边距，同css
              itemGap: 25, // 主副标题纵向间隔，单位px，默认为10，
              textStyle: {
-                 fontSize: 16,
+                 fontSize: 14,
                  fontWeight: 'normal',
-                 fontFamily: 'microsoft yahei',
-                 color: '#325bdb' // 主标题文字颜色
+                 fontStyle: 'normal',
+                 fontFamily: '微软雅黑, Arial, Verdana, sans-serif',
              },
              subtextStyle: {
                  color: '#aaa' // 副标题文字颜色
@@ -55,11 +61,6 @@ define(function() {
              // 横向布局时为水平间隔，纵向布局时为纵向间隔
              itemWidth: 20, // 图例图形宽度
              itemHeight: 14, // 图例图形高度
-             textStyle: {
-                 fontSize: 14,
-                 fontFamily: 'microsoft yahei',
-                 color: '#333' // 图例文字颜色
-             }
          },
 
          // 值域
@@ -84,9 +85,6 @@ define(function() {
              splitNumber: 5, // 分割段数，默认为5，为0时为线性渐变
              color: ['#1e90ff', '#f0ffff'], //颜色
              //text:['高','低'],         // 文本，默认为数值文本
-             textStyle: {
-                 color: '#333' // 值域文字颜色
-             }
          },
 
          toolbox: {
@@ -188,7 +186,7 @@ define(function() {
              axisLine: { // 坐标轴线
                  show: true, // 默认显示，属性show控制显示与否
                  lineStyle: { // 属性lineStyle控制线条样式
-                     color: '#48b',
+                     color: '#ccc',
                      width: 2,
                      type: 'solid'
                  }
@@ -200,7 +198,6 @@ define(function() {
                  inside: false, // 控制小标记是否在grid里
                  length: 5, // 属性length控制线长
                  lineStyle: { // 属性lineStyle控制线条样式
-                     color: '#333',
                      width: 1
                  }
              },
@@ -218,7 +215,7 @@ define(function() {
                  show: true, // 默认显示，属性show控制显示与否
                  // onGap: null,
                  lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
-                     color: ['#ccc'],
+                     color: ["#e5e5e5"],
                      width: 1,
                      type: 'solid'
                  }
@@ -245,7 +242,7 @@ define(function() {
              axisLine: { // 坐标轴线
                  show: true, // 默认显示，属性show控制显示与否
                  lineStyle: { // 属性lineStyle控制线条样式
-                     color: '#48b',
+                     color: '#ccc',
                      width: 2,
                      type: 'solid'
                  }
@@ -271,7 +268,7 @@ define(function() {
              splitLine: { // 分隔线
                  show: true, // 默认显示，属性show控制显示与否
                  lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
-                     color: ['#ccc'],
+                     color: ['#e5e5e5'],
                      width: 1,
                      type: 'solid'
                  }
@@ -334,7 +331,6 @@ define(function() {
                  normal: {
                      // color: '各异',
                      barBorderColor: '#fff', // 柱条边线
-                     barBorderRadius: 5, // 柱条边线圆角，单位px，默认为0
                      barBorderWidth: 0, // 柱条边线线宽，单位px，默认为1
                      label: {
                          show: false
@@ -346,7 +342,6 @@ define(function() {
                  emphasis: {
                      // color: '各异',
                      barBorderColor: 'rgba(0,0,0,0)', // 柱条边线
-                     barBorderRadius: 5, // 柱条边线圆角，单位px，默认为0
                      barBorderWidth: 0, // 柱条边线线宽，单位px，默认为1
                      label: {
                          show: false
@@ -489,10 +484,6 @@ define(function() {
                      label: {
                          show: true,
                          position: 'outer',
-                         textStyle: {
-                             fontSize: 12,
-                             fontFamily: 'microsoft yahei'
-                         }
                          // textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE
                      },
                      labelLine: {
@@ -723,16 +714,6 @@ define(function() {
                  }
              }
          },
-
-         textStyle: {
-             decoration: 'none',
-             fontFamily: 'microsoft yahei,Arial, Verdana, sans-serif',
-             fontFamily2: 'microsoft yahei', // IE8- 字体模糊并且不支持不同字体混排，额外指定一份
-             fontSize: 14,
-             fontStyle: 'normal',
-             fontWeight: 'normal'
-         },
-
          // 默认标志图形类型列表
          symbolList: [
              'circle', 'rectangle', 'triangle', 'diamond',
@@ -745,7 +726,7 @@ define(function() {
          calculableHolderColor: '#ccc', // 可计算占位提示颜色
          nameConnector: ' & ',
          valueConnector: ' : ',
-         animation: false,
+         animation: true,
          animationThreshold: 2500, // 动画元素阀值，产生的图形原素超过2500不出动画
          addDataAnimation: true, // 动态数据接口是否开启动画效果
          animationDuration: 2000,

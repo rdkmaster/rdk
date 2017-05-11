@@ -24,7 +24,6 @@ define(['echarts'], function(echarts) {
 return function(data, context, GraphService, attributes) {
 
 return {
-    
     xAxis : [
         {
             type : 'category',
@@ -39,18 +38,11 @@ return {
               interval:0,
               length:5,//刻度长短设置
               lineStyle:{
-                     color:'#bbbbbb',
+                     color:'#bbb',
                }
 
             },
-            axisLine: {//轴线设置
-                show:true,
-                lineStyle: {
-                    color: '#cccccc',
-                }
-            },  
             splitLine:{//网格线相关设置
-               show: true,
                interval:0,//类目轴为true且为这个为0时才会显示
                lineStyle:{
                 color:"#eee"
@@ -67,9 +59,8 @@ return {
             show:false,
             },
             axisLine: {//轴线设置
-                show:true,
                 lineStyle: {
-                    color: '#cccccc',
+                    color: '#ccc'
                 }
             },  
             min:0,
@@ -81,12 +72,10 @@ return {
         }
     ],
     series : [
-       
         {
             name: data.rowDescriptor[0],
             type:'line',
             connectNulls:true,
-            //hoverAnimation:false,
             smooth:true,
             symbolSize:[5,5],
             showAllSymbol:true,

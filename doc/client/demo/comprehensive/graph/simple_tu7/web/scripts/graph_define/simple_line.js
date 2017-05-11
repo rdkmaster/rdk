@@ -81,12 +81,9 @@ return {
             name:'bar1',
             type:'bar',
             silent: true,
+            animation:false,//关闭动画
             itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
                 normal: {
-                    color: "#ddeef7",
-                    barBorderRadius: 5,
-                },
-                emphasis: {
                     color: "#ddeef7",
                     barBorderRadius: 5,
                 }
@@ -105,14 +102,9 @@ return {
                     show: true, position:[145 , -3] ,
                     textStyle: {
                         color: "#434343",
-                        fontSize:12,
-                        fontFamily:'微软雅黑'
-
                     },
                     formatter: "{c}"
-
-                   
-                },
+                }
             },
             itemStyle: {
                 normal: {
