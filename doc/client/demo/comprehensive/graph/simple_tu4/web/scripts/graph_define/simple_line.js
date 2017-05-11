@@ -38,13 +38,10 @@ return {
     title : {
         text:"时延比例分布",
         textStyle: {
-            fontSize: 14,
-            fontWeight:'normal',
             color: '#008fd4',
-            fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
         },
         top:20
-    }, 
+    },
      grid:{
         left:100,
         right:getGridRight(),
@@ -59,21 +56,16 @@ return {
             position: 'bottom',
             max:"dataMax",
             axisLabel : {
-               //show:true,
-                textStyle: { 
-                    fontSize:12,
-                    fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
-                    fontWeight: 'normal',
-                    color: '#bbbbbb' 
+                textStyle: {
+                    color: '#bbb'
                 }             
             },
             axisTick:{//坐标轴刻度相关设置
                 show:true,
-				//inside:true,//刻度朝向，里外
-                color:'#ddd',
                 length:3,//刻度长短设置
-                lineStyle:{
-                     color:'#ddd',
+                lineStyle : {
+                    color: '#ddd',
+                    width : 1
                 }
             },  
             axisLine: {
@@ -92,16 +84,11 @@ return {
             data : data.header,
             boundaryGap :[0.01,0.01],
             axisLabel : {
-                //show:true,
-                textStyle: { 
-                    fontSize:12,
-                    fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
-                    fontWeight: 'normal',
+                textStyle: {
                     color: '#666' 
                 }             
             },
             axisLine: {
-                show : true,
                 lineStyle : {
                     color: '#ddd',
                     width : 1
@@ -114,23 +101,16 @@ return {
                 lineStyle:{
                      color:'#54acd5',
                 }
-            },               
+            }
         }
     ],
     series : [
         {
             type:'bar',  
             barGap:'-100%',
+            silent: true,
             itemStyle : { 
                 normal: {
-                    label : {show: false, position: 'top'},
-                    barBorderColor:'#54acd5',
-                    opacity:0.2,
-                    color:'#54acd5',
-                    barBorderRadius: 5
-                },
-                emphasis: {
-                    label : {show: false, position: 'top'},
                     barBorderColor:'#54acd5',
                     opacity:0.2,
                     color:'#54acd5',
@@ -144,6 +124,7 @@ return {
             type:'bar',
             stack: '总量',
             barGap:'-100%',
+            silent: true,
             itemStyle:{
                 normal:{
                     barBorderColor:'rgba(0,0,0,0)',
@@ -151,15 +132,8 @@ return {
                     barBorderRadius: 5,
                     textStyle: {
                         align : 'right'
-                    },
-                emphasis: {
-                    label : {show: false, position: 'top'},
-                    barBorderColor:'#54acd5',
-                    opacity:0.2,
-                    color:'#54acd5',
-                    barBorderRadius: 5
+                    }
                 }
-                },
                 
             },
             barWidth: 10,
@@ -170,13 +144,13 @@ return {
             type:'bar',         
             stack: '总量',
             barGap:'-100%',
+            silent: true,
             animation:true,
             label : {
                 normal: {
                     show: true,
                     position: ['100%',getBrowserInfo()],
                     textStyle:{
-                        fontSize:12,
                         color:"#54acd5"
                     }
                 }
@@ -187,13 +161,7 @@ return {
                     color:'#54acd5',
                     barBorderRadius: 5
                      
-                },
-                emphasis: {
-                    barBorderColor:'#54acd5',
-                    color:'#54acd5',
-                    barBorderRadius: 5
-                     
-                },
+                }
             },
             barWidth:10,
             data:data.data[2]

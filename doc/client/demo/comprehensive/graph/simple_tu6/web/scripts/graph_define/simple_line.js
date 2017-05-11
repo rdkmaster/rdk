@@ -1,4 +1,3 @@
-
 // underscore 是一个开源库，提供了丰富的高性能的对数组，集合等的操作
 // api 手册：http://learningcn.com/underscore
 // 为了少加载不必要的代码，默认是不引入 underscore 的，需要用到的话
@@ -7,7 +6,7 @@
 //           ...
 //        });
 
-define(['echarts'], function(echarts) {
+define(['echarts'], function (echarts) {
 
 // data 是Graph的输入数据。
 // 使用data参数时，请务必保持只读
@@ -21,209 +20,114 @@ define(['echarts'], function(echarts) {
 // GraphService 是一个函数集，主要提供了对二维数组的常用操作
 
 // attributes 是当前Graph所在的html节点的所有属性集。也是一种辅助数据。
-return function(data, context, GraphService, attributes) {
-    
-return {
-    title: {
-        text: '各市得分排名',
-        left: "center",
-        top: 20,
-        textStyle: {
-            color: '#434343',
-            fontSize: 12
-        }
-    },
-
-     // legend: {
-     //    data: ['bar', 'bar2', 'bar3', 'bar4','bar4','bar5','bar6'],
-     //    align: 'left',
-     //    left: 10
-     // },
-    calculable : true,
-    grid:{
-        left:90,
-        right:60,
-        top:60,
-        // show:true,
-        // borderWidth:1
-        },
-    xAxis : [
-        {  
-            type : 'value',
-            splitNumber:4,
-            axisLine:{
-                show: false,
-            },
-            splitLine:{//出网格线
-　　　　            show:false
-　　        },
-            axisTick:{//坐标轴刻度相关设置
-                show: false,
-            },
-            axisLabel:{
-                show: false,
-            },
-        }
-    ],
-    yAxis : [
-        {
-             splitLine:{
-　　　　   show:false
-　　        },
-            boundaryGap:true,
-            type : 'category',
-            scale:false,
-            axisLabel:{
-                // show: false,
-              textStyle :{
-                  color:'#434343'//刻度标签样式
-              } 
-           
-            },
-             axisLine:{
-                show: false,
-                lineStyle:{
-                    color:'#ff7c27' //刻度样式
-                }
-            } ,
-            axisTick:{//坐标轴刻度相关设置
-                show: false,
-                length:5,//刻度长短设置
-            },
-            data :data.header
-        }
-    ],
-    series : [
-         {
-            name:'bar',
-            type:'bar',
-            stack:"总量",
-            animation:false,//关闭动漫
-            itemStyle: {
-                normal: {
-                    color:data.data[0][0]>95 ? "#98e2a6" : data.data[0][0]>90 ? "#9ad0e2" : data.data[0][0]>80 ? 
-                    "#f7e685" : data.data[0][0]>70 ? "#f6c88a" : "#ff8e74",
-                    barBorderRadius: 0
-                },
-                emphasis: {color: data.data[0][0]>95 ? "#98e2a6" : data.data[0][0]>90 ? "#9ad0e2" : data.data[0][0]>80 ? 
-                    "#f7e685" : data.data[0][0]>70 ? "#f6c88a" : "#ff8e74",}
-            },
-             barWidth:'10px',
-             data: data.data[0]
-          
-        },
-        {
-            name:'bar2',
-            type:'bar',
-            stack:"总量",
-            itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
-                normal: {
-                    color:data.data[1][1]>95 ? "#98e2a6" : data.data[1][1]>90 ? "#9ad0e2" : data.data[1][1]>80 ? 
-                    "#f7e685" : data.data[1][1]>70 ? "#f6c88a" : "#ff8e74",
-                    barBorderRadius: 0
-                },
-                emphasis: {color: data.data[1][1]>95 ? "#98e2a6" : data.data[1][1]>90 ? "#9ad0e2" : data.data[1][1]>80 ? 
-                    "#f7e685" : data.data[1][1]>70 ? "#f6c88a" : "#ff8e74",}
-            },
-            barWidth:'10px',//条形宽度
-            
-            data:data.data[1]
-        },
-        {
-            name:'bar3',
-            type:'bar',
-            stack:"总量",
-            itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
-                normal: {
-                    color:data.data[2][2]>95 ? "#98e2a6" : data.data[2][2]>90 ? "#9ad0e2" : data.data[2][2]>80 ? 
-                    "#f7e685" : data.data[2][2]>70 ? "#f6c88a" : "#ff8e74",
-                    barBorderRadius: 0
-                },
-                emphasis: {color:data.data[2][2]>95 ? "#98e2a6" : data.data[2][2]>90 ? "#9ad0e2" : data.data[2][2]>80 ? 
-                    "#f7e685" : data.data[2][2]>70 ? "#f6c88a" : "#ff8e74",}
-            },
-            barWidth:'10px',//条形宽度
-             data:data.data[2]
-        },
-        {
-            name:'bar4',
-            type:'bar',
-            stack:"总量",
-            itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
-                normal: {
-                    color:data.data[3][3]>95 ? "#98e2a6" : data.data[3][3]>90 ? "#9ad0e2" : data.data[3][3]>80 ? 
-                    "#f7e685" : data.data[3][3]>70 ? "#f6c88a" : "#ff8e74",
-                    barBorderRadius: 0
-                },
-                emphasis: {color:data.data[3][3]>95 ? "#98e2a6" : data.data[3][3]>90 ? "#9ad0e2" : data.data[3][3]>80 ? 
-                    "#f7e685" : data.data[3][3]>70 ? "#f6c88a" : "#ff8e74",}
-            },
-            barWidth:'10px',//条形宽度
-            
-             data:data.data[3]
-        },
-        {
-            name:'bar5',
-            type:'bar',
-            stack:"总量",
-            itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
-                normal: {
-                    color:data.data[4][4]>95 ? "#98e2a6" : data.data[4][4]>90 ? "#9ad0e2" : data.data[4][4]>80 ? 
-                    "#f7e685" : data.data[4][4]>70 ? "#f6c88a" : "#ff8e74",
-                    barBorderRadius: 0
-                },
-                emphasis: {color:data.data[4][4]>95 ? "#98e2a6" : data.data[4][4]>90 ? "#9ad0e2" : data.data[4][4]>80 ? 
-                    "#f7e685" : data.data[4][4]>70 ? "#f6c88a" : "#ff8e74",}
-            },
-            barWidth:'10px',//条形宽度
-            
-             data:data.data[4]
-        },
-        {
-            name:'bar6',
-            type:'bar',
-            stack:"总量",
-            itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
-                normal: {
-                   color:data.data[5][5]>95 ? "#98e2a6" : data.data[5][5]>90 ? "#9ad0e2" : data.data[5][5]>80 ? 
-                    "#f7e685" : data.data[5][5]>70 ? "#f6c88a" : "#ff8e74",
-                    barBorderRadius: 0
-                },
-                emphasis: {color: data.data[5][5]>95 ? "#98e2a6" : data.data[5][5]>90 ? "#9ad0e2" : data.data[5][5]>80 ? 
-                    "#f7e685" : data.data[5][5]>70 ? "#f6c88a" : "#ff8e74",}
-            },
-            barWidth:'10px',//条形宽度
-             data:data.data[5]
-        },
-        {
-            name:'bar6',
-            type:'bar',
-            stack:"总量",
-            label : {//图形数据显示位置
-                normal: {
-                    show: true, position:['100%' , -5] ,
-                    textStyle: {
-                        color: "#585858"
-                    },
-                    formatter: function(params){
-                        console.log(params)
-                        return  "  "+(100 - params.value)
+    return function (data, context, GraphService, attributes) {
+        var allData = [];
+        var len = data.data[0].length;
+        if (data.data[0].length) {
+            for (var i = 0; i < len; i++) {
+                allData[i] = {};
+                allData[i].value = data.data[0][i];
+                allData[i].itemStyle = {
+                    normal: {
+                        color: data.data[0][i] > 95 ? "#98e2a6" : data.data[0][i] > 90 ? "#9ad0e2" : data.data[0][i] > 80 ?
+                            "#f7e685" : data.data[0][i] > 70 ? "#f6c88a" : "#ff8e74"
                     }
-                },
-            },
-            itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
-                normal: {
-                    color: "#dedede",
-                    // opacity: 0.1,
-                    barBorderRadius: 0
-                },
-                emphasis: {color: "#dedede",}
-            },
-            barWidth:'10px',//条形宽度
-            data:[100-data.data[0][0] , 100-data.data[1][1] , 100-data.data[2][2] , 100-data.data[3][3] , 100-data.data[4][4] , 100-data.data[5][5]]
+                }
+            }
         }
-        
-    ]
-};
+        return {
+            title: {
+                text: '各市得分排名',
+                left: "center",
+                top: 20,
+                textStyle: {
+                    color: '#434343',
+                    fontSize: 12
+                }
+            },
+            calculable: true,
+            grid: {
+                left: 90,
+                right: 60,
+                top: 60
+            },
+            xAxis: [
+                {
+                    type: 'value',
+                    splitNumber: 4,
+                    axisLine: {
+                        show: false
+                    },
+                    splitLine: {//出网格线
+                        show: false
+                    },
+                    axisLabel: {
+                        show: false
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    splitLine: {
+                        show: false
+                    },
+                    boundaryGap: true,
+                    type: 'category',
+                    scale: false,
+                    axisLabel: {
+                        textStyle: {
+                            color: '#434343'//刻度标签样式
+                        }
 
-}});
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    axisTick: {//坐标轴刻度相关设置
+                        show: false
+                    },
+                    data: data.header
+                }
+            ],
+            series: [
+                {
+                    name: 'bar',
+                    type: 'bar',
+                    stack: "总量",
+                    silent: true,
+                    animation: false,//关闭动漫
+                    barWidth: '10px',
+                    data: allData
+
+                },
+                {
+                    name: 'bar6',
+                    type: 'bar',
+                    stack: "总量",
+                    silent: true,
+                    animation: false,//关闭动漫
+                    label: {//图形数据显示位置
+                        normal: {
+                            show: true, position: ['100%', -5],
+                            textStyle: {
+                                color: "#585858"
+                            },
+                            formatter: function (params) {
+                                return "  " + (100 - params.value)
+                            }
+                        },
+                    },
+                    itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
+                        normal: {
+                            color: "#dedede"
+                        }
+                    },
+                    barWidth: '10px',//条形宽度
+                    data: [100 - data.data[0][0], 100 - data.data[0][1], 100 - data.data[0][2], 100 - data.data[0][3], 100 - data.data[0][4], 100 - data.data[0][5]]
+                }
+
+            ]
+        };
+
+    }
+});

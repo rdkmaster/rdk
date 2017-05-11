@@ -22,7 +22,17 @@ define([], function() {
 
 // attributes 是当前Graph所在的html节点的所有属性集。也是一种辅助数据。
 return function(data, context, GraphService, attributes) {
-
+    colors = ['#d78989','#efa59d','#f0c163','#fce5be']
+    var allData = [];
+    var len = data.data.length;
+    if (len) {
+        for (var i = 0; i < len; i++) {
+            allData[i] = {};
+            allData[i].value = data.data[i].value;
+            allData[i].name = data.data[i].name;
+            allData[i].itemStyle = {normal: {color: colors[i]}}
+        }
+    }
 return {
  legend: {
         itemWidth: 12,
@@ -68,9 +78,7 @@ return {
                 show: false,
                  textStyle: {
                     color:'#000',
-                    fontFamily : '微软雅黑',
                     fontSize : 14,
-                    fontWeight:'normal'
                 },
                 formatter : function (params){
                     return  params.name+'\n'+params.value + '%'
@@ -79,7 +87,6 @@ return {
         },
         itemStyle: {
             normal: {
-                // color: 各异,
                 borderColor: '#fff',
                 borderWidth: 1,
             }
@@ -89,30 +96,12 @@ return {
         center : ['30%', '50%'],
         avoidLabelOverlap: false,
         hoverAnimation:false,
-       // itemStyle : ,
-        // selectedMode: 'single',
         labelLine: {
             normal: {
                 show: false
             }
         },
-        data:[{
-                    name: data.data[0].name,
-                    value: data.data[0].value,
-                    itemStyle:{normal: {color: '#d78989'}}
-                }, {
-                    name: data.data[1].name,
-                    value: data.data[1].value,
-                    itemStyle:{normal: {color: '#efa59d'}}
-                }, {
-                    name: data.data[2].name,
-                    value: data.data[2].value,
-                    itemStyle:{normal: {color: '#f0c163'}}
-                }, {
-                    name: data.data[3].name,
-                    value: data.data[3].value,
-                    itemStyle:{normal: {color: '#fce5be'}}
-        }]
+        data:allData
     }]
 };
 

@@ -22,6 +22,9 @@ define([/*  'underscore'   */], function() {
 
 // attributes 是当前Graph所在的html节点的所有属性集。也是一种辅助数据。
 return function(data, context, GraphService, attributes) {
+    var allSeries=[];
+    var selected = {};
+    var len = data.data.length;
     var sampleColors = ["#54acd5","#f99660","#a4bf6a","#ec6d6d","#f7b913","#8ac9b6","#bea5c8","#01c5c2","#a17660"];
     var vmaxColors = ['#41addc', '#bea5c8', '#85c56c', '#f99660', '#ffc20e', '#ec6d6d', '#8ac9b6', '#585eaa', '#b22c46', '#96582a'];
     function GetRequest() {
@@ -36,12 +39,26 @@ return function(data, context, GraphService, attributes) {
         }
         return theRequest;
     }
-    var  colors = GetRequest().vmax==3.0?vmaxColors:sampleColors;return {
+    var  colors = GetRequest().vmax==3.0?vmaxColors:sampleColors;
+    if(data.data.length){
+        for(var i=0;i<len;i++){
+            allSeries[i] = {};
+            selected[data.rowDescriptor[i]]=i<3?true:false
+            allSeries[i].name =data.rowDescriptor[i];
+            allSeries[i].type = 'line';
+            allSeries[i].showAllSymbol = true;
+            allSeries[i].animation = true;
+            allSeries[i].smooth = false;
+            allSeries[i].symbolSize = [5,5];
+            allSeries[i].hoverAnimation = false;
+            allSeries[i].data = data.data[i]
+        }
+    }
+    return {
     color:colors,
     tooltip : {
         trigger: 'axis',
-        position: function (point, params, dom) {
-      // 固定在顶部
+        position: function (point) {// 固定在顶部
             return [point[0]+10, point[1]];
         }
     },
@@ -51,25 +68,8 @@ return function(data, context, GraphService, attributes) {
         itemHeight:5,
         top:20,
         inactiveColor:"#bbb",
-        textStyle:{
-            color:"#333",
-            fontSize:12,  
-            fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
-            fontWeight: 'normal'
-        },
         itemGap:10,
-         selected: {
-            "语音感知": true,
-            "数据感知": true,
-            "业务体验": true,
-            "网页浏览": false,
-            "即时通讯": false,
-            "社交媒体": false,
-            "视频": false,
-            "下载": false,
-            "其他": false,
-            "网络接入": false,
-            }
+        selected: selected
     },
     grid:{
         left:45,
@@ -88,132 +88,25 @@ return function(data, context, GraphService, attributes) {
         {
             type : 'category', boundaryGap : false,
 			axisLabel:{//标签设置
-                interval:4,
-                textStyle:{
-                    color:"#666",
-                    fontSize:10,  
-                    fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
-                    fontWeight: 'normal'
-                }
+                interval:4
             },
-            axisLine: {//轴线设置
-                    show : true,
-                    lineStyle : {
-                        color: '#ccc',
-                        width : 1
-                    }
-                },
             splitLine:{//设置网格
-                show: true,
-                interval:0,
-                lineStyle:{
-                color:"#e5e5e5"
-               }
+                interval:0
            },
-                       scale:true,
+            scale:true,
             data : data.header
         }
     ],
     yAxis : [
         {
-            type : 'value',splitNumber:10,//不是类轴才会生效，设置网格多少
-            splitLine:{//网格样式
-                lineStyle:{
-                    color:"#e5e5e5"
-                }
-            },
+            type : 'value',
+            splitNumber:10,//不是类轴才会生效，设置网格多少
             axisLabel:{//标签设置
-                interval:4,
-                textStyle:{
-                    color:"#666",
-                    fontSize:10,  
-                    fontFamily:'微软雅黑, Arial, Verdana, sans-serif',
-                    fontWeight: 'normal'
-                }
-            },
-            // splitArea:{//网格颜色
-            //     show:true,
-            //     areaStyle:{
-            //         color:['red','green']
-            //     }
-            // },
-            axisLine: {
-                    show : true,
-                    lineStyle : {
-                        color: '#ccc',
-                        width : 1
-                }
-           }
+                interval:4
+            }
         }
     ],
-    series : [
-        {
-            name: data.rowDescriptor[0],showAllSymbol:true,//是否显示所有的点
-            animation:true,//出场动漫是否打开
-            data: data.data[0],smooth:false,//是否平滑曲线连接
-            symbolSize:[5,5],//转折点处样式大小
-            hoverAnimation:false,
-            type:'line'
-        },
-        {
-            name: data.rowDescriptor[1],showAllSymbol :true,animation:true,
-            data: data.data[1],smooth:false,symbolSize:[5,5],
-            hoverAnimation:false,
-            type:'line'
-        },
-		{
-            name: data.rowDescriptor[2],showAllSymbol :true,animation:true,
-            data: data.data[2],smooth:false,symbolSize:[5,5],
-            hoverAnimation:false,
-            type:'line'
-        },
-		{
-            name: data.rowDescriptor[3],showAllSymbol :true,animation:true,
-            data: data.data[3],smooth:false,symbolSize:[5,5],
-            hoverAnimation:false,
-            type:'line'
-        },
-		{
-            name: data.rowDescriptor[4],showAllSymbol :true,animation:true,
-            data: data.data[4],smooth:false,symbolSize:[5,5],
-            hoverAnimation:false,
-            type:'line'
-        },
-		{
-            name: data.rowDescriptor[5],showAllSymbol :true,animation:true,
-            data: data.data[5],smooth:false,symbolSize:[5,5],
-            hoverAnimation:false,
-            type:'line'
-        },
-		{
-            name: data.rowDescriptor[6],showAllSymbol :true,animation:true,
-            data: data.data[6],smooth:false,symbolSize:[5,5],
-            hoverAnimation:false,
-            type:'line'
-        },
-		{
-            name: data.rowDescriptor[7],showAllSymbol :true,animation:true,
-            data: data.data[7],smooth:false,symbolSize:[5,5],
-            hoverAnimation:false,
-            type:'line'
-        },
-		{
-            name: data.rowDescriptor[8],showAllSymbol :true,animation:true,
-            data: data.data[8],smooth:false,
-            hoverAnimation:false,
-            symbolSize:[5,5],
-            type:'line'
-        },
-		{
-            name: data.rowDescriptor[9],animation:true,
-            data: data.data[9],
-            symbolSize:[5,5],
-            hoverAnimation:false,
-			showAllSymbol :true,
-            smooth:false,
-            type:'line'
-        }
-    ]
+    series : allSeries
 };
 
 }});

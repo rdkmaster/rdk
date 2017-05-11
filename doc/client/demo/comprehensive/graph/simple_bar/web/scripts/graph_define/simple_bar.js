@@ -27,7 +27,7 @@ var allSeries=[],
     if(data.data.length){
         for(var i=0;i<len;i++){
             allSeries[i] = {};
-            allSeries[i].name =data.header[i];
+            allSeries[i].name =data.rowDescriptor[i];
             allSeries[i].type = 'bar';
             allSeries[i].stack = '总量';
             allSeries[i].barWidth = 15;
@@ -44,8 +44,7 @@ return{
         }
     },
     legend: {
-        data: ['hot', 'instrument','parallel','rader','simple','boxplots','bubblegraduent','funnelplot','mulberryfigure','rectangletree' ,
-        'relationalgraph','simplebar','componentlayout','comprehensive','containers'],
+        data: data.rowDescriptor,
         itemHeight:8,
         itemGap:8,
         width: '95%',
