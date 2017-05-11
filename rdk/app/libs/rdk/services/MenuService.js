@@ -19,11 +19,12 @@ define(['angular', 'rd.core', 'jquery', 'rd.controls.Module', 'rd.services.Popup
         }
       };
 
-      scope.selectItem = function(event, label){
+      scope.selectItem = function(event, item){
         event.stopPropagation();
-        scope.selectedMenu = label;
+        scope.selectedMenu = item.label;
         var retMenuModuleID = $('#menuID').find('.ui-dialog-content').attr('id');//界面弹出菜单永远只有一个menuID
-        EventService.broadcast(retMenuModuleID, EventTypes.SELECT, label);
+        EventService.broadcast(retMenuModuleID, EventTypes.SELECT, item.label);
+		EventService.broadcast(retMenuModuleID, EventTypes.CLICK, item);
         MenuService.destroyMenu();
       };
 
@@ -96,11 +97,11 @@ define(['angular', 'rd.core', 'jquery', 'rd.controls.Module', 'rd.services.Popup
         '<div class="rdk_menu" >\
         <ul class="list-group" id="Rdk_Menu" > \
         <li class="list-group-item" ng-repeat="item in menuConfig" ng-mouseover="showSubMenu($event)" \
-        ng-mouseleave="hideSubMenu($event)" ng-click="selectItem($event, item.label)"\
+        ng-mouseleave="hideSubMenu($event)" ng-click="selectItem($event, item)"\
         ng-class="{true:\'active\', false:\'\'}[item.label === selectedMenu]">\
         <span>{{item.label}}</span><i class="icon fa fa-chevron-right" ng-if="item.list !== undefined"></i>\
         <ul ng-if="item.list !== undefined" class="rdk_sub_menu" >\
-        <li class="list-group-item" ng-click="selectItem($event, subItem.label)"\
+        <li class="list-group-item" ng-click="selectItem($event, subItem)"\
         ng-class="{true:\'active\', false:\'\'}[subItem.label === selectedMenu]"\
         ng-repeat="subItem in item.list" ><span>{{subItem.label}}</span></li>\
         </ul>\
