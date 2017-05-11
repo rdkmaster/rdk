@@ -474,7 +474,7 @@ define(function() {
              startAngle: 90,
              minAngle: 1, // 最小角度改为0
              selectedOffset: 10, // 选中是扇区偏移量
-             // selectedMode:'single',
+             hoverAnimation:false,
              calculable: false,
              itemStyle: {
                  normal: {

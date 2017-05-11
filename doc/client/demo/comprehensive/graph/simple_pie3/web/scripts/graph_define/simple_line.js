@@ -22,7 +22,25 @@ define([], function() {
 
 // attributes 是当前Graph所在的html节点的所有属性集。也是一种辅助数据。
 return function(data, context, GraphService, attributes) {
-
+    /*
+    * 饼图联动，如：现在二级原因有7个，实际用的时间可以根据点击时获取的‘二级原因的名字’作为查询条件获得相应数据;
+    * 从而7个js 可以只写一个了。
+    *
+    * */
+    colors = ['#f99660','#a4bf6a','#8ac9b6','#54acd5','#bea5c8']
+    var allData = [];
+    var len = data.data.length;
+    if (len) {
+        for (var i = 0; i < len; i++) {
+            allData[i] = {};
+            allData[i].value = data.data[i].value;
+            allData[i].name = data.data[i].name;
+            allData[i].selected=i==0?true:false;
+            allData[i].itemStyle = i==0?{normal: {color: colors[i],
+                shadowColor:colors[i],
+                shadowBlur: 12.5}}:{normal: {color: colors[i]}}
+        }
+    }
 return {
      legend: {
         itemWidth: 12,
@@ -32,7 +50,6 @@ return {
         left: 30,
         textStyle: {
             color: '#434343',
-            fontSize: 12,
         },
         data: data.header
     },
@@ -49,17 +66,8 @@ return {
         y: '62%',
         itemGap: 5,
         subtext: "一级原因",
-        textStyle : {
-            color:'#333',
-            fontFamily : '微软雅黑',
-            fontSize : 14,
-            fontWeight:'normal'
-        },
         subtextStyle: {
-            color:'#333',
-            fontFamily : '微软雅黑',
-            fontSize : 14,
-            fontWeight:'normal'
+            fontSize : 14
         }
     },
         series: [
@@ -70,20 +78,11 @@ return {
                 show: false,
                  textStyle: {
                     color:'#000',
-                    fontFamily : '微软雅黑',
                     fontSize : 14,
-                    fontWeight:'normal'
                 },
                 formatter : function (params){
                     return  params.name+'\n'+params.value + '%'
                 }
-            }
-        },
-        itemStyle: {
-            normal: {
-                // color: 各异,
-                borderColor: '#fff',
-                borderWidth: 1,
             }
         },
         type:'pie',
@@ -96,29 +95,7 @@ return {
                 show: false
             }
         },
-        data:[{
-                    name: data.data[0].name,
-                    value: data.data[0].value,
-                    selected:true,
-                    itemStyle:{normal: {color: '#f99660'}}
-                }, {
-                    name: data.data[1].name,
-                    value: data.data[1].value,
-                    itemStyle:{normal: {color: '#a4bf6a'}}
-                }, {
-                    name: data.data[2].name,
-                    value: data.data[2].value,
-                    itemStyle:{normal: {color: '#8ac9b6'}}
-                }, {
-                    name: data.data[3].name,
-                    value: data.data[3].value,
-                    itemStyle:{normal: {color: '#54acd5'}}
-                },{
-                    name: data.data[4].name,
-                    value: data.data[4].value,
-                    itemStyle:{normal: {color: '#bea5c8'}}
-                }
-        ]
+        data:allData
     }]
 };
 
