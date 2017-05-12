@@ -1,0 +1,13 @@
+
+    <rdk_combo_select caption="'已选项:'" open='true'  id="comboID" open_policy="{{policy}}">
+        <rdk_basic_selector data="allItems" selected_items="selectedItems" multiple_select="true"  child_change="selected2string">
+        </rdk_basic_selector>
+    </rdk_combo_select>
+    <div style="margin-top:140px;">
+    <button ng-click="comOpenStatus()">changeOpenStatus</button>
+    <button ng-click="comCloseShow()">lockCloseShow</button>
+    <button ng-click="comSetValue()">setValue</button>
+    <button ng-click="comGetValue()">getValue</button>
+    <button ng-click="comSetCaption()">setCaption</button>
+    <button ng-click="comGetCaption()">getCaption</button>
+    </div>
