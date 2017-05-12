@@ -8,6 +8,7 @@
     margin:0;
     padding:0;
     position: absolute;
+    z-index: 99;
     top: 0;
     width: 150px;
     border-radius: 5px;

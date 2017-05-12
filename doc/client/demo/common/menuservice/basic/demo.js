@@ -18,7 +18,7 @@
             y: 90
         };
         scope.load = function(event){
-            moduleID = MenuService.addMenu(menuConfig, scope.position, event);
+            moduleID = MenuService.addMenu(menuConfig, scope.position);
         }
 
         scope.close = function () {
