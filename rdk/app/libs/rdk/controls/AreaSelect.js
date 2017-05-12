@@ -113,7 +113,8 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
             showAllCity:"=?",
             multipleSelect: '=?',
             multipleArea: '=?',
-            delimiter: '@?'
+            delimiter: '@?',
+            defaultSelected:"@?"
         };
         return {
             restrict: 'E',
@@ -301,6 +302,32 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
                 _initDefaultAreaData();
             };
             function _initDefaultAreaData(){  //初始化地区默认数据
+                if(tAttrs.defaultSelected=="the-one"){
+                    _setDefaultAreaDataByDs(); //以数据源第一个记录为默认数据
+                }
+                _setDefaultAreaDataByUser(); //以用户随意设置的地区为默认数据
+            }
+            function _setDefaultAreaDataByDs(){
+                var defaultProvince;
+                if($vm.dsProvinces.data){
+                    defaultProvince = $vm.dsProvinces.data.data[0];
+                    $vm.userArr[0]=defaultProvince;
+                    if(tAttrs.granularity=="province"){
+                        areaDataHandle();
+                        $vm.activeTab=1;
+                    }
+                    else if(tAttrs.granularity=="city")
+                    {
+                        defaultProvince.freezeProvince=scope.freezeProvince;
+                        _queryCityByProvince(defaultProvince);
+                        $vm.activeTab=2;
+                    }else{
+                        _queryCityByProvince(defaultProvince);
+                        $vm.activeTab=3;
+                    }
+                }
+            }
+            function _setDefaultAreaDataByUser(){
                 var defaultProvince;
                 if($vm.dsProvinces.data && scope.areaData.province){
                     defaultProvince = _queryDataByName($vm.dsProvinces.data.data,scope.areaData.province);
@@ -328,7 +355,6 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
                     }
                 }
             }
-
             function areaDataHandle(){  //处理选择结果，更新视图显示及返回数据结果
                 if(!_hasOver){
                     return
@@ -387,6 +413,14 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
                     }else{
                         areaDataHandle();
                     }
+                }else if(tAttrs.defaultSelected=="the-one"){
+                    defaultCity = $vm.dsCitys.data.data[0];
+                    $vm.userArr[1]=defaultCity;
+                    if(tAttrs.granularity!="city"){
+                        _queryAreaByCity(defaultCity);
+                    }else{
+                        areaDataHandle();
+                    }
                 }
             }
             function _areasResultHandler(){
@@ -396,6 +430,10 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
                 var defaultArea;
                 if($vm.dsAreas.data && scope.areaData.area) {
                     defaultArea = _queryDataByName($vm.dsAreas.data.data, scope.areaData.area);
+                    $vm.userArr[2] = defaultArea;
+                }
+                else if(tAttrs.defaultSelected=="the-one"){
+                    defaultArea = $vm.dsAreas.data.data[0];
                     $vm.userArr[2] = defaultArea;
                 }
                 areaDataHandle();

@@ -87,7 +87,7 @@ multiple_select设置为true多选时可以设置此属性，为true则可以跨
 
 配置第三级选择项页签名称,缺省时默认值为"区"。
 
-## freezeProvince ##
+## freeze-province ##
 
 在地区粒度属性granularity配置为city时，可用于冻结默认省不可更改。
 
@@ -99,12 +99,12 @@ multiple_select设置为true多选时可以设置此属性，为true则可以跨
 详细示例如下：
 <live_demo example="controls/area/setting" width="600"></live_demo>
 
-## showAllProvince ##
+## show-all-province ##
 
 在`showAll` 设置为`false` 时可以设置此属性，表示在选择项里显示：全省（特殊标签项）
 
 
-## showAllCity ##
+## show-all-city ##
 
 在`showAll` 设置为`false` 时可以设置此属性，表示在选择项里显示：全市（特殊标签项）
 
@@ -112,6 +112,14 @@ multiple_select设置为true多选时可以设置此属性，为true则可以跨
 详细示例如下：
 <live_demo example="controls/area/showAll" width="600"></live_demo>
 
+## default-selected ##
+
+此属性可以设置数据源记录中第一个数据为默认地区
+
+    default-selected="the-one"
+
+详细示例如下：
+<live_demo example="controls/area/theOnedefault" width="600"></live_demo>
 
 # 事件 #
 
