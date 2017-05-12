@@ -1,0 +1,21 @@
+<ds id="dsProv"  url="$svr/mock/areaServiceProv.js"></ds>
+<ds id="dsCity"  url="$svr/mock/areaServiceCity.js"></ds>
+<ds id="dsArea"  url="$svr/mock/areaServiceArea.js"></ds>
+
+<div  rdk-theme="rdk-zte-gray rdk-theme-zte-vmax" style="display: flex">
+    <rdk_combo_select adapt_content_width="true" show-icon="false" caption="'Area'">
+        <rdk-area-select ds_province="dsProv" ds_city="dsCity" ds_area="dsArea"
+                         area-data="default"
+                         default-selected="the-one"
+        ></rdk-area-select>
+    </rdk_combo_select>
+    <h4 style="line-height: 50px;margin: 0 10px;">此Demo还展示了地区控件的另外一种主题风格</h4>
+</div>
+<br>
+<div ng-if="default">
+    你选择的地区：
+    {{default.province.name}}  {{default.city.name}}  {{default.area.name}}
+</div>
+
+
+
