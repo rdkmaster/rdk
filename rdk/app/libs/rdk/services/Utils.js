@@ -291,7 +291,29 @@
                 return -1;
             }
         };
-
+        //获取元素在页面中的偏移量
+        this.getOffsetRect = function(element){
+            var box=element.getBoundingClientRect();
+            var body=document.body;
+            var docElem=document.documentElement;
+            var scrollTop=window.pageYOffset||docElem.scrollTop||body.scrollTop;
+            var scrollLeft=window.pageXOffset||docElem.scrollLeft||body.scrollLeft;
+            var clientTop=docElem.clientTop||body.clientTop;
+            var clientLeft=docElem.clientLeft||body.clientLeft;
+            var top=box.top+scrollTop-clientTop;
+            var left=box.left+scrollLeft-clientLeft;
+            return {
+                //Math.round 兼容火狐浏览器bug
+                top:Math.round(top),
+                left:Math.round(left)
+            }
+        };
+        //元素x方向进行边界检测
+        this.offsetCheckX = function(element){
+            var elemOffsetRect = this.getOffsetRect(element);
+            return elemOffsetRect.left >= document.documentElement.clientWidth - element.offsetWidth
+        };
+        //获取被隐藏元素的物理尺寸
         this.getSize = function(element,targetEl) {
             var _addCss = { visibility: 'hidden' };
             var _oldCss = {};

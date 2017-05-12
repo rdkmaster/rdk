@@ -17,7 +17,7 @@
         ];
 
         scope.load = function(event){
-            moduleID = MenuService.addMenu(scope.menuConfig, 'mouse', event);
+            moduleID = MenuService.addMenu(scope.menuConfig, 'mouse');
             EventService.register(moduleID, EventTypes.SELECT, function(event, data){
                 alert(data);
             });

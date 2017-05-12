@@ -19,7 +19,7 @@
                 hoffset: 0,
                 voffset: 0
             };
-            moduleID = MenuService.addMenu(menuConfig, position, event);
+            moduleID = MenuService.addMenu(menuConfig, position);
         }
 
         scope.close = function () {
