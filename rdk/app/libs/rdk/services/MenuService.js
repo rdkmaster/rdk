@@ -181,12 +181,6 @@ define(['angular', 'rd.core', 'jquery', 'rd.controls.Module', 'rd.services.Popup
         if ((wOffy = bodyHeight - (pos.y + $('#Rdk_Menu').outerHeight())) < 0) {
           pos.y = bodyHeight - $('#Rdk_Menu').outerHeight();
         }
-        //$('#Rdk_Menu')???这是啥
-        //  if(Utils.offsetCheckX($('#Rdk_Menu')[0])){
-        //    pos.x=document.documentElement.clientWidth - 200;
-        //    pos.y=pos.y+10; //10矫正误差
-        //  }
-
         return pos;
       }
     }
