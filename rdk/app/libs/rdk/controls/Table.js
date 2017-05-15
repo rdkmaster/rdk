@@ -305,6 +305,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
             pagingType: "@?",
             pagingVisible: "@?",
             lang: "@?",
+            search:"=?",
             searchPrompt: "@?",
             searchPattern: '@?',
             proxyDs: "@?",
@@ -628,7 +629,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         };
 
                         //启用搜索功能
-                        scope.search = (attrs.search == "true") ? true : ((attrs.searchable == "true") ? true : false); //优先attrs.search
+                        scope.search = Utils.getValue(scope.search, attrs.search, false);
 
                         if(scope.search){
                             scope.searchPosition = (scope.searchPosition == 'bottom') ? 'bottom' : 'top';
