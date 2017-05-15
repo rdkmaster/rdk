@@ -85,7 +85,7 @@
 <live_demo example="controls/comboselect/demo4change"  width="605"></live_demo>
 
 
-#方法 #
+# 方法 #
 
 ## changeOpenStatus ##
 
