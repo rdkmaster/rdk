@@ -305,6 +305,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
             pagingType: "@?",
             pagingVisible: "@?",
             lang: "@?",
+            search:"=?",
             searchPrompt: "@?",
             searchPattern: '@?',
             proxyDs: "@?",
@@ -628,7 +629,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         };
 
                         //启用搜索功能
-                        scope.search = (attrs.search == "true") ? true : ((attrs.searchable == "true") ? true : false); //优先attrs.search
+                        scope.search = Utils.getValue(scope.search, attrs.search, false);
 
                         if(scope.search){
                             scope.searchPosition = (scope.searchPosition == 'bottom') ? 'bottom' : 'top';
@@ -890,11 +891,36 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 if (curSortIndex == iCol) {
                                     scope.destData.reverse();
                                 } else {
-                                    scope.destData.sort(_compareElement(columnDef)); //从小到大排
+                                    var sortArr = filterSortArr(scope.destData,columnDef,true);
+                                    var sortArrNot = filterSortArr(scope.destData,columnDef,false);
+                                    sortArr.sort(_compareElement(columnDef)); //从小到大排
+                                    scope.destData = sortArrNot.concat(sortArr);
                                 }
                             }
                             curSortIndex=iCol;
                         };
+                        //过滤arr,过滤数组中特殊符号"--"以及int类型时isNaN类型的数据
+                        //isSort为ture时返回需要排序的数组，false时返回过滤的特殊数据集
+                        function filterSortArr(arr,columnDef,isSort){
+                            var result=[];
+                            var len=arr.length;
+                            if(isSort){ //
+                                for(var i=0; i<len; i++){
+                                    if( (columnDef.sortas=="int" && !isNaN(parseInt(arr[i][columnDef.data])))
+                                        || arr[i][columnDef.data]!="--"){
+                                        result.push(arr[i]);
+                                    }
+                                }
+                            }else{
+                                for(var j=0; j<len; j++){
+                                    if( (columnDef.sortas=="int" && isNaN(parseInt(arr[j][columnDef.data])))
+                                        || arr[j][columnDef.data]=="--"){
+                                        result.push(arr[j]);
+                                    }
+                                }
+                            }
+                            return result;
+                        }
                         scope.curSortCol=function(index){
                             return curSortIndex===index;
                         };
