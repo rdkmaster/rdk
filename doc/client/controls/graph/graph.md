@@ -90,6 +90,10 @@ width和height表示graph的宽和高，只支持数字不用加单位，默认�
 1. mapselected
 1. mapunselected
 
+`rdk_graph`的`click` 和 `dblclick` 同时监听需要处理时，不能正常响应，这是Echart内部实现决定的，提供HACK方式。
+
+<live_demo example="controls/graph/event" width="900"></live_demo>
+
 #样式#
 `rdk_graph`的样式主要是通过主题文件来设置的。主题文件中设置了所有图形的样式。
 
