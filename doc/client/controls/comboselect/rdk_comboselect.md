@@ -121,11 +121,11 @@
 
 "getCaption"方法作用是获得"caption"属性的内容，调用方式如下：
 
-    rdk.comboID.getValue（）
+    rdk.comboID.getCaption（）
 
 下面是以上方法的综合示例：
 
-<live_demo example="controls/comboselect/method"  width="605"></live_demo>
+<live_demo example="controls/comboselect/methods"  width="605"></live_demo>
 
 # 样式 #
 
