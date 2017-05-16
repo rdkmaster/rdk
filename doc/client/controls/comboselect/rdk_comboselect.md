@@ -107,9 +107,9 @@
 
 ## getValue ##
 
-"setValue"方法作用是获得显示框的内容，调用方式如下：
+"getValue"方法作用是获得显示框的内容，调用方式如下：
 
-    rdk.comboID.setValue（）
+    rdk.comboID.getValue（）
 
 ## setCaption ##
 
@@ -121,11 +121,11 @@
 
 "getCaption"方法作用是获得"caption"属性的内容，调用方式如下：
 
-    rdk.comboID.setValue（）
+    rdk.comboID.getValue（）
 
 下面是以上方法的综合示例：
 
-<live_demo example="controls/comboselect/globalMethod"  width="605"></live_demo>
+<live_demo example="controls/comboselect/method"  width="605"></live_demo>
 
 # 样式 #
 
