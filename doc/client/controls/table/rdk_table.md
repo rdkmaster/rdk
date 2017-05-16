@@ -629,8 +629,52 @@ cells 为 改变的行列信息的数组信息
          }
 **目前情况下当Edit功能和Group功能一起使用时，rowIndex和columnIndex的值均不正确，该两个属性为了兼容以前版本存在，请使用cells去操作**
 
-#方法 #
-暂无
+# 方法 #
+### setCurrentPage ###
+
+"setCurrentPage"方法有一个参数,表示显示那页，参数为0时，显示第一页，调用如下：
+
+    rdk.tableID.setCurrentPage(number)
+
+### resetCurrentPage ###
+
+重置显示页面，也就是显示第一次页，调用如下：
+
+    rdk.tableID.resetCurrentPage()
+
+### getTablePageNumber ###
+
+获取当前翻页的类型，调用如下：
+
+    rdk.tableID.getTablePageNumber()
+
+### setPageSize ###
+
+"setPageSize"方法有一个参数表示定义列表每页要展现的行数，调用如下：
+
+    rdk.tableID.setPageSize(number)
+
+### setChecked ###
+
+"setChecked"方法表示设置有复选框的功能时，那些行被勾选，有一个参数，表标被勾先这行的内容，调用如下：
+
+    rdk.tableID.setChecked(item)
+
+### setGlobalSearch ###
+
+"setGlobalSearch"方法有一个参数，表示要过滤的内容，调用如下：
+
+    rdk.tableID.setGlobalSearch(searchVal)
+
+### getSearchInfo ###
+
+获得过滤的内容，调用如下：
+
+    rdk.tableID.getSearchInfo()
+
+以上方法综合示例如下：
+
+<live_demo example="controls/table/methods"></live_demo>
 
 # 样式 #
 
