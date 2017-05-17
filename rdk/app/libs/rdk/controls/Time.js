@@ -72,7 +72,6 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                     }
 
                     function _init() {
-                        debugger;
 					    if(scope.option){
 							if (scope.option.realFormat) {
                             if (!scope.option.realValue) {
@@ -142,8 +141,6 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                         var i18n = Utils.getLocale(scope);
                         scope.range = Utils.isTrue(iAttrs.range);
                         scope.disabled = Utils.isTrue(scope.disabled, false);
-
-
                         scope.handle = function() {
                             _init();
                         }
@@ -157,7 +154,6 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
 
                         function _init() {
                             scope.range = Utils.isTrue(iAttrs.range);
-
                             scope.label = Utils.getValue(scope.label, iAttrs.label, "时间");
                             if (angular.isUndefined(scope.setting)) {
                                 scope.setting = {};
@@ -421,7 +417,6 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                             if (scope.setting.startDate) {
                                 option.startDate = scope.setting.startDate;
                             }
-                            debugger;
                             switch (scope.selectedGranularity.value) {
                                 case TimeUnit.QUARTER:
                                     option.startView = PickerConstant.HOUR;
