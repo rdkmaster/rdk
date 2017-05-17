@@ -36,6 +36,7 @@ return function(data, context, GraphService, attributes) {
         }
         return theRequest;
     }
+    GetRequest().vmax==3.0 && (data.data[0][2]=null);//vmax为3.0时设其一个数据为空
     var  colors = GetRequest().vmax==3.0?vmaxColors:sampleColors;
     return {
         title: {
