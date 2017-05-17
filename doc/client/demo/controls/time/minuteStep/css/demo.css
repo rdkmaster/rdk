@@ -1,0 +1,9 @@
+body >.dropdown-menu{
+    min-width: 298px;
+}
+body >.dropdown-menu .table-condensed{
+    min-width: 298px;
+}
+body >.datetimepicker table tr td span{
+    width: 42px;
+}

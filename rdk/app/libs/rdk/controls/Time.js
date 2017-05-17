@@ -72,6 +72,7 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                     }
 
                     function _init() {
+                        debugger;
 					    if(scope.option){
 							if (scope.option.realFormat) {
                             if (!scope.option.realValue) {
@@ -141,6 +142,8 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                         var i18n = Utils.getLocale(scope);
                         scope.range = Utils.isTrue(iAttrs.range);
                         scope.disabled = Utils.isTrue(scope.disabled, false);
+
+
                         scope.handle = function() {
                             _init();
                         }
@@ -154,12 +157,14 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
 
                         function _init() {
                             scope.range = Utils.isTrue(iAttrs.range);
+
                             scope.label = Utils.getValue(scope.label, iAttrs.label, "时间");
                             if (angular.isUndefined(scope.setting)) {
                                 scope.setting = {};
                             }
                             scope.setting.selectGranularity = Utils.getValue(scope.setting.selectGranularity, undefined, false);
                             scope.setting.granularity = Utils.getValue(scope.setting.granularity, undefined, TimeUnit.DAY);
+                            scope.setting.minuteStep = +Utils.getValue(scope.setting.minuteStep, undefined, 15);
                             //默认周日为一周开始
                             scope.setting.weekStart = Utils.getValue(scope.setting.weekStart, undefined, 0);
                             scope.timeFormat = TimeFormate[Utils.getValueFromKey(TimeUnit, scope.setting.granularity)];
@@ -416,11 +421,12 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                             if (scope.setting.startDate) {
                                 option.startDate = scope.setting.startDate;
                             }
+                            debugger;
                             switch (scope.selectedGranularity.value) {
                                 case TimeUnit.QUARTER:
                                     option.startView = PickerConstant.HOUR;
                                     option.minView = PickerConstant.HOUR;
-                                    option.minuteStep = 15;
+                                    option.minuteStep = scope.setting.minuteStep;
                                     break;
                                 case TimeUnit.HOUR:
                                     option.startView = PickerConstant.DAY;

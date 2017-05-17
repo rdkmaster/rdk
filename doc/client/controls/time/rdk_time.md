@@ -89,6 +89,14 @@
 
 <live_demo example="controls/time/granularitySet" width="900"></live_demo>
 
+### minuteStep ###
+
+> 支持类型：Number.
+
+当时间粒度属性`granularity`设置为`quarter`时。可设置此属性，表示`quarter`粒度下的最小精确度，默认值: 15。
+
+<live_demo example="controls/time/minuteStep" width="900"></live_demo>
+
 ###weekStart ###
 标志一周开始，默认为周日（0），可配置0（星期日）到6（星期六）
 <live_demo example="controls/time/weekStart" width="900"></live_demo>
