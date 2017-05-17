@@ -160,6 +160,7 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                             }
                             scope.setting.selectGranularity = Utils.getValue(scope.setting.selectGranularity, undefined, false);
                             scope.setting.granularity = Utils.getValue(scope.setting.granularity, undefined, TimeUnit.DAY);
+                            scope.setting.minuteStep = +Utils.getValue(scope.setting.minuteStep, undefined, 15);
                             //默认周日为一周开始
                             scope.setting.weekStart = Utils.getValue(scope.setting.weekStart, undefined, 0);
                             scope.timeFormat = TimeFormate[Utils.getValueFromKey(TimeUnit, scope.setting.granularity)];
@@ -420,7 +421,7 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                                 case TimeUnit.QUARTER:
                                     option.startView = PickerConstant.HOUR;
                                     option.minView = PickerConstant.HOUR;
-                                    option.minuteStep = 15;
+                                    option.minuteStep = scope.setting.minuteStep;
                                     break;
                                 case TimeUnit.HOUR:
                                     option.startView = PickerConstant.DAY;
