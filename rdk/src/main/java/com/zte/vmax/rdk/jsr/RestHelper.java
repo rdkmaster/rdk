@@ -7,11 +7,13 @@ import com.zte.vmax.rdk.util.RdkUtil;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import jdk.nashorn.internal.runtime.Undefined;
 
+import javax.net.ssl.*;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
+import java.net.*;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,6 +21,27 @@ import java.util.regex.Pattern;
  * Created by 10045812 on 16-6-27.
  */
 public class RestHelper extends AbstractAppLoggable {
+
+    private static class TrustAnyHostnameVerifier implements HostnameVerifier {
+        public boolean verify(String hostname, SSLSession session) {
+            return true;
+        }
+    }
+
+    private static class TrustAnyTrustManager implements X509TrustManager {
+
+        public void checkClientTrusted(X509Certificate[] chain, String authType)
+                throws CertificateException {
+        }
+
+        public void checkServerTrusted(X509Certificate[] chain, String authType)
+                throws CertificateException {
+        }
+
+        public X509Certificate[] getAcceptedIssuers() {
+            return new X509Certificate[]{};
+        }
+    }
 
     protected void initLogger() {
         logger = AppLogger.getLogger("RestHelper", appName);
@@ -50,7 +73,7 @@ public class RestHelper extends AbstractAppLoggable {
         return commonRest(url, param, option, "PUT", ifErrorInfo);
     }
 
-    private String commonRest(String url, String param, Object option, String method, boolean ifErrorInfo) {
+    private String fixUrl(String url) {
         url = url.trim();
         Matcher m = URL_PTN.matcher(url);
         if (!m.find()) {
@@ -61,70 +84,15 @@ public class RestHelper extends AbstractAppLoggable {
             }
             url = prefix + url;
         }
-        logger.debug("requesting(" + method + ") url=" + url);
+        return url;
+    }
 
-        //需要请求的restful地址
-        URL oUrl = null;
-        try {
-            oUrl = new URL(url);
-        } catch (MalformedURLException e) {
-            logger.error("Malformed URL", e);
-            return ifErrorInfo ? RdkUtil.toJsonString(new RestError(e.toString())) : null;
-        }
-
-        //打开restful链接
-        HttpURLConnection conn = null;
-        try {
-            conn = (HttpURLConnection) oUrl.openConnection();
-        } catch (IOException e) {
-            logger.error("can not open connection", e);
-            return ifErrorInfo ? RdkUtil.toJsonString(new RestError(e.toString())) : null;
-        }
-
-        setRequestProperties(conn, option);
-
-        int connTimeout = Integer.parseInt(getProperty(option, "connectTimeout", "60000"));
-        conn.setConnectTimeout(connTimeout);
-        int readTimeout = Integer.parseInt(getProperty(option, "readTimeout", "120000"));
-        conn.setReadTimeout(readTimeout);
-
-        // 提交模式
-        try {
-            conn.setRequestMethod(method);
-        } catch (ProtocolException e) {
-            logger.error("Invalid protocol", e);
-            return ifErrorInfo ? RdkUtil.toJsonString(new RestError(e.toString())) : null;
-        }
-
-        if (!method.equals("GET")) {
-            // 发送POST,PUT,DELETE请求必须设置如下两行
-            conn.setDoOutput(true);
-            conn.setDoInput(true);
-
-            //设置请求参数
-            PrintWriter out = null;
-            try {
-                out = new PrintWriter(conn.getOutputStream());
-
-                out.print(param);
-                // flush输出流的缓冲
-                out.flush();
-            } catch (Exception e) {
-                logger.error("write queryString error", e);
-                return ifErrorInfo ? RdkUtil.toJsonString(new RestError(e.toString())) : null;
-            } finally {
-                if (out != null) {
-                    out.close();
-                }
-            }
-
-        }
-
+    private Object readBytesFromConn(URLConnection connection, boolean ifErrorInfo) {
         //读取请求返回值
         InputStream inStream = null;
         ByteArrayOutputStream baos = null;
         try {
-            inStream = conn.getInputStream();
+            inStream = connection.getInputStream();
             byte[] buff = new byte[1024 * 4];  //每次读4KB
             baos = new ByteArrayOutputStream();
             int len = -1;
@@ -150,8 +118,89 @@ public class RestHelper extends AbstractAppLoggable {
                 logger.error("inStream close error:", e);
             }
         }
+        return baos.toByteArray();
+    }
 
-        byte[] bytes = baos.toByteArray();
+    private String commonRest(String url, String param, Object option, String method, boolean ifErrorInfo) {
+        url = fixUrl(url);
+        logger.debug("requesting(" + method + ") url=" + url);
+
+        //需要请求的restful地址
+        URL oUrl = null;
+        try {
+            oUrl = new URL(url);
+        } catch (MalformedURLException e) {
+            logger.error("Malformed URL", e);
+            return ifErrorInfo ? RdkUtil.toJsonString(new RestError(e.toString())) : null;
+        }
+
+        //打开restful链接
+        URLConnection conn = null;
+
+        try {
+            if (url.toLowerCase().startsWith("https")) {
+                conn = oUrl.openConnection();
+                SSLContext sc = SSLContext.getInstance("SSL");
+                sc.init(null, new TrustManager[]{new TrustAnyTrustManager()},
+                        new java.security.SecureRandom());
+                ((HttpsURLConnection) conn).setSSLSocketFactory(sc.getSocketFactory());
+                ((HttpsURLConnection) conn).setHostnameVerifier(new TrustAnyHostnameVerifier());
+                conn.setDoOutput(true);
+                ((HttpsURLConnection) conn).setRequestMethod(method);
+            } else {
+                conn = oUrl.openConnection();
+                ((HttpURLConnection) conn).setRequestMethod(method);
+            }
+        } catch (ProtocolException e) {
+            logger.error("Invalid protocol", e);
+            return ifErrorInfo ? RdkUtil.toJsonString(new RestError(e.toString())) : null;
+        } catch (IOException e) {
+            logger.error("can not open connection", e);
+            return ifErrorInfo ? RdkUtil.toJsonString(new RestError(e.toString())) : null;
+        } catch (NoSuchAlgorithmException e) {
+            logger.error("SSL algorithm missing error!", e);
+            return ifErrorInfo ? RdkUtil.toJsonString(new RestError(e.toString())) : null;
+        } catch (KeyManagementException e) {
+            logger.error("key Management error!", e);
+            return ifErrorInfo ? RdkUtil.toJsonString(new RestError(e.toString())) : null;
+        }
+
+        setRequestProperties(conn, option);
+
+        int connTimeout = Integer.parseInt(getProperty(option, "connectTimeout", "60000"));
+        conn.setConnectTimeout(connTimeout);
+        int readTimeout = Integer.parseInt(getProperty(option, "readTimeout", "120000"));
+        conn.setReadTimeout(readTimeout);
+
+        if (!method.equals("GET")) {
+            // 发送POST,PUT,DELETE请求必须设置如下两行
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+
+            //设置请求参数
+            PrintWriter out = null;
+            try {
+                out = new PrintWriter(conn.getOutputStream());
+                out.print(param);
+                // flush输出流的缓冲
+                out.flush();
+            } catch (Exception e) {
+                logger.error("write queryString error", e);
+                return ifErrorInfo ? RdkUtil.toJsonString(new RestError(e.toString())) : null;
+            } finally {
+                if (out != null) {
+                    out.close();
+                }
+            }
+
+        }
+        Object res = readBytesFromConn(conn, ifErrorInfo);
+        byte[] bytes = null;
+        if (res instanceof String) {
+            return (String) res;
+        } else {
+            bytes = (byte[]) res;
+        }
 
         String encoding = getProperty(option, "encoding", "utf-8");
         String result;
@@ -164,7 +213,7 @@ public class RestHelper extends AbstractAppLoggable {
         return result;
     }
 
-    private void setRequestProperties(HttpURLConnection conn, Object option) {
+    private void setRequestProperties(URLConnection conn, Object option) {
         if (option instanceof Undefined) {
             return;
         }
