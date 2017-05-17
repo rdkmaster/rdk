@@ -1,11 +1,11 @@
 ## 图形示例 ##
 
 ### 示例一
-    说明： 打开这个示例后在这链接后面加“?vmax=3.0”可看到3.0的颜色示例。
+    说明： 打开这个示例后在这链接后面加“index.html?vmax=3.0”可看到3.0的颜色示例。
 <live_demo example="comprehensive/graph/simple_tu1/web/" width="900" height="400"></live_demo>
 
 ### 示例二
-    说明： 打开这个示例后在这链接后面加“?vmax=3.0”可看到3.0的颜色示例。
+    说明： 打开这个示例后在这链接后面加“index.html?vmax=3.0”可看到3.0的颜色示例。
 <live_demo example="comprehensive/graph/simple_tu2/web/" width="900" height="400"></live_demo>
 
 ### 示例三
@@ -36,6 +36,7 @@
 <live_demo example="comprehensive/graph/simple_tu7/web" width="900" height="400"></live_demo>
 
 ### 示例十二
+    说明： 打开这个示例后在这链接后面加“index.html?vmax=3.0”可看到断数据折线图。
 <live_demo example="comprehensive/graph/simple_line/web" width="900" height="400"></live_demo>
 
 ### 示例十三
