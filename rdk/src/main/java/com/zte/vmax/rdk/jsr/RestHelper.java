@@ -196,7 +196,7 @@ public class RestHelper extends AbstractAppLoggable {
         }
         Object res = readBytesFromConn(conn, ifErrorInfo);
         byte[] bytes = null;
-        if (res instanceof String) {
+        if (res == null || res instanceof String) {
             return (String) res;
         } else {
             bytes = (byte[]) res;
