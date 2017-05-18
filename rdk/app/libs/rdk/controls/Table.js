@@ -474,9 +474,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 //暂留rowFilter,后期实现search功能
                 var rowFilter = "";
 
-                if ((tAttributes.search == "true") ? true : ((tAttributes.searchable == "true") ? true : false)) {
-                    rowFilter += "| filter:globalSearch";
-                };
+                rowFilter += "| filter:globalSearch";
+
                 var pagingFilter = "";
                 pagingFilter += " | offset: currentPage:pageSize |limitTo: pageSize";
 
@@ -746,6 +745,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
                         }, true);
 
+                        scope.$watch('search',function(newVal){
+                            if(!newVal){
+                                scope.globalSearch = '';
+                            }
+                        });
                         scope.getCellStyle = function(itemRowSpan,columnDef){
                             var destObj = {};
                             if (itemRowSpan && itemRowSpan[columnDef["targets"]] == 0) {
