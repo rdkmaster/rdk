@@ -142,7 +142,10 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
         }
 
         function bindEventToHandle(table, handle, column) {
-
+            //加个click事件阻止冒泡到表格th节点上的排序事件
+            $(handle).click(function(event){
+                event.stopPropagation();
+            });
             // This event starts the dragging
             $(handle).mousedown(function(event) {
                 if (isFirstDrag) {

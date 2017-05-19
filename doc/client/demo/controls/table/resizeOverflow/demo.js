@@ -6,6 +6,34 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main($scope) {
+
+        $scope.setting = {
+            "columnDefs" :[
+                {
+                    targets : 0,
+                    sortas: "string",
+                    sortable: true
+                },{
+                    targets : "extn",
+                    sortable: true,
+                    sortas: "int",
+                    sort: function(a, b){
+                        if(parseInt(a, 10) < parseInt(b, 10)){
+                            return -1;
+                        }
+                        else {
+                            return 1;
+                        }
+                    }
+                },{
+                    targets : 3,
+                    sortas: "date",
+                    sortable: true
+                }
+
+            ]
+        }
+
         $scope.data = {};
         $scope.resizeMode="OverflowResizer";
         $scope.data.header = ["姓名", "职位", "薪资", "入职日期", "部门", "其他"];
