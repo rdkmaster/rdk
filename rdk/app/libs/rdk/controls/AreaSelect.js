@@ -145,7 +145,7 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
         function _link(scope,tElement,tAttrs,comboSelectCtrl) {
             Utils.checkEventHandlers(tAttrs,scopeDefine);
             var i18n = Utils.getLocale(scope);
-            //TODO:处理控件内部数据的国际化:省市区标签
+
             var $vm = scope.$vm = {
                 resultData:"", //返回结果，字符串
                 userArr:[], //数组:保存用户选择的省市区对象
@@ -340,7 +340,7 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
                         $vm.activeTab=1;
                     }else if(!scope.areaData.city){
                         if(tAttrs.granularity=="city"){
-                            allProvinceTip="全省";
+                            allProvinceTip=$vm.i18n.allProv;
                             defaultProvince.freezeProvince=scope.freezeProvince;
                         }
                         areaDataHandle();
