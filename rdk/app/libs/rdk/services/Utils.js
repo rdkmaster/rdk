@@ -275,7 +275,16 @@
             });
             return dest;
         }
-
+        this.isEmptyObject = function(obj) {
+            if(!angular.isObject(obj)){
+                console.error ("Utils isEmptyObject Method Parameter Error");
+            }
+            var prop;
+            for (prop in obj){
+                return false;
+            }
+            return true
+        };
         this.contains = function(arr, object ,isHash) {
             if(typeof object ==="object" && angular.isArray(arr)){
                 for(var i=0,len=arr.length ; i<len ; i++)

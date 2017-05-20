@@ -5,7 +5,7 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
             '<div>\
                 <div class="rdk-area-contain">\
                     <ul class="nav nav-tabs">\
-                        <li ng-class="{active: $vm.activeTab == 1}"><a ng-click="$vm.activeTab = 1">{{$vm.userArr[0].name || provinceLabel || "省"}}</a></li>\
+                        <li ng-class="{active: $vm.activeTab == 1}"><a ng-click="$vm.activeTab = 1">{{$vm.userArr[0].name || provinceLabel || $vm.i18n.province}}</a></li>\
                     </ul>\
                     <div class="rdk-area-content">\
                         <div class="rdk-area-panel" ng-show="$vm.activeTab == 1">\
@@ -27,8 +27,8 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
             '<div>\
                 <div class="rdk-area-contain">\
                     <ul class="nav nav-tabs">\
-                        <li ng-if="!freezeProvince" ng-class="{active: $vm.activeTab == 1}"><a ng-click="$vm.activeTab = 1">{{$vm.userArr[0].name || provinceLabel || "省"}}</a></li>\
-                        <li ng-show="!!$vm.dsCitys.data.data.length" ng-class="{active: $vm.activeTab == 2}"><a ng-click="$vm.activeTab = 2">{{$vm.userArr[1].name || cityLabel || "市"}}</a></li>\
+                        <li ng-if="!freezeProvince" ng-class="{active: $vm.activeTab == 1}"><a ng-click="$vm.activeTab = 1">{{$vm.userArr[0].name || provinceLabel || $vm.i18n.province}}</a></li>\
+                        <li ng-show="!!$vm.dsCitys.data.data.length" ng-class="{active: $vm.activeTab == 2}"><a ng-click="$vm.activeTab = 2">{{$vm.userArr[1].name || cityLabel || $vm.i18n.city}}</a></li>\
                     </ul>\
                     <div class="rdk-area-content">\
                         <div class="rdk-area-panel" ng-show="$vm.activeTab == 1" ng-if="!freezeProvince">\
@@ -41,7 +41,7 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
                         </div>\
                         <div class="rdk-area-panel" ng-show="$vm.activeTab == 2">\
                             <ul>\
-                                <li ng-if="showAll" ng-click="$vm.selectAllProOrCity(\'全省\',\'lockCity\')" class="all-label"><a>全省</a></li>\
+                                <li ng-if="showAll" ng-click="$vm.selectAllProOrCity(\'全省\',\'lockCity\')" class="all-label"><a>{{$vm.i18n.allProv}}</a></li>\
                                 <li ng-repeat="city in $vm.dsCitys.data.data" ng-click="$vm.changeSelected(city,1)">\
                                     <span ng-if="multipleSelect" class="rdk-area-checkbox" >\
                                     <i ng-show="$vm.activeCurItemClass(city,1)" class="fa fa-check icon-selected"></i>\
@@ -58,9 +58,9 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
             '<div>\
                 <div class="rdk-area-contain">\
                     <ul class="nav nav-tabs">\
-                        <li ng-class="{active: $vm.activeTab == 1}"><a ng-click="$vm.activeTab = 1">{{$vm.userArr[0].name || provinceLabel || "省"}}</a></li>\
-                        <li ng-show="!!$vm.dsCitys.data.data.length" ng-class="{active: $vm.activeTab == 2}"><a ng-click="$vm.activeTab = 2">{{$vm.userArr[1].name || cityLabel || "市"}}</a></li>\
-                        <li ng-show="!!$vm.dsAreas.data.data.length" ng-class="{active: $vm.activeTab == 3}"><a ng-click="$vm.activeTab = 3">{{$vm.userArr[2].name || areaLabel || "区"}}</a></li>\
+                        <li ng-class="{active: $vm.activeTab == 1}"><a ng-click="$vm.activeTab = 1">{{$vm.userArr[0].name || provinceLabel || $vm.i18n.province}}</a></li>\
+                        <li ng-show="!!$vm.dsCitys.data.data.length" ng-class="{active: $vm.activeTab == 2}"><a ng-click="$vm.activeTab = 2">{{$vm.userArr[1].name || cityLabel || $vm.i18n.city}}</a></li>\
+                        <li ng-show="!!$vm.dsAreas.data.data.length" ng-class="{active: $vm.activeTab == 3}"><a ng-click="$vm.activeTab = 3">{{$vm.userArr[2].name || areaLabel || $vm.i18n.area}}</a></li>\
                     </ul>\
                     <div class="rdk-area-content">\
                         <div class="rdk-area-panel" ng-show="$vm.activeTab == 1">\
@@ -73,7 +73,7 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
                         </div>\
                         <div class="rdk-area-panel" ng-show="$vm.activeTab == 2">\
                             <ul>\
-                                <li ng-if="showAll || showAllProvince" ng-click="$vm.selectAllProOrCity(\'全省\')" class="all-label"><a>全省</a></li>\
+                                <li ng-if="showAll || showAllProvince" ng-click="$vm.selectAllProOrCity(\'全省\')" class="all-label"><a>{{$vm.i18n.allProv}}</a></li>\
                                 <li ng-repeat="city in $vm.dsCitys.data.data">\
                                     <a ng-click="$vm.clkCityNextLvOpen(city,1)" ng-class="{selected:$vm.activeCurItemClass(city,1)}">{{city.name}}</a>\
                                 </li>\
@@ -81,7 +81,7 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
                         </div>\
                         <div class="rdk-area-panel" ng-show="$vm.activeTab == 3">\
                             <ul>\
-                                <li ng-if="showAll || showAllCity" ng-click="$vm.selectAllProOrCity(\'全市\')" class="all-label"><a>全市</a></li>\
+                                <li ng-if="showAll || showAllCity" ng-click="$vm.selectAllProOrCity(\'全市\')" class="all-label"><a>{{$vm.i18n.allCity}}</a></li>\
                                 <li ng-repeat="area in $vm.dsAreas.data.data" ng-click="$vm.changeSelected(area,2)">\
                                     <span ng-if="multipleSelect" class="rdk-area-checkbox" >\
                                     <i ng-show="$vm.activeCurItemClass(area,2)" class="fa fa-check icon-selected"></i>\
@@ -144,7 +144,8 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
 
         function _link(scope,tElement,tAttrs,comboSelectCtrl) {
             Utils.checkEventHandlers(tAttrs,scopeDefine);
-            //TODO:处理控件内部数据的国际化:省市区标签
+            var i18n = Utils.getLocale(scope);
+
             var $vm = scope.$vm = {
                 resultData:"", //返回结果，字符串
                 userArr:[], //数组:保存用户选择的省市区对象
@@ -167,6 +168,7 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
             scope.multipleSelect = Utils.isTrue(scope.multipleSelect,tAttrs.multipleSelect, false);
             scope.multipleArea = Utils.isTrue(scope.multipleArea,tAttrs.multipleArea, false);
 
+            _initializeI18n();
             _init();
 
             $vm.changeSelected = function(item,index){ //选择地区项，结束当前地区选择
@@ -302,11 +304,12 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
                 _initDefaultAreaData();
             };
             function _initDefaultAreaData(){  //初始化地区默认数据
-                if(tAttrs.defaultSelected=="the-one"){
+                if(tAttrs.defaultSelected=="the-one" && Utils.isEmptyObject(scope.areaData)){
                     _setDefaultAreaDataByDs(); //以数据源第一个记录为默认数据
                 }
                 _setDefaultAreaDataByUser(); //以用户随意设置的地区为默认数据
             }
+
             function _setDefaultAreaDataByDs(){
                 var defaultProvince;
                 if($vm.dsProvinces.data){
@@ -337,7 +340,7 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
                         $vm.activeTab=1;
                     }else if(!scope.areaData.city){
                         if(tAttrs.granularity=="city"){
-                            allProvinceTip="全省";
+                            allProvinceTip=$vm.i18n.allProv;
                             defaultProvince.freezeProvince=scope.freezeProvince;
                         }
                         areaDataHandle();
@@ -413,7 +416,7 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
                     }else{
                         areaDataHandle();
                     }
-                }else if(tAttrs.defaultSelected=="the-one"){
+                }else if(tAttrs.defaultSelected=="the-one"  && Utils.isEmptyObject(scope.areaData)){
                     defaultCity = $vm.dsCitys.data.data[0];
                     $vm.userArr[1]=defaultCity;
                     if(tAttrs.granularity!="city"){
@@ -432,7 +435,7 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
                     defaultArea = _queryDataByName($vm.dsAreas.data.data, scope.areaData.area);
                     $vm.userArr[2] = defaultArea;
                 }
-                else if(tAttrs.defaultSelected=="the-one"){
+                else if(tAttrs.defaultSelected=="the-one"  && Utils.isEmptyObject(scope.areaData)){
                     defaultArea = $vm.dsAreas.data.data[0];
                     $vm.userArr[2] = defaultArea;
                 }
@@ -485,6 +488,27 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
                     }
                 });
                 $vm.resultData = $vm.resultData.substring(0,$vm.resultData.length - _multDelimiter.length);
+            }
+
+            function _initializeI18n() {
+                i18n = i18n.toLowerCase();
+                if (i18n == 'zh_cn' || i18n == 'zh-cn') {
+                    $vm.i18n = {
+                        'province': '省',
+                        'city': '市',
+                        'area': '区',
+                        'allProv':'全省',
+                        'allCity':'全市'
+                    }
+                } else {
+                    $vm.i18n = {
+                        'province': 'Province',
+                        'city': 'City',
+                        'area': 'Area',
+                        'allProv':'All Province',
+                        'allCity':'All City'
+                    }
+                }
             }
         }
     }])

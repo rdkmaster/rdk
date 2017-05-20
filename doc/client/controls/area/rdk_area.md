@@ -114,7 +114,7 @@ multiple_select设置为true多选时可以设置此属性，为true则可以跨
 
 ## default-selected ##
 
-此属性可以设置数据源记录中第一个数据为默认地区
+在没有配置`area-data`属性时，可以使用此属性快捷设置数据源记录中第一个数据为默认地区
 
     default-selected="the-one"
 
