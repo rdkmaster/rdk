@@ -4,6 +4,8 @@
     </rdk_table>
 </div>
 <br>
-<input type="text" ng-model="rowIndex"><button ng-click="gotoRowIndex()">goto</button>
-<button ng-click="change()">选中一行</button>
+<input type="text" ng-model="rowIndex"><button ng-click="gotoRowIndex()">方式1：goto</button>
+<button ng-click="change()">方式2：选中一行</button>
 <span>Total {{ds_table2.data.length}} Recodes</span>
+
+<h4>备注：这两种方式设置行选中的区别在于方式2在索引没有变化时不会生效</h4>

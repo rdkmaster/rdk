@@ -680,7 +680,9 @@ cells 为 改变的行列信息的数组信息
 
 设置指定行被选中,跳转到指定行并高亮，调用如下：
 
-    rdk.tableID.setSelected()
+    rdk.tableID.setSelected(index)
+
+参数说明: index数据行索引，从0计数。
 
 以上方法综合示例如下：
 
