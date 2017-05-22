@@ -396,6 +396,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     return searchObject;
                 }
 
+                this.setSelected=function(index){
+                    scope.highLightItem(index);
+                }
+
                 function _refreshSingleCheckedData(items){
                     angular.forEach(scope.destData, function(item){
                         item.checked = false;
@@ -932,7 +936,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             if(event!=null){
                                 scope.selectedModel = _setRowHighLight(item,event.target);
                             }else{
-                                scope.selectedModel.rows.push(item);
+                                scope.selectedModel.rows[0]=item;
                             }
                             EventService.raiseControlEvent(scope, 'select', item);
                         };
@@ -1213,15 +1217,19 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         scope.directionStr = direction;
                         ctrl.setCurrentPage(scope.currentPage);
                     }
-
+                    //根据index索引指定行选中并高亮
+                    scope.highLightItem = _highLightItem;
                     function _highLightItem(index) {
-                        if (scope.destData) { //destData有定义时
+                        if (scope.destData && +index < scope.destData.length) { //destData有定义时
                             var selectedItem = scope.destData[index];
                             scope.setSelected(selectedItem, null);
+                            var scrollIndex= index-2;
+                            var selector = ".rdk-table>tbody>tr:nth-of-type(" + scrollIndex + ")";
+                            element[0].querySelector(selector).scrollIntoView();
                         }
                     }
 
-                    var _hasAddTrReady=false; //标记多级表头的Html字符串是否插入到模板中
+              var _hasAddTrReady=false; //标记多级表头的Html字符串是否插入到模板中
                     function _reSetTableHeaders(){
                         var thead = element[0].querySelector('thead');
                         var ths=thead.querySelector("tr:last-child").querySelectorAll("th[ng-repeat]");
