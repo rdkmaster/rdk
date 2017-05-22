@@ -7,19 +7,24 @@
     var controllerDefination = ['$scope', main];
     function main(scope) {
 
-        scope.settingPanel = { //表格设置列宽度和样式类
+        scope.setting = { //表格设置列宽度和样式类
             "columnDefs" :[
 
             ]
         };
 
-        scope.allData= {data: [], field: [], header: []}
+        scope.allData= {data: [], field: [], header: []};
+        var obj;
         for (var i = 0; i < 5; i++) {
             scope.allData.data.push([]);
             for (var j = 0; j < 30; j++) {
                 scope.allData.data[i].push('data: ' + i + ', ' + j);
                 scope.allData.field[j] = 'filed' + j;
                 scope.allData.header[j] = 'header' + j;
+                obj={};
+                obj.targets=j;
+                obj.sortable=true;
+                scope.setting.columnDefs.push(obj);
             }
         }
     }
