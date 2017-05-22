@@ -676,6 +676,16 @@ cells 为 改变的行列信息的数组信息
 
 <live_demo example="controls/table/methods"></live_demo>
 
+### setSelected ###
+
+设置指定行被选中,跳转到指定行并高亮，调用如下：
+
+    rdk.tableID.setSelected()
+
+以上方法综合示例如下：
+
+<live_demo example="controls/table/gotoRowIndex"></live_demo>
+
 # 样式 #
 
 ### 表的整体属性 ###

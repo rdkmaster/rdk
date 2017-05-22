@@ -1229,7 +1229,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         }
                     }
 
-              var _hasAddTrReady=false; //标记多级表头的Html字符串是否插入到模板中
+                    var _hasAddTrReady=false; //标记多级表头的Html字符串是否插入到模板中
                     function _reSetTableHeaders(){
                         var thead = element[0].querySelector('thead');
                         var ths=thead.querySelector("tr:last-child").querySelectorAll("th[ng-repeat]");
