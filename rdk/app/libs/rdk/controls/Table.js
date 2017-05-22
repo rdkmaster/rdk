@@ -1223,9 +1223,22 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         if (scope.destData && +index < scope.destData.length) { //destData有定义时
                             var selectedItem = scope.destData[index];
                             scope.setSelected(selectedItem, null);
-                            var scrollIndex= index-2;
-                            var selector = ".rdk-table>tbody>tr:nth-of-type(" + scrollIndex + ")";
-                            element[0].querySelector(selector).scrollIntoView();
+                            var scrollIndex = +index+1;
+                            var selector;
+                            if(!!element[0].scrollIntoViewIfNeeded){
+                                selector = ".rdk-table>tbody>tr:nth-of-type(" + scrollIndex + ")";
+                                element[0].querySelector(selector).scrollIntoViewIfNeeded();
+                            }else{
+                                //兼容IE,火狐不支持scrollIntoViewIfNeeded
+                                scrollIndex = scrollIndex>3 ? scrollIndex-3 : 1;
+                                if(scrollIndex>1){
+                                    selector = ".rdk-table>tbody>tr:nth-of-type(" + scrollIndex + ")";
+                                }else{
+                                    selector = ".rdk-table>thead";
+                                }
+                                element[0].querySelector(selector).scrollIntoView();
+                            }
+
                         }
                     }
 
