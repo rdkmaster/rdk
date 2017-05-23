@@ -16,6 +16,8 @@
 
 `icon` 图标的class，支持font-awesome符号图标，例：fa fa-tag
 
+<live_demo example="controls/icon/iconfont" width="900"></live_demo>
+
 `icon` 图片的src，例：./img/edit.png
 
 传入图片src的例子：

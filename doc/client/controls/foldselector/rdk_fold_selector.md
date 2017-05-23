@@ -98,4 +98,7 @@
 >事件类型：EventTypes.CHANGE
 同 `rdk_basic_selector` 的 `CHANGE` 事件，监听捕获 `rdk_basic_selector` 控件内部修改后的最新的数据信息。关于监听事件请参见`事件机制`中的`监听`部分
 
+示例如下：
+
+<live_demo example="controls/foldselector/event"  width="405"></live_demo>
 

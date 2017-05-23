@@ -29,7 +29,7 @@ rdk的图形控件主要是封装了echart3的内容，因此只要符合echart3
 以上示例中的`simple_line.js`就是对应的图形显示的模板文件。
 此属性中的模板文件一般和`data`属性一起使用，其中`data`属性是向图形模板文件中传入对应的入参信息。
 
-## data <binding></binding> ##
+## data <binding></binding>##
 > 支持类型：对象或数据源id
 
 `data` 是需要在图形中展示的全部信息，可以是某个`数据源`的id。
