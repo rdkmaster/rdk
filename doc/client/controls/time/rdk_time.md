@@ -29,12 +29,12 @@
 缺省`range`时，只会生成一个时间选择控件。用于选择某个时间点。
 然后结合`setting`属性的`value`可以设置这个时间点的默认值。
 
-<live_demo example="controls/time/defaultValue" width="900"></live_demo>
+<live_demo example="controls/time/defaultRange" width="900"></live_demo>
 
 加入range属性后，就会生成两个时间选择控件，用来选择某个时间段。
 然后结合`setting`属性的`value`可以设置时间段的起止时间。
 
-<live_demo example="controls/time/gap" width="900"></live_demo>
+<live_demo example="controls/time/range" width="900"></live_demo>
 
 ## setting ##
 > 支持类型：json对象
