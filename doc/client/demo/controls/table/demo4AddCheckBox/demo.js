@@ -23,6 +23,7 @@
 
         EventService.register('table', EventTypes.CHECK, function(event, data){
             var selectedData = data.data;
+            console.log(selectedData);
         });
     }
 
