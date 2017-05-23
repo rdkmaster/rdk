@@ -931,6 +931,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
                             if(event!=null){
                                 scope.selectedModel = _setRowHighLight(item,event.target);
+								EventService.raiseControlEvent(scope, 'click', item);
                             }else{
                                 scope.selectedModel.rows.push(item);
                             }
