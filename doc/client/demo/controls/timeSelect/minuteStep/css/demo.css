@@ -1,0 +1,10 @@
+.time-wrap{
+    border: 1px solid #ccc;
+    height: 295px;
+    width: 210px;
+    padding: 5px;
+}
+.time-wrap .rdk-time-select-module{
+    height: 255px;
+    padding-right: 6px;
+}
