@@ -29,13 +29,11 @@ input[type="text"]::-ms-clear{
     padding-right: 6px;
 }
 
-
 .time-wrap{
     border: 1px solid #ccc;
-    height: 295px;
+    height: 300px;
     width: 210px;
     padding: 5px;
-
     position: absolute;
     background-color: #fff;
     top: 35px;
@@ -59,4 +57,11 @@ input[type="text"]::-ms-clear{
     border-bottom-right-radius: 4px;
     margin-left: -5px;
     vertical-align: bottom;
+}
+
+.m-time .rdk-time-granularity{
+    padding-bottom: 8px;
+}
+.m-time .rdk-time-select-module .datetimepicker{
+    padding: 0;
 }

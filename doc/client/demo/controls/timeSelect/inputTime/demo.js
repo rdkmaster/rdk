@@ -71,6 +71,8 @@
         EventService.register('timeID', EventTypes.GRANULARITY_CHANGE, updateInputVal);
         EventService.register('timeID', EventTypes.CHANGE, function(event, data){
             scope.inputVal=data;
+            //时间选择后自动关闭
+            scope.timeOpen = false;
         });
 
         //m-time节点以外区域点击关闭时间框
