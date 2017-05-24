@@ -1,11 +1,13 @@
 package com.zte.vmax.rdk.jsr;
 
+import com.zte.vmax.rdk.actor.Messages;
 import com.zte.vmax.rdk.log.AbstractAppLoggable;
 import com.zte.vmax.rdk.log.AppLogger;
 import com.zte.vmax.rdk.config.Config;
 import com.zte.vmax.rdk.util.RdkUtil;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import jdk.nashorn.internal.runtime.Undefined;
+import scala.Array;
 
 import javax.net.ssl.*;
 import java.io.*;
@@ -16,11 +18,17 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import scala.collection.JavaConversions.*;
 
 /**
  * Created by 10045812 on 16-6-27.
  */
 public class RestHelper extends AbstractAppLoggable {
+    private Array<Messages.Header> originHeaders;
+
+    public void setOriginHeader(Array<Messages.Header> originHeader) {
+        this.originHeaders = originHeader;
+    }
 
     private static class TrustAnyHostnameVerifier implements HostnameVerifier {
         public boolean verify(String hostname, SSLSession session) {
@@ -214,6 +222,7 @@ public class RestHelper extends AbstractAppLoggable {
     }
 
     private void setRequestProperties(URLConnection conn, Object option) {
+        for(Messages.Header header:originHeaders)
         if (option instanceof Undefined) {
             return;
         }

@@ -44,6 +44,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
   def setContext(context: RDKContext): Unit = {
     if (context != NoneContext) {
       this.context = Option(context)
+      this.restHelper.setOriginHeader(getCurrentReqCtxHeaderArray)
     }
   }
 
@@ -57,11 +58,13 @@ class Runtime(engine: ScriptEngine) extends Logger {
   //获取context信息
   def getReqCtxHeaderInfo: String = {
     this.context match {
-      case Some(context) => RdkUtil.toJsonString(context.asInstanceOf[HttpRequestContext].wrap.request.headers.map { header => Header(header.name, header.value) }.toArray)
+      case Some(context) => RdkUtil.toJsonString(getCurrentReqCtxHeaderArray)
 
       case None => ""
     }
   }
+
+  def getCurrentReqCtxHeaderArray:Array[Header]= context.asInstanceOf[HttpRequestContext].wrap.request.headers.map { header => Header(header.name, header.value) }.toArray
 
   //获取主机名
   def getHostName: String = RdkUtil.getHostName
