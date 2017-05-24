@@ -240,6 +240,11 @@
             "icon": "fa fa-file"
           },
           {
+            "label": "ScoreIndicator",
+            "url": "doc/client/controls/scoreindicator/scoreindicator.html",
+            "icon": "fa fa-file"
+          },
+          {
             "label": "Switch",
             "url": "doc/client/controls/switch/rdk_switch.html",
             "icon": "fa fa-file"

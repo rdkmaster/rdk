@@ -1,4 +1,3 @@
-<rdk_title>Table</rdk_title>
 
 # 简介 #
 

@@ -1,9 +1,7 @@
-<rdk_title>ProgressBar进度条</rdk_title>
 
 # 简介 #
 
 `rdk_progressbar` 主要用于进度渲染
-
 
 这是一个简单的 `rdk_progressbar` 例子：
 
@@ -17,7 +15,7 @@
 
 目前的进度值
 
-## max <binding></binding> ##
+## max <binding></binding>##
 >支持类型：数字
 
 进度的最大值

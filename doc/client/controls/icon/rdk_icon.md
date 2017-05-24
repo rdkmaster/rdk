@@ -1,4 +1,3 @@
-<rdk_icon></rdk_icon>
 
 # 简介 #
 `rdk_icon` 是带图标的描述文字。

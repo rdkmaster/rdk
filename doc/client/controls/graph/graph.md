@@ -1,5 +1,3 @@
-<rdk_title>Graph图形</rdk_title>
-
 
 # 简介 #
 

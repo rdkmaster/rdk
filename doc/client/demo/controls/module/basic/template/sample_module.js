@@ -3,7 +3,7 @@
     var controllerName = 'SampleModuleController';
 
     //参考 main.js 中同名变量的说明
-    var imports = [ ];
+    var imports = [ 'rd.controls.Time' ];
     var extraModules = [ ];
 
     var controllerDefination = ['$scope', 'DataSourceService', 'EventService', main];

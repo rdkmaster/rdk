@@ -1,4 +1,3 @@
-<rdk_title>ComboSelect组合框</rdk_title>
 
 # 简介 #
 

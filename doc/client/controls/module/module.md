@@ -26,7 +26,11 @@
 
 模板url。一个模板实际上就是一个html片段。下面是一个简单的html模板：
 
-![](template.png)
+    <div controller="SampleModuleController">
+        <h3>这里是 {{$moduleId}}</h3>
+        <p>data = {{data}}</p>
+        <rdk_time></rdk_time>
+    </div>
 
 模板中使用的所有变量的上下文scope取决于 controller 属性的值。
 
@@ -69,6 +73,9 @@
 
 加载模块相关文件的超时毫秒数。默认值是10000。
 
+以上属性的综合示例如下：
+
+<live_demo example="controls/module/merge" width="900"></live_demo>
 
 # 方法 #
 
@@ -138,9 +145,10 @@
 ## EventTypes.READY ##
 
 当模块一切准备就绪时发出此事件。
-<live_demo example="controls/module/simple_load" width="900"></live_demo>
 
 ## EventTypes.DESTROY ##
 
 当模块被销毁之后发出此事件。
-<live_demo example="controls/module/simple_load" width="900"></live_demo>
+
+以上事件综合示例：
+<live_demo example="controls/module/event" width="900"></live_demo>

@@ -1,4 +1,3 @@
-<rdk_title>Time</rdk_title>
 
 # 简介 #
 
