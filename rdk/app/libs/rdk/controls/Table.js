@@ -396,7 +396,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     return searchObject;
                 }
 
-                this.setSelected=function(index){
+                this.scrollTo=function(index){
                     scope.highLightItem(index);
                 }
 

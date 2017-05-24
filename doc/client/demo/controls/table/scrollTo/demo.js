@@ -21,7 +21,7 @@
         }
 
         $scope.gotoRowIndex=function(){
-            rdk.myTable.setSelected($scope.rowIndex);
+            rdk.myTable.scrollTo($scope.rowIndex);
         }
 
         $scope.idx = 3;
