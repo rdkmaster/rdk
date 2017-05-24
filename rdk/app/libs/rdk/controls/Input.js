@@ -1,6 +1,6 @@
 define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.FontAwesome', 'css!rd.styles.Bootstrap'], function() {
     var inputApp = angular.module("rd.controls.Input", ['rd.core']);
-    inputApp.directive('rdkInput', ['Utils', 'EventService', 'EventTypes', function(Utils, EventService, EventTypes) {
+    inputApp.directive('rdkInput', ['Utils', 'EventService', 'EventTypes','$timeout', function(Utils, EventService, EventTypes,$timeout) {
         var scopeDefine={
             id:"@?",
             placeholder : "@?", 
@@ -64,16 +64,16 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
                             changeShowDelete(inputValue);
                         });
                     };
-
                     inputElement.oninput = function(event) {
                         updateModel(event.target.value);
                     }
-
+                   $timeout(function(){
+                           inputElement.value = ngModel.$viewValue || '';
+                   },0)
                     ngModel.$render = function() {
                         inputElement.value = ngModel.$viewValue || '';
                         changeShowDelete(ngModel.$viewValue);
                     };
-
                     function changeShowDelete(value) {
                         if (value) scope.showDelete = true;
                         else scope.showDelete = false;
