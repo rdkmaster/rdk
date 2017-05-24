@@ -1,3 +1,9 @@
-<button ng-click="clickHandler()">客户端分页pageSize改变</button>
-<rdk_table id='tableID' ds="ds_table" ds_url="mock.json" ds_query_if="ready" page_size="2">
-</rdk_table>
+<div  class="m-table">
+    <rdk_table id='tableID' class="u-table" custom-scroll="rdk-scroll" data="allData" page_size="5">
+    </rdk_table>
+    <div class="u-page-size">
+        <rdk_list_selector id="mySelect" data="selectData" selected-items="selected">
+        </rdk_list_selector>
+        <input type="text" ng-model="selected[0]" ng-change="changeSize()">
+    </div>
+</div>
