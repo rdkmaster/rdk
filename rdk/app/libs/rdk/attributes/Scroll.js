@@ -34,11 +34,13 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                 var scrollOptions = scope.$eval(iAttrs.scrollOption);//解析scroll特性配置
                 var defaultOptions = ScrollConfig.getOptions();//获取默认配置
                 var perfectOptions = angular.extend(defaultOptions, scrollOptions);
+                var throttle = Utils.throttle;
                 iElement.css({position: 'relative',overflow: 'hidden'}); //滚动条容器必要的样式
                 perfectScroll.initialize(container,perfectOptions);  //初始化滚动条
                 //获取滚动槽的样式宽度
                 var railOffsetWidth=Utils.getStyle(container.querySelector(".ps-scrollbar-y-rail"),"width");
-                perfectScroll.lazyResize=function(){  //DOM元素内容不确定是否加载完，滚动条进行延时加载处理
+                //滚动条需要更新状态调用 perfectScroll.lazyResize
+                perfectScroll.lazyResize=function(){
                     if (hlazyResize) clearTimeout(hlazyResize);
                     hlazyResize = setTimeout(function(){
                         perfectScroll.update(container);
@@ -49,7 +51,7 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                     },0);
                 };
 
-                perfectScroll.lazyResize();
+                throttle(perfectScroll.lazyResize)();
 
                 if(!!MutationObserver)
                 {
@@ -67,13 +69,13 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                         //过滤滚动条节点的观察
                         if(!(container.children[i].classList.contains("ps-scrollbar-x-rail") || container.children[i].classList.contains("ps-scrollbar-y-rail")))
                         {
-                            perfectScroll.observer=new MutationObserver(perfectScroll.lazyResize);
+                            perfectScroll.observer=new MutationObserver(throttle(perfectScroll.lazyResize));
                             perfectScroll.observer.observe(container.children[i], observerOption);
                             perfectScroll.observerList.push(perfectScroll.observer);
                         }
                     }
                     //观察自己
-                    perfectScroll.observer=new MutationObserver(perfectScroll.lazyResize);
+                    perfectScroll.observer=new MutationObserver(throttle(perfectScroll.lazyResize));
                     perfectScroll.observer.observe(container, {
                         'childList': true,
                         'attributes':true,
@@ -82,7 +84,7 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                     });
                     var parentNode = _findParentScrollNode(container);
                     if(!!parentNode){
-                        perfectScroll.parentNodeObserver  =  new MutationObserver(perfectScroll.lazyResize);
+                        perfectScroll.parentNodeObserver  =  new MutationObserver(throttle(perfectScroll.lazyResize));
                         perfectScroll.parentNodeObserver.observe(parentNode, {
                             'childList': true,
                             'attributes':true,
@@ -126,6 +128,7 @@ define(['perfect-scrollbar','rd.core','css!rd.styles.Scroll'], function(perfectS
                     }
                     return node;
                 }
+
             }
         }]);
 

@@ -81,3 +81,8 @@
 
 <live_demo example="controls/timeSelect/change" width="900"></live_demo>
 
+# 应用示列 #
+
+这是一个的 `input` 结合 `rdk_time_select` 构造一个可输入时间的例子：
+
+<live_demo example="controls/timeSelect/inputTime" width="900"></live_demo>
