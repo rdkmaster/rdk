@@ -1,4 +1,3 @@
-<rdk_title>rdk框架app开发指导手册</rdk_title>
 
 ## 背景
 

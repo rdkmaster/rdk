@@ -1,4 +1,3 @@
-<rdk_title>Alert</rdk_title>
 
 # 简介 #
 

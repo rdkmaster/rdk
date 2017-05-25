@@ -1,4 +1,3 @@
-<rdk_title>Selector</rdk_title>
 
 # 简介 #
 

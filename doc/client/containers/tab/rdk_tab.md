@@ -1,4 +1,3 @@
-<rdk_title>Tab页</rdk_title>
 
 # 简介 #
 

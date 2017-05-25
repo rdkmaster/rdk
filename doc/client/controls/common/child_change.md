@@ -1,6 +1,5 @@
-<rdk_title>child_change</rdk_title>
 
-#childChange说明#
+# childChange说明 #
 
 >支持类型：函数
 

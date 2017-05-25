@@ -1,4 +1,3 @@
-<rdk_title>RDK公共导出服务</rdk_title>
 
 rdk 提供了可支持导出excel，csv，txt格式的公共导出服务
 
