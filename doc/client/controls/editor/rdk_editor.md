@@ -1,4 +1,3 @@
-<rdk_title>Editor</rdk_title>
 
 # 简介 #
 `rdk_editor` 是一个多行编辑器控件，它具有可编辑，可读，代码可折叠的功能。

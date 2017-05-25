@@ -1,4 +1,3 @@
-<rdk_title>ComboSelect组合框</rdk_title>
 
 # 简介 #
 
@@ -152,7 +151,7 @@
 #### width {#width3}
 选择信息控件宽度，默认值75%。
 
-####position {#position2}
+#### position {#position2}
 定位属性,默认值: absolute
 
 #### margin-left ####

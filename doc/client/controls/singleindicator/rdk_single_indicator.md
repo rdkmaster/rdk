@@ -1,4 +1,3 @@
-<rdk_title>SingleIndicator</rdk_title>
 
 # 简介 #
 

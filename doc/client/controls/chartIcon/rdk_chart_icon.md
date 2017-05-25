@@ -1,7 +1,6 @@
-<rdk_title>chart icon</rdk_title>
 
 # 简介 #
-一个简洁，轻量级chart图标控件,可用于简单的chart图表显示，表格控件结合使用等。
+一个简洁，轻量级chart图<rdk_title>chart icon</rdk_title>标控件,可用于简单的chart图表显示，表格控件结合使用等。
 
 详情请看官方文档说明：[http://benpickles.github.io/peity/](http://benpickles.github.io/peity/)
 

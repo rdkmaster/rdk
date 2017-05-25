@@ -1,4 +1,3 @@
-<rdk_title>ListSelector</rdk_title>
 
 # 简介 #
 

@@ -1,4 +1,3 @@
-<rdk_numeric_input>Numeric_Input</rdk_numeric_input>
 
 # 简介 #
 `rdk_numeric_input` 是数值输入框

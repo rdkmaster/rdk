@@ -1,4 +1,3 @@
-<rdk_title>Map地图</rdk_title>
 
 # 简介 #
 
@@ -69,7 +68,7 @@
 1. mapselected
 1. mapunselected
 
-#具体使用场景#
+# 具体使用场景 #
 ## 地图点击 ##
 <live_demo example="controls/map/event" width="900"></live_demo>
 ## 切换地域 ##

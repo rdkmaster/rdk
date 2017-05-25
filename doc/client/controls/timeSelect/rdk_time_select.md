@@ -1,4 +1,3 @@
-<rdk_title>TimeSelect</rdk_title>
 
 # 简介 #
 
