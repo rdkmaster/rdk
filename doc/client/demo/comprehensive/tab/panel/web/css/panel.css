@@ -84,3 +84,6 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+.rdk-table-module{
+    height: 260px;
+}

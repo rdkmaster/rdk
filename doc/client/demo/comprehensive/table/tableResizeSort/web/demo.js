@@ -24,6 +24,7 @@
                 obj={};
                 obj.targets=j;
                 obj.sortable=true;
+                obj.width =j*5 +100 + "px";
                 scope.setting.columnDefs.push(obj);
             }
         }
