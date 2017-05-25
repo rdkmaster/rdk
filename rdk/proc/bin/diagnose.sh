@@ -12,20 +12,28 @@ diagnose() {
         if [ $? == 0 ]; then
             return 0
         fi
+        sleep 10
     done
     log 'rdk did not respond for '$3' times'
     return 1
 }
 
 waitForReady() {
-    for ((time=1; time<=60; time++));do
+    time1=$(date +%s -s 'now')
+    while true
+    do
         sleep 10
         diagnose 10 30 1
         if [ $? == 0 ]; then
             return 0
         fi
+
+        time2=$(date +%s -s 'now')
+        delta=$(($time2 - $time1))
+        if [ $delta -lt 1860 ]; then
+            return 1
+        fi
     done
-    return 1
 }
 
 restartRDK() {
@@ -56,7 +64,7 @@ run() {
         sleep $waitTimeout
 
         log 'diagnosing rdk ...'
-        diagnose 10 30 2
+        diagnose 10 30 3
         if [ $? != 0 ]; then
             log 'NOT GOOD! rdk did not respond in time, gonna restart it.'
             restartRDK
