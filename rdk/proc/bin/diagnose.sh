@@ -18,14 +18,14 @@ diagnose() {
 }
 
 waitForReady() {
-    while true
-    do
-        sleep 30
+    for ((time=1; time<=60; time++));do
+        sleep 10
         diagnose 10 30 1
         if [ $? == 0 ]; then
-            break
+            return 0
         fi
     done
+    return 1
 }
 
 restartRDK() {
@@ -44,7 +44,7 @@ run() {
     fi
 
     log "waiting for rdk to get ready..."
-    diagnose 10 30 20
+    waitForReady
     if [ $? != 0 ]; then
         log "NOT GOOD! rdk has not been ready since last restart!"
         return 1;
