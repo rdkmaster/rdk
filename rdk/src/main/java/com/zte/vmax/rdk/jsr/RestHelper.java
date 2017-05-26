@@ -175,6 +175,8 @@ public class RestHelper extends AbstractAppLoggable {
 
         setRequestProperties(conn, option);
 
+        setRequestHeaders(conn);
+
         int connTimeout = Integer.parseInt(getProperty(option, "connectTimeout", "60000"));
         conn.setConnectTimeout(connTimeout);
         int readTimeout = Integer.parseInt(getProperty(option, "readTimeout", "120000"));
@@ -221,8 +223,14 @@ public class RestHelper extends AbstractAppLoggable {
         return result;
     }
 
+    private void setRequestHeaders(URLConnection conn) {
+        for (int i = 0; i < this.originHeaders.length(); i++) {
+            Messages.Header header = this.originHeaders.apply(i);
+            conn.setRequestProperty(header.key(), header.value());
+        }
+    }
+
     private void setRequestProperties(URLConnection conn, Object option) {
-        for(Messages.Header header:originHeaders)
         if (option instanceof Undefined) {
             return;
         }
