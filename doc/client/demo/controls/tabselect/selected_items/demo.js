@@ -7,7 +7,10 @@
     var controllerDefination = ['$scope', 'EventService', 'EventTypes',main];
     function main(scope,EventService,EventTypes ) {
         scope.trackItemByVal = "value";
-
+        scope.searchValue = false;
+        scope.search  = function(){
+            scope.searchValue = !scope.searchValue
+        }
         scope.selItems = [{
             "label": "浙江省",
             "value": "2"

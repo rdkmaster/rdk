@@ -67,7 +67,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.TabSelector','rd.controls
                 scope.trackItemBy = Utils.getValue(scope.trackItemBy, iAttrs.trackItemBy, scope.labelField);
                 scope._trackItemBy = scope.trackItemBy ? scope.trackItemBy.trim().split(/\s*,\s*/) : [scope.labelField];
                 scope.multipleSelect = Utils.isTrue(iAttrs.multipleSelect, true);
-                scope.searchable = Utils.isTrue(iAttrs.searchable, false);
+                scope.searchable = Utils.getValue(scope.searchable,iAttrs.searchable, false);
                 scope.editable = Utils.isTrue(iAttrs.editable, false);
                 
                 scope.activeTab = _activeTab;
