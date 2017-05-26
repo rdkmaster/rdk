@@ -65,6 +65,13 @@
             }else{
                 scope.inputVal = scope.setting.value;
             }
+            //错误的格式输入导致value=="",返回当前时间
+            if(scope.setting.value==""){
+                scope.setting.value="now";
+                $timeout(function(){
+                    scope.inputVal =scope.setting.value;
+                },0);
+            }
         }
 
         //粒度改变更新inputVal
