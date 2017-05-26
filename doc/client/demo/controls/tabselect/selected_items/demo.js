@@ -6,10 +6,6 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', 'EventService', 'EventTypes',main];
     function main(scope,EventService,EventTypes ) {
-        EventService.register('tabselectData', EventTypes.RESULT, function(event, data) {
-            scope.tabselectData = data;
-        });
-
         scope.trackItemByVal = "value";
 
         scope.selItems = [{
