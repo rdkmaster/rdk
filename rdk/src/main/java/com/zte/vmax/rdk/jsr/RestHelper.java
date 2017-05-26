@@ -7,8 +7,6 @@ import com.zte.vmax.rdk.config.Config;
 import com.zte.vmax.rdk.util.RdkUtil;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import jdk.nashorn.internal.runtime.Undefined;
-import scala.Array;
-
 import javax.net.ssl.*;
 import java.io.*;
 import java.net.*;
@@ -18,15 +16,15 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import scala.collection.JavaConversions.*;
+
 
 /**
  * Created by 10045812 on 16-6-27.
  */
 public class RestHelper extends AbstractAppLoggable {
-    private Array<Messages.Header> originHeaders;
+    private scala.collection.Iterator<Messages.Header> originHeaders;
 
-    public void setOriginHeader(Array<Messages.Header> originHeader) {
+    public void setOriginHeader(scala.collection.Iterator<Messages.Header> originHeader) {
         this.originHeaders = originHeader;
     }
 
@@ -224,8 +222,8 @@ public class RestHelper extends AbstractAppLoggable {
     }
 
     private void setRequestHeaders(URLConnection conn) {
-        for (int i = 0; i < this.originHeaders.length(); i++) {
-            Messages.Header header = this.originHeaders.apply(i);
+        while (this.originHeaders.hasNext()) {
+            Messages.Header header = this.originHeaders.next();
             conn.setRequestProperty(header.key(), header.value());
         }
     }

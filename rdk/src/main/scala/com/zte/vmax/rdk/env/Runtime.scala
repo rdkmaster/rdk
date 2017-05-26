@@ -28,9 +28,9 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
 
   implicit var application: String = ""
-  val locale: String = Config.get(Config.get("extension.locale.key")) match{
-    case ""=>"zh_CN"
-    case x =>x
+  val locale: String = Config.get(Config.get("extension.locale.key")) match {
+    case "" => "zh_CN"
+    case x => x
   }
 
   val fileHelper = new FileHelper
@@ -43,8 +43,8 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   def setContext(context: RDKContext): Unit = {
     if (context != NoneContext) {
+      this.restHelper.setOriginHeader(getCurrentReqCtxHeaderArray(context).toIterator)
       this.context = Option(context)
-      this.restHelper.setOriginHeader(getCurrentReqCtxHeaderArray)
     }
   }
 
@@ -55,16 +55,17 @@ class Runtime(engine: ScriptEngine) extends Logger {
   def removeDBInfoByName(dbName: String) = {
     DataSource.removeDBInfoByName(dbName)
   }
+
   //获取context信息
   def getReqCtxHeaderInfo: String = {
     this.context match {
-      case Some(context) => RdkUtil.toJsonString(getCurrentReqCtxHeaderArray)
+      case Some(ctx) => RdkUtil.toJsonString(getCurrentReqCtxHeaderArray(ctx))
 
       case None => ""
     }
   }
 
-  def getCurrentReqCtxHeaderArray:Array[Header]= context.asInstanceOf[HttpRequestContext].wrap.request.headers.map { header => Header(header.name, header.value) }.toArray
+  def getCurrentReqCtxHeaderArray(ctx: RDKContext): Array[Header] = ctx.asInstanceOf[HttpRequestContext].wrap.request.headers.map { header => Header(header.name, header.value) }.toArray
 
   //获取主机名
   def getHostName: String = RdkUtil.getHostName
@@ -87,11 +88,12 @@ class Runtime(engine: ScriptEngine) extends Logger {
     jarHelper.setAppName(appName)
 
   }
+
   //重置当前数据源
   def resetDataSource: Unit = {
-    opCurDataSource =ProxyManager.getDefaultDataSource(application) match {
-      case None=>Some("db.default")
-      case x=>x
+    opCurDataSource = ProxyManager.getDefaultDataSource(application) match {
+      case None => Some("db.default")
+      case x => x
     }
   }
 
@@ -135,14 +137,14 @@ class Runtime(engine: ScriptEngine) extends Logger {
     engine.eval(script).asInstanceOf[ScriptObjectMirror]
   }
 
-  def getEngine:ScriptEngine={
+  def getEngine: ScriptEngine = {
     engine
   }
 
   def callService(callable: ScriptObjectMirror, param: AnyRef, script: String): ServiceRawResult = {
-      val result: AnyRef = serviceCaller.call(callable, callable, param, script)
-      if (result.isInstanceOf[String]) ServiceRawResult(result.toString, MediaTypes.`text/plain`)
-      else ServiceRawResult(jsonParser.call(callable, result, "").toString, MediaTypes.`application/json`)
+    val result: AnyRef = serviceCaller.call(callable, callable, param, script)
+    if (result.isInstanceOf[String]) ServiceRawResult(result.toString, MediaTypes.`text/plain`)
+    else ServiceRawResult(jsonParser.call(callable, result, "").toString, MediaTypes.`application/json`)
   }
 
   /**
