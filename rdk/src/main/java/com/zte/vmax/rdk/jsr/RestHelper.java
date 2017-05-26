@@ -22,10 +22,10 @@ import java.util.regex.Pattern;
  * Created by 10045812 on 16-6-27.
  */
 public class RestHelper extends AbstractAppLoggable {
-    private scala.collection.Iterator<Messages.Header> originHeaders;
+    private scala.collection.Iterator<Messages.Header> originHeaderIter;
 
-    public void setOriginHeader(scala.collection.Iterator<Messages.Header> originHeader) {
-        this.originHeaders = originHeader;
+    public void setOriginHeader(scala.collection.Iterator<Messages.Header> originHeaderIter) {
+        this.originHeaderIter = originHeaderIter;
     }
 
     private static class TrustAnyHostnameVerifier implements HostnameVerifier {
@@ -222,8 +222,8 @@ public class RestHelper extends AbstractAppLoggable {
     }
 
     private void setRequestHeaders(URLConnection conn) {
-        while (this.originHeaders.hasNext()) {
-            Messages.Header header = this.originHeaders.next();
+        while (this.originHeaderIter.hasNext()) {
+            Messages.Header header = this.originHeaderIter.next();
             conn.setRequestProperty(header.key(), header.value());
         }
     }
