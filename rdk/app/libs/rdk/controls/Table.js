@@ -396,6 +396,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     return searchObject;
                 }
 
+                this.scrollTo=function(index){
+                    scope.highLightItem(index);
+                }
+
                 function _refreshSingleCheckedData(items){
                     angular.forEach(scope.destData, function(item){
                         item.checked = false;
@@ -933,7 +937,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 scope.selectedModel = _setRowHighLight(item,event.target);
 								EventService.raiseControlEvent(scope, 'click', item);
                             }else{
-                                scope.selectedModel.rows.push(item);
+                                scope.selectedModel.rows[0]=item;
                             }
                             EventService.raiseControlEvent(scope, 'select', item);
                         };
@@ -1214,11 +1218,28 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         scope.directionStr = direction;
                         ctrl.setCurrentPage(scope.currentPage);
                     }
-
+                    //根据index索引指定行选中并高亮
+                    scope.highLightItem = _highLightItem;
                     function _highLightItem(index) {
-                        if (scope.destData) { //destData有定义时
+                        if (scope.destData && +index < scope.destData.length) { //destData有定义时
                             var selectedItem = scope.destData[index];
                             scope.setSelected(selectedItem, null);
+                            var scrollIndex = +index+1;
+                            var selector;
+                            if(!!element[0].scrollIntoViewIfNeeded){
+                                selector = ".rdk-table>tbody>tr:nth-of-type(" + scrollIndex + ")";
+                                element[0].querySelector(selector).scrollIntoViewIfNeeded();
+                            }else{
+                                //兼容IE,火狐不支持scrollIntoViewIfNeeded
+                                scrollIndex = scrollIndex>3 ? scrollIndex-3 : 1;
+                                if(scrollIndex>1){
+                                    selector = ".rdk-table>tbody>tr:nth-of-type(" + scrollIndex + ")";
+                                }else{
+                                    selector = ".rdk-table>thead";
+                                }
+                                element[0].querySelector(selector).scrollIntoView();
+                            }
+
                         }
                     }
 
