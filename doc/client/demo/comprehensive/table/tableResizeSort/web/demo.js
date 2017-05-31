@@ -9,22 +9,21 @@
 
         scope.setting = { //表格设置列宽度和样式类
             "columnDefs" :[
-
             ]
         };
 
         scope.allData= {data: [], field: [], header: []};
         var obj;
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 80; i++) {
             scope.allData.data.push([]);
-            for (var j = 0; j < 30; j++) {
+            for (var j = 0; j < 50; j++) {
                 scope.allData.data[i].push('data: ' + i + ', ' + j);
                 scope.allData.field[j] = 'filed' + j;
                 scope.allData.header[j] = 'header' + j;
                 obj={};
                 obj.targets=j;
                 obj.sortable=true;
-                obj.width =j*5 +100 + "px";
+                obj.width = j*3 +100 + "px";
                 scope.setting.columnDefs.push(obj);
             }
         }

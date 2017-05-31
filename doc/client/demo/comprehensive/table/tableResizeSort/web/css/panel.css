@@ -2,6 +2,9 @@
     width: 600px;
     margin: 30px;
 }
+.rdk-table-module .wrapper{
+    max-height: 500px;
+}
 /* table */
 /* td 第1,2,3列右对齐*/
 .table-wrap .rdk-table-module .rdk-table thead>tr>th:nth-of-type(1),
