@@ -28,6 +28,7 @@
 	    $scope.setting = {
             value: 'now-2h', //当前选中的时间value,支持双向绑定
             granularity: "quarter",  //粒度，类型枚举，备选date/week/month/hour/quarter，默认值是date
+            minuteStep:1, //分钟粒度最小精确度
             selectGranularity:true,  //显示选择粒度
             weekStart:"0",          //属性，周开始设置，类型0~6数字。默认值是0
             startDate:"2016-01-01", //可选的开始时间，类型字符串/Date对象
@@ -36,6 +37,14 @@
 	    }
 
 <live_demo example="controls/timeSelect/setting" width="900"></live_demo>
+
+### minuteStep ###
+
+> 支持类型：Number.
+
+当时间粒度选择为`quarter`时。设置此属性，表示`quarter`粒度下的最小精确度，默认值: 15。
+
+<live_demo example="controls/timeSelect/minuteStep" width="900"></live_demo>
 
 ### selectGranularity ###
 > 支持类型：数组或布尔类型
@@ -80,3 +89,8 @@
 
 <live_demo example="controls/timeSelect/change" width="900"></live_demo>
 
+# 应用示列 #
+
+这是一个的 `input` 结合 `rdk_time_select` 构造一个可输入时间的例子：
+
+<live_demo example="controls/timeSelect/inputTime" width="900"></live_demo>

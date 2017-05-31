@@ -1,6 +1,6 @@
-define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
+define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attributes.Scroll'],
     function() {
-        var timeSelectApp = angular.module('rd.controls.TimeSelect', ['rd.core','rd.controls.TimeBasic']);
+        var timeSelectApp = angular.module('rd.controls.TimeSelect', ['rd.core','rd.controls.TimeBasic','rd.attributes.Scroll']);
 
         timeSelectApp.directive('rdkTimeSelect', ['PickerConstant', 'TimeMacro', 'TimeFormate', 'TimeUnit', 'Utils', 'TimeUtilService', '$timeout','EventService','EventTypes', function(PickerConstant, TimeMacro, TimeFormate, TimeUnit, Utils, TimeUtilService, $timeout,EventService,EventTypes) {
             var scopeDefine={
@@ -20,7 +20,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                                     {{granularityItem.label}}\
                                     </span>\
                                 </div>\
-                                <div class="rdk-time-select-module">\
+                                <div class="rdk-time-select-module" rdk-scroll>\
                                     <input ng-show="false" ng-model="setting.value"  type="text">\
                                 </div>\
                                 <div ng-if="hasExpect" class="color-tips">\
@@ -55,6 +55,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                     scope.changeGranularity = function(granularity){
                         scope.setting.granularity=granularity;
                         scope.selectedGranularity.value=granularity;
+                        EventService.raiseControlEvent(scope, EventTypes.GRANULARITY_CHANGE,granularity);
                     };
 
                     function getInitValue() {
@@ -128,6 +129,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         scope.setting.selectGranularity = Utils.getValue(scope.setting.selectGranularity, undefined, false);
                         scope.setting.selectGranularity = scope.setting.selectGranularity && (angular.isArray(scope.setting.selectGranularity) ? scope.setting.selectGranularity : defaultGranularity);
                         scope.setting.granularity = Utils.getValue(scope.setting.granularity, undefined, TimeUnit.DAY);
+                        scope.setting.minuteStep = +Utils.getValue(scope.setting.minuteStep, undefined, 15);
                         //默认周日为一周开始
                         scope.setting.weekStart = Utils.getValue(scope.setting.weekStart, undefined, 0);
                         scope.timeFormat = TimeFormate[Utils.getValueFromKey(TimeUnit, scope.setting.granularity)];
@@ -174,7 +176,14 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                         _setWeekStyle();
                         _bindEventHandler(_setWeekStyle);
                     }
-
+                    datetimepicker.on('changeDate', function(ev) {
+                        scope.$apply(function() {
+                            scope.setting.value = TimeUtilService.dateFormate(new Date(ev.date.valueOf()), scope.startTimeOption.format);
+                            _setExpectDate();
+                            _setWeekStyle();
+                            EventService.raiseControlEvent(scope, EventTypes.CHANGE, scope.setting.weekValue || scope.setting.value);
+                        });
+                    })
                     function handleWeekValue() {
                         if (scope.selectedGranularity.value != "week"){
                             return;
@@ -212,7 +221,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                             case TimeUnit.QUARTER:
                                 option.startView = PickerConstant.HOUR;
                                 option.minView = PickerConstant.HOUR;
-                                option.minuteStep = 15;
+                                option.minuteStep = scope.setting.minuteStep;
                                 break;
                             case TimeUnit.HOUR:
                                 option.startView = PickerConstant.DAY;
@@ -235,21 +244,21 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect'],
                                 option.minView = PickerConstant.DAY;
                                 break;
                         }
+                        _validSettingVal(option.endDate);
                         return option;
+                    }
+                    //校验设置的时间value是否超过endDate
+                    function _validSettingVal(maxDate){
+                        var maxSettingVal = TimeUtilService.getTimeMacroCalculate(scope.setting.value);
+                        if(maxSettingVal>maxDate){
+                            scope.setting.value=maxDate;
+                        }
                     }
 
                     function _datetimepicker(domNode,option){
                         !!datetimepicker && datetimepicker.datetimepicker('remove');
                         datetimepicker = $(domNode).datetimepicker(option);
                         datetimepicker.datetimepicker('update');//增加个隐藏的input节点目的:解决没法更新时间的BUG
-                        datetimepicker.on('changeDate', function(ev) {
-                            _setExpectDate();
-                            _setWeekStyle();
-                            scope.$apply(function() {
-                                scope.setting.value = TimeUtilService.dateFormate(new Date(ev.date.valueOf()), scope.startTimeOption.format);
-                                EventService.raiseControlEvent(scope, EventTypes.CHANGE, scope.setting.weekValue || scope.setting.value);
-                            });
-                        })
                     }
 
                     function _setWeekStyle(){

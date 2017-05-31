@@ -1,0 +1,14 @@
+
+<div class="m-time" tabindex="1">
+    <input type="text" class="u-time-input form-control" ng-change="inputChange(inputVal)" ng-blur="rdkInputBlur()" ng-model="inputVal">
+    <rdk-icon icon="iconfont iconfont-e8c2" ng-click="toggleOpen()"></rdk-icon>
+    <div class="time-wrap" ng-show="timeOpen">
+        <rdk_time_select id="timeID" class="u-time-select" setting="setting"></rdk_time_select>
+    </div>
+</div>
+<h4>你选择的时间值：<span>{{setting.value}}</span></h4>
+
+<h4>备注：</h4>
+<h5>输入还支持时间宏，比如输入now-10n,
+    now 代表当前时间。now - 10n 代表当前时间向前追溯10分钟。支持y/m/d/h/n五种追溯方式。</h5>
+<h5>周粒度不支持输入</h5>
