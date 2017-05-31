@@ -78,11 +78,14 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect','css!rd.styl
                     };
                     this.getValue = function() {
                         return scope.inputStr;
-                    }
-
+                    };
+                    this.closeOpen = function(){
+                        scope.open = false;
+                        scope.isSelect=false;
+                    };
                     this.setCaption = function(caption){
                         scope.caption = caption;
-                    }
+                    };
                     this.getCaption = function() {
                         return scope.caption;
                     }
