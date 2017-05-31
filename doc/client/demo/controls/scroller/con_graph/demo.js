@@ -4,8 +4,12 @@
         'rd.controls.Scroller','rd.controls.Graph'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope',  main];
-    function main(scope ) {
+    var controllerDefination = ['$scope','EventService','EventTypes',  main];
+    function main(scope,EventService,EventTypes ) {
+
+        EventService.register('scrollerID', EventTypes.CHANGE, function(content,data){
+                alert("改变事件")
+        });
         scope.images=[
         {
             src:'img/img1.png',

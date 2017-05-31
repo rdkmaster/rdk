@@ -196,7 +196,7 @@
           },
           {
             "label": "ListSelector",
-            "url": "doc/client/controls/input/rdk_list_selector.html",
+            "url": "doc/client/controls/listSelector/rdk_list_selector.html",
             "icon": "fa fa-file"
           },
           {
@@ -227,11 +227,6 @@
           {
             "label": "Selector",
             "url": "doc/client/controls/selector/rdk_selector.html",
-            "icon": "fa fa-file"
-          },
-          {
-            "label": "Select",
-            "url": "doc/client/controls/select/rdk_select.html",
             "icon": "fa fa-file"
           },
           {
