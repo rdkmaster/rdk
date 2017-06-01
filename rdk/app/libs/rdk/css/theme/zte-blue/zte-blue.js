@@ -28,6 +28,7 @@ require.config({
         "rd.styles.Time": "../rdk/css/theme/zte-blue/rdk-time-style",
         "rd.styles.TimeBasic": "../rdk/css/theme/zte-blue/rdk-time-basic-style",
         "rd.styles.TimeSelect": "../rdk/css/theme/zte-blue/rdk-time-select-style",
+        "rd.styles.TimeRange": "../rdk/css/theme/zte-blue/rdk-time-range-style",
         "rd.styles.Tree": "../rdk/css/theme/zte-blue/rdk-tree-style",
         "rd.styles.Switch": "../rdk/css/theme/zte-blue/rdk-switch-style",
         "rd.styles.NumericInput": "../rdk/css/theme/zte-blue/rdk-numericinput-style",

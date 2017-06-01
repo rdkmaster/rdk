@@ -33,7 +33,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect','css!rd.styl
                                   </div>\
                               </div>\
                               <div class="combo-content-transclude" on-finish-render="domRenderFinished">\
-                                  <div ng-transclude ng-show="open"></div>\
+                                  <div ng-transclude ng-show="open" class="rdk-scroll"></div>\
                               </div>\
                           </div>',
 
@@ -79,7 +79,10 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect','css!rd.styl
                     this.getValue = function() {
                         return scope.inputStr;
                     }
-
+                    this.closeOpen = function(){
+                        scope.open = false;
+                        scope.isSelect=false;
+                    };
                     this.setCaption = function(caption){
                         scope.caption = caption;
                     }

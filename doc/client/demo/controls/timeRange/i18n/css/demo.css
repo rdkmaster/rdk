@@ -1,0 +1,10 @@
+.rdk-time-range-module .rdk-time-select{
+    min-width: 280px;
+}
+
+.rdk-time-range-module .rdk-time-select-module{
+    margin: 0 auto;
+    width: 210px;
+    display: block;
+    height: 260px;
+}
