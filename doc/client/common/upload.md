@@ -1,9 +1,6 @@
-<rdk_title>RDK文件上传服务</rdk_title>
-
-rdk 提供了可支持客户端文件上传的服务
 
 ## 服务
-
+rdk 提供了可支持客户端文件上传的服务
     /rdk/service/common/upload
 
 注意，**该服务为post请求**。

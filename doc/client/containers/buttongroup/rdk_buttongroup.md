@@ -1,4 +1,3 @@
-<rdk_title>ButtonGroup</rdk_title>
 
 # 简介 #
 

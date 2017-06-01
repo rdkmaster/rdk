@@ -1,4 +1,3 @@
-<rdk-area-select></rdk-area-select>
 
 # 简介 #
 

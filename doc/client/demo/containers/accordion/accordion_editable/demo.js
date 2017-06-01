@@ -7,7 +7,7 @@
     var controllerDefination = ['$scope', main];
     function main(scope) {
         scope.buttonSource = [{
-            icon: "./../img/edit.png",
+            icon: "/doc/client/demo/containers/accordion/img/edit.png",
             label: "编辑",
             tooltips: "点击可进行编辑",
             callback: function(obj, htmlID) {

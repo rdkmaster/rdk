@@ -6,12 +6,11 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', 'EventService', 'EventTypes',main];
     function main(scope,EventService,EventTypes ) {
-        EventService.register('tabselectData', EventTypes.RESULT, function(event, data) {
-            scope.tabselectData = data;
-        });
-
         scope.trackItemByVal = "value";
-
+        scope.searchValue = false;
+        scope.search  = function(){
+            scope.searchValue = !scope.searchValue
+        }
         scope.selItems = [{
             "label": "浙江省",
             "value": "2"

@@ -115,7 +115,7 @@
 								opacity: 1,
 								top: $(element).scrollTop() - offsetTop
 							});
-
+							$stickyHead.css("visibility", "visible");
 						} else {
 							// When top of viewport is above or below table
 							$stickyHead.add($stickyInsct).css({

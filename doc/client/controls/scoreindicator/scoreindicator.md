@@ -1,5 +1,3 @@
-<rdk_title>ScoreIndicator</rdk_title>
-
 
 # 简介 #
 
@@ -56,10 +54,10 @@
 
 示例如下：
 <live_demo example="controls/scoreindicator/scoreindicator_update" width="600" height="400"></live_demo>
-#事件#
+# 事件 #
 暂无
 
-#样式#
+# 样式 #
 暂无
 
 

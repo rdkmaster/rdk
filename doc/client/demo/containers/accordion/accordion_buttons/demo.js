@@ -7,14 +7,14 @@
     var controllerDefination = ['$scope', main];
     function main(scope) {
         scope.buttonSource = [{
-            icon: "/doc/client/demo/containers/accordion/img/edit.png",
+            icon: "../img/edit.png",
             label: "编辑",
             tooltips: "点击可进行编辑",
             callback: function(obj, htmlID) {
                 alert("点击了编辑按钮！");
             }
         }, {
-            icon: "/doc/client/demo/containers/accordion/img/delete.png",
+            icon: "../img/delete.png",
             label: "删除",
             tooltips: "点击将删除内容",
             callback: function(obj) {

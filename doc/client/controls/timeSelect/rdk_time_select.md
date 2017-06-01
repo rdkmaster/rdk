@@ -1,4 +1,3 @@
-<rdk_title>TimeSelect</rdk_title>
 
 # 简介 #
 
@@ -59,7 +58,7 @@
                 {label: "Month", value: "month"}
             ];
 
-<live_demo example="controls/timeSelect/expect" width="900"></live_demo>
+<live_demo example="controls/timeSelect/selectGranularity" width="900"></live_demo>
 
 ### expectSelectedDate ###
 > 支持类型：数组

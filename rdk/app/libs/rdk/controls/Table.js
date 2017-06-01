@@ -37,7 +37,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         <tbody ng-mouseleave="clearHovered()">\
                             <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
                                 ng-class="{\'row-span\':groupTargets,\'selected-row\':ifRowHighLight(item,\'click\'),\'selected-row-hover\':ifRowHighLight(item,\'hover\')}" ng-dblclick="dbClickHandler(item,$index)">\
-                                <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="currentPageData[$index].checked"></td>\
+                                <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="item.checked"></td>\
                                 <td ng-class="{\'selected-row-td\':ifRowHighLight(item,\'click\',columnDef),\'selected-row-hover-td\':ifRowHighLight(item,\'hover\',columnDef)}" ng-mouseenter="setHovered(item,$event)" rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" ng-style="getCellStyle(itemRowSpan,columnDef)">\
                                 </td>\
                             </tr>\
@@ -394,6 +394,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     searchObject.searchKey = scope.globalSearch;
                     searchObject.searchFields = _getSearchFields();
                     return searchObject;
+                }
+
+                this.scrollTo=function(index){
+                    scope.highLightItem(index);
                 }
 
                 function _refreshSingleCheckedData(items){
@@ -931,8 +935,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
                             if(event!=null){
                                 scope.selectedModel = _setRowHighLight(item,event.target);
+								EventService.raiseControlEvent(scope, 'click', item);
                             }else{
-                                scope.selectedModel.rows.push(item);
+                                scope.selectedModel.rows[0]=item;
                             }
                             EventService.raiseControlEvent(scope, 'select', item);
                         };
@@ -1213,11 +1218,28 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         scope.directionStr = direction;
                         ctrl.setCurrentPage(scope.currentPage);
                     }
-
+                    //根据index索引指定行选中并高亮
+                    scope.highLightItem = _highLightItem;
                     function _highLightItem(index) {
-                        if (scope.destData) { //destData有定义时
+                        if (scope.destData && +index < scope.destData.length) { //destData有定义时
                             var selectedItem = scope.destData[index];
                             scope.setSelected(selectedItem, null);
+                            var scrollIndex = +index+1;
+                            var selector;
+                            if(!!element[0].scrollIntoViewIfNeeded){
+                                selector = ".rdk-table>tbody>tr:nth-of-type(" + scrollIndex + ")";
+                                element[0].querySelector(selector).scrollIntoViewIfNeeded();
+                            }else{
+                                //兼容IE,火狐不支持scrollIntoViewIfNeeded
+                                scrollIndex = scrollIndex>3 ? scrollIndex-3 : 1;
+                                if(scrollIndex>1){
+                                    selector = ".rdk-table>tbody>tr:nth-of-type(" + scrollIndex + ")";
+                                }else{
+                                    selector = ".rdk-table>thead";
+                                }
+                                element[0].querySelector(selector).scrollIntoView();
+                            }
+
                         }
                     }
 

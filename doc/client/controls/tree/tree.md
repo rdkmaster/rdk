@@ -1,6 +1,4 @@
-﻿<rdk_title>Tree</rdk_title>
-
-
+﻿
 # 简介
 
 `rdk_tree` 主要用于提供树形结构的展示。

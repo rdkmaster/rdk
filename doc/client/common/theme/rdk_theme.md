@@ -1,6 +1,5 @@
-<rdk_title>theme</rdk_title>
 
-##RDK主题控制
+## RDK主题控制
 
 
 # 实现方式 #

@@ -1,4 +1,3 @@
-<rdk_title>Button</rdk_title>
 
 # 简介 #
 `rdk_button` 是自带多种功能的按钮。

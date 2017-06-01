@@ -1,4 +1,3 @@
-<rdk_title>Scroller翻页</rdk_title>
 
 # 简介 #
 `rdk_scroller` 是可以自定义内容的轮播器。翻页策略支持timeout和manual的组合，分别是超时自动翻页、鼠标单击翻页，默认同时支持。当设置了超时自动翻页后，支持自定义超时时间。此外，也可以自定义轮播同时显示的页数。
@@ -53,7 +52,7 @@
 
 ---
 
-#样式修改#
+# 样式修改 #
 
 ## offset ##
 >支持类型：整型
@@ -62,7 +61,7 @@
 
 <live_demo example="controls/scroller/offset" width="900"></live_demo>
 
-##箭头的透明度##
+## 箭头的透明度 ##
 在style中，设置class为left-arrow和right-arrow的样式，opacity设置透明度，top设置箭头的相对高度，默认透明度0.5：
 
 	<style type="text/css">
@@ -82,7 +81,7 @@
 <live_demo example="controls/scroller/style" width="900"></live_demo>
 
 ---
-#事件#
+# 事件 #
 当控件id不为空，点击左右箭头会发出一个以该id为key的'EventTypes.CHANGE'事件。
 
 `rdk_scroller`也支持内嵌其他rdk控件，这里以图像结合`rdk_graph`为例,设置显示页数为3，如下所示：

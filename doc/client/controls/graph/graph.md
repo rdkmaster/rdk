@@ -1,5 +1,3 @@
-<rdk_title>Graph图形</rdk_title>
-
 
 # 简介 #
 
@@ -24,6 +22,8 @@ rdk的图形控件主要是封装了echart3的内容，因此只要符合echart3
     <rdk_graph graph_define="/doc/client/demo/controls/graph/basic/scripts/graph_define/simple_line.js">
     </rdk_graph>
 
+<live_demo example="controls/graph/height-width" width="900"></live_demo>
+
 以上示例中的`simple_line.js`就是对应的图形显示的模板文件。
 此属性中的模板文件一般和`data`属性一起使用，其中`data`属性是向图形模板文件中传入对应的入参信息。
 
@@ -39,14 +39,14 @@ data对象中应该包含以下**必填属性**：
 - data:真实的数据
 其详细信息可以参见`rdk_table`控件的对应属性。
 
-##ds##
+## ds ##
 > 支持类型：对象或数据源id
 
 数据源绑定的变量即直接从数据源获取的反馈信息。一般和`data`属性相同，但`data`属性的信息可以根据`ds`和相关的业务逻辑将数据进行新的处理。
 
 `ds`属性一般和`ds-url`属性一起使用来获取图形显示的数据信息。
 
-##ds-url##
+## ds-url ##
 > 支持类型：字符串
 
 此属性用于设置数据服务的引用路径，一般和`ds`属性一起使用。
@@ -55,14 +55,14 @@ data对象中应该包含以下**必填属性**：
 
 <live_demo example="controls/graph/ds" width="900"></live_demo>
 
-##width和height <binding></binding>##
+## width和height <binding></binding> ##
 > 支持类型：number类型。
 
 width和height表示graph的宽和高，只支持数字不用加单位，默认单位都是px;width默认值为其父元素的100%;height默认值为300;
 
 <live_demo example="controls/graph/height-width" width="900"></live_demo>
 
-#事件#
+# 事件 #
 `rdk_graph`控件支持echart3中的所有常用的事件。
 
 ## 常用事件 ##
@@ -93,15 +93,23 @@ width和height表示graph的宽和高，只支持数字不用加单位，默认�
 `rdk_graph`的`click` 和 `dblclick` 同时监听需要处理时，不能正常响应，这是Echart内部实现决定的，提供HACK方式。
 
 <live_demo example="controls/graph/event" width="900"></live_demo>
+# echarts API #
+`echarts`的API可以通过以下方式调用：
 
-#样式#
+    rdk.graphID.chart.api
+
+示例如下：
+
+<live_demo example="controls/graph/api/web" width="900"></live_demo>
+
+# 样式 #
 `rdk_graph`的样式主要是通过主题文件来设置的。主题文件中设置了所有图形的样式。
 
-##默认主题##
+## 默认主题 ##
 如果`rdk_graph`控件不手动设置主题文件，则`rdk_graph`控件会使用控件库中的默认样式。
 图形控件的默认的样式会使用rdk控件库中的`chart_theme.js`文件中的样式（rdk/app/libs/rdk/css/theme/chart_theme.js）
 
-##自定义主题##
+## 自定义主题 ##
 `rdk_graph`也提供了自定义主题的使用接口。`rdk_graph`控件可以通过使用`setTheme`函数来引用和使用自己的主题样式文件。
 只需要在对应`main.js`文件中添加如下代码即可实现：
 
@@ -111,7 +119,7 @@ width和height表示graph的宽和高，只支持数字不用加单位，默认�
 
 <live_demo example="controls/graph/theme" width="900"></live_demo>
 
-#GraphService服务#
+# GraphService服务 #
 
 Graph控件提供了一些常见的对数据进行操作的服务，可在使用Graph模板文件的时候用到
 
@@ -135,7 +143,7 @@ return function(data, context, GraphService, attributes) {
 }});
 
 ~~~
-##column##
+## column ##
 定义：
 	function column(matrix, idx);
 
@@ -146,7 +154,7 @@ return function(data, context, GraphService, attributes) {
 
 返回：返回二维数组的 idx 列组成的一维数组
 
-##row##
+## row ##
 定义：
 	function row(matrix, idx);
 
@@ -157,7 +165,7 @@ return function(data, context, GraphService, attributes) {
 
 返回：返回二维数组的 idx 行组成的一维数组
 
-##distinct##
+## distinct ##
 定义：
 	function distinct(array);
 
@@ -167,7 +175,7 @@ return function(data, context, GraphService, attributes) {
 
 返回：将该一维数组重复的部分去除后返回。
 
-##classify##
+## classify ##
 定义：
 	function classify(data, column);
 
@@ -188,94 +196,93 @@ return function(data, context, GraphService, attributes) {
   }
 ~~~
 
-#更多示例#
+# 更多示例 #
 
-环形图1：
+### 环形图1 ###
 
 <live_demo example="comprehensive/graph/simple_pie1/web" width="900"></live_demo>
 
-环形图2：
+### 环形图2 ###
 
 <live_demo example="comprehensive/graph/simple_pie2/web" width="900"></live_demo>
 
-环形图3：
+### 环形图3 ###
 
 <live_demo example="comprehensive/graph/simple_pie3/web" width="900"></live_demo>
 
-环形图4：
+### 环形图4 ###
 
 <live_demo example="comprehensive/graph/simple_scorePie/web" width="900"></live_demo>
 
 
-
-折线柱状组合图：
+### 折线柱状组合图 ###
 
 <live_demo example="comprehensive/graph/simple_tu2/web" width="900"></live_demo>
 
-条形图1：
+### 条形图1 ###
 
 <live_demo example="comprehensive/graph/simple_tu3/web" width="900"></live_demo>
 
-条形图2：
+### 条形图2 ###
 
 <live_demo example="comprehensive/graph/simple_tu4/web" width="900"></live_demo>
 
-条形图3：
+### 条形图3 ###
 
 <live_demo example="comprehensive/graph/simple_tu6/web" width="900"></live_demo>
 
-条形图和多选框结合：
+### 条形图和多选框结合 ###
 
 <live_demo example="comprehensive/graph/simple_tu7/web" width="900"></live_demo>
 
-堆叠区域图：
+### 堆叠区域图 ###
 
 <live_demo example="comprehensive/graph/simple_tu5/web" width="900"></live_demo>
 
-散点图：
+### 散点图 ###
 
 <live_demo example="comprehensive/graph/bubble_graduent/web" width="900"></live_demo>
 
-雷达图：
+### 雷达图 ###
 
 <live_demo example="comprehensive/graph/rader/web" width="900"></live_demo>
 
-k线图：
+### k线图 ###
 
 <live_demo example="comprehensive/graph/simple_tu1/web" width="900"></live_demo>
 
-箱线图：
+### 箱线图 ###
 
 <live_demo example="comprehensive/graph/box_plots/web" width="900"></live_demo>
 
-热力图：
+### 热力图 ###
 
 <live_demo example="comprehensive/graph/hot/web" width="900"></live_demo>
 
-关系图：
+### 关系图 ###
 
 <live_demo example="comprehensive/graph/relational_graph/web" width="900"></live_demo>
 
-矩形树图：
+### 矩形树图 ###
 
 <live_demo example="comprehensive/graph/rectangle_tree/web" width="900"></live_demo>
 
-平行坐标：
+### 平行坐标 ###
 
 <live_demo example="comprehensive/graph/parallel/web" width="900"></live_demo>
 
-桑葚图：
+### 桑葚图 ###
 
 <live_demo example="comprehensive/graph/mulberry_figure/web" width="900"></live_demo>
 
-漏斗图：
+### 漏斗图 ###
 
 <live_demo example="comprehensive/graph/funnel_plot/web" width="900"></live_demo>
 
-仪表盘：
+### 仪表盘 ###
 
 <live_demo example="comprehensive/graph/instrument/web" width="900"></live_demo>
 
-综合示例：
+### 综合示例 ###
 一个数据源画出折线图和饼图
 <live_demo example="comprehensive/graph/twoData/web" width="900"></live_demo>

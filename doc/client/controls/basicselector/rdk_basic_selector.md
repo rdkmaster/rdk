@@ -1,4 +1,3 @@
-<rdk_title>BasicSelector</rdk_title>
 
 # 简介 #
 

@@ -196,7 +196,7 @@
           },
           {
             "label": "ListSelector",
-            "url": "doc/client/controls/input/rdk_list_selector.html",
+            "url": "doc/client/controls/listSelector/rdk_list_selector.html",
             "icon": "fa fa-file"
           },
           {
@@ -230,13 +230,13 @@
             "icon": "fa fa-file"
           },
           {
-            "label": "Select",
-            "url": "doc/client/controls/select/rdk_select.html",
+            "label": "SingleIndicator",
+            "url": "doc/client/controls/singleindicator/rdk_single_indicator.html",
             "icon": "fa fa-file"
           },
           {
-            "label": "SingleIndicator",
-            "url": "doc/client/controls/singleindicator/rdk_single_indicator.html",
+            "label": "ScoreIndicator",
+            "url": "doc/client/controls/scoreindicator/scoreindicator.html",
             "icon": "fa fa-file"
           },
           {

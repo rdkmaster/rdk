@@ -1,4 +1,3 @@
-<rdk_title>Accordion</rdk_title>
 
 # 简介 #
 
