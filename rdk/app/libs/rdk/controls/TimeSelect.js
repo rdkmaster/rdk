@@ -46,9 +46,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                     scope.language = Utils.getLocale(scope);
 
                     scope.hasExpect=false;
-                    scope.render=_render;
 
-                    _initDefaultSetting();　//初始化设置，只读取一遍set
                     _render();
 
                     scope.activeGranularityCls = function(granularity){
@@ -149,6 +147,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                     }
 
                     function _render() {
+                        _initDefaultSetting();
                         scope.setting.weekValue =  null;
                         scope.setting.selectGranularity = Utils.getValue(scope.setting.selectGranularity, undefined, false);
                         scope.setting.selectGranularity = scope.setting.selectGranularity && (angular.isArray(scope.setting.selectGranularity) ? scope.setting.selectGranularity : defaultGranularity);
