@@ -18,5 +18,7 @@
 ### 示例六
 <live_demo example="comprehensive/tab/simple2/web" width="900" height="400"></live_demo>
 
+### 示例七
+<live_demo example="comprehensive/table/scrollFixedColumn" width="900" height="400"></live_demo>
 
 

@@ -414,6 +414,14 @@ cells 为 改变的行列信息的数组信息
 详细示例如下：
 <live_demo example="controls/table/demo4AddCheckBox"></live_demo>
 
+## 复选框列 check_box_title ##
+>支持类型：字符串
+
+`add_check_box`属性为`true`时可设置此属性给表头增加`title`
+
+详细示例如下：
+<live_demo example="controls/table/demo4AddCheckBox2"></live_demo>
+
 ## 自动添加行编号 ##
 可以通过列渲染的方式实现行号自动自动添加功能。
 

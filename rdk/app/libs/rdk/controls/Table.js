@@ -26,7 +26,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     <table class="rdk-table" >\
                         <thead ng-if="!noHeader">\
                             <tr>\
-                                <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
+                                <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><span ng-if="checkBoxTitle">{{checkBoxTitle}}</span><input ng-if="!checkBoxTitle" name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
                                 <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinished" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)">\
                                     {{columnDef.title}}\
                                     <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
@@ -49,7 +49,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         </tbody>\
                     </table>\
                 </div>\
-                <rdk-paging ng-if="pageVisible && pageCtrl && paging" data-page-size="pageSize" \
+                <rdk-paging ng-show="pageVisible && pageCtrl && paging" data-page-size="pageSize" \
                      data-lang="{{lang}}" current-page="currentPage" data-search-position="{{searchPosition}}" ng-class="{true:\'visiblePageLine\', false:\'unvisiblePageLine\'}[columnDefs.length!=0 && !noData]">\
                 </rdk-paging>\
                 <div ng-if="showExport && !noData" class="table-export"><rdk_button click="touchExport" icon="iconfont iconfont-e8c9" label="{{exportLabel}}"></rdk_button></div>\
@@ -311,6 +311,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
             proxyDs: "@?",
             pageNumber: "@?",
             addCheckBox: "=?",
+            checkBoxTitle: "@?",
             defaultConditionProcessor: "&?",
             floatableHeader: "@?",
             change: "&?",
@@ -1028,7 +1029,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             var currentPage = parseInt(scope.currentPage, 10);
                             var pageSize = parseInt(scope.pageSize, 10);
                             var start = currentPage * pageSize;
-                            return scope.destData.slice(start, start+pageSize); //子数组
+                            return scope.destData ? scope.destData.slice(start, start+pageSize) :[]; //子数组
                         }
 
                         scope.refreshTotal4Single = function(){
@@ -1308,7 +1309,15 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                     obj[field] = data[index];
                                 });
                                 obj["$index"] = index; //item上存原行
-                                obj["checked"] = false;
+                                if(input.checked){
+                                    angular.forEach(input.checked,function(checked,cIndex){
+                                        if(index == cIndex){
+                                            obj["checked"] = checked;
+                                        }
+                                    })
+                                }else{
+                                    obj["checked"] = false;
+                                }
                                 result.push(obj);
                             });
                             return result;
