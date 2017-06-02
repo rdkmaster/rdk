@@ -1,13 +1,13 @@
 .rdk-time-range-module{
     display: inline-flex;
+}
+.rdk-time-range-module .rdk-combo-container{
     border-radius: 4px;
     border: 1px solid #ccc;
     background-color: #fff;
     align-items:center;
 }
 .rdk-time-range-module  span.time-range-split{
-    height: 32px;
-    line-height: 30px;
     margin-left: -16px;
 }
 /* rdk-time-select容器*/
@@ -49,4 +49,74 @@
 /*下拉容器*/
 .rdk-time-range-module .range-second .combo-content-transclude{
     left: initial;
+}
+
+
+/* input-time*/
+.rdk-time-range-module{
+    display: inline-flex;
+    position: relative;
+}
+.rdk-time-range-module .rdk-time-container:hover {
+    border-color: rgba(0,143,212,0.6)
+}
+.rdk-time-range-module .rdk-time-container:focus {
+    border-color: rgba(0,143,212,0.6);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 2px rgba(0,143,212,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 2px rgba(0,143,212,0.6);
+}
+/* input*/
+.rdk-time-range-module input{
+    border: 0;
+    outline: none;
+}
+.rdk-time-range-module input[type="text"]::-ms-clear{
+    display:none;
+}
+.rdk-time-range-module .u-time-input{
+    width: 180px;
+    display: inline-block;
+    text-align: center;
+}
+/* time-select wrap start*/
+.u-time-select-wrap{
+    border: 1px solid #ccc;
+    height: 300px;
+    width: 210px;
+    padding: 5px;
+    position: absolute;
+    background-color: #fff;
+    top: 35px;
+}
+.u-time-select-wrap.time-start{
+    left: 0;
+}
+.u-time-select-wrap.time-end{
+    right: 0;
+}
+/* time-select wrap end*/
+
+/* time-select */
+.rdk-time-range-module  .rdk-time-select-module{
+    height: 255px;
+    padding-right: 6px;
+}
+/* icon */
+.rdk-time-range-module .u-time-icon{
+    width: 38px;
+    padding: 6px 8px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    text-align: center;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    margin-left: -5px;
+    vertical-align: bottom;
+}
+.rdk-time-range-module .iconfont{
+    color: #008fd4;
+    font-size: 20px;
 }

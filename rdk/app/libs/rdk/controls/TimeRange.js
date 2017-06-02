@@ -1,7 +1,50 @@
-define(['rd.core', 'rd.controls.ComboSelect', 'rd.controls.TimeSelect', 'css!rd.styles.TimeRange'],
+define(['rd.core', 'rd.controls.ComboSelect', 'rd.controls.TimeSelect', 'css!rd.styles.TimeRange','css!rd.styles.IconFonts'],
     function() {
         var timeApp = angular.module('rd.controls.TimeRange', ['rd.core', 'rd.controls.ComboSelect','rd.controls.TimeSelect']);
-
+        timeApp.run(["$templateCache", function($templateCache) {
+            $templateCache.put("common.html",
+                '<div class="rdk-time-range-module">\
+                    <div class="rdk-combo-container">\
+                        <rdk_combo_select  class="range-first" caption="label" show-icon="false || !range" id="rdkComboSelectStart{{$$id}}" frozen="disabled">\
+                            <rdk_time_select class="rdk-time-select" id="rdkTimeSelectStart{{$$id}}" setting="startSetting"></rdk_time_select>\
+                        </rdk_combo_select>\
+                        <span ng-if="range" class="time-range-split"> -- </span>\
+                        <rdk_combo_select  ng-if="range" class="range-second" id="rdkComboSelectEnd{{$$id}}" show-icon="false" frozen="disabled">\
+                            <rdk_time_select  class="rdk-time-select" id="rdkTimeSelectEnd{{$$id}}" setting="endSetting"></rdk_time_select>\
+                        </rdk_combo_select>\
+                    </div>\
+                </div>'
+            );
+            $templateCache.put("inpTime0.html",
+                '<div class="rdk-time-range-module">\
+                    <input type="text" class="u-time-input form-control" ng-change="inputChange(inputVal)" ng-blur="inputBlur()" ng-model="inputVal">\
+                    <div class="range-first" ng-show="timeOpen">\
+                        <rdk_time_select id="rdkTimeSelectStart{{$$id}}" class="rdk-time-select" setting="setting"  setting="startSetting"></rdk_time_select>\
+                    </div>\
+                    <span ng-if="range" class="time-range-split"> -- </span>\
+                     <input type="text" class="u-time-input form-control" ng-change="inputChange(inputVal)" ng-blur="inputBlur()" ng-model="inputVal">\
+                    <div class="range-second" ng-if="range && timeOpen">\
+                        <rdk_time_select id="rdkTimeSelectEnd{{$$id}}" class="rdk-time-select" setting="endSetting"></rdk_time_select>\
+                    </div>\
+                </div>'
+            );
+            $templateCache.put("inpTime.html",
+                '<div class="rdk-time-range-module">\
+                    <div class="rdk-time-container form-control" tabindex="1">\
+                        <input type="text" class="u-time-input" ng-change="startInpChange(startInpVal)" ng-blur="startInpBlur()" ng-model="startInpVal">\
+                        <span ng-if="range" class="time-range-split"> -- </span>\
+                        <input ng-if="range" type="text" class="u-time-input" ng-change="endInpChange(endInpVal)" ng-blur="endInpBlur()" ng-model="endInpVal">\
+                        <div ng-show="timeOpen" class="u-time-select-wrap time-start rdk-scroll">\
+                            <rdk_time_select id="rdkTimeSelectStart{{$$id}}" class="u-time-select" setting="startSetting"></rdk_time_select>\
+                        </div>\
+                        <div ng-if="range && timeOpen" class="u-time-select-wrap time-end rdk-scroll">\
+                            <rdk_time_select id="rdkTimeSelectEnd{{$$id}}" class="u-time-select" setting="endSetting"></rdk_time_select>\
+                        </div>\
+                    </div>\
+                    <i class="u-time-icon iconfont iconfont-e8c2" ng-click="toggleOpen()"></i>\
+                </div>'
+            );
+        }]);
         timeApp.directive('rdkTimeRange', ['PickerConstant', 'TimeMacro', 'TimeFormate', 'TimeUnit', 'TimeUtilService', 'Utils', '$timeout', 'EventService', 'EventTypes', function(PickerConstant, TimeMacro, TimeFormate, TimeUnit, TimeUtilService, Utils, $timeout, EventService, EventTypes) {
             var scopeDefine = {
                 id: "@?",
@@ -13,15 +56,13 @@ define(['rd.core', 'rd.controls.ComboSelect', 'rd.controls.TimeSelect', 'css!rd.
             return {
                 restrict: 'E',
                 replace: true,
-                template: '<div class="rdk-time-range-module">\
-                                <rdk_combo_select  class="range-first" caption="label" show-icon="false || !range" id="rdkComboSelectStart{{$$id}}" frozen="disabled">\
-                                    <rdk_time_select class="rdk-time-select" id="rdkTimeSelectStart{{$$id}}" setting="startSetting"></rdk_time_select>\
-                                </rdk_combo_select>\
-                                <span ng-if="range" class="time-range-split"> -- </span>\
-                                <rdk_combo_select  ng-if="range" class="range-second" id="rdkComboSelectEnd{{$$id}}" show-icon="false" frozen="disabled">\
-                                    <rdk_time_select  class="rdk-time-select" id="rdkTimeSelectEnd{{$$id}}" setting="endSetting"></rdk_time_select>\
-                                </rdk_combo_select>\
-                           </div>',
+                templateUrl: function(elem, attr){
+                    if(attr.input=="" || attr.input=="true"){
+                        return "inpTime.html";
+                    }else{
+                        return "common.html"
+                    }
+                },
                 scope: scopeDefine,
                 controller: ['$scope','$element','$attrs', function(scope,element,attrs){
 
