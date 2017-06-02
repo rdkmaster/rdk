@@ -169,6 +169,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                         } else {
                             scope.setting.endDate = Utils.getValue(TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(_handleMacroValue("endDate")), scope.timeFormat), undefined, null);
                         }
+
                         scope.selectedGranularity = setDefaultGranularity(scope.setting.granularity);
 
                         scope.startTimeOption = _generateOption();
@@ -188,8 +189,10 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                                     currentGranularity = scope.setting.selectGranularity[i];
                                 }
                             }
-                            return currentGranularity;
+                        }else{
+                            currentGranularity.value=scope.setting.granularity;
                         }
+                        return currentGranularity;
                     }
                     datetimepicker.on('changeDate', function(ev) {
                         scope.$apply(function() {
@@ -233,7 +236,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                         option.forceParse = 0;
                         option.weekStart = scope.setting.weekStart;
                         option.language = Utils.getLocale(scope);
-                        option.granularity = scope.selectedGranularity.value || scope.setting.granularity;
+                        option.granularity = scope.selectedGranularity.value;
                         if (scope.setting.endDate) {
                             option.endDate = scope.setting.endDate;
                         } else {
