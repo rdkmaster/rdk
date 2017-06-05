@@ -68,6 +68,7 @@ require.config({
         "rd.controls.TimeBasic": "../rdk/controls/TimeBasic",
         "rd.controls.Time": "../rdk/controls/Time",
         "rd.controls.TimeSelect": "../rdk/controls/TimeSelect",
+        "rd.controls.TimePane": "../rdk/controls/TimePane",
         "rd.controls.Tree": "../rdk/controls/Tree",
         "rd.controls.NumericInput": "../rdk/controls/NumericInput",
         "rd.controls.Switch": "../rdk/controls/Switch",

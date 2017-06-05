@@ -15,8 +15,8 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                 template: ' <div>\
                                 <div ng-show="setting.selectGranularity && setting.selectGranularity.length" class="rdk-time-granularity">\
                                     <span ng-repeat="granularityItem in setting.selectGranularity" \
-                                    ng-click="changeGranularity(granularityItem.value)" \
-                                    ng-class="{\'rdk-time-active\':activeGranularityCls(granularityItem.value)}">\
+                                    ng-click="changeGranularity(granularityItem)" \
+                                    ng-class="{\'rdk-time-active\':activeGranularityCls(granularityItem)}">\
                                     {{granularityItem.label}}\
                                     </span>\
                                 </div>\
@@ -47,41 +47,35 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
 
                     scope.hasExpect=false;
 
+                    _render();
+
                     scope.activeGranularityCls = function(granularity){
-                        return scope.setting.granularity == granularity;
+                        return scope.selectedGranularity.value == granularity.value;
                     };
-                    scope.selectedGranularity={};
 
                     scope.changeGranularity = function(granularity){
-                        scope.setting.granularity=granularity;
-                        scope.selectedGranularity.value=granularity;
+                        
+                        scope.setting.granularity=granularity.value;
+                        scope.selectedGranularity=granularity;
                         EventService.raiseControlEvent(scope, EventTypes.GRANULARITY_CHANGE,granularity);
                     };
 
-                    function getInitValue() {
-                        if (angular.isUndefined(scope.setting)) {
-                            scope.setting = {};
-                        }
-                        if (!angular.isUndefined(scope.setting.value)) {
-                            initValue = scope.setting.value;
-                        }
-                        initStartDate = scope.setting.startDate;
-                        initEndDate = scope.setting.endDate;
-                    }
-
-                    getInitValue();
-                    _init();
-
                     scope.$watch('setting.value', function(newVal, oldVal) {
                         if (!!newVal && newVal !== oldVal) {
-                            _init();
+                            _render();
+                        }
+                    });
+                    scope.$watch('setting.startDate', function(newVal, oldVal) {
+                        if (!!newVal && newVal !== oldVal) {
+                            _render();
                         }
                     });
                     scope.$watch('setting.granularity', function(newVal, oldVal) {
                         if (!!newVal && newVal !== oldVal) {
-                            _init();
+                            _render();
                         }
                     });
+
                     scope.$watch('condition.startTime', function(newVal, oldVal) {
                         scope.setting.value = newVal;
                         handleWeekValue();
@@ -108,7 +102,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                             if (initEndDate.indexOf("now") >= 0) {
                                 scope.setting.endDate = Utils.getValue(TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(initEndDate), scope.timeFormat), undefined, null);
                             }
-                            _init();
+                            _render();
                         }
                         timer = $timeout(updateValue, scope.refreshTimeout);
                     };
@@ -121,18 +115,44 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                         !!datetimepicker && datetimepicker.datetimepicker('remove');
                     });
 
-                    function _init() {
+                    function _initDefaultSetting(){
                         if (angular.isUndefined(scope.setting)) {
                             scope.setting = {};
                         }
-                        scope.setting.weekValue =  null;
-                        scope.setting.selectGranularity = Utils.getValue(scope.setting.selectGranularity, undefined, false);
-                        scope.setting.selectGranularity = scope.setting.selectGranularity && (angular.isArray(scope.setting.selectGranularity) ? scope.setting.selectGranularity : defaultGranularity);
+                        if (!angular.isUndefined(scope.setting.value)) {
+                            initValue = scope.setting.value;
+                        }
+                        initStartDate = scope.setting.startDate;
+                        initEndDate = scope.setting.endDate;
+
                         scope.setting.granularity = Utils.getValue(scope.setting.granularity, undefined, TimeUnit.DAY);
+
                         scope.setting.minuteStep = +Utils.getValue(scope.setting.minuteStep, undefined, 15);
                         //默认周日为一周开始
                         scope.setting.weekStart = Utils.getValue(scope.setting.weekStart, undefined, 0);
-                        scope.timeFormat = TimeFormate[Utils.getValueFromKey(TimeUnit, scope.setting.granularity)];
+                        scope.granularityList = Utils.getValue(scope.setting.granularityItems, undefined, undefined);
+                        if (scope.granularityList) {
+                            for (var i = 0; i < scope.granularityList.length; i++) {
+                                var item = scope.granularityList[i];
+                                if (item.value == scope.setting.granularity) {
+                                    scope.selectedGranularity = item;
+                                    break;
+                                }
+                            }
+                            if (!scope.selectedGranularity && scope.granularityList.length > 0) {
+                                scope.selectedGranularity = scope.granularityList[0];
+                            }
+                        }
+                        //scope.selectedGranularity = setDefaultGranularity(scope.setting.granularity);
+                    }
+
+                    function _render() {
+                        _initDefaultSetting();
+                        scope.setting.weekValue =  null;
+                        scope.setting.selectGranularity = Utils.getValue(scope.setting.selectGranularity, undefined, false);
+                        scope.setting.selectGranularity = scope.setting.selectGranularity && (angular.isArray(scope.setting.selectGranularity) ? scope.setting.selectGranularity : defaultGranularity);
+                        scope.timeFormat = TimeFormate[Utils.getValueFromKey(TimeUnit, scope.setting.granularity || TimeUnit.DAY)];
+
                         if (angular.isUndefined(scope.setting.value)) {
                             scope.setting.value = TimeUtilService.dateFormate(new Date(), scope.timeFormat);
                         } else {
@@ -146,27 +166,11 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                         if (angular.isUndefined(scope.setting.endDate) || !scope.setting.endDate) {
                             scope.setting.endDate = Utils.getValue(TimeUtilService.getTimeMacroCalculate(scope.setting.endDate), undefined, null);
                         } else {
-                            scope.setting.endDate = Utils.getValue(TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(scope.setting.endDate), scope.timeFormat), undefined, null);
+                            scope.setting.endDate = Utils.getValue(TimeUtilService.dateFormate(TimeUtilService.getTimeMacroCalculate(_handleMacroValue("endDate")), scope.timeFormat), undefined, null);
                         }
 
-                        scope.granularityList = Utils.getValue(scope.setting.granularityItems, undefined, undefined);
+                        scope.selectedGranularity = setDefaultGranularity(scope.setting.granularity);
 
-                        if (scope.granularityList) {
-                            for (var i = 0; i < scope.granularityList.length; i++) {
-                                var item = scope.granularityList[i];
-                                if (item.value == scope.setting.granularity) {
-                                    scope.selectedGranularity = item;
-                                    break;
-                                }
-                            }
-                            if (!scope.selectedGranularity && scope.granularityList.length > 0) {
-                                scope.selectedGranularity = scope.granularityList[0];
-                            }
-                        } else {
-                            scope.selectedGranularity = {
-                                "value": scope.setting.granularity
-                            };
-                        }
                         scope.startTimeOption = _generateOption();
                         scope.condition = {};
                         scope.condition.startTime = scope.setting.value;
@@ -175,6 +179,19 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                         _setExpectDate();
                         _setWeekStyle();
                         _bindEventHandler(_setWeekStyle);
+                    }
+                    function setDefaultGranularity(val){
+                        var currentGranularity={};
+                        if(scope.setting.selectGranularity){
+                            for(var i= 0, gLen = scope.setting.selectGranularity.length ; i<gLen ; i++){
+                                if(scope.setting.selectGranularity[i].value==val){
+                                    currentGranularity = scope.setting.selectGranularity[i];
+                                }
+                            }
+                        }else{
+                            currentGranularity.value=scope.setting.granularity;
+                        }
+                        return currentGranularity;
                     }
                     datetimepicker.on('changeDate', function(ev) {
                         scope.$apply(function() {
@@ -199,6 +216,16 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                             return date.getFullYear() + 'Week' + (week < 10 ? '0' : '') + week;
                         }
                     }
+                    function _handleMacroValue(option) {
+                        if (!scope[option]) {
+                            if (TimeUtilService.checkIfMacro(scope.setting[option])) {
+                                scope[option] = scope.setting[option];
+                            } else {
+                                return scope.setting[option];
+                            }
+                        }
+                        return scope[option];
+                    }
                     function _generateOption() {
                         var option = {};
                         option.minuteStep = null;
@@ -212,12 +239,13 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                         if (scope.setting.endDate) {
                             option.endDate = scope.setting.endDate;
                         } else {
-                            option.endDate = new Date();
+                            option.endDate = TimeUtilService.dateFormate(new Date(), scope.timeFormat);
                         }
                         if (scope.setting.startDate) {
                             option.startDate = scope.setting.startDate;
                         }
-                        switch (scope.selectedGranularity.value) {
+                       
+                        switch (option.granularity) {
                             case TimeUnit.QUARTER:
                                 option.startView = PickerConstant.HOUR;
                                 option.minView = PickerConstant.HOUR;

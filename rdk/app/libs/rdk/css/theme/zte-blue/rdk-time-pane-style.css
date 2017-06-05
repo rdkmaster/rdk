@@ -1,0 +1,52 @@
+.rdk-time-range-module{
+    display: inline-flex;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    align-items:center;
+}
+.rdk-time-range-module  span.time-range-split{
+    height: 32px;
+    line-height: 30px;
+    margin-left: -16px;
+}
+/* rdk-time-select容器*/
+.rdk-time-range-module .rdk-time-select{
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    margin-top: 2px;
+    width: 215px;
+    padding: 8px 5px 8px 5px;
+    background-color: #fff;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.175);
+    border-radius: 0 0 4px 4px;
+}
+.rdk-time-range-module  .rdk-time-select-module{
+    height: 255px;
+    padding-right: 6px;
+}
+/*覆盖combo-select样式*/
+.rdk-time-range-module .rdk-combo-select-module .combo-content{
+    border-radius: 0;
+    border: none;
+    background-color: transparent;
+}
+/* p标签*/
+.rdk-time-range-module .rdk-combo-select-module .combo-content-theme{
+    margin: 0;
+    text-align: center;
+}
+.rdk-time-range-module .rdk-combo-select-module .combo-content-transclude{
+    background-color: transparent;
+}
+/*宽度调整*/
+.rdk-time-range-module .range-second .width-fixed{
+    min-width: 150px;
+}
+.rdk-time-range-module .range-first .width-fixed{
+    min-width: 150px;
+    margin-right: 16px;
+}
+/*下拉容器*/
+.rdk-time-range-module .range-second .combo-content-transclude{
+    left: initial;
+}
