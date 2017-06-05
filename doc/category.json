@@ -332,7 +332,7 @@
         "items": [
           {
             "label": "搜索筛选",
-            "url": "doc/client/common/ApplicationExample/SearchFilter.html",
+            "url": "doc/client/common/ApplicationExample/Screening.html",
             "icon": "fa fa-file"
           },
           {
