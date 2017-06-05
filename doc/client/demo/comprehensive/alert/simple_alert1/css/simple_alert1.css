@@ -12,5 +12,5 @@
 	margin: 10px 16px 16px 0;
 }
 .rdk-alert-btnLine .rdk-alert-svrMsgBtn:not(:last-child) {
-	margin-left: -4px;
+	margin-right: 12px;
 }
