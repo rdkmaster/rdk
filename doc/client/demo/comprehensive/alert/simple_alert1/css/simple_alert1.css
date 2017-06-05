@@ -4,3 +4,13 @@
 	min-width: 400px!important;
 	max-width: 508px!important;
 }
+/* 软银样式 */
+.rdk-alert-btnLine {
+	text-align: right;
+}
+.rdk-theme-zte-vmax .rdk-alert-svrMsgBtn {
+	margin: 10px 16px 16px 0;
+}
+.rdk-alert-btnLine .rdk-alert-svrMsgBtn:not(:last-child) {
+	margin-right: 12px;
+}
