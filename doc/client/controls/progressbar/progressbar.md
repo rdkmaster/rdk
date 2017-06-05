@@ -42,11 +42,10 @@ bootstrap的样式类型，'success', 'info', 'warning', 'danger' 可以应用bo
 
 <live_demo example="controls/progressbar/customContent" width="900"></live_demo>
 
-
 ## 无值只需要显示进度条直到事情完成
 <live_demo example="controls/progressbar/noValueBar" width="900"></live_demo>
 
-##跟表格结合使用
+## 跟表格结合使用
 <live_demo example="controls/progressbar/withTable" width="900"></live_demo>
 
 

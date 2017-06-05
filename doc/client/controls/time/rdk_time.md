@@ -96,11 +96,11 @@
 
 <live_demo example="controls/time/minuteStep" width="900"></live_demo>
 
-###weekStart ###
+### weekStart ###
 标志一周开始，默认为周日（0），可配置0（星期日）到6（星期六）
 <live_demo example="controls/time/weekStart" width="900"></live_demo>
 
-###gap ###
+### gap ###
 当时间控件设置为range后，granularityItems支持gap属性，用于表示前后两个时间的时间间隔，支持
 inday/inweek/inmonth/inyear 和具体的 1d,2w,3m,4y。
 <live_demo example="controls/time/gap" width="900"></live_demo>

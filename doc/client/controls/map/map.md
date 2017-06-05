@@ -36,9 +36,11 @@
 # 事件 #
 
 ## 接收的事件 ##
+
 ### UPDATE_GRAPH ###
 接收的事件，用于外部数据变化后，发事件通知地图更新。
 <live_demo example="controls/map/visualMap" width="900"></live_demo>
+
 ### mapSelect/mapUnSelect ###
 接收的事件，用于外部选择或者取消地图的某块区域
 <live_demo example="controls/map/mapselected" width="900"></live_demo>
@@ -69,14 +71,19 @@
 1. mapunselected
 
 # 具体使用场景 #
+
 ## 地图点击 ##
 <live_demo example="controls/map/event" width="900"></live_demo>
+
 ## 切换地域 ##
 <live_demo example="controls/map/changemap" width="900"></live_demo>
+
 ## 外部选择某块区域 ##
 <live_demo example="controls/map/mapselected" width="900"></live_demo>
+
 ## 不同地域渲染成不同颜色块并加上气泡 ##
 <live_demo example="controls/map/visualMap" width="900"></live_demo>
+
 ## 地域钻取 ##
 <live_demo example="controls/map/drill" width="900"></live_demo>
 		

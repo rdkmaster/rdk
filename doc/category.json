@@ -115,7 +115,7 @@
           },
           {
             "label": "弹出菜单",
-            "url": "doc/client/common/popupservice/PopupService.html",
+            "url": "doc/client/common/menuservice/MenuService.html",
             "icon": "fa fa-file"
           },
           {
@@ -196,7 +196,7 @@
           },
           {
             "label": "ListSelector",
-            "url": "doc/client/controls/listSelector/rdk_list_selector.html",
+            "url": "doc/client/controls/listselector/rdk_list_selector.html",
             "icon": "fa fa-file"
           },
           {
@@ -251,7 +251,7 @@
           },
           {
             "label": "steps",
-            "url": "doc/client/controls/table/rdk_steps.html",
+            "url": "client/controls/steps/rdk_steps.html",
             "icon": "fa fa-file"
           },
           {
