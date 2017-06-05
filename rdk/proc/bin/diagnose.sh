@@ -30,7 +30,7 @@ waitForReady() {
 
         time2=$(date +%s -s 'now')
         delta=$(($time2 - $time1))
-        if [ $delta -lt 1860 ]; then
+        if [ $delta -gt 1860 ]; then
             return 1
         fi
     done
