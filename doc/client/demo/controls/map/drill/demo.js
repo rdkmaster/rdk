@@ -6,15 +6,15 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope','EventService', main];
     function main(scope,EventService) {
-        scope.mapUrl = 'mapinfo/china.map';
+        scope.mapUrl = 'mapinfo/china.json';
 
         EventService.register('gis', 'click', function(event, data) {
             scope.name = data.name;
             var id = data.rawData.properties.id;
             if (id.length == 2) {
-                scope.mapUrl = 'mapinfo/geometryProvince/' + id + '.map';
+                scope.mapUrl = 'mapinfo/geometryProvince/' + id + '.json';
             } else if (id.length == 4) {
-                scope.mapUrl = 'mapinfo/geometryCouties/' + id + '00.map';
+                scope.mapUrl = 'mapinfo/geometryCouties/' + id + '00.json';
             }
         });
     }
