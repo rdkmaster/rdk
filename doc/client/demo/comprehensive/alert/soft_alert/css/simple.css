@@ -17,9 +17,11 @@ ul {
 .alertImg li {
     float: left;
     line-height: 12px;
+    color: #666;
 }
 .alertImg li p{
     line-height: 14px;
+    color: #333;
 }
 .iconfont-e90d:before {
     font-size: 36px;

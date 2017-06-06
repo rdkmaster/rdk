@@ -105,6 +105,12 @@
 	background-color: #fff;
 	color: #ccc;
 }
+.rdk-button-caution {
+	background-color: #f99660;
+}
+.rdk-button-warning {
+	background-color: #ec6d6d;
+}
 /* -- theme style : rdk-theme-zte-vmax start --*/
 /*.rdk-theme-zte-vmax .rdk-button-guidance ~ .rdk-button-btn {
 	text-shadow:0 0 0.2em #8df10b, -0 -0 0.2em #8df10b;
