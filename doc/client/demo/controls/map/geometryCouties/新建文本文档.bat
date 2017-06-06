@@ -1,2 +1,0 @@
-
-ren *.map *.json
