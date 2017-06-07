@@ -30,6 +30,16 @@
 
 <live_demo example="controls/timePane/range" width="900"></live_demo>
 
+## input ##
+
+时间支持输入,缺省`input`时,只可以通过下拉框选择时间
+
+>输入还支持时间宏，比如输入now-10n,now 代表当前时间。now - 10n 代表当前时间向前追溯10分钟。支持y/m/d/h/n五种追溯方式。
+
+>周粒度不支持输入
+
+<live_demo example="controls/timePane/input" width="900"></live_demo>
+
 ## setting ##
 > 支持类型：json对象
 

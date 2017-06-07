@@ -5,10 +5,10 @@
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
-    function main(scope ) {
-        scope.showGranularity = {
-            value: ['2016-03-04 14:00', '2016-03-10 16:00'],
-            selectGranularity: [{
+    function main(scope) {
+        scope.settingSingle={
+            value: 'now',
+            selectGranularity:  [{
                 label: "分",
                 value: "quarter"
             }, {
@@ -24,8 +24,32 @@
                 label: "月",
                 value: "month"
             }],
-            granularity: "week"
+            granularity: "date",
+            minuteStep:1
+        };
+
+        scope.settingRange = {
+            value: ['now-20d', 'now'],
+            selectGranularity:  [{
+                label: "分",
+                value: "quarter"
+            }, {
+                label: "时",
+                value: "hour"
+            }, {
+                label: "天",
+                value: "date"
+            }, {
+                label: "周",
+                value: "week"
+            },{
+                label: "月",
+                value: "month"
+            }],
+            granularity: "date",
+            minuteStep:1
         }
+
     }
 
     var controllerName = 'DemoController';

@@ -272,14 +272,23 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                                 option.minView = PickerConstant.DAY;
                                 break;
                         }
-                        _validSettingVal(option.endDate);
+                        _validSettingVal(option.startDate,option.endDate);
                         return option;
                     }
-                    //校验设置的时间value是否超过endDate
-                    function _validSettingVal(maxDate){
-                        var maxSettingVal = TimeUtilService.getTimeMacroCalculate(scope.setting.value);
-                        if(maxSettingVal>maxDate){
+                    //校验设置的时间value是否在[startDate,endDate]区间
+                    function _validSettingVal(minDate,maxDate){
+                        var settingVal = TimeUtilService.getTimeMacroCalculate(scope.setting.value);
+                        if(angular.isString(minDate)){
+                            minDate = TimeUtilService.getTimeMacroCalculate(minDate);
+                        }
+                        if(angular.isString(maxDate)){
+                            maxDate = TimeUtilService.getTimeMacroCalculate(maxDate);
+                        }
+                        if(settingVal>maxDate){
                             scope.setting.value=maxDate;
+                        }
+                        if(settingVal<minDate){
+                            scope.setting.value=minDate;
                         }
                     }
 

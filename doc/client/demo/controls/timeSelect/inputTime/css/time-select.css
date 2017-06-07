@@ -31,7 +31,6 @@ input[type="text"]::-ms-clear{
 
 .time-wrap{
     border: 1px solid #ccc;
-    height: 300px;
     width: 210px;
     padding: 5px;
     position: absolute;
