@@ -42,6 +42,9 @@
 ### 示例十三
 <live_demo example="comprehensive/graph/simple_bar/web" width="900" height="400"></live_demo>
 
+### 示例十四--地图
+<live_demo example="comprehensive/map/japan" width="900" height="400"></live_demo>
+
 
 
 

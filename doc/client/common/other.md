@@ -1,5 +1,3 @@
-<rdk_title>其他</rdk_title>
-
 
 ## RDK初始化事件
 

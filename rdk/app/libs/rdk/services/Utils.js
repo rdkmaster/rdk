@@ -275,7 +275,16 @@
             });
             return dest;
         }
-
+        this.isEmptyObject = function(obj) {
+            if(!angular.isObject(obj)){
+                console.error ("Utils isEmptyObject Method Parameter Error");
+            }
+            var prop;
+            for (prop in obj){
+                return false;
+            }
+            return true
+        };
         this.contains = function(arr, object ,isHash) {
             if(typeof object ==="object" && angular.isArray(arr)){
                 for(var i=0,len=arr.length ; i<len ; i++)
@@ -289,6 +298,28 @@
                 return -1;
             }else {
                 return -1;
+            }
+        };
+        //函数流的控制，函数被频繁调用的场景
+        this.throttle = function(fn,interval){
+            var _self = fn;
+            var timer;
+            var firstTime = true;
+            return function (){
+                var args = arguments;
+                var _me = this;
+                if(firstTime){
+                    _self.apply(_me,args);
+                    return firstTime = false;
+                }
+                if(timer){
+                    return false;
+                }
+                timer = setTimeout(function(){
+                    clearTimeout(timer);
+                    timer = null;
+                    _self.apply(_me,args);
+                },interval || 200)
             }
         };
         //获取元素在页面中的偏移量

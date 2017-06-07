@@ -1,4 +1,5 @@
 <rdk_tab_select ds="tabselectData" ds_url="mock.json" ds_query_if="ready"
-    selected_items="selItems" track_item_by="{{trackItemByVal}}" searchable='false'
-    label_field='label' node_field='dim' data='tabselectData' child_change="tabSelectChanged">
+    selected_items="selItems" track_item_by="{{trackItemByVal}}" searchable='searchValue'
+    label_field='label' node_field='dim' child_change="tabSelectChanged">
 </rdk_tab_select>
+<button ng-click="search()">search</button>

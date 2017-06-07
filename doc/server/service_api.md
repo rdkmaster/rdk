@@ -1077,13 +1077,14 @@ rdk_server在服务启动时会自动加载应用的初始化脚本。
 
 说明：应用需要使用到第三方jar包中的类时，可以使用这个函数把类反射出来到js中直接调用： 
 
-    var myClass = loadClass("$base/lib", "com.zte.sql.optimizer.SqlOptimizer");
+    var myClass = loadClass("$base/lib/optimize.jar", "com.zte.sql.optimizer.SqlOptimizer");
 	var myInst = myClass.newInstance();
 	var result = myInst.myMethod(...);
 
-上述代码会把 app/example/server/lib（以example应用为例） 目录下的所有jar包都加载到虚拟机中，并实例出 `com.zte.sql.optimizer.SqlOptimizer` 这个类的一个实例。
+上述代码会把 app/example/server/lib/optimize.jar（以example应用为例）加载到虚拟机中，并实例出 `com.zte.sql.optimizer.SqlOptimizer` 这个类的一个实例。
 
-注意：RDK虚拟机的JRE是1.8的，所以在JS中实例化并运行的Java代码，都是在JRE1.8下跑的
+注意：RDK虚拟机的JRE是1.8的，所以在JS中实例化并运行的Java代码，都是在JRE1.8下跑的;
+      多次加载同一个jar包虽然不会影响功能，但对性能会有一定的影响，因此当参数jarPath为包目录时，应避免在同一个服务中多次使用，以免重复加载造成性能问题。
 
 #### JS与Java互传参数的建议 ####
 

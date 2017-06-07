@@ -1,6 +1,4 @@
-﻿<rdk_title>Tree</rdk_title>
-
-
+﻿
 # 简介
 
 `rdk_tree` 主要用于提供树形结构的展示。
@@ -223,6 +221,7 @@ html代码如下：
 事件类型：EventTypes.CHECK，监听 ON_CHECK 事件，即设置可勾选属性后，勾选tree节点后，可以得到勾选的节点。
 示例如下：
 <live_demo example="controls/tree/event_check" width="900"></live_demo>
+
 # 样式
 暂无
 
@@ -237,7 +236,6 @@ html代码如下：
 
 示例如下：
 <live_demo example="controls/tree/unselect_on_blur" width="900"></live_demo>
-
 
 ztree  API
 [http://http://www.treejs.cn/v3/api.php](http://http://www.treejs.cn/v3/api.php)

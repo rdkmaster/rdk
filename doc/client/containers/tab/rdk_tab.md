@@ -1,4 +1,3 @@
-<rdk_title>Tab页</rdk_title>
 
 # 简介 #
 
@@ -48,6 +47,10 @@
 代码如下：
 
     <rdk-tab height_style="auto"></rdk-tab>
+
+以上三个属性的综合示例如下：
+
+<live_demo example="containers/tab/tab_selectedtab" width="800"></live_demo>
 
 ## collapsible ##
 >支持类型：字符串
@@ -159,7 +162,7 @@ tab的`div`模板带有该属性时，该`div`对应的tab页面会出现关闭�
 应用监听该事件并结合下面的`desTroyTab`或者`closeTab`方法进行相应的处理。
 
 
-#方法 #
+# 方法 #
 
 ## addTab ##
 

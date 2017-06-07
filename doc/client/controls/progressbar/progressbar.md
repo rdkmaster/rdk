@@ -1,9 +1,7 @@
-<rdk_title>ProgressBar进度条</rdk_title>
 
 # 简介 #
 
 `rdk_progressbar` 主要用于进度渲染
-
 
 这是一个简单的 `rdk_progressbar` 例子：
 
@@ -17,7 +15,7 @@
 
 目前的进度值
 
-## max <binding></binding> ##
+## max <binding></binding>##
 >支持类型：数字
 
 进度的最大值
@@ -44,11 +42,10 @@ bootstrap的样式类型，'success', 'info', 'warning', 'danger' 可以应用bo
 
 <live_demo example="controls/progressbar/customContent" width="900"></live_demo>
 
-
 ## 无值只需要显示进度条直到事情完成
 <live_demo example="controls/progressbar/noValueBar" width="900"></live_demo>
 
-##跟表格结合使用
+## 跟表格结合使用
 <live_demo example="controls/progressbar/withTable" width="900"></live_demo>
 
 

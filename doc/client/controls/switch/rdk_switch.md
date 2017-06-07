@@ -1,4 +1,3 @@
-<rdk_switch></rdk_switch>
 
 # 简介 #
 `rdk_switch` 是在线编辑器。

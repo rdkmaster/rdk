@@ -1,12 +1,12 @@
 package com.zte.vmax.rdk.jsr;
 
+import com.zte.vmax.rdk.actor.Messages;
 import com.zte.vmax.rdk.log.AbstractAppLoggable;
 import com.zte.vmax.rdk.log.AppLogger;
 import com.zte.vmax.rdk.config.Config;
 import com.zte.vmax.rdk.util.RdkUtil;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import jdk.nashorn.internal.runtime.Undefined;
-
 import javax.net.ssl.*;
 import java.io.*;
 import java.net.*;
@@ -17,10 +17,16 @@ import java.security.cert.X509Certificate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 /**
  * Created by 10045812 on 16-6-27.
  */
 public class RestHelper extends AbstractAppLoggable {
+    private scala.collection.Iterator<Messages.Header> originHeaderIter;
+
+    public void setOriginHeader(scala.collection.Iterator<Messages.Header> originHeaderIter) {
+        this.originHeaderIter = originHeaderIter;
+    }
 
     private static class TrustAnyHostnameVerifier implements HostnameVerifier {
         public boolean verify(String hostname, SSLSession session) {
@@ -167,6 +173,8 @@ public class RestHelper extends AbstractAppLoggable {
 
         setRequestProperties(conn, option);
 
+        setRequestHeaders(conn);
+
         int connTimeout = Integer.parseInt(getProperty(option, "connectTimeout", "60000"));
         conn.setConnectTimeout(connTimeout);
         int readTimeout = Integer.parseInt(getProperty(option, "readTimeout", "120000"));
@@ -196,7 +204,7 @@ public class RestHelper extends AbstractAppLoggable {
         }
         Object res = readBytesFromConn(conn, ifErrorInfo);
         byte[] bytes = null;
-        if (res instanceof String) {
+        if (res == null || res instanceof String) {
             return (String) res;
         } else {
             bytes = (byte[]) res;
@@ -211,6 +219,13 @@ public class RestHelper extends AbstractAppLoggable {
             result = new String(bytes);
         }
         return result;
+    }
+
+    private void setRequestHeaders(URLConnection conn) {
+        while (this.originHeaderIter.hasNext()) {
+            Messages.Header header = this.originHeaderIter.next();
+            conn.setRequestProperty(header.key(), header.value());
+        }
     }
 
     private void setRequestProperties(URLConnection conn, Object option) {

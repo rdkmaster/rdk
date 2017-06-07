@@ -22,7 +22,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.TabSelect','rd.controls.C
     			template: 
 	    			'<div class="rdk-tabselect-module">\
 		    			<rdk_combo_select caption="caption" open="open" child_change="childBasicSelectorChanged">\
-		    				<rdk_tab_selector selected_items="selectedItems" track_item_by="{{trackItemBy}}" label_field="labelField" \
+		    				<rdk_tab_selector searchable="searchable" selected_items="selectedItems" track_item_by="{{trackItemBy}}" label_field="labelField" \
                                 node_field="nodeField" data="data"></rdk_tab_selector>\
 		    			</rdk_combo_select>\
 	    			</div>',
@@ -52,7 +52,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.TabSelect','rd.controls.C
                     scope.labelField = Utils.getValue(scope.labelField, iAttrs.labelField, 'label');
                     scope.trackItemBy = Utils.getValue(scope.trackItemBy, iAttrs.trackItemBy, scope.labelField);
                     scope.multipleSelect = Utils.isTrue(iAttrs.multipleSelect, true);
-                    scope.searchable = Utils.isTrue(iAttrs.searchable, false);
+                    scope.searchable = Utils.getValue(scope.searchable,iAttrs.searchable, false);
                     scope.editable = Utils.isTrue(iAttrs.editable, false);
                 }
 

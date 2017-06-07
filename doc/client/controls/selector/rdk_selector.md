@@ -1,4 +1,3 @@
-<rdk_title>Selector</rdk_title>
 
 # 简介 #
 
@@ -71,6 +70,7 @@
 
 `selected_items` 支持双向绑定。当选中的数据集发生变化时，界面也会实时更新。例如：
 <live_demo example="controls/selector/selected_items"  width="405"></live_demo>
+
 ## id ##
 >支持类型：字符串
 

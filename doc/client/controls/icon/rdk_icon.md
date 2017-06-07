@@ -1,4 +1,3 @@
-<rdk_icon></rdk_icon>
 
 # 简介 #
 `rdk_icon` 是带图标的描述文字。
@@ -15,6 +14,8 @@
 > 支持类型：字符串
 
 `icon` 图标的class，支持font-awesome符号图标，例：fa fa-tag
+
+<live_demo example="controls/icon/iconfont" width="900"></live_demo>
 
 `icon` 图片的src，例：./img/edit.png
 

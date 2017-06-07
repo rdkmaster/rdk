@@ -1,4 +1,3 @@
-<rdk_title>Panel</rdk_title>
 
 # 简介 #
 
@@ -68,7 +67,7 @@
 示例如下：
 <live_demo example="containers/panel/panel_close" width="405"></live_demo>
 
-#方法 #
+# 方法 #
 暂无
 
 # 样式 #

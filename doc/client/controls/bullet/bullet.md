@@ -1,4 +1,3 @@
-<rdk_title>Bullet子弹图</rdk_title>
 
 # 简介 #
 

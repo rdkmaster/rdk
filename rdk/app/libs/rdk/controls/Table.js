@@ -26,7 +26,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     <table class="rdk-table" >\
                         <thead ng-if="!noHeader">\
                             <tr>\
-                                <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><input name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
+                                <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><span ng-if="checkBoxTitle">{{checkBoxTitle}}</span><input ng-if="!checkBoxTitle" name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
                                 <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinished" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)" style="width:{{columnDef.width}}">\
                                     {{columnDef.title}}\
                                     <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
@@ -37,7 +37,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         <tbody ng-mouseleave="clearHovered()">\
                             <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
                                 ng-class="{\'row-span\':groupTargets,\'selected-row\':ifRowHighLight(item,\'click\'),\'selected-row-hover\':ifRowHighLight(item,\'hover\')}" ng-dblclick="dbClickHandler(item,$index)">\
-                                <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="currentPageData[$index].checked"></td>\
+                                <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="item.checked"></td>\
                                 <td ng-class="{\'selected-row-td\':ifRowHighLight(item,\'click\',columnDef),\'selected-row-hover-td\':ifRowHighLight(item,\'hover\',columnDef)}" ng-mouseenter="setHovered(item,$event)" rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" ng-style="getCellStyle(itemRowSpan,columnDef)">\
                                 </td>\
                             </tr>\
@@ -49,7 +49,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         </tbody>\
                     </table>\
                 </div>\
-                <rdk-paging ng-if="pageVisible && pageCtrl && paging" data-page-size="pageSize" \
+                <rdk-paging ng-show="pageVisible && pageCtrl && paging" data-page-size="pageSize" \
                      data-lang="{{lang}}" current-page="currentPage" data-search-position="{{searchPosition}}" ng-class="{true:\'visiblePageLine\', false:\'unvisiblePageLine\'}[columnDefs.length!=0 && !noData]">\
                 </rdk-paging>\
                 <div ng-if="showExport && !noData" class="table-export"><rdk_button click="touchExport" icon="iconfont iconfont-e8c9" label="{{exportLabel}}"></rdk_button></div>\
@@ -311,6 +311,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
             proxyDs: "@?",
             pageNumber: "@?",
             addCheckBox: "=?",
+            checkBoxTitle: "@?",
             defaultConditionProcessor: "&?",
             floatableHeader: "@?",
             change: "&?",
@@ -394,6 +395,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     searchObject.searchKey = scope.globalSearch;
                     searchObject.searchFields = _getSearchFields();
                     return searchObject;
+                }
+
+                this.scrollTo=function(index){
+                    scope.highLightItem(index);
                 }
 
                 function _refreshSingleCheckedData(items){
@@ -756,7 +761,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 destObj.display="none";
                             }
                             destObj.width = columnDef.width;
-                            console.log(destObj.width);
                             if(scope.setting && scope.setting.scrollX){
                                 destObj.cursor = 'move';
                             }
@@ -932,8 +936,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
                             if(event!=null){
                                 scope.selectedModel = _setRowHighLight(item,event.target);
+								EventService.raiseControlEvent(scope, 'click', item);
                             }else{
-                                scope.selectedModel.rows.push(item);
+                                scope.selectedModel.rows[0]=item;
                             }
                             EventService.raiseControlEvent(scope, 'select', item);
                         };
@@ -1024,7 +1029,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             var currentPage = parseInt(scope.currentPage, 10);
                             var pageSize = parseInt(scope.pageSize, 10);
                             var start = currentPage * pageSize;
-                            return scope.destData.slice(start, start+pageSize); //子数组
+                            return scope.destData ? scope.destData.slice(start, start+pageSize) :[]; //子数组
                         }
 
                         scope.refreshTotal4Single = function(){
@@ -1214,11 +1219,28 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         scope.directionStr = direction;
                         ctrl.setCurrentPage(scope.currentPage);
                     }
-
+                    //根据index索引指定行选中并高亮
+                    scope.highLightItem = _highLightItem;
                     function _highLightItem(index) {
-                        if (scope.destData) { //destData有定义时
+                        if (scope.destData && +index < scope.destData.length) { //destData有定义时
                             var selectedItem = scope.destData[index];
                             scope.setSelected(selectedItem, null);
+                            var scrollIndex = +index+1;
+                            var selector;
+                            if(!!element[0].scrollIntoViewIfNeeded){
+                                selector = ".rdk-table>tbody>tr:nth-of-type(" + scrollIndex + ")";
+                                element[0].querySelector(selector).scrollIntoViewIfNeeded();
+                            }else{
+                                //兼容IE,火狐不支持scrollIntoViewIfNeeded
+                                scrollIndex = scrollIndex>3 ? scrollIndex-3 : 1;
+                                if(scrollIndex>1){
+                                    selector = ".rdk-table>tbody>tr:nth-of-type(" + scrollIndex + ")";
+                                }else{
+                                    selector = ".rdk-table>thead";
+                                }
+                                element[0].querySelector(selector).scrollIntoView();
+                            }
+
                         }
                     }
 
@@ -1287,7 +1309,15 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                     obj[field] = data[index];
                                 });
                                 obj["$index"] = index; //item上存原行
-                                obj["checked"] = false;
+                                if(input.checked){
+                                    angular.forEach(input.checked,function(checked,cIndex){
+                                        if(index == cIndex){
+                                            obj["checked"] = checked;
+                                        }
+                                    })
+                                }else{
+                                    obj["checked"] = false;
+                                }
                                 result.push(obj);
                             });
                             return result;

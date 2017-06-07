@@ -18,5 +18,5 @@
 ### 示例六
 <live_demo example="comprehensive/tab/simple2/web" width="900" height="400"></live_demo>
 
-
-
+### 示例七(表格列可拖动)
+<live_demo example="comprehensive/tab/resizeable/web" width="900" height="400"></live_demo>

@@ -21,6 +21,7 @@
 }
 .rdk-time-granularity{
     display: flex;
+    margin-bottom: 8px;
     justify-content: center;
 }
 .rdk-time-granularity > span{

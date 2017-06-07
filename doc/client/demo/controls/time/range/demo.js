@@ -6,7 +6,10 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
     function main(scope) {
-
+        scope.range = {
+            value: ['2016-03-04 14:00','now'],
+            granularity: "hour",
+        }
 
     }
 

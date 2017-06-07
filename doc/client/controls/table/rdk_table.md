@@ -1,4 +1,3 @@
-<rdk_title>Table</rdk_title>
 
 # 简介 #
 
@@ -22,6 +21,29 @@ data对象中应该包含以下**必填属性**：
 - data:真实的数据
 
 <live_demo example="controls/table/basic"></live_demo>
+
+## ds ##
+> 支持类型：对象或数据源id
+
+数据源绑定的变量即直接从数据源获取的反馈信息。一般和`data`属性相同，但`data`属性的信息可以根据`ds`和相关的业务逻辑将数据进行新的处理。
+
+`ds`属性一般和`ds-url`属性一起使用来获取图形显示的数据信息。
+
+## ds-url ##
+> 支持类型：字符串
+
+此属性用于设置数据服务的引用路径，一般和`ds`属性一起使用。具体可查看[`数据源`](/doc/client/common/datasource/DataSourceService.md)的使用
+
+    <rdk_table ds="ds_table" ds_url="mock.json" ds_query_if="ready">
+    </rdk_table>
+
+<live_demo example="controls/table/datasource" width="900"></live_demo>
+
+## 无数据情况显示 ##
+如下示例：
+
+<live_demo example="controls/table/demo4NoData" width="900"></live_demo>
+
 
 ## selected_index <binding></binding>##
 > 支持类型：整型数据
@@ -392,6 +414,14 @@ cells 为 改变的行列信息的数组信息
 详细示例如下：
 <live_demo example="controls/table/demo4AddCheckBox"></live_demo>
 
+## 复选框列 check_box_title ##
+>支持类型：字符串
+
+`add_check_box`属性为`true`时可设置此属性给表头增加`title`
+
+详细示例如下：
+<live_demo example="controls/table/demo4AddCheckBox2"></live_demo>
+
 ## 自动添加行编号 ##
 可以通过列渲染的方式实现行号自动自动添加功能。
 
@@ -690,6 +720,18 @@ cells 为 改变的行列信息的数组信息
 
 <live_demo example="controls/table/methods"></live_demo>
 
+### scrollTo ###
+
+移动到指定行，并且被选中高亮，调用如下：
+
+    rdk.tableID.scrollTo(index)
+
+参数说明: index数据行索引，从0计数。
+
+以上方法综合示例如下：
+
+<live_demo example="controls/table/scrollTo"></live_demo>
+
 # 样式 #
 
 ### 表的整体属性 ###
@@ -741,5 +783,12 @@ cells 为 改变的行列信息的数组信息
 ## 数据源绑定 ##
 表格的数据可以通过数据源绑定的方式进行数据展示。
 数据源绑定的说明请参照`BasicSelector控件`中的数据源绑定章节中的内容。以下为`rdk_table`的数据源绑定的示例：
+
+## 国际化 ##
+具体使用可以查看[`国际化`](/doc/client/common/i18n/i18n.md)文档，示例如下：
+
+<live_demo example="controls/table/demo4i18n"></live_demo>
+
+
 
 

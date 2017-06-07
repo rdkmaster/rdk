@@ -1,4 +1,3 @@
-<rdk_title>TabSelect</rdk_title>
 
 # 简介 #
 
@@ -107,7 +106,10 @@
 ## selectedItems <binding></binding>##
 > 支持类型：数组 或者 数据源id
 
-`selected_items` 是选中的集合，可以是 `scope` 的对象，也可以是某个`数据源`的id。`rdk_tabselect` 的任何修改都会直接反馈到对应的变量上，例如：
+`selected_items` 是选中的集合，可以是 `scope` 的对象，也可以是某个`数据源`的id。`rdk_tabselect` 的任何修改都会直接反馈到对应的变量上。
+
+以上各属性如下示例：
+
 <live_demo example="controls/tabselect/selected_items"  width="485"></live_demo>
 
 注意，`selected_items` 可以参考 `data` 的做法，把值以json字符串的形式写在html中，但是这样做会导致无法使用上面例子中的双向绑定功能。

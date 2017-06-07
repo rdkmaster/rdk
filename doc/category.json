@@ -115,7 +115,7 @@
           },
           {
             "label": "弹出菜单",
-            "url": "doc/client/common/popupservice/PopupService.html",
+            "url": "doc/client/common/menuservice/MenuService.html",
             "icon": "fa fa-file"
           },
           {
@@ -196,7 +196,7 @@
           },
           {
             "label": "ListSelector",
-            "url": "doc/client/controls/input/rdk_list_selector.html",
+            "url": "doc/client/controls/listselector/rdk_list_selector.html",
             "icon": "fa fa-file"
           },
           {
@@ -230,13 +230,13 @@
             "icon": "fa fa-file"
           },
           {
-            "label": "Select",
-            "url": "doc/client/controls/select/rdk_select.html",
+            "label": "SingleIndicator",
+            "url": "doc/client/controls/singleindicator/rdk_single_indicator.html",
             "icon": "fa fa-file"
           },
           {
-            "label": "SingleIndicator",
-            "url": "doc/client/controls/singleindicator/rdk_single_indicator.html",
+            "label": "ScoreIndicator",
+            "url": "doc/client/controls/scoreindicator/scoreindicator.html",
             "icon": "fa fa-file"
           },
           {
@@ -251,7 +251,7 @@
           },
           {
             "label": "steps",
-            "url": "doc/client/controls/table/rdk_steps.html",
+            "url": "doc/client/controls/steps/rdk_steps.html",
             "icon": "fa fa-file"
           },
           {
@@ -332,7 +332,7 @@
         "items": [
           {
             "label": "搜索筛选",
-            "url": "doc/client/common/ApplicationExample/SearchFilter.html",
+            "url": "doc/client/common/ApplicationExample/Screening.html",
             "icon": "fa fa-file"
           },
           {

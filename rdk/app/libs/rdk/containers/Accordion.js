@@ -51,7 +51,7 @@ define(['angular', 'jquery', 'gsap', 'rd.core', 'css!rd.styles.Accordion',
                                 </a>\
                             </div>\
                         </div>\
-                        <div class="content"></div>\
+                        <div class="content"><div class="accordion-animate"></div></div>\
                     </div>',  
 
                 controller: ['$scope', function(scope) {
@@ -67,8 +67,8 @@ define(['angular', 'jquery', 'gsap', 'rd.core', 'css!rd.styles.Accordion',
 
             function _link(scope, iEle, iAttrs, ctrl, transclude){
 
-                var  direction, themeDom, transcludeDom;
-
+                var  direction, themeDom, transcludeDom,transcludeDomAnimate;
+                var throttle = Utils.throttle;
                 var transcludeScope = scope.$parent.$new();
                 transclude(transcludeScope, function(clone,innerScope) {
                     for (var key in clone){
@@ -76,7 +76,7 @@ define(['angular', 'jquery', 'gsap', 'rd.core', 'css!rd.styles.Accordion',
                             $(iEle[0]).find(".theme").html('').append(clone[key].innerHTML);
                         }
                         if(clone[key].innerHTML !=undefined && clone[key].tagName != "HEADER_RENDERER"){
-                            $(iEle[0]).find(".content").append(clone[key]);
+                            $(iEle[0]).find(".accordion-animate").append(clone[key]);
                         }
                     };
                 }); 
@@ -111,7 +111,10 @@ define(['angular', 'jquery', 'gsap', 'rd.core', 'css!rd.styles.Accordion',
                     // 全局变量
                     direction = scope.expandDirection.toLowerCase();
                     themeDom = iEle[0].querySelector(".theme");
+                    //动画需要设置高度的节点
                     transcludeDom = iEle[0].querySelector(".content");
+                    //动画需要获取高度的节点,不设置高度时其高度是随子元素自适应的
+                    transcludeDomAnimate = iEle[0].querySelector(".accordion-animate");
 
                     _initDefaultAttrByDirection();
                     _unCoverStateHandler();
@@ -147,15 +150,7 @@ define(['angular', 'jquery', 'gsap', 'rd.core', 'css!rd.styles.Accordion',
                 function _setDefaultState(){
                     TweenLite.set($(transcludeDom), 0, {height: 'auto', width: 'auto'});
                     $timeout(function(){
-                        scope.contentHeight = parseInt($(transcludeDom).css('height'), 10);
-                        scope.contentWidth  = parseInt($(transcludeDom).css('Width'), 10);
-                        if(scope.contentHeight==0 || scope.contentWidth==0){
-                            //找出隐藏的父元素节点,获取隐藏元素内transcludeDom的size combo-content-transclude
-                            //var parentHideDom = $(transcludeDom).parents().find("div[ng-transclude][ng-show]:first")[0];
-                            var parentHideDom = _findParentHideNode(transcludeDom);
-                            scope.contentHeight = scope.contentHeight || (!!parentHideDom && Utils.getSize(parentHideDom,transcludeDom).height);
-                            scope.contentWidth  = scope.contentWidth || (!!parentHideDom && Utils.getSize(parentHideDom,transcludeDom).width);
-                        }
+                        _cacalHeight();
                         _moveArrowToCenter();
                         _coverStateHandler();
                         _resetDefaultState();
@@ -192,7 +187,19 @@ define(['angular', 'jquery', 'gsap', 'rd.core', 'css!rd.styles.Accordion',
                     scope.open ? _animateIn() : _animateOut();
                 }
 
+                function _cacalHeight(){
+                    scope.contentHeight = parseInt($(transcludeDomAnimate).css('height'), 10);
+                    scope.contentWidth = parseInt($(transcludeDomAnimate).css('Width'), 10);
+                    if (scope.contentHeight == 0 || scope.contentWidth == 0) {
+                        //找出隐藏的父元素节点,获取隐藏元素内transcludeDom的size combo-content-transclude
+                        //var parentHideDom = $(transcludeDom).parents().find("div[ng-transclude][ng-show]:first")[0];
+                        var parentHideDom = _findParentHideNode(transcludeDomAnimate);
+                        scope.contentHeight = scope.contentHeight || (!!parentHideDom && Utils.getSize(parentHideDom, transcludeDomAnimate).height);
+                        scope.contentWidth = scope.contentWidth || (!!parentHideDom && Utils.getSize(parentHideDom, transcludeDomAnimate).width);
+                    }
+                }
                 function _animateIn(){
+                    _cacalHeight();
                     switch(direction){
                         case 'top':
                         case 'bottom':
@@ -344,6 +351,25 @@ define(['angular', 'jquery', 'gsap', 'rd.core', 'css!rd.styles.Accordion',
                 function _getTooltips(event, tooltips, label){
                     tooltips = tooltips ? tooltips : label;
                     event.target.setAttribute("title", tooltips);                    
+                }
+
+                var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+                var animateObserver;
+                if(!!MutationObserver)
+                {
+                    var observerOption={
+                        'childList': true,
+                        'attributes':true,
+                        'characterData':true,
+                        'subtree': true
+                    };
+                    //open 状态不改变时不会触发scope.$watch("open"),并且数据变化时更新动画参数
+                    animateObserver=new MutationObserver(throttle(_animateState,500));
+                    animateObserver.observe(transcludeDomAnimate, observerOption);
+
+                    scope.$on('$destroy', function () {
+                        !!animateObserver && animateObserver.disconnect();
+                    });
                 }
             }
         }])

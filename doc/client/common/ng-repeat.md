@@ -1,4 +1,3 @@
-<rdk_title>ng-repeat用法</rdk_title>
 
 这是一个强大的指令，熟练使用可以节约大量工作。
 

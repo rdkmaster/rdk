@@ -1,4 +1,3 @@
-<rdk_title>Button</rdk_title>
 
 # 简介 #
 `rdk_button` 是自带多种功能的按钮。
@@ -68,7 +67,7 @@ click 表示按钮单击之后的回调函数。
 ## type ##
 > 支持类型：字符串。
 
-type 表示按钮的不用样式，目前只有5种样式，分别为 normal,danger,guidance,white,default,默认值为normal。
+type 表示按钮的不用样式，目前只有7种样式，分别为 normal,danger,guidance,white,default,warning,caution默认值为normal。
 
 <live_demo example="controls/button/type" width="900"></live_demo>
 
