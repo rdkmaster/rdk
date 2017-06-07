@@ -14,7 +14,7 @@
             if (id.length == 2) {
                 scope.mapUrl = 'mapinfo/geometryProvince/' + id + '.json';
             } else if (id.length == 4) {
-                scope.mapUrl = '../geometryCouties/' + id + '00.json';
+                scope.mapUrl = 'mapinfo/geometryCouties/' + id + '00.json';
             }
         });
     }
