@@ -534,6 +534,20 @@ cells 为 改变的行列信息的数组信息
 
 通过设置`custom_scroll`属性的值给表格增加RDK的滚动条。`custom_scroll`="rdk-scroll"
 
+>同上面通用功能提到的滚动条rdk-scroll的用法区别：
+
+用法一：<rdk-table rdk-scroll></rdk-table>
+用法二：<rdk-table custom_scroll="rdk-scroll"></rdk-table>
+
+用法一是在rdk-table的根节点创建滚动条，滚动区域的固定宽高样式可以直接设置在此节点或者父节点；
+用法二是在rdk-table控件的内部table标签父节点上创建滚动条，滚动区域的固定宽高样式需要设置在内部节点,
+此用法同用法一相比的优点是，滚动时不会再连同rdk-table里的搜索框和分页条一条滚动
+
+    .rdk-table-module .wrapper{
+        height: xxxx;
+        width:xxxx;
+    }
+
 详细示例如下:
 <live_demo example="controls/table/customScroll"></live_demo>
 

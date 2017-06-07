@@ -2,9 +2,10 @@
     display: inline-flex;
     overflow: hidden;
 }
-.table-moved .rdk-table-module{
+.table-moved .rdk-table-module .wrapper{
     width: 450px;
     border-left: 1px solid #e5e5e5;
+    height: 300px;
 }
 .table-moved .rdk-table-module .table-export{
     right: -100px;
