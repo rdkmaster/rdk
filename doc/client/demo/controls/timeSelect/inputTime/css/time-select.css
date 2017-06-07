@@ -19,7 +19,7 @@ input[type="text"]::-ms-clear{
     border-color: rgba(0,143,212,0.6)
 }
 .m-time .u-time-input:focus {
-    border-color: rgba(212, 88, 64, 0.6);
+    border-color: rgba(0,143,212,0.6);
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 2px rgba(0,143,212,0.6);
     box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 2px rgba(0,143,212,0.6);
 }
@@ -31,7 +31,6 @@ input[type="text"]::-ms-clear{
 
 .time-wrap{
     border: 1px solid #ccc;
-    height: 300px;
     width: 210px;
     padding: 5px;
     position: absolute;

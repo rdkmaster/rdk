@@ -5,17 +5,22 @@
     border-radius: 4px;
     border: 1px solid #ccc;
     background-color: #fff;
-    align-items:center;
+    justify-content: center;
+    align-content: center;
+    display: inline-flex;
+}
+.rdk-time-range-module .rdk-combo-container span.time-range-split{
+    margin-left: -16px;
 }
 .rdk-time-range-module  span.time-range-split{
-    margin-left: -16px;
+    line-height: 30px;
 }
 /* rdk-time-select容器*/
 .rdk-time-range-module .rdk-time-select{
     border: 1px solid rgba(0, 0, 0, 0.15);
     margin-top: 2px;
     width: 215px;
-    padding: 8px 5px 8px 5px;
+    padding: 8px 5px;
     background-color: #fff;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.175);
     border-radius: 0 0 4px 4px;
@@ -33,73 +38,103 @@
 /* p标签*/
 .rdk-time-range-module .rdk-combo-select-module .combo-content-theme{
     margin: 0;
+    margin-right: 16px;
     text-align: center;
 }
 .rdk-time-range-module .rdk-combo-select-module .combo-content-transclude{
     background-color: transparent;
 }
-/*宽度调整*/
-.rdk-time-range-module .range-second .width-fixed{
-    min-width: 150px;
+.rdk-time-range-module .rdk-combo-select-module .combo-content-icon{
+    top:7px;
 }
-.rdk-time-range-module .range-first .width-fixed{
+/*宽度调整*/
+.rdk-time-range-module .width-fixed{
     min-width: 150px;
-    margin-right: 16px;
 }
 /*下拉容器*/
 .rdk-time-range-module .range-second .combo-content-transclude{
     left: initial;
 }
-
+.rdk-time-range-module .rdk-time-select-module .datetimepicker{
+    padding: 0;
+}
 
 /* input-time*/
 .rdk-time-range-module{
     display: inline-flex;
     position: relative;
 }
-.rdk-time-range-module .rdk-time-container:hover {
+.rdk-time-range-module .rdk-time-container{
+    display: inline-flex;
+    justify-content: center;
+    align-content: center;
+    padding: 0 2px;
+    height: 34px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #555;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.rdk-time-range-module:not(.disabled-cursor) .rdk-time-container:hover {
     border-color: rgba(0,143,212,0.6)
 }
-.rdk-time-range-module .rdk-time-container:focus {
+.rdk-time-range-module:not(.disabled-cursor) .rdk-time-container.time-focus {
     border-color: rgba(0,143,212,0.6);
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 2px rgba(0,143,212,0.6);
     box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 2px rgba(0,143,212,0.6);
 }
+/* disabled */
+.rdk-time-range-module.disabled-cursor{
+    cursor:not-allowed;
+}
+.rdk-time-range-module.disabled-cursor  .rdk-time-container .u-time-input{
+    pointer-events: none;
+}
 /* input*/
-.rdk-time-range-module input{
+.rdk-time-range-module .rdk-time-container input{
     border: 0;
     outline: none;
 }
 .rdk-time-range-module input[type="text"]::-ms-clear{
     display:none;
 }
-.rdk-time-range-module .u-time-input{
-    width: 180px;
+.rdk-time-range-module .rdk-time-container .u-time-input{
+    width: 150px;
     display: inline-block;
     text-align: center;
+    padding: 0 10px;
 }
+
 /* time-select wrap start*/
-.u-time-select-wrap{
-    border: 1px solid #ccc;
-    height: 300px;
-    width: 210px;
-    padding: 5px;
+.rdk-time-range-module .u-time-select-wrap{
     position: absolute;
     background-color: #fff;
-    top: 35px;
+    top: 34px;
+    z-index: 99;
 }
-.u-time-select-wrap.time-start{
+.rdk-time-range-module .u-time-select-wrap.time-start{
     left: 0;
 }
-.u-time-select-wrap.time-end{
+.rdk-time-range-module .u-time-select-wrap.time-end{
     right: 0;
+}
+.rdk-time-range-module .rdk-time-container .u-time-select-wrap.time-end{
+    left: 220px;
 }
 /* time-select wrap end*/
 
 /* time-select */
 .rdk-time-range-module  .rdk-time-select-module{
     height: 255px;
-    padding-right: 6px;
+    padding-right: 12px;
 }
 /* icon */
 .rdk-time-range-module .u-time-icon{
@@ -113,7 +148,6 @@
     border: 1px solid #ccc;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
-    margin-left: -5px;
     vertical-align: bottom;
 }
 .rdk-time-range-module .iconfont{
