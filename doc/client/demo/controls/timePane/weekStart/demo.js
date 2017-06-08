@@ -8,24 +8,18 @@
     function main(scope ) {
         scope.weekStart = {
             value: "2015-01-01",
-            selectGranularity: true,
-            granularity: "week",
+            selectGranularity: false,
+            granularity: "date",
             weekStart :3, // 0（星期日）到6（星期六）
-            granularityItems: [{
-                label: "15分钟",
-                value: "quarter"
+            customTime: [{
+                label: "过去1天",
+                value: "now-1d"
             }, {
-                label: "小时",
-                value: "hour"
+                label: "过去3天",
+                value: "now-3d"
             }, {
-                label: "天",
-                value: "date"
-            }, {
-                label: "周",
-                value: "week"
-            },{
-                label: "月",
-                value: "month"
+                label: "当前时间",
+                value: "now"
             }]
         }
     }

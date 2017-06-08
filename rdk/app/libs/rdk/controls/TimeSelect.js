@@ -20,6 +20,13 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                                     {{granularityItem.label}}\
                                     </span>\
                                 </div>\
+                               <div ng-if="!setting.selectGranularity && !setting.selectGranularity.length && setting.customTime" class="rdk-time-granularity">\
+                                    <span ng-repeat="customTimeItem in setting.customTime" \
+                                    ng-click="changeCustomTime(customTimeItem)" \
+                                    ng-class="{\'rdk-time-active\':activeCustomTimeCls(customTimeItem)}">\
+                                    {{customTimeItem.label}}\
+                                    </span>\
+                                </div>\
                                 <div class="rdk-time-select-module" rdk-scroll>\
                                     <input ng-show="false" ng-model="setting.value"  type="text">\
                                 </div>\
@@ -48,17 +55,24 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                     scope.hasExpect=false;
 
                     _render();
-
+                    scope.selectedCustomTime = {};
                     scope.activeGranularityCls = function(granularity){
                         return scope.selectedGranularity.value == granularity.value;
                     };
-
+                    scope.activeCustomTimeCls = function(customTimeItem){
+                        return scope.selectedCustomTime.value == customTimeItem.value;
+                    };
                     scope.changeGranularity = function(granularity){
-                        
                         scope.setting.granularity=granularity.value;
                         scope.selectedGranularity=granularity;
                         EventService.raiseControlEvent(scope, EventTypes.GRANULARITY_CHANGE,granularity);
                     };
+                    scope.changeCustomTime = function(customTimeItem){
+                        scope.selectedCustomTime=customTimeItem;
+                        scope.setting.value=customTimeItem.value;
+                       // EventService.raiseControlEvent(scope, EventTypes.GRANULARITY_CHANGE,granularity);
+                    };
+
 
                     scope.$watch('setting.value', function(newVal, oldVal) {
                         if (!!newVal && newVal !== oldVal) {
