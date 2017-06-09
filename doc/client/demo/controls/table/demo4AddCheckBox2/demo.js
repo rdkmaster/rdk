@@ -33,8 +33,14 @@
         $scope.dsDataPro = function(data){
             var result = data;
             result.checked=[];
+            //第一行设置为默认选中,实际开发自行根据业务逻辑进行数据的判断
             angular.forEach(data.data,function(item,index){
                 item[0]==1 ? result.checked[index] = true :false;
+            });
+            result.disabled=[];
+            //第二行设置为不可选
+            angular.forEach(data.data,function(item,index){
+                item[0]==2 ? result.disabled[index] = true :false;
             });
             return result;
         }

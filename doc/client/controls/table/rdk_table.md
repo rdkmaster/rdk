@@ -407,6 +407,16 @@ cells 为 改变的行列信息的数组信息
 ## 复选框列 add_check_box ##
 >支持类型：布尔型
 
+使用add_check_box功能时，数据源对象上可配置`checked`,`disabled`属性
+
+data对象中应该包含以下**必填属性**：
+
+    - field 	：表中的列头信息
+    - header：field的各个列头的国际化内容
+    - data:真实的数据
+    - checked:checkBox默认已选择状态
+    - disabled:禁用checkBox
+
 此属性支持自定义复选框的功能，通过此属性可以定义列表每列前添加一个复选框，点击可以得到选中的列信息。代码如下：
 
     <rdk_table add_check_box='true'></rdk_table>

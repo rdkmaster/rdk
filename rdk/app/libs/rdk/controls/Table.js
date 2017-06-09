@@ -37,7 +37,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         <tbody ng-mouseleave="clearHovered()">\
                             <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
                                 ng-class="{\'row-span\':groupTargets,\'selected-row\':ifRowHighLight(item,\'click\'),\'selected-row-hover\':ifRowHighLight(item,\'hover\')}" ng-dblclick="dbClickHandler(item,$index)">\
-                                <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="item.checked"></td>\
+                                <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-disabled="item.disabled" ng-model="item.checked"></td>\
                                 <td ng-class="{\'selected-row-td\':ifRowHighLight(item,\'click\',columnDef),\'selected-row-hover-td\':ifRowHighLight(item,\'hover\',columnDef)}" ng-mouseenter="setHovered(item,$event)" rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" ng-style="getCellStyle(itemRowSpan,columnDef)">\
                                 </td>\
                             </tr>\
@@ -1099,7 +1099,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     function _refreshCurrentSingleChecked(isChecked){
                         _resetTotalCheckedDom(isChecked);
                         angular.forEach(scope.currentPageData, function(rowData){
-                            rowData.checked = isChecked;
+                            if(!rowData.disabled){
+                                rowData.checked = isChecked;
+                            }
                         })
                     }
 
@@ -1317,6 +1319,13 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                     })
                                 }else{
                                     obj["checked"] = false;
+                                }
+                                if(input.disabled){
+                                    angular.forEach(input.disabled,function(disabled,cIndex){
+                                        if(index == cIndex){
+                                            obj["disabled"] = disabled;
+                                        }
+                                    })
                                 }
                                 result.push(obj);
                             });
