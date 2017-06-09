@@ -1,0 +1,162 @@
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr{
+    border-top-right-radius:0;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl{
+    border-top-left-radius:0;
+}
+.ui-jqgrid-hbox .ui-jqgrid-htable thead>tr.ui-jqgrid-labels{
+    color: #008fd4;
+    background-color: #eee;
+    border-bottom: 0;
+    height: 30px;
+    line-height: 16px;
+}
+
+.ui-jqgrid-hbox .ui-jqgrid-htable thead>tr.ui-jqgrid-labels > th {
+    text-align: center;
+    font-weight: normal;
+    color: #008fd4;
+    background-color: #eee;
+}
+
+.ui-state-default,.table-wrap .ui-widget-content .ui-state-default,.table-wrap .ui-widget-header .ui-state-default{
+    background: none;
+}
+/* tr */
+.ui-widget-content{
+    background: none;
+    color: #434343;
+}
+.ui-widget-content .ui-jqgrid-btable{
+    border-left: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+}
+.ui-jqgrid-btable > tbody > tr.ui-widget-content:not(.ui-state-hover):nth-child(odd){
+    background-color: #fff;
+}
+.ui-jqgrid-btable > tbody > tr.ui-widget-content:not(.ui-state-hover):nth-child(even){
+    background-color: #f3f3f3;
+}
+.ui-jqgrid-btable > tbody > tr.ui-widget-content{
+    height: 30px;
+}
+.ui-state-hover, .ui-widget-content .ui-state-hover{
+    border: 1px solid #e5e5e5;
+}
+/* td */
+.ui-jqgrid-btable > tbody > tr.ui-widget-content > td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px 8px;
+}
+/*hover*/
+.ui-jqgrid-btable > tbody > tr.ui-state-highlight{
+    background: #cde4fa !important;
+    border: none;
+    border-right: 0;
+    border-bottom: 0;
+    /*background: #f8da4e url(images/ui-bg_glass_55_f8da4e_1x400.png) 50% 50% repeat-x;*/
+    color: #434343;
+}
+.ui-jqgrid-btable > tbody > tr.ui-state-hover{
+    border: none;
+    border-right: 0;
+    border-bottom: 0;
+    background:  #e2eef9;
+    font-weight: normal;
+    color: #434343;
+}
+
+.ui-jqgrid-htable > thead > tr > th,
+.ui-jqgrid-btable > tbody > tr:not(.jqgfirstrow) > td {
+    border: 1px solid #e5e5e5;
+}
+.ui-jqgrid tr.ui-row-ltr td{
+    border-right-width: 0;
+}
+.ui-jqgrid tr.jqgrow td{
+    border-bottom-width: 0;
+}
+
+.ui-jqgrid .ui-jqgrid-btable{
+    border-collapse: collapse;
+}
+/*head*/
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    border: 1px solid #e5e5e5;
+    border-bottom: 0;
+    background:none;
+    font-weight: normal;
+}
+
+.ui-jqgrid .ui-jqgrid-pager{
+    padding-top: 6px !important;
+}
+table.ui-pager-table{
+    color: #999;
+}
+
+table.ui-pager-table .ui-pg-input{
+    color: #333;
+    width: 30px;
+    border-radius: 4px;
+    outline: 0;
+    border: 1px solid #bbb;
+    text-align: center;
+}
+table.ui-pager-table .ui-pg-input:hover{
+    border: 1px solid rgba(0,143,212,0.6);
+}
+table.ui-pager-table .ui-pg-input:focus{
+    border: 1px solid rgba(0,143,212,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 4px rgba(0,143,212,0.6);
+}
+
+
+table.ui-pager-table .ui-pg-selbox{
+    border: 1px solid #bbb;
+    height: 22px;
+    border-radius: 4px;
+    outline: none;
+}
+.ui-jqgrid .ui-pg-table td{
+    padding: 0;
+}
+
+table.ui-pager-table .ui-pg-selbox:focus{
+    outline: none;
+    border: 1px solid rgba(0,143,212,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 4px rgba(0,143,212,0.6);
+}
+.ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+    border: 1px solid #e5e5e5;
+    background: none;
+    font-weight: normal;
+    color: #434343;
+}
+table.ui-pager-table .ui-state-hover, .ui-widget-content table.ui-pager-table .ui-state-hover{
+    border: none;
+    background: none;
+}
+.ui-jqgrid .ui-pg-button.ui-state-disabled{
+    pointer-events: none;
+}
+.ui-jqgrid .ui-pg-button span.ui-separator{
+    pointer-events: none;
+}
+.ui-widget-content {
+    border: 0;
+    background: none;
+    color: #434343;
+}
+/* 没有滚动条去掉此样式*/
+.ui-jqgrid-view {
+    border: 1px solid #e5e5e5;
+    border-bottom: 0;
+}
+.ui-jqgrid-hbox{
+    background-color: #eee;
+}
+.ui-jqgrid-bdiv>div{
+    background-color: #eee;
+}

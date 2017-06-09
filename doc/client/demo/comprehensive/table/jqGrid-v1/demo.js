@@ -1,0 +1,82 @@
+(function() {
+    // 这些变量和函数的说明，请参考 rdk/app/example/web/scripts/main.js 的注释
+    var imports = [
+        'jquery-grid',
+        'css!base/css/rdk-jq-grid-style',
+        'css!base/css/jquery-ui',
+        'css!base/css/ui.jqgrid',
+        'jquery-grid-i18-cn',
+        'jquery-grid-i18-en'
+    ];
+    var extraModules = [ ];
+    var controllerDefination = ['$scope', main];
+    function main(scope) {
+        scope.dsResultHandler=function(data){
+            var colSetting = [];
+            //构造列头数组
+            for (var i=0;i<data.field.length;i++){
+                var obj={};
+                obj.name=data.field[i];
+                obj.index=data.field[i];
+                obj.width=100;
+                obj.sorttype="float";
+                obj.align="center";
+                if(data.field=="extn"){
+                    obj.sortable=false;
+                }
+                colSetting.push(obj);
+            }
+            //初始化配置
+            var myGridTable = $("#gridTable").jqGrid({
+                datatype: "local",
+                colNames:data.header,
+                colModel:colSetting,
+                //multiselect: true, //复选框
+                regional : 'cn', //i18: cn or en
+                rowNum:10, //page size
+                rowList:[ 10, 20, 30 ], //change page size
+                pager : '#gridPage', // div id
+                viewrecords: true,
+                sortorder: "desc",
+                height: '200',
+                width:"800"
+                //hiddengrid : true, 最初隐藏表格
+                //caption: "Manipulating Array Data"
+            });
+            //写入数据
+            var gridData = convertToObject(data);
+            for(var i=0;i<=gridData.length;i++){
+                $("#gridTable").jqGrid('addRowData',i+1,gridData[i]);
+            }
+            //设置导航功能
+            // $("#gridTable").jqGrid('navGrid', '#pager2', {edit : false,add : false,del : false});
+            //重新加载当前表格
+            myGridTable.trigger("reloadGrid");
+        };
+
+        //ds数据矩阵转换成与列头对应的数组对象
+        function convertToObject(ds) {
+            var result = [];
+            angular.forEach(ds.data, function(data) {
+                var obj = {};
+                angular.forEach(ds.field, function(field, index) {
+                    obj[field] = data[index];
+                });
+                result.push(obj);
+            });
+            return result;
+        }
+
+    }
+
+    var controllerName = 'DemoController';
+    //==========================================================================
+    //                 从这里开始的代码、注释请不要随意修改
+    //==========================================================================
+    define(/*fix-from*/application.import(imports)/*fix-to*/, start);
+    function start() {
+        application.initImports(imports, arguments);
+        rdk.$injectDependency(application.getComponents(extraModules, imports));
+        rdk.$ngModule.controller(controllerName, controllerDefination);
+    }
+})();
