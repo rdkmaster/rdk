@@ -65,7 +65,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                         EventService.raiseControlEvent(scope, EventTypes.GRANULARITY_CHANGE,granularity);
                     };
                     scope.changeCustomTime = function(customTimeItem){
-                        EventService.raiseControlEvent(scope, "CUSTOM_CHANGE", customTimeItem);
+                        EventService.raiseControlEvent(scope, EventTypes.CUSTOM_CHANGE, customTimeItem);
                     };
 
                     scope.$watch('setting.value', function(newVal, oldVal) {

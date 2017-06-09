@@ -242,7 +242,7 @@ define(['rd.core', 'rd.controls.ComboSelect', 'rd.controls.TimeSelect', 'css!rd.
                                 rdk[comboSelectEndId].closeOpen();
                             }
                         });
-                        EventService.register(timeSelectEndId, "CUSTOM_CHANGE", function(event, data){
+                        EventService.register(timeSelectEndId, EventTypes.CUSTOM_CHANGE, function(event, data){
                             if(data.value.indexOf("-")!=-1){ //过去时间
                                 scope.endSetting.value="now";
                                 scope.startSetting.value=data.value;
