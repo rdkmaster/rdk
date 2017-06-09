@@ -45,6 +45,11 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                         {label: "Week", value: "week"},
                         {label: "Month", value: "month"}
                     ];
+                    var defaultCustomTime=[
+                        {label: "未来3天", value: "now+3d"},
+                        {label: "过去3天", value: "now-3d"},
+                        {label: "当前时间", value: "now"}
+                    ];
                     var charToNum = {一:1, 二:2, 三:3, 四:4, 五:5, 六:6, 七:7, 八:8, 九:9, 十:10, 十一:11, 十二:12};
                     var enUsSimpleToNum = {Jan:1, Feb:2, Mar:3, Apr:4, May:5, Jun:6, Jul:7, Aug:8, Sep:9, Oct:10, Nov:11, Dec:12};
                     var enUsToNum = {January:1, February:2, March:3, April:4, May:5, June:6, July:7, August:8, September:9, October:10, November:11, December:12};
@@ -158,7 +163,9 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                         _initDefaultSetting();
                         scope.setting.weekValue =  null;
                         scope.setting.selectGranularity = Utils.getValue(scope.setting.selectGranularity, undefined, false);
+                        scope.setting.customTime = Utils.getValue(scope.setting.customTime, undefined, false);
                         scope.setting.selectGranularity = scope.setting.selectGranularity && (angular.isArray(scope.setting.selectGranularity) ? scope.setting.selectGranularity : defaultGranularity);
+                        scope.setting.customTime = scope.setting.customTime && (angular.isArray(scope.setting.customTime) ? scope.setting.customTime : defaultCustomTime);
                         scope.timeFormat = TimeFormate[Utils.getValueFromKey(TimeUnit, scope.setting.granularity || TimeUnit.DAY)];
 
                         if (angular.isUndefined(scope.setting.value)) {

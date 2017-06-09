@@ -88,6 +88,7 @@ define(['rd.core', 'rd.controls.ComboSelect', 'rd.controls.TimeSelect', 'css!rd.
                             //scope.endSetting = angular.extend(scope.endSetting, angular.copy(scope.setting, {}));
                             Utils.shallowCopy(scope.setting,scope.endSetting);
                             scope.endSetting.selectGranularity=false;
+                            scope.endSetting.customTime=true;
                             scope.setting.weekValue=[];
                         }
 
