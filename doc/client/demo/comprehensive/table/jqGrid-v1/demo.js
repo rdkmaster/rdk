@@ -14,6 +14,7 @@
         scope.dsResultHandler=function(data){
             var colSetting = [];
             //构造列头数组
+            //配置表头属性，宽度，是否排序，排序类型....详细参考官方文档
             for (var i=0;i<data.field.length;i++){
                 var obj={};
                 obj.name=data.field[i];
