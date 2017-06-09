@@ -87,6 +87,7 @@ define(['rd.core', 'rd.controls.ComboSelect', 'rd.controls.TimeSelect', 'css!rd.
                             scope.endSetting={};
                             //scope.endSetting = angular.extend(scope.endSetting, angular.copy(scope.setting, {}));
                             Utils.shallowCopy(scope.setting,scope.endSetting);
+                            scope.endSetting.selectGranularity=false;
                             scope.setting.weekValue=[];
                         }
 
@@ -241,6 +242,28 @@ define(['rd.core', 'rd.controls.ComboSelect', 'rd.controls.TimeSelect', 'css!rd.
                                 rdk[comboSelectEndId].closeOpen();
                             }
                         });
+                        EventService.register(timeSelectEndId, "CUSTOM_CHANGE", function(event, data){
+                            if(data.value.indexOf("-")!=-1){ //过去时间
+                                scope.endSetting.value="now";
+                                scope.startSetting.value=data.value;
+                            }else if(data.value.indexOf("+")!=-1){//未来时间
+                                scope.endSetting.value=data.value;
+                                scope.startSetting.value="now";
+                            }else{
+                                scope.startSetting.value=data.value;
+                                scope.endSetting.value=data.value;
+                            }
+                            if(isInpTime){
+                                $timeout(function(){
+                                    scope.startTimeBindView.value=scope.startSetting.weekValue || scope.startSetting.value;
+                                    scope.endTimeBindView.value=scope.endSetting.weekValue || scope.endSetting.value;
+                                },0)
+                            }
+                            scope.setting.value[0]=scope.startSetting.value;
+                            scope.setting.value[1]=scope.endSetting.value;
+                            scope.timeOpen=false;
+                        });
+
                         //粒度变化
                         EventService.register(timeSelectStartId, EventTypes.GRANULARITY_CHANGE, function(event, data){
                             _displayOnComboSelect(scope.startTimeBindView);
