@@ -1299,7 +1299,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     }
                     var scrollWidth, first = true,
                         stickyWrapElement;
-
                     function _reloadLocalData() {
                         function _convertToObject(input) {
                             var result = new Array();
