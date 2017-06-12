@@ -89,7 +89,7 @@ define(['rd.core', 'rd.controls.ComboSelect', 'rd.controls.TimeSelect', 'css!rd.
                             Utils.shallowCopy(scope.setting,scope.endSetting);
                             scope.endSetting.selectGranularity=false;
                             if(scope.setting.selectGranularity){
-                                scope.endSetting.customTime=true;
+                                scope.endSetting.customTime=scope.setting.customTime;
                             }
                             scope.setting.weekValue=[];
                         }
