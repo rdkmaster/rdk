@@ -417,6 +417,19 @@ cells 为 改变的行列信息的数组信息
 ## 复选框列 check_box_title ##
 >支持类型：字符串
 
+使用add_check_box功能时，数据源对象上可配置`checked`,`disabled`属性
+
+data对象中应该包含以下**必填属性**：
+
+    - field 	：表中的列头信息
+    - header：field的各个列头的国际化内容
+    - data:真实的数据
+
+data对象中可增加以下**非必要属性**：
+
+    - checked：checkBox默认已选择状态
+    - disabled：禁用checkBox
+
 `add_check_box`属性为`true`时可设置此属性给表头增加`title`
 
 详细示例如下：
