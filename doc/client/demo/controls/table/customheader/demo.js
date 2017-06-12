@@ -5,18 +5,14 @@
         'css!base/custom'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope', 'Alert','DataSourceService','$timeout', main];
-    function main($scope, Alert, DataSourceService, $timeout) {
+    var controllerDefination = ['$scope', 'Alert','DataSourceService', main];
+    function main($scope, Alert, DataSourceService) {
         var arr=[],arrData=[],numTarget;
         $scope.sizeColor = true;
-        $timeout(function(){
-            console.log($scope.ds_table.header)
-        },0)
         $scope.setting = {
             "columnDefs" :[
                 {
                     title : function(data, target) {
-                        console.log($scope)
                         $scope.allItems=[];
                         var total = []
                         var j = 0;
@@ -94,7 +90,6 @@
             ds.query(condition)
         }
         $scope.tableProcessor=function(data) {
-            console.log(data)
             arrData=JSON.parse(JSON.stringify(data.data))
             if (!!arr.length) {
                 data.data = flter(data.data, arr, numTarget)
