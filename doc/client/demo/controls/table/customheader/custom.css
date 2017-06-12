@@ -1,0 +1,67 @@
+.rdk-selector-module .selector li {
+    float: left;
+    width: 100%;
+    border:none;
+    border-radius: 0;
+    margin: 2px 0;
+    padding: 3px;
+    padding-left: 21px;
+}
+.rdk-selector-module .selected-item {
+    background-color: #fff;
+}
+.rdk-selector-module .selector {
+    padding: 0;
+    text-align: left;
+}
+.rdk-selector-module .selector li:last-child {
+    margin-bottom: 0;
+}
+.rdk-selector-module .selector li {
+    background-image: url(images/normal.png);
+    background-repeat: no-repeat;
+    background-position: 5px center;
+    color: #333;
+}
+.rdk-selector-module .selector li:hover{
+    background-image: url(images/hover.png);
+    background-repeat: no-repeat;
+    background-color: #fff;
+    background-position: 5px center;
+    color: #333;
+}
+.rdk-selector-module .selector li.selected-item{
+    background-image: url(images/selected.png);
+    background-repeat: no-repeat;
+    background-position: 5px center ;
+    color: #333;
+}
+.rdk-table-module .rdk-table > thead > tr > th:nth-child(3) {
+    position: relative;
+    text-align: right;
+}
+ .selectorContent {
+    position: absolute;
+    top: 16px;
+    left: 100%;
+}
+.pticon {
+    position: absolute;
+    right:0;
+    top: 2px;
+}
+.selectorMain .rdk-table-icon {
+    position: absolute;
+    top:10px;
+    right: 18px;
+    z-index: 99999;
+}
+.colorGray {
+    color: #ccc;
+}
+.selectorMain .iconfont-e92a {
+    cursor: pointer;
+}
+.selectorMain .rdk-selector-module {
+    width: 150px;
+}
