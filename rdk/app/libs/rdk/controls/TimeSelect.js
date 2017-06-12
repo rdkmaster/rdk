@@ -20,6 +20,13 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                                     {{granularityItem.label}}\
                                     </span>\
                                 </div>\
+                               <div ng-if="!setting.selectGranularity && !setting.selectGranularity.length && setting.customTime" class="rdk-time-granularity">\
+                                    <span ng-repeat="customTimeItem in setting.customTime" \
+                                    ng-click="changeCustomTime(customTimeItem)">\
+                                    {{customTimeItem.label}}\
+                                    </span>\
+                                </div>\
+                                <div ng-if="!setting.selectGranularity && !setting.customTime" class="rdk-time-select-padding"></div>\
                                 <div class="rdk-time-select-module" rdk-scroll>\
                                     <input ng-show="false" ng-model="setting.value"  type="text">\
                                 </div>\
@@ -48,16 +55,18 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                     scope.hasExpect=false;
 
                     _render();
-
+                    scope.selectedCustomTime = {};
                     scope.activeGranularityCls = function(granularity){
                         return scope.selectedGranularity.value == granularity.value;
                     };
 
                     scope.changeGranularity = function(granularity){
-                        
                         scope.setting.granularity=granularity.value;
                         scope.selectedGranularity=granularity;
                         EventService.raiseControlEvent(scope, EventTypes.GRANULARITY_CHANGE,granularity);
+                    };
+                    scope.changeCustomTime = function(customTimeItem){
+                        EventService.raiseControlEvent(scope, EventTypes.CUSTOM_CHANGE, customTimeItem);
                     };
 
                     scope.$watch('setting.value', function(newVal, oldVal) {
@@ -150,6 +159,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                         _initDefaultSetting();
                         scope.setting.weekValue =  null;
                         scope.setting.selectGranularity = Utils.getValue(scope.setting.selectGranularity, undefined, false);
+                        scope.setting.customTime = Utils.getValue(scope.setting.customTime, undefined, false);
                         scope.setting.selectGranularity = scope.setting.selectGranularity && (angular.isArray(scope.setting.selectGranularity) ? scope.setting.selectGranularity : defaultGranularity);
                         scope.timeFormat = TimeFormate[Utils.getValueFromKey(TimeUnit, scope.setting.granularity || TimeUnit.DAY)];
 

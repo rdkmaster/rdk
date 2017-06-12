@@ -122,7 +122,26 @@ inday/inweek/inmonth/inyear 和具体的 1d,2w,3m,4y。
 
 <live_demo example="controls/timePane/showGranularity" width="900"></live_demo>
 
-### disabled ###
+### customTime ###
+> 支持类型：数组或布尔类型
+
+`customTime` 在使用`range`功能时，可使用此属性定义常用时间设置
+
+            customTime: [{
+                label: "未来3天",
+                value: "now+3d"
+            }, {
+                label: "过去3天",
+                value: "now-3d"
+            }, {
+                label: "过去1月",
+                value: "now-1m"
+            }]
+
+
+<live_demo example="controls/timePane/customTime" width="900"></live_demo>
+
+## disabled ##
 
 > 支持类型：布尔
 

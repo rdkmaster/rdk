@@ -5,13 +5,11 @@
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];
-    function main(scope ) {
-        scope.weekStart = {
-            value: "2015-01-01",
-            selectGranularity: true,
-            granularity: "week",
-            weekStart :3, // 0（星期日）到6（星期六）
-            granularityItems: [{
+    function main(scope) {
+        scope.showGranularity = {
+            value: ['2016-03-04 14:00', '2016-03-10 16:00'],
+            endDate: "now+10d",
+            selectGranularity:  [{
                 label: "分",
                 value: "quarter"
             }, {
@@ -26,7 +24,23 @@
             },{
                 label: "月",
                 value: "month"
+            }],
+            granularity: "date",
+            customTime: [{
+                label: "未来3天",
+                value: "now+3d"
+            }, {
+                label: "过去3天",
+                value: "now-3d"
+            }, {
+                label: "过去1月",
+                value: "now-1m"
             }]
+        }
+
+        scope.valueChang=function(){
+            scope.showGranularity.value = ['2015-05-04 14:00', '2015-05-10 16:00']; //支持y/m/w/d/h
+            scope.showGranularity.granularity = "month"; //支持y/m/w/d/h
         }
     }
 
