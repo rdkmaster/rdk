@@ -24,6 +24,7 @@
         GRAPH_UPDATE: "graph_update",
         UPDATE_GRAPH: "update_graph",
         GRANULARITY_CHANGE:"granularity_change",
+        CUSTOM_CHANGE:"custom_change",
 
         CLICK: "click",
         OPEN: "open",

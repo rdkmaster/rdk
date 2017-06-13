@@ -1106,7 +1106,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     function _refreshCurrentSingleChecked(isChecked){
                         _resetTotalCheckedDom(isChecked);
                         angular.forEach(scope.currentPageData, function(rowData){
-                            rowData.checked = isChecked;
+                            if(!rowData.disabled){
+                                rowData.checked = isChecked;
+                            }
                         })
                     }
 
@@ -1306,7 +1308,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     }
                     var scrollWidth, first = true,
                         stickyWrapElement;
-
                     function _reloadLocalData() {
                         function _convertToObject(input) {
                             var result = new Array();
@@ -1324,6 +1325,13 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                     })
                                 }else{
                                     obj["checked"] = false;
+                                }
+                                if(input.disabled){
+                                    angular.forEach(input.disabled,function(disabled,cIndex){
+                                        if(index == cIndex){
+                                            obj["disabled"] = disabled;
+                                        }
+                                    })
                                 }
                                 result.push(obj);
                             });

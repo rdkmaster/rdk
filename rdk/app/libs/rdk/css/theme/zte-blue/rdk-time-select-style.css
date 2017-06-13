@@ -48,7 +48,6 @@
     background-color: #008FD4;
     color: #fff;
 }
-
 /*expect date css*/
 /* 备注:兼容火狐background-color不能加在tr节点上，否则td节点无法显示圆角 start*/
 .rdk-time-select-module .datetimepicker table tr.active{
@@ -139,4 +138,7 @@
 .rdk-time-select-module .datetimepicker  .datetimepicker-days td, .rdk-time-select-module .datetimepicker .datetimepicker-days th{
     width: 29px;
     height: 30px;
+}
+.rdk-time-select-padding{
+    padding-top: 34px;
 }
