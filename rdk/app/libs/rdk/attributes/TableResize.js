@@ -118,7 +118,6 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
             setColumnSizes(cache);
 
             // Initialise all handlers for every column
-
             handleColumns.each(function(index, column) {
                 initHandle(table, column);
             })
@@ -155,8 +154,7 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
             //$(handle).height($(table).height())
 
             // Use the middleware to decide which columns this handle controls
-
-            var controlledColumn = resizer.handleMiddleware(handle, column);
+            var controlledColumn = resizer.handleMiddleware(handle, column)
 
             // Bind mousedown, mousemove & mouseup events
             bindEventToHandle(table, handle, controlledColumn);
@@ -174,6 +172,7 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
                     resizer.onFirstDrag(column, handle);
                     resizer.onTableReady();
                 }
+
 
                 var optional = {}
                 if (resizer.intervene) {
@@ -208,7 +207,6 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
         function calculateWidthEvent(column, orgX, orgWidth, optional) {
             return function(event) {
                 // Get current mouse position
-
                 var newX = event.clientX;
 
                 // Use calculator function to calculate new width
@@ -219,7 +217,6 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
                 if (resizer.restrict(newWidth)) return;
 
                 // Extra optional column
-
                 if (resizer.intervene){
                     var optWidth = resizer.intervene.calculator(optional.orgWidth, diffX);
                     if (resizer.intervene.restrict(optWidth)) return;

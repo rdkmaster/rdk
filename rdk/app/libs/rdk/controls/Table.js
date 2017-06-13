@@ -507,7 +507,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 }
 
                 if(tAttributes.customScroll=="rdk-scroll" && tAttributes.rdkScroll == null){
-                    debugger;
                     tElement[0].querySelector(".wrapper").setAttribute("rdk-scroll","");
                 }
 
@@ -1088,10 +1087,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
 
                             if (scope.setting && scope.setting.scrollX && attrs.customScroll!=="rdk-scroll") {
-                               // tableWrap.addEventListener("scroll",scrollLeftHandle,false)
-                            }else if(attrs.customScroll=="rdk-scroll"){
-                               // tableWrap.addEventListener('ps-scroll-x', scrollLeftHandle,false);
                                 tableWrap.addEventListener("scroll",scrollLeftHandle,false)
+                            }else if(attrs.customScroll=="rdk-scroll"){
+                                tableWrap.addEventListener('ps-scroll-x', scrollLeftHandle,false);
                             }
                         }
                         function scrollLeftHandle(event) {
