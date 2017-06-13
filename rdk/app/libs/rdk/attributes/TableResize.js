@@ -6,9 +6,11 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
         var mode;
 
         var columns = null;
+        var columnsBody = null;
         var ctrlColumns = null;
         var handleColumns = null;
         var table = null;
+        var tableBody = null;
         var container = null;
         var resizer = null;
         var isFirstDrag = true;
@@ -16,18 +18,23 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
         var cache = null;
 
         function link(scope, element, attr) {
+
             var id = !!attr.id && attr.id.replace(/(\d+)/g,function(val){return "_"+val});
             EventService.register(id, EventTypes.READY, init);
 
             function init(){
                 // Set global reference to table
                 table = element;
+                //table 可拖动的表格，tableBody出现滚动条的表格
+
+                tableBody = document.querySelector(".resize-"+attr.id);
 
                 // Set global reference to container
                 container = scope.container ? $(scope.container) : $(table).parent();
 
                 // Add css styling/properties to table
                 $(table).addClass('resize');
+                $(tableBody).addClass('resize');
 
                 // Initialise handlers, bindings and modes
                 initialiseAll(table, attr, scope);
@@ -66,6 +73,7 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
 
         function resetTable(table) {
             $(table).outerWidth('100%');
+            $(tableBody).outerWidth('100%');
             //$(table).find('th').width('auto');
         }
 
@@ -77,12 +85,22 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
             // Get all column headers
             columns = $(table).find('th');
 
+            //columnsBody=$(tableBody).find('td');
+            if(tableBody){
+                columnsBody=tableBody.querySelectorAll("tbody>tr:first-child>td");
+                for(var i=columnsBody.length-1;i>=0;i--){
+                    columns[i].bakColumn=columnsBody[i];
+                }
+            }
+
+            columns.bakColumns=columnsBody;
             mode = scope.mode;
 
             // Get the resizer object for the current mode
             var ResizeModel = getResizer(scope, attr);
             if (!ResizeModel) return;
-            resizer = new ResizeModel(table, columns, container);
+
+            resizer = new ResizeModel(table, columns, container,tableBody);
 
             // Load column sized from saved storage
             cache = resizeStorage.loadTableSizes(table, scope.mode)
@@ -100,6 +118,7 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
             setColumnSizes(cache);
 
             // Initialise all handlers for every column
+
             handleColumns.each(function(index, column) {
                 initHandle(table, column);
             })
@@ -114,6 +133,7 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
             }
 
             $(table).width('100%');
+            $(tableBody).width('100%');
 
             ctrlColumns.each(function(index, column){
                 var id = $(column).attr('id');
@@ -135,7 +155,8 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
             //$(handle).height($(table).height())
 
             // Use the middleware to decide which columns this handle controls
-            var controlledColumn = resizer.handleMiddleware(handle, column)
+
+            var controlledColumn = resizer.handleMiddleware(handle, column);
 
             // Bind mousedown, mousemove & mouseup events
             bindEventToHandle(table, handle, controlledColumn);
@@ -154,10 +175,10 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
                     resizer.onTableReady();
                 }
 
-
                 var optional = {}
                 if (resizer.intervene) {
                     optional = resizer.intervene.selector(column);
+                    optional.bakColumn = resizer.intervene.selector(column.bakColumn);
                     optional.column = optional;
                     optional.orgWidth = $(optional).width();
                 }
@@ -187,6 +208,7 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
         function calculateWidthEvent(column, orgX, orgWidth, optional) {
             return function(event) {
                 // Get current mouse position
+
                 var newX = event.clientX;
 
                 // Use calculator function to calculate new width
@@ -197,14 +219,17 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
                 if (resizer.restrict(newWidth)) return;
 
                 // Extra optional column
+
                 if (resizer.intervene){
                     var optWidth = resizer.intervene.calculator(optional.orgWidth, diffX);
                     if (resizer.intervene.restrict(optWidth)) return;
                     $(optional).width(optWidth)
+                    $(optional.bakColumn).width(optWidth)
                 }
 
                 // Set size
                 $(column).width(newWidth);
+                $(column.bakColumn).width(newWidth);
             }
         }
 
@@ -287,10 +312,11 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
 
     rdkTableResize.factory("ResizerModel", [function() {
 
-        function ResizerModel(table, columns, container){
+        function ResizerModel(table, columns, container,tableBody){
             this.minWidth = 25;
 
             this.table = table;
+            this.tableBody = tableBody;
             this.columns = columns;
             this.container = container;
 
@@ -308,6 +334,7 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
         ResizerModel.prototype.onTableReady = function () {
             // Table is by default 100% width
             $(this.table).outerWidth('100%');
+            $(this.tableBody).outerWidth('100%');
         };
 
         ResizerModel.prototype.handles = function () {
@@ -324,6 +351,7 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
             // By default, set all columns to absolute widths
             $(this.ctrlColumns).each(function(index, column) {
                 $(column).width($(column).width());
+                $(column.bakColumn).width($(column).width());
             })
         };
 
@@ -356,9 +384,10 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
 
     rdkTableResize.factory("BasicResizer", ["ResizerModel", function(ResizerModel) {
 
-        function BasicResizer(table, columns, container) {
+        function BasicResizer(table, columns, container,tableBody) {
+
             // Call super constructor
-            ResizerModel.call(this, table, columns, container)
+            ResizerModel.call(this, table, columns, container,tableBody);
 
             // All columns are controlled in basic mode
             this.ctrlColumns = this.columns;
@@ -395,6 +424,9 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
             $(this.columns).first().css({
                 width: 'auto'
             });
+            $(this.columns.bakColumns).first().css({
+                width: 'auto'
+            });
         };
 
         BasicResizer.prototype.handles = function() {
@@ -406,6 +438,7 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
             // Replace all column's width with absolute measurements
             $(this.columns).each(function(index, column) {
                 $(column).width($(column).width());
+                $(column.bakColumn).width($(column).width());
             })
         };
 
@@ -420,6 +453,7 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
                 var percentWidth = colWidth / totWidth * 100 + '%';
                 totPercent += (colWidth / totWidth * 100);
                 $(column).css({ width: percentWidth });
+                $(column.bakColumn).css({ width: percentWidth });
             })
 
         };
@@ -456,6 +490,9 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
             $(this.columns).first().css({
                 width: 'auto'
             });
+            $(this.columns.bakColumns).first().css({
+                width: 'auto'
+            });
         };
 
         FixedResizer.prototype.handles = function() {
@@ -472,12 +509,15 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
             // Replace each column's width with absolute measurements
             $(this.ctrlColumns).each(function(index, column) {
                 $(column).width($(column).width());
+                $(column.bakColumn).width($(column).width());
             })
         };
 
         FixedResizer.prototype.handleMiddleware = function (handle, column) {
             // Fixed mode handles always controll next neightbour column
-            return $(column).next();
+            var td = $(column).next();
+            td.bakColumn = column.nextElementSibling.bakColumn;
+            return td;
         };
 
         FixedResizer.prototype.restrict = function (newWidth) {
@@ -510,9 +550,9 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
 
     rdkTableResize.factory("OverflowResizer", ["ResizerModel", function(ResizerModel) {
 
-        function OverflowResizer(table, columns, container) {
+        function OverflowResizer(table, columns, container,tableBody) {
             // Call super constructor
-            ResizerModel.call(this, table, columns, container)
+            ResizerModel.call(this, table, columns, container,tableBody)
         }
 
         // Inherit by prototypal inheritance
@@ -530,6 +570,8 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
             // For mode overflow, make table as small as possible
             //$(this.table).width($(this.table[0].parentNode).width());
             $(this.table).width(1);
+
+            $(this.tableBody).width(1);
         };
 
         // Return constructor

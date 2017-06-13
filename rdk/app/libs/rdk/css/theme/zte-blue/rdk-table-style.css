@@ -435,6 +435,9 @@ i.regular_right,i.regular_left{
     float: left;
 }
 /* vmax :3.0 风格 end */
+.rdk-table-module .rdk-table-head{
+    table-layout: fixed;
+}
 
 /* table col resizeable start */
 /* sticky-thead 是指浮动表头的样式 */

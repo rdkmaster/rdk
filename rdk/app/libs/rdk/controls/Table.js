@@ -22,32 +22,38 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         </select>\
                     </div>\
                </div>\
-               <div class="wrapper" ng-style="{{scrollStyle}}">\
-                    <table class="rdk-table" >\
-                        <thead ng-if="!noHeader">\
-                            <tr>\
-                                <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><span ng-if="checkBoxTitle">{{checkBoxTitle}}</span><input ng-if="!checkBoxTitle" name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
-                                <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinished" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)" style="width:{{columnDef.width}}">\
-                                    {{columnDef.title}}\
-                                    <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
-                                    <i ng-if="columnDef.sortable && curSortCol($index)" class="rdk-table-icon" ng-class="{true:\'rdk-table-sort-down\',false:\'rdk-table-sort-up\'}[changeSortIconStatus($index)]"></i>\
-                                </th>\
-                            </tr>\
-                        </thead>\
-                        <tbody ng-mouseleave="clearHovered()">\
-                            <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
-                                ng-class="{\'row-span\':groupTargets,\'selected-row\':ifRowHighLight(item,\'click\'),\'selected-row-hover\':ifRowHighLight(item,\'hover\')}" ng-dblclick="dbClickHandler(item,$index)">\
-                                <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="item.checked"></td>\
-                                <td ng-class="{\'selected-row-td\':ifRowHighLight(item,\'click\',columnDef),\'selected-row-hover-td\':ifRowHighLight(item,\'hover\',columnDef)}" ng-mouseenter="setHovered(item,$event)" rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" ng-style="getCellStyle(itemRowSpan,columnDef)">\
-                                </td>\
-                            </tr>\
-                             <tr ng-if="noData">\
-                                <td colspan="{{addCheckBox?(visibleColumnDefsCount+1):visibleColumnDefsCount}}">\
-                                    <div class="no-data"></div>\
-                                </td>\
-                            </tr>\
-                        </tbody>\
-                    </table>\
+               <div class="rdk-table-box">\
+                   <div class="rdk-table-head-box" style="width:100%;overflow:hidden">\
+                        <table class="rdk-table rdk-table-head">\
+                           <thead ng-if="!noHeader">\
+                                <tr>\
+                                    <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><span ng-if="checkBoxTitle">{{checkBoxTitle}}</span><input ng-if="!checkBoxTitle" name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
+                                    <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinished" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)" style="width:{{columnDef.width}}">\
+                                        {{columnDef.title}}\
+                                        <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
+                                        <i ng-if="columnDef.sortable && curSortCol($index)" class="rdk-table-icon" ng-class="{true:\'rdk-table-sort-down\',false:\'rdk-table-sort-up\'}[changeSortIconStatus($index)]"></i>\
+                                    </th>\
+                                </tr>\
+                            </thead>\
+                        </table>\
+                   </div>\
+                   <div class="wrapper" ng-style="scrollStyle">\
+                        <table class="rdk-table rdk-table-body">\
+                            <tbody ng-mouseleave="clearHovered()">\
+                                <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
+                                    ng-class="{\'row-span\':groupTargets,\'selected-row\':ifRowHighLight(item,\'click\'),\'selected-row-hover\':ifRowHighLight(item,\'hover\')}" ng-dblclick="dbClickHandler(item,$index)">\
+                                    <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="item.checked"></td>\
+                                    <td ng-class="{\'selected-row-td\':ifRowHighLight(item,\'click\',columnDef),\'selected-row-hover-td\':ifRowHighLight(item,\'hover\',columnDef)}" ng-mouseenter="setHovered(item,$event)" rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" ng-style="getCellStyle(itemRowSpan,columnDef)">\
+                                    </td>\
+                                </tr>\
+                                 <tr ng-if="noData">\
+                                    <td colspan="{{addCheckBox?(visibleColumnDefsCount+1):visibleColumnDefsCount}}">\
+                                        <div class="no-data"></div>\
+                                    </td>\
+                                </tr>\
+                            </tbody>\
+                        </table>\
+                    </div>\
                 </div>\
                 <rdk-paging ng-show="pageVisible && pageCtrl && paging" data-page-size="pageSize" \
                      data-lang="{{lang}}" current-page="currentPage" data-search-position="{{searchPosition}}" ng-class="{true:\'visiblePageLine\', false:\'unvisiblePageLine\'}[columnDefs.length!=0 && !noData]">\
@@ -501,6 +507,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 }
 
                 if(tAttributes.customScroll=="rdk-scroll" && tAttributes.rdkScroll == null){
+                    debugger;
                     tElement[0].querySelector(".wrapper").setAttribute("rdk-scroll","");
                 }
 
@@ -509,11 +516,14 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 }
 
                 if(!!tAttributes.resize){
-                    var tableElement=tElement[0].querySelector(".rdk-table");
+                    var tableElement=tElement[0].querySelector(".rdk-table.rdk-table-head");
+                    var tableElementB=tElement[0].querySelector(".rdk-table.rdk-table-body");
                     tableElement.setAttribute("resizeable","");
                     tableElement.setAttribute("mode","resizeMode");
                     tableElement.setAttribute("id","rdkTable{{$id}}");
                     tableElement.style.tableLayout="fixed";
+                    tableElementB.classList.add("resize-"+"rdkTable{{$id}}");
+                    tableElementB.style.tableLayout="fixed";
                 }
 
                 return function link(scope, element, attrs, ctrl) {
@@ -1038,8 +1048,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             _resetTotalCheckedDom(isChecked);
                         }
                         var isFirstBroadCast=true;
+
                         scope.$on('ngRepeatFinished', function() {
-                            _fixTableHeader();
+                            _fixedTableHead();
                             scope.refreshSingleCurrentPage();
                             _serverSortResponse();//后端排序，刷新后的响应
                             scope.$watch("selectedIndex", function(newVal, oldVal) { //根据selectedIndex高亮显示
@@ -1062,38 +1073,36 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             _reSetTableHeaders(); //自定义表头
                         });
 
+                        var tableWrap = element[0].querySelector(".wrapper");
+                        var tHeadBox = element[0].querySelector(".rdk-table-head-box");
+                        function _fixedTableHead(){
+                            if(!scope.noData || !scope.noHeader){
+                                var tHeadThs =  element[0].querySelectorAll("table.rdk-table-head>thead>tr>th");
+                                var tBodyTds =  element[0].querySelectorAll("table.rdk-table-body>tbody>tr:first-child>td");
+                                var colWidths = Array.prototype.map.call(tBodyTds, function(obj) {
+                                    return Utils.getStyle(obj,"width");
+                                });
+                                Array.prototype.map.call(tHeadThs, function(colObj,index) {
+                                    colObj.style.width=colWidths[index];
+                                });
+                            }
+
+                            if (scope.setting && scope.setting.scrollX && attrs.customScroll!=="rdk-scroll") {
+                               // tableWrap.addEventListener("scroll",scrollLeftHandle,false)
+                            }else if(attrs.customScroll=="rdk-scroll"){
+                               // tableWrap.addEventListener('ps-scroll-x', scrollLeftHandle,false);
+                                tableWrap.addEventListener("scroll",scrollLeftHandle,false)
+                            }
+                        }
+                        function scrollLeftHandle(event) {
+                            var target = event.target || event.srcElement;
+                            tHeadBox.scrollLeft=target.scrollLeft;
+                        }
                     };
                     //END INIT
 
                     function _resetCurrentPageData(newVal){
                         scope.currentPageData = newVal.concat();
-                    }
-
-                    function _fixTableHeader(){
-                        _beforeFixHeader();
-                        $(element.find("table")).fixHeader();//wrapper->[sticky-wrap]->sticky-enabled->[sticky-thead]
-                        _afterFixHeader();
-                        if(scope.floatableHeader) return;
-                        $(element[0].querySelector('.sticky-thead')).remove();
-                    }
-
-                    function _beforeFixHeader(){
-                        if($(element).has($('.sticky-wrap')).length != 0){
-                             $(element[0].querySelector('.sticky-enabled')).unwrap();
-                        }
-                        if($(element).has($('.sticky-thead')).length != 0){
-                            $(element[0].querySelector('.sticky-thead')).remove();
-                        }
-                    }
-
-                    function _afterFixHeader(){
-                        if(scope.setting && scope.setting.scrollX && attrs.customScroll!=="rdk-scroll") {
-                            var handDragElement = element[0].querySelector(".sticky-wrap");//拖动产生在这层
-                            $(handDragElement).addClass("sticky-wrap-overflow");
-                        }
-                        if(scope.addCheckBox){
-                            $compile($(element[0].querySelector('.sticky-thead th:first-child')))(scope);
-                        }
                     }
 
                     function _refreshCurrentSingleChecked(isChecked){
@@ -1350,7 +1359,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         scope.groupTargets = undefined;
                         //scrollStyle
                         if (scope.setting && scope.setting.scrollX && attrs.customScroll!=="rdk-scroll") {
-                            scope.scrollStyle = "overflow:auto;width:100%;";
+                            scope.scrollStyle = {
+                                overflow:"auto",
+                                width:"100%"
+                            };
                             first = true;
                             $(element.find("tbody")).touchEvent("swipe", "detouch");
                             $(element.find("tbody")).touchEvent("swipe", "touch", _move);
