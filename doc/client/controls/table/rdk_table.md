@@ -196,7 +196,7 @@ data对象中应该包含以下**必填属性**：
 - targets列的索引。
 
 详细示例如下：
-<live_demo example="controls/table/customHeader"></live_demo>
+<live_demo example="controls/table/customheader"></live_demo>
 
 ### 添加多级表头 ###
 
