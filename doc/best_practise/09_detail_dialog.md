@@ -39,7 +39,7 @@ var controllerDefination = ['$scope', 'DataSourceService', 'EventService','Popup
 }
 ~~~
 
-其中关于模块化，具体使用参考[Module控件](/doc/client/controls/module/module.md)；PopupService弹出框服务 用于动态加载模块，并提供弹出及关闭弹出服务。具体请参考[PopupService服务](/doc/client/common/popupservice/popupservice.md)
+其中关于模块化，具体使用参考[Module控件](/doc/client/controls/module/module.md)；PopupService弹出框服务 用于动态加载模块，并提供弹出及关闭弹出服务。具体请参考[PopupService服务](/doc/client/common/popupservice/PopupService.md)
 
 ### 添加gis地图
 - 在弹出框中显示gis地图

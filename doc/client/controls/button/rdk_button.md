@@ -14,7 +14,7 @@
 ## label ##
 > 支持类型：字符串。
 
-label 用于按钮文字说明 ，支持双绑。默认值""。
+`label` 用于按钮文字说明 ，支持双绑。默认值""。
 
 <live_demo example="controls/button/label" width="900"></live_demo>
 
@@ -28,7 +28,7 @@ icon 按钮图标,放在文字说明的前面,支持双绑，值为图标路径�
 ## toggle <binding></binding>  ##
 > 支持类型：布尔型。
 
-toggle表示按钮是否保持按下的状态。
+`toggle`表示按钮是否保持按下的状态。
 
 为false时（默认值），表示不启用，此时按钮只有响应单击的功能，即是一个最普通的按钮。此状态下selected属性的值永远为false。
 
@@ -39,35 +39,35 @@ toggle表示按钮是否保持按下的状态。
 ## selected <binding></binding> ##
 > 支持类型：布尔型。
 
-selected 按钮当前的是按下的状态还是正常状态，支持双绑。默认值false。
+`selected` 按钮当前的是按下的状态还是正常状态，支持双绑。默认值false。
 
 <live_demo example="controls/button/selected" width="900"></live_demo>
 
 ## enabled <binding></binding> ##
 > 支持类型：布尔型。
 
-enabled 表示按钮当前是否可响应单击，默认值true，支持双绑。
+`enabled` 表示按钮当前是否可响应单击，默认值true，支持双绑。
 
 <live_demo example="controls/button/enabled" width="900"></live_demo>
 
 ## tooltip ##
 > 支持类型：字符串。
 
-tooltip 表示按钮的tooltip，支持双绑。
+`tooltip` 表示按钮的提示信息，支持双绑。
 
 <live_demo example="controls/button/tooltip" width="900"></live_demo>
 
 ## click ##
 > 支持类型：函数。
 
-click 表示按钮单击之后的回调函数。
+`click` 表示按钮单击之后的回调函数。
 
 <live_demo example="controls/button/click" width="900"></live_demo>
 
 ## type ##
 > 支持类型：字符串。
 
-type 表示按钮的不用样式，目前只有7种样式，分别为 normal,danger,guidance,white,default,warning,caution默认值为normal。
+`type` 表示按钮的不用样式，目前只有7种样式，分别为 normal,danger,guidance,white,default,warning,caution默认值为normal。
 
 <live_demo example="controls/button/type" width="900"></live_demo>
 

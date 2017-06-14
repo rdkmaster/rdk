@@ -71,5 +71,5 @@ html代码结构：
 	
 
 详细示例：
-<live_demo example="common/justify/Columns" width="900" height="400"></live_demo>
+<live_demo example="common/justify/columns" width="900" height="400"></live_demo>
 
