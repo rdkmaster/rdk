@@ -19,7 +19,7 @@
                 var obj={};
                 obj.name=data.field[i];
                 obj.index=data.field[i];
-                obj.width=100;
+                obj.width=200;
                 obj.sorttype="float";
                 obj.align="center";
                 if(data.field=="extn"){
@@ -40,7 +40,7 @@
                 viewrecords: true,
                 sortorder: "desc",
                 height: '200',
-                width:"800"
+                width:"400"
                 //hiddengrid : true, 最初隐藏表格
                 //caption: "Manipulating Array Data"
             });
@@ -48,6 +48,13 @@
             var gridData = convertToObject(data);
             for(var i=0;i<=gridData.length;i++){
                 $("#gridTable").jqGrid('addRowData',i+1,gridData[i]);
+            }
+            if(gridData.length==0){
+                var head = document.querySelector(".m-jqgrid .ui-jqgrid-hdiv");
+                var body = document.querySelector(".m-jqgrid .ui-jqgrid-bdiv");
+                head.style.overflow="auto";
+                head.style.height="200px";
+                body.style.height="0";
             }
             //设置导航功能
             // $("#gridTable").jqGrid('navGrid', '#pager2', {edit : false,add : false,del : false});

@@ -40,6 +40,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                    <div class="wrapper" ng-style="scrollStyle">\
                         <table class="rdk-table rdk-table-body">\
                             <tbody ng-mouseleave="clearHovered()">\
+                                <tr class="table-first-row"><td ng-repeat="columnDef in columnDefs track by columnDef.targets" ng-show="columnDef.visible"></td></tr>\
                                 <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
                                     ng-class="{\'row-span\':groupTargets,\'selected-row\':ifRowHighLight(item,\'click\'),\'selected-row-hover\':ifRowHighLight(item,\'hover\')}" ng-dblclick="dbClickHandler(item,$index)">\
                                     <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="item.checked"></td>\
@@ -1049,7 +1050,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         var isFirstBroadCast=true;
 
                         scope.$on('ngRepeatFinished', function() {
-                            _fixedTableHead();
                             scope.refreshSingleCurrentPage();
                             _serverSortResponse();//后端排序，刷新后的响应
                             scope.$watch("selectedIndex", function(newVal, oldVal) { //根据selectedIndex高亮显示
@@ -1066,27 +1066,31 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 EventService.broadcast('rdkTable_'+scope.$id, EventTypes.READY,null);
                                 isFirstBroadCast=false;
                             }
-                            window.addEventListener("resize",_fixedTableHead,false);
                         });
+                        //ngRepeatFinished和tableHeadNgRepeatFinished区别在于数据变化后tableHeadNgRepeatFinished不会再执行
                         scope.$on('tableHeadNgRepeatFinished', function() {
+                            _fixedTableHead();  //固定表头
                             _reSetTableAddHeaders(); //多级表头
                             _reSetTableHeaders(); //自定义表头
+                            window.addEventListener("resize",_fixedTableHead,false);
                         });
 
                         var tableWrap = element[0].querySelector(".wrapper");
                         var tHeadBox = element[0].querySelector(".rdk-table-head-box");
                         function _fixedTableHead(){
+                            var tableWrapWidth = Utils.getStyle(tableWrap,"width");
+                            var tHeadBox =  element[0].querySelector(".rdk-table-head-box");
+                            tHeadBox.style.width=tableWrapWidth;
                             if(!scope.noData || !scope.noHeader){
                                 var tHeadThs =  element[0].querySelectorAll("table.rdk-table-head>thead>tr>th");
                                 var tBodyTds =  element[0].querySelectorAll("table.rdk-table-body>tbody>tr:first-child>td");
-                                var colWidths = Array.prototype.map.call(tBodyTds, function(obj) {
+                                var colWidths = Array.prototype.map.call(tHeadThs, function(obj) {
                                     return Utils.getStyle(obj,"width");
                                 });
-                                Array.prototype.map.call(tHeadThs, function(colObj,index) {
+                                Array.prototype.map.call(tBodyTds, function(colObj,index) {
                                     colObj.style.width=colWidths[index];
                                 });
                             }
-
                             if (scope.setting && scope.setting.scrollX && attrs.customScroll!=="rdk-scroll") {
                                 tableWrap.addEventListener("scroll",scrollLeftHandle,false)
                             }else if(attrs.customScroll=="rdk-scroll"){

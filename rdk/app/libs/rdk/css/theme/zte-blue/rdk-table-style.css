@@ -435,8 +435,25 @@ i.regular_right,i.regular_left{
     float: left;
 }
 /* vmax :3.0 风格 end */
+.rdk-table-module .rdk-table-head-box{
+    width: 100%;
+    overflow: hidden;
+}
 .rdk-table-module .rdk-table-head{
+
+}
+.rdk-table-module .rdk-table-body{
     table-layout: fixed;
+}
+.rdk-table-module .rdk-table-body .table-first-row>td{
+    height: 0 !important;
+    border: 0 !important;
+    padding: 0 9px !important;
+}
+.rdk-table-module .rdk-table-body> tbody > tr > td> div >div{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* table col resizeable start */

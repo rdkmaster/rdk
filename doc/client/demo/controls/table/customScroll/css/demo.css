@@ -4,20 +4,9 @@
 }
 .table-moved .rdk-table-module .wrapper{
     width: 450px;
-    border-left: 1px solid #e5e5e5;
+    border: 1px solid #e5e5e5;
     height: 300px;
 }
 .table-moved .rdk-table-module .table-export{
     right: -100px;
-}
-.table-fixed .rdk-table-module{
-    width: 100px;
-    box-shadow: -2px -0 4px rgba(0,0,0,0.175);
-}
-.table-fixed .rdk-table-module .iconfont{
-    cursor: pointer;
-}
-.iconfont-e8b7{
-    color: #008FD4;
-    font-size: 19px;
 }
