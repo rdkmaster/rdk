@@ -23,7 +23,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     </div>\
                </div>\
                <div class="rdk-table-box">\
-                   <div class="rdk-table-head-box" style="width:100%;overflow:hidden">\
+                   <div class="rdk-table-head-box">\
                         <table class="rdk-table rdk-table-head">\
                            <thead ng-if="!noHeader">\
                                 <tr>\
@@ -1066,6 +1066,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 EventService.broadcast('rdkTable_'+scope.$id, EventTypes.READY,null);
                                 isFirstBroadCast=false;
                             }
+                            window.addEventListener("resize",_fixedTableHead,false);
                         });
                         scope.$on('tableHeadNgRepeatFinished', function() {
                             _reSetTableAddHeaders(); //多级表头
@@ -1091,11 +1092,14 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }else if(attrs.customScroll=="rdk-scroll"){
                                 tableWrap.addEventListener('ps-scroll-x', scrollLeftHandle,false);
                             }
+
                         }
                         function scrollLeftHandle(event) {
                             var target = event.target || event.srcElement;
                             tHeadBox.scrollLeft=target.scrollLeft;
                         }
+
+
                     };
                     //END INIT
 
