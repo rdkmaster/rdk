@@ -1579,7 +1579,7 @@
             $(eg).attr({"id" : "gbox_"+this.id,"dir":dir}).insertBefore(gv);
             $(gv).attr("id","gview_"+this.id).appendTo(eg);
             $("<div "+getstyle(ts.p.styleUI+'.common','overlay', false, 'jqgrid-overlay')+ " id='lui_"+this.id+"'></div>").insertBefore(gv);
-            $("<div "+getstyle(stylemodule,'loadingBox', false, 'loading')+" id='load_"+this.id+"'>"+$.jgrid.getRegional(ts, "defaults.loadtext", this.p.loadtext)+"</div>").insertBefore(gv);
+            //$("<div "+getstyle(stylemodule,'loadingBox', false, 'loading')+" id='load_"+this.id+"'>"+$.jgrid.getRegional(ts, "defaults.loadtext", //this.p.loadtext)+"</div>").insertBefore(gv);
 
             $(this).attr({role:"presentation","aria-multiselectable":!!this.p.multiselect,"aria-labelledby":"gbox_"+this.id});
 

@@ -46,8 +46,17 @@
             });
             //写入数据
             var gridData = convertToObject(data);
+
             for(var i=0;i<=gridData.length;i++){
                 $("#gridTable").jqGrid('addRowData',i+1,gridData[i]);
+            }
+            //无数据多列有x滚动条处理
+            if(gridData.length==0){
+                var head = document.querySelector(".m-jqgrid .ui-jqgrid-hdiv");
+                var body = document.querySelector(".m-jqgrid .ui-jqgrid-bdiv");
+                head.style.overflow="auto";
+                head.style.height="200px";
+                body.style.height="0";
             }
             //设置导航功能
             // $("#gridTable").jqGrid('navGrid', '#pager2', {edit : false,add : false,del : false});
