@@ -536,8 +536,13 @@ cells 为 改变的行列信息的数组信息
 
 >同上面通用功能提到的滚动条rdk-scroll的用法区别：
 
-用法一：<rdk-table rdk-scroll></rdk-table>
-用法二：<rdk-table custom_scroll="rdk-scroll"></rdk-table>
+用法一：
+
+    <rdk-table rdk-scroll></rdk-table>
+
+用法二：
+
+    <rdk-table custom_scroll="rdk-scroll"></rdk-table>
 
 用法一是在rdk-table的根节点创建滚动条，滚动区域的固定宽高样式可以直接设置在此节点或者父节点；
 用法二是在rdk-table控件的内部table标签父节点上创建滚动条，滚动区域的固定宽高样式需要设置在内部节点,
@@ -676,7 +681,7 @@ cells 为 改变的行列信息的数组信息
 # 方法 #
 ### setCurrentPage ###
 
-"setCurrentPage"方法有一个参数,表示显示那页，参数为0时，显示第一页，调用如下：
+`setCurrentPage`方法有一个参数,表示显示那页，参数为0时，显示第一页，调用如下：
 
     rdk.tableID.setCurrentPage(number)
 
@@ -694,19 +699,19 @@ cells 为 改变的行列信息的数组信息
 
 ### setPageSize ###
 
-"setPageSize"方法有一个参数表示定义列表每页要展现的行数，调用如下：
+`setPageSize`方法有一个参数表示定义列表每页要展现的行数，调用如下：
 
     rdk.tableID.setPageSize(number)
 
 ### setChecked ###
 
-"setChecked"方法表示设置有复选框的功能时，那些行被勾选，有一个参数，表标被勾先这行的内容，调用如下：
+`setChecked`方法表示设置有复选框的功能时，那些行被勾选，有一个参数，表标被勾先这行的内容，调用如下：
 
     rdk.tableID.setChecked(item)
 
 ### setGlobalSearch ###
 
-"setGlobalSearch"方法有一个参数，表示要过滤的内容，调用如下：
+`setGlobalSearch`方法有一个参数，表示要过滤的内容，调用如下：
 
     rdk.tableID.setGlobalSearch(searchVal)
 

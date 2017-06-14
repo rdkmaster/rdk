@@ -192,7 +192,7 @@
 
 <live_demo example="controls/basicselector/select_event" width="405"></live_demo>
 
-#方法 #
+# 方法 #
 
 ## selected2string ##
 
@@ -224,8 +224,6 @@ Selector控件提供一个将所有选择项转化为相互连接的字符串函
 
 # 样式 #
 
-### [关键样式示例](/doc/client/demo/controls/basicselector/select_style) ###
-
 ### border {#border1}
 边框样式，默认值：1px solid #a5a6aa
 
@@ -249,7 +247,7 @@ Selector控件提供一个将所有选择项转化为相互连接的字符串函
 
 ### original-item ###
 
-####list-style ####
+#### list-style ####
 设置所有的列表属性,默认值: none
 
 #### float #####

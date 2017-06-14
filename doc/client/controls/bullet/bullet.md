@@ -20,7 +20,8 @@
 `sliders` 用于指定滑块对应的值，如[10,20,50,87]
 
 <live_demo example="controls/bullet/changeSliderValue" width="900"></live_demo>
-## sliderStyles  <binding></binding>##
+
+## sliderStyles <binding></binding> ##
 
 `sliderStyles` 用于滑块的样式，如
    > [

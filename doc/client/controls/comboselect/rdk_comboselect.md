@@ -88,37 +88,37 @@
 
 ## changeOpenStatus ##
 
-可以改变"open"属性的状态，调用时取相反的状态，如：当前下拉选择项为折叠状态时，调用其方法下拉选择项会变成展开状态，调用方法如下：
+可以改变`open`属性的状态，调用时取相反的状态，如：当前下拉选择项为折叠状态时，调用其方法下拉选择项会变成展开状态，调用方法如下：
 
     rdk.comboID.changeOpenStatus()
 
 ## lockCloseShow ##
 
-可以锁定关闭显示，在"open_policy"属性为"hover"可看到有效,调用方法如下：
+可以锁定关闭显示，在`open_policy`属性为"hover"可看到有效,调用方法如下：
 
     rdk.comboID.lockCloseShow()
 
 ## setValue ##
 
-"setValue"方法有一个参数,它表示为给显示框替换的内容，调用方式如下：
+`setValue`方法有一个参数,它表示为给显示框替换的内容，调用方式如下：
 
     rdk.comboID.setValue（value）
 
 ## getValue ##
 
-"getValue"方法作用是获得显示框的内容，调用方式如下：
+`getValue`方法作用是获得显示框的内容，调用方式如下：
 
     rdk.comboID.getValue（）
 
 ## setCaption ##
 
-"setCaption"方法有一个参数,它表示为替换"caption"属性的内容，调用方式如下：
+`setCaption`方法有一个参数,它表示为替换`caption`属性的内容，调用方式如下：
 
     rdk.comboID.setCaption（value)
 
 ## getCaption ##
 
-"getCaption"方法作用是获得"caption"属性的内容，调用方式如下：
+`getCaption`方法作用是获得`caption`属性的内容，调用方式如下：
 
     rdk.comboID.getCaption（）
 
@@ -127,8 +127,6 @@
 <live_demo example="controls/comboselect/methods"  width="605"></live_demo>
 
 # 样式 #
-
-### [关键样式示例](/doc/client/demo/controls/comboselect/comboselect_style) ###
 
 ### rdk-combo-select-module ###
 
