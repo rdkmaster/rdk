@@ -438,8 +438,11 @@ i.regular_right,i.regular_left{
     float: left;
 }
 /* vmax :3.0 风格 end */
+.rdk-table-module .wrapper{
+    width: 100%;
+}
 .rdk-table-module .wrapper,.rdk-table-module .rdk-table-head-box{
-    padding:0 1px
+    padding:0 5px
 }
 
 .rdk-table-module .rdk-table-head-box{

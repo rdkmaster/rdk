@@ -365,9 +365,10 @@
             _isNgHide && element.classList.add("ng-hide");
             return { width: _width, height: _height };
         };
-
+        this.isIE = this.isIE();
         this.getStyle = function(element, styleName) {
             var result = element.style[styleName] ? element.style[styleName] : element.currentStyle ? element.currentStyle[styleName] : window.getComputedStyle(element, null)[styleName];
+            // ie直接返回计算后的样式,避免误差
             //ie下有可能会返回 auto.......
             if( (styleName =="width" || styleName =="height") && result =="auto"){
                 var property="offset"+styleName[0].toUpperCase()+styleName.slice(1);

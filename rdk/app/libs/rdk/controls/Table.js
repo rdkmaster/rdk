@@ -1048,7 +1048,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             _resetTotalCheckedDom(isChecked);
                         }
                         var isFirstBroadCast=true;
-
                         scope.$on('ngRepeatFinished', function() {
                             _fixedTableHead();  //固定表头
                             scope.refreshSingleCurrentPage();
@@ -1067,11 +1066,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 EventService.broadcast('rdkTable_'+scope.$id, EventTypes.READY,null);
                                 isFirstBroadCast=false;
                             }
-
                         });
                         //ngRepeatFinished和tableHeadNgRepeatFinished区别在于数据变化后tableHeadNgRepeatFinished不会再执行
                         scope.$on('tableHeadNgRepeatFinished', function() {
-                            _reSetTableAddHeaders(); //多级表头
                             _reSetTableHeaders(); //自定义表头
                             _fixedTableHeadBindEvent();
                         });
@@ -1080,18 +1077,27 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         var tHeadBox = element[0].querySelector(".rdk-table-head-box");
                         function _fixedTableHead(){
                             tHeadBox.style.width=Utils.getStyle(tableWrap,"width");
+                            if(Utils.isIE){
+                                tableWrap.style.width = Utils.getStyle(tableWrap,"width");
+                            }
                             if(!scope.noData || !scope.noHeader){
                                 //是否存在多级表头
-                                var tHeadThs =  element[0].querySelectorAll("table.rdk-table-head>thead>tr:last-child>th");
-                                var tBodyTds =  element[0].querySelectorAll("table.rdk-table-body>tbody>tr:first-child>td");
+                                var tHeadThs =  element[0].querySelectorAll("table.rdk-table-head>thead>tr>th");
+                                var tBodyTds =  element[0].querySelectorAll("table.rdk-table-body>tbody>tr:nth-of-type(2)>td");
                                 var colWidths = Array.prototype.map.call(tBodyTds, function(obj) {
                                     return Utils.getStyle(obj,"width");
                                 });
                                 Array.prototype.map.call(tHeadThs, function(colObj,index) {
                                     colObj.style.width=colWidths[index];
                                 });
+                                if(Utils.isIE){
+                                    var tBodyFirstTds =  element[0].querySelectorAll("table.rdk-table-body>tbody>tr:nth-of-type(1)>td");
+                                    Array.prototype.map.call(tBodyFirstTds, function(colObj,index) {
+                                        colObj.style.width=colWidths[index];
+                                    });
+                                }
                             }
-
+                            _reSetTableAddHeaders(); //多级表头
                         }
                         function _fixedTableHeadBindEvent(){
                             if (scope.setting && scope.setting.scrollX && attrs.customScroll!=="rdk-scroll") {
@@ -1310,7 +1316,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             var firstRowThs = firstRow.querySelectorAll("th");
                             //多级表头时将第一行的高度设置为0隐藏起来
                             Array.prototype.map.call(firstRowThs, function(colObj,index) {
-                                colObj.innerHTML=null;
+                              //  colObj.innerHTML=null; ie null都不识别？？
+                                colObj.innerHTML="";
                                 colObj.style.height=0;
                                 colObj.style.padding=0;
                                 colObj.style.borderTop=0;
