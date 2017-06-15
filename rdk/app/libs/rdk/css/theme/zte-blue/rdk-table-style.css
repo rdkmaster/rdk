@@ -212,6 +212,9 @@
 .rdk-table-module .rdk-table > tbody > tr > td {
     border: 1px solid #e5e5e5;
 }
+.rdk-table-module .rdk-table > tbody > tr:nth-of-type(2) > td {
+    border-top: 0;
+}
 .rdk-table-module .rdk-table tfoot tr{
     background-color: #FFFFFF;
     color: #333;
@@ -435,21 +438,28 @@ i.regular_right,i.regular_left{
     float: left;
 }
 /* vmax :3.0 风格 end */
+.rdk-table-module .wrapper,.rdk-table-module .rdk-table-head-box{
+    padding:0 1px
+}
+
 .rdk-table-module .rdk-table-head-box{
     width: 100%;
     overflow: hidden;
 }
 .rdk-table-module .rdk-table-head{
-
-}
-.rdk-table-module .rdk-table-body{
     table-layout: fixed;
 }
+.rdk-table-module .rdk-table-body{
+
+}
+
 .rdk-table-module .rdk-table-body .table-first-row>td{
     height: 0 !important;
-    border: 0 !important;
-    padding: 0 9px !important;
+    padding: 0 8px !important;
+    border-top: 0;
+    border-bottom: 0;
 }
+.rdk-table-module .rdk-table-head> thead > tr > th,
 .rdk-table-module .rdk-table-body> tbody > tr > td> div >div{
     overflow: hidden;
     text-overflow: ellipsis;

@@ -1050,6 +1050,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         var isFirstBroadCast=true;
 
                         scope.$on('ngRepeatFinished', function() {
+                            _fixedTableHead();  //固定表头
                             scope.refreshSingleCurrentPage();
                             _serverSortResponse();//后端排序，刷新后的响应
                             scope.$watch("selectedIndex", function(newVal, oldVal) { //根据selectedIndex高亮显示
@@ -1066,44 +1067,44 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 EventService.broadcast('rdkTable_'+scope.$id, EventTypes.READY,null);
                                 isFirstBroadCast=false;
                             }
+
                         });
                         //ngRepeatFinished和tableHeadNgRepeatFinished区别在于数据变化后tableHeadNgRepeatFinished不会再执行
                         scope.$on('tableHeadNgRepeatFinished', function() {
-                            _fixedTableHead();  //固定表头
                             _reSetTableAddHeaders(); //多级表头
                             _reSetTableHeaders(); //自定义表头
-                            window.addEventListener("resize",_fixedTableHead,false);
+                            _fixedTableHeadBindEvent();
                         });
 
                         var tableWrap = element[0].querySelector(".wrapper");
                         var tHeadBox = element[0].querySelector(".rdk-table-head-box");
                         function _fixedTableHead(){
-                            var tableWrapWidth = Utils.getStyle(tableWrap,"width");
-                            var tHeadBox =  element[0].querySelector(".rdk-table-head-box");
-                            tHeadBox.style.width=tableWrapWidth;
+                            tHeadBox.style.width=Utils.getStyle(tableWrap,"width");
                             if(!scope.noData || !scope.noHeader){
-                                var tHeadThs =  element[0].querySelectorAll("table.rdk-table-head>thead>tr>th");
+                                //是否存在多级表头
+                                var tHeadThs =  element[0].querySelectorAll("table.rdk-table-head>thead>tr:last-child>th");
                                 var tBodyTds =  element[0].querySelectorAll("table.rdk-table-body>tbody>tr:first-child>td");
-                                var colWidths = Array.prototype.map.call(tHeadThs, function(obj) {
+                                var colWidths = Array.prototype.map.call(tBodyTds, function(obj) {
                                     return Utils.getStyle(obj,"width");
                                 });
-                                Array.prototype.map.call(tBodyTds, function(colObj,index) {
+                                Array.prototype.map.call(tHeadThs, function(colObj,index) {
                                     colObj.style.width=colWidths[index];
                                 });
                             }
+
+                        }
+                        function _fixedTableHeadBindEvent(){
                             if (scope.setting && scope.setting.scrollX && attrs.customScroll!=="rdk-scroll") {
                                 tableWrap.addEventListener("scroll",scrollLeftHandle,false)
                             }else if(attrs.customScroll=="rdk-scroll"){
                                 tableWrap.addEventListener('ps-scroll-x', scrollLeftHandle,false);
                             }
-
+                            window.addEventListener("resize",_fixedTableHead,false);
                         }
                         function scrollLeftHandle(event) {
                             var target = event.target || event.srcElement;
                             tHeadBox.scrollLeft=target.scrollLeft;
                         }
-
-
                     };
                     //END INIT
 
@@ -1152,7 +1153,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                     function _resetTotalCheckedDom(isChecked){
                         _resetTotalCheckStatus(isChecked);
-                        _resetFixHeadCheckStatus(isChecked);
                     }
 
                     function refreshTableI18n() {
@@ -1187,19 +1187,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     }
 
                     function _resetTotalCheckStatus(isChecked){
-                        var originTable = element.find('.sticky-enabled');
+                        var originTable = element.find('.rdk-table-box');;
                         var arr = originTable.find('input[name="totalCheckBox"]');
                         if(arr.length == 0) return;
                         arr[0].checked = isChecked;
                     }
 
-                    function _resetFixHeadCheckStatus(isChecked){
-                        if(!scope.floatableHeader) return;
-                        var copyTable = element.find('.sticky-thead');
-                        var arr = copyTable.find('input[name="totalCheckBox"]');
-                        if(arr.length == 0) return;
-                        arr[0].checked = isChecked;
-                    }
 
                     function _isAllChecked(){
                         if(scope.currentPageData.length == 0) return false;
@@ -1310,7 +1303,19 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
                             var template=angular.element(scope.setting.additionalHeader);
                             var trs= $compile(template)(scope.appScope);
+                            var firstRowHTML = thead.innerHTML;
                             $(thead).prepend(trs);
+                            $(thead).prepend($(firstRowHTML));
+                            var firstRow = thead.querySelector("tr:first-child");
+                            var firstRowThs = firstRow.querySelectorAll("th");
+                            //多级表头时将第一行的高度设置为0隐藏起来
+                            Array.prototype.map.call(firstRowThs, function(colObj,index) {
+                                colObj.innerHTML=null;
+                                colObj.style.height=0;
+                                colObj.style.padding=0;
+                                colObj.style.borderTop=0;
+                                colObj.style.borderButtom=0;
+                            });
                         }
                         _hasAddTrReady=true;  //表头已重定义
                     }
@@ -1392,7 +1397,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         if (first) {
                             first = false;
                             scrollWidth = element[0].querySelector(".rdk-table").offsetWidth - element[0].offsetWidth;
-                            stickyWrapElement = element[0].querySelector(".sticky-wrap");//拖动作用在这层
+                            stickyWrapElement = element[0].querySelector(".wrapper");//拖动作用在这层
                         }
 
                         var startPoint = e.startPoint;

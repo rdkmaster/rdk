@@ -40,7 +40,7 @@
             for(var i=0;i<80;i++){
                 var testData=[];
                 for(var j=0;j<8;j++){
-                    testData.push(i+''+j);
+                    testData.push('data '+ i+' , '+j);
                 }
                 data.push(testData);
             }
