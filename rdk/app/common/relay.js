@@ -20,8 +20,8 @@
 
     function _relay(req, method) {
         return !!req.throughtRest ?
-            restRelay(req.service, req.param, method) :
-            nativeRelay(req.service, req.param);
+            restRelay(req.service, req.param || req.peerParam, method) :
+            nativeRelay(req.service, req.param || req.peerParam);
     }
 
     function nativeRelay(service, param) {
