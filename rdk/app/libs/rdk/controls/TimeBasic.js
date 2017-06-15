@@ -30,6 +30,9 @@ define(['jquery', 'bootstrap',
                     
                 },
                 dateAdd: function(date, strInterval, Number) {
+				    if(angular.isString(date)){
+					    date = date.replace(/-/g,"/");
+					}
                     switch (strInterval) {
                         case 's':
                             return new Date(Date.parse(date) + (1000 * Number));
