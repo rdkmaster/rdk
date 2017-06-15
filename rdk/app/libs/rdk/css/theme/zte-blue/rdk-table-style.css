@@ -442,7 +442,7 @@ i.regular_right,i.regular_left{
     width: 100%;
 }
 .rdk-table-module .wrapper,.rdk-table-module .rdk-table-head-box{
-    padding:0 5px
+    padding:0 1px
 }
 
 .rdk-table-module .rdk-table-head-box{
