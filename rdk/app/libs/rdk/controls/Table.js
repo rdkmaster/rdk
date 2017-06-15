@@ -1100,11 +1100,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             _reSetTableAddHeaders(); //多级表头
                         }
                         function _fixedTableHeadBindEvent(){
-                            if (scope.setting && scope.setting.scrollX && attrs.customScroll!=="rdk-scroll") {
-                                tableWrap.addEventListener("scroll",scrollLeftHandle,false)
-                            }else if(attrs.customScroll=="rdk-scroll"){
-                                tableWrap.addEventListener('ps-scroll-x', scrollLeftHandle,false);
-                            }
+                            tableWrap.addEventListener("scroll",scrollLeftHandle,false);
                             window.addEventListener("resize",_fixedTableHead,false);
                         }
                         function scrollLeftHandle(event) {
