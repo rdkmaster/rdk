@@ -19,7 +19,7 @@
                 var obj={};
                 obj.name=data.field[i];
                 obj.index=data.field[i];
-                obj.width=200;
+                obj.width=100;
                 obj.sorttype="float";
                 obj.align="center";
                 if(data.field=="extn"){
@@ -40,15 +40,17 @@
                 viewrecords: true,
                 sortorder: "desc",
                 height: '200',
-                width:"400"
+                width:"800"
                 //hiddengrid : true, 最初隐藏表格
                 //caption: "Manipulating Array Data"
             });
             //写入数据
             var gridData = convertToObject(data);
+
             for(var i=0;i<=gridData.length;i++){
                 $("#gridTable").jqGrid('addRowData',i+1,gridData[i]);
             }
+            //无数据多列有x滚动条处理
             if(gridData.length==0){
                 var head = document.querySelector(".m-jqgrid .ui-jqgrid-hdiv");
                 var body = document.querySelector(".m-jqgrid .ui-jqgrid-bdiv");

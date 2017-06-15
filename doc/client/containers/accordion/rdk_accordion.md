@@ -186,8 +186,6 @@ unfoldedIcon默认值"fa fa-angle-double-up"
 
 # 样式 #
 
-### [关键样式示例](/doc/client/demo/containers/accordion/accordion_style) ###
-
 ### 模块整体样式 ###
 
 #### width {#width1}

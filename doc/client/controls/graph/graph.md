@@ -14,7 +14,7 @@ rdk的图形控件主要是封装了echart3的内容，因此只要符合echart3
 
 # 属性 #
 
-##graph_define##
+## graph_define ##
 > 支持类型：字符串
 
 此属性用于rdk_graph控件获取图形模板文件的路径的设定。
@@ -93,7 +93,9 @@ width和height表示graph的宽和高，只支持数字不用加单位，默认�
 `rdk_graph`的`click` 和 `dblclick` 同时监听需要处理时，不能正常响应，这是Echart内部实现决定的，提供HACK方式。
 
 <live_demo example="controls/graph/event" width="900"></live_demo>
+
 # echarts API #
+
 `echarts`的API可以通过以下方式调用：
 
     rdk.graphID.chart.api
