@@ -28,7 +28,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                            <thead ng-if="!noHeader">\
                                 <tr>\
                                     <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><span ng-if="checkBoxTitle">{{checkBoxTitle}}</span><input ng-if="!checkBoxTitle" name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
-                                    <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinished" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)" style="width:{{columnDef.width}}">\
+                                    <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinished" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)" style="width:{{columnDef.width}}" ng-attr-title="{{columnDef.title}}">\
                                         {{columnDef.title}}\
                                         <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
                                         <i ng-if="columnDef.sortable && curSortCol($index)" class="rdk-table-icon" ng-class="{true:\'rdk-table-sort-down\',false:\'rdk-table-sort-up\'}[changeSortIconStatus($index)]"></i>\
@@ -1077,7 +1077,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         var tHeadBox = element[0].querySelector(".rdk-table-head-box");
                         function _fixedTableHead(){
                             tHeadBox.style.width=Utils.getStyle(tableWrap,"width");
-                            if(Utils.isIE){
+                            if(Utils.isIEFlag){
                                 tableWrap.style.width = Utils.getStyle(tableWrap,"width");
                             }
                             if(!scope.noData || !scope.noHeader){
@@ -1090,7 +1090,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 Array.prototype.map.call(tHeadThs, function(colObj,index) {
                                     colObj.style.width=colWidths[index];
                                 });
-                                if(Utils.isIE){
+                                if(Utils.isIEFlag){
                                     var tBodyFirstTds =  element[0].querySelectorAll("table.rdk-table-body>tbody>tr:nth-of-type(1)>td");
                                     Array.prototype.map.call(tBodyFirstTds, function(colObj,index) {
                                         colObj.style.width=colWidths[index];
