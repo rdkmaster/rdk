@@ -47,6 +47,18 @@
                     },
                     targets : 2,
                     sortable: true
+                },
+                {
+                    title : function(data, target) {
+                        $scope.data=data.data;
+                        return '<span>自定义列and自定义表头</span>\
+                                <select ng-change="titleExtraSelecteHandler(titleExtraSelected)"\
+                                        ng-model="titleExtraSelected"\
+                                        ng-options="item[2] as item[2]  for item in data">\
+                                    <option value="">-- choose an item --</option>\
+                        </select>'
+                    },
+                    render : '<a ng-click="appScope.click(item)" href="javascript:void(0)">点击</a>'
                 }
             ]
         };
