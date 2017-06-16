@@ -27,8 +27,8 @@ require.config({
         "jquery-peity":"../jquery-peity/jquery.peity",
         "jquery-grid":"../jquery-gird/jquery.jqGrid",
         "jquery-grid-base":"../jquery-gird/grid.base",
-        "jquery-grid-i18-en":"../jquery-gird/grid.locale-en",
-        "jquery-grid-i18-cn":"../jquery-gird/grid.locale-cn",
+        "jquery-grid-i18n-en":"../jquery-gird/grid.locale-en",
+        "jquery-grid-i18n-cn":"../jquery-gird/grid.locale-cn",
 
         "throttle-debounce" : '../jquery-headfix/jquery.ba-throttle-debounce.min',
         "perfect-scrollbar" : '../perfect-scrollbar/perfect-scrollbar',
