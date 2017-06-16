@@ -41,9 +41,8 @@
     text-align: right;
 }
  .selectorContent {
-    position: absolute;
-    top: 16px;
-    left: 100%;
+    position: fixed;
+    z-index: 999;
 }
 .pticon {
     position: absolute;
@@ -64,4 +63,7 @@
 }
 .selectorMain .rdk-selector-module {
     width: 150px;
+}
+.rdk-table-module .rdk-table-head> thead > tr > th{
+    overflow: visible;
 }

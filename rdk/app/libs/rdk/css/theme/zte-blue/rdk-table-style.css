@@ -84,13 +84,11 @@
 .rdk-table-module .rdk-table > thead > tr > th {
     text-align: center;
     font-weight: normal;
+    height: 32px;
     padding: 5px 8px;
 }
 .rdk-table-module .rdk-table > thead div.rdk-table-custom-header{
     display: inline-block;
-}
-.rdk-table-module .rdk-table tr {
-    line-height: 20px;
 }
 .rdk-table-module .rdk-table > tbody > tr > td {
     text-align: center;
@@ -440,22 +438,34 @@ i.regular_right,i.regular_left{
 /* vmax :3.0 风格 end */
 .rdk-table-module .wrapper{
     width: 100%;
+
 }
 .rdk-table-module .wrapper,.rdk-table-module .rdk-table-head-box{
-    padding:0 1px
+    /*padding:0 1px*/
 }
-
 .rdk-table-module .rdk-table-head-box{
     width: 100%;
     overflow: hidden;
+    position: relative;
+    height: 33px;
 }
 .rdk-table-module .rdk-table-head{
     table-layout: fixed;
+    position: absolute;
+    z-index: 99;
+    top: 0;
+    left: 0;
 }
+.rdk-table-module .rdk-table-head>thead{
+
+}
+
 .rdk-table-module .rdk-table-body{
-
+    margin-top: -33px;
 }
-
+.rdk-table-module .rdk-table-body>thead>tr{
+    overflow: hidden;
+}
 .rdk-table-module .rdk-table-body .table-first-row>td{
     height: 0 !important;
     padding: 0 8px !important;
@@ -464,9 +474,7 @@ i.regular_right,i.regular_left{
 }
 .rdk-table-module .rdk-table-head> thead > tr > th,
 .rdk-table-module .rdk-table-body> tbody > tr > td> div >div{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+
 }
 
 /* table col resizeable start */

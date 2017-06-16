@@ -12,7 +12,8 @@
         $scope.setting = {
             "columnDefs" :[
                 {
-                    title : function(data, target) {
+                    title : function(data, target,col) {
+                        debugger;
                         $scope.allItems=[];
                         var total = []
                         var j = 0;
@@ -25,8 +26,8 @@
                                 j++;
                             }
                         }
-                        return '<div style="position: absolute;top:6px;right: 2px;width: 100%;text-align: center;margin-top:0" >你好<i class="iconfont iconfont-e92a pticon" ng-class="{colorGray:sizeColor}" ng-click="selectorShow(1)"></i>\
-                                <div ng-show="selectShow" class="selectorContent">\
+                        return '<div style="position: absolute;top:6px;right: 2px;width: 100%;text-align: center;margin-top:0" >你好<i class="iconfont iconfont-e92a pticon" ng-class="{colorGray:sizeColor}" ng-click="selectorShow(target)"></i>\
+                                <div  class="selectorContent ng-hide">\
                         <rdk_basic_selector data="allItems" selected_items="allSelected" multiple_select="true" searchable="false" editable="false" change="selectorChanged"><span>{{item.label}}</span>\
                         </rdk_basic_selector>\
                         </div></div>'
@@ -46,27 +47,19 @@
                     },
                     targets : 2,
                     sortable: true
-                },
-                {
-                    title : function(data, target) {
-                        $scope.data=data.data;
-                        return '<span>自定义列and自定义表头</span>\
-                                <select ng-change="titleExtraSelecteHandler(titleExtraSelected)"\
-                                        ng-model="titleExtraSelected"\
-                                        ng-options="item[2] as item[2]  for item in data">\
-                                    <option value="">-- choose an item --</option>\
-                        </select>'
-                    },
-                    render : '<a ng-click="appScope.click(item)" href="javascript:void(0)">点击</a>'
                 }
             ]
         };
         $scope.selectShow = false;
         $scope.selectorShow = function(target){
-            numTarget = target;
+
+            var th = $(event.target).parents(".rdk-table-custom-header");
+            var mySelect = th[0].querySelector(".selectorContent");
+            mySelect.style.left = event.clientX + 6 + 'px';
+            mySelect.style.top = event.clientY + 6 + 'px';
+            mySelect.classList.toggle("ng-hide");
             $scope.selectShow = !$scope.selectShow;
             $scope.selectSho = false;
-
         }
         function flter(items,item,target){//过滤
             var objective = [], residue= []

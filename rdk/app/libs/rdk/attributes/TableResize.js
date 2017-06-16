@@ -87,7 +87,8 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
 
             //columnsBody=$(tableBody).find('td');
             if(tableBody){
-                columnsBody=tableBody.querySelectorAll("tbody>tr:first-child>td");
+               // columnsBody=tableBody.querySelectorAll("tbody>tr:first-child>td");
+                columnsBody=tableBody.querySelectorAll("thead>tr:last-child>th");
                 for(var i=columnsBody.length-1;i>=0;i--){
                     columns[i].bakColumn=columnsBody[i];
                 }

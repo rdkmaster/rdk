@@ -39,8 +39,17 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                    </div>\
                    <div class="wrapper" ng-style="scrollStyle">\
                         <table class="rdk-table rdk-table-body">\
+                           <thead ng-if="!noHeader">\
+                                <tr>\
+                                    <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><span ng-if="checkBoxTitle">{{checkBoxTitle}}</span><input ng-if="!checkBoxTitle" name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
+                                    <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinishedBody" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)" style="width:{{columnDef.width}}" ng-attr-title="{{columnDef.title}}">\
+                                        {{columnDef.title}}\
+                                        <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
+                                        <i ng-if="columnDef.sortable && curSortCol($index)" class="rdk-table-icon" ng-class="{true:\'rdk-table-sort-down\',false:\'rdk-table-sort-up\'}[changeSortIconStatus($index)]"></i>\
+                                    </th>\
+                                </tr>\
+                            </thead>\
                             <tbody ng-mouseleave="clearHovered()">\
-                                <tr class="table-first-row"><td ng-repeat="columnDef in columnDefs track by columnDef.targets" ng-show="columnDef.visible"></td></tr>\
                                 <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
                                     ng-class="{\'row-span\':groupTargets,\'selected-row\':ifRowHighLight(item,\'click\'),\'selected-row-hover\':ifRowHighLight(item,\'hover\')}" ng-dblclick="dbClickHandler(item,$index)">\
                                     <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="item.checked"></td>\
@@ -1072,9 +1081,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             _reSetTableHeaders(); //自定义表头
                             _fixedTableHeadBindEvent();
                         });
-
+                        scope.$on('tableHeadNgRepeatFinishedBody', function() {
+                            _reSetTableHeadersBody(); //自定义表头
+                        });
                         var tableWrap = element[0].querySelector(".wrapper");
                         var tHeadBox = element[0].querySelector(".rdk-table-head-box");
+                        var tableHead = element[0].querySelector(".rdk-table-head");
                         function _fixedTableHead(){
                             tHeadBox.style.width=Utils.getStyle(tableWrap,"width");
                             if(Utils.isIEFlag){
@@ -1083,7 +1095,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             if(!scope.noData || !scope.noHeader){
                                 //是否存在多级表头
                                 var tHeadThs =  element[0].querySelectorAll("table.rdk-table-head>thead>tr>th");
-                                var tBodyTds =  element[0].querySelectorAll("table.rdk-table-body>tbody>tr:nth-of-type(2)>td");
+                                var tBodyTds =  element[0].querySelectorAll("table.rdk-table-body>thead>tr>th");
                                 var colWidths = Array.prototype.map.call(tBodyTds, function(obj) {
                                     return Utils.getStyle(obj,"width");
                                 });
@@ -1097,7 +1109,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                     });
                                 }
                             }
-                            _reSetTableAddHeaders(); //多级表头
+                            _reSetTableAddHeaders(tHeadBox,tableHead); //多级表头
                         }
                         function _fixedTableHeadBindEvent(){
                             tableWrap.addEventListener("scroll",scrollLeftHandle,false);
@@ -1258,7 +1270,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                     var _hasAddTrReady=false; //标记多级表头的Html字符串是否插入到模板中
                     function _reSetTableHeaders(){
-                        var thead = element[0].querySelector('thead');
+                        var thead = element[0].querySelector('table.rdk-table-head>thead');
                         var ths=thead.querySelector("tr:last-child").querySelectorAll("th[ng-repeat]");
                         //创建一个节点包裹自定义表头渲染的DOM元素
                         var customHeader="<div class='rdk-table-custom-header'>";
@@ -1280,6 +1292,25 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
                         }
                     }
+                    function _reSetTableHeadersBody(){
+                        var thead = element[0].querySelector('table.rdk-table-body>thead');
+                        var ths=thead.querySelector("tr:last-child").querySelectorAll("th[ng-repeat]");
+                        //创建一个节点包裹自定义表头渲染的DOM元素
+                        var customHeader="<div class='rdk-table-custom-header'>";
+                        var customHeaderEndTag="</div>";
+                        for(var key in scope.compileHeads)
+                        {
+                            for(var i= 0,thLen=ths.length;i<thLen;i++){
+                                if(scope.compileHeads.hasOwnProperty(key) && key==i){
+                                    var th= $compile(customHeader + scope.compileHeads[key] + customHeaderEndTag)(scope.appScope);
+                                    if(ths[i].querySelector(".rdk-table-custom-header")){
+                                        $(ths[i].querySelector(".rdk-table-custom-header")).remove();
+                                    }
+                                    $(ths[i]).prepend(th);
+                                }
+                            }
+                        }
+                    }
                     //重置表头自定义的列渲染，删除已渲染好的节点元素
                     function _restTableHeaders(compileHeads){
                         var thead = element[0].querySelector('thead');
@@ -1292,7 +1323,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
                         }
                     }
-                    function _reSetTableAddHeaders(){
+                    function _reSetTableAddHeaders(tHeadBox,tableHead){
                         if(_hasAddTrReady){
                             return;
                         }
@@ -1320,6 +1351,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 colObj.style.borderButtom=0;
                             });
                         }
+                        debugger;
+                        tHeadBox.style.height=Utils.getStyle(tableHead,"height");
                         _hasAddTrReady=true;  //表头已重定义
                     }
                     var scrollWidth, first = true,
@@ -1604,7 +1637,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             if(target!==0){
                                 target =  target || scope.columnDefs.length;
                             }
-                            scope.compileHeads[target]=title(scope.data,target);
+                            scope.compileHeads[target]=title(scope.data,target,scope.columnDefs[target]);
                         }
                     }
                 }
