@@ -9,8 +9,6 @@
 
 ## popup ##
 
-### 基本用法{#a}
-
         var moduleID = PopupService.popup(module, initData, option);
 
 ### 入参说明
@@ -83,8 +81,6 @@
 
 要覆盖弹出框原有样式，可以利用 *popup()* 中 第三个入参 *option* 的 *id* 。在用户自定义 *css* 文件时，通过覆盖样式文件 *rdk-PopupService-style.css* 中的各样样式，以实现用户的样式定制。
 
-#### 基本用法{#b}
-
 		var sampleUrl = '/doc/client/demo/common/popupservice/demo4css/template/sample_module.html';
 		var initData = {myData: 'load module manually...'};
 		var myOption = {
@@ -114,8 +110,6 @@
 
 <font color=red>**注意**</font> *icon* 目前只支持 *font-awesome* 标准图标。譬如 
 `fa fa-windows`
-
-#### 基本用法{#c}
 
 	<div controller="SampleModuleController" class='sampleClass' caption='弹出框标题' icon='fa fa-windows'>
 	    ...

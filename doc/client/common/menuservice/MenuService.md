@@ -4,18 +4,21 @@
 
 
 这是使用MenuService的基础实例：
+
 <live_demo example="common/menuservice/basic" ></live_demo>
+
 <font color=green>提示：</font> 可多次提示
 
 *MenuService* 提供了两个可调用的方法：
 
+
 ## addMenu ##
 
-### 基本用法{#a}
+### 基本用法 ###
 
         var moduleID = MenuService.addMenu(scope.menuConfig, position);
 
-### 入参说明
+### 入参说明 ###
 
 1. menuConfig json对象，必选。是菜单的结构，可支持二级菜单。
 
@@ -55,7 +58,7 @@
 		};
 
 
-### 出参说明
+### 出参说明 ###
 
 返回的是菜单ID，后面用户可以用这个ID销毁菜单，方便用户自定义菜单销毁的流程
 
