@@ -13,7 +13,6 @@
             "columnDefs" :[
                 {
                     title : function(data, target,col) {
-                        debugger;
                         $scope.allItems=[];
                         var total = []
                         var j = 0;
@@ -64,7 +63,6 @@
         };
         $scope.selectShow = false;
         $scope.selectorShow = function(target){
-
             var th = $(event.target).parents(".rdk-table-custom-header");
             var mySelect = th[0].querySelector(".selectorContent");
             mySelect.style.left = event.clientX + 6 + 'px';
@@ -73,6 +71,13 @@
             $scope.selectShow = !$scope.selectShow;
             $scope.selectSho = false;
         }
+        $(document).mouseup(function(e) {//点击关闭过滤弹出框
+            var mySelect = $(document.querySelector("div:not(.ng-hide).selectorContent"));
+            if(!mySelect.is(e.target) && mySelect.has(e.target).length === 0) {
+               mySelect[0].classList.add("ng-hide");
+            }
+        });
+
         function flter(items,item,target){//过滤
             var objective = [], residue= []
             for(var j=0;j<item.length;j++){
