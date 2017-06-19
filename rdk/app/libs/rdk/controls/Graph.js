@@ -15,8 +15,8 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
             return service;
         }
     }]);
-    vmaxGraphApp.directive('rdkGraph', ['EventService', 'EventTypes', 'GraphService', 'Utils', 'RdkGraph', '$timeout',
-        function(EventService, EventTypes, GraphService, Utils, RdkGraph, $timeout) {
+    vmaxGraphApp.directive('rdkGraph', ['EventService', 'EventTypes', 'GraphService', 'Utils', 'RdkGraph', '$timeout','$window',
+        function(EventService, EventTypes, GraphService, Utils, RdkGraph, $timeout,$window) {
             var scopeDefine={
                 id: '@',
                 graphTemplate: '@?',
@@ -60,14 +60,14 @@ define(['echarts', 'angular', 'rd.core', 'css!rd.styles.Graph'], function(echart
                 scope.realHeight = scope.height || element[0].offsetHeight||300;
 
 
-                window.onresize = function() {
-                    if (!scope.width || !scope.height) {
+                angular.element($window).bind('resize',function(){
+                      if (!scope.width || !scope.height) {
                         _resize(0, 0, scope.chart);
                         scope.realWidth = scope.width || element[0].offsetWidth || 400;
                         scope.realHeight = scope.height || element[0].offsetHeight || 300;
                         _resize(scope.realWidth, scope.realHeight, scope.chart);
-                    }
-                }
+                    }  
+                });
 
                 scope.noData = false;
                 
