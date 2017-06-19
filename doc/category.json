@@ -270,6 +270,11 @@
             "icon": "fa fa-file"
           },
           {
+            "label": "timePane",
+            "url": "doc/client/controls/timePane/rdk_time_pane.html",
+            "icon": "fa fa-file"
+          },
+          {
             "label": "Tree",
             "url": "doc/client/controls/tree/tree.html",
             "icon": "fa fa-file"
