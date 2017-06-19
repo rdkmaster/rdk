@@ -132,6 +132,7 @@
 @media screen and (min-width:0\0) {
     /* 备注：IE11 不支持 inline-flex在row方向上动态增加宽度，所以此处使用inline-block解决*/
     .rdk-combo-select-module .combo-content ,.rdk-combo-select-module .rdk-combo-animate{
+	    display:inline-block;
         white-space: nowrap;
     }
     .rdk-theme-zte-vmax .rdk-combo-select-module .combo-content{
