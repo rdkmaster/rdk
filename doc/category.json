@@ -250,7 +250,7 @@
             "icon": "fa fa-file"
           },
           {
-            "label": "steps",
+            "label": "Steps",
             "url": "doc/client/controls/steps/rdk_steps.html",
             "icon": "fa fa-file"
           },
@@ -270,7 +270,7 @@
             "icon": "fa fa-file"
           },
           {
-            "label": "timePane",
+            "label": "TimePane",
             "url": "doc/client/controls/timePane/rdk_time_pane.html",
             "icon": "fa fa-file"
           },
