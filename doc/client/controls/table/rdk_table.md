@@ -478,7 +478,7 @@ data对象中可增加以下**非必要属性**：
 
 ### 后端过滤 ###
 
-		<rdk_table data="data" search='true' paging-type="server"></rdk_table>
+		<rdk_table data="data" search='true' paging-type="server-auto"></rdk_table>
 
 后端过滤时，如果搜索框内有输入内容，就会出现搜索字段的下拉框，方便用户指定关键字的检索字段。
 
@@ -487,6 +487,7 @@ data对象中可增加以下**非必要属性**：
 
 ## search_prompt <binding></binding>##
 支持类型：字符串
+`search_prompt`表示搜索框内的提示字
 
 <live_demo example="controls/table/searchPrompt"></live_demo>
 
