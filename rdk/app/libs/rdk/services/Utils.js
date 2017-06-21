@@ -372,11 +372,11 @@
             //ie下有可能会返回 auto.......
             if( (styleName =="width" || styleName =="height") && result =="auto"){
                 var property="offset"+styleName[0].toUpperCase()+styleName.slice(1);
-                return element[property]+"px"
+                return element[property]+"px";
             }
             return result
         };
-
+        
         this.setStyle = function(element, obj){
             if (angular.isObject(obj)) {
                 for (var property in obj) {

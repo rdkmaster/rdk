@@ -1,4 +1,4 @@
-.rdk-table-module {
+﻿.rdk-table-module {
     position: relative;
     margin: 0 0;
 }
@@ -85,7 +85,7 @@
     text-align: center;
     font-weight: normal;
     height: 32px;
-    padding: 5px 8px;
+    padding: 0 8px;
 }
 .rdk-table-module .rdk-table > thead div.rdk-table-custom-header{
     display: inline-block;
@@ -238,6 +238,9 @@
     background-color:  #e2eef9;
 }
 .rdk-table-module .rdk-table > tbody > tr>td.selected-row-hover-td{
+    background-color:  #e2eef9;
+}
+.rdk-table-module .rdk-table.rdk-table-simple > tbody > tr:hover{
     background-color:  #e2eef9;
 }
 .rdk-table-module .count {
@@ -446,6 +449,7 @@ i.regular_right,i.regular_left{
 .rdk-table-module .rdk-table-head-box{
     width: 100%;
     overflow: hidden;
+
     position: relative;
     height: 33px;
 }

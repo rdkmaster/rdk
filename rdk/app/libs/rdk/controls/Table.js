@@ -28,7 +28,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                            <thead ng-if="!noHeader">\
                                 <tr>\
                                     <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><span ng-if="checkBoxTitle">{{checkBoxTitle}}</span><input ng-if="!checkBoxTitle" name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
-                                    <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinished" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-if="columnDef.visible" ng-click="sortHandler($index, columnDef)" style="width:{{columnDef.width}}" ng-attr-title="{{columnDef.title}}">\
+                                    <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinished" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)" style="width:{{columnDef.width}}" ng-attr-title="{{columnDef.title}}">\
                                         {{columnDef.title}}\
                                         <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
                                         <i ng-if="columnDef.sortable && curSortCol($index)" class="rdk-table-icon" ng-class="{true:\'rdk-table-sort-down\',false:\'rdk-table-sort-up\'}[changeSortIconStatus($index)]"></i>\
@@ -42,7 +42,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                            <thead ng-if="!noHeader">\
                                 <tr>\
                                     <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><span ng-if="checkBoxTitle">{{checkBoxTitle}}</span><input ng-if="!checkBoxTitle" name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
-                                    <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinishedBody" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-if="columnDef.visible" ng-click="sortHandler($index, columnDef)" style="width:{{columnDef.width}}" ng-attr-title="{{columnDef.title}}">\
+                                    <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinishedBody" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)" style="width:{{columnDef.width}}" ng-attr-title="{{columnDef.title}}">\
                                         {{columnDef.title}}\
                                         <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
                                         <i ng-if="columnDef.sortable && curSortCol($index)" class="rdk-table-icon" ng-class="{true:\'rdk-table-sort-down\',false:\'rdk-table-sort-up\'}[changeSortIconStatus($index)]"></i>\
@@ -53,7 +53,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
                                     ng-class="{\'row-span\':groupTargets,\'selected-row\':ifRowHighLight(item,\'click\'),\'selected-row-hover\':ifRowHighLight(item,\'hover\')}" ng-dblclick="dbClickHandler(item,$index)">\
                                     <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="item.checked"></td>\
-                                    <td ng-class="{\'selected-row-td\':ifRowHighLight(item,\'click\',columnDef),\'selected-row-hover-td\':ifRowHighLight(item,\'hover\',columnDef)}" ng-mouseenter="setHovered(item,$event)" rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-if="columnDef.visible" class="{{columnDef.class}}" ng-style="getCellStyle(itemRowSpan,columnDef)">\
+                                    <td ng-class="{\'selected-row-td\':ifRowHighLight(item,\'click\',columnDef),\'selected-row-hover-td\':ifRowHighLight(item,\'hover\',columnDef)}" ng-mouseenter="setHovered(item,$event)" rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" ng-style="getCellStyle(itemRowSpan,columnDef)">\
                                     </td>\
                                 </tr>\
                                  <tr ng-if="noData">\
@@ -73,7 +73,71 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
             </div>\
             </div>'
         );
-
+        $templateCache.put("/src/templates/tbsimple.html",
+            '<div>\
+            <div class="rdk-table-module rdk-table-search-{{searchPosition}}">\
+                <div ng-if="search" class="searchWapper search-position-{{searchPosition}}">\
+                    <input type="text" ng-style="width" class="form-control search" placeholder="{{searchPrompt}}" ng-focus="searchFocusHandler()"\
+                           ng-keyup="keyPressHandler($event)" ng-class="{\'border-style\':$parent.globalSearch!=\'\' && $parent.globalSearch!=null}" ng-model="$parent.globalSearch" ng-mouseenter="searchMouseEnterHandler()" ng-mouseleave="searchMouseLeaveHandler()">\
+                    <i class="glyphicon glyphicon-search search_icon" ng-click="serverSearchHandler()" style="cursor:{{pagingType==\'server\' || pagingType==\'server-auto\' ? \'pointer\' : \'default\'}}"></i>\
+                    <div ng-show="($parent.globalSearch && searchFocus)?true:false">\
+                        <select selectpicker="{{columnDefs.length}}" ng-model="val" ng-change="selectChangeHandler(val)"\
+                                ng-options="columnDef.data as columnDef.name for columnDef in columnDefs | realoption"\
+                                class="form-control search_select">\
+                            <option value="">{{i18n.searchAll}}</option>\
+                        </select>\
+                    </div>\
+               </div>\
+               <div class="rdk-table-box">\
+                   <div class="rdk-table-head-box">\
+                        <table class="rdk-table rdk-table-head">\
+                           <thead ng-if="!noHeader">\
+                                <tr>\
+                                    <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><span ng-if="checkBoxTitle">{{checkBoxTitle}}</span><input ng-if="!checkBoxTitle" name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
+                                    <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinished" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)" style="width:{{columnDef.width}}" ng-attr-title="{{columnDef.title}}">\
+                                        {{columnDef.title}}\
+                                        <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
+                                        <i ng-if="columnDef.sortable && curSortCol($index)" class="rdk-table-icon" ng-class="{true:\'rdk-table-sort-down\',false:\'rdk-table-sort-up\'}[changeSortIconStatus($index)]"></i>\
+                                    </th>\
+                                </tr>\
+                            </thead>\
+                        </table>\
+                   </div>\
+                   <div class="wrapper" ng-style="scrollStyle">\
+                        <table class="rdk-table rdk-table-body rdk-table-simple">\
+                           <thead ng-if="!noHeader">\
+                                <tr>\
+                                    <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><span ng-if="checkBoxTitle">{{checkBoxTitle}}</span><input ng-if="!checkBoxTitle" name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
+                                    <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinishedBody" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)" style="width:{{columnDef.width}}" ng-attr-title="{{columnDef.title}}">\
+                                        {{columnDef.title}}\
+                                        <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
+                                    </th>\
+                                </tr>\
+                            </thead>\
+                            <tbody>\
+                                <tr class="rowTr" on-finish-render  ng-click="setSelected(item,null)"\
+                                    ng-class="{\'selected-row\':ifRowHighLight(item,\'click\')}" ng-dblclick="dbClickHandler(item,$index)">\
+                                    <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="item.checked"></td>\
+                                    <td  ng-repeat="columnDef in columnDefs" ng-show="columnDef.visible" class="{{columnDef.class}}">\
+                                    {{item[columnDef.data]}}</td>\
+                                </tr>\
+                                 <tr ng-if="noData">\
+                                    <td colspan="{{addCheckBox?(visibleColumnDefsCount+1):visibleColumnDefsCount}}">\
+                                        <div class="no-data"></div>\
+                                    </td>\
+                                </tr>\
+                            </tbody>\
+                        </table>\
+                    </div>\
+                </div>\
+                <rdk-paging ng-show="pageVisible && pageCtrl && paging" data-page-size="pageSize" \
+                     data-lang="{{lang}}" current-page="currentPage" data-search-position="{{searchPosition}}" ng-class="{true:\'visiblePageLine\', false:\'unvisiblePageLine\'}[columnDefs.length!=0 && !noData]">\
+                </rdk-paging>\
+                <div ng-if="showExport && !noData" class="table-export"><rdk_button click="touchExport" icon="iconfont iconfont-e8c9" label="{{exportLabel}}"></rdk_button></div>\
+                <div class="clearfix"></div>\
+            </div>\
+            </div>'
+        );
         $templateCache.put("/src/templates/paging.html",
             '<div class="pagingLine">\
                 <span class="disabledRecords spanRecords search-{{searchPosition}}">{{i18n.total}} {{count}} {{i18n.records}}</span>\
@@ -344,7 +408,13 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
         return {
             restrict: 'EA',
             replace: true,
-            templateUrl: '/src/templates/common.html',
+            templateUrl: function(elem, attr){
+                if(attr.useLiteTable=="" || attr.useLiteTable=="true"){
+                    return "/src/templates/common.html"
+                }else{
+                     return "/src/templates/tbsimple.html";
+                }
+            },
             controller: ['$scope', function(scope) {
 
                 Utils.publish(scope, this);
@@ -1058,6 +1128,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         }
                         var isFirstBroadCast=true;
                         scope.$on('ngRepeatFinished', function() {
+                            console.log("ngRepeatFinished");
                             _fixedTableHead();  //固定表头
                             scope.refreshSingleCurrentPage();
                             _serverSortResponse();//后端排序，刷新后的响应
@@ -1083,16 +1154,25 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         });
                         scope.$on('tableHeadNgRepeatFinishedBody', function() {
                             _reSetTableHeadersBody(); //自定义表头
+                            if(scope.noData){
+                                $timeout(function(){
+                                    _fixedTableHead();  //固定表头
+                                }, 0);
+                            }
                         });
                         var tableWrap = element[0].querySelector(".wrapper");
                         var tHeadBox = element[0].querySelector(".rdk-table-head-box");
                         var tableHead = element[0].querySelector(".rdk-table-head");
+                        var tableBody = element[0].querySelector(".rdk-table-body");
                         function _fixedTableHead(){
-                            tHeadBox.style.width=Utils.getStyle(tableWrap,"width");
-                            if(Utils.isIEFlag){
-                                tableWrap.style.width = Utils.getStyle(tableWrap,"width");
-                            }
-                            if(!scope.noData || !scope.noHeader){
+                           // var width=Utils.getStyle(tHeadBox.parentNode,"width");
+                           // var width2=Utils.getStyle(tableWrap,"width");
+                           // tHeadBox.style.width=perFn(width,width2);
+                           // if(Utils.isIEFlag){
+                           //     tableWrap.style.width = Utils.getStyle(tableWrap,"width");
+                           // }
+
+                            if(!scope.noHeader){
                                 //是否存在多级表头
                                 var tHeadThs =  element[0].querySelectorAll("table.rdk-table-head>thead>tr>th");
                                 var tBodyTds =  element[0].querySelectorAll("table.rdk-table-body>thead>tr>th");
@@ -1103,11 +1183,14 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                     colObj.style.width=colWidths[index];
                                 });
                                 if(Utils.isIEFlag){
-                                    var tBodyFirstTds =  element[0].querySelectorAll("table.rdk-table-body>tbody>tr:nth-of-type(1)>td");
-                                    Array.prototype.map.call(tBodyFirstTds, function(colObj,index) {
-                                        colObj.style.width=colWidths[index];
-                                    });
+                                   Array.prototype.map.call(tBodyTds, function(colObj,index) {
+                                       colObj.style.width=colWidths[index];
+                                   });
+                                    tableBody.style.tableLayout="fixed";
                                 }
+                                var tHeadHeight = Utils.getStyle(tableHead,"height");
+                                tableBody.style.marginTop="-" + tHeadHeight;
+                                tHeadBox.style.height=tHeadHeight;
                             }
                             _reSetTableAddHeaders(tHeadBox,tableHead); //多级表头
                         }
@@ -1118,6 +1201,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         function scrollLeftHandle(event) {
                             var target = event.target || event.srcElement;
                             tHeadBox.scrollLeft=target.scrollLeft;
+                            if(tHeadBox.scrollLeft!=target.scrollLeft){
+
+                            }
+
                         }
                     };
                     //END INIT
@@ -1318,7 +1405,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         for(var i= 0,thLen=ths.length;i<thLen;i++) {
                             for (var key in compileHeads) {
                                 if (compileHeads.hasOwnProperty(key) && key == i) {
-                                    ths[i].querySelector(".rdk-table-custom-header").innerHTML = null;
+                                    ths[i].querySelector(".rdk-table-custom-header").innerHTML = "";
                                 }
                             }
                         }
