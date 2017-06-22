@@ -8,7 +8,7 @@ log() {
 
 diagnose() {
     for ((time=1; time<=$3; time++));do
-        curl --connect-timeout $1 --max-time $2 http://localhost:5812/rdk/service/app/console/server/diagnose
+        curl --connect-timeout $1 --max-time $2 http://localhost:5812/rdk/service/app/console/server/diagnose > /dev/null
         if [ $? == 0 ]; then
             return 0
         fi
