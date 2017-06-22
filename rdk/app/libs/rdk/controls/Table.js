@@ -103,7 +103,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             </thead>\
                         </table>\
                    </div>\
-                   <div class="wrapper" ng-style="scrollStyle" style="display:flex">\
+                   <div class="wrapper" ng-style="scrollStyle">\
                         <table class="rdk-table rdk-table-body rdk-table-simple">\
                            <thead ng-if="!noHeader">\
                                 <tr>\
