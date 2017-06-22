@@ -368,8 +368,8 @@
         this.isIEFlag = this.isIE();
         this.getStyle = function(element, styleName) {
             var result = element.style[styleName] ? element.style[styleName] : element.currentStyle ? element.currentStyle[styleName] : window.getComputedStyle(element, null)[styleName];
-            // ie直接返回计算后的样式,避免误差
-            //ie下有可能会返回 auto.......
+            // 注意IE坑：ie直接返回计算后的样式，计算后的样式IE盒子模型不是w3c标准模型还是有小数点误差
+            //ie下有可能会返回 auto.......  返回offsetWidth..会有小数点误差
             if( (styleName =="width" || styleName =="height") && result =="auto"){
                 var property="offset"+styleName[0].toUpperCase()+styleName.slice(1);
                 return element[property]+"px";

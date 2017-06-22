@@ -449,7 +449,6 @@ i.regular_right,i.regular_left{
 .rdk-table-module .rdk-table-head-box{
     width: 100%;
     overflow: hidden;
-
     position: relative;
     height: 33px;
 }
@@ -463,7 +462,6 @@ i.regular_right,i.regular_left{
 .rdk-table-module .rdk-table-head>thead{
 
 }
-
 .rdk-table-module .rdk-table-body{
     margin-top: -33px;
 }
@@ -503,3 +501,38 @@ i.regular_right,i.regular_left{
     white-space: nowrap;
 }
 /* table col resizeable end */
+
+/*兼容IE11 : css rule sets go here */
+@media screen and (min-width:0\0) {
+    /*css 解决IE列无法对齐，和滚动条占据宽度的问题 */
+    .rdk-table-module .rdk-table-box .wrapper{
+        /*padding-right: 27px;*/
+    }
+    .rdk-table-module .rdk-table-head{
+        /*width: 98.5%*/
+    }
+    .rdk-table-module .rdk-table-head{
+        /*width: 98.5%*/
+    }
+    .rdk-table-module .rdk-table{
+        /*box-sizing: content-box!important;*/
+    }
+     .rdk-table-module .rdk-table>thead{
+        /*box-sizing: content-box!important;*/
+    }
+    .rdk-table-module .wrapper,.rdk-table-module .rdk-table-head-box{
+        /*padding:0 1px 0 2px;*/
+    }
+    .rdk-table-module .rdk-table-head-box{
+        /*background-color: #eee;*/
+        /*margin-left: 2px;*/
+        /*padding-right: 0;*/
+    }
+    .rdk-table-module .rdk-table > thead > tr > th{
+        /*padding: 0; border:0;*/
+    }
+    .rdk-table-module .rdk-table > tbody > tr > td{
+        /*padding: 0;*/
+        /*border:0;*/
+    }
+}

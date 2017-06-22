@@ -103,7 +103,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             </thead>\
                         </table>\
                    </div>\
-                   <div class="wrapper" ng-style="scrollStyle">\
+                   <div class="wrapper" ng-style="scrollStyle" style="display:flex">\
                         <table class="rdk-table rdk-table-body rdk-table-simple">\
                            <thead ng-if="!noHeader">\
                                 <tr>\
@@ -410,9 +410,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
             replace: true,
             templateUrl: function(elem, attr){
                 if(attr.useLiteTable=="" || attr.useLiteTable=="true"){
-                    return "/src/templates/common.html"
+                    return "/src/templates/tbsimple.html";
                 }else{
-                     return "/src/templates/tbsimple.html";
+                    return "/src/templates/common.html"
                 }
             },
             controller: ['$scope', function(scope) {
@@ -1160,20 +1160,19 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 }, 0);
                             }
                         });
+                        scope.$watch("pageSize",function(newVal,oldVal){
+                            if(newVal!=oldVal){
+                                _fixedTableHead();
+                            }
+                        })
                         var tableWrap = element[0].querySelector(".wrapper");
                         var tHeadBox = element[0].querySelector(".rdk-table-head-box");
                         var tableHead = element[0].querySelector(".rdk-table-head");
                         var tableBody = element[0].querySelector(".rdk-table-body");
+                        var isIE =Utils.isIEFlag;
+                        var hasHandeLastTh=false;
                         function _fixedTableHead(){
-                           // var width=Utils.getStyle(tHeadBox.parentNode,"width");
-                           // var width2=Utils.getStyle(tableWrap,"width");
-                           // tHeadBox.style.width=perFn(width,width2);
-                           // if(Utils.isIEFlag){
-                           //     tableWrap.style.width = Utils.getStyle(tableWrap,"width");
-                           // }
-
                             if(!scope.noHeader){
-                                //是否存在多级表头
                                 var tHeadThs =  element[0].querySelectorAll("table.rdk-table-head>thead>tr>th");
                                 var tBodyTds =  element[0].querySelectorAll("table.rdk-table-body>thead>tr>th");
                                 var colWidths = Array.prototype.map.call(tBodyTds, function(obj) {
@@ -1182,29 +1181,44 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 Array.prototype.map.call(tHeadThs, function(colObj,index) {
                                     colObj.style.width=colWidths[index];
                                 });
-                                if(Utils.isIEFlag){
-                                   Array.prototype.map.call(tBodyTds, function(colObj,index) {
-                                       colObj.style.width=colWidths[index];
-                                   });
+                                if(isIE){
+                                    Array.prototype.map.call(tBodyTds, function(colObj,index){
+                                        colObj.style.width=colWidths[index];
+                                    })
                                     tableBody.style.tableLayout="fixed";
                                 }
-                                var tHeadHeight = Utils.getStyle(tableHead,"height");
+                                //注意有多级表头
+                                var tHeadHeight;
+                                if(!!scope.setting && scope.setting.additionalHeader){
+                                    tHeadHeight = parseFloat(Utils.getStyle(tableHead.querySelector("thead>tr:last-child"),"height"))+1+"px";
+                                }else{
+                                    tHeadHeight = Utils.getStyle(tableHead,"height");
+                                }
                                 tableBody.style.marginTop="-" + tHeadHeight;
                                 tHeadBox.style.height=tHeadHeight;
                             }
                             _reSetTableAddHeaders(tHeadBox,tableHead); //多级表头
+                            hasHandeLastTh=false;
                         }
                         function _fixedTableHeadBindEvent(){
                             tableWrap.addEventListener("scroll",scrollLeftHandle,false);
+                            isIE && tableWrap.addEventListener("mouseup",scrollLeftHandleUp,false);
                             window.addEventListener("resize",_fixedTableHead,false);
+                        }
+                        
+                        function scrollLeftHandleUp(event) {
+                            hasHandeLastTh && scrollLeftHandle(event);
                         }
                         function scrollLeftHandle(event) {
                             var target = event.target || event.srcElement;
                             tHeadBox.scrollLeft=target.scrollLeft;
-                            if(tHeadBox.scrollLeft!=target.scrollLeft){
-
+                            //IE的原生滚动条是会占据宽度的，需要进行列矫正对齐
+                            if(tHeadBox.scrollLeft!=target.scrollLeft && !hasHandeLastTh){
+                                var lastTh = tHeadBox.querySelector("thead>tr>th:last-child");
+                                var lastThWid = parseFloat(Utils.getStyle(lastTh,"width"));
+                                lastTh.style.width = lastThWid + 17 + 'px'; // 17 = 滚动条宽度
+                                hasHandeLastTh=true;
                             }
-
                         }
                     };
                     //END INIT
