@@ -1128,7 +1128,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         }
                         var isFirstBroadCast=true;
                         scope.$on('ngRepeatFinished', function() {
-                            console.log("ngRepeatFinished");
                             _fixedTableHead();  //固定表头
                             scope.refreshSingleCurrentPage();
                             _serverSortResponse();//后端排序，刷新后的响应
@@ -1175,18 +1174,26 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             if(!scope.noHeader){
                                 var tHeadThs =  element[0].querySelectorAll("table.rdk-table-head>thead>tr>th");
                                 var tBodyTds =  element[0].querySelectorAll("table.rdk-table-body>thead>tr>th");
+                                var tBodyTdsDate =  element[0].querySelectorAll("table.rdk-table-body>tbody>tr:first-child>td");
                                 var colWidths = Array.prototype.map.call(tBodyTds, function(obj) {
                                     return Utils.getStyle(obj,"width");
                                 });
-                                Array.prototype.map.call(tHeadThs, function(colObj,index) {
-                                    colObj.style.width=colWidths[index];
-                                });
+                                //TODO:IE列无法对齐，暂时JS控制，能否找到CSS解决方案
                                 if(isIE){
+                                    if(!scope.noData){
+                                        tableBody.style.tableLayout="auto";
+                                        colWidths = Array.prototype.map.call(tBodyTdsDate, function(obj) {
+                                             return Utils.getStyle(obj,"width");
+                                        });
+                                    }
                                     Array.prototype.map.call(tBodyTds, function(colObj,index){
                                         colObj.style.width=colWidths[index];
                                     })
                                     tableBody.style.tableLayout="fixed";
                                 }
+                                Array.prototype.map.call(tHeadThs, function(colObj,index) {
+                                    colObj.style.width=colWidths[index];
+                                });
                                 //注意有多级表头
                                 var tHeadHeight;
                                 if(!!scope.setting && scope.setting.additionalHeader){

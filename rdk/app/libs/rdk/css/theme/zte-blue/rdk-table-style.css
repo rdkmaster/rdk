@@ -514,12 +514,6 @@ i.regular_right,i.regular_left{
     .rdk-table-module .rdk-table-head{
         /*width: 98.5%*/
     }
-    .rdk-table-module .rdk-table{
-        /*box-sizing: content-box!important;*/
-    }
-     .rdk-table-module .rdk-table>thead{
-        /*box-sizing: content-box!important;*/
-    }
     .rdk-table-module .wrapper,.rdk-table-module .rdk-table-head-box{
         /*padding:0 1px 0 2px;*/
     }
