@@ -24,6 +24,7 @@ define([/*  'underscore'   */], function() {
 return function(data, context, GraphService, attributes) {
     var sampleColors = ["#54acd5","#f99660","#a4bf6a","#ec6d6d","#f7b913","#8ac9b6","#bea5c8","#01c5c2","#a17660"];
     var vmaxColors = ['#41addc', '#bea5c8', '#85c56c', '#f99660', '#ffc20e', '#ec6d6d', '#8ac9b6', '#585eaa', '#b22c46', '#96582a'];
+    var arrMap = [],len = data.data.length,arrSeries = [];
     function GetRequest() {
         var url = location.search; //获取url中"?"符后的字串
         var theRequest = new Object();
@@ -38,19 +39,45 @@ return function(data, context, GraphService, attributes) {
     }
     GetRequest().vmax==3.0 && (data.data[0][2]=null);//vmax为3.0时设其一个数据为空
     var  colors = GetRequest().vmax==3.0?vmaxColors:sampleColors;
+    for(var i = 0; i<len; i++){
+        arrMap[i*2]={};
+        arrMap[i*2].show = false;
+        arrMap[i*2].seriesIndex = i*2;
+        arrMap[i*2].dimension = 0;
+        arrMap[i*2].pieces  = [{lte: 3, color: 'transparent'},{gt: 3, color: colors[i]}]
+        arrMap[i*2+1] =  JSON.parse(JSON.stringify(arrMap[i*2]));
+        arrMap[i*2+1].seriesIndex =  i*2 + 1;
+        arrMap[i*2+1].pieces  = [{lte: 3, color: colors[i]}, {gt: 3, color: 'transparent'}]
+    }
+    for (var j=0; j<len; j++){
+        arrSeries[j*2] = {};
+        arrSeries[j*2].name = data.rowDescriptor[j];
+        arrSeries[j*2].type = "line";
+        arrSeries[j*2].lineStyle = {normal:{type:'dashed'}};
+        arrSeries[j*2].itemStyle = {normal:{color:colors[j]}};
+        arrSeries[j*2].smooth = true;
+        arrSeries[j*2].symbolSize = [5, 5];
+        arrSeries[j*2].data = data.data[j];
+        arrSeries[j*2+1] = JSON.parse(JSON.stringify(arrSeries[j*2]));
+        arrSeries[j*2+1].lineStyle = {normal:{type:'solid'}}
+    }
     return {
         title: {
             text: '预数据虚线图'
         },
         tooltip: {
             trigger: 'axis',
-            formatter: function (name) {
-                if(name[0].value==""){
-                    name[0].value=name[1].value
+            formatter: function (arrTrigger) {
+                var paneString = arrTrigger[0].name;
+                for(var i=0;i<arrTrigger.length;i++){
+                    if(i%2){
+                        paneString +="<br/>" + "<div style='border-radius: 50%;width:10px;height:10px;display: inline-block;margin-right:8px;background: " + colors[parseInt(i/2)] + " '></div>" + arrTrigger[i].seriesName+":" + arrTrigger[i].value
+                    }
                 }
-                return name[0].name+"<br/>"+name[0].seriesName+":" + name[0].value
+                return paneString
             }
         },
+
         grid:{
             left:45,
             right:45,
@@ -67,6 +94,7 @@ return function(data, context, GraphService, attributes) {
                     fontWeight: 'normal'
                 }
             },
+
             axisLine: {//轴线设置
                 show : true,
                 lineStyle : {
@@ -108,23 +136,7 @@ return function(data, context, GraphService, attributes) {
                 }
             }
         },
-        series: [
-            {
-                name:data.rowDescriptor,
-                type:'line',
-                itemStyle:{normal:{color:colors[0]}},
-                lineStyle:{normal:{color:colors[0]}},
-                smooth:false,symbolSize:[5,5],
-                data:data.data[0]
-            },
-            {
-                name:'联盟广告',
-                type:'line',
-                lineStyle:{normal:{type:'dashed',color:colors[0]}},
-                itemStyle:{normal:{color:colors[0]}},
-                smooth:false,symbolSize:[5,5],
-                data:data.data[1]
-            }
-        ]
+        visualMap: arrMap,
+        series:arrSeries
     };
 }});
