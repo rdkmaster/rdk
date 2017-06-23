@@ -240,7 +240,7 @@
 .rdk-table-module .rdk-table > tbody > tr>td.selected-row-hover-td{
     background-color:  #e2eef9;
 }
-.rdk-table-module .rdk-table.rdk-table-simple > tbody > tr:hover{
+.rdk-table-module .rdk-table.rdk-table-simple > tbody > tr.rowTr:hover{
     background-color:  #e2eef9;
 }
 .rdk-table-module .count {

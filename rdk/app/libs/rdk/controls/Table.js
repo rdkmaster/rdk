@@ -1209,13 +1209,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         }
                         function _fixedTableHeadBindEvent(){
                             tableWrap.addEventListener("scroll",scrollLeftHandle,false);
-                            isIE && tableWrap.addEventListener("mouseup",scrollLeftHandleUp,false);
                             window.addEventListener("resize",_fixedTableHead,false);
                         }
-                        
-                        function scrollLeftHandleUp(event) {
-                            hasHandeLastTh && scrollLeftHandle(event);
-                        }
+                      
                         function scrollLeftHandle(event) {
                             var target = event.target || event.srcElement;
                             tHeadBox.scrollLeft=target.scrollLeft;
@@ -1224,7 +1220,16 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 var lastTh = tHeadBox.querySelector("thead>tr>th:last-child");
                                 var lastThWid = parseFloat(Utils.getStyle(lastTh,"width"));
                                 lastTh.style.width = lastThWid + 17 + 'px'; // 17 = 滚动条宽度
+                                tHeadBox.scrollLeft=target.scrollLeft;
                                 hasHandeLastTh=true;
+                            }
+                        }
+                        function hasScroll(el,direction){
+                            direction = direction || "vertical";
+                            if(direction==="vertical"){
+                                return el.scrollHeight > el.clientHeight;
+                            }else{
+                                return el.scrollWidth > el.clientWidth;
                             }
                         }
                     };
@@ -1359,9 +1364,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             scope.setSelected(selectedItem, null);
                             var scrollIndex = +index+1;
                             var selector;
+                            var targetRow;
                             if(!!element[0].scrollIntoViewIfNeeded){
                                 selector = ".rdk-table>tbody>tr:nth-of-type(" + scrollIndex + ")";
-                                element[0].querySelector(selector).scrollIntoViewIfNeeded();
+                                targetRow = element[0].querySelector(selector)
+                                !!targetRow && targetRow.scrollIntoViewIfNeeded();
                             }else{
                                 //兼容IE,火狐不支持scrollIntoViewIfNeeded
                                 scrollIndex = scrollIndex>3 ? scrollIndex-3 : 1;
@@ -1370,7 +1377,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 }else{
                                     selector = ".rdk-table>thead";
                                 }
-                                element[0].querySelector(selector).scrollIntoView();
+                                targetRow = element[0].querySelector(selector);
+                                !!targetRow && targetRow.scrollIntoView();
                             }
 
                         }
