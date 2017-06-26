@@ -19,7 +19,7 @@ div,p,button {
 .ui-widget-overlay {
 	background: rgba(0, 0, 0, .2);
 }
-.rdk-popupservice-dialog input {
+.rdk-popupservice-dialog .rdk-alert-btnLine>input {
 	border: none
 }
 div.rdk-popupservice-dialog .ui-widget-header {
