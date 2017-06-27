@@ -455,7 +455,7 @@ i.regular_right,i.regular_left{
 .rdk-table-module .rdk-table-head{
     table-layout: fixed;
     position: absolute;
-    z-index: 99;
+    z-index: 0;
     top: 0;
     left: 0;
 }
@@ -505,14 +505,19 @@ i.regular_right,i.regular_left{
 /*兼容IE11 : css rule sets go here */
 @media screen and (min-width:0\0) {
     /*css 解决IE列无法对齐，和滚动条占据宽度的问题 */
-    .rdk-table-module .rdk-table-box .wrapper{
-        /*padding-right: 27px;*/
+    .rdk-table-module  .wrapper{
+       /*padding-right: 17px;*/
+    }
+    .rdk-table-module  .rdk-table-head-box{
+        /*overflow-y: scroll;*/
+        background-color: #eee;
     }
     .rdk-table-module .rdk-table-head{
-        /*width: 98.5%*/
+        /*17px == 滚动条宽度 ：表格总宽度小于容器时有效*/
+        width: calc(100% - 17px); 
     }
-    .rdk-table-module .rdk-table-head{
-        /*width: 98.5%*/
+    .rdk-table-module .rdk-table-body{
+       
     }
     .rdk-table-module .wrapper,.rdk-table-module .rdk-table-head-box{
         /*padding:0 1px 0 2px;*/

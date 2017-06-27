@@ -22,7 +22,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         </select>\
                     </div>\
                </div>\
-               <div class="rdk-table-box">\
                    <div class="rdk-table-head-box">\
                         <table class="rdk-table rdk-table-head">\
                            <thead ng-if="!noHeader">\
@@ -64,7 +63,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             </tbody>\
                         </table>\
                     </div>\
-                </div>\
                 <rdk-paging ng-show="pageVisible && pageCtrl && paging" data-page-size="pageSize" \
                      data-lang="{{lang}}" current-page="currentPage" data-search-position="{{searchPosition}}" ng-class="{true:\'visiblePageLine\', false:\'unvisiblePageLine\'}[columnDefs.length!=0 && !noData]">\
                 </rdk-paging>\
@@ -88,7 +86,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         </select>\
                     </div>\
                </div>\
-               <div class="rdk-table-box">\
                    <div class="rdk-table-head-box">\
                         <table class="rdk-table rdk-table-head">\
                            <thead ng-if="!noHeader">\
@@ -118,8 +115,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 <tr class="rowTr" on-finish-render  ng-click="setSelected(item,null)"\
                                     ng-class="{\'selected-row\':ifRowHighLight(item,\'click\')}" ng-dblclick="dbClickHandler(item,$index)">\
                                     <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="item.checked"></td>\
-                                    <td  ng-repeat="columnDef in columnDefs" ng-show="columnDef.visible" class="{{columnDef.class}}">\
-                                    {{item[columnDef.data]}}</td>\
+                                    <td  ng-repeat="columnDef in columnDefs" ng-show="columnDef.visible" class="{{columnDef.class}}" rdk-column-parser-lite>{{item[columnDef.data]}}</td>\
                                 </tr>\
                                  <tr ng-if="noData">\
                                     <td colspan="{{addCheckBox?(visibleColumnDefsCount+1):visibleColumnDefsCount}}">\
@@ -129,7 +125,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             </tbody>\
                         </table>\
                     </div>\
-                </div>\
                 <rdk-paging ng-show="pageVisible && pageCtrl && paging" data-page-size="pageSize" \
                      data-lang="{{lang}}" current-page="currentPage" data-search-position="{{searchPosition}}" ng-class="{true:\'visiblePageLine\', false:\'unvisiblePageLine\'}[columnDefs.length!=0 && !noData]">\
                 </rdk-paging>\
@@ -341,6 +336,23 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 }
             }
         })
+        .directive('rdkColumnParserLite', function($compile, $parse) {
+            return {
+                restrict: 'A',
+                link: function(scope, element, attr) {
+                    if (scope.columnDef.render) {
+                        var html;
+                        if (angular.isFunction(scope.columnDef.render)) {
+                            html = '<div>' + scope.columnDef.render.call(undefined, scope.item) + '</div>';
+                        } else {
+                            html = '<div>' + scope.columnDef.render + '</div>';
+                        }
+                        element.html(html);
+                        $compile(element.contents())(scope);
+                    }
+                }
+            }
+        })
         .directive('rdkColumnParser', function($compile, $parse) {
             return {
                 restrict: 'A',
@@ -485,6 +497,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                 this.scrollTo=function(index){
                     scope.highLightItem(index);
+                    scope.scrollTo(index);
                 }
 
                 function _refreshSingleCheckedData(items){
@@ -1025,7 +1038,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
                             if(event!=null){
                                 scope.selectedModel = _setRowHighLight(item,event.target);
-								EventService.raiseControlEvent(scope, 'click', item);
+                                EventService.raiseControlEvent(scope, 'click', item);
                             }else{
                                 scope.selectedModel.rows[0]=item;
                             }
@@ -1314,10 +1327,14 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     }
 
                     function _resetTotalCheckStatus(isChecked){
-                        var originTable = element.find('.rdk-table-box');;
+                        var originTable = element.find('.rdk-table-module .rdk-table-head');
+                        var originTableB = element.find('.rdk-table-module .rdk-table-body');
                         var arr = originTable.find('input[name="totalCheckBox"]');
+                        var arrB = originTableB.find('input[name="totalCheckBox"]');
                         if(arr.length == 0) return;
                         arr[0].checked = isChecked;
+                        if(arrB.length == 0) return;
+                        arrB[0].checked = isChecked;
                     }
 
 
@@ -1362,6 +1379,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         if (scope.destData && +index < scope.destData.length) { //destData有定义时
                             var selectedItem = scope.destData[index];
                             scope.setSelected(selectedItem, null);
+                        }
+                    }
+                    scope.scrollTo=function(index){
                             var scrollIndex = +index+1;
                             var selector;
                             var targetRow;
@@ -1380,10 +1400,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 targetRow = element[0].querySelector(selector);
                                 !!targetRow && targetRow.scrollIntoView();
                             }
-
-                        }
                     }
-
                     var _hasAddTrReady=false; //标记多级表头的Html字符串是否插入到模板中
                     function _reSetTableHeaders(){
                         var thead = element[0].querySelector('table.rdk-table-head>thead');

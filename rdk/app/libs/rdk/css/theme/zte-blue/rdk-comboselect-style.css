@@ -20,9 +20,9 @@
     font-family: "微软雅黑", Helvetica, Arial, sans-serif;
     font-size: 14px;
     border-radius: 4px;
-    padding: 0;
+    padding: 0px 26px 0px 8px;
 }
-.rdk-combo-select-module .width-fixed{width: 120px;}
+.rdk-combo-select-module .width-fixed{width: 100%;}
 .rdk-combo-select-module .width-changed{min-width: 120px;}
 .rdk-combo-select-module .combo-content-theme{
     cursor: pointer;
@@ -35,7 +35,7 @@
     box-shadow: none;
     border: none;
     padding: 0;
-    margin: 0px 26px 0px 8px;
+    margin: 0;
 }
 .rdk-combo-select-module .combo-content-icon{
     right: 5px;
@@ -131,9 +131,10 @@
 /*兼容IE11 : css rule sets go here */
 @media screen and (min-width:0\0) {
     /* 备注：IE11 不支持 inline-flex在row方向上动态增加宽度，所以此处使用inline-block解决*/
-    .rdk-combo-select-module .combo-content ,.rdk-combo-select-module .rdk-combo-animate{
+    .rdk-combo-select-module .combo-content{
         display: inline-block;
         white-space: nowrap;
+        width: 100%;
     }
     .rdk-theme-zte-vmax .rdk-combo-select-module .combo-content{
         display: inline-flex;
