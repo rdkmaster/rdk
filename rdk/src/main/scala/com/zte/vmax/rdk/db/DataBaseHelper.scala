@@ -9,6 +9,7 @@ import com.zte.vmax.rdk.actor.Messages.{DBSession, DataTable}
 import com.zte.vmax.rdk.defaults.Misc
 import com.zte.vmax.rdk.proxy.ProxyManager
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
+import jdk.nashorn.api.scripting.ScriptObjectMirror
 
 import scala.collection.mutable.ArrayBuffer
 import scala.concurrent.duration._
@@ -26,7 +27,7 @@ object DataBaseHelper extends Logger {
     * @param maxLine 返回的最大行数
     * @return
     */
-  def fetch(session: DBSession, sql: String, maxLine: Long, nullToString: String = "null"): Option[AnyRef] = {
+  def fetch(session: DBSession, sql: String, maxLine: Long, nullToString: String, result: ScriptObjectMirror): Unit = {
 
     getConnection(session).map(connection =>
       try {
@@ -34,19 +35,25 @@ object DataBaseHelper extends Logger {
         val statement = connection.createStatement
         val opSql = RdkUtil.getVSql(session, sql)
         if (opSql.isEmpty) {
-          return None
+          return
         }
         val rs = statement.executeQuery(opSql.get)
         val meta = rs.getMetaData
         val fieldCnt = meta.getColumnCount
+        val field = result.getMember("field").asInstanceOf[ScriptObjectMirror]
+        val header = result.getMember("header").asInstanceOf[ScriptObjectMirror]
 
-        val fieldLst = 1 to fieldCnt map (i => (meta.getColumnLabel(i), meta.getColumnType(i)))
-        val fieldNames = fieldLst.map(_._1).toArray
-        val fieldTypes = fieldLst.map(_._2).toArray
-        val dataArray = new ArrayBuffer[Array[String]]
+        val fieldTypes = new Array[Int](fieldCnt)
+        for (i <- 1 to fieldCnt) {
+          field.callMember("push", meta.getColumnLabel(i))
+          header.callMember("push", meta.getColumnLabel(i))
+          fieldTypes.update(i-1, meta.getColumnType(i))
+        }
+
         var i = 0L
         while (rs.next() && i < maxLine) {
-          dataArray.append(getRowValue(rs, fieldCnt, fieldTypes, nullToString))
+          val row = result.callMember("_addEmptyRow").asInstanceOf[ScriptObjectMirror]
+          getRowValue(rs, fieldCnt, fieldTypes, nullToString).foreach(item => row.callMember("push", item))
           i = i + 1
         }
 
@@ -54,16 +61,13 @@ object DataBaseHelper extends Logger {
         RdkUtil.safeClose(statement)
         RdkUtil.safeClose(connection)
         appLogger(session.appName).debug(s"fetch->$sql (${System.currentTimeMillis - currentTime} ms)")
-        Some(DataTable(fieldNames, fieldTypes, dataArray.toArray))
       }
       catch {
         case e: Throwable =>
           appLogger(session.appName).error("fetch data error", e)
           RdkUtil.safeClose(connection)
-          Some(DBError(e.toString))
-      }).flatten
-
-
+          result.setMember("error", e.toString)
+      })
   }
 
   private def getRowValue(rs: ResultSet, fieldCnt: Int, fieldTypes: Array[Int], nullToString: String): Array[String] = {
@@ -107,24 +111,24 @@ object DataBaseHelper extends Logger {
     * @param timeout 超时时间（秒）
     * @return 数据表集合
     */
-  def batchFetch(session: DBSession, sqlArr: List[String], maxLine: Long, timeout: Long): List[Option[AnyRef]] = {
+  def batchFetch(session: DBSession, sqlArr: List[String], maxLine: Long, timeout: Long, result: ScriptObjectMirror): Unit = {
     if (sqlArr.isEmpty) {
-      return Nil
+      return
     }
     val currentTime = System.currentTimeMillis()
 
     implicit val ec = RdkServer.system.dispatchers.lookup(Misc.blocking_io_dispatcher)
     implicit val myTimeout = Timeout(timeout seconds)
-    val result = sqlArr.map(sql => {
+    val futureResult = sqlArr.map(sql => {
       Future {
-        fetch(session, sql, maxLine)
+        // sql一样的时候，idx的值可能是错的
+        val idx = sqlArr.indexOf(sql)
+        fetch(session, sql, maxLine, "null", result.get(idx.toString).asInstanceOf[ScriptObjectMirror])
       }(ec)
     })
 
-    val value = Await.result(Future.sequence(result), myTimeout.duration)
+    Await.result(Future.sequence(futureResult), myTimeout.duration)
     appLogger(session.appName).debug(s"batchFetch->${sqlArr mkString} (${System.currentTimeMillis - currentTime} ms)")
-    value
-
   }
 
   /**
