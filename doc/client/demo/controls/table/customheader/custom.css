@@ -36,34 +36,35 @@
     background-position: 5px center ;
     color: #333;
 }
-.rdk-table-module .rdk-table > thead > tr > th:nth-child(3) {
-    position: relative;
-    text-align: right;
-}
  .selectorContent {
-    position: fixed;
-    z-index: 999;
+     position: absolute;
+     top: 16px;
+     left: 100%;
+     z-index: 99999;
 }
-.pticon {
-    position: absolute;
-    right:0;
-    top: 2px;
+.userDefined {
+    position: relative;
 }
-.selectorMain .rdk-table-icon {
-    position: absolute;
-    top:10px;
-    right: 18px;
-    z-index: 99999;
-}
+
 .colorGray {
     color: #ccc;
 }
+.clhide {
+    display:none;
+}
+.clshow {
+    display: block;
+}
 .selectorMain .iconfont-e92a {
     cursor: pointer;
+    margin-left: 10px;
 }
 .selectorMain .rdk-selector-module {
     width: 150px;
 }
-.rdk-table-module .rdk-table-head> thead > tr > th{
-    overflow: visible;
+.rdk-table-module .rdk-table > thead > tr >th:nth-child(3)>.rdk-table-icon,
+.rdk-table-module .rdk-table > thead > tr >th:nth-child(4)>.rdk-table-icon{
+    margin-left: -27px;
+    position: relative;
+    z-index: 99999;
 }
