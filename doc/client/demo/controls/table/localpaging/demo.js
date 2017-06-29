@@ -27,7 +27,7 @@
         $scope.allData= {data: [], field: [], header: []};
         for (var i = 0; i < 500; i++) {
             $scope.allData.data.push([]);
-            for (var j = 0; j < 30; j++) {
+            for (var j = 0; j < 20; j++) {
                 $scope.allData.data[i].push('data' + i  + j);
                 $scope.allData.field[j] = 'filed' + j;
                 $scope.allData.header[j] = 'head' + j;

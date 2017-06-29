@@ -89,6 +89,9 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
             if(tableBody){
                // columnsBody=tableBody.querySelectorAll("tbody>tr:first-child>td");
                 columnsBody=tableBody.querySelectorAll("thead>tr:last-child>th");
+                if(!columnsBody.length){
+                    columnsBody=tableBody.querySelectorAll("tbody>tr:first-child>td");
+                }
                 for(var i=columnsBody.length-1;i>=0;i--){
                     columns[i].bakColumn=columnsBody[i];
                 }
@@ -131,8 +134,8 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
                 resetTable(table);
                 return;
             }
-
-            $(table).width('100%');
+            //$(table).width($(table).width()/$(table.parentNode).width()*100+"%");
+            //$(table).width('100%');
             $(tableBody).width('100%');
 
             ctrlColumns.each(function(index, column){
@@ -155,6 +158,7 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
             //$(handle).height($(table).height())
 
             // Use the middleware to decide which columns this handle controls
+
             var controlledColumn = resizer.handleMiddleware(handle, column)
 
             // Bind mousedown, mousemove & mouseup events
@@ -200,7 +204,17 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
                 $(window).mousemove(calculateWidthEvent(column, orgX, orgWidth, optional))
 
                 // Stop dragging as soon as the mouse is released
-                $(window).one('mouseup', unbindEvent(handle))
+
+                if(window.top !== window.self){
+                    // window.top.addEventListener("mouseup",unbindEvent(handle));
+                    $(window.top).one('mouseup', unbindEvent(handle))
+                }else{
+                    for(var i= 0,winLen = window.frames.length;i<winLen;i++){
+                        window.frames[i] && window.frames[i].addEventListener("mouseup",unbindEvent(handle));
+                    }
+                }
+               // window.addEventListener("mouseup",unbindEvent(handle));
+                 $(window).one('mouseup', unbindEvent(handle))
 
             })
         }
@@ -244,6 +258,7 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
 
 
         function unbindEvent(handle) {
+            console.log("unbindEvent");
             // Event called at end of drag
             return function( /*event*/ ) {
                 $(handle).removeClass('active');

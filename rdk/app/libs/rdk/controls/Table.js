@@ -5,56 +5,89 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 ], function() {
 
     var tableModule = angular.module('rd.controls.Table', ['rd.core','rd.controls.Button','rd.attributes.Scroll','rd.attributes.Resize']);
-
+    var searchTemplte =
+        '<div ng-if="search" class="searchWapper search-position-{{searchPosition}}">\
+            <input type="text" ng-style="width" class="form-control search" placeholder="{{searchPrompt}}" ng-focus="searchFocusHandler()"\
+                  ng-keyup="keyPressHandler($event)" ng-class="{\'border-style\':$parent.globalSearch!=\'\' && $parent.globalSearch!=null}" ng-model="$parent.globalSearch" ng-mouseenter="searchMouseEnterHandler()" ng-mouseleave="searchMouseLeaveHandler()">\
+            <i class="glyphicon glyphicon-search search_icon" ng-click="serverSearchHandler()" style="cursor:{{pagingType==\'server\' || pagingType==\'server-auto\' ? \'pointer\' : \'default\'}}"></i>\
+            <div ng-show="($parent.globalSearch && searchFocus)?true:false">\
+                <select selectpicker="{{columnDefs.length}}" ng-model="val" ng-change="selectChangeHandler(val)"\
+                    ng-options="columnDef.data as columnDef.name for columnDef in columnDefs | realoption"\
+                    class="form-control search_select">\
+                    <option value="">{{i18n.searchAll}}</option>\
+                </select>\
+            </div>\
+        </div>';
+    var pageTemplte =
+        '<rdk-paging ng-show="pageVisible && pageCtrl && paging" data-page-size="pageSize" \
+              data-lang="{{lang}}" current-page="currentPage" data-search-position="{{searchPosition}}" ng-class="{true:\'visiblePageLine\', false:\'unvisiblePageLine\'}[columnDefs.length!=0 && !noData]">\
+        </rdk-paging>\
+        <div ng-if="showExport && !noData" class="table-export"><rdk_button click="touchExport" icon="iconfont iconfont-e8c9" label="{{exportLabel}}"></rdk_button></div>\
+        <div class="clearfix">';
+    var fixedTheadTemplte =
+        '<div class="rdk-table-head-box">\
+            <table class="rdk-table rdk-table-head">\
+                <thead ng-if="!noHeader">\
+                    <tr>\
+                        <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><span ng-if="checkBoxTitle">{{checkBoxTitle}}</span><input ng-if="!checkBoxTitle" name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
+                        <th ng-repeat="columnDef in columnDefs track by columnDef.targets" \
+                            on-finish-render="tableHeadNgRepeatFinished" \
+                            ng-mouseover="cursorHandler($event, columnDef.sortable)" \
+                            ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)" \
+                            ng-style="{width:columnDef.width}" ng-attr-title="{{columnDef.title}}">\
+                            {{columnDef.title}}\
+                             <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
+                             <i ng-if="columnDef.sortable && curSortCol($index)" class="rdk-table-icon" ng-class="{true:\'rdk-table-sort-down\',false:\'rdk-table-sort-up\'}[changeSortIconStatus($index)]"></i>\
+                         </th>\
+                    </tr>\
+                </thead>\
+            </table>\
+        </div>';
+    var tbodyLiteTemplte =
+        '<tbody>\
+            <tr ng-if="isResize" class="table-first-row"><td ng-if="addCheckBox"></td><td ng-repeat="columnDef in columnDefs track by columnDef.targets" ng-show="columnDef.visible" ng-style="{width:columnDef.width}"></td></tr>\
+            <tr class="rowTr" \
+                on-finish-render  ng-click="setSelected(item,null)"\
+                ng-class="{\'selected-row\':ifRowHighLight(item,\'click\')}" \
+                ng-dblclick="dbClickHandler(item,$index)">\
+                <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="item.checked"></td>\
+                <td ng-repeat="columnDef in columnDefs" \
+                    ng-show="columnDef.visible" \
+                    class="{{columnDef.class}}" \
+                    rdk-column-parser-lite>{{item[columnDef.data]}}</td>\
+            </tr>\
+            <tr ng-if="noData">\
+                <td colspan="{{addCheckBox?(visibleColumnDefsCount+1):visibleColumnDefsCount}}">\
+                    <div class="no-data"></div>\
+                </td>\
+            </tr>\
+        </tbody>';
     tableModule.run(["$templateCache", function($templateCache) {
         $templateCache.put("/src/templates/common.html",
             '<div>\
-            <div class="rdk-table-module rdk-table-search-{{searchPosition}}">\
-                <div ng-if="search" class="searchWapper search-position-{{searchPosition}}">\
-                    <input type="text" ng-style="width" class="form-control search" placeholder="{{searchPrompt}}" ng-focus="searchFocusHandler()"\
-                           ng-keyup="keyPressHandler($event)" ng-class="{\'border-style\':$parent.globalSearch!=\'\' && $parent.globalSearch!=null}" ng-model="$parent.globalSearch" ng-mouseenter="searchMouseEnterHandler()" ng-mouseleave="searchMouseLeaveHandler()">\
-                    <i class="glyphicon glyphicon-search search_icon" ng-click="serverSearchHandler()" style="cursor:{{pagingType==\'server\' || pagingType==\'server-auto\' ? \'pointer\' : \'default\'}}"></i>\
-                    <div ng-show="($parent.globalSearch && searchFocus)?true:false">\
-                        <select selectpicker="{{columnDefs.length}}" ng-model="val" ng-change="selectChangeHandler(val)"\
-                                ng-options="columnDef.data as columnDef.name for columnDef in columnDefs | realoption"\
-                                class="form-control search_select">\
-                            <option value="">{{i18n.searchAll}}</option>\
-                        </select>\
-                    </div>\
-               </div>\
-                   <div class="rdk-table-head-box">\
-                        <table class="rdk-table rdk-table-head">\
-                           <thead ng-if="!noHeader">\
-                                <tr>\
-                                    <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><span ng-if="checkBoxTitle">{{checkBoxTitle}}</span><input ng-if="!checkBoxTitle" name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
-                                    <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinished" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)" style="width:{{columnDef.width}}" ng-attr-title="{{columnDef.title}}">\
+             <div class="rdk-table-module rdk-table-search-{{searchPosition}}">'
+                 + searchTemplte
+                 + fixedTheadTemplte + '\
+                 <div class="wrapper" ng-style="scrollStyle">\
+                     <table class="rdk-table rdk-table-body">\
+                         <thead ng-if="!noHeader && !isResize">\
+                             <tr>\
+                                 <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><span ng-if="checkBoxTitle">{{checkBoxTitle}}</span><input ng-if="!checkBoxTitle" name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
+                                     <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinishedBody" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)" ng-style="{width:columnDef.width}" ng-attr-title="{{columnDef.title}}">\
                                         {{columnDef.title}}\
                                         <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
                                         <i ng-if="columnDef.sortable && curSortCol($index)" class="rdk-table-icon" ng-class="{true:\'rdk-table-sort-down\',false:\'rdk-table-sort-up\'}[changeSortIconStatus($index)]"></i>\
-                                    </th>\
-                                </tr>\
-                            </thead>\
-                        </table>\
-                   </div>\
-                   <div class="wrapper" ng-style="scrollStyle">\
-                        <table class="rdk-table rdk-table-body">\
-                           <thead ng-if="!noHeader">\
-                                <tr>\
-                                    <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><span ng-if="checkBoxTitle">{{checkBoxTitle}}</span><input ng-if="!checkBoxTitle" name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
-                                    <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinishedBody" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)" style="width:{{columnDef.width}}" ng-attr-title="{{columnDef.title}}">\
-                                        {{columnDef.title}}\
-                                        <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
-                                        <i ng-if="columnDef.sortable && curSortCol($index)" class="rdk-table-icon" ng-class="{true:\'rdk-table-sort-down\',false:\'rdk-table-sort-up\'}[changeSortIconStatus($index)]"></i>\
-                                    </th>\
-                                </tr>\
-                            </thead>\
-                            <tbody ng-mouseleave="clearHovered()">\
-                                <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
-                                    ng-class="{\'row-span\':groupTargets,\'selected-row\':ifRowHighLight(item,\'click\'),\'selected-row-hover\':ifRowHighLight(item,\'hover\')}" ng-dblclick="dbClickHandler(item,$index)">\
-                                    <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="item.checked"></td>\
-                                    <td ng-class="{\'selected-row-td\':ifRowHighLight(item,\'click\',columnDef),\'selected-row-hover-td\':ifRowHighLight(item,\'hover\',columnDef)}" ng-mouseenter="setHovered(item,$event)" rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" ng-style="getCellStyle(itemRowSpan,columnDef)">\
-                                    </td>\
-                                </tr>\
+                                     </th>\
+                                 </tr>\
+                             </thead>\
+                             <tbody ng-mouseleave="clearHovered()">\
+                                 <tr ng-if="isResize" class="table-first-row"><td ng-if="addCheckBox"></td><td ng-repeat="columnDef in columnDefs track by columnDef.targets" ng-show="columnDef.visible" ng-style="{width:columnDef.width}"></td></tr>\
+                                 <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
+                                     ng-class="{\'row-span\':groupTargets,\'selected-row\':ifRowHighLight(item,\'click\'),\'selected-row-hover\':ifRowHighLight(item,\'hover\')}" ng-dblclick="dbClickHandler(item,$index)">\
+                                     <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="item.checked"></td>\
+                                     <td ng-class="{\'selected-row-td\':ifRowHighLight(item,\'click\',columnDef),\'selected-row-hover-td\':ifRowHighLight(item,\'hover\',columnDef)}" ng-mouseenter="setHovered(item,$event)" rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" ng-style="getCellStyle(itemRowSpan,columnDef)">\
+                                     </td>\
+                                 </tr>\
                                  <tr ng-if="noData">\
                                     <td colspan="{{addCheckBox?(visibleColumnDefsCount+1):visibleColumnDefsCount}}">\
                                         <div class="no-data"></div>\
@@ -62,74 +95,31 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 </tr>\
                             </tbody>\
                         </table>\
-                    </div>\
-                <rdk-paging ng-show="pageVisible && pageCtrl && paging" data-page-size="pageSize" \
-                     data-lang="{{lang}}" current-page="currentPage" data-search-position="{{searchPosition}}" ng-class="{true:\'visiblePageLine\', false:\'unvisiblePageLine\'}[columnDefs.length!=0 && !noData]">\
-                </rdk-paging>\
-                <div ng-if="showExport && !noData" class="table-export"><rdk_button click="touchExport" icon="iconfont iconfont-e8c9" label="{{exportLabel}}"></rdk_button></div>\
-                <div class="clearfix"></div>\
-            </div>\
-            </div>'
+                    </div>'
+                    + pageTemplte + '\
+             </div>\
+             </div>'
         );
         $templateCache.put("/src/templates/tbsimple.html",
             '<div>\
-            <div class="rdk-table-module rdk-table-search-{{searchPosition}}">\
-                <div ng-if="search" class="searchWapper search-position-{{searchPosition}}">\
-                    <input type="text" ng-style="width" class="form-control search" placeholder="{{searchPrompt}}" ng-focus="searchFocusHandler()"\
-                           ng-keyup="keyPressHandler($event)" ng-class="{\'border-style\':$parent.globalSearch!=\'\' && $parent.globalSearch!=null}" ng-model="$parent.globalSearch" ng-mouseenter="searchMouseEnterHandler()" ng-mouseleave="searchMouseLeaveHandler()">\
-                    <i class="glyphicon glyphicon-search search_icon" ng-click="serverSearchHandler()" style="cursor:{{pagingType==\'server\' || pagingType==\'server-auto\' ? \'pointer\' : \'default\'}}"></i>\
-                    <div ng-show="($parent.globalSearch && searchFocus)?true:false">\
-                        <select selectpicker="{{columnDefs.length}}" ng-model="val" ng-change="selectChangeHandler(val)"\
-                                ng-options="columnDef.data as columnDef.name for columnDef in columnDefs | realoption"\
-                                class="form-control search_select">\
-                            <option value="">{{i18n.searchAll}}</option>\
-                        </select>\
-                    </div>\
-               </div>\
-                   <div class="rdk-table-head-box">\
-                        <table class="rdk-table rdk-table-head">\
-                           <thead ng-if="!noHeader">\
-                                <tr>\
-                                    <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><span ng-if="checkBoxTitle">{{checkBoxTitle}}</span><input ng-if="!checkBoxTitle" name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
-                                    <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinished" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)" style="width:{{columnDef.width}}" ng-attr-title="{{columnDef.title}}">\
-                                        {{columnDef.title}}\
-                                        <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
-                                        <i ng-if="columnDef.sortable && curSortCol($index)" class="rdk-table-icon" ng-class="{true:\'rdk-table-sort-down\',false:\'rdk-table-sort-up\'}[changeSortIconStatus($index)]"></i>\
-                                    </th>\
-                                </tr>\
-                            </thead>\
-                        </table>\
-                   </div>\
-                   <div class="wrapper" ng-style="scrollStyle">\
-                        <table class="rdk-table rdk-table-body rdk-table-simple">\
-                           <thead ng-if="!noHeader">\
-                                <tr>\
-                                    <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><span ng-if="checkBoxTitle">{{checkBoxTitle}}</span><input ng-if="!checkBoxTitle" name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
-                                    <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinishedBody" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)" style="width:{{columnDef.width}}" ng-attr-title="{{columnDef.title}}">\
-                                        {{columnDef.title}}\
-                                        <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
-                                    </th>\
-                                </tr>\
-                            </thead>\
-                            <tbody>\
-                                <tr class="rowTr" on-finish-render  ng-click="setSelected(item,null)"\
-                                    ng-class="{\'selected-row\':ifRowHighLight(item,\'click\')}" ng-dblclick="dbClickHandler(item,$index)">\
-                                    <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="item.checked"></td>\
-                                    <td  ng-repeat="columnDef in columnDefs" ng-show="columnDef.visible" class="{{columnDef.class}}" rdk-column-parser-lite>{{item[columnDef.data]}}</td>\
-                                </tr>\
-                                 <tr ng-if="noData">\
-                                    <td colspan="{{addCheckBox?(visibleColumnDefsCount+1):visibleColumnDefsCount}}">\
-                                        <div class="no-data"></div>\
-                                    </td>\
-                                </tr>\
-                            </tbody>\
-                        </table>\
-                    </div>\
-                <rdk-paging ng-show="pageVisible && pageCtrl && paging" data-page-size="pageSize" \
-                     data-lang="{{lang}}" current-page="currentPage" data-search-position="{{searchPosition}}" ng-class="{true:\'visiblePageLine\', false:\'unvisiblePageLine\'}[columnDefs.length!=0 && !noData]">\
-                </rdk-paging>\
-                <div ng-if="showExport && !noData" class="table-export"><rdk_button click="touchExport" icon="iconfont iconfont-e8c9" label="{{exportLabel}}"></rdk_button></div>\
-                <div class="clearfix"></div>\
+             <div class="rdk-table-module rdk-table-search-{{searchPosition}}">'
+                 + searchTemplte
+                 + fixedTheadTemplte + '\
+                 <div class="wrapper" ng-style="scrollStyle">\
+                     <table class="rdk-table rdk-table-body rdk-table-simple">\
+                         <thead ng-if="!noHeader && !isResize">\
+                             <tr>\
+                                 <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><span ng-if="checkBoxTitle">{{checkBoxTitle}}</span><input ng-if="!checkBoxTitle" name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
+                                 <th ng-repeat="columnDef in columnDefs track by columnDef.targets" on-finish-render="tableHeadNgRepeatFinishedBody" ng-mouseover="cursorHandler($event, columnDef.sortable)" ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)" ng-style="{width:columnDef.width}" ng-attr-title="{{columnDef.title}}">\
+                                     {{columnDef.title}}\
+                                     <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
+                                 </th>\
+                             </tr>\
+                         </thead>'
+                         + tbodyLiteTemplte + '\
+                     </table>\
+                  </div>'
+                 + pageTemplte + '\
             </div>\
             </div>'
         );
@@ -629,6 +619,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     scope.searchWidth = Utils.getValue(scope.searchWidth, attrs.searchWidth, "168px");
                     scope.exportLabel = Utils.getValue(scope.exportLabel, attrs.exportLabel, "");
                     scope.resizeMode = Utils.getValue(scope.resize, attrs.resize, "BasicResizer");
+
+                    scope.isResize = Utils.getValue(undefined, attrs.resize, false);
 
                     scope.touchExport = function() {
                         EventService.raiseControlEvent(scope, EventTypes.EXPORT, null)
@@ -1176,14 +1168,21 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             if(newVal!=oldVal){
                                 _fixedTableHead();
                             }
-                        })
+                        });
                         var tableWrap = element[0].querySelector(".wrapper");
                         var tHeadBox = element[0].querySelector(".rdk-table-head-box");
                         var tableHead = element[0].querySelector(".rdk-table-head");
                         var tableBody = element[0].querySelector(".rdk-table-body");
                         var isIE =Utils.isIEFlag;
                         var hasHandeLastTh=false;
+
                         function _fixedTableHead(){
+                            if(!!attrs.resize && attrs.resize!=""){
+                                isIE && ieScrollWidth();
+                                tHeadBox.style.width=Utils.getStyle(tableWrap,"width");
+                                _reSetTableAddHeaders(tHeadBox,tableHead); //多级表头
+                                return
+                            }
                             if(!scope.noHeader){
                                 var tHeadThs =  element[0].querySelectorAll("table.rdk-table-head>thead>tr>th");
                                 var tBodyTds =  element[0].querySelectorAll("table.rdk-table-body>thead>tr>th");
@@ -1205,20 +1204,24 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                     tableBody.style.tableLayout="fixed";
                                 }
                                 Array.prototype.map.call(tHeadThs, function(colObj,index) {
-                                    colObj.style.width=colWidths[index];
+                                    if(isIE && colObj.hasScroll){
+                                        colObj.style.width=parseFloat(colWidths[index])+colObj.hasScroll+'px';
+                                    }else{
+                                        colObj.style.width=colWidths[index];
+                                    }
                                 });
                                 //注意有多级表头
-                                var tHeadHeight;
+                                var trHeight;
                                 if(!!scope.setting && scope.setting.additionalHeader){
-                                    tHeadHeight = parseFloat(Utils.getStyle(tableHead.querySelector("thead>tr:last-child"),"height"))+1+"px";
+                                    Utils.getStyle(tableHead,"height");
+                                    trHeight = parseFloat(Utils.getStyle(tableHead.querySelector("thead>tr:last-child"),"height"))+1+"px";
                                 }else{
-                                    tHeadHeight = Utils.getStyle(tableHead,"height");
+                                    trHeight = Utils.getStyle(tableHead,"height");
                                 }
-                                tableBody.style.marginTop="-" + tHeadHeight;
-                                tHeadBox.style.height=tHeadHeight;
+                                tableBody.style.marginTop="-" + trHeight;
+                                tHeadBox.style.height=Utils.getStyle(tableHead,"height");
                             }
                             _reSetTableAddHeaders(tHeadBox,tableHead); //多级表头
-                            hasHandeLastTh=false;
                         }
                         function _fixedTableHeadBindEvent(){
                             tableWrap.addEventListener("scroll",scrollLeftHandle,false);
@@ -1228,21 +1231,39 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         function scrollLeftHandle(event) {
                             var target = event.target || event.srcElement;
                             tHeadBox.scrollLeft=target.scrollLeft;
-                            //IE的原生滚动条是会占据宽度的，需要进行列矫正对齐
-                            if(tHeadBox.scrollLeft!=target.scrollLeft && !hasHandeLastTh){
+                            if(isIE && tHeadBox.scrollLeft!=target.scrollLeft && !hasHandeLastTh && !scope.isResize){
                                 var lastTh = tHeadBox.querySelector("thead>tr>th:last-child");
                                 var lastThWid = parseFloat(Utils.getStyle(lastTh,"width"));
                                 lastTh.style.width = lastThWid + 17 + 'px'; // 17 = 滚动条宽度
+                                lastTh.hasScroll=17;
                                 tHeadBox.scrollLeft=target.scrollLeft;
                                 hasHandeLastTh=true;
+                            }
+                        }
+                        //var tableHeadWid;
+                        //var wid;
+                        function ieScrollWidth(){
+                            if(hasScroll(tableWrap)){
+                                tHeadBox.style.overflowY="scroll";
+                               // $(tableHead).append("<div style='width:17px;height:32px;'></div>");
+                               // tableHeadWid= !!tableHeadWid?tableHeadWid:Utils.getStyle(tableHead,"width");
+                               // if(tableHeadWid.indexOf("%")!==-1){
+                               //      wid = !!wid?wid:parseFloat(tableHeadWid)/100*tableHead.offsetWidth;
+                               //     tableHead.style.width=wid - 16 +'px';
+                               // }else{
+                               //     tableHead.style.width=tableHeadWid - 16 +'px';
+                               // }
+                            }else{
+                                tHeadBox.style.overflowY="hidden";
+                                //tableHead.style.width=Utils.getStyle(tableBody,"width");
                             }
                         }
                         function hasScroll(el,direction){
                             direction = direction || "vertical";
                             if(direction==="vertical"){
-                                return el.scrollHeight > el.clientHeight;
+                                return el.scrollHeight > el.clientHeight +2; //2px border
                             }else{
-                                return el.scrollWidth > el.clientWidth;
+                                return el.scrollWidth > el.clientWidth +2;
                             }
                         }
                     };
@@ -1484,7 +1505,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 colObj.style.borderButtom=0;
                             });
                         }
-                        tHeadBox.style.height=Utils.getStyle(tableHead,"height");
+                        if(!scope.isResize){
+                            tHeadBox.style.height=Utils.getStyle(tableHead,"height");
+                        }
                         _hasAddTrReady=true;  //表头已重定义
                     }
                     var scrollWidth, first = true,

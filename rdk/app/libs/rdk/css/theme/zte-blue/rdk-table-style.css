@@ -87,7 +87,7 @@
     height: 32px;
     padding: 0 8px;
 }
-.rdk-table-module .rdk-table > thead div.rdk-table-custom-header{
+.rdk-table-module .rdk-table:not(.resize) > thead div.rdk-table-custom-header{
     display: inline-block;
 }
 .rdk-table-module .rdk-table > tbody > tr > td {
@@ -450,9 +450,8 @@ i.regular_right,i.regular_left{
     width: 100%;
     overflow: hidden;
     position: relative;
-    height: 33px;
 }
-.rdk-table-module .rdk-table-head{
+.rdk-table-module table:not(.resize).rdk-table-head{
     table-layout: fixed;
     position: absolute;
     z-index: 0;
@@ -464,6 +463,9 @@ i.regular_right,i.regular_left{
 }
 .rdk-table-module .rdk-table-body{
     margin-top: -33px;
+}
+.rdk-table-module .rdk-table-body.resize{
+    margin-top: 0;
 }
 .rdk-table-module .rdk-table-body>thead>tr{
     overflow: hidden;
@@ -494,12 +496,21 @@ i.regular_right,i.regular_left{
     border-right: none;
 }
 .rdk-table-module .rdk-table.resize > thead > tr > th,
+.rdk-table-module .rdk-table.resize > thead > tr > th >div,
 .rdk-table-module .rdk-table.resize + .rdk-table.sticky-thead > thead > tr > th,
 .rdk-table-module .rdk-table.resize > tbody > tr > td > div >div{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.rdk-table-module .rdk-table.resize > tbody > tr > td,
+.rdk-table-module .rdk-table.resize > tbody > tr > td > div,
+.rdk-table-module .rdk-table.resize > tbody > tr > td > div >div{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 /* table col resizeable end */
 
 /*兼容IE11 : css rule sets go here */
@@ -512,9 +523,9 @@ i.regular_right,i.regular_left{
         /*overflow-y: scroll;*/
         background-color: #eee;
     }
-    .rdk-table-module .rdk-table-head{
+    .rdk-table-module .rdk-table-head:not(.resize){
         /*17px == 滚动条宽度 ：表格总宽度小于容器时有效*/
-        width: calc(100% - 17px); 
+        width: calc(100% - 17px);
     }
     .rdk-table-module .rdk-table-body{
        
