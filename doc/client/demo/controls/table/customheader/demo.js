@@ -7,8 +7,7 @@
     var extraModules = [ ];
     var controllerDefination = ['$scope', 'Alert','DataSourceService','$timeout', main];
     function main($scope, Alert, DataSourceService,$timeout) {
-        var arr=[],arrData=[],numTarget=null;
-        $scope.sizeColor = true;
+        var arr=[],arrData=[];
         $scope.setting = {
             "columnDefs" :[
                 {
@@ -25,7 +24,7 @@
                                 j++;
                             }
                         }
-                        return '<div class="userDefined"  >你好<i class="iconfont iconfont-e92a pticon colorGray" ng-click="selectorShow('+target+',$event)"></i>\
+                        return '<div class="userDefined"  >你好<i class="iconfont iconfont-e92a pticon colorGray" ></i>\
                                 <div  class="selectorContent clhide">\
                         <rdk_basic_selector data="allItems" selected_items="allSelected" multiple_select="true" searchable="false" editable="false" change="selectorChanged"><span>{{item.label}}</span>\
                         </rdk_basic_selector>\
@@ -48,7 +47,7 @@
                                 j++;
                             }
                         }
-                        return '<div  class="userDefined" >你好<i class="iconfont iconfont-e92a pticon colorGray" ng-click="selectorShow('+target+',$event)"></i>\
+                        return '<div  class="userDefined" >你好<i class="iconfont iconfont-e92a pticon colorGray"></i>\
                                 <div  class="selectorContent clhide">\
                         <rdk_basic_selector data="allItem" selected_items="allSelecte" multiple_select="true" searchable="false" editable="false" change="selectorChanged"><span>{{item.label}}</span>\
                         </rdk_basic_selector>\
@@ -113,8 +112,7 @@
             }
             return objective
         }
-        $scope.selectorChanged = function(context,selected ,index) {
-            $scope.sizeColor=!!selected.length ? false:true;
+        $scope.selectorChanged = function(context,selected ) {
             ben =[$scope.allSelecte,$scope.allSelected];//这里有两个下拉过滤列，定义了两数组，过多的话建议用循环做；
                                                         // $scope.setting中定义的过滤列可以用循环做，可以定义一个数组列的位置,如这里为[1,2]
             arr=[];
@@ -132,7 +130,7 @@
             arrData=JSON.parse(JSON.stringify(data.data))
             if (!!arr.length) {
                 for(var i = 0;i<arr.length;i++){
-                    data.data = flter(data.data, arr[i], numTarget)
+                    data.data = flter(data.data, arr[i])
                 }
             }
             return data
