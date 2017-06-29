@@ -604,6 +604,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     tableElement.setAttribute("mode","resizeMode");
                     tableElement.setAttribute("id","rdkTable{{$id}}");
                     tableElement.style.tableLayout="fixed";
+                    tableElement.classList.add("resize");
                     tableElementB.classList.add("resize-"+"rdkTable{{$id}}");
                     tableElementB.style.tableLayout="fixed";
                 }
@@ -1179,8 +1180,14 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         function _fixedTableHead(){
                             if(!!attrs.resize && attrs.resize!=""){
                                 isIE && ieScrollWidth();
-                                tHeadBox.style.width=Utils.getStyle(tableWrap,"width");
                                 _reSetTableAddHeaders(tHeadBox,tableHead); //多级表头
+                                //表体容器是固定宽度，把表头容器也固定宽度
+                                var tableWrapWid = parseInt(Utils.getStyle(tableWrap,"width"));
+                                var tHeadBoxWid = parseInt(Utils.getStyle(tHeadBox,"width"));
+                                if(tHeadBoxWid>tableWrapWid){
+                                    tHeadBox.style.width=tableWrapWid+'px';
+                                }
+                                tHeadBox.style.backgroundColor="transparent";
                                 return
                             }
                             if(!scope.noHeader){
