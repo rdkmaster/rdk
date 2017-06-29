@@ -16,7 +16,7 @@
                         $scope.allItems=[];
                         var total = []
                         var j = 0;
-                        for(var i=0;i< arrData.length;i++){
+                        for(var i=0;i< arrData.length;i++){//去重，得出下拉的列
                             if(total.indexOf(arrData[i][target]) === -1){
                                 total.push(arrData[i][target]);
                                 $scope.allItems[j]={};
@@ -25,7 +25,7 @@
                                 j++;
                             }
                         }
-                        return '<div class="userDefined"  >你好<i class="iconfont iconfont-e92a pticon" ng-class="{colorGray:!allSelected.length}" ng-click="selectorShow('+target+',$event)"></i>\
+                        return '<div class="userDefined"  >你好<i class="iconfont iconfont-e92a pticon colorGray" ng-click="selectorShow('+target+',$event)"></i>\
                                 <div  class="selectorContent clhide">\
                         <rdk_basic_selector data="allItems" selected_items="allSelected" multiple_select="true" searchable="false" editable="false" change="selectorChanged"><span>{{item.label}}</span>\
                         </rdk_basic_selector>\
@@ -39,7 +39,7 @@
                         $scope.allItem=[];
                         var total = []
                         var j = 0;
-                        for(var i=0;i< arrData.length;i++){
+                        for(var i=0;i< arrData.length;i++){//去重，得出下拉的列
                             if(total.indexOf(arrData[i][target]) === -1){
                                 total.push(arrData[i][target]);
                                 $scope.allItem[j]={};
@@ -48,7 +48,7 @@
                                 j++;
                             }
                         }
-                        return '<div  class="userDefined" >你好<i class="iconfont iconfont-e92a pticon" ng-class="{colorGray:!allSelecte.length}" ng-click="selectorShow('+target+',$event)"></i>\
+                        return '<div  class="userDefined" >你好<i class="iconfont iconfont-e92a pticon colorGray" ng-click="selectorShow('+target+',$event)"></i>\
                                 <div  class="selectorContent clhide">\
                         <rdk_basic_selector data="allItem" selected_items="allSelecte" multiple_select="true" searchable="false" editable="false" change="selectorChanged"><span>{{item.label}}</span>\
                         </rdk_basic_selector>\
@@ -67,35 +67,39 @@
                                     <option value="">-- choose an item --</option>\
                         </select>'
                     },
+                    targets : 6,
+                    sortable: true,
                     render : '<a ng-click="appScope.click(item)" href="javascript:void(0)">点击</a>'
                 }
             ]
         };
-        $scope.selectShow = false;
-        $scope.selectorShow = function(target,event){
-            $scope.selectShow = !$scope.selectShow;
-            $scope.selectSho = true;
-
-        }
-        $timeout(function(){
+        $timeout(function(){//弹出框开关及过滤图标亮灭
             $(".pticon").click(function(e){
                 if($(this).next().is($(".clhide"))){
-                    $(".selectorContent").addClass("clhide")
-                    $(this).next().removeClass("clhide")
+                    $(".selectorContent").addClass("clhide");
+                    $(this).next().removeClass("clhide");
+                    $(this).removeClass("colorGray");
                 }else{
                     $(".selectorContent").addClass("clhide")  ;
-                    $(this).next().addClass("clhide")
+                    $(this).next().addClass("clhide");
+                    if(!!$(this).next().find(".selected-item").length){
+                        $(this).removeClass("colorGray");
+                    }else{
+                        $(this).addClass("colorGray");
+                    }
                 }
 
             })
-        },1000)
-        $(document).mouseup(function(e) {//点击关闭过滤弹出框
+        },500);
+        $(document).mouseup(function(e) {//点击任何弹出框外的地方可关闭弹出框
             var mySelect = $(".userDefined");
             if(!mySelect.is(e.target) && mySelect.has(e.target).length === 0) {
+                if($(".selectorContent:not(.clhide)").length && !$(".selectorContent:not(.clhide)").find(".selected-item").length){
+                    $(".selectorContent:not(.clhide)").prev().addClass("colorGray")
+                }
                 $(".selectorContent").addClass("clhide");
             }
         });
-        $scope.arritems = [$scope.allSelecte,$scope.allSelected]
         function flter(items,item){//过滤
             if(item.length===0) return items;
             var objective = []
@@ -111,12 +115,14 @@
         }
         $scope.selectorChanged = function(context,selected ,index) {
             $scope.sizeColor=!!selected.length ? false:true;
-            arr = [],arr[0]=[],arr[1]=[];
-            for(var i = 0;i<$scope.allSelecte.length;i++){
-                    arr[0][i]=$scope.allSelecte[i].label;
-            }
-            for(var i = 0;i<$scope.allSelected.length;i++){
-                arr[1][i]=$scope.allSelected[i].label;
+            ben =[$scope.allSelecte,$scope.allSelected];//这里有两个下拉过滤列，定义了两数组，过多的话建议用循环做；
+                                                        // $scope.setting中定义的过滤列可以用循环做，可以定义一个数组列的位置,如这里为[1,2]
+            arr=[];
+            for(var i = 0;i<ben.length;i++){
+                arr[i] = []
+               for(var t = 0;t<ben[i].length;t++){
+                   arr[i][t] = ben[i][t].label;
+               }
             }
             var ds = DataSourceService.get('ds_table');
             var condition = {};

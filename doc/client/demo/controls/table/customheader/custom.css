@@ -36,27 +36,16 @@
     background-position: 5px center ;
     color: #333;
 }
-.rdk-table-module .rdk-table > thead > tr > th:nth-child(3) {
-    position: relative;
-    text-align: right;
-}
  .selectorContent {
-    position: absolute;
-    /*top: 16px;*/
-    /*left: 100%;*/
+     position: absolute;
+     top: 16px;
+     left: 100%;
      z-index: 99999;
 }
-/*.pticon {*/
-    /*position: absolute;*/
-    /*right:0;*/
-    /*top: 2px;*/
-/*}*/
-/*.selectorMain .rdk-table-icon {*/
-    /*position: absolute;*/
-    /*!*top:10px;*!*/
-    /*!*right: 18px;*!*/
-    /*z-index: 99999;*/
-/*}*/
+.userDefined {
+    position: relative;
+}
+
 .colorGray {
     color: #ccc;
 }
@@ -68,8 +57,14 @@
 }
 .selectorMain .iconfont-e92a {
     cursor: pointer;
+    margin-left: 10px;
 }
 .selectorMain .rdk-selector-module {
     width: 150px;
 }
-.rdk-table-module .rdk-table > thead > tr > th
+.rdk-table-module .rdk-table > thead > tr >th:nth-child(3)>.rdk-table-icon,
+.rdk-table-module .rdk-table > thead > tr >th:nth-child(4)>.rdk-table-icon{
+    margin-left: -27px;
+    position: relative;
+    z-index: 99999;
+}
