@@ -88,6 +88,7 @@ define(['rd.core', 'rd.controls.ComboSelect', 'rd.controls.TimeSelect', 'css!rd.
                             //scope.endSetting = angular.extend(scope.endSetting, angular.copy(scope.setting, {}));
                             Utils.shallowCopy(scope.setting,scope.endSetting);
                             scope.endSetting.selectGranularity=false;
+                            scope.endSetting.padding=true;
                             if(scope.setting.selectGranularity){
                                 scope.endSetting.customTime=scope.setting.customTime;
                             }
@@ -423,7 +424,7 @@ define(['rd.core', 'rd.controls.ComboSelect', 'rd.controls.TimeSelect', 'css!rd.
                                 inpVal = inpVal.replace(regMM,function(regVal){
                                     return regVal+":";
                                 });
-                               // inpVal=inpVal+":";
+                                // inpVal=inpVal+":";
                             }
                             var regYMDS=/^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\s+/g;
                             if(!regYMDS.test(inpVal)){
@@ -461,6 +462,10 @@ define(['rd.core', 'rd.controls.ComboSelect', 'rd.controls.TimeSelect', 'css!rd.
                         scope.startInpBlur = function(){
                             scope.startTimeBindView.value=scope.startSetting.weekValue || scope.startSetting.value;
                             _displayOnComboSelect(scope.startTimeBindView);
+                            if(scope.range){
+                                scope.endTimeBindView.value=scope.endSetting.weekValue || scope.endSetting.value;
+                                _displayOnComboSelect(scope.endTimeBindView);
+                            }
                             //错误的格式输入导致value=="",返回当前时间
                             if(scope.startSetting.value==""){
                                 scope.startSetting.value="now";
@@ -475,6 +480,10 @@ define(['rd.core', 'rd.controls.ComboSelect', 'rd.controls.TimeSelect', 'css!rd.
                         scope.endInpBlur = function(){
                             scope.endTimeBindView.value=scope.endSetting.weekValue || scope.endSetting.value;
                             _displayOnComboSelect(scope.endTimeBindView);
+                            if(scope.range){
+                                scope.startTimeBindView.value=scope.startSetting.weekValue || scope.startSetting.value;
+                                _displayOnComboSelect(scope.startTimeBindView);
+                            }
                             //错误的格式输入导致value=="",返回当前时间
                             if(scope.endSetting.value==""){
                                 scope.endSetting.value="now";
@@ -498,7 +507,7 @@ define(['rd.core', 'rd.controls.ComboSelect', 'rd.controls.TimeSelect', 'css!rd.
                                 $timeout(function() {
                                     scope.timeContainer.focus = scope.timeOpen = false;
                                     scope.startOpen=scope.endOpen=true;
-                                 }, 0)
+                                }, 0)
                             }
                         }
                     }

@@ -477,6 +477,7 @@ var File = {
         return b;
     },
     delete: function (path) {
+        path = java.FileHelper.fixPath(path, rdk_runtime.application());
         var jFile = new java.File(path);
         if (jFile.isDirectory()) {
             var files = file.list(path, true);

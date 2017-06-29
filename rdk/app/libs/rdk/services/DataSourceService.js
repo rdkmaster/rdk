@@ -436,7 +436,11 @@
                         var config = {
                             method: method,
                             url: _parseUrl(destCondition),
-                            headers: { 'Content-Type': 'application/json' }
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Cache-Control': 'no-cache',
+                                'Pragma': 'no-cache'
+                            }
                         }
                         config[method == DSConst.HTTP_GET ? 'params' : 'data'] = destCondition;
 

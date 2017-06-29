@@ -26,7 +26,7 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                                     {{customTimeItem.label}}\
                                     </span>\
                                 </div>\
-                                <div ng-if="!setting.selectGranularity && !setting.customTime" class="rdk-time-select-padding"></div>\
+                                <div ng-if="setting.padding" class="rdk-time-select-padding"></div>\
                                 <div class="rdk-time-select-module" rdk-scroll>\
                                     <input ng-show="false" ng-model="setting.value"  type="text">\
                                 </div>\
