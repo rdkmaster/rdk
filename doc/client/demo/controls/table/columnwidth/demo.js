@@ -12,8 +12,28 @@
                     targets : 0,
                     width : "20%"
                 },{
+                    targets : 1,
+                    width : "10%"
+                },{
                     targets : "extn",
                     width : "40%"
+                },{
+                    title : "编辑列",
+                    render : "<a style='cursor:pointer' ng-click='appScope.click(item)'>点击</a>"
+                },{
+                    targets : 3,
+                    visible : false
+                },{
+                    targets : 4,
+                    visible : false
+                },{
+                    targets:"position",
+                    render:function(item){
+                        if(item.position == "Accountant")
+                            return "<p style='color:red'>"+item.position+"</p>";
+                        else
+                            return item.position;
+                    }
                 }
             ]
         }

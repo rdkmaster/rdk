@@ -604,6 +604,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     tableElement.setAttribute("mode","resizeMode");
                     tableElement.setAttribute("id","rdkTable{{$id}}");
                     tableElement.style.tableLayout="fixed";
+                    tableElement.classList.add("resize");
                     tableElementB.classList.add("resize-"+"rdkTable{{$id}}");
                     tableElementB.style.tableLayout="fixed";
                 }
@@ -1177,15 +1178,32 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         var hasHandeLastTh=false;
 
                         function _fixedTableHead(){
+                            var tHeadThs =  element[0].querySelectorAll("table.rdk-table-head>thead>tr>th");
+                            var tBodyTds;
                             if(!!attrs.resize && attrs.resize!=""){
-                                isIE && ieScrollWidth();
-                                tHeadBox.style.width=Utils.getStyle(tableWrap,"width");
+                                if(isIE){
+                                    ieScrollWidth();
+                                    tHeadBox.style.backgroundColor="transparent";
+                                }
+                                //表体容器是固定宽度，把表头容器也固定宽度
+                                var tableWrapWid = $(tableWrap).width();
+                                var tHeadBoxWid = $(tHeadBox).width();
+                                if(tHeadBoxWid>tableWrapWid){
+                                    $(tHeadBox).width(tableWrapWid);
+                                }
+                                var theadColWidths = Array.prototype.map.call(tHeadThs, function(obj) {
+                                    return $(obj).width();
+                                });
+                                //表头th width copy-->tbody td ,百分比-->px
+                                tBodyTds =  element[0].querySelectorAll("table.rdk-table-body>tbody>tr:first-child>td");
+                                Array.prototype.map.call(tBodyTds, function(colObj,index) {
+                                    $(colObj).width(theadColWidths[index]);
+                                });
                                 _reSetTableAddHeaders(tHeadBox,tableHead); //多级表头
                                 return
                             }
                             if(!scope.noHeader){
-                                var tHeadThs =  element[0].querySelectorAll("table.rdk-table-head>thead>tr>th");
-                                var tBodyTds =  element[0].querySelectorAll("table.rdk-table-body>thead>tr>th");
+                                tBodyTds =  element[0].querySelectorAll("table.rdk-table-body>thead>tr>th");
                                 var tBodyTdsDate =  element[0].querySelectorAll("table.rdk-table-body>tbody>tr:first-child>td");
                                 var colWidths = Array.prototype.map.call(tBodyTds, function(obj) {
                                     return Utils.getStyle(obj,"width");
