@@ -77,8 +77,11 @@
 .rdk-table-module .rdk-table.resize > thead > tr > th, .rdk-table-module .rdk-table.resize > thead > tr > th >div{
     overflow: visible;
 }
+.rdk-table-module .rdk-table > thead div.rdk-table-custom-header {
+    vertical-align: middle;
+}
 .rdk-table-module .rdk-table-head-box{
-    height: 250px;
+    height: 243px;
 }
 .rdk-table-module .rdk-table-head{
     position: absolute;top:0;
