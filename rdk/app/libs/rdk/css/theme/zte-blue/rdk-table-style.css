@@ -1,4 +1,4 @@
-.rdk-table-module {
+﻿.rdk-table-module {
     position: relative;
     margin: 0 0;
 }
@@ -84,13 +84,12 @@
 .rdk-table-module .rdk-table > thead > tr > th {
     text-align: center;
     font-weight: normal;
-    padding: 5px 8px;
+    height: 32px;
+    padding: 0 8px;
 }
 .rdk-table-module .rdk-table > thead div.rdk-table-custom-header{
     display: inline-block;
-}
-.rdk-table-module .rdk-table tr {
-    line-height: 20px;
+    vertical-align: middle;
 }
 .rdk-table-module .rdk-table > tbody > tr > td {
     text-align: center;
@@ -208,9 +207,16 @@
     color: gray;
 }
 /*表格横纵网格线*/
+.rdk-table-module .rdk-table{
+    border-left: 1px solid #e5e5e5;
+}
 .rdk-table-module .rdk-table > thead > tr > th,
 .rdk-table-module .rdk-table > tbody > tr > td {
     border: 1px solid #e5e5e5;
+    border-left: 0;/* td上去掉border-left,减少列对齐误差*/
+}
+.rdk-table-module .rdk-table > tbody > tr:nth-of-type(2) > td {
+    border-top: 0;
 }
 .rdk-table-module .rdk-table tfoot tr{
     background-color: #FFFFFF;
@@ -237,6 +243,9 @@
     background-color:  #e2eef9;
 }
 .rdk-table-module .rdk-table > tbody > tr>td.selected-row-hover-td{
+    background-color:  #e2eef9;
+}
+.rdk-table-module .rdk-table.rdk-table-simple > tbody > tr.rowTr:hover{
     background-color:  #e2eef9;
 }
 .rdk-table-module .count {
@@ -403,10 +412,10 @@ i.regular_right,i.regular_left{
     border:none;
 }
 .rdk-theme-zte-vmax .rdk-table-module .rdk-table > tbody > tr > td {
-    padding: 5px 14px;
+    padding: 5px 12px;
 }
 .rdk-theme-zte-vmax .rdk-table-module .rdk-table > thead> tr > th {
-    padding: 5px 14px;
+    padding: 5px 12px;
 }
 .rdk-theme-zte-vmax .rdk-table-module .rdk-table tr{
     border-bottom: 1px solid #dcdcdc;
@@ -435,6 +444,48 @@ i.regular_right,i.regular_left{
     float: left;
 }
 /* vmax :3.0 风格 end */
+.rdk-table-module .wrapper{
+    width: 100%;
+
+}
+.rdk-table-module .wrapper,.rdk-table-module .rdk-table-head-box{
+    /*padding:0 1px*/
+}
+.rdk-table-module .rdk-table-head-box{
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+.rdk-table-module table:not(.resize).rdk-table-head{
+    table-layout: fixed;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+.rdk-table-module .rdk-table-head>thead{
+
+}
+.rdk-table-module .rdk-table-body{
+    margin-top: -33px;
+}
+.rdk-table-module .rdk-table-body.resize{
+    margin-top: 0;
+}
+.rdk-table-module .rdk-table-body>thead>tr{
+    overflow: hidden;
+}
+.rdk-table-module .rdk-table-body .table-first-row>td{
+    height: 0 !important;
+    border-top: 0!important;
+    border-bottom: 0!important;
+    padding-top: 0!important;
+    padding-bottom: 0!important;
+}
+.rdk-table-module .rdk-table-head> thead > tr > th,
+.rdk-table-module .rdk-table-body> tbody > tr > td> div >div{
+
+}
 
 /* table col resizeable start */
 /* sticky-thead 是指浮动表头的样式 */
@@ -442,6 +493,7 @@ i.regular_right,i.regular_left{
 .rdk-table-module .rdk-table.resize + .rdk-table.sticky-thead{
     table-layout: fixed;
 }
+.rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize > tbody > tr:first-child>td,
 .rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize > thead > tr > th,
 .rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize + .rdk-table.sticky-thead > thead > tr > th{
     border-right: 1px solid #e6e6e6;
@@ -451,10 +503,53 @@ i.regular_right,i.regular_left{
     border-right: none;
 }
 .rdk-table-module .rdk-table.resize > thead > tr > th,
+.rdk-table-module .rdk-table.resize > thead > tr > th >div,
 .rdk-table-module .rdk-table.resize + .rdk-table.sticky-thead > thead > tr > th,
 .rdk-table-module .rdk-table.resize > tbody > tr > td > div >div{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.rdk-table-module .rdk-table.resize > tbody > tr > td,
+.rdk-table-module .rdk-table.resize > tbody > tr > td > div,
+.rdk-table-module .rdk-table.resize > tbody > tr > td > div >div{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 /* table col resizeable end */
+
+/*兼容IE11 : css rule sets go here */
+@media screen and (min-width:0\0) {
+    /*css 解决IE列无法对齐，和滚动条占据宽度的问题 */
+    .rdk-table-module  .wrapper{
+       /*padding-right: 17px;*/
+    }
+    .rdk-table-module  .rdk-table-head-box{
+        /*overflow-y: scroll;*/
+        background-color: #eee;
+    }
+    .rdk-table-module .rdk-table-head:not(.resize){
+        /*17px == 滚动条宽度 ：表格总宽度小于容器时有效*/
+        width: calc(100% - 17px);
+    }
+    .rdk-table-module .rdk-table-body{
+       
+    }
+    .rdk-table-module .wrapper,.rdk-table-module .rdk-table-head-box{
+        /*padding:0 1px 0 2px;*/
+    }
+    .rdk-table-module .rdk-table-head-box{
+        /*background-color: #eee;*/
+        /*margin-left: 2px;*/
+        /*padding-right: 0;*/
+    }
+    .rdk-table-module .rdk-table > thead > tr > th{
+        /*padding: 0; border:0;*/
+    }
+    .rdk-table-module .rdk-table > tbody > tr > td{
+        /*padding: 0;*/
+        /*border:0;*/
+    }
+}

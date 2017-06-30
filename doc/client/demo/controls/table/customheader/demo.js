@@ -68,12 +68,13 @@
                     },
                     targets : 6,
                     sortable: true,
+                    width: 320,
                     render : '<a ng-click="appScope.click(item)" href="javascript:void(0)">点击</a>'
                 }
             ]
         };
         $timeout(function(){//弹出框开关及过滤图标亮灭
-            $(".pticon").click(function(e){
+            $(".pticon").click(function(event){
                 if($(this).next().is($(".clhide"))){
                     $(".selectorContent").addClass("clhide");
                     $(this).next().removeClass("clhide");
@@ -87,7 +88,7 @@
                         $(this).addClass("colorGray");
                     }
                 }
-
+                return false
             })
         },500);
         $(document).mouseup(function(e) {//点击任何弹出框外的地方可关闭弹出框

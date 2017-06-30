@@ -29,8 +29,6 @@
         ];
 
         scope.clear = function() {
-          scope.data.header = [];
-          scope.data.field = ["name", "position", "salary", "start_date", "office", "extn"];
           scope.data.data = [ ];
         };
 

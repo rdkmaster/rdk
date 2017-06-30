@@ -365,17 +365,18 @@
             _isNgHide && element.classList.add("ng-hide");
             return { width: _width, height: _height };
         };
-
+        this.isIEFlag = this.isIE();
         this.getStyle = function(element, styleName) {
             var result = element.style[styleName] ? element.style[styleName] : element.currentStyle ? element.currentStyle[styleName] : window.getComputedStyle(element, null)[styleName];
-            //ie下有可能会返回 auto.......
+            // 注意IE坑：ie直接返回计算后的样式，计算后的样式IE盒子模型不是w3c标准模型还是有小数点误差
+            //ie下有可能会返回 auto.......  返回offsetWidth..会有小数点误差
             if( (styleName =="width" || styleName =="height") && result =="auto"){
                 var property="offset"+styleName[0].toUpperCase()+styleName.slice(1);
-                return element[property]+"px"
+                return element[property]+"px";
             }
             return result
         };
-
+        
         this.setStyle = function(element, obj){
             if (angular.isObject(obj)) {
                 for (var property in obj) {

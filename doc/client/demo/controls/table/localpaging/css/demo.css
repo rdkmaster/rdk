@@ -1,7 +1,6 @@
 /*使用cunstom-scroll定义滚动条，容器的宽高需要设置在此节点上 start*/
 .m-table .rdk-table-module .wrapper{
-    max-height: 520px;
-    border: 1px solid #e2e2e2;
+    max-height: 320px;
 }
 /*使用cunstom-scroll定义滚动条，容器的宽高需要设置在此节点上 end*/
 .m-table{
