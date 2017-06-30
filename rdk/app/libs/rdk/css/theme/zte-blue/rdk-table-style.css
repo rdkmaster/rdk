@@ -89,7 +89,7 @@
 }
 .rdk-table-module .rdk-table > thead div.rdk-table-custom-header{
     display: inline-block;
-    vertical-align: bottom;
+    vertical-align: middle;
 }
 .rdk-table-module .rdk-table > tbody > tr > td {
     text-align: center;
