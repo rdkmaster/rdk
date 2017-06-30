@@ -89,7 +89,7 @@
 }
 .rdk-table-module .rdk-table > thead div.rdk-table-custom-header{
     display: inline-block;
-    vertical-align: bottom;
+    vertical-align: middle;
 }
 .rdk-table-module .rdk-table > tbody > tr > td {
     text-align: center;
@@ -207,9 +207,13 @@
     color: gray;
 }
 /*表格横纵网格线*/
+.rdk-table-module .rdk-table{
+    border-left: 1px solid #e5e5e5;
+}
 .rdk-table-module .rdk-table > thead > tr > th,
 .rdk-table-module .rdk-table > tbody > tr > td {
     border: 1px solid #e5e5e5;
+    border-left: 0;/* td上去掉border-left,减少列对齐误差*/
 }
 .rdk-table-module .rdk-table > tbody > tr:nth-of-type(2) > td {
     border-top: 0;
