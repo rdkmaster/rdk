@@ -73,7 +73,14 @@
             ]
         };
         $timeout(function(){//弹出框开关及过滤图标亮灭
-            $(".pticon").click(function(e){
+            //$(".pticon").each(function(){
+            //    $(this).next().css({
+            //        "top" :$(this).offset().top,
+            //        "left":$(this).offset().left
+            //    })
+            //})
+            $(".pticon").click(function(event){
+                console.log( $(this).offset().top,$(this).offset().left)
                 if($(this).next().is($(".clhide"))){
                     $(".selectorContent").addClass("clhide");
                     $(this).next().removeClass("clhide");
@@ -87,7 +94,6 @@
                         $(this).addClass("colorGray");
                     }
                 }
-
             })
         },500);
         $(document).mouseup(function(e) {//点击任何弹出框外的地方可关闭弹出框

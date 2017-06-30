@@ -68,3 +68,9 @@
     position: relative;
     z-index: 99999;
 }
+.rdk-table-module table:not(.resize).rdk-table-head {
+    z-index:1;
+}
+.rdk-table-module .wrapper{
+    height: 403px;
+}
