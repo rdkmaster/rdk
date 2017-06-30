@@ -74,3 +74,15 @@
 .rdk-table-module .wrapper{
     height: 403px;
 }
+.rdk-table-module .rdk-table.resize > thead > tr > th, .rdk-table-module .rdk-table.resize > thead > tr > th >div{
+    overflow: visible;
+}
+.rdk-table-module .rdk-table-head-box{
+    height: 250px;
+}
+.rdk-table-module .rdk-table-head{
+    position: absolute;top:0;
+}
+.rdk-table-module .wrapper{
+    margin-top: -210px;
+}
