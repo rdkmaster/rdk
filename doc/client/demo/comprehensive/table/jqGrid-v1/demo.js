@@ -5,8 +5,8 @@
         'css!base/css/rdk-jq-grid-style',
         'css!base/css/jquery-ui',
         'css!base/css/ui.jqgrid',
-        'jquery-grid-i18-cn',
-        'jquery-grid-i18-en'
+        'jquery-grid-i18n-cn',
+        'jquery-grid-i18n-en'
     ];
     var extraModules = [ ];
     var controllerDefination = ['$scope', main];

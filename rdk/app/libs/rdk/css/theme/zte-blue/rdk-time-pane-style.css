@@ -118,7 +118,7 @@
     position: absolute;
     background-color: #fff;
     top: 34px;
-    z-index: 99;
+    z-index: 999;
 }
 .rdk-time-range-module .u-time-select-wrap.time-start{
     left: 0;
@@ -148,6 +148,7 @@
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
     vertical-align: bottom;
+    border-left: 0;
 }
 .rdk-time-range-module .iconfont{
     color: #008fd4;
