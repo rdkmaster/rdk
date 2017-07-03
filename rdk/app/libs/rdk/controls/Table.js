@@ -26,23 +26,25 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
         <div class="clearfix">';
     var fixedTheadTemplte =
         '<div class="rdk-table-head-box">\
-            <table class="rdk-table rdk-table-head">\
-                <thead ng-if="!noHeader">\
-                    <tr>\
-                        <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><span ng-if="checkBoxTitle">{{checkBoxTitle}}</span><input ng-if="!checkBoxTitle" name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
-                        <th ng-repeat="columnDef in columnDefs track by columnDef.targets" \
-                            on-finish-render="tableHeadNgRepeatFinished" \
-                            ng-mouseover="cursorHandler($event, columnDef.sortable)" \
-                            ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)" \
-                            ng-style="{width:columnDef.width}" ng-attr-title="{{columnDef.title}}">\
-                            {{columnDef.title}}\
+         <div class="rdk-table-head-wrap">\
+             <table class="rdk-table rdk-table-head">\
+                 <thead ng-if="!noHeader">\
+                     <tr>\
+                         <th ng-if="addCheckBox && visibleColumnDefsCount!=0"><span ng-if="checkBoxTitle">{{checkBoxTitle}}</span><input ng-if="!checkBoxTitle" name="totalCheckBox" type="checkbox" ng-click="totalCheck(allChecked)" ng-model="allChecked"></th>\
+                         <th ng-repeat="columnDef in columnDefs track by columnDef.targets" \
+                             on-finish-render="tableHeadNgRepeatFinished" \
+                             ng-mouseover="cursorHandler($event, columnDef.sortable)" \
+                             ng-show="columnDef.visible" ng-click="sortHandler($index, columnDef)" \
+                             ng-style="{width:columnDef.width}" ng-attr-title="{{columnDef.title}}">\
+                             {{columnDef.title}}\
                              <i ng-if="columnDef.sortable && !curSortCol($index)" class="rdk-table-icon rdk-table-sort"></i>\
                              <i ng-if="columnDef.sortable && curSortCol($index)" class="rdk-table-icon" ng-class="{true:\'rdk-table-sort-down\',false:\'rdk-table-sort-up\'}[changeSortIconStatus($index)]"></i>\
                          </th>\
-                    </tr>\
-                </thead>\
-            </table>\
-        </div>';
+                     </tr>\
+                 </thead>\
+             </table>\
+         </div>\
+         </div>';
     var tbodyLiteTemplte =
         '<tbody>\
             <tr ng-if="isResize" class="table-first-row"><td ng-if="addCheckBox"></td><td ng-repeat="columnDef in columnDefs track by columnDef.targets" ng-show="columnDef.visible" ng-style="{width:columnDef.width}"></td></tr>\
@@ -1183,7 +1185,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             if(!!attrs.resize && attrs.resize!=""){
                                 if(isIE){
                                     ieScrollWidth();
-                                    tHeadBox.style.backgroundColor="transparent";
                                 }
                                 //表体容器是固定宽度，把表头容器也固定宽度
                                 var tableWrapWid = $(tableWrap).width();
@@ -1197,6 +1198,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 //表头th width copy-->tbody td ,百分比-->px
                                 tBodyTds =  element[0].querySelectorAll("table.rdk-table-body>tbody>tr:first-child>td");
                                 Array.prototype.map.call(tBodyTds, function(colObj,index) {
+                                    $(colObj).width(theadColWidths[index]);
+                                });
+                                Array.prototype.map.call(tHeadThs, function(colObj,index) {
                                     $(colObj).width(theadColWidths[index]);
                                 });
                                 _reSetTableAddHeaders(tHeadBox,tableHead); //多级表头
@@ -1258,22 +1262,13 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 hasHandeLastTh=true;
                             }
                         }
-                        //var tableHeadWid;
-                        //var wid;
+                        var theadWrap=document.querySelector(".rdk-table-head-wrap");
+                        //处理IE滚动占据宽度
                         function ieScrollWidth(){
                             if(hasScroll(tableWrap)){
-                                tHeadBox.style.overflowY="scroll";
-                               // $(tableHead).append("<div style='width:17px;height:32px;'></div>");
-                               // tableHeadWid= !!tableHeadWid?tableHeadWid:Utils.getStyle(tableHead,"width");
-                               // if(tableHeadWid.indexOf("%")!==-1){
-                               //      wid = !!wid?wid:parseFloat(tableHeadWid)/100*tableHead.offsetWidth;
-                               //     tableHead.style.width=wid - 16 +'px';
-                               // }else{
-                               //     tableHead.style.width=tableHeadWid - 16 +'px';
-                               // }
+                                theadWrap.classList.add("thead-padding");
                             }else{
-                                tHeadBox.style.overflowY="hidden";
-                                //tableHead.style.width=Utils.getStyle(tableBody,"width");
+                                theadWrap.classList.remove("thead-padding");
                             }
                         }
                         function hasScroll(el,direction){

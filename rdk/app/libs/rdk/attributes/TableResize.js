@@ -135,8 +135,8 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
                 return;
             }
             //$(table).width($(table).width()/$(table.parentNode).width()*100+"%");
-            //$(table).width('100%');
             $(tableBody).width('100%');
+            $(table).width($(tableBody).width());
 
             ctrlColumns.each(function(index, column){
                 var id = $(column).attr('id');
