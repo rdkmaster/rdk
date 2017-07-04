@@ -73,14 +73,32 @@
                 }
             ]
         };
+        function controlIcon(ele){
+            ele.each(function(){
+                if(!!$(this).find(".selected-item").length){
+                    $(this).prev().removeClass("colorGray");
+                }else{
+                    $(this).prev().addClass("colorGray");
+                }
+            })
+        }
         $timeout(function(){//弹出框开关及过滤图标亮灭
-            $(".pticon").click(function(event){
+            $('.wrapper').scroll(function(event){
+                $(".selectorContent").addClass("clhide");
+                controlIcon($(".selectorContent"))
+            });
+            $(".pticon").click(function(e){
                 if($(this).next().is($(".clhide"))){
                     $(".selectorContent").addClass("clhide");
+                    $(this).next().css({
+                        "top": ($(this).offset().top+15) + "px",
+                        "left": ($(this).offset().left+10) + "px"
+                    });
                     $(this).next().removeClass("clhide");
+                    controlIcon($(".selectorContent"));
                     $(this).removeClass("colorGray");
                 }else{
-                    $(".selectorContent").addClass("clhide")  ;
+                    $(".selectorContent").addClass("clhide");
                     $(this).next().addClass("clhide");
                     if(!!$(this).next().find(".selected-item").length){
                         $(this).removeClass("colorGray");
@@ -91,7 +109,7 @@
                 return false
             })
         },500);
-        $(document).mouseup(function(e) {//点击任何弹出框外的地方可关闭弹出框
+        $(document).mousedown(function(e) {//点击任何弹出框外的地方可关闭弹出框
             var mySelect = $(".userDefined");
             if(!mySelect.is(e.target) && mySelect.has(e.target).length === 0) {
                 if($(".selectorContent:not(.clhide)").length && !$(".selectorContent:not(.clhide)").find(".selected-item").length){
