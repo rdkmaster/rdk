@@ -57,6 +57,10 @@
                     sortable: true
                 },
                 {
+                    targets : 5,
+                    sortable: true,
+                },
+                {
                     title : function(data, target) {
                         $scope.data=data.data;
                         return '<span>自定义列and自定义表头</span>\
@@ -66,21 +70,46 @@
                                     <option value="">-- choose an item --</option>\
                         </select>'
                     },
-                    targets : 6,
-                    sortable: true,
                     width: 320,
                     render : '<a ng-click="appScope.click(item)" href="javascript:void(0)">点击</a>'
                 }
             ]
         };
+        function controlIcon(ele){
+            ele.each(function(){
+                if(!!$(this).find(".selected-item").length){
+                    $(this).prev().removeClass("colorGray");
+                }else{
+                    $(this).prev().addClass("colorGray");
+                }
+            })
+        }
         $timeout(function(){//弹出框开关及过滤图标亮灭
-            $(".pticon").click(function(event){
+            $('.wrapper').scroll(function(event){
+                if(!!$(".selectorContent:not(.clhide)").length) {
+                    $(".selectorContent").addClass("clhide");
+                    controlIcon($(".selectorContent"))
+                }
+            });
+
+            $(document).scroll(function(event){
+                if(!!$(".selectorContent:not(.clhide)").length) {
+                    $(".selectorContent").addClass("clhide");
+                    controlIcon($(".selectorContent"))
+                }
+            });
+            $(".pticon").click(function(e){
                 if($(this).next().is($(".clhide"))){
                     $(".selectorContent").addClass("clhide");
+                    $(this).next().css({
+                        "top": ($(this).offset().top+15-$(document).scrollTop()) + "px",
+                        "left": ($(this).offset().left+10-$(document).scrollLeft()) + "px"
+                    });
                     $(this).next().removeClass("clhide");
+                    controlIcon($(".selectorContent"));
                     $(this).removeClass("colorGray");
                 }else{
-                    $(".selectorContent").addClass("clhide")  ;
+                    $(".selectorContent").addClass("clhide");
                     $(this).next().addClass("clhide");
                     if(!!$(this).next().find(".selected-item").length){
                         $(this).removeClass("colorGray");
@@ -91,7 +120,7 @@
                 return false
             })
         },500);
-        $(document).mouseup(function(e) {//点击任何弹出框外的地方可关闭弹出框
+        $(document).mousedown(function(e) {//点击任何弹出框外的地方可关闭弹出框
             var mySelect = $(".userDefined");
             if(!mySelect.is(e.target) && mySelect.has(e.target).length === 0) {
                 if($(".selectorContent:not(.clhide)").length && !$(".selectorContent:not(.clhide)").find(".selected-item").length){

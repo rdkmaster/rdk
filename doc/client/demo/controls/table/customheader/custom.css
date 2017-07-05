@@ -37,10 +37,8 @@
     color: #333;
 }
  .selectorContent {
-     position: absolute;
-     top: 16px;
-     left: 100%;
-     z-index: 99999;
+     position: fixed;
+     z-index: 999999;
 }
 .userDefined {
     position: relative;
@@ -74,18 +72,15 @@
 .rdk-table-module .wrapper{
     height: 403px;
 }
-.rdk-table-module .rdk-table.resize > thead > tr > th, .rdk-table-module .rdk-table.resize > thead > tr > th >div{
-    overflow: visible;
-}
 .rdk-table-module .rdk-table > thead div.rdk-table-custom-header {
     vertical-align: middle;
 }
-.rdk-table-module .rdk-table-head-box{
-    height: 243px;
-}
-.rdk-table-module .rdk-table-head{
-    position: absolute;top:0;
-}
-.rdk-table-module .wrapper{
-    margin-top: -210px;
-}
+/*.rdk-table-module .rdk-table-head-box{*/
+    /*height: 243px;*/
+/*}*/
+/*.rdk-table-module .rdk-table-head{*/
+    /*position: absolute;top:0;*/
+/*}*/
+/*.rdk-table-module .wrapper{*/
+    /*margin-top: -210px;*/
+/*}*/
