@@ -57,6 +57,10 @@
                     sortable: true
                 },
                 {
+                    targets : 5,
+                    sortable: true,
+                },
+                {
                     title : function(data, target) {
                         $scope.data=data.data;
                         return '<span>自定义列and自定义表头</span>\
@@ -66,8 +70,6 @@
                                     <option value="">-- choose an item --</option>\
                         </select>'
                     },
-                    targets : 6,
-                    sortable: true,
                     width: 320,
                     render : '<a ng-click="appScope.click(item)" href="javascript:void(0)">点击</a>'
                 }
@@ -84,15 +86,24 @@
         }
         $timeout(function(){//弹出框开关及过滤图标亮灭
             $('.wrapper').scroll(function(event){
-                $(".selectorContent").addClass("clhide");
-                controlIcon($(".selectorContent"))
+                if(!!$(".selectorContent:not(.clhide)").length) {
+                    $(".selectorContent").addClass("clhide");
+                    controlIcon($(".selectorContent"))
+                }
+            });
+
+            $(document).scroll(function(event){
+                if(!!$(".selectorContent:not(.clhide)").length) {
+                    $(".selectorContent").addClass("clhide");
+                    controlIcon($(".selectorContent"))
+                }
             });
             $(".pticon").click(function(e){
                 if($(this).next().is($(".clhide"))){
                     $(".selectorContent").addClass("clhide");
                     $(this).next().css({
-                        "top": ($(this).offset().top+15) + "px",
-                        "left": ($(this).offset().left+10) + "px"
+                        "top": ($(this).offset().top+15-$(document).scrollTop()) + "px",
+                        "left": ($(this).offset().left+10-$(document).scrollLeft()) + "px"
                     });
                     $(this).next().removeClass("clhide");
                     controlIcon($(".selectorContent"));
