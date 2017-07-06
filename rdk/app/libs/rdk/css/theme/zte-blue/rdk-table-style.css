@@ -245,7 +245,7 @@
 .rdk-table-module .rdk-table > tbody > tr>td.selected-row-hover-td{
     background-color:  #e2eef9;
 }
-.rdk-table-module .rdk-table.rdk-table-simple > tbody > tr.rowTr:hover{
+.rdk-table-module .rdk-table.rdk-table-simple > tbody > tr.rowTr:not(.selected-row):hover{
     background-color:  #e2eef9;
 }
 .rdk-table-module .count {
@@ -518,6 +518,8 @@ i.regular_right,i.regular_left{
     white-space: nowrap;
 }
 
+.rdk-table-module .rdk-table.resize >thead th:last-child,
+.rdk-table-module .rdk-table.resize >tbody td:last-child{width:auto;}
 /* table col resizeable end */
 
 /*兼容IE11 : css rule sets go here */
@@ -526,9 +528,12 @@ i.regular_right,i.regular_left{
     .rdk-table-module  .wrapper{
        /*padding-right: 17px;*/
     }
-    .thead-padding{
+    .rdk-table-head-wrap{
         float: left;/*必要:浮动才能撑开表格宽度*/
         padding-right: 17px; /*17==滚动条宽度*/
+    }
+    .rdk-table-module .wrapper,.rdk-table-module  .rdk-table-head-box{
+        width: calc(100% + 1px); /*border 1px 刚好消除x滚动条*/
     }
     .rdk-table-module  .rdk-table-head-box{
         /*overflow-y: scroll;*/

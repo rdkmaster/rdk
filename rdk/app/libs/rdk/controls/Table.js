@@ -53,7 +53,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 ng-class="{\'selected-row\':ifRowHighLight(item,\'click\')}" \
                 ng-dblclick="dbClickHandler(item,$index)">\
                 <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="item.checked"></td>\
-                <td ng-repeat="columnDef in columnDefs" \
+                <td ng-repeat="columnDef in columnDefs track by $index" \
                     ng-show="columnDef.visible" \
                     class="{{columnDef.class}}" \
                     rdk-column-parser-lite>{{item[columnDef.data]}}</td>\
@@ -585,10 +585,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                 if (tAttributes.pagingType !== "server" && tAttributes.pagingType !== "server-auto") {
                     tElement.find("rdk-paging").attr("count", filterCount);
-                    tElement[0].querySelector(".rowTr").setAttribute("ng-repeat", "item in $filtered = (destData" + rowFilter + ")" + pagingFilter + searchFieldFilter);
+                    tElement[0].querySelector(".rowTr").setAttribute("ng-repeat", "item in $filtered = (destData" + rowFilter + ")" + pagingFilter + searchFieldFilter + "  track by item.$index");
                 } else {
                     tElement.find("rdk-paging").attr("count", "data.paging.totalRecord");
-                    tElement[0].querySelector(".rowTr").setAttribute("ng-repeat", "item in $filtered = destData");
+                    tElement[0].querySelector(".rowTr").setAttribute("ng-repeat", "item in $filtered = destData track by $index");
                 }
 
                 if(tAttributes.customScroll=="rdk-scroll" && tAttributes.rdkScroll == null){
@@ -598,7 +598,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 if(tAttributes.pageNumber === "-1"){
                     tElement.find("rdk-paging").attr("page-goto", true);
                 }
-
+                // set default resize mode : OverflowResizer
+                if(tAttributes.resize==""){
+                    tAttributes.resize="OverflowResizer";
+                }
                 if(!!tAttributes.resize){
                     var tableElement=tElement[0].querySelector(".rdk-table.rdk-table-head");
                     var tableElementB=tElement[0].querySelector(".rdk-table.rdk-table-body");
@@ -1150,6 +1153,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 scope.searchPrompt="Total "+ scope.data.data.length + " Records";
                             }
                             if(attrs.resize && isFirstBroadCast){
+                                if(scope.setting && scope.setting.additionalHeader){
+                                    console.warn("setting additionalHeader function resize is not supported");
+                                    return
+                                }
                                 EventService.broadcast('rdkTable_'+scope.$id, EventTypes.READY,null);
                                 isFirstBroadCast=false;
                             }
@@ -1180,12 +1187,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         var hasHandeLastTh=false;
 
                         function _fixedTableHead(){
+                            debugger;
                             var tHeadThs =  element[0].querySelectorAll("table.rdk-table-head>thead>tr>th");
                             var tBodyTds;
                             if(!!attrs.resize && attrs.resize!=""){
-                                if(isIE){
-                                    ieScrollWidth();
-                                }
                                 //表体容器是固定宽度，把表头容器也固定宽度
                                 var tableWrapWid = $(tableWrap).width();
                                 var tHeadBoxWid = $(tHeadBox).width();
@@ -1198,9 +1203,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 //表头th width copy-->tbody td ,百分比-->px
                                 tBodyTds =  element[0].querySelectorAll("table.rdk-table-body>tbody>tr:first-child>td");
                                 Array.prototype.map.call(tBodyTds, function(colObj,index) {
-                                    $(colObj).width(theadColWidths[index]);
-                                });
-                                Array.prototype.map.call(tHeadThs, function(colObj,index) {
                                     $(colObj).width(theadColWidths[index]);
                                 });
                                 _reSetTableAddHeaders(tHeadBox,tableHead); //多级表头
@@ -1249,7 +1251,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             tableWrap.addEventListener("scroll",scrollLeftHandle,false);
                             window.addEventListener("resize",_fixedTableHead,false);
                         }
-                      
+
                         function scrollLeftHandle(event) {
                             var target = event.target || event.srcElement;
                             tHeadBox.scrollLeft=target.scrollLeft;
@@ -1260,23 +1262,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 lastTh.hasScroll=17;
                                 tHeadBox.scrollLeft=target.scrollLeft;
                                 hasHandeLastTh=true;
-                            }
-                        }
-                        var theadWrap=document.querySelector(".rdk-table-head-wrap");
-                        //处理IE滚动占据宽度
-                        function ieScrollWidth(){
-                            if(hasScroll(tableWrap)){
-                                theadWrap.classList.add("thead-padding");
-                            }else{
-                                theadWrap.classList.remove("thead-padding");
-                            }
-                        }
-                        function hasScroll(el,direction){
-                            direction = direction || "vertical";
-                            if(direction==="vertical"){
-                                return el.scrollHeight > el.clientHeight +2; //2px border
-                            }else{
-                                return el.scrollWidth > el.clientWidth +2;
                             }
                         }
                     };
