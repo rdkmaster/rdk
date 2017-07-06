@@ -173,12 +173,18 @@ define(['rd.core', 'rd.controls.ComboSelect', 'rd.controls.TimeSelect', 'css!rd.
                     }
                     //显示时间控件的value到视图上
                     function _displayOnComboSelect(){
-                        if(isInpTime){
-                            return
-                        }
                         var args = [].slice.call(arguments);
                         for (var i=0;i<args.length;i++){
-                            rdk[args[i].comboId].setValue(args[i].value);
+                            if(isInpTime){
+                                if(angular.isArray(scope.setting.value)){
+                                    scope.setting.value[i]=args[i].value;
+                                }else{
+                                    scope.setting.value=args[i].value;
+                                }
+                                //return
+                            }else{
+                                rdk[args[i].comboId].setValue(args[i].value);
+                            }
                         }
                     }
                     //刷新setting
@@ -460,11 +466,12 @@ define(['rd.core', 'rd.controls.ComboSelect', 'rd.controls.TimeSelect', 'css!rd.
 
                         //失去焦点更新
                         scope.startInpBlur = function(){
+                            debugger;
                             scope.startTimeBindView.value=scope.startSetting.weekValue || scope.startSetting.value;
                             _displayOnComboSelect(scope.startTimeBindView);
                             if(scope.range){
                                 scope.endTimeBindView.value=scope.endSetting.weekValue || scope.endSetting.value;
-                                _displayOnComboSelect(scope.endTimeBindView);
+                                _displayOnComboSelect(scope.startTimeBindView,scope.endTimeBindView);
                             }
                             //错误的格式输入导致value=="",返回当前时间
                             if(scope.startSetting.value==""){
@@ -482,7 +489,7 @@ define(['rd.core', 'rd.controls.ComboSelect', 'rd.controls.TimeSelect', 'css!rd.
                             _displayOnComboSelect(scope.endTimeBindView);
                             if(scope.range){
                                 scope.startTimeBindView.value=scope.startSetting.weekValue || scope.startSetting.value;
-                                _displayOnComboSelect(scope.startTimeBindView);
+                                _displayOnComboSelect(scope.startTimeBindView,scope.endTimeBindView);
                             }
                             //错误的格式输入导致value=="",返回当前时间
                             if(scope.endSetting.value==""){
