@@ -1187,7 +1187,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         var hasHandeLastTh=false;
 
                         function _fixedTableHead(){
-                            debugger;
                             var tHeadThs =  element[0].querySelectorAll("table.rdk-table-head>thead>tr>th");
                             var tBodyTds;
                             if(!!attrs.resize && attrs.resize!=""){

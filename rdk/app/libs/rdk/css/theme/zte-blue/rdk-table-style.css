@@ -541,7 +541,7 @@ i.regular_right,i.regular_left{
     }
     .rdk-table-module .rdk-table-head:not(.resize){
         /*17px == 滚动条宽度 ：表格总宽度小于容器时有效*/
-        /*width: calc(100% - 17px);*/
+        width: calc(100% - 17px);
     }
     .rdk-table-module .rdk-table-body{
        
