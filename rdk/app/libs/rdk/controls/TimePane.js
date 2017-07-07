@@ -466,7 +466,6 @@ define(['rd.core', 'rd.controls.ComboSelect', 'rd.controls.TimeSelect', 'css!rd.
 
                         //失去焦点更新
                         scope.startInpBlur = function(){
-                            debugger;
                             scope.startTimeBindView.value=scope.startSetting.weekValue || scope.startSetting.value;
                             _displayOnComboSelect(scope.startTimeBindView);
                             if(scope.range){
