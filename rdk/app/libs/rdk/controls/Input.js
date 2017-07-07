@@ -75,8 +75,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.Input','css!rd.styles.Fon
                         changeShowDelete(ngModel.$viewValue);
                     };
                     function changeShowDelete(value) {
-                        if (value) scope.showDelete = true;
-                        else scope.showDelete = false;
+                        scope.showDelete = !!value && !scope.readonly;
                     }
 
                     iconElement.onclick = function(event) {
