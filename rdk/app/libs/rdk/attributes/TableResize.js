@@ -135,8 +135,8 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
                 return;
             }
             //$(table).width($(table).width()/$(table.parentNode).width()*100+"%");
-            //$(table).width('100%');
             $(tableBody).width('100%');
+            $(table).width($(tableBody).width());
 
             ctrlColumns.each(function(index, column){
                 var id = $(column).attr('id');
@@ -203,22 +203,22 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
                 // On every mouse move, calculate the new width
                 $(window).mousemove(calculateWidthEvent(column, orgX, orgWidth, optional))
 
-                // Stop dragging as soon as the mouse is released
+                iframeBindMouseUp(window.top,handle);
 
-                if(window.top !== window.self){
-                    // window.top.addEventListener("mouseup",unbindEvent(handle));
-                    $(window.top).one('mouseup', unbindEvent(handle))
-                }else{
-                    for(var i= 0,winLen = window.frames.length;i<winLen;i++){
-                        window.frames[i] && window.frames[i].addEventListener("mouseup",unbindEvent(handle));
-                    }
-                }
                // window.addEventListener("mouseup",unbindEvent(handle));
-                 $(window).one('mouseup', unbindEvent(handle))
+               //  $(window).one('mouseup', unbindEvent(handle))
 
             })
         }
-
+        //拖动到其它iframe页面拖动无法释放
+        function iframeBindMouseUp(curWindow,handle){
+            if(!!curWindow){
+                $(curWindow).one('mouseup', unbindEvent(handle));
+                for(var i= 0,winLen = curWindow.frames.length;i<winLen;i++){
+                    iframeBindMouseUp(curWindow.frames[i],handle);
+                }
+            }
+        }
         function calculateWidthEvent(column, orgX, orgWidth, optional) {
             return function(event) {
                 // Get current mouse position
@@ -258,7 +258,7 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
 
 
         function unbindEvent(handle) {
-            console.log("unbindEvent");
+
             // Event called at end of drag
             return function( /*event*/ ) {
                 $(handle).removeClass('active');
@@ -268,6 +268,7 @@ define(['angular', 'rd.core','css!rd.styles.tableResize'], function(){
                 resizer.onEndDrag();
 
                 saveColumnSizes();
+              //$(cwindow).unbind('mouseup');
             }
         }
 

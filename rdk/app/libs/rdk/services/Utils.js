@@ -289,9 +289,13 @@
             if(typeof object ==="object" && angular.isArray(arr)){
                 for(var i=0,len=arr.length ; i<len ; i++)
                 {
+                    //angular.equals 进行对象比较时把 "$"开头的属性给过滤掉了
                     if(!isHash && angular.equals(arr[i],object)){
                         return i
-                    }else if( isHash && arr[i].$$hashKey === object.$$hashKey){
+                    }
+                    //ng-repeat track by 后 数组里每个对象元素不会再加了一个 $$hashKey 的属性 这个key由ng内部生成
+                    //else if( isHash && arr[i].$$hashKey === object.$$hashKey){
+                    else if( isHash && arr[i].$index === object.$index){ //$index是针对表格数据生成的行标识
                         return i
                     }
                 }
