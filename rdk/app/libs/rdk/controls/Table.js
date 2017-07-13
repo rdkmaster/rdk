@@ -987,7 +987,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         }
 
                         scope.sortHandler = function(iCol, columnDef) {
-                            debugger;
                             if (!columnDef.sortable) return;
                             if(curSortIndex!==iCol){
                                 sortIconStatus=true;
