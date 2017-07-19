@@ -7,6 +7,12 @@ import com.zte.vmax.rdk.log.AppLogger;
 import com.zte.vmax.rdk.util.RdkUtil;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import jdk.nashorn.internal.runtime.Undefined;
+import jxl.*;
+import jxl.format.UnderlineStyle;
+import jxl.read.biff.BiffException;
+import jxl.write.*;
+import org.json.JSONObject;
+import org.json.XML;
 
 import java.io.*;
 import java.lang.Boolean;
@@ -16,13 +22,6 @@ import java.nio.channels.FileChannel;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import jxl.*;
-import jxl.format.UnderlineStyle;
-import jxl.read.biff.BiffException;
-import jxl.write.*;
-import org.json.JSONObject;
-import org.json.XML;
 
 
 /**
@@ -274,9 +273,17 @@ public class FileHelper extends AbstractAppLoggable {
         List<String[]> result = null;
         try {
             result = new CSVReader(reader, separator, quoteChar, escapeChar, line, strictQuotes, ignoreLeadingWhiteSpace, keepCR).readAll();
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             logger.error("read csv file error:" + ex);
             return null;
+        }finally {
+            try {
+                if (reader != null)
+                    reader.close();
+            }catch (IOException e){
+                logger.error("close stream error:" + e);
+            }
         }
         return RdkUtil.toJsonString(result);
 
@@ -683,6 +690,72 @@ public class FileHelper extends AbstractAppLoggable {
 
         return cellStylesMap;
     }
+    // 从属性映射表中，找到对应的值, 找不到提供默认值
+    private <T> T getValue4Map(Map<String, Object> option, String key, T defaults){
+        String value = option.get(key) == null ? "" : option.get(key).toString();
+        return value.length() == 0 ? defaults : (defaults instanceof java.lang.Integer ? (T) new Integer(value) :(T)value);
+    }
+
+    private static int compareLeftRight(int left, int right){
+        return left > right ? 1 : (left < right ? -1 : 0);
+    }
+
+    private Comparator<Area> compare =  new Comparator<Area>() {
+        @Override
+        public int compare(Area o1, Area o2) {
+            return compareLeftRight(o1.getStart().getRow(), o2.getStart().getRow()) == 0 ?
+                    compareLeftRight(o1.getStart().getColumn(), o2.getStart().getColumn()) :
+                    compareLeftRight(o1.getStart().getRow(), o2.getStart().getRow());
+        }
+    };
+
+    private  <T> void addAreaData2Map(TreeMap<Area, T> map, ScriptObjectMirror cellpos, T data){
+        map.put(new Area(
+                new CellPosition(getValue4Map(cellpos, "fromCol", Area.DEFAULT_FROM_SIZE), getValue4Map(cellpos, "fromRow", Area.DEFAULT_FROM_SIZE)),
+                new CellPosition(getValue4Map(cellpos,"toCol", Area.DEFAULT_TO_SIZE), getValue4Map(cellpos,"toRow", Area.DEFAULT_TO_SIZE))), data );
+    }
+
+    private <T> T getDataFromArea(TreeMap<Area, T> map, Area area, T deafults){
+        //Area existArea = map.lowerKey(area);
+        Iterator<Map.Entry<Area, T>> iterator = map.entrySet().iterator();
+        while(iterator.hasNext()){
+            Map.Entry<Area, T> value = iterator.next();
+            if(area.getStart().getRow() >= value.getKey().getStart().getRow() && area.getEnd().getRow() <= value.getKey().getEnd().getRow() &&
+               area.getStart().getColumn() >= value.getKey().getStart().getColumn() && area.getEnd().getColumn() <= value.getKey().getEnd().getColumn())
+                return value.getValue();
+        }
+        return deafults;
+    }
+
+    private TreeMap<Area, FormatDetail> parseFormatToMap(HashMap<String, Object> option, WritableSheet sheet){
+        TreeMap<Area, FormatDetail> map = new TreeMap<Area, FormatDetail>(compare);
+        if (isOpsContainKeyOfSheet(sheet, option, "format")){
+            ScriptObjectMirror formatMirror = (ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get("format");
+            for (int i = 0; i < formatMirror.size(); i++) {
+                ScriptObjectMirror oneCellFormat = (ScriptObjectMirror) formatMirror.get(Integer.toString(i));
+                addAreaData2Map(map, (ScriptObjectMirror) oneCellFormat.get("cell"), new FormatDetail(getValue4Map(oneCellFormat, "type",
+                        FormatDetail.STRING_FORMAT), getValue4Map(oneCellFormat, "detail", FormatDetail.DEFAULT_NUMBER_DETAIL)));
+            }
+        }
+        return map;
+    }
+
+    private TreeMap<Area, List<?>> parseDefaultVaueListToMap(HashMap<String, Object> option, WritableSheet sheet){
+        TreeMap<Area, List<?>> map = new TreeMap<Area, List<?>>(compare);
+        if (isOpsContainKeyOfSheet(sheet, option, "validation")){
+            ScriptObjectMirror validationMirror = (ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get("validation");
+            for (int i = 0; i < validationMirror.size(); i++) {
+                ScriptObjectMirror oneCellFormat = (ScriptObjectMirror) validationMirror.get(Integer.toString(i));
+                ScriptObjectMirror list =(ScriptObjectMirror) oneCellFormat.get("list");
+                List<String> validationList = new ArrayList<String>();
+                for(int valueIndex = 0; valueIndex < list.size(); valueIndex ++) {
+                    validationList.add(list.get(Integer.toString(valueIndex)).toString());
+                }
+                addAreaData2Map(map, (ScriptObjectMirror) oneCellFormat.get("cell"), validationList);
+            }
+        }
+        return map;
+    }
 
     private boolean writeEXCELRow(WritableSheet sheet, int rowIndex, ScriptObjectMirror rowContent, ScriptObjectMirror excludeIndexes, HashMap<String, Object> option) {
         if (!likeArray(rowContent)) {
@@ -690,6 +763,8 @@ public class FileHelper extends AbstractAppLoggable {
         }
         //解析出需要设置样式的单元格并放置在map中
         Map<CellPosition, CellStyle> cellStylesMap = parseCellStyleToMap(option, sheet);
+        TreeMap<Area, FormatDetail> formtMap = parseFormatToMap(option, sheet);
+        TreeMap<Area, List<?>> validationMap = parseDefaultVaueListToMap(option, sheet);
 
         ArrayList<Integer> ci = toIntList(excludeIndexes);
         int length = toInt(rowContent.getMember("length"), 0);
@@ -698,23 +773,49 @@ public class FileHelper extends AbstractAppLoggable {
             String idx = Integer.toString(i);
             if (rowContent.hasMember(idx) && !ci.contains(i)) {
                 Object cellObj = rowContent.getMember(idx);
-                Label label = null;
+                WritableCell label = null;
                 CellPosition pos = new CellPosition(i, rowIndex);
+                // 单元格类型和有效性初始化
+                Area currentArea = new Area(pos, pos);
+                FormatDetail format =  getDataFromArea(formtMap, currentArea, new FormatDetail(FormatDetail.STRING_FORMAT, null));
+                NumberFormat numFormat = format.getType() == FormatDetail.NUMBERIC_FORMAT ? new NumberFormat(format.getDetail()) : null;
+                List<?> validation =  getDataFromArea(validationMap, currentArea, new ArrayList<String>());
+
+                WritableCellFormat cellFormat = null;
                 if (cellStylesMap != null && cellStylesMap.containsKey(pos)) {
                     CellStyle cellStyle = cellStylesMap.get(pos);
                     WritableFont writeFont = new WritableFont(WritableFont.createFont(cellStyle.getFont().getFont_family()), cellStyle.getFont().getFont_size(),
                             (cellStyle.getFont().getFont_weight() == 0 ? WritableFont.NO_BOLD : WritableFont.BOLD), false, UnderlineStyle.NO_UNDERLINE,
                             Colour.getInternalColour(cellStyle.getFont().getFont_color()));
-                    WritableCellFormat cellFormat = new WritableCellFormat(writeFont); // 单元格定义
+                    cellFormat = numFormat == null ? new WritableCellFormat(writeFont) : new WritableCellFormat(writeFont,numFormat); // 单元格定义
                     try {
                         cellFormat.setBackground(Colour.getInternalColour(cellStyle.getBackground_color())); // 设置单元格的背景颜色
                         cellFormat.setAlignment(Alignment.getAlignment(cellStyle.getText_align())); // 设置对齐方式
                     } catch (WriteException e) {
                         logger.error("set cell style error:" + e);
                     }
-                    label = new Label(j++, rowIndex, cellObj == null ? "" : cellObj.toString(), cellFormat);
-                } else {
-                    label = new Label(j++, rowIndex, cellObj == null ? "" : cellObj.toString());
+                }
+
+
+                String txt = cellObj == null ? "" : cellObj.toString();
+                if(numFormat != null){
+                    if(txt.matches("[0-9]+(\\.[0-9]+)*")){
+                        try{
+                            double value = Double.parseDouble(txt);
+                            cellFormat = cellFormat == null ? new WritableCellFormat(numFormat) : cellFormat;
+                            label = new jxl.write.Number(j++, rowIndex,  value, cellFormat);
+                        }catch (RuntimeException e){
+                            logger.error("format data to numeric error:" + e);
+                        }
+                    }
+                }
+                label = label == null ? (cellFormat == null ? new Label(j++, rowIndex, txt) :
+                        new Label(j++, rowIndex, txt, cellFormat) ) : label;
+
+                if(validation.size() > 0){
+                    WritableCellFeatures cellFeatures = new WritableCellFeatures();
+                    cellFeatures.setDataValidationList(validation);
+                    label.setCellFeatures(cellFeatures);
                 }
 
                 try {
@@ -928,6 +1029,45 @@ public class FileHelper extends AbstractAppLoggable {
 
         public int hashCode() {
             return ("col" + column + "row" + row).hashCode();
+        }
+    }
+
+    private class Area{
+        private CellPosition start;
+        private CellPosition end;
+
+        public static final int MAX_SIZE = Integer.MAX_VALUE;
+        public static final int DEFAULT_FROM_SIZE = 0;
+        public static final int DEFAULT_TO_SIZE =  MAX_SIZE;
+
+        public Area(CellPosition start, CellPosition end){
+            this.start = start;
+            this.end = end;
+        }
+
+        public CellPosition getStart() {
+            return start;
+        }
+
+        public CellPosition getEnd() { return end; }
+
+    }
+
+    private class FormatDetail{
+        public static final String DEFAULT_NUMBER_DETAIL = "0.0000000000";
+        public static final String STRING_FORMAT = "string";
+        public static final String NUMBERIC_FORMAT = "number";
+
+        private String type;
+        private String detail;
+        public FormatDetail(String type, String detail){
+            this.type = type;
+            this.detail = detail;
+        }
+
+        public String getType() { return type; }
+        public String getDetail() {
+            return detail == null || detail.length() == 0 ? DEFAULT_NUMBER_DETAIL : detail;
         }
     }
 
