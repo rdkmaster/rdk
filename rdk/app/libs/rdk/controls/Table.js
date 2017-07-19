@@ -495,9 +495,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 }
 
                 function _refreshSingleCheckedData(items){
-                    angular.forEach(scope.destData, function(item){
-                        item.checked = false;
-                    })
                     angular.forEach(items, function(item){
                         var index = _.findIndex(scope.destData, item);
                         if(index != -1){
@@ -822,6 +819,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                     EventService.broadcast(attrs.id, EventTypes.PAGING_DATA_CHANGE, newVal);
                                 }
                                 _resetCurrentPageData(newVal);
+                                $timeout(_fixedTableHead,0);
                             }
                         }, true);
 
@@ -1136,7 +1134,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             var currentPage = parseInt(scope.currentPage, 10);
                             var pageSize = parseInt(scope.pageSize, 10);
                             var start = currentPage * pageSize;
-                            return scope.destData ? scope.destData.slice(start, start+pageSize) :[]; //子数组
+                            var filterData = scope.$eval("destData | filter:globalSearch");
+                            return filterData ? filterData.slice(start, start+pageSize) :[]; //子数组
                         }
 
                         scope.refreshTotal4Single = function(){
@@ -1348,7 +1347,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                     function _getCheckedItems(){
                         var arr = [];
-                        angular.forEach(scope.destData, function(item){
+                        var filterData = scope.$eval("destData | filter:globalSearch");
+                        angular.forEach(filterData, function(item){
                             if(item.checked){
                                 arr.push(item);
                             }
