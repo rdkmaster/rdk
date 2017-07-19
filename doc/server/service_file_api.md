@@ -214,6 +214,13 @@
             - font-family：字体，默认为“Arial”，常用的有“Times New Roman”，“Courier New”，“Tahoma”；
             - font-size：字体大小，默认为10；
        - cellSpan：数组，要合并的单元格对象数组。其中对象格式为：`{ "fromCol": 起始列, "fromRow": 起始行, "toCol": 终止列, "toRow": 终止行}`
+       - format: 数组，要设置的单元格类型对象数组。其中对象及常用值为：
+            - cell: 对象, 需要设置数据类型的对象。 对象格式为：`{ "fromCol": 起始列, "fromRow": 起始行, "toCol": 终止列, "toRow": 终止行}` 起始行列不输入则默认为0，终止行列不输入则为Integer.MAX_VALUE 即7FFFFFFF
+            - type: 字符串，需要设置的对象类型。目前只支持 "number" 和 "string" ,都为小写。
+            - detail: 字符串，需要设置的数字类型的格式化串。类似 0.00 保存两位小数, 0 只保留整数位, 000 不足三位,左边补齐； 目前只对number有效
+       - validation: 数组，要设置的单元格数据列表对象数组。其中对象及常用值为：
+            - cell: 对象, 必选， 需要设置数据类型的对象。 对象格式为：`{ "fromCol": 起始列, "fromRow": 起始行, "toCol": 终止列, "toRow": 终止行}` 起始行列不输入则默认为0，终止行列不输入则为Integer.MAX_VALUE 即7FFFFFFF
+            - list: 数组, 必选， 需要设置的默认值列表,比如 [1,2,3]
 
 返回：true/false对应写入成功/失败。
 
@@ -297,6 +304,60 @@
 
                 var b = File.saveAsEXCEL(filestr,content,excludeindexes,option);
 
+示例四：支持列数据类型配置				
+
+        var filestr="mydata.xls";//必选
+
+                var content={                 //必选
+                    'sheet1':new DataTable(['A','B'],['a','b'],[[1,2],[3,4]]),
+
+                    'sheet2':
+                        [['30','test1'],['20','test2']]
+                };
+
+                var excludeindexes=[];
+
+                var option={
+                    "sheet1": {
+                        "format" :[
+                            {
+                                "cell" : { "fromRow": 1, "fromCol": 0,  "toCol": 1},
+                                "type" : "number",
+                                "detail" : "0"
+                            }]
+                    }
+                }
+
+                var b = File.saveAsEXCEL(filestr,content,excludeindexes,option);
+
+示例五：支持列数据列表配置				
+
+        var filestr="mydata.xls";//必选
+
+                var content={                 //必选
+                    'sheet1':new DataTable(['A','B'],['a','b'],[[1,2],[3,4]]),
+
+                    'sheet2':
+                        [['30','test1'],['20','test2']]
+                };
+
+                var excludeindexes=[];
+
+                var option={
+                    "sheet1": {
+                        "validation" :[
+                            {
+                                "cell" : { "fromRow": 0, "fromCol": 0,  "toCol": 0},
+                                "list" : [1,2,3]
+                            },
+                            {
+                                "cell" : { "fromRow": 0, "fromCol": 1,  "toRow": 10, "toCol": 1},
+                                "list" : ["string","number"]
+                            }]
+                    }
+                }
+
+                var b = File.saveAsEXCEL(filestr,content,excludeindexes,option);    			
 
 ### `File.list()` {#list}###
 
