@@ -37,7 +37,6 @@
                 var myY = myTop ? 'top' : (myBottom ? 'bottom' : undefined);
                 var atX = myX || 'center';
                 var atY = myY || 'center';
-                debugger;
                 $('#'+popupModuleID).dialog({
                     modal: myModal,
                     show: {effect: myEffect},  //blind,clip,drop,explode,fold,puff,slide,scale,size,pulsate
