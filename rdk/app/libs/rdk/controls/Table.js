@@ -763,7 +763,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         scope.compileHeads={};//需要被编译的表头对象
                         _searchGapClick();//只要有search
 
-                        debugger;
                         //默认国际化
                         if (typeof(attrs.lang) === 'undefined') { //今后会废弃lang属性
                             scope.lang = 'zh-CN';
@@ -1834,7 +1833,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 $scope.TableCtrl = TableCtrl;
                 $scope.TableCtrl.pageCtrl = $scope;
                 /*paging国际化处理*/
-                debugger;
                 $scope.appScope = getTableAppScope();
                 initializePagingI18n();
                 refreshPagingI18n();
