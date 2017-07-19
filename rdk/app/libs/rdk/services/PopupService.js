@@ -10,7 +10,7 @@
             $(document.body).append(moduleHtml);
             $compile($('#'+popupModuleID))($rootScope.$$childHead);  
 
-            $('#'+popupModuleID).css({'display': 'none'});//避免load进来时刹那的显现
+            $('#'+popupModuleID).css({visibility:'hidden'});//避免load进来时刹那的显现
 
             EventService.register(popupModuleID, EventTypes.READY, _readyHandler);
             rdk[popupModuleID].loadModule(initData, module, option.controller); 
@@ -37,7 +37,7 @@
                 var myY = myTop ? 'top' : (myBottom ? 'bottom' : undefined);
                 var atX = myX || 'center';
                 var atY = myY || 'center';
-
+                debugger;
                 $('#'+popupModuleID).dialog({
                     modal: myModal,
                     show: {effect: myEffect},  //blind,clip,drop,explode,fold,puff,slide,scale,size,pulsate
@@ -71,7 +71,7 @@
                     _positionHandler(popupModuleID, option);
                 }, 0);
 
-                $('#'+popupModuleID).css({'display': ''});
+                $('#'+popupModuleID).css({visibility:''});
             }
         };
         this.widget=function(id){

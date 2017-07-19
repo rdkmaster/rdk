@@ -1,0 +1,10 @@
+.my-popup .rdk-table-module .wrapper{
+    max-height: 320px;
+}
+.my-popup{
+    border: 1px solid #000000;
+}
+.test{
+    padding: 5px;
+    border: 2px solid #00a65a;
+}

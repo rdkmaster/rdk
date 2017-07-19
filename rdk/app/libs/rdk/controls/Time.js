@@ -223,7 +223,6 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                             if (scope.setting.selectGranularity === true) {
                                 scope.$watch('selectedGranularity', function(newVal, oldVal) {
                                     if (newVal != null) {
-                                        console.log("selectGranularity---");
                                         rdk["timeSelect" + scope.$id].refreshSelect();
                                         scope.setting.granularity = scope.selectedGranularity.value;
                                         scope.timeFormat = TimeFormate[Utils.getValueFromKey(TimeUnit, scope.setting.granularity)];
@@ -263,13 +262,6 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                                 });
 
                             }
-                            var minWidth;
-                            if (scope.range) {
-                                minWidth = scope.setting.selectGranularity ? "407px" : "287px";
-                            } else {
-                                minWidth = scope.setting.selectGranularity ? "262px" : "142px";
-                            }
-                            iElement[0].getElementsByTagName("div")[0].style.minWidth = minWidth;
                         }
 
 

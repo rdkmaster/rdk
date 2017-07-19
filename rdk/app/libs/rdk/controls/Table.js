@@ -495,9 +495,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 }
 
                 function _refreshSingleCheckedData(items){
-                    angular.forEach(scope.destData, function(item){
-                        item.checked = false;
-                    })
                     angular.forEach(items, function(item){
                         var index = _.findIndex(scope.destData, item);
                         if(index != -1){
@@ -766,6 +763,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         scope.compileHeads={};//需要被编译的表头对象
                         _searchGapClick();//只要有search
 
+                        debugger;
                         //默认国际化
                         if (typeof(attrs.lang) === 'undefined') { //今后会废弃lang属性
                             scope.lang = 'zh-CN';
@@ -822,6 +820,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                     EventService.broadcast(attrs.id, EventTypes.PAGING_DATA_CHANGE, newVal);
                                 }
                                 _resetCurrentPageData(newVal);
+                                $timeout(_fixedTableHead,0);
                             }
                         }, true);
 
@@ -1136,7 +1135,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             var currentPage = parseInt(scope.currentPage, 10);
                             var pageSize = parseInt(scope.pageSize, 10);
                             var start = currentPage * pageSize;
-                            return scope.destData ? scope.destData.slice(start, start+pageSize) :[]; //子数组
+                            var filterData = scope.$eval("destData | filter:globalSearch");
+                            return filterData ? filterData.slice(start, start+pageSize) :[]; //子数组
                         }
 
                         scope.refreshTotal4Single = function(){
@@ -1348,7 +1348,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                     function _getCheckedItems(){
                         var arr = [];
-                        angular.forEach(scope.destData, function(item){
+                        var filterData = scope.$eval("destData | filter:globalSearch");
+                        angular.forEach(filterData, function(item){
                             if(item.checked){
                                 arr.push(item);
                             }
@@ -1833,6 +1834,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 $scope.TableCtrl = TableCtrl;
                 $scope.TableCtrl.pageCtrl = $scope;
                 /*paging国际化处理*/
+                debugger;
                 $scope.appScope = getTableAppScope();
                 initializePagingI18n();
                 refreshPagingI18n();
