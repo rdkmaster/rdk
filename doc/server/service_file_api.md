@@ -320,11 +320,11 @@
                 var option={
                     "sheet1": {
                         "format" :[
-							{
-								"cell" : { "fromRow": 1, "fromCol": 0,  "toCol": 1},
-								"type" : "number",
-								"detail" : "0"
-							}]
+                            {
+                                "cell" : { "fromRow": 1, "fromCol": 0,  "toCol": 1},
+                                "type" : "number",
+                                "detail" : "0"
+                            }]
                     }
                 }
 
@@ -346,18 +346,18 @@
                 var option={
                     "sheet1": {
                         "validation" :[
-							{
-								"cell" : { "fromRow": 0, "fromCol": 0,  "toCol": 0},
-								"list" : [1,2,3]
-							},
-							{
-								"cell" : { "fromRow": 0, "fromCol": 1,  "toRow": 10, "toCol": 1},
-								"list" : ["string","number"]
-							}]
+                            {
+                                "cell" : { "fromRow": 0, "fromCol": 0,  "toCol": 0},
+                                "list" : [1,2,3]
+                            },
+                            {
+                                "cell" : { "fromRow": 0, "fromCol": 1,  "toRow": 10, "toCol": 1},
+                                "list" : ["string","number"]
+                            }]
                     }
                 }
 
-                var b = File.saveAsEXCEL(filestr,content,excludeindexes,option);				
+                var b = File.saveAsEXCEL(filestr,content,excludeindexes,option);    			
 
 ### `File.list()` {#list}###
 
