@@ -473,7 +473,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     _refreshSingleCheckedData(items);
                     scope.refreshSingleCurrentPage();
                 }
-
+                this.resetSortStatus = function(){
+                    scope.resetSortStatus();
+                }
                 this.setGlobalSearch = function(searchVal){
                     if(!scope.search) return;
                     scope.globalSearch = searchVal;
@@ -585,7 +587,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                 if (tAttributes.pagingType !== "server" && tAttributes.pagingType !== "server-auto") {
                     tElement.find("rdk-paging").attr("count", filterCount);
-                    tElement[0].querySelector(".rowTr").setAttribute("ng-repeat", "item in $filtered = (destData" + rowFilter + ")" + pagingFilter + searchFieldFilter + "  track by item.$index");
+                    tElement[0].querySelector(".rowTr").setAttribute("ng-repeat", "item in $filtered = (destData" + rowFilter + ")" + pagingFilter + searchFieldFilter + "  track by $index");
                 } else {
                     tElement.find("rdk-paging").attr("count", "data.paging.totalRecord");
                     tElement[0].querySelector(".rowTr").setAttribute("ng-repeat", "item in $filtered = destData track by $index");
@@ -637,7 +639,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                     var curSortIndex;
                     var sortIconStatus=true;
-
+                    //在没有使用ds的表格,数据变动后由app主动去重置排序索引
+                    scope.resetSortStatus = function(){
+                        curSortIndex=-1;
+                    }
                     function _init() {
 
                         if (angular.isUndefined(scope.proxyDs) && (scope.pagingType == "server" || scope.pagingType == "server-auto")) {
@@ -802,6 +807,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             _reloadLocalData();
                             if (scope.pagingType == "server" || scope.pagingType == "server-auto") {
                                 scope.currentPage = scope.data.paging ? (scope.data.paging.currentPage - 1) : 0;
+                                $timeout(_fixedTableHead,0);
                             }
                             if (ctrl.pageCtrl) {
                                 $timeout(function(){
@@ -820,10 +826,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         }, true);
 
                         scope.$watch("currentPage", function(newVal, oldVal) {
-                            if (newVal) {
+                            if (newVal != oldVal) { // currentPage 从0开始的
                                 if (angular.isDefined(attrs.id)) {
                                     EventService.broadcast(attrs.id, EventTypes.PAGING_NUMBER_CHANGE, newVal);
                                 }
+                                $timeout(_fixedTableHead,0);
                             }
                         }, true);
 
@@ -1185,8 +1192,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         var tableBody = element[0].querySelector(".rdk-table-body");
                         var isIE =Utils.isIEFlag;
                         var hasHandeLastTh=false;
-
+                        var resizeReady=false;
                         function _fixedTableHead(){
+                            if(scope.isResize && resizeReady) return; //resize开启时只需调整一次表头
                             var tHeadThs =  element[0].querySelectorAll("table.rdk-table-head>thead>tr>th");
                             var tBodyTds;
                             if(!!attrs.resize && attrs.resize!=""){
@@ -1205,6 +1213,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                     $(colObj).width(theadColWidths[index]);
                                 });
                                 _reSetTableAddHeaders(tHeadBox,tableHead); //多级表头
+                                resizeReady=true;
                                 return
                             }
                             if(!scope.noHeader){
@@ -1223,8 +1232,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                     }
                                     Array.prototype.map.call(tBodyTds, function(colObj,index){
                                         colObj.style.width=colWidths[index];
-                                    })
-                                    tableBody.style.tableLayout="fixed";
+                                    });
+                                    //表格初始隐藏列宽度获取失败
+                                    if(parseFloat(colWidths[0]) !=0){
+                                        tableBody.style.tableLayout="fixed";
+                                    }
                                 }
                                 Array.prototype.map.call(tHeadThs, function(colObj,index) {
                                     if(isIE && colObj.hasScroll){
