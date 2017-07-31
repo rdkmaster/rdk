@@ -17,7 +17,7 @@ import jdk.nashorn.api.scripting.ScriptObjectMirror
 import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.db.DataBaseHelper.DBError
 import spray.http.HttpHeaders.RawHeader
-import spray.http.{HttpHeader, MediaTypes}
+import spray.http.{MediaTypes}
 
 /**
   * Created by 10054860 on 2016/7/11.
