@@ -24,8 +24,8 @@ import java.util.regex.Pattern;
 public class RestHelper extends AbstractAppLoggable {
     private scala.collection.Iterator<Messages.Header> originHeaderIter;
 
-    public void setOriginHeader(scala.collection.Iterator<Messages.Header> originHeaderIter) {
-        this.originHeaderIter = originHeaderIter;
+    public void setOriginHeader(Object originHeaderIter) {
+        this.originHeaderIter = (scala.collection.Iterator<Messages.Header>)originHeaderIter;
     }
 
     private static class TrustAnyHostnameVerifier implements HostnameVerifier {
