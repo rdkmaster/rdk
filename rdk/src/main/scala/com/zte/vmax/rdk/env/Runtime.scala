@@ -148,6 +148,12 @@ class Runtime(engine: ScriptEngine) extends Logger {
     val headerMap = new util.HashMap[String, String]()
     val result: AnyRef = serviceCaller.call(callable, callable, param, script, headerMap)
 
+    var ct: MediaType = if (result.isInstanceOf[String]) MediaTypes.`text/plain` else MediaTypes.`application/json`
+    if (headerMap.containsKey("Content-Type")) {
+      ct = MediaType.custom(headerMap.get("Content-Type"))
+      headerMap.remove("Content-Type")
+    }
+
     val it = headerMap.entrySet().iterator()
     val headers = new Array[RawHeader](headerMap.size())
     var index = 0
@@ -156,9 +162,6 @@ class Runtime(engine: ScriptEngine) extends Logger {
       headers(index) = RawHeader(entry.getKey, entry.getValue)
       index += 1
     }
-
-    var ct: MediaType = if (result.isInstanceOf[String]) MediaTypes.`text/plain` else MediaTypes.`application/json`
-    if (headerMap.containsKey("Content-Type")) ct = MediaType.custom(headerMap.get("Content-Type"))
 
     if (result.isInstanceOf[String]) ServiceRawResult(result.toString, ct, headers.toList)
     else ServiceRawResult(jsonParser.call(callable, result, "").toString, ct, headers.toList)

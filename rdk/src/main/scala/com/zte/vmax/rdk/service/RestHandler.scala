@@ -8,7 +8,6 @@ import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 import org.apache.log4j.{Level, LogManager}
 import org.json4s.{DefaultFormats, Formats}
-import spray.http.HttpHeaders.RawHeader
 import spray.http._
 import spray.httpx.Json4sSupport
 import spray.routing.{Directives, RequestContext}

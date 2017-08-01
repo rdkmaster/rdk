@@ -16,16 +16,17 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import scala.collection.Iterator;
 
 
 /**
  * Created by 10045812 on 16-6-27.
  */
 public class RestHelper extends AbstractAppLoggable {
-    private scala.collection.Iterator<Messages.Header> originHeaderIter;
+    private Iterator<Messages.Header> originHeaderIter;
 
-    public void setOriginHeader(Object originHeaderIter) {
-        this.originHeaderIter = (scala.collection.Iterator<Messages.Header>)originHeaderIter;
+    public void setOriginHeader(Iterator<Messages.Header> originHeaderIter) {
+        this.originHeaderIter = originHeaderIter;
     }
 
     private static class TrustAnyHostnameVerifier implements HostnameVerifier {
