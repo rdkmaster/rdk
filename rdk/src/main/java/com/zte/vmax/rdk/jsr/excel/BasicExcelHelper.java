@@ -23,7 +23,7 @@ public abstract class BasicExcelHelper implements ExcelHelper{
     protected abstract short getDataFormat(Workbook book, String formatDetail);
 
     public static ExcelHelper getRealHelper(String fullName){
-        return fullName.matches("^.*xlsx$") ? new XlsxExcelHelper() : new XlsExcelHelper();
+        return fullName.matches("^.*\\.xlsx$") ? new XlsxExcelHelper() : new XlsExcelHelper();
     }
 
     // 判断是否存在值 - 复用以前的代码
@@ -153,7 +153,10 @@ public abstract class BasicExcelHelper implements ExcelHelper{
                 excelContent.put(sheet.getSheetName(), content);
             }
         } finally {
-            if(fis != null) fis.close();
+            try {
+                if(fis != null) fis.close();
+            } catch (Exception e) {
+            }
         }
         return RdkUtil.toJsonString(excelContent);
     }
@@ -213,9 +216,18 @@ public abstract class BasicExcelHelper implements ExcelHelper{
             out = new FileOutputStream(fullPathName);
             book.write(out);
         }finally {
-            if(book != null) book.close();
-            if(out != null) out.close();
-            if(input != null) input.close();
+            try {
+                if(book != null) book.close();
+            } catch (Exception e) {
+            }
+            try {
+                if(out != null) out.close();
+            } catch (Exception e) {
+            }
+            try {
+                if(input != null) input.close();
+            } catch (Exception e) {
+            }
         }
         return true;
     }
