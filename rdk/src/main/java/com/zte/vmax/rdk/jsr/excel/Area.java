@@ -1,0 +1,56 @@
+package com.zte.vmax.rdk.jsr.excel;
+
+/**
+ * Created by 10033559 on 2017/7/26.
+ */
+public class Area {
+
+    public static class CellPosition {
+        private int column;
+        private int row;
+
+        public CellPosition(int column, int row) {
+            this.column = column;
+            this.row = row;
+        }
+
+        public int getColumn() {
+            return column;
+        }
+
+        public int getRow() {
+            return row;
+        }
+
+        public boolean equals(Object obj) {
+            return (obj != null &&
+                    this.column == ((CellPosition) obj).column &&
+                    this.row == ((CellPosition) obj).row) ? true : false;
+
+        }
+
+        public int hashCode() {
+            return ("col" + column + "row" + row).hashCode();
+        }
+    }
+
+    private CellPosition start;
+    private CellPosition end;
+
+    public static final int MAX_ROW_SIZE = 1048575;
+    public static final int MAX_COL_SIZE = 16383;
+    public static final int DEFAULT_FROM_SIZE = 0;
+    public static final int DEFAULT_TO_ROW_SIZE = MAX_ROW_SIZE;
+    public static final int DEFAULT_TO_COL_SIZE =  MAX_COL_SIZE;
+
+    public Area(CellPosition start, CellPosition end){
+        this.start = start;
+        this.end = end;
+    }
+
+    public CellPosition getStart() {
+        return start;
+    }
+
+    public CellPosition getEnd() { return end; }
+}
