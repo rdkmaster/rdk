@@ -215,7 +215,6 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
 
             //展开下一级 province-->city
             $vm.clkProvinceNextLvOpen=function(province,index){
-                debugger;
                 !!comboSelectCtrl && comboSelectCtrl.lockCloseShow();
                 _queryCityByProvince(province);
                 if(!scope.multipleArea && $vm.userArr[index] && !angular.equals($vm.userArr[index],province))
@@ -268,7 +267,6 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
             };
             //关闭选择框,返回选择结果信息
             function _closeRdkArea(){
-                debugger;
                 if(!scope.multipleSelect){
                     !!comboSelectCtrl && comboSelectCtrl.changeOpenStatus();
                 }

@@ -1262,7 +1262,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 tableBody.style.marginTop="-" + trHeight;
                                 tHeadBox.style.height=Utils.getStyle(tableHead,"height");
                             }
-                            debugger;
                             _reSetTableAddHeaders(tHeadBox,tableHead); //多级表头
                         }
                         function _fixedTableHeadBindEvent(){
