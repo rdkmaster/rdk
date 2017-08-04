@@ -497,16 +497,16 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
                         'province': '省',
                         'city': '市',
                         'area': '区',
-                        'allProv':'全省',
-                        'allCity':'全市'
+                        'allProv':'全部',
+                        'allCity':'全部'
                     }
                 } else {
                     $vm.i18n = {
                         'province': 'Province',
                         'city': 'City',
                         'area': 'Area',
-                        'allProv':'All Province',
-                        'allCity':'All City'
+                        'allProv':'All',
+                        'allCity':'All'
                     }
                 }
             }
