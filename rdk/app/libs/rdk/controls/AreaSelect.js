@@ -215,6 +215,7 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
 
             //展开下一级 province-->city
             $vm.clkProvinceNextLvOpen=function(province,index){
+                debugger;
                 !!comboSelectCtrl && comboSelectCtrl.lockCloseShow();
                 _queryCityByProvince(province);
                 if(!scope.multipleArea && $vm.userArr[index] && !angular.equals($vm.userArr[index],province))
@@ -267,6 +268,7 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
             };
             //关闭选择框,返回选择结果信息
             function _closeRdkArea(){
+                debugger;
                 if(!scope.multipleSelect){
                     !!comboSelectCtrl && comboSelectCtrl.changeOpenStatus();
                 }
@@ -497,16 +499,16 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
                         'province': '省',
                         'city': '市',
                         'area': '区',
-                        'allProv':'全省',
-                        'allCity':'全市'
+                        'allProv':'全部',
+                        'allCity':'全部'
                     }
                 } else {
                     $vm.i18n = {
                         'province': 'Province',
                         'city': 'City',
                         'area': 'Area',
-                        'allProv':'All Province',
-                        'allCity':'All City'
+                        'allProv':'All',
+                        'allCity':'All'
                     }
                 }
             }

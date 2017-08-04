@@ -274,6 +274,9 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                                     return scope.setting[option];
                                 }
                             }
+                            if(option==="startDate"){
+                                return scope.setting[option];
+                            }
                             return scope[option];
                         }
 

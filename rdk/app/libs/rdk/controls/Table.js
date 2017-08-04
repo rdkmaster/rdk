@@ -1158,6 +1158,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             if(attrs.pageNumber=="-1" && attrs.searchPosition =="bottom"){
                                 scope.searchPrompt="Total "+ scope.data.data.length + " Records";
                             }
+                            _resizeHandle();//表头可拖动
+                        });
+                        function _resizeHandle(){
                             if(attrs.resize && isFirstBroadCast){
                                 if(scope.setting && scope.setting.additionalHeader){
                                     console.warn("setting additionalHeader function resize is not supported");
@@ -1166,10 +1169,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 EventService.broadcast('rdkTable_'+scope.$id, EventTypes.READY,null);
                                 isFirstBroadCast=false;
                             }
-                        });
+                        }
                         //ngRepeatFinished和tableHeadNgRepeatFinished区别在于数据变化后tableHeadNgRepeatFinished不会再执行
                         scope.$on('tableHeadNgRepeatFinished', function() {
                             _reSetTableHeaders(); //自定义表头
+                            _resizeHandle();//表头可拖动
                             _fixedTableHeadBindEvent();
                         });
                         scope.$on('tableHeadNgRepeatFinishedBody', function() {
@@ -1219,18 +1223,20 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 tBodyTds =  element[0].querySelectorAll("table.rdk-table-body>thead>tr>th");
                                 var tBodyTdsDate =  element[0].querySelectorAll("table.rdk-table-body>tbody>tr:first-child>td");
                                 var colWidths = Array.prototype.map.call(tBodyTds, function(obj) {
-                                    return Utils.getStyle(obj,"width");
+                                    return $(obj).width();
+                                   // return Utils.getStyle(obj,"width");
                                 });
-                                //TODO:IE列无法对齐，暂时JS控制，能否找到CSS解决方案
+                                //TODO:IE列某些场景下表格列无法对齐
                                 if(isIE){
                                     if(!scope.noData){
                                         tableBody.style.tableLayout="auto";
                                         colWidths = Array.prototype.map.call(tBodyTdsDate, function(obj) {
-                                             return Utils.getStyle(obj,"width");
+                                            return $(obj).width();
+                                           // return  Utils.getStyle(obj,"width");
                                         });
                                     }
                                     Array.prototype.map.call(tBodyTds, function(colObj,index){
-                                        colObj.style.width=colWidths[index];
+                                        $(colObj).width(colWidths[index]);
                                     });
                                     //表格初始隐藏列宽度获取失败
                                     if(parseFloat(colWidths[0]) !=0){
@@ -1241,7 +1247,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                     if(isIE && colObj.hasScroll){
                                         colObj.style.width=parseFloat(colWidths[index])+colObj.hasScroll+'px';
                                     }else{
-                                        colObj.style.width=colWidths[index];
+                                       // colObj.style.width=colWidths[index];
+                                        $(colObj).width(colWidths[index]);
                                     }
                                 });
                                 //注意有多级表头
@@ -1255,6 +1262,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 tableBody.style.marginTop="-" + trHeight;
                                 tHeadBox.style.height=Utils.getStyle(tableHead,"height");
                             }
+                            debugger;
                             _reSetTableAddHeaders(tHeadBox,tableHead); //多级表头
                         }
                         function _fixedTableHeadBindEvent(){
@@ -1509,7 +1517,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                               //  colObj.innerHTML=null; ie null都不识别？？
                                 colObj.innerHTML="";
                                 colObj.style.height=0;
-                                colObj.style.padding=0;
+                                colObj.style.paddingTop=0;
+                                colObj.style.paddingButtom=0;
                                 colObj.style.borderTop=0;
                                 colObj.style.borderButtom=0;
                             });
@@ -1579,8 +1588,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         //scrollStyle
                         if (scope.setting && scope.setting.scrollX && attrs.customScroll!=="rdk-scroll") {
                             scope.scrollStyle = {
-                                overflow:"auto",
-                                width:"100%"
+                                overflow:"auto"
                             };
                             first = true;
                             $(element.find("tbody")).touchEvent("swipe", "detouch");

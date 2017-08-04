@@ -393,6 +393,9 @@ i.regular_right,i.regular_left{
 }
 
 /* vmax :3.0 风格 start */
+.rdk-theme-zte-vmax .rdk-table-module .rdk-table{
+    border-left: 0;
+}
 .rdk-theme-zte-vmax .rdk-table-module .rdk-table thead>tr {
     background-color:#fff;
 }
@@ -499,6 +502,7 @@ i.regular_right,i.regular_left{
     border-right: 1px solid #e6e6e6;
 }
 .rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize > thead > tr > th:last-child,
+.rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize > tbody > tr > td:last-child,
 .rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize + .rdk-table.sticky-thead > thead > tr > th:last-child{
     border-right: none;
 }
@@ -533,7 +537,7 @@ i.regular_right,i.regular_left{
         padding-right: 17px; /*17==滚动条宽度*/
     }
     .rdk-table-module .wrapper,.rdk-table-module  .rdk-table-head-box{
-        width: calc(100% + 1px); /*border 1px 刚好消除x滚动条*/
+        width: calc(100% + 2px); /*border 1px 刚好消除x滚动条*/
     }
     .rdk-table-module  .rdk-table-head-box{
         /*overflow-y: scroll;*/
@@ -560,5 +564,11 @@ i.regular_right,i.regular_left{
     .rdk-table-module .rdk-table > tbody > tr > td{
         /*padding: 0;*/
         /*border:0;*/
+    }
+}
+/*兼容火狐 : css rule sets go here */
+@-moz-document url-prefix() {
+    .rdk-table-module .wrapper,.rdk-table-module  .rdk-table-head-box{
+        width: calc(100% + 2px); /*border 1px 刚好消除x滚动条*/
     }
 }

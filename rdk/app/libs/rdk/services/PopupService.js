@@ -10,7 +10,7 @@
             $(document.body).append(moduleHtml);
             $compile($('#'+popupModuleID))($rootScope.$$childHead);  
 
-            $('#'+popupModuleID).css({visibility:'hidden'});//避免load进来时刹那的显现
+            $('#'+popupModuleID).css({display:'none'});//避免load进来时刹那的显现
 
             EventService.register(popupModuleID, EventTypes.READY, _readyHandler);
             rdk[popupModuleID].loadModule(initData, module, option.controller); 
@@ -70,7 +70,7 @@
                     _positionHandler(popupModuleID, option);
                 }, 0);
 
-                $('#'+popupModuleID).css({visibility:''});
+                $('#'+popupModuleID).css({display:''});
             }
         };
         this.widget=function(id){
