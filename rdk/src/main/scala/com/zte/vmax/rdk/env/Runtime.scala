@@ -1,5 +1,6 @@
 package com.zte.vmax.rdk.env
 
+import java.util
 import javax.script._
 
 import com.google.gson.GsonBuilder
@@ -15,7 +16,9 @@ import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 import jdk.nashorn.api.scripting.ScriptObjectMirror
 import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.db.DataBaseHelper.DBError
+import spray.http.HttpHeaders.RawHeader
 import spray.http.MediaTypes
+import spray.http.MediaType
 
 /**
   * Created by 10054860 on 2016/7/11.
@@ -142,13 +145,31 @@ class Runtime(engine: ScriptEngine) extends Logger {
   }
 
   def callService(callable: ScriptObjectMirror, param: AnyRef, script: String): ServiceRawResult = {
-    val result: AnyRef = serviceCaller.call(callable, callable, param, script)
-    if (result.isInstanceOf[String]) ServiceRawResult(result.toString, MediaTypes.`text/plain`)
-    else ServiceRawResult(jsonParser.call(callable, result, "").toString, MediaTypes.`application/json`)
+    val headerMap = new util.HashMap[String, String]()
+    val result: AnyRef = serviceCaller.call(callable, callable, param, script, headerMap)
+
+    var ct: MediaType = if (result.isInstanceOf[String]) MediaTypes.`text/plain` else MediaTypes.`application/json`
+    if (headerMap.containsKey("Content-Type")) {
+      ct = MediaType.custom(headerMap.get("Content-Type"))
+      headerMap.remove("Content-Type")
+    }
+
+    val it = headerMap.entrySet().iterator()
+    val headers = new Array[RawHeader](headerMap.size())
+    var index = 0
+    while (it.hasNext) {
+      val entry = it.next()
+      headers(index) = RawHeader(entry.getKey, entry.getValue)
+      index += 1
+    }
+
+    if (result.isInstanceOf[String]) ServiceRawResult(result.toString, ct, headers.toList)
+    else ServiceRawResult(jsonParser.call(callable, result, "").toString, ct, headers.toList)
   }
 
   /**
-    * 缓冲数据功能实现区，线程安全在js中控制了，这里不需要控�?    */
+    * 缓冲数据功能实现区，线程安全在js中控制了，这里不需要控制
+    */
 
   def buffer(key: String, data: AnyRef): AnyRef = {
     CacheHelper.getAppCache.put(key, data)

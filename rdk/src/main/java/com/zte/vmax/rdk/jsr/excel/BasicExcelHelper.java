@@ -48,7 +48,7 @@ public abstract class BasicExcelHelper implements ExcelHelper{
         }
     }
 
-    public static ExcelHelper getRealHelper(String fullName){
+    public static ExcelHelper getRealHelper(String fullName) {
         return new File(fullName).exists() ? getHelper4FileMagic(fullName) : getHelper4FullName(fullName);
     }
 
@@ -185,8 +185,9 @@ public abstract class BasicExcelHelper implements ExcelHelper{
             }
         } finally {
             try {
-               if(fis != null) fis.close();
-            } catch (Exception e) {}
+                if(fis != null) fis.close();
+            } catch (Exception e) {
+            }
         }
         return RdkUtil.toJsonString(excelContent);
     }
@@ -241,16 +242,16 @@ public abstract class BasicExcelHelper implements ExcelHelper{
         }finally {
             try {
                 if(book != null) book.close();
-                } catch (Exception e) {
-                }
+            } catch (Exception e) {
+            }
             try {
                 if(out != null) out.close();
-                } catch (Exception e) {
-                }
+            } catch (Exception e) {
+            }
             try {
                 if(input != null) input.close();
-                } catch (Exception e) {
-                }
+            } catch (Exception e) {
+            }
         }
         return true;
     }

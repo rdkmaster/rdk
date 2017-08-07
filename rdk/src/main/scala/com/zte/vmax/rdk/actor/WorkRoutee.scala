@@ -48,7 +48,7 @@ class WorkRoutee extends Actor with Json4sSupport with Logger {
 
     case WSCallJSMethod(head, body) =>
       val result = RdkUtil.handleJsRequest(runtime, NoneContext, body.script, body.app, body.param, body.method)
-      sender ! WSResponse(head, if (result.isLeft) ServiceRawResult(result.left.get.getMessage, MediaTypes.`text/plain`) else result.right.get)
+      sender ! WSResponse(head, if (result.isLeft) ServiceRawResult(result.left.get.getMessage, MediaTypes.`text/plain`, Nil) else result.right.get)
 
     case (no: Long, UploadServiceParam(data: MultipartFormData, fileName: String, timeStamp: Long)) =>
       runtime.setAppName("uploadFile")

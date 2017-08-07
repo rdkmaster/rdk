@@ -87,7 +87,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
         } else {
           rct.complete(
             HttpResponse(StatusCodes.OK,
-              HttpEntity(ContentType(s.contentType, HttpCharsets.`UTF-8`), s.content))
+              HttpEntity(ContentType(s.contentType, HttpCharsets.`UTF-8`), s.content), s.headers)
           )
         }
     }
