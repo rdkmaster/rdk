@@ -3,13 +3,12 @@ package com.zte.vmax.rdk.jsr.excel;
 import com.zte.vmax.rdk.util.RdkUtil;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import jdk.nashorn.internal.runtime.Undefined;
+import org.apache.commons.collections4.map.HashedMap;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellRangeAddressList;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+
+import java.io.*;
 import java.util.*;
 
 /**
@@ -20,10 +19,37 @@ public abstract class BasicExcelHelper implements ExcelHelper{
     protected abstract Workbook getBook(InputStream fis) throws Exception;
     protected abstract Workbook getBook() throws Exception;
     protected abstract DataValidation getValidation4Range(Sheet sheet, CellRangeAddressList ranges, String[] validationList);
+    protected abstract DataValidation getValidation4Formula(Sheet sheet, CellRangeAddressList ranges, String strFormula);
     protected abstract short getDataFormat(Workbook book, String formatDetail);
 
+    private Map<CellFormat, CellStyle> cellStypeMap = new HashedMap<CellFormat, CellStyle>();
+    private static final int MAX_CELLNUM = 4000;
+    public static final byte[] XLS_MAGIC = new byte[]{(byte)0xD0,(byte)0xCF,(byte)0x11,(byte)0xE0};
+    public static final byte[] XLSX_MAGIC = new byte[]{(byte)0x50,(byte)0x4B,(byte)0x03,(byte)0x04};
+
+    private static ExcelHelper getHelper4FullName(String fullName){
+        return fullName.matches("^.*\\.xlsx$") ? new XlsxExcelHelper() : new XlsExcelHelper();
+    }
+
+    private static ExcelHelper getHelper4FileMagic(String fullName){
+        InputStream input = null;
+        try{
+            input = new FileInputStream(fullName);
+            byte[] magic = new byte[4];
+            input.read(magic);
+            return Arrays.equals(magic, XLSX_MAGIC) ? new XlsxExcelHelper() : new XlsExcelHelper();
+        }catch(Exception e){
+            return getHelper4FullName(fullName);
+        }finally {
+            try{
+                if(input != null) input.close();
+            }catch(Exception e){
+            }
+        }
+    }
+
     public static ExcelHelper getRealHelper(String fullName){
-        return fullName.matches("^.*xlsx$") ? new XlsxExcelHelper() : new XlsExcelHelper();
+        return new File(fullName).exists() ? getHelper4FileMagic(fullName) : getHelper4FullName(fullName);
     }
 
     // 判断是否存在值 - 复用以前的代码
@@ -114,22 +140,27 @@ public abstract class BasicExcelHelper implements ExcelHelper{
     }
 
     // 解析 validation 属性
-    private Map<Area, String[]> parseDefaultVaueListToMap(Map<String, Object> option, String sheetName){
-        Map<Area, String[]> map = new HashMap<Area, String[]>();
+    private Map<Area, Object> parseDefaultVaueListToMap(Map<String, Object> option, String sheetName){
+        Map<Area, Object> map = new HashMap<Area, Object>();
         if (isOpsContainKeyOfSheet(sheetName, option, "validation")){
             ScriptObjectMirror validationMirror = (ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheetName)).get("validation");
             for (int i = 0; i < validationMirror.size(); i++) {
                 ScriptObjectMirror oneCellFormat = (ScriptObjectMirror) validationMirror.get(Integer.toString(i));
                 ScriptObjectMirror list =(ScriptObjectMirror) oneCellFormat.get("list");
-                String[] validationList = new String[list.size()];
-                for(int valueIndex = 0; valueIndex < list.size(); valueIndex ++) {
-                    validationList[valueIndex] = list.get(Integer.toString(valueIndex)).toString();
+                Object formula = oneCellFormat.get("formula");
+                if(list != null && list.size() > 0){
+                    String[] validationList = new String[list.size()];
+                    for(int valueIndex = 0; valueIndex < list.size(); valueIndex ++)
+                        validationList[valueIndex] = list.get(Integer.toString(valueIndex)).toString();
+                    addAreaData2Map(map, (ScriptObjectMirror) oneCellFormat.get("cell"), validationList);
+                }else {
+                    if(formula != null) addAreaData2Map(map, (ScriptObjectMirror) oneCellFormat.get("cell"), formula.toString());
                 }
-                addAreaData2Map(map, (ScriptObjectMirror) oneCellFormat.get("cell"), validationList);
             }
         }
         return map;
     }
+
 
     // 根据名称读取XML内容,返回json字符串
     public String readExcel(String fullPathName)throws Exception{
@@ -153,7 +184,9 @@ public abstract class BasicExcelHelper implements ExcelHelper{
                 excelContent.put(sheet.getSheetName(), content);
             }
         } finally {
-            if(fis != null) fis.close();
+            try {
+               if(fis != null) fis.close();
+            } catch (Exception e) {}
         }
         return RdkUtil.toJsonString(excelContent);
     }
@@ -191,20 +224,13 @@ public abstract class BasicExcelHelper implements ExcelHelper{
                         if (!excludeValue.contains(colIndex)) {
                             Cell cell = row.createCell(colIndex);
                             Area.CellPosition pos = new Area.CellPosition(colIndex, rowIndex);
-                            CellStyle cellStyle = book.createCellStyle();
-                            Font font = book.createFont();
-                            fillShowStyle4Cell(styleMap, pos, cellStyle, font);
-
                             Object cellObj = oneRowData.getMember(String.valueOf(colIndex));
-                            String value = cellObj == null ? "" : cellObj.toString();
-                            Area currentArea = new Area(pos, pos);
-                            CellFormat.FormatDetail format = getDataFromArea(formatMap, currentArea, new CellFormat.FormatDetail(CellFormat.FormatDetail.STRING_FORMAT, null));
-                            if (format.getType() == CellFormat.FormatDetail.NUMBERIC_FORMAT && value.matches("[0-9]+(\\.[0-9]+)*")) {
-                                cell.setCellValue(Double.parseDouble(value));
-                                cellStyle.setDataFormat(getDataFormat(book, format.getDetail()));
-                            } else
-                                cell.setCellValue(value);
-                            cell.setCellStyle(cellStyle);
+                            cell.setCellValue(cellObj == null ? "" : cellObj.toString());
+
+                            if(( styleMap != null && styleMap.size() > 0 ) || ( formatMap != null && formatMap.size() > 0 ) ) {
+                                fillStyle4Cell(cell, styleMap ==  null ? null : styleMap.get(pos), getDataFromArea(formatMap,
+                                        new Area(pos, pos), new CellFormat.FormatDetail(CellFormat.FormatDetail.STRING_FORMAT, null)),book);
+                            }
                         }
                     }
                 }
@@ -213,39 +239,71 @@ public abstract class BasicExcelHelper implements ExcelHelper{
             out = new FileOutputStream(fullPathName);
             book.write(out);
         }finally {
-            if(book != null) book.close();
-            if(out != null) out.close();
-            if(input != null) input.close();
+            try {
+                if(book != null) book.close();
+                } catch (Exception e) {
+                }
+            try {
+                if(out != null) out.close();
+                } catch (Exception e) {
+                }
+            try {
+                if(input != null) input.close();
+                } catch (Exception e) {
+                }
         }
         return true;
     }
 
     //全文有效值设定
-    private void renderValidation4Sheet(Map<Area, String[]> validationMap, Sheet sheet){
-        Iterator<Map.Entry<Area, String[]>> it = validationMap.entrySet().iterator();
+    private void renderValidation4Sheet(Map<Area, Object> validationMap, Sheet sheet){
+        Iterator<Map.Entry<Area, Object>> it = validationMap.entrySet().iterator();
         while(it.hasNext()){
-            Map.Entry<Area, String[]> entry = it.next();
+            Map.Entry<Area, Object> entry = it.next();
             Area key = entry.getKey();
-            String[] value = entry.getValue();
-            sheet.addValidationData(getValidation4Range(sheet, new CellRangeAddressList(key.getStart().getRow(),
-                    key.getEnd().getRow(), key.getStart().getColumn(), key.getEnd().getColumn()),value));
+            Object value = entry.getValue();
+            CellRangeAddressList range = new CellRangeAddressList(key.getStart().getRow(),
+                    key.getEnd().getRow(), key.getStart().getColumn(), key.getEnd().getColumn());
+            if(value instanceof String[]) {
+                String[] list = (String[])value;
+                sheet.addValidationData(getValidation4Range(sheet, range, list));
+            }else if(value instanceof String){
+                String formula = (String) value;
+                sheet.addValidationData(getValidation4Formula(sheet, range, formula));
+            }
         }
     }
 
-    // 填充显示样式
-    private void fillShowStyle4Cell( Map<Area.CellPosition, CellFormat.StyleFormat> cellStylesMap, Area.CellPosition pos, CellStyle cellstyle, Font font){
-        if (cellStylesMap != null && cellStylesMap.containsKey(pos)) {
-            CellFormat.StyleFormat styleFormat = cellStylesMap.get(pos);
-            font.setFontHeightInPoints((short) styleFormat.getFontFormat().getFontSize());
-            font.setColor((short) styleFormat.getFontFormat().getFontColor());
-            font.setBold(styleFormat.getFontFormat().getFontWeight() != 0);
-            font.setFontName(styleFormat.getFontFormat().getFontFamily());
+    // 填充样式
+    private void fillStyle4Cell(Cell cell, CellFormat.StyleFormat styleFormat, CellFormat.FormatDetail detail, Workbook book){
+        CellFormat format = new CellFormat(styleFormat, detail);
+        CellStyle cellStyle = cellStypeMap.get(format);
+        if(cellStyle == null) {
+            if (cellStypeMap.size() >= MAX_CELLNUM) return;
 
-            cellstyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-            cellstyle.setFillForegroundColor((short) styleFormat.getBackgroundColor());
-            cellstyle.setAlignment(CellFormat.ALIGN.get(styleFormat.getTextAlign()));
-            cellstyle.setFont(font);
+            cellStyle = book.createCellStyle();
+
+            if(styleFormat != null) {
+                Font font = book.createFont();
+                font.setFontHeightInPoints((short) styleFormat.getFontFormat().getFontSize());
+                font.setColor((short) styleFormat.getFontFormat().getFontColor());
+                font.setBold(styleFormat.getFontFormat().getFontWeight() != 0);
+                font.setFontName(styleFormat.getFontFormat().getFontFamily());
+
+                cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+                cellStyle.setFillForegroundColor((short) styleFormat.getBackgroundColor());
+                cellStyle.setAlignment(CellFormat.ALIGN.get(styleFormat.getTextAlign()));
+                cellStyle.setFont(font);
+            }
+            if(detail != null && detail.getType() == CellFormat.FormatDetail.NUMBERIC_FORMAT &&
+                    cell.getStringCellValue().matches("[0-9]+(\\.[0-9]+)*")){
+                cell.setCellValue(Double.parseDouble(cell.getStringCellValue()));
+                cellStyle.setDataFormat(getDataFormat(book, detail.getDetail()));
+            }
+
+            cellStypeMap.put(format, cellStyle);
         }
+        cell.setCellStyle(cellStyle);
     }
 
     // 合并单元格

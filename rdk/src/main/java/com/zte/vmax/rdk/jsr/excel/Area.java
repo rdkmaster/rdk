@@ -23,9 +23,8 @@ public class Area {
         }
 
         public boolean equals(Object obj) {
-            return (obj != null &&
-                    this.column == ((CellPosition) obj).column &&
-                    this.row == ((CellPosition) obj).row) ? true : false;
+            CellPosition that = (CellPosition)obj;
+            return that != null && this.column == that.column && this.row == that.row;
 
         }
 
@@ -53,4 +52,14 @@ public class Area {
     }
 
     public CellPosition getEnd() { return end; }
+
+    public boolean equals(Object obj) {
+        Area that = (Area) obj;
+        return that != null && Util.isEquals(this.start, that.start) && Util.isEquals(this.end, that.end);
+
+    }
+
+    public int hashCode() {
+        return Util.hash(start) + Util.hash(end);
+    }
 }

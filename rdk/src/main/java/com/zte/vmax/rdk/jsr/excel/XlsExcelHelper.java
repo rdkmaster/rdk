@@ -31,6 +31,12 @@ public class XlsExcelHelper extends  BasicExcelHelper{
     }
 
     @Override
+    protected DataValidation getValidation4Formula(Sheet sheet, CellRangeAddressList ranges, String strFormula) {
+        DVConstraint dvConstraint = DVConstraint.createFormulaListConstraint(strFormula);
+        return new HSSFDataValidation(ranges, dvConstraint);
+    }
+
+    @Override
     protected short getDataFormat(Workbook book, String formatDetail){
         return HSSFDataFormat.getBuiltinFormat(formatDetail);
     }

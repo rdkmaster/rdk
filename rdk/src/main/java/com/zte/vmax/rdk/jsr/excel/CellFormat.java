@@ -11,6 +11,9 @@ import java.util.Map;
  */
 public class CellFormat {
 
+    private StyleFormat style;
+    private FormatDetail detail;
+
     public static final int DEFAULT_POINT_SIZE = 10;
     public static final int DEFAULT_BACKGROUND_COLOR = IndexedColors.WHITE.getIndex();
 
@@ -40,6 +43,24 @@ public class CellFormat {
         }
     }
 
+    public CellFormat(){}
+
+    public CellFormat(StyleFormat style, FormatDetail detail){
+        this.style = style;
+        this.detail = detail;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        CellFormat that = (CellFormat) obj;
+        return that != null && Util.isEquals(this.style, that.style)  &&  Util.isEquals(this.detail, that.detail);
+    }
+
+    @Override
+    public int hashCode(){
+        return Util.hash(style) + Util.hash(detail);
+    }
+
     public static class FontFormat{
         private String fontFamily;
         private int fontSize;
@@ -67,6 +88,18 @@ public class CellFormat {
         public int getFontWeight() {
             return fontWeight;
         }
+
+        @Override
+        public boolean equals(Object obj){
+            FontFormat that = (FontFormat) obj;
+            return that != null && Util.isEquals(this.fontFamily, that.fontFamily) && this.fontSize == that.fontSize &&
+                    this.fontColor == that.fontColor && this.fontWeight == that.fontWeight;
+        }
+
+        @Override
+        public int hashCode(){
+            return Util.hash(fontFamily) + fontSize + fontColor + fontWeight;
+        }
     }
 
     public static class StyleFormat {
@@ -91,6 +124,18 @@ public class CellFormat {
         public FontFormat getFontFormat() {
             return fontFormat;
         }
+
+        @Override
+        public boolean equals(Object obj){
+            StyleFormat that = (StyleFormat) obj;
+            return that != null && this.backgroundColor == that.backgroundColor &&
+                    Util.isEquals(this.textAlign, that.textAlign) && Util.isEquals(this.fontFormat, that.fontFormat);
+        }
+
+        @Override
+        public int hashCode(){
+            return backgroundColor + Util.hash(textAlign) + Util.hash(fontFormat);
+        }
     }
 
     public static class FormatDetail{
@@ -108,6 +153,17 @@ public class CellFormat {
         public String getType() { return type; }
         public String getDetail() {
             return detail == null || detail.length() == 0 ? DEFAULT_NUMBER_DETAIL : detail;
+        }
+
+        @Override
+        public boolean equals(Object obj){
+            FormatDetail that = (FormatDetail) obj;
+            return that!= null && Util.isEquals(this.type, that.type) && Util.isEquals(this.detail, that.detail);
+        }
+
+        @Override
+        public int hashCode(){
+            return Util.hash(type) + Util.hash(detail);
         }
     }
 }
