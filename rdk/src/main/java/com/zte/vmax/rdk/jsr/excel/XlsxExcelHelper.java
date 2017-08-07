@@ -13,12 +13,12 @@ import java.io.InputStream;
  */
 public class XlsxExcelHelper extends BasicExcelHelper{
     @Override
-    public Workbook getBook() throws Exception {
+    protected Workbook getBook() throws Exception {
         return new XSSFWorkbook();
     }
 
     @Override
-    public Workbook getBook(InputStream fis) throws Exception {
+    protected Workbook getBook(InputStream fis) throws Exception {
         return new XSSFWorkbook(fis);
     }
 
@@ -26,6 +26,13 @@ public class XlsxExcelHelper extends BasicExcelHelper{
     protected DataValidation getValidation4Range(Sheet sheet, CellRangeAddressList ranges, String[] validationList) {
         XSSFDataValidationHelper dvHelper = new XSSFDataValidationHelper((XSSFSheet)sheet);
         XSSFDataValidationConstraint dvConstraint = (XSSFDataValidationConstraint) dvHelper.createExplicitListConstraint(validationList);
+        return dvHelper.createValidation(dvConstraint, ranges);
+    }
+
+    @Override
+    protected DataValidation getValidation4Formula(Sheet sheet, CellRangeAddressList ranges, String strFormula) {
+        XSSFDataValidationHelper dvHelper = new XSSFDataValidationHelper((XSSFSheet)sheet);
+        XSSFDataValidationConstraint dvConstraint = (XSSFDataValidationConstraint) dvHelper.createFormulaListConstraint(strFormula);
         return dvHelper.createValidation(dvConstraint, ranges);
     }
 
