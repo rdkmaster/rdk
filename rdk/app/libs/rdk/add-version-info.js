@@ -10,3 +10,4 @@ fs.rename(`${__dirname}/mainconfig.js`, `${__dirname}/mainconfig-${args.v}.js`);
 content = fs.readFileSync(`${__dirname}/mainconfig-${args.v}.js`).toString();
 fs.wirteFileSync(`${__dirname}/mainconfig-${args.v}.js`,
     content.replace(/"(rd\.(attributes|containers|controls|services)\.\w+?)":\s*"(.+?)"\s*,/g, `"$1": "$3-${args.v}"`));
+
