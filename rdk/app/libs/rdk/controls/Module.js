@@ -95,7 +95,16 @@ define(['rd.core'], function() {
                         scope.loadContext = {controller: controller, initData: initData};
 
                         var reg = /<([a-z]+)(\s*\w*?\s*=\s*".+?")*(\s*?>[\s\S]*?(<\/\1>)+|\s*\/>)/i;
-                        reg.test(url) ? _compileModule(url) : ($http.get(url, {timeout: timeout}).success(_compileModule).error(_loadError));
+                        if (reg.test(url)) {
+                            //是一个html片段
+                            _compileModule(url);
+                        } else {
+                            //是一个url，需要下载
+                            url = url.replace(/(.+)(\.html)\s*$/i, function(found, fileName, extName) {
+                                return application.version == '0.0.0' ? found : fileName + '-' + application.version + extName;
+                            });
+                            $http.get(url, {timeout: timeout}).success(_compileModule).error(_loadError)
+                        }
                     }
 
                     function _compileModule(htmlSource) {
