@@ -496,13 +496,17 @@ RDK的解决方案如下：
 3. 这个工具的运行需要依赖nodejs环境，因此如果你的电脑没有安装nodejs，请自行安装。
 4. 在cmd窗口中执行 `node d:\add-version-info.js -v 1.1.1 -c /d/temp/11/web/` 命令，其中-c后面的目录是待处理的源码目录 
 5. 这个工具的使用帮助如下
-Usage:
-  add-version-info -v version -c code-home [-e extensions] [-x excludes]
--v 是版本号，例如1.1.1。注意0.0.0是rdk保留的版本号，请别使用。
--c 是待转换源码所在路径
--e 是需要处理的文件的扩展名，默认值是 js,html,css。多个扩展名请用英文逗号隔开
--x 是不需要处理的文件列表，默认值是 index.html。多个文件请用英文逗号隔开
 
+```
+Usage:
+  add-version-info -v version -c code-home [-e extensions] [-x excludes] [-h]
+     -v 是版本号，例如1.1.1。注意0.0.0是rdk保留的版本号，请别使用。
+     -c 是待转换源码所在根，如果需要同时处理多不同根路径的话，请用英文逗号隔开，例如 script1/aa,script2/bb,script3/cc
+     -e 是需要处理的文件的扩展名，默认值是 js,html,css。多个扩展名请用英文逗号隔开
+     -x 是不需要处理的文件列表，默认值是 index.html。多个文件请用英文逗号隔开
+     -h 显示这些信息
+```
+请使用 `add-version-info -h` 获得最新的帮助信息
 
 
 
