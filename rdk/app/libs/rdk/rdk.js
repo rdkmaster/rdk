@@ -98,11 +98,15 @@ define(["app-basic", "mainconfig"], function() {
              * 初始化应用入口
              */
             var appScript;
+            application.version = '0.0.0';
             for (var i = 0; i < document.scripts.length; i++) {
                 var s = document.scripts[i];
                 var src = s.getAttribute('src');
                 if (src && src.match(/libs\/requirejs\/require.js$/)) {
+                    application.version = s.getAttribute('app-version');
+                    application.version = application.version ? application.version : '0.0.0';
                     appScript = s.getAttribute('rdk-app');
+                    appScript += (application.version != '0.0.0' ? '-' + application.version : '');
                 }
             };
             if (appScript) {

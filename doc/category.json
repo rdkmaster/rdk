@@ -62,10 +62,10 @@
     "icon": "fa fa-folder-open"
   },
   {
-    "label": "前端开发 · 控件",
+    "label": "前端 · 手册",
     "items": [
       {
-        "label": "前端 · 通用功能",
+        "label": "通用功能",
         "items": [
           {
             "label": "数据源",
@@ -137,8 +137,13 @@
         "icon": "fa fa-folder-open"
       },
       {
-        "label": "前端 · 控件",
+        "label": "控件",
         "items": [
+          {
+            "label": "Accordion",
+            "url": "doc/client/containers/accordion/rdk_accordion.html",
+            "icon": "fa fa-file"
+          },
           {
             "label": "Alert",
             "url": "doc/client/common/alert/alert.html",
@@ -162,6 +167,11 @@
           {
             "label": "Button",
             "url": "doc/client/controls/button/rdk_button.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "ButtonGroup",
+            "url": "doc/client/containers/buttongroup/rdk_buttongroup.html",
             "icon": "fa fa-file"
           },
           {
@@ -215,6 +225,11 @@
             "icon": "fa fa-file"
           },
           {
+            "label": "Panel",
+            "url": "doc/client/containers/panel/rdk_panel.html",
+            "icon": "fa fa-file"
+          },
+          {
             "label": "Progressbar",
             "url": "doc/client/controls/progressbar/progressbar.html",
             "icon": "fa fa-file"
@@ -242,6 +257,11 @@
           {
             "label": "Switch",
             "url": "doc/client/controls/switch/rdk_switch.html",
+            "icon": "fa fa-file"
+          },
+          {
+            "label": "Tab",
+            "url": "doc/client/containers/tab/rdk_tab.html",
             "icon": "fa fa-file"
           },
           {
@@ -283,32 +303,6 @@
         "icon": "fa fa-folder-open"
       },
       {
-        "label": "前端 · 容器",
-        "items": [
-          {
-            "label": "Accordion",
-            "url": "doc/client/containers/accordion/rdk_accordion.html",
-            "icon": "fa fa-file"
-          },
-          {
-            "label": "ButtonGroup",
-            "url": "doc/client/containers/buttongroup/rdk_buttongroup.html",
-            "icon": "fa fa-file"
-          },
-          {
-            "label": "Panel",
-            "url": "doc/client/containers/panel/rdk_panel.html",
-            "icon": "fa fa-file"
-          },
-          {
-            "label": "Tab",
-            "url": "doc/client/containers/tab/rdk_tab.html",
-            "icon": "fa fa-file"
-          }
-        ],
-        "icon": "fa fa-folder-open"
-      },
-      {
         "label":"WebGIS",
         "icon": "fa fa-folder-open",
         "items":[
@@ -333,7 +327,7 @@
         ]
       },
       {
-        "label": "前端 · 应用示例demo",
+        "label": "应用示例demo",
         "items": [
           {
             "label": "搜索筛选",
@@ -419,7 +413,7 @@
         "icon": "fa fa-folder-open"
       },
       {
-        "label": "前端 · app开发详细说明文档",
+        "label": "app开发详细说明文档",
         "items": [
           {
             "label": "Help Document",
@@ -430,7 +424,7 @@
         "icon": "fa fa-folder-open"
       },
       {
-        "label": "前端 · 原生HTML标签",
+        "label": "原生HTML标签",
         "items": [
           {
             "label": "h1~h6",
@@ -465,7 +459,7 @@
         ],
         "icon": "fa fa-folder-open"
       },{
-        "label": "前端 · AngularJS",
+        "label": "AngularJS相关",
         "items": [
           {
             "label": "频繁使用",
@@ -651,7 +645,7 @@
     "icon": "fa fa-folder-open"
   },
   {
-    "label": "后端服务 · API",
+    "label": "后端 · 手册",
     "items": [
       {
         "label": "总览",
