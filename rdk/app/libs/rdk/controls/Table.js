@@ -333,14 +333,27 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 restrict: 'A',
                 link: function(scope, element, attr) {
                     if (scope.columnDef.render) {
-                        var html;
-                        if (angular.isFunction(scope.columnDef.render)) {
-                            html = '<div>' + scope.columnDef.render.call(undefined, scope.item) + '</div>';
-                        } else {
-                            html = '<div>' + scope.columnDef.render + '</div>';
+                        var DUMMY_SCOPE = {$destroy: angular.noop};
+                        var childScope;
+                        var destroyChildScope = function() {
+                            (childScope || DUMMY_SCOPE).$destroy();
+                        };
+                        scope.$watch("item",parseColumn,true);
+
+                        function parseColumn(newV,oldV){
+                            //创建子scope，方便在每次销毁DOM时，也能销毁掉scope，去掉compile带来的watchers
+                            childScope = scope.$new(false);
+                            var html;
+                            if (angular.isFunction(scope.columnDef.render)) {
+                                html = '<div>' + scope.columnDef.render.call(undefined, scope.item) + '</div>';
+                            } else {
+                                html = '<div>' + scope.columnDef.render + '</div>';
+                            }
+                            element.html(html);
+                            $compile(element.contents())(childScope);
+
+                            scope.$on("$destroy", destroyChildScope);
                         }
-                        element.html(html);
-                        $compile(element.contents())(scope);
                     }
                 }
             }
@@ -349,33 +362,42 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
             return {
                 restrict: 'A',
                 link: function(scope, element, attr) {
-                    var html = '<div style="min-height: 20px" ng-click="editHandler($event, columnDef)" ng-mouseenter="changeShape($event, columnDef)">';
-                    if (scope.columnDef.render) {
-                        if (angular.isFunction(scope.columnDef.render)) {
-                            html += '<div>' + scope.columnDef.render.call(undefined, scope.item) + '</div>';
-                        } else {
-                            html += '<div>' + scope.columnDef.render + '</div>';
-                        }
-                    } else if (scope.columnDef.editable) {
-                        if (scope.columnDef.editorRenderer) {
-                            if (angular.isFunction(scope.columnDef.editorRenderer)) {
-                                html += '<div ng-show="true">' + scope.columnDef.editorRenderer.call(undefined, scope.item) + '</div>';
+                    var DUMMY_SCOPE = {$destroy: angular.noop};
+                    var childScope;
+                    var destroyChildScope = function() {
+                        (childScope || DUMMY_SCOPE).$destroy();
+                    };
+                    scope.$watch("item",parseColumn,true);
+                    function parseColumn(){
+                        var html = '<div style="min-height: 20px" ng-click="editHandler($event, columnDef)" ng-mouseenter="changeShape($event, columnDef)">';
+                        if (scope.columnDef.render) {
+                            if (angular.isFunction(scope.columnDef.render)) {
+                                html += '<div>' + scope.columnDef.render.call(undefined, scope.item) + '</div>';
                             } else {
-                                html += '<div ng-show="true">' + scope.columnDef.editorRenderer + '</div>';
+                                html += '<div>' + scope.columnDef.render + '</div>';
+                            }
+                        } else if (scope.columnDef.editable) {
+                            if (scope.columnDef.editorRenderer) {
+                                if (angular.isFunction(scope.columnDef.editorRenderer)) {
+                                    html += '<div ng-show="true">' + scope.columnDef.editorRenderer.call(undefined, scope.item) + '</div>';
+                                } else {
+                                    html += '<div ng-show="true">' + scope.columnDef.editorRenderer + '</div>';
+                                }
+                            } else {
+                                html += '<div ng-bind="item[columnDef.data]"> </div>';
+                                html += '<div ng-show="false">' +
+                                    '<input class="editInput" ng-model="item[columnDef.data]"  ng-keyup="inputPressHandler($event, item.$index, columnDef,itemRowSpan,$parent.$index)" ng-blur="editorBlurHandler($event, item.$index, columnDef,itemRowSpan,$parent.$index)">' +
+                                    '</div>';
                             }
                         } else {
-                            html += '<div ng-bind="item[columnDef.data]"> </div>';
-                            html += '<div ng-show="false">' +
-                                '<input class="editInput" ng-model="item[columnDef.data]"  ng-keyup="inputPressHandler($event, item.$index, columnDef,itemRowSpan,$parent.$index)" ng-blur="editorBlurHandler($event, item.$index, columnDef,itemRowSpan,$parent.$index)">' +
-                                '</div>';
+                            html += '<div ng-bind="item[columnDef.data]"> </div>'
                         }
-                    } else {
-                        html += '<div ng-bind="item[columnDef.data]"> </div>'
-                    }
 
-                    html += '</div>'
-                    element.html(html);
-                    $compile(element.contents())(scope);
+                        html += '</div>'
+                        element.html(html);
+                        $compile(element.contents())(scope);
+                        scope.$on("$destroy", destroyChildScope);
+                    }
                 }
             }
         });
