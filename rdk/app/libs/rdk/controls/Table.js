@@ -340,14 +340,14 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         };
                         scope.$watch("item",parseColumn,true);
 
-                        function parseColumn(newV,oldV){
+                        function parseColumn(){
                             //创建子scope，方便在每次销毁DOM时，也能销毁掉scope，去掉compile带来的watchers
                             childScope = scope.$new(false);
                             var html;
-                            if (angular.isFunction(scope.columnDef.render)) {
-                                html = '<div>' + scope.columnDef.render.call(undefined, scope.item) + '</div>';
+                            if (angular.isFunction(childScope.columnDef.render)) {
+                                html = '<div>' + childScope.columnDef.render.call(undefined, childScope.item) + '</div>';
                             } else {
-                                html = '<div>' + scope.columnDef.render + '</div>';
+                                html = '<div>' + childScope.columnDef.render + '</div>';
                             }
                             element.html(html);
                             $compile(element.contents())(childScope);
@@ -362,11 +362,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
             return {
                 restrict: 'A',
                 link: function(scope, element, attr) {
-                    var DUMMY_SCOPE = {$destroy: angular.noop};
-                    var childScope;
-                    var destroyChildScope = function() {
-                        (childScope || DUMMY_SCOPE).$destroy();
-                    };
                     scope.$watch("item",parseColumn,true);
                     function parseColumn(){
                         var html = '<div style="min-height: 20px" ng-click="editHandler($event, columnDef)" ng-mouseenter="changeShape($event, columnDef)">';
@@ -396,7 +391,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         html += '</div>'
                         element.html(html);
                         $compile(element.contents())(scope);
-                        scope.$on("$destroy", destroyChildScope);
                     }
                 }
             }
