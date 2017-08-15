@@ -333,26 +333,17 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 restrict: 'A',
                 link: function(scope, element, attr) {
                     if (scope.columnDef.render) {
-                        var DUMMY_SCOPE = {$destroy: angular.noop};
-                        var childScope;
-                        var destroyChildScope = function() {
-                            (childScope || DUMMY_SCOPE).$destroy();
-                        };
                         scope.$watch("item",parseColumn,true);
-
                         function parseColumn(){
                             //创建子scope，方便在每次销毁DOM时，也能销毁掉scope，去掉compile带来的watchers
-                            childScope = scope.$new(false);
                             var html;
-                            if (angular.isFunction(childScope.columnDef.render)) {
-                                html = '<div>' + childScope.columnDef.render.call(undefined, childScope.item) + '</div>';
+                            if (angular.isFunction(scope.columnDef.render)) {
+                                html = '<div>' + scope.columnDef.render.call(undefined, scope.item) + '</div>';
                             } else {
-                                html = '<div>' + childScope.columnDef.render + '</div>';
+                                html = '<div>' + scope.columnDef.render + '</div>';
                             }
                             element.html(html);
-                            $compile(element.contents())(childScope);
-
-                            scope.$on("$destroy", destroyChildScope);
+                            $compile(element.contents())(scope);
                         }
                     }
                 }
