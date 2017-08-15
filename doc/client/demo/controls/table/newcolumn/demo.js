@@ -10,7 +10,7 @@
             "columnDefs" :[
                 {
                     title : "编辑列",
-                    render : "<a style='cursor:pointer' ng-click='appScope.click(item)'>点击</a>"
+                    render : "<a style='cursor:pointer' ng-click='appScope.click(item,$parent.$index,$index)'>点击</a>"
                 },{
                     title : "索引添加",
                     targets : 1,
@@ -33,8 +33,9 @@
             ]
         }
 
-        $scope.click = function(item){
-            alert("新添加的具有点击功能的列！");
+        $scope.click = function(item,rowNum , colnum){
+            debugger;
+            console.log(item,rowNum , colnum);
         }
     }
 

@@ -19,8 +19,32 @@
                 "5421"
             ],
             [
+                "Tiger Nixon2",
+                "System Architect2",
+                "$320,800",
+                "2011/04/25",
+                "Edinburgh",
+                "5421"
+            ],
+            [
                 "Garrett Winters",
                 "Accountant",
+                "$170,750",
+                "2011/07/25",
+                "Tokyo",
+                "8422"
+            ],
+            [
+                "Garrett Winters2",
+                "Accountant2",
+                "$170,750",
+                "2011/07/25",
+                "Tokyo",
+                "8422"
+            ],
+            [
+                "Garrett Winters3",
+                "Accountant3",
                 "$170,750",
                 "2011/07/25",
                 "Tokyo",
