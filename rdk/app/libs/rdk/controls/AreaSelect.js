@@ -2,8 +2,8 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
     var areaModule = angular.module('rd.controls.AreaSelect', ['rd.core']);
     areaModule.run(["$templateCache", function($templateCache) {
         $templateCache.put("province.html",
-            '<div>\
-                <div class="rdk-area-contain">\
+            '<div class="rdk-area-contain">\
+                <div >\
                     <ul class="nav nav-tabs">\
                         <li ng-class="{active: $vm.activeTab == 1}"><a ng-click="$vm.activeTab = 1">{{$vm.userArr[0].name || provinceLabel || $vm.i18n.province}}</a></li>\
                     </ul>\
@@ -24,8 +24,8 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
             </div>'
         );
         $templateCache.put("city.html",
-            '<div>\
-                <div class="rdk-area-contain">\
+            '<div class="rdk-area-contain">\
+                <div>\
                     <ul class="nav nav-tabs">\
                         <li ng-if="!freezeProvince" ng-class="{active: $vm.activeTab == 1}"><a ng-click="$vm.activeTab = 1">{{$vm.userArr[0].name || provinceLabel || $vm.i18n.province}}</a></li>\
                         <li ng-show="!!$vm.dsCitys.data.data.length" ng-class="{active: $vm.activeTab == 2}"><a ng-click="$vm.activeTab = 2">{{$vm.userArr[1].name || cityLabel || $vm.i18n.city}}</a></li>\
@@ -55,8 +55,8 @@ define(['angular', 'rd.core', 'css!rd.styles.Bootstrap','css!rd.styles.FontAweso
             </div>'
         );
         $templateCache.put("common.html",
-            '<div>\
-                <div class="rdk-area-contain">\
+            '<div class="rdk-area-contain">\
+                <div>\
                     <ul class="nav nav-tabs">\
                         <li ng-class="{active: $vm.activeTab == 1}"><a ng-click="$vm.activeTab = 1">{{$vm.userArr[0].name || provinceLabel || $vm.i18n.province}}</a></li>\
                         <li ng-show="!!$vm.dsCitys.data.data.length" ng-class="{active: $vm.activeTab == 2}"><a ng-click="$vm.activeTab = 2">{{$vm.userArr[1].name || cityLabel || $vm.i18n.city}}</a></li>\

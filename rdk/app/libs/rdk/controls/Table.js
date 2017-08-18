@@ -53,10 +53,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 ng-class="{\'selected-row\':ifRowHighLight(item,\'click\')}" \
                 ng-dblclick="dbClickHandler(item,$index)">\
                 <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="item.checked"></td>\
-                <td ng-repeat="columnDef in columnDefs track by $index" \
+                <td ng-repeat="columnDef in columnDefs" \
                     ng-show="columnDef.visible" \
                     class="{{columnDef.class}}" \
-                    rdk-column-parser-lite>{{item[columnDef.data]}}</td>\
+                    rdk-column-parser-lite></td>\
             </tr>\
             <tr ng-if="noData">\
                 <td colspan="{{addCheckBox?(visibleColumnDefsCount+1):visibleColumnDefsCount}}">\
@@ -332,19 +332,22 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
             return {
                 restrict: 'A',
                 link: function(scope, element, attr) {
-                    if (scope.columnDef.render) {
-                        scope.$watch("item",parseColumn,true);
-                        function parseColumn(){
-                            //创建子scope，方便在每次销毁DOM时，也能销毁掉scope，去掉compile带来的watchers
-                            var html;
+                    scope.$watch("columnDef",parseColumn,true);
+                    scope.$watch("item",parseColumn,true);
+                    function parseColumn(){
+                        //创建子scope，方便在每次销毁DOM时，也能销毁掉scope，去掉compile带来的watchers
+                        var html;
+                        if (scope.columnDef.render) {
                             if (angular.isFunction(scope.columnDef.render)) {
                                 html = '<div>' + scope.columnDef.render.call(undefined, scope.item) + '</div>';
                             } else {
                                 html = '<div>' + scope.columnDef.render + '</div>';
                             }
-                            element.html(html);
-                            $compile(element.contents())(scope);
+                        }else{
+                            html = '<div ng-bind="item[columnDef.data]"></div>';
                         }
+                        element.html(html);
+                        $compile(element.contents())(scope);
                     }
                 }
             }
