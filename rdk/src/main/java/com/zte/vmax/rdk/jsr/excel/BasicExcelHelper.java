@@ -48,8 +48,9 @@ public abstract class BasicExcelHelper implements ExcelHelper{
         }
     }
 
-    public static ExcelHelper getRealHelper(String fullName) {
-        return new File(fullName).exists() ? getHelper4FileMagic(fullName) : getHelper4FullName(fullName);
+    public static ExcelHelper getRealHelper(String fullName){
+        File f = new File(fullName);
+        return f.exists() && f.length() > 0 ? getHelper4FileMagic(fullName) : getHelper4FullName(fullName);
     }
 
     // 判断是否存在值 - 复用以前的代码
@@ -296,13 +297,16 @@ public abstract class BasicExcelHelper implements ExcelHelper{
                 cellStyle.setAlignment(CellFormat.ALIGN.get(styleFormat.getTextAlign()));
                 cellStyle.setFont(font);
             }
-            if(detail != null && detail.getType() == CellFormat.FormatDetail.NUMBERIC_FORMAT &&
-                    cell.getStringCellValue().matches("[0-9]+(\\.[0-9]+)*")){
-                cell.setCellValue(Double.parseDouble(cell.getStringCellValue()));
+
+            if(detail != null){
                 cellStyle.setDataFormat(getDataFormat(book, detail.getDetail()));
             }
-
             cellStypeMap.put(format, cellStyle);
+        }
+        // 数字类型要生效, 必须要转换设置cell 的值为 数字型的，否则即使设置了格式,也无效
+        if(detail != null && detail.getType() == CellFormat.FormatDetail.NUMBERIC_FORMAT &&
+                cell.getStringCellValue().matches("[0-9]+(\\.[0-9]+)?")){
+            cell.setCellValue(Double.parseDouble(cell.getStringCellValue()));
         }
         cell.setCellStyle(cellStyle);
     }
