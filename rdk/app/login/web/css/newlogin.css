@@ -59,7 +59,7 @@ input::-ms-clear {
     */
     position: absolute;
     width: 100vh;
-    height: 100vh;
+    height: 110vh;
     overflow: hidden;
     transition: all .8s;
     left: calc(50vw - 50vh);
