@@ -134,7 +134,7 @@ public abstract class BasicExcelHelper implements ExcelHelper{
             for (int i = 0; i < formatMirror.size(); i++) {
                 ScriptObjectMirror oneCellFormat = (ScriptObjectMirror) formatMirror.get(Integer.toString(i));
                 addAreaData2Map(map, (ScriptObjectMirror) oneCellFormat.get("cell"), new CellFormat.FormatDetail(getValue4Map(oneCellFormat, "type",
-                        CellFormat.FormatDetail.STRING_FORMAT), getValue4Map(oneCellFormat, "detail", CellFormat.FormatDetail.DEFAULT_NUMBER_DETAIL)));
+                        CellFormat.FormatDetail.STRING_FORMAT), getValue4Map(oneCellFormat, "detail", CellFormat.FormatDetail.DEFAULT_STRING_DETAIL)));
             }
         }
         return map;
@@ -268,10 +268,14 @@ public abstract class BasicExcelHelper implements ExcelHelper{
                     key.getEnd().getRow(), key.getStart().getColumn(), key.getEnd().getColumn());
             if(value instanceof String[]) {
                 String[] list = (String[])value;
-                sheet.addValidationData(getValidation4Range(sheet, range, list));
+                DataValidation validation = getValidation4Range(sheet, range, list);
+                validation.setShowErrorBox(true);
+                sheet.addValidationData(validation);
             }else if(value instanceof String){
                 String formula = (String) value;
-                sheet.addValidationData(getValidation4Formula(sheet, range, formula));
+                DataValidation validation = getValidation4Formula(sheet, range, formula);
+                validation.setShowErrorBox(true);
+                sheet.addValidationData(validation);
             }
         }
     }
@@ -298,7 +302,7 @@ public abstract class BasicExcelHelper implements ExcelHelper{
                 cellStyle.setFont(font);
             }
 
-            if(detail != null){
+            if(detail != null && detail.getDetail() != null){
                 cellStyle.setDataFormat(getDataFormat(book, detail.getDetail()));
             }
             cellStypeMap.put(format, cellStyle);
