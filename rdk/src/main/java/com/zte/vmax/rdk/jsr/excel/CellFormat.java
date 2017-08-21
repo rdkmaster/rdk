@@ -140,6 +140,7 @@ public class CellFormat {
 
     public static class FormatDetail{
         public static final String DEFAULT_NUMBER_DETAIL = "0.0000000000";
+        public static final String DEFAULT_STRING_DETAIL = "";
         public static final String STRING_FORMAT = "string";
         public static final String NUMBERIC_FORMAT = "number";
 
@@ -152,7 +153,7 @@ public class CellFormat {
 
         public String getType() { return type; }
         public String getDetail() {
-            return detail == null || detail.length() == 0 ? DEFAULT_NUMBER_DETAIL : detail;
+            return detail == null || detail.length() == 0 ?( NUMBERIC_FORMAT.equals(type) ? DEFAULT_NUMBER_DETAIL : null) : detail;
         }
 
         @Override
