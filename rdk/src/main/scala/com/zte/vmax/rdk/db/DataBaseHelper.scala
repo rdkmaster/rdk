@@ -28,7 +28,10 @@ object DataBaseHelper extends Logger {
     * @return
     */
   def fetch(session: DBSession, sql: String, maxLine: Long, nullToString: String, result: ScriptObjectMirror): Unit = {
-
+    if(result == null) {
+      logger.error("Result Object cannot be null")
+      return;
+    }
     getConnection(session).map(connection =>
       try {
         val currentTime = System.currentTimeMillis()
@@ -112,6 +115,10 @@ object DataBaseHelper extends Logger {
     * @return 数据表集合
     */
   def batchFetch(session: DBSession, sqlArr: List[String], maxLine: Long, timeout: Long, result: ScriptObjectMirror): Unit = {
+    if(result == null) {
+      logger.error("Result Object cannot be null")
+      return;
+    }
     if (sqlArr.isEmpty) {
       return
     }
