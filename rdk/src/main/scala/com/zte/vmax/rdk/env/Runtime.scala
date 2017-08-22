@@ -271,27 +271,25 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   def executeUpdate(appName: String, sql: String, ifErrorInfo: Boolean): Any = {
     DataBaseHelper.executeUpdate(useDbSession, sql) match {
-      case Some(dataOrError) => {
+      case Some(dataOrError) =>
         dataOrError match {
           case num: Int => num
-          case error: DBError if (ifErrorInfo) => objectToJson(error)
+          case error: DBError if ifErrorInfo => objectToJson(error)
           case _ => 0
         }
-      }
       case _ => 0
     }
   }
 
   def batchExecuteUpdate(appName: String, sqlArr: ScriptObjectMirror, ifErrorInfo: Boolean): Any = {
-    val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
+    val lst = for (i <- 0 until sqlArr.size()) yield sqlArr.get(i.toString).toString
     DataBaseHelper.batchExecuteUpdate(useDbSession, lst.toList) match {
-      case Some(dataOrError) => {
+      case Some(dataOrError) =>
         dataOrError.head match {
           case num: Integer => objectToJson(dataOrError.toArray)
           case error: DBError if ifErrorInfo => objectToJson(error)
           case _ => objectToJson(Array.apply())
         }
-      }
       case _ =>
     }
 
