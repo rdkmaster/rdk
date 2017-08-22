@@ -64,8 +64,7 @@ public abstract class BasicExcelHelper implements ExcelHelper{
     // 检查数据是否正确 - 复用的likeArray
     @Deprecated
     private boolean isCorrectJSObject(Object obj) {
-        if(obj == null || obj instanceof Undefined || !(obj instanceof ScriptObjectMirror)) return false;
-        return ((ScriptObjectMirror) obj).hasMember("length") ? true : false;
+        return !(obj == null || obj instanceof Undefined || !(obj instanceof ScriptObjectMirror)) && ((ScriptObjectMirror) obj).hasMember("length");
     }
 
     // 比较函数
@@ -81,15 +80,13 @@ public abstract class BasicExcelHelper implements ExcelHelper{
     }
 
     // 从Map中获取 区域Area 对应的属性值
-    private <T> T getDataFromArea(TreeMap<Area, T> map, Area area, T deafults){
-        Iterator<Map.Entry<Area, T>> iterator = map.entrySet().iterator();
-        while(iterator.hasNext()){
-            Map.Entry<Area, T> value = iterator.next();
-            if(area.getStart().getRow() >= value.getKey().getStart().getRow() && area.getEnd().getRow() <= value.getKey().getEnd().getRow() &&
+    private <T> T getDataFromArea(TreeMap<Area, T> map, Area area, T defaults){
+        for (Map.Entry<Area, T> value : map.entrySet()) {
+            if (area.getStart().getRow() >= value.getKey().getStart().getRow() && area.getEnd().getRow() <= value.getKey().getEnd().getRow() &&
                     area.getStart().getColumn() >= value.getKey().getStart().getColumn() && area.getEnd().getColumn() <= value.getKey().getEnd().getColumn())
                 return value.getValue();
         }
-        return deafults;
+        return defaults;
     }
 
     // 解析配置参数
@@ -199,30 +196,32 @@ public abstract class BasicExcelHelper implements ExcelHelper{
         InputStream input = null;
         OutputStream out = null;
         try {
-            int toWritesheetNums = content.size();
+            int toWriteSheetNums = content.size();
             boolean append = (boolean) option.get("append");
-            Object[] toWritesheetNames = content.keySet().toArray();
+            Object[] toWriteSheetNames = content.keySet().toArray();
             if (append) {
                 input = new FileInputStream(fullPathName);
                 book = getBook(input);
             } else
                 book = getBook();
 
-            for (int sheetIndex = 0; sheetIndex < toWritesheetNums; sheetIndex++) {
-                String sheetname = toWritesheetNames[sheetIndex].toString();
-                Sheet sheet = book.getSheet(sheetname) == null ? book.createSheet(sheetname) : book.getSheet(sheetname);
-                ScriptObjectMirror oneSheetData = (ScriptObjectMirror) content.get(sheetname);
-                ScriptObjectMirror excludeConfig = (ScriptObjectMirror) excludeIndexes.get(sheetname);
+            for (int sheetIndex = 0; sheetIndex < toWriteSheetNums; sheetIndex++) {
+                String sheetName = toWriteSheetNames[sheetIndex].toString();
+                Sheet sheet = book.getSheet(sheetName) == null ? book.createSheet(sheetName) : book.getSheet(sheetName);
+                ScriptObjectMirror oneSheetData = (ScriptObjectMirror) content.get(sheetName);
+                ScriptObjectMirror excludeConfig = (ScriptObjectMirror) excludeIndexes.get(sheetName);
                 Collection excludeValue = excludeConfig == null ? new ArrayList() : excludeConfig.values();
 
-                Map<Area.CellPosition, CellFormat.StyleFormat> styleMap = parseCellStyleToMap(option, sheetname);
-                TreeMap<Area, CellFormat.FormatDetail> formatMap = parseFormatToMap(option, sheetname);
-                renderValidation4Sheet(parseDefaultVaueListToMap(option, sheetname), sheet);
+                Map<Area.CellPosition, CellFormat.StyleFormat> styleMap = parseCellStyleToMap(option, sheetName);
+                TreeMap<Area, CellFormat.FormatDetail> formatMap = parseFormatToMap(option, sheetName);
+                renderValidation4Sheet(parseDefaultVaueListToMap(option, sheetName), sheet);
                 int currentRow = sheet.getPhysicalNumberOfRows();
-                for (int rowIndex = 0; rowIndex < getValue4Map(oneSheetData, "length", 0); rowIndex++) {
+                int rowLength = getValue4Map(oneSheetData, "length", 0);
+                for (int rowIndex = 0; rowIndex < rowLength; rowIndex++) {
                     Row row = sheet.createRow(currentRow + rowIndex);
                     ScriptObjectMirror oneRowData = (ScriptObjectMirror) oneSheetData.getMember(Integer.toString(rowIndex));
-                    for (int colIndex = 0; colIndex < getValue4Map(oneRowData, "length", 0); colIndex++) {
+                    int colLength = getValue4Map(oneRowData, "length", 0);
+                    for (int colIndex = 0; colIndex < colLength; colIndex++) {
                         if (!excludeValue.contains(colIndex)) {
                             Cell cell = row.createCell(colIndex);
                             Area.CellPosition pos = new Area.CellPosition(colIndex, rowIndex);
@@ -230,8 +229,9 @@ public abstract class BasicExcelHelper implements ExcelHelper{
                             cell.setCellValue(cellObj == null ? "" : cellObj.toString());
 
                             if(( styleMap != null && styleMap.size() > 0 ) || ( formatMap != null && formatMap.size() > 0 ) ) {
-                                fillStyle4Cell(cell, styleMap ==  null ? null : styleMap.get(pos), getDataFromArea(formatMap,
-                                        new Area(pos, pos), new CellFormat.FormatDetail(CellFormat.FormatDetail.STRING_FORMAT, null)),book);
+                                CellFormat.FormatDetail detailDefault = new CellFormat.FormatDetail(CellFormat.FormatDetail.STRING_FORMAT, null);
+                                CellFormat.FormatDetail detail = getDataFromArea(formatMap, new Area(pos, pos), detailDefault);
+                                fillStyle4Cell(cell, styleMap ==  null ? null : styleMap.get(pos), detail, book);
                             }
                         }
                     }
@@ -259,19 +259,17 @@ public abstract class BasicExcelHelper implements ExcelHelper{
 
     //全文有效值设定
     private void renderValidation4Sheet(Map<Area, Object> validationMap, Sheet sheet){
-        Iterator<Map.Entry<Area, Object>> it = validationMap.entrySet().iterator();
-        while(it.hasNext()){
-            Map.Entry<Area, Object> entry = it.next();
+        for (Map.Entry<Area, Object> entry : validationMap.entrySet()) {
             Area key = entry.getKey();
             Object value = entry.getValue();
             CellRangeAddressList range = new CellRangeAddressList(key.getStart().getRow(),
                     key.getEnd().getRow(), key.getStart().getColumn(), key.getEnd().getColumn());
-            if(value instanceof String[]) {
-                String[] list = (String[])value;
+            if (value instanceof String[]) {
+                String[] list = (String[]) value;
                 DataValidation validation = getValidation4Range(sheet, range, list);
                 validation.setShowErrorBox(true);
                 sheet.addValidationData(validation);
-            }else if(value instanceof String){
+            } else if (value instanceof String) {
                 String formula = (String) value;
                 DataValidation validation = getValidation4Formula(sheet, range, formula);
                 validation.setShowErrorBox(true);
@@ -308,7 +306,7 @@ public abstract class BasicExcelHelper implements ExcelHelper{
             cellStypeMap.put(format, cellStyle);
         }
         // 数字类型要生效, 必须要转换设置cell 的值为 数字型的，否则即使设置了格式,也无效
-        if(detail != null && detail.getType() == CellFormat.FormatDetail.NUMBERIC_FORMAT &&
+        if(detail != null && detail.getType().equals(CellFormat.FormatDetail.NUMBERIC_FORMAT) &&
                 cell.getStringCellValue().matches("[0-9]+(\\.[0-9]+)?")){
             cell.setCellValue(Double.parseDouble(cell.getStringCellValue()));
         }
