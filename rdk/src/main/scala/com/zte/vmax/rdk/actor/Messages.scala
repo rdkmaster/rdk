@@ -4,7 +4,7 @@ package com.zte.vmax.rdk.actor
 import akka.routing.ConsistentHashingRouter.ConsistentHashable
 import com.zte.vmax.activemq.rdk.RDKMessage
 import org.json4s.JObject
-import spray.http.{MediaType, MediaTypes, MultipartFormData}
+import spray.http.{HttpHeader, MediaType, MediaTypes, MultipartFormData}
 import spray.routing.RequestContext
 
 import scala.language.existentials
@@ -31,7 +31,7 @@ object Messages {
 
   case class ServiceResult(result: String)
 
-  case class ServiceRawResult(content: String, contentType: MediaType)
+  case class ServiceRawResult(content: String, contentType: MediaType, headers: List[HttpHeader])
 
   case class UploadServiceParam(data: MultipartFormData, fileName: String, timeStamp: Long)
 

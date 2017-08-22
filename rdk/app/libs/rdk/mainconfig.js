@@ -44,8 +44,8 @@ require.config({
         "rd.containers.ButtonGroup": "../rdk/containers/ButtonGroup",
         "rd.containers.GraphGroup": "../rdk/containers/GraphGroup",
         "rd.containers.Panel": "../rdk/containers/Panel",
-
         "rd.containers.Tab": "../rdk/containers/Tab",
+
         "rd.controls.Alert": "../rdk/controls/Alert",
         "rd.controls.AreaSelect": "../rdk/controls/AreaSelect",
         "rd.controls.BasicSelector": "../rdk/controls/BasicSelector",

@@ -87,83 +87,64 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
         } else {
           rct.complete(
             HttpResponse(StatusCodes.OK,
-              HttpEntity(ContentType(s.contentType, HttpCharsets.`UTF-8`), s.content))
+              HttpEntity(ContentType(s.contentType, HttpCharsets.`UTF-8`), s.content), s.headers)
           )
         }
     }
   }
 
   def runRoute =
-    path("runtime" / "log") {
-      get {
-        parameters('level.as[String]) {
-          req =>
-            complete {
-              val level = req.toUpperCase()
-              level match {
-                case "DEBUG" => LogManager.getRootLogger.setLevel(Level.DEBUG)
-                case "INFO" => LogManager.getRootLogger.setLevel(Level.INFO)
-                case "WARN" => LogManager.getRootLogger.setLevel(Level.WARN)
-                case "ERROR" => LogManager.getRootLogger.setLevel(Level.ERROR)
-                case "FATAL" => LogManager.getRootLogger.setLevel(Level.FATAL)
-                case _ => LogManager.getRootLogger.setLevel(Level.ERROR)
-              }
-              "log level changed to " + LogManager.getRootLogger.getLevel()
-            }
-        }
-      }
-    } ~
-      path("rdk" / "service" / Segments) {
-        url => {
+    path("rdk" / "service" / Segments) {
+      url => {
+        get {
+          parameters('p.as[ServiceParam]) {
+            req =>
+              ctx =>
+                logger.warn( s"""query param type deprecated ! please use this type: uri?key1=val1&key2=val2&... """)
+                if (req == null) {
+                  completeWithError(ctx, StatusCodes.BadRequest, "bad argument")
+                } else {
+                  doDispatch(ctx, url, req.app, req.param, true)
+                }
+          }
+        } ~
           get {
-            parameters('p.as[ServiceParam]) {
+            parameterMap {
               req =>
                 ctx =>
-                  logger.warn( s"""query param type deprecated ! please use this type: uri?key1=val1&key2=val2&... """)
-                  if (req == null) {
-                    completeWithError(ctx, StatusCodes.BadRequest, "bad argument")
-                  } else {
-                    doDispatch(ctx, url, req.app, req.param, true)
+                  req match {
+                    case null =>
+                      completeWithError(ctx, StatusCodes.BadRequest, "bad argument")
+                    case _ =>
+                      doDispatch(ctx, url, req.getOrElse("app", null), req, false)
                   }
             }
           } ~
-            get {
-              parameterMap {
-                req =>
-                  ctx =>
-                    req match {
-                      case null =>
-                        completeWithError(ctx, StatusCodes.BadRequest, "bad argument")
-                      case _ =>
-                        doDispatch(ctx, url, req.getOrElse("app", null), req, false)
-                    }
-              }
-            } ~
-            get { ctx =>
-              //这个分支应该走不进来
-              doDispatch(ctx, url, null, null, true)
-            } ~
-            (put | post | delete) {
-              ctx =>
-                val json = ctx.request.entity.asString(HttpCharsets.`UTF-8`)
-                val req = RdkUtil.json2Object[AnyRef](json).orNull
-                try {
-                  val strMap = req.asInstanceOf[StringMap[AnyRef]]
-                  val app = strMap.get("app")
-                  val appStr: String = if (app == null) null else app.toString
-                  val param = strMap.get("param")
-                  if (param == null) {
-                    doDispatch(ctx, url, appStr, req, false)
-                  } else {
-                    doDispatch(ctx, url, appStr, param.asInstanceOf[AnyRef], true)
-                  }
-                } catch {
-                  case t: Throwable =>
-                    doDispatch(ctx, url, null, json, false)
+          get { ctx =>
+            //这个分支应该走不进来
+            doDispatch(ctx, url, null, null, true)
+          } ~
+          (put | post | delete) {
+            ctx =>
+              val json = ctx.request.entity.asString(HttpCharsets.`UTF-8`)
+              val req = RdkUtil.json2Object[AnyRef](json).orNull
+              try {
+                val strMap = req.asInstanceOf[StringMap[AnyRef]]
+                val app = strMap.get("app")
+                val appStr: String = if (app == null) null else app.toString
+                val param = strMap.get("param")
+                if (param == null) {
+                  doDispatch(ctx, url, appStr, req, false)
+                } else {
+                  doDispatch(ctx, url, appStr, param.asInstanceOf[AnyRef], true)
                 }
-            }
-        }
-      } ~
+              } catch {
+                case t: Throwable =>
+                  doDispatch(ctx, url, null, json, false)
+              }
+          }
+      }
+    } ~
       path("rdk" / "service") {
         get {
           parameters('p.as[ServiceParam]) {

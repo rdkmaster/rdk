@@ -15,9 +15,9 @@
             }
         }
 
-        $scope.selectData=[5,10,20,40,80];
+        $scope.selectData=[5,10,20,40,80,100,200];
         $scope.selected=[];
-        $scope.selected[0]=$scope.selectData[0];
+        $scope.selected[0]=$scope.selectData[2];
 
         EventService.register('mySelect', EventTypes.CHANGE, function(event, data) {//处理被选中的数据
             rdk.tableID.setPageSize(data);
@@ -25,12 +25,12 @@
 
         //测试数据
         $scope.allData= {data: [], field: [], header: []};
-        for (var i = 0; i < 400; i++) {
+        for (var i = 0; i < 500; i++) {
             $scope.allData.data.push([]);
-            for (var j = 0; j < 6; j++) {
-                $scope.allData.data[i].push('data: ' + i + ', ' + j);
+            for (var j = 0; j < 20; j++) {
+                $scope.allData.data[i].push('data' + i  + j);
                 $scope.allData.field[j] = 'filed' + j;
-                $scope.allData.header[j] = 'header' + j;
+                $scope.allData.header[j] = 'head' + j;
             }
         }
     }

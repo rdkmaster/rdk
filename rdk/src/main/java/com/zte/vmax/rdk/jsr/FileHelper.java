@@ -2,27 +2,26 @@ package com.zte.vmax.rdk.jsr;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import com.zte.vmax.rdk.jsr.excel.BasicExcelHelper;
+import com.zte.vmax.rdk.jsr.excel.ExcelHelper;
 import com.zte.vmax.rdk.log.AbstractAppLoggable;
 import com.zte.vmax.rdk.log.AppLogger;
 import com.zte.vmax.rdk.util.RdkUtil;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import jdk.nashorn.internal.runtime.Undefined;
+import org.json.JSONObject;
+import org.json.XML;
 
 import java.io.*;
-import java.lang.Boolean;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import jxl.*;
-import jxl.format.UnderlineStyle;
-import jxl.read.biff.BiffException;
-import jxl.write.*;
-import org.json.JSONObject;
-import org.json.XML;
 
 
 /**
@@ -274,9 +273,17 @@ public class FileHelper extends AbstractAppLoggable {
         List<String[]> result = null;
         try {
             result = new CSVReader(reader, separator, quoteChar, escapeChar, line, strictQuotes, ignoreLeadingWhiteSpace, keepCR).readAll();
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             logger.error("read csv file error:" + ex);
             return null;
+        }finally {
+            try {
+                if (reader != null)
+                    reader.close();
+            }catch (IOException e){
+                logger.error("close stream error:" + e);
+            }
         }
         return RdkUtil.toJsonString(result);
 
@@ -414,78 +421,15 @@ public class FileHelper extends AbstractAppLoggable {
         return op;
     }
 
-    private boolean isMergeCell(Sheet sheet, Cell cell) {
-        //获取所有的合并单元格
-        Range[] ranges = sheet.getMergedCells();
-        if (ranges.length == 0) {
-            return false;
-        }
-        for (Range range : ranges) {
-            int startRow = range.getTopLeft().getRow();
-            int startCol = range.getTopLeft().getColumn();
-            int endRow = range.getBottomRight().getRow();
-            int endCol = range.getBottomRight().getColumn();
-
-            if (cell.getColumn() > endCol || cell.getColumn() < startCol
-                    || cell.getRow() < startRow || cell.getRow() > endRow) {
-                return false;
-            }
-
-            if (range.getTopLeft().equals(cell)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public String readExcel(String fileStr, Object option) {
-        HashMap<String, Object> op = parseExcelOptionFromScript(option);
-
         fileStr = fixPath(fileStr, appName);
-
-        InputStream fis = null;
-        Workbook rwb = null;
-        Map<String, List<List<String>>> excelContent = new HashMap();
-        try {
-            fis = new FileInputStream(fileStr);
-            WorkbookSettings workbookSettings = new WorkbookSettings();
-            workbookSettings.setEncoding(op.get("encoding").toString());
-            rwb = Workbook.getWorkbook(fis, workbookSettings);
-            String[] sheetNames = rwb.getSheetNames();
-            for (String sheetName : sheetNames) {
-                List<List<String>> content = new ArrayList();
-                Sheet sheet = rwb.getSheet(sheetName);
-                for (int row = 0; row < sheet.getRows(); row++) {
-                    List<String> rowLst = new ArrayList();
-                    for (int col = 0; col < sheet.getColumns(); col++) {
-                        Cell cell = sheet.getCell(col, row);
-                        rowLst.add(isMergeCell(sheet, cell) ? "" : cell.getContents());
-                    }
-                    content.add(rowLst);
-                }
-                excelContent.put(sheetName, content);
-            }
-        } catch (FileNotFoundException e) {
-            logger.error("can not find file:" + e);
+        try{
+            ExcelHelper helper = BasicExcelHelper.getRealHelper(fileStr);
+            return helper.readExcel(fileStr);
+        }catch (Exception ex){
+            logger.error("Read Excel Error", ex);
             return null;
-        } catch (IOException e) {
-            logger.error("IO exception:" + e);
-            return null;
-        } catch (BiffException e) {
-            logger.error("BiffException:" + e);
-            return null;
-        } finally {
-            if (rwb != null) {
-                rwb.close();
-            }
-            if (fis != null)
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    logger.error("close file inputStream error:" + e);
-                }
         }
-        return RdkUtil.toJsonString(excelContent);
     }
 
     public boolean saveAsEXCEL(String file, ScriptObjectMirror content, ScriptObjectMirror excludeIndexes, Object option) {
@@ -493,238 +437,23 @@ public class FileHelper extends AbstractAppLoggable {
     }
 
     public boolean saveAsEXCEL(String fileStr, ScriptObjectMirror content, ScriptObjectMirror excludeIndexes, HashMap<String, Object> option) {
-
         fileStr = fixPath(fileStr, appName);
-
         File file = new File(fileStr);
-
         if (file.isDirectory()) {
             logger.error("need a file, got a path: " + fileStr);
             return false;
         }
-
         if (!ensureFileExists(file)) {
             return false;
         }
-
-        int toWritesheetNums = content.size();
-
-        boolean append = (boolean) option.get("append");
-
-        WorkbookSettings workbookSettings = new WorkbookSettings();
-
-        workbookSettings.setEncoding(option.get("encoding").toString());
-
-        WritableWorkbook rwb = null;
-
-        Workbook wb = null;
-
-        Object[] toWritesheetNames = content.keySet().toArray();
-
-        if (append) {   //追加
-            try {
-                wb = Workbook.getWorkbook(file, workbookSettings);
-                rwb = Workbook.createWorkbook(file, wb);
-            } catch (Exception e) {
-                logger.warn("can not find workbook:" + file + ",will create new workbook:" + e);
-                try {
-                    rwb = Workbook.createWorkbook(file);
-                } catch (Exception ex) {
-                    logger.error("create workbook error:" + e);
-                    return false;
-                }
-            }
-
-            for (int i = 0; i < toWritesheetNums; i++) {
-                String sheetname = toWritesheetNames[i].toString();
-                appendEXCEL(rwb, sheetname, (ScriptObjectMirror) content.get(sheetname), (ScriptObjectMirror) excludeIndexes.get(sheetname), option);
-                spanCell(rwb.getSheet(sheetname), option);
-            }
-
-            try {
-                rwb.write();
-                rwb.close();
-                if (wb != null) {
-                    wb.close();
-                }
-            } catch (Exception e) {
-                logger.error("write or close error:" + e);
-                return false;
-            }
-        } else {        //复写
-            try {
-                rwb = Workbook.createWorkbook(file, workbookSettings);
-            } catch (Exception e) {
-                logger.error("create workbook error:" + e);
-                return false;
-            }
-            for (int i = 0; i < toWritesheetNums; i++) {
-                String sheetname = toWritesheetNames[i].toString();
-                writeEXCEL(rwb, sheetname, i, (ScriptObjectMirror) content.get(sheetname), (ScriptObjectMirror) excludeIndexes.get(sheetname), option);
-                spanCell(rwb.getSheet(sheetname), option);
-            }
-
-            try {
-                rwb.write();
-                rwb.close();
-            } catch (Exception e) {
-                logger.error("write or close error:" + e);
-                return false;
-            }
-        }
-        logger.info("saving excel success!");
-        return true;
-    }
-
-    private boolean isOpsContainKeyOfSheet(WritableSheet sheet, HashMap<String, Object> option, String key) {
-        return option.containsKey(sheet.getName()) &&
-                (option.get(sheet.getName()) != null) &&
-                ((ScriptObjectMirror) option.get(sheet.getName())).containsKey(key) &&
-                (((ScriptObjectMirror) option.get(sheet.getName())).get(key) != null) &&
-                ((ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get(key)).size() > 0;
-    }
-
-    private void spanCell(WritableSheet sheet, HashMap<String, Object> option) {
-        //解析出需要合并的单元格
-        if (isOpsContainKeyOfSheet(sheet, option, "cellSpan")) {
-            ScriptObjectMirror spanMirror = ((ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get("cellSpan"));
-            for (int i = 0; i < spanMirror.size(); i++) {
-                ScriptObjectMirror span = (ScriptObjectMirror) spanMirror.get(Integer.toString(i));
-
-                int fromCol = Integer.parseInt(span.get("fromCol").toString());
-                int fromRow = Integer.parseInt(span.get("fromRow").toString());
-                int toCol = Integer.parseInt(span.get("toCol").toString());
-                int toRow = Integer.parseInt(span.get("toRow").toString());
-
-                try {
-                    sheet.mergeCells(fromCol, fromRow, toCol, toRow);
-                } catch (WriteException e) {
-                    logger.error("span cell error" + e);
-                }
-            }
-        }
-    }
-
-    private boolean writeEXCEL(WritableWorkbook workbook, String sheetname, int sheetindex, ScriptObjectMirror content, ScriptObjectMirror excludeIndexes, HashMap<String, Object> option) {
-        WritableSheet sheet = workbook.createSheet(sheetname, sheetindex);
-        int length = toInt(content.getMember("length"), 0);
-        for (int i = 0; i < length; i++) {
-            writeEXCELRow(sheet, i, (ScriptObjectMirror) content.getMember(Integer.toString(i)), excludeIndexes, option);
-        }
-
-        return true;
-    }
-
-    private boolean appendEXCEL(WritableWorkbook workbook, String sheetName, ScriptObjectMirror content, ScriptObjectMirror excludeIndexes, HashMap<String, Object> option) {
-        WritableSheet ws = null;
-        int length = toInt(content.getMember("length"), 0);
-
-        String[] sheetNames = workbook.getSheetNames();
-        List<String> existsheetNames = Arrays.asList(sheetNames);
-        if (existsheetNames.contains(sheetName)) {//追加表存在
-            try {
-                ws = workbook.getSheet(sheetName);
-            } catch (Exception e) {
-                logger.error("get sheet error:" + e);
-                return false;
-            }
-            int rows = ws.getRows();
-            for (int i = 0; i < length; i++) {
-                writeEXCELRow(ws, i + rows, (ScriptObjectMirror) content.getMember(Integer.toString(i)), excludeIndexes, option);
-            }
-        } else {              //追加但表不存在
-            ws = workbook.createSheet(sheetName, sheetNames.length + 1);
-            for (int i = 0; i < length; i++) {
-                writeEXCELRow(ws, i, (ScriptObjectMirror) content.getMember(Integer.toString(i)), excludeIndexes, option);
-            }
-        }
-
-        return true;
-    }
-
-    private Map<CellPosition, CellStyle> parseCellStyleToMap(HashMap<String, Object> option, WritableSheet sheet) {
-        Map<CellPosition, CellStyle> cellStylesMap = null;
-
-        if (isOpsContainKeyOfSheet(sheet, option, "styles")) {
-            cellStylesMap = new HashMap<CellPosition, CellStyle>();
-            ScriptObjectMirror stylesMirror = (ScriptObjectMirror) ((ScriptObjectMirror) option.get(sheet.getName())).get("styles");
-            for (int i = 0; i < stylesMirror.size(); i++) {
-                ScriptObjectMirror cell = (ScriptObjectMirror) stylesMirror.get(Integer.toString(i));
-                ScriptObjectMirror cellpos = (ScriptObjectMirror) cell.get("cell");
-                int col = Integer.parseInt(cellpos.get("col").toString());
-                int row = Integer.parseInt(cellpos.get("row").toString());
-
-                ScriptObjectMirror style = (ScriptObjectMirror) cell.get("style");
-                int bg_color = style.get("background-color") == null ? Colour.WHITE.getValue() : Integer.parseInt(style.get("background-color").toString());
-
-                int align = Alignment.LEFT.getValue();
-                if (style.get("text-align") != null) {
-                    switch (style.get("text-align").toString()) {
-                        case "left":
-                            align = Alignment.LEFT.getValue();
-                            break;
-                        case "centre":
-                            align = Alignment.CENTRE.getValue();
-                            break;
-                        case "right":
-                            align = Alignment.RIGHT.getValue();
-                            break;
-                    }
-                }
-
-                String font_family = style.get("font-family") == null ? "Arial" : style.get("font-family").toString();
-                int font_size = style.get("font-size") == null ? WritableFont.DEFAULT_POINT_SIZE : Integer.parseInt(style.get("font-size").toString());
-                int font_weight = style.get("font-weight") == null ? 0 : Integer.parseInt(style.get("font-weight").toString());
-                int font_color = style.get("font-color") == null ? Colour.BLACK.getValue() : Integer.parseInt(style.get("font-color").toString());
-
-                cellStylesMap.put(new CellPosition(col, row), new CellStyle(bg_color, align, new FontStyle(font_family, font_size, font_weight, font_color)));
-            }
-        }
-
-        return cellStylesMap;
-    }
-
-    private boolean writeEXCELRow(WritableSheet sheet, int rowIndex, ScriptObjectMirror rowContent, ScriptObjectMirror excludeIndexes, HashMap<String, Object> option) {
-        if (!likeArray(rowContent)) {
+        try{
+            ExcelHelper helper = BasicExcelHelper.getRealHelper(fileStr);
+            helper.writeExcel(fileStr, content, excludeIndexes, option);
+        }catch (Exception ex){
+            logger.error("Write Excel Error", ex);
             return false;
         }
-        //解析出需要设置样式的单元格并放置在map中
-        Map<CellPosition, CellStyle> cellStylesMap = parseCellStyleToMap(option, sheet);
-
-        ArrayList<Integer> ci = toIntList(excludeIndexes);
-        int length = toInt(rowContent.getMember("length"), 0);
-        int j = 0;
-        for (int i = 0; i < length; i++) {
-            String idx = Integer.toString(i);
-            if (rowContent.hasMember(idx) && !ci.contains(i)) {
-                Object cellObj = rowContent.getMember(idx);
-                Label label = null;
-                CellPosition pos = new CellPosition(i, rowIndex);
-                if (cellStylesMap != null && cellStylesMap.containsKey(pos)) {
-                    CellStyle cellStyle = cellStylesMap.get(pos);
-                    WritableFont writeFont = new WritableFont(WritableFont.createFont(cellStyle.getFont().getFont_family()), cellStyle.getFont().getFont_size(),
-                            (cellStyle.getFont().getFont_weight() == 0 ? WritableFont.NO_BOLD : WritableFont.BOLD), false, UnderlineStyle.NO_UNDERLINE,
-                            Colour.getInternalColour(cellStyle.getFont().getFont_color()));
-                    WritableCellFormat cellFormat = new WritableCellFormat(writeFont); // 单元格定义
-                    try {
-                        cellFormat.setBackground(Colour.getInternalColour(cellStyle.getBackground_color())); // 设置单元格的背景颜色
-                        cellFormat.setAlignment(Alignment.getAlignment(cellStyle.getText_align())); // 设置对齐方式
-                    } catch (WriteException e) {
-                        logger.error("set cell style error:" + e);
-                    }
-                    label = new Label(j++, rowIndex, cellObj == null ? "" : cellObj.toString(), cellFormat);
-                } else {
-                    label = new Label(j++, rowIndex, cellObj == null ? "" : cellObj.toString());
-                }
-
-                try {
-                    sheet.addCell(label);
-                } catch (Exception e) {
-                    logger.error("addcell error:" + e);
-                    return false;
-                }
-            }
-        }
+        logger.info("saving excel success!");
         return true;
     }
 
@@ -844,91 +573,6 @@ public class FileHelper extends AbstractAppLoggable {
         }
 
         return path;
-    }
-
-    //用于xls单元格样式模板
-    private class FontStyle {
-        private String font_family;
-        private int font_size;
-        private int font_weight;
-        private int font_color;
-
-        public FontStyle(String font_family, int font_size, int font_weight, int font_color) {
-            this.font_family = font_family;
-            this.font_size = font_size;
-            this.font_weight = font_weight;
-            this.font_color = font_color;
-        }
-
-        public String getFont_family() {
-            return font_family;
-        }
-
-        public int getFont_size() {
-            return font_size;
-        }
-
-        public int getFont_weight() {
-            return font_weight;
-        }
-
-        public int getFont_color() {
-            return font_color;
-        }
-    }
-
-    private class CellStyle {
-        private int background_color;
-        private int text_align;
-        private FontStyle font;
-
-        public CellStyle(int background_color, int text_align, FontStyle font) {
-            this.background_color = background_color;
-            this.text_align = text_align;
-            this.font = font;
-        }
-
-        public int getBackground_color() {
-            return background_color;
-        }
-
-        public int getText_align() {
-            return text_align;
-        }
-
-        public FontStyle getFont() {
-            return font;
-        }
-
-    }
-
-    private class CellPosition {
-        private int column;
-        private int row;
-
-        public CellPosition(int column, int row) {
-            this.column = column;
-            this.row = row;
-        }
-
-        public int getColumn() {
-            return column;
-        }
-
-        public int getRow() {
-            return row;
-        }
-
-        public boolean equals(Object obj) {
-            return (obj != null &&
-                    this.column == ((CellPosition) obj).column &&
-                    this.row == ((CellPosition) obj).row) ? true : false;
-
-        }
-
-        public int hashCode() {
-            return ("col" + column + "row" + row).hashCode();
-        }
     }
 
 }

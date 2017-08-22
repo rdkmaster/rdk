@@ -289,9 +289,13 @@
             if(typeof object ==="object" && angular.isArray(arr)){
                 for(var i=0,len=arr.length ; i<len ; i++)
                 {
+                    //angular.equals 进行对象比较时把 "$"开头的属性给过滤掉了
                     if(!isHash && angular.equals(arr[i],object)){
                         return i
-                    }else if( isHash && arr[i].$$hashKey === object.$$hashKey){
+                    }
+                    //ng-repeat track by 后 数组里每个对象元素不会再加了一个 $$hashKey 的属性 这个key由ng内部生成
+                    //else if( isHash && arr[i].$$hashKey === object.$$hashKey){
+                    else if( isHash && arr[i].$index === object.$index){ //$index是针对表格数据生成的行标识
                         return i
                     }
                 }
@@ -365,17 +369,18 @@
             _isNgHide && element.classList.add("ng-hide");
             return { width: _width, height: _height };
         };
-
+        this.isIEFlag = this.isIE();
         this.getStyle = function(element, styleName) {
             var result = element.style[styleName] ? element.style[styleName] : element.currentStyle ? element.currentStyle[styleName] : window.getComputedStyle(element, null)[styleName];
-            //ie下有可能会返回 auto.......
+            // 注意IE坑：ie直接返回计算后的样式，计算后的样式IE盒子模型不是w3c标准模型还是有小数点误差
+            //ie下有可能会返回 auto.......  返回offsetWidth..会有小数点误差
             if( (styleName =="width" || styleName =="height") && result =="auto"){
                 var property="offset"+styleName[0].toUpperCase()+styleName.slice(1);
-                return element[property]+"px"
+                return element[property]+"px";
             }
             return result
         };
-
+        
         this.setStyle = function(element, obj){
             if (angular.isObject(obj)) {
                 for (var property in obj) {

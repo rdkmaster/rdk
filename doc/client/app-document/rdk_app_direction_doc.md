@@ -468,8 +468,45 @@ ds_url属性的值为后端服务文件的url
 
 **提示：** `matrix(sql)`函数为工程模板v1.0的api，最新的v2.0版本可用`Data.fetch(sql)`进行替换
 
+# 应用代码版本控制
+在实际开发过程中，应用代码必然需要经历不停的升级。这带来一个问题，当服务器上的应用的代码升级了后，由于浏览器会使用缓存的老版本js/html/css代码，导致应用升级失败。用户不得不清空浏览器缓存才能够使用最新版本的应用代码。
 
+RDK的解决方案如下：
 
+1. 在应用的入口html文件中（通常是index.html），在rdk入口的script节点上增加一个`app-version="1.1.1"`属性，修改后如下：
+
+```
+<head>
+    ...
+
+    <link rel="stylesheet" type="text/css" href="/rdk/app/libs/rdk/css/loading.css">
+    <script data-main="/rdk/app/libs/rdk/rdk.js" src="/rdk/app/libs/requirejs/require.js"
+        rdk-app="scripts/main" app-version="1.1.1"></script>
+
+    ...
+
+</head>
+```
+
+注意：
+- 如果不需要采用版本控制，则请不要添加这个属性，否则会导致应用启动失败。
+- `0.0.0`是RDK保留的版本号，请勿使用。
+
+2. 将应用的所有html/css/js代码的文件名，都加上相应的版本信息，比如`main.js`需要改为`main-1.1.1.js`。考虑到这个过程非常繁琐，我们提供了一个[工具](/doc/tools/add-version-info/add-version-info.js)来完成这个事情。右击链接另存为可以将这个js文件保存到你本地。**注意**：这个工具不是必须的，如果你有其他的批量重命名文件的工具，那请尽管用其他工具，效果是一样的。
+3. 这个工具的运行需要依赖nodejs环境，因此如果你的电脑没有安装nodejs，请自行安装。
+4. 在cmd窗口中执行 `node d:\add-version-info.js -v 1.1.1 -c /d/temp/11/web/` 命令，其中-c后面的目录是待处理的源码目录 
+5. 这个工具的使用帮助如下
+
+```
+Usage:
+  add-version-info -v version -c code-home [-e extensions] [-x excludes] [-h]
+     -v 是版本号，例如1.1.1。注意0.0.0是rdk保留的版本号，请别使用。
+     -c 是待转换源码所在根，如果需要同时处理多不同根路径的话，请用英文逗号隔开，例如 script1/aa,script2/bb,script3/cc
+     -e 是需要处理的文件的扩展名，默认值是 js,html,css。多个扩展名请用英文逗号隔开
+     -x 是不需要处理的文件列表，默认值是 index.html。多个文件请用英文逗号隔开
+     -h 显示这些信息
+```
+请使用 `add-version-info -h` 获得最新的帮助信息
 
 
 

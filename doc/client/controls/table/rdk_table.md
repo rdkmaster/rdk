@@ -211,6 +211,7 @@ data对象中应该包含以下**必填属性**：
 
 详细示例如下：
 <live_demo example="controls/table/additionalHeader"></live_demo>
+
 >删除自带表头：如果自定义了多级表头，可以通过属性设置删除表格自带的表头
 
 具体设置格式如下：
@@ -505,16 +506,12 @@ data对象中可增加以下**非必要属性**：
 `resize` 定义此属性表格单元格的宽度可以进行拖动调整，单元格宽度调整的模式，可以设置如下3种模式。
 
 1. BasicResizer：相邻表格单元格宽度百分比调整，表格总体宽度不变。
-2. FixedResizer：表格第一列宽度自动。调整其它列只影响第一列的宽度，表格总体宽度不变。
-3. OverflowResizer：宽度调整只影响拖动的列，其它列宽度总是不变,表格可以扩展出它的容器，添加滚动条。
+2. OverflowResizer：宽度调整只影响拖动的列，其它列宽度总是不变,表格可以扩展出它的容器，添加滚动条。
 
 >OverflowResizer模式下表格出现滚动条是浏览器自带的，已经被禁止，滚动条需要使用`custom-scroll`属性。
 
 `resize=BasicResizer`示例：
 <live_demo example="controls/table/resizeBasic"></live_demo>
-
-`resize=FixedResizer`示例：
-<live_demo example="controls/table/resizeFixed"></live_demo>
 
 `resize=OverflowResizer`示例：
 <live_demo example="controls/table/resizeOverflow"></live_demo>
@@ -600,15 +597,6 @@ data对象中可增加以下**非必要属性**：
 `page_number` 非零正整数时的详细示例如下：
 <live_demo example="controls/table/demo4PageNumber"></live_demo>
 
-## floatable_header ##
->支持类型：布尔型
-
- - `true`时滚动条下拉会复制表头。缺省时默认为`true`。
- - `false`时滚动条下拉不会再出现表头。
-
-实例如下：
-<live_demo example="controls/table/demo4FloatableHeader"></live_demo>
-
 ## change/select/export/check/double_click ##
 
 - 编辑单元格后，如果定义了`change`函数，就会调用应用自定义的`change`方法。该属性可绕开事件机制。
@@ -616,6 +604,10 @@ data对象中可增加以下**非必要属性**：
 - 单击导出按钮后，如果定义了`export`函数，就会调用应用自定义的`export`方法。该属性可绕开事件机制。
 - 双击表格某行后，如果定义了`double_click`函数，就会调用应用自定义的`double_click`方法。该属性可绕开事件机制。
 - `add_check_box = true`时，首列出现复选框，勾选某个复选框后，如果定义了`check`函数，就会调用应用自定义的`check`方法。该属性可绕开事件机制。
+
+## use-lite-table  ##
+
+此属性用于提高表格的渲染性能，如果使用了单元格可编辑或者单元格合并功能时切勿使用此属性，其它场景建议在模板上都加上此属性！
 
 # 事件 #
 

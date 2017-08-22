@@ -1281,8 +1281,8 @@ function _java2json(javaObj) {
 
 //服务调用辅助函数，用来将前端入参转为 json 对象。
 //入参经过java后，就变成了java对象，在js中操作起来不方便
-function _callService(serviceImplement, request, script) {
-    return serviceImplement.call(serviceImplement, _java2json(request), script);
+function _callService(serviceImplement, request, script, headers) {
+    return serviceImplement.call(serviceImplement, _java2json(request), script, headers);
 }
 
 
