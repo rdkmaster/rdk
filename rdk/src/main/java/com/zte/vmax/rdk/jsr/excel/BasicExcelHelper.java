@@ -27,19 +27,19 @@ public abstract class BasicExcelHelper implements ExcelHelper{
     public static final byte[] XLS_MAGIC = new byte[]{(byte)0xD0,(byte)0xCF,(byte)0x11,(byte)0xE0};
     public static final byte[] XLSX_MAGIC = new byte[]{(byte)0x50,(byte)0x4B,(byte)0x03,(byte)0x04};
 
-    private static ExcelHelper getHelper4FullName(String fullName, boolean bigData){
-        return fullName.matches("^.*\\.xlsx$") ? (bigData ? new XlsxSExcelHelper() : new XlsxExcelHelper()) : new XlsExcelHelper();
+    private static ExcelHelper getHelper4FullName(String fullName, boolean useStreaming){
+        return fullName.matches("^.*\\.xlsx$") ? (useStreaming ? new XlsxSExcelHelper() : new XlsxExcelHelper()) : new XlsExcelHelper();
     }
 
-    private static ExcelHelper getHelper4FileMagic(String fullName, boolean bigData){
+    private static ExcelHelper getHelper4FileMagic(String fullName, boolean useStreaming){
         InputStream input = null;
         try{
             input = new FileInputStream(fullName);
             byte[] magic = new byte[4];
             input.read(magic);
-            return Arrays.equals(magic, XLSX_MAGIC) ? (bigData ? new XlsxSExcelHelper() : new XlsxExcelHelper()) : new XlsExcelHelper();
+            return Arrays.equals(magic, XLSX_MAGIC) ? (useStreaming ? new XlsxSExcelHelper() : new XlsxExcelHelper()) : new XlsExcelHelper();
         }catch(Exception e){
-            return getHelper4FullName(fullName, bigData);
+            return getHelper4FullName(fullName, useStreaming);
         }finally {
             try{
                 if(input != null) input.close();
@@ -48,9 +48,9 @@ public abstract class BasicExcelHelper implements ExcelHelper{
         }
     }
 
-    public static ExcelHelper getRealHelper(String fullName, boolean bigData){
+    public static ExcelHelper getRealHelper(String fullName, boolean useStreaming){
         File f = new File(fullName);
-        return f.exists() && f.length() > 0 ? getHelper4FileMagic(fullName, bigData) : getHelper4FullName(fullName, bigData);
+        return f.exists() && f.length() > 0 ? getHelper4FileMagic(fullName, useStreaming) : getHelper4FullName(fullName, useStreaming);
     }
 
     // 判断是否存在值 - 复用以前的代码

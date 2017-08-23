@@ -447,8 +447,8 @@ public class FileHelper extends AbstractAppLoggable {
             return false;
         }
         try{
-            boolean bigData = option.get("useStreaming") != null ? (boolean) option.get("useStreaming") : false;
-            ExcelHelper helper = BasicExcelHelper.getRealHelper(fileStr, bigData);
+            boolean useStreaming = option.get("useStreaming") != null ? (boolean) option.get("useStreaming") : false;
+            ExcelHelper helper = BasicExcelHelper.getRealHelper(fileStr, useStreaming);
             helper.writeExcel(fileStr, content, excludeIndexes, option);
         }catch (Exception ex){
             logger.error("Write Excel Error", ex);
