@@ -424,7 +424,7 @@ public class FileHelper extends AbstractAppLoggable {
     public String readExcel(String fileStr, Object option) {
         fileStr = fixPath(fileStr, appName);
         try{
-            ExcelHelper helper = BasicExcelHelper.getRealHelper(fileStr);
+            ExcelHelper helper = BasicExcelHelper.getRealHelper(fileStr, false);
             return helper.readExcel(fileStr);
         }catch (Exception ex){
             logger.error("Read Excel Error", ex);
@@ -447,7 +447,8 @@ public class FileHelper extends AbstractAppLoggable {
             return false;
         }
         try{
-            ExcelHelper helper = BasicExcelHelper.getRealHelper(fileStr);
+            boolean bigData = option.get("useStreaming") != null ? (boolean) option.get("useStreaming") : false;
+            ExcelHelper helper = BasicExcelHelper.getRealHelper(fileStr, bigData);
             helper.writeExcel(fileStr, content, excludeIndexes, option);
         }catch (Exception ex){
             logger.error("Write Excel Error", ex);
