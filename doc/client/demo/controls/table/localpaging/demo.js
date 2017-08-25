@@ -25,12 +25,22 @@
 
         //测试数据
         $scope.allData= {data: [], field: [], header: []};
-        for (var i = 0; i < 500; i++) {
+        for (var i = 0; i < 100; i++) {
             $scope.allData.data.push([]);
             for (var j = 0; j < 20; j++) {
                 $scope.allData.data[i].push('data' + i  + j);
                 $scope.allData.field[j] = 'filed' + j;
                 $scope.allData.header[j] = 'head' + j;
+            }
+        }
+
+        $scope.change = function(){
+            $scope.allData.data=[];
+            for (var i = 0; i < 100; i++) {
+                $scope.allData.data.push([]);
+                for (var j = 0; j < 20; j++) {
+                    $scope.allData.data[i].push('test' + i  + j);
+                }
             }
         }
     }

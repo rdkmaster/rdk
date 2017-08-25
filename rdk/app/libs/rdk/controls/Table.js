@@ -52,11 +52,11 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 on-finish-render  ng-click="setSelected(item,null)"\
                 ng-class="{\'selected-row\':ifRowHighLight(item,\'click\')}" \
                 ng-dblclick="dbClickHandler(item,$index)">\
-                <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="item.checked"></td>\
-                <td ng-repeat="columnDef in columnDefs track by $index" \
+                <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-disabled="item.disabled" ng-model="item.checked"></td>\
+                <td ng-repeat="columnDef in columnDefs" \
                     ng-show="columnDef.visible" \
                     class="{{columnDef.class}}" \
-                    rdk-column-parser-lite>{{item[columnDef.data]}}</td>\
+                    rdk-column-parser-lite></td>\
             </tr>\
             <tr ng-if="noData">\
                 <td colspan="{{addCheckBox?(visibleColumnDefsCount+1):visibleColumnDefsCount}}">\
@@ -86,7 +86,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                  <tr ng-if="isResize" class="table-first-row"><td ng-if="addCheckBox"></td><td ng-repeat="columnDef in columnDefs track by columnDef.targets" ng-show="columnDef.visible" ng-style="{width:columnDef.width}"></td></tr>\
                                  <tr class="rowTr" on-finish-render  rdk-row-parser ng-click="setSelected(item,$event)"\
                                      ng-class="{\'row-span\':groupTargets,\'selected-row\':ifRowHighLight(item,\'click\'),\'selected-row-hover\':ifRowHighLight(item,\'hover\')}" ng-dblclick="dbClickHandler(item,$index)">\
-                                     <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-model="item.checked"></td>\
+                                     <td ng-if="addCheckBox"><input type="checkbox" ng-click="singleCheck()" ng-disabled="item.disabled" ng-model="item.checked"></td>\
                                      <td ng-class="{\'selected-row-td\':ifRowHighLight(item,\'click\',columnDef),\'selected-row-hover-td\':ifRowHighLight(item,\'hover\',columnDef)}" ng-mouseenter="setHovered(item,$event)" rowspan="{{getRowSpan(itemRowSpan,columnDef)}}" ng-repeat="columnDef in columnDefs" rdk-column-parser ng-show="columnDef.visible" class="{{columnDef.class}}" ng-style="getCellStyle(itemRowSpan,columnDef)">\
                                      </td>\
                                  </tr>\
@@ -332,28 +332,22 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
             return {
                 restrict: 'A',
                 link: function(scope, element, attr) {
-                    if (scope.columnDef.render) {
-                        var DUMMY_SCOPE = {$destroy: angular.noop};
-                        var childScope;
-                        var destroyChildScope = function() {
-                            (childScope || DUMMY_SCOPE).$destroy();
-                        };
-                        scope.$watch("item",parseColumn,true);
-
-                        function parseColumn(){
-                            //创建子scope，方便在每次销毁DOM时，也能销毁掉scope，去掉compile带来的watchers
-                            childScope = scope.$new(false);
-                            var html;
-                            if (angular.isFunction(childScope.columnDef.render)) {
-                                html = '<div>' + childScope.columnDef.render.call(undefined, childScope.item) + '</div>';
+                    scope.$watch("columnDef",parseColumn,true);
+                    scope.$watch("item",parseColumn,true);
+                    function parseColumn(){
+                        //创建子scope，方便在每次销毁DOM时，也能销毁掉scope，去掉compile带来的watchers
+                        var html;
+                        if (scope.columnDef.render) {
+                            if (angular.isFunction(scope.columnDef.render)) {
+                                html = '<div>' + scope.columnDef.render.call(undefined, scope.item) + '</div>';
                             } else {
-                                html = '<div>' + childScope.columnDef.render + '</div>';
+                                html = '<div>' + scope.columnDef.render + '</div>';
                             }
-                            element.html(html);
-                            $compile(element.contents())(childScope);
-
-                            scope.$on("$destroy", destroyChildScope);
+                        }else{
+                            html = '<div ng-bind="item[columnDef.data]"></div>';
                         }
+                        element.html(html);
+                        $compile(element.contents())(scope);
                     }
                 }
             }

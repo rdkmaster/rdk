@@ -274,7 +274,8 @@ define(['rd.core', 'rd.controls.TimeBasic', 'css!rd.styles.Time'],
                                     return scope.setting[option];
                                 }
                             }
-                            if(option==="startDate"){
+                            //备注：startDate,endDate是能动态改变的
+                            if(option==="startDate" || option==="endDate"){
                                 return scope.setting[option];
                             }
                             return scope[option];

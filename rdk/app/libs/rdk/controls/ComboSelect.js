@@ -114,6 +114,7 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect','css!rd.styl
                 scope.openShow = _openShow;
                 scope.isSelect = false;
                 var _textDom = iEle[0].querySelector(".combo-content-theme");
+                var _offsetCheckXOver=false;
                 if(scope.adaptContentWidth){
                     var _comboAnimateDom = iEle[0].querySelector(".rdk-combo-animate");
                     var _comboContentDom = _comboAnimateDom.querySelector(".combo-content");
@@ -147,6 +148,16 @@ define(['angular', 'jquery', 'rd.core', 'css!rd.styles.ComboSelect','css!rd.styl
                     $(document).unbind('mouseup', _hideDropdown);
                     if (scope.open) {
                         $(document).mouseup(_hideDropdown);
+                        //首次打开下拉框进行边界检查:combo下的弹出框是否超过浏览器屏幕
+                        if(!_offsetCheckXOver){
+                            setTimeout(function(){
+                                var transcludeDom =iEle[0].querySelector("div[ng-transclude]").firstElementChild;
+                                if(Utils.offsetCheckX(transcludeDom)){
+                                    transcludeDom.style.right= 0;
+                                }
+                                _offsetCheckXOver = true;
+                            },0)
+                        }
                     }
                 }, false);
 

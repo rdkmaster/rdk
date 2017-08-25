@@ -2,7 +2,7 @@ define(['rd.core', 'rd.controls.ComboSelect', 'rd.controls.TimeSelect', 'css!rd.
     function() {
         var timeApp = angular.module('rd.controls.TimePane', ['rd.core', 'rd.controls.ComboSelect','rd.controls.TimeSelect']);
         timeApp.run(["$templateCache", function($templateCache) {
-            $templateCache.put("common.html",
+            $templateCache.put("inpTimeDefault.html",
                 '<div class="rdk-time-range-module">\
                     <div class="rdk-combo-container">\
                         <rdk_combo_select  class="range-first" caption="label" show-icon="false || !range" id="rdkComboSelectStart{{$$id}}" frozen="disabled">\
@@ -47,7 +47,7 @@ define(['rd.core', 'rd.controls.ComboSelect', 'rd.controls.TimeSelect', 'css!rd.
                     if(attr.input=="" || attr.input=="true"){
                         return "inpTime.html";
                     }else{
-                        return "common.html"
+                        return "inpTimeDefault.html"
                     }
                 },
                 scope: scopeDefine,
