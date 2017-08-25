@@ -98,17 +98,16 @@ define(["app-basic", "mainconfig"], function() {
              * 初始化应用入口
              */
             var appScript;
-            application.version = '0.0.0';
             for (var i = 0; i < document.scripts.length; i++) {
                 var s = document.scripts[i];
                 var src = s.getAttribute('src');
                 if (src && src.match(/libs\/requirejs\/require.js$/)) {
                     application.version = s.getAttribute('app-version');
-                    application.version = application.version ? application.version : '0.0.0';
                     appScript = s.getAttribute('rdk-app');
-                    appScript += (application.version != '0.0.0' ? '-' + application.version : '');
                 }
             };
+            //默认认为一天一个版本
+            application.version = application.version ? application.version : require.rdkAppVersion();
             if (appScript) {
                 if (appScript[0] != '/') {
                     //非绝对路径时，给拼成绝对路径

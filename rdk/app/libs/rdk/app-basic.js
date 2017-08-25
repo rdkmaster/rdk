@@ -9,9 +9,6 @@ application = (function() {
             } else {
                 url = item;
             }
-            url = application.version == '0.0.0' ? url : url.replace(/(^|!)base\/.+$/, function(found) {
-                return found += '-' + application.version;
-            });
             list.push(url);
         }
         return list;
@@ -40,7 +37,7 @@ application = (function() {
         return compList;
     }
     return {
-        version: '0.0.0',
+        version: require.rdkAppVersion(),
 
         base: (function() {
             var match = location.pathname.match(/^(.*)\//);

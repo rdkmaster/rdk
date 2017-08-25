@@ -1880,6 +1880,13 @@ var requirejs, require, define;
     };
 
     /**
+     * added by chenxu, to create a default version daily.
+     */
+    req.rdkAppVersion = function() {
+        return window.application && window.application.version ? window.application.version : ('0.0.' + parseInt(+new Date/1000/3600/24));
+    }
+
+    /**
      * Does the request to load a module for the browser case.
      * Make this a separate function to allow other environments
      * to override it.
@@ -1889,6 +1896,9 @@ var requirejs, require, define;
      * @param {Object} url the URL to the module.
      */
     req.load = function (context, moduleName, url) {
+        //added by chenxu, to make requirejs load with version.
+        url += '?' + req.rdkAppVersion();
+
         var config = (context && context.config) || {},
             node;
         if (isBrowser) {
