@@ -2,7 +2,7 @@ require.config({
     //下载依赖超时时间，0为不超时
     waitSeconds: 30,
     paths: {
-        "angular": "../angular/angular",
+        "angular": "../angular/angular.min",
         "ui.router": "../angular/angular-ui-router",
         "blockUI": "../angular/angular-block-ui.min",
         "angular-bootstrap-progressbar":"../angular/angular.bootstap.progressbar",
@@ -92,7 +92,7 @@ require.config({
         "rd.styles.IconCss": "../iconFonts/css/iconfont",
         "rd.styles.IconFont": "../iconFonts/fonts/iconfont",
         "rd.styles.Bootstrap": "../bootstrap/css/bootstrap.min",
-        "rd.styles.FontAwesome": "../font-awesome-4.3.0/css/font-awesome",
+        "rd.styles.FontAwesome": "../font-awesome-4.3.0/css/font-awesome.min",
         "rd.styles.IconFonts": "../iconFonts/fonts/iconfont",
 
         "rdk.theme.zte-blue":"css/theme/zte-blue/zte-blue",
