@@ -13,7 +13,7 @@
         var dataTable = Cache.aging.get(key);
         if (!dataTable) {
             timestamp = new Date().getTime();
-            dataTable = Rest.get(req.service, param, {readTimeout: 120000});
+            dataTable = Rest.get(req.service, param, {readTimeout: req.timeout ? req.timeout : 120000});
             try {
                 dataTable = JSON.parse(dataTable);
                 if (dataTable.hasOwnProperty('result')) {

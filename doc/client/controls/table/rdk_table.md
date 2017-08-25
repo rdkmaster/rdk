@@ -464,6 +464,12 @@ data对象中可增加以下**非必要属性**：
 
 <live_demo example="controls/table/big-data"></live_demo>
 
+## paging_timeout ##
+>支持类型：数字
+仅在服务端自动分页（paging_type="server-auto")模式下有效，用于配置服务端分页单次等待超时时间，默认值是120s。代码如下：
+
+    <rdk_table paging_timeout="180000"></rdk_table>
+
 ## search ##
 >支持类型：布尔型
 

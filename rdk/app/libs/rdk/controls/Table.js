@@ -397,6 +397,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
             selectedIndex: '=?',
             pageSize: "@?",
             pagingType: "@?",
+            pagingTimeout: "@?",
             pagingVisible: "@?",
             lang: "@?",
             search:"=?",
@@ -684,6 +685,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 var param = {
                                     peerParam: config[key],
                                     service: url,
+                                    timeout: scope.pagingTimeout,
                                     paging: {
                                         currentPage: Number(scope.currentPage+1),
                                         pageSize: Number(scope.pageSize)
