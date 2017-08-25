@@ -234,6 +234,10 @@ define(['rd.core','rd.controls.TimeBasic','css!rd.styles.TimeSelect','rd.attribu
                                 return scope.setting[option];
                             }
                         }
+                        //备注：startDate,endDate是能动态改变的
+                        if(option==="startDate" || option==="endDate"){
+                            return scope.setting[option];
+                        }
                         return scope[option];
                     }
                     function _generateOption() {
