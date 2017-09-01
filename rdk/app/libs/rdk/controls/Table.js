@@ -356,6 +356,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
             return {
                 restrict: 'A',
                 link: function(scope, element, attr) {
+                    scope.$watch("columnDef",parseColumn,true);
                     scope.$watch("item",parseColumn,true);
                     function parseColumn(){
                         var html = '<div style="min-height: 20px" ng-click="editHandler($event, columnDef)" ng-mouseenter="changeShape($event, columnDef)">';
@@ -375,7 +376,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             } else {
                                 html += '<div ng-bind="item[columnDef.data]"> </div>';
                                 html += '<div ng-show="false">' +
-                                    '<input class="editInput" ng-model="item[columnDef.data]"  ng-keyup="inputPressHandler($event, item.$index, columnDef,itemRowSpan,$parent.$index)" ng-blur="editorBlurHandler($event, item.$index, columnDef,itemRowSpan,$parent.$index)">' +
+                                    '<input class="editInput" value="{{item[columnDef.data]}}"  ng-keyup="inputPressHandler($event, item.$index, columnDef,itemRowSpan,$parent.$index)" ng-blur="editorBlurHandler($event, item.$index, columnDef,itemRowSpan,$parent.$index)">' +
                                     '</div>';
                             }
                         } else {
@@ -944,11 +945,19 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 $(lastDivTarget).css('display', "inline");
                                 $(lastDivTarget).removeAttr("class");
                                 //$(lastDivTarget.childNodes[0]).val($(lastDivTarget.childNodes[0]).attr("value"));
-                                $(lastDivTarget.childNodes[0]).focus();
+                               // $(lastDivTarget.childNodes[0]).focus();
+                                setFocus(lastDivTarget.childNodes[0],true);
                                 event.currentTarget.parentNode.style.width = tdWidthCache + 'px';
                             }
                         }
-
+                        function setFocus(ele, isFocus) {
+                            if (isFocus) {
+                                ele.focus();
+                                ele.value = ele.value;
+                            } else {
+                                ele.blur();
+                            }
+                        }
                         scope.editorBlurHandler = function(event, row, columnDef, itemRowSpan, filterIndex) {
                             var inputTarget = event.currentTarget;
                             var divTarget = inputTarget.parentNode;
