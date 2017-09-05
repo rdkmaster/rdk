@@ -19,7 +19,7 @@ diagnose() {
 }
 
 waitForReady() {
-    time1=$(date +%s -s 'now')
+    time1=$(date +%s)
     while true
     do
         sleep 10
@@ -28,7 +28,7 @@ waitForReady() {
             return 0
         fi
 
-        time2=$(date +%s -s 'now')
+        time2=$(date +%s)
         delta=$(($time2 - $time1))
         if [ $delta -gt 1860 ]; then
             return 1
@@ -73,4 +73,4 @@ run() {
     done
 }
 
-run
+run &

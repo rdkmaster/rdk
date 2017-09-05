@@ -30,5 +30,5 @@ fi
 $JAVA_HOME/bin/java $jvm_opts -Dfile.encoding=UTF-8 -D$rdk_flag -classpath "$classPath" com.zte.vmax.rdk.Run 2>> $curDir/../../proc/logs/errors.log &
 
 cd $curDir
-sh $curDir/diagnose.sh 30 $diagnose_flag &
+sh $curDir/diagnose.sh 30 $diagnose_flag
 
