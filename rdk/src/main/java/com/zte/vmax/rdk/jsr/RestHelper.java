@@ -223,7 +223,7 @@ public class RestHelper extends AbstractAppLoggable {
     }
 
     private void setRequestHeaders(URLConnection conn) {
-        while (this.originHeaderIter.hasNext()) {
+        while (this.originHeaderIter != null && this.originHeaderIter.hasNext()) {
             Messages.Header header = this.originHeaderIter.next();
             conn.setRequestProperty(header.key(), header.value());
         }
