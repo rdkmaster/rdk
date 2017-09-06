@@ -496,15 +496,14 @@ i.regular_right,i.regular_left{
 .rdk-table-module .rdk-table.resize + .rdk-table.sticky-thead{
     table-layout: fixed;
 }
-.rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize > tbody > tr:first-child>td,
-.rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize > thead > tr > th,
-.rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize + .rdk-table.sticky-thead > thead > tr > th{
+/*为了找到拖动点,表头列与列之间有跟分割线，使用伪元素方式能消除应用在百分比设置列宽时的1px border误差*/
+.rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize > thead > tr > th:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
     border-right: 1px solid #e6e6e6;
-}
-.rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize > thead > tr > th:last-child,
-.rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize > tbody > tr > td:last-child,
-.rdk-theme-zte-vmax .rdk-table-module .rdk-table.resize + .rdk-table.sticky-thead > thead > tr > th:last-child{
-    border-right: none;
 }
 .rdk-table-module .rdk-table.resize > thead > tr > th,
 .rdk-table-module .rdk-table.resize > thead > tr > th >div,
