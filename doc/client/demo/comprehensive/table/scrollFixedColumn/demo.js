@@ -7,7 +7,16 @@
     var controllerDefination = ['$scope','EventService','EventTypes', main];
     function main($scope,EventService,EventTypes) {
 
-        $scope.setting1 = {};
+        $scope.setting1 = {
+            "columnDefs" :[
+                {targets : 0, sortable: true},
+                {targets : 1, sortable: true},
+                {targets : 2, sortable: true},
+                {targets : 3, sortable: true},
+                {targets : 4, sortable: true},
+                {targets : 5, sortable: true}
+            ]
+        };
         $scope.setting2 = {
             selectable:false,
             "columnDefs" :[
@@ -37,6 +46,9 @@
         });
         EventService.register('tableHost', EventTypes.PAGING_NUMBER_CHANGE, function(event, data){
             rdk.tableBak.setCurrentPage(data);
+        });
+        EventService.register('tableHost', EventTypes.SORT_CHANGE, function(event, data){
+            rdk.tableBak.setCurrentSort(data);
         });
 
 
