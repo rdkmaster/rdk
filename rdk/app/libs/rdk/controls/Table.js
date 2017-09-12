@@ -506,6 +506,13 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     scope.scrollTo(index);
                 }
 
+                this.setCurrentSort=function(sortObj){
+                    if(!sortObj || Utils.isEmptyObject(sortObj)){
+                        return
+                    }
+                    scope.sortHandler(sortObj.targetIndex,sortObj.columnDef,sortObj.status)
+                }
+
                 function _refreshSingleCheckedData(items){
                     angular.forEach(items, function(item){
                         var index = _.findIndex(scope.destData, item);
@@ -854,7 +861,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         scope.$watch("compileHeads", function(newVal, oldVal) {
                             if (newVal != oldVal) {
                                 _restTableHeaders(oldVal);
+                                _restTableHeadersBody(oldVal);
                                 _reSetTableHeaders();
+                                _reSetTableHeadersBody();
                             }
                         }, true);
 
@@ -1005,12 +1014,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
                         }
 
-                        scope.sortHandler = function(iCol, columnDef) {
+                        scope.sortHandler = function(iCol, columnDef,sortStatus) {
                             if (!columnDef.sortable) return;
                             if(curSortIndex!==iCol){
                                 sortIconStatus=true;
                             }
-                            sortIconStatus=!sortIconStatus;
+                            sortIconStatus = sortStatus || !sortIconStatus;
                             var table = element[0].querySelector('.sticky-enabled');
                             if (scope.pagingType == "server" || scope.pagingType == "server-auto") {
                                 scope.serverSortCache = true;
@@ -1030,6 +1039,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 }
                             }
                             curSortIndex=iCol;
+                            var sortInfo={
+                                columnDef:columnDef,
+                                targetIndex:curSortIndex,
+                                status:sortIconStatus
+                            };
+                            EventService.broadcast(attrs.id, EventTypes.SORT_CHANGE,sortInfo);
                         };
                         scope.curSortCol=function(index){
                             return curSortIndex===index;
@@ -1502,9 +1517,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
                         }
                     }
-                    //重置表头自定义的列渲染，删除已渲染好的节点元素
+                    //重置表头自定义的列渲染，删除head已渲染好的节点元素
                     function _restTableHeaders(compileHeads){
-                        var thead = element[0].querySelector('thead');
+                        var thead = element[0].querySelector('table.rdk-table-head>thead');
                         var ths=thead.querySelector("tr:last-child").querySelectorAll("th[ng-repeat]");
                         for(var i= 0,thLen=ths.length;i<thLen;i++) {
                             for (var key in compileHeads) {
@@ -1514,6 +1529,19 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             }
                         }
                     }
+                    //重置表头自定义的列渲染，删除body已渲染好的节点元素
+                    function _restTableHeadersBody(compileHeads){
+                        var thead = element[0].querySelector('table.rdk-table-body>thead');
+                        var ths=thead.querySelector("tr:last-child").querySelectorAll("th[ng-repeat]");
+                        for(var i= 0,thLen=ths.length;i<thLen;i++) {
+                            for (var key in compileHeads) {
+                                if (compileHeads.hasOwnProperty(key) && key == i) {
+                                    ths[i].querySelector(".rdk-table-custom-header").innerHTML = "";
+                                }
+                            }
+                        }
+                    }
+
                     function _reSetTableAddHeaders(tHeadBox,tableHead){
                         if(_hasAddTrReady){
                             return;
