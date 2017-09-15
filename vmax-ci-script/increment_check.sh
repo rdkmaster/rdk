@@ -12,12 +12,14 @@ BUILD_NUMBER=$1
 
 # You may need to modify the below parameters for your project
 JDK_HOME=/usr/java/jdk1.8.0_131 # scalastyle need jdk1.8
-Scala_Version=scala-2.10.5
+Scala_Version=scala-2.10
 Ivy2_Home=/home/sbt/ivy2
 Sbt_Home=/home/sbt
 Scalastyle_Jar=/home/scalastyle_2.12-0.9.0-batch.jar
 Findbugs_Jar=/home/findbugs-3.0.1/lib/findbugs.jar
 Project_Dir=rdk
+Script_Dir=rdk/vmax-ci-script
+
 
 index=0
 index_add=0
@@ -205,7 +207,7 @@ do
 done
 
 # Check modified files for current commit
-$JDK_HOME/bin/java -jar $Scalastyle_Jar --config $BASE_DIR/$Project_Dir/scalastyle-config.xml --xmlOutput $BASE_DIR/scalastyle_result_new.xml --xmlEncoding UTF-8 $scala_files_st_add $scala_files_st_modi
+$JDK_HOME/bin/java -jar $Scalastyle_Jar --config $BASE_DIR/$Script_Dir/scalastyle-config.xml --xmlOutput $BASE_DIR/scalastyle_result_new.xml --xmlEncoding UTF-8 $scala_files_st_add $scala_files_st_modi
 java -jar $Findbugs_Jar -textui -auxclasspath $Ivy2_Home $auxclasspathes -sourcepath $BASE_DIR -xml -output findbugs_result_new.xml $class_files_st_modi $class_files_st_add
 cat scalastyle_result_new.xml
 cat findbugs_result_new.xml
@@ -226,7 +228,7 @@ incrementCompile $Project_Dir
 #incrementCompile "vmax-metadata-common/metajar/dataperiodmanage/"
 
 # Check modified files for last commit
-$JDK_HOME/bin/java -jar $Scalastyle_Jar --config $BASE_DIR/$Project_Dir/scalastyle-config.xml --xmlOutput $BASE_DIR/scalastyle_result_old.xml --xmlEncoding UTF-8 $scala_files_st_modi
+$JDK_HOME/bin/java -jar $Scalastyle_Jar --config $BASE_DIR/$Script_Dir/scalastyle-config.xml --xmlOutput $BASE_DIR/scalastyle_result_old.xml --xmlEncoding UTF-8 $scala_files_st_modi
 java -jar $Findbugs_Jar -textui -auxclasspath $Ivy2_Home $auxclasspathes -sourcepath $BASE_DIR -xml -output findbugs_result_old.xml $class_files_st_modi
 cat scalastyle_result_old.xml
 cat findbugs_result_old.xml
