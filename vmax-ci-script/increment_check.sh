@@ -18,7 +18,7 @@ Sbt_Home=/home/sbt
 Scalastyle_Jar=/home/scalastyle_2.12-0.9.0-batch.jar
 Findbugs_Jar=/home/findbugs-3.0.1/lib/findbugs.jar
 Project_Dir=rdk
-Script_Dir=rdk/vmax-ci-script
+Script_Dir=vmax-ci-script
 
 
 index=0
