@@ -2,7 +2,7 @@
 - [http://rdk.zte.com.cn](http://rdk.zte.com.cn)
 
 ## 第一步
-[《天龙八步》](http://rdk.zte.com.cn/doc/#best_practise/index.md)，这是RDK的Hello World。
+[《天龙八步》](http://rdk.zte.com.cn/version/latest/doc/best_practise/index.html)，这是RDK的Hello World。
 
 ## BUG!!!
 > 你提的每个bug都是在帮助rdk改进！
