@@ -16,12 +16,12 @@ define(['angular', 'rd.core', 'jquery', 'rd.controls.Module', 'rd.services.Popup
           $('.rdk_menu').parents('.ui-dialog').css({'overflow': 'visible'});
 
           subMenu.css({
-            'left': tWidth+2,
+            'left': tWidth,
           }).show();
           //x方向进行边界检测
           if(Utils.offsetCheckX(subMenu[0])){
             subMenu.css({
-              'left': -(tWidth+2),
+              'left': -tWidth,
             })
           }
         }
