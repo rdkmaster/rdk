@@ -446,14 +446,14 @@
 		                        iconBlockTemplate.querySelector(".iconCode").innerHTML = '<span>&#x</span>' + icon.iconCode.toLowerCase();
 	                        }
 	                        if (type === "symbol") {
-		                        iconBlockTemplate.querySelector(".iconContent").innerHTML = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-' + icon.iconCode + '"></use></svg>';
+		                        iconBlockTemplate.querySelector(".iconContent").innerHTML = '<svg class="icon" aria-hidden="true"><use xlink:href="#iconfont-' + icon.iconCode + '"></use></svg>';
 		                        iconBlockTemplate.querySelector(".iconName").innerHTML = icon.iconName;
-		                        iconBlockTemplate.querySelector(".iconCode").innerHTML = '#icon-' + icon.iconCode.toLowerCase();
+		                        iconBlockTemplate.querySelector(".iconCode").innerHTML = '#iconfont-' + icon.iconCode.toLowerCase();
 	                        }
 	                        if (type === "fontClass") {
-		                        iconBlockTemplate.querySelector(".iconContent").innerHTML = '<i class="iconfont icon-' + icon.iconCode + '"></i>';
+		                        iconBlockTemplate.querySelector(".iconContent").innerHTML = '<i class="iconfont iconfont-' + icon.iconCode + '"></i>';
 		                        iconBlockTemplate.querySelector(".iconName").innerHTML = icon.iconName;
-		                        iconBlockTemplate.querySelector(".iconCode").innerHTML = 'icon-' + icon.iconCode.toLowerCase();
+		                        iconBlockTemplate.querySelector(".iconCode").innerHTML = 'iconfont-' + icon.iconCode.toLowerCase();
 	                        }
 	                        iconGroupTemplate.appendChild(iconBlockTemplate);
                         }
