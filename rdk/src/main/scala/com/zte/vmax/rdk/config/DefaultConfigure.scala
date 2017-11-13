@@ -10,7 +10,7 @@ import com.zte.vmax.rdk.util.Logger
   * Created by 10054860 on 2016/9/26.
   * 读取vmax系统的配置文件
   */
-object DefaultConfiger extends Logger {
+object DefaultConfigure extends Logger {
 
   /**
     * 从配置文件读取属性值
@@ -20,7 +20,6 @@ object DefaultConfiger extends Logger {
 
     */
   private def getKey(file: String, lookUpKey: String): String = {
-
     val prop = new Properties()
     try {
       prop.load(new FileReader(file))
@@ -30,6 +29,7 @@ object DefaultConfiger extends Logger {
         logger.error(s"load config file error:${file} ")
         return ""
     }
+
 
   }
 

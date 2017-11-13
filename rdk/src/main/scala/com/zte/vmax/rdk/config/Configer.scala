@@ -22,10 +22,10 @@ trait ConfigTrait extends Logger {
   def setConfigFiles(files: String*): Unit = {
     logger.debug(s"config home: $configHome")
     config = files.toList.map(load).reduce((a, b) => a.withFallback(b))
-    config = config.withFallback(DefaultConfiger.getConfig).resolve()
+    config = config.withFallback(DefaultConfigure.getConfig).resolve()
     //注册默认的数据源(gbase)
     val defaultGbaseDataSource =
-      s"""db.default.url="${DefaultConfiger.getGbaseUrl}" """
+      s"""db.default.url="${DefaultConfigure.getGbaseUrl}" """
     config = config.withFallback(ConfigFactory.parseString(defaultGbaseDataSource)).resolve()
   }
 
