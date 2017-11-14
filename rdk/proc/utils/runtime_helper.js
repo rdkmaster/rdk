@@ -827,9 +827,9 @@ var Data = {
 
     // 设置数据源配置
     setDataSource: function (jsonObj) {
-        var json = JSON.stringify(jsonObj)
+        var json = JSON.stringify(jsonObj);
         java.Config.set(json);
-        Log.info("update datasource config!changed:" + json)
+        Log.info("update datasource config!changed:" + json);
         rdk_runtime.reloadDataSource();
     },
 
@@ -852,22 +852,15 @@ var Data = {
         }
     },
     fetchWithDataSource: function (dataSource, sql, maxLine) {
-        return Data._ifFetchWithDataSource(dataSource, sql, maxLine, true);
+        return Data._ifFetchWithDataSource(sql, maxLine, dataSource);
     },
     allowNullToString: function (strict) {
         Cache.put("#_#allowNullToString#_#", !strict);
     },
     fetch: function (sql, maxLine) {
-        return Data._ifFetchWithDataSource(sql, maxLine, null, false);
+        return Data._ifFetchWithDataSource(sql, maxLine);
     },
-    _ifFetchWithDataSource: function (arg1, arg2, arg3, withDataSource) {
-        var dataSource = arg1;
-        var sql = arg2;
-        var maxLine = arg3;
-        if (!withDataSource) {
-            sql = arg1;
-            maxLine = arg2;
-        }
+    _ifFetchWithDataSource: function (sql, maxLine, dataSource) {
         if (!maxLine || !_.isDefined(maxLine)) {
             Log.warn("param maxLine empty,set maxLine=4000");
             maxLine = 4000;
@@ -878,24 +871,21 @@ var Data = {
             return;
         }
 
-        var dataObj = null;
-        if (!withDataSource) {
-            dataObj = JSON.parse(rdk_runtime.fetch(sql, maxLine));
+        var dataTable = new DataTable([], [], []);
+        if (!!dataSource) {
+            rdk_runtime.fetchWithDataSource(dataSource, sql, maxLine, dataTable);
         } else {
-            dataObj = JSON.parse(rdk_runtime.fetchWithDataSource(dataSource, sql, maxLine))
+            rdk_runtime.fetch(sql, maxLine, dataTable);
         }
-
-        if (!dataObj.hasOwnProperty("error")) {
-            dataObj = new DataTable(i18n(dataObj.fieldNames), dataObj.fieldNames, dataObj.data)
-        }
-        return dataObj;
+        dataTable.header = i18n(dataTable.header);
+        return dataTable;
     },
     fetch_first_cell: function (sql) {
         Log.warn("function deprecated,please use Data.fetchFirstCell()");
         return Data.fetchFirstCell(sql);
     },
     fetchFirstCell: function (sql) {
-        return rdk_runtime.fetch_first_cell(sql);
+        return rdk_runtime.fetchFirstCell(sql, new DataTable([], [], []));
     },
     batchFetch: function (sqlArray, maxLine, timeout) {  //并发实现
         return Data._ifBatchFetchWithDataSource(sqlArray, maxLine, timeout, null, false);
@@ -1007,68 +997,74 @@ function DataTable(header, field, data, paging) {
             }
         }
         return this;
-    },
+    };
 
-        this.filter = function (func) {
-            if (!_.isFunction(func)) {
-                Log.error("function required!param value:" + func);
-                return this;
-            }
-            var data = [];
-            try {                            //try catch
-                if (func(this.data[row])) {
-                    data.push(this.data[row]);
-                }
-            } catch (error) {
-                Log.warn("function call error");
-            }
+    this.filter = function (func) {
+        if (!_.isFunction(func)) {
+            Log.error("function required!param value:" + func);
             return this;
-        },
-
-        this.select = function (colNameArray) {
-            if (!colNameArray || !_.isArray(colNameArray)) {
-                Log.error("field Array required! field param:" + colNameArray);
-                return this;
-            }
-            var field = [];
-            var header = [];  //delete
-            var data = [];    //转置？
-            var paging = {};
-            var index = 0;
-            for (var i = 0; i < colNameArray.length; i++) {
-                var colName = colNameArray[i];
-                index = this.field.indexOf(colName)
-                if (index == -1) {
-                    Log.warn("field not exist! " + colName);
-                    continue;
-                }
-                field.push(colName);
-                header.push(this.header[index]);
-                for (row = 0; row < this.data.length; row++) {
-                    var rowArray = [];
-                    rowArray.push(this.data[row][index]);
-                    data.push(rowArray);
-                }
-            }
-            this.header = header;
-            this.field = field;
-            this.data = data;
-            this.paging = paging;
-            return this;
-        },
-
-        this.map = function (func) {  //log error
-            Log.error("map funciton is not supported yet!");
-            //if(!_.isFunction(func)){
-            //    Log.error("function required! parm:"+func);
-            //}
-            //each(this.data,func);
-            return this;
-        },
-
-        this.clone = function () {
-            return new DataTable(this.header, this.field, this.data, this.paging);
         }
+        var data = [];
+        try {                            //try catch
+            if (func(this.data[row])) {
+                data.push(this.data[row]);
+            }
+        } catch (error) {
+            Log.warn("function call error");
+        }
+        return this;
+    };
+
+    this.select = function (colNameArray) {
+        if (!colNameArray || !_.isArray(colNameArray)) {
+            Log.error("field Array required! field param:" + colNameArray);
+            return this;
+        }
+        var field = [];
+        var header = [];  //delete
+        var data = [];    //转置？
+        var paging = {};
+        var index = 0;
+        for (var i = 0; i < colNameArray.length; i++) {
+            var colName = colNameArray[i];
+            index = this.field.indexOf(colName);
+            if (index == -1) {
+                Log.warn("field not exist! " + colName);
+                continue;
+            }
+            field.push(colName);
+            header.push(this.header[index]);
+            for (row = 0; row < this.data.length; row++) {
+                var rowArray = [];
+                rowArray.push(this.data[row][index]);
+                data.push(rowArray);
+            }
+        }
+        this.header = header;
+        this.field = field;
+        this.data = data;
+        this.paging = paging;
+        return this;
+    };
+
+    this.map = function (func) {  //log error
+        Log.error("map funciton is not supported yet!");
+        //if(!_.isFunction(func)){
+        //    Log.error("function required! parm:"+func);
+        //}
+        //each(this.data,func);
+        return this;
+    };
+
+    this.clone = function () {
+        return new DataTable(this.header, this.field, this.data, this.paging);
+    };
+
+    this._addEmptyRow = function() {
+        var row = [];
+        this.data.push(row);
+        return row;
+    }
 }
 
 function json(data, indent) {
