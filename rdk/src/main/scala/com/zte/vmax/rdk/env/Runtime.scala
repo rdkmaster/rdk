@@ -13,12 +13,15 @@ import com.zte.vmax.rdk.jsr._
 import com.zte.vmax.rdk.mq.MqHelper
 import com.zte.vmax.rdk.proxy.ProxyManager
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
-import jdk.nashorn.api.scripting.ScriptObjectMirror
 import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.db.DataBaseHelper.DBError
+import jdk.nashorn.api.scripting.ScriptObjectMirror
+import jdk.nashorn.internal.runtime.Undefined
 import spray.http.HttpHeaders.RawHeader
 import spray.http.MediaTypes
 import spray.http.MediaType
+
+import scala.collection.mutable.ArrayBuffer
 
 /**
   * Created by 10054860 on 2016/7/11.
@@ -225,75 +228,68 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   }
 
-  def fetch(sql: String, maxLine: Int): String = {
-    var data: Option[AnyRef] = None
+  def fetch(sql: String, maxLine: Int, result: ScriptObjectMirror): Unit = {
     if (cacheGet("#_#allowNullToString#_#").asInstanceOf[Boolean]) {
-      data = DataBaseHelper.fetch(useDbSession, sql, maxLine, null)
+      DataBaseHelper.fetch(useDbSession, sql, maxLine, null, result)
     } else {
-      data = DataBaseHelper.fetch(useDbSession, sql, maxLine)
+      DataBaseHelper.fetch(useDbSession, sql, maxLine, "null", result)
     }
-    objectToJson(data getOrElse "null") //转json？
   }
 
-  def fetchWithDataSource(dataSource: String, sql: String, maxLine: Int): String = {
-    var data: Option[AnyRef] = None
+  def fetchWithDataSource(dataSource: String, sql: String, maxLine: Int, result: ScriptObjectMirror): Unit = {
     if (cacheGet("#_#allowNullToString#_#").asInstanceOf[Boolean]) {
-      data = DataBaseHelper.fetch(DBSession(application, Some(dataSource)), sql, maxLine, null)
+      DataBaseHelper.fetch(DBSession(application, Some(dataSource)), sql, maxLine, null, result)
     } else {
-      data = DataBaseHelper.fetch(DBSession(application, Some(dataSource)), sql, maxLine)
+      DataBaseHelper.fetch(DBSession(application, Some(dataSource)), sql, maxLine, "null", result)
     }
-    objectToJson(data getOrElse "null")
   }
 
-  def batchFetch(sqlArr: ScriptObjectMirror, maxLine: Int, timeout: Long): String = {
+  def batchFetch(sqlArr: ScriptObjectMirror, maxLine: Int, timeout: Long, resultArray: ScriptObjectMirror): Unit = {
     val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
-    val data = DataBaseHelper.batchFetch(useDbSession, lst.toList, maxLine, timeout)
-    val ret = data.map(it => if (it.nonEmpty) it.get else Nil)
-    objectToJson(ret.toArray)
+    DataBaseHelper.batchFetch(useDbSession, lst.toList, maxLine, timeout, resultArray)
   }
 
-  def batchFetchWithDataSource(dataSource: String, sqlArr: ScriptObjectMirror, maxLine: Int, timeout: Long): String = {
+  def batchFetchWithDataSource(dataSource: String, sqlArr: ScriptObjectMirror, maxLine: Int, timeout: Long, resultArray: ScriptObjectMirror): Unit = {
     val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
-    val data = DataBaseHelper.batchFetch(DBSession(application, Some(dataSource)), lst.toList, maxLine, timeout)
-    val ret = data.map(it => if (it.nonEmpty) it.get else Nil)
-    objectToJson(ret.toArray)
+    DataBaseHelper.batchFetch(DBSession(application, Some(dataSource)), lst.toList, maxLine, timeout, resultArray)
   }
 
-  def fetch_first_cell(sql: String): String = {
-    DataBaseHelper.fetch(useDbSession, sql, 1) match {
-      case Some(dataOrError) => {
-        dataOrError match {
-          case it: DataTable if (it.data.length >= 1) => it.data(0)(0)
-          case _ => null
-        }
-      }
-      case _ => null
+  def fetchFirstCell(sql: String, helper: ScriptObjectMirror): String = {
+    DataBaseHelper.fetch(useDbSession, sql, 1, "null", helper)
+    if (helper.hasMember("error")) {
+      return null
     }
+
+    val data = helper.getMember("data").asInstanceOf[ScriptObjectMirror]
+    if (data.getMember("length").asInstanceOf[Int] > 0) {
+      val value = data.get("0").asInstanceOf[ScriptObjectMirror].get("0")
+      if (!value.isInstanceOf[Undefined]) value.toString
+    }
+
+    null
   }
 
   def executeUpdate(appName: String, sql: String, ifErrorInfo: Boolean): Any = {
     DataBaseHelper.executeUpdate(useDbSession, sql) match {
-      case Some(dataOrError) => {
+      case Some(dataOrError) =>
         dataOrError match {
           case num: Int => num
-          case error: DBError if (ifErrorInfo) => objectToJson(error)
+          case error: DBError if ifErrorInfo => objectToJson(error)
           case _ => 0
         }
-      }
       case _ => 0
     }
   }
 
   def batchExecuteUpdate(appName: String, sqlArr: ScriptObjectMirror, ifErrorInfo: Boolean): Any = {
-    val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
+    val lst = for (i <- 0 until sqlArr.size()) yield sqlArr.get(i.toString).toString
     DataBaseHelper.batchExecuteUpdate(useDbSession, lst.toList) match {
-      case Some(dataOrError) => {
+      case Some(dataOrError) =>
         dataOrError.head match {
           case num: Integer => objectToJson(dataOrError.toArray)
           case error: DBError if ifErrorInfo => objectToJson(error)
           case _ => objectToJson(Array.apply())
         }
-      }
       case _ =>
     }
 
