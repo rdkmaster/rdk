@@ -1,6 +1,7 @@
 #!/bin/sh
 
 curDir=$(cd `dirname $0`; pwd)
+port=`more ../conf/rdk.cfg | grep listen.port| cut -d "=" -f2`
 
 log() {
     echo `date +%F" "%H:%M:%S`: $1 >> $curDir/../../proc/logs/diagnose.log
@@ -8,7 +9,8 @@ log() {
 
 diagnose() {
     for ((time=1; time<=$3; time++));do
-        curl --silent --connect-timeout $1 --max-time $2 http://localhost:5812/rdk/service/app/console/server/diagnose > /dev/null
+        curl --silent --connect-timeout $1 --max-time $2 \
+            http://localhost:$port/rdk/service/app/console/server/diagnose > /dev/null
         if [ $? == 0 ]; then
             return 0
         fi
