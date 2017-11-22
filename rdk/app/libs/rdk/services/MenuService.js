@@ -160,8 +160,8 @@ define(['angular', 'rd.core', 'jquery', 'rd.controls.Module', 'rd.services.Popup
         var wOffx = 0, wOffy = 0, bodyWidth = $(window).width(), bodyHeight = $(window).height();
         if (pos === 'mouse') {
           pos = {
-            x: event.pageX,
-            y: event.pageY
+            x: event.pageX || event.clientX,
+            y: event.pageY || event.clientY
           };
         } else if (typeof pos === 'object' && pos.relateTo) {
           var dom = $('#' + pos.relateTo)
