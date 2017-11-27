@@ -9,7 +9,7 @@ import jdk.nashorn.api.scripting.ScriptObjectMirror
 import org.scalatest.{FunSpec, Matchers}
 import test.mock.db.{BaseConnectionMock, BaseMetaData, BaseResultSetMock, BaseStatementMock}
 
-/**
+ /*
   * Created by 10054860 on 2016/7/14.
   */
 class DBHelperTestSpec extends FunSpec with Matchers {

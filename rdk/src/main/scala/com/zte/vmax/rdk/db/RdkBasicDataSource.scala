@@ -8,7 +8,7 @@ import java.sql.SQLException
 import com.zte.vmax.rdk.util.Logger
 import org.apache.tomcat.dbcp.dbcp.{BasicDataSource, ConnectionFactory}
 
-/**
+ /*
   * Created by 10054860 on 2016/11/22.
   */
 class RdkBasicDataSource extends BasicDataSource with Logger {
@@ -43,5 +43,6 @@ class RdkBasicDataSource extends BasicDataSource with Logger {
 
   }
 
-  def getParentLogger = null
-}
+  def getParentLogger = null //scalastyle:off
+ }
+

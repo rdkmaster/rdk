@@ -10,7 +10,7 @@ import akka.pattern.ask
 
 import scala.concurrent.{Await, Future}
 
-/**
+ /*
   * Created by 10054860 on 2016/7/28.
   */
 object MqHelper extends Logger {
@@ -20,7 +20,7 @@ object MqHelper extends Logger {
   //构造唯一的主题
   private def makeUniqueReplyTopic(app: String, replyTopic: String) = s"${replyTopic}@${app}@${RdkServer.uuid}"
 
-  /**
+   /*
     * p2p消息发送
     *
     * @param topic 发送的主题
@@ -30,7 +30,7 @@ object MqHelper extends Logger {
     RdkServer.mqRouter ! MQ_P2P(topic, body)
   }
 
-  /**
+   /*
     * MQ的RPC同步调用
     *
     * @param topic      请求主题名称
@@ -56,7 +56,7 @@ object MqHelper extends Logger {
     }
   }
 
-  /**
+   /*
     * 广播消息
     *
     * @param topic 主题名称
@@ -66,7 +66,7 @@ object MqHelper extends Logger {
     RdkServer.mqRouter ! MQ_BroadCast(topic, body)
   }
 
-  /**
+   /*
     * 回复消息
     *
     * @param replyTopic 回复的主题
@@ -76,7 +76,7 @@ object MqHelper extends Logger {
     RdkServer.mqRouter ! MQ_P2P(makeUniqueReplyTopic(app, replyTopic), body)
   }
 
-  /**
+   /*
     * 订阅主题
     *
     * @param app          应用名

@@ -5,10 +5,16 @@ import java.net.{MalformedURLException, URLClassLoader}
 import com.zte.vmax.rdk.defaults.Const
 import com.zte.vmax.rdk.util.Logger
 
-/**
+ /*
   * 专门用于加载所有rdk应用jdbc驱动的ClassLoader实例
   * Created by 10184092 on 2017/3/9.
   */
+
+
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(
+  value = Array("DP_CREATE_CLASSLOADER_INSIDE_DO_PRIVILEGED"),
+  justification = "false alarm")
+//scalastyle:off if.brace
 object JDBCDriverClassLoader extends URLClassLoader(Array.empty) with Logger {
   val file: File = new File(Const.jdbcDriversDir)
 
@@ -25,3 +31,5 @@ object JDBCDriverClassLoader extends URLClassLoader(Array.empty) with Logger {
       }
   }
 }
+//scalastyle:off if.brace
+

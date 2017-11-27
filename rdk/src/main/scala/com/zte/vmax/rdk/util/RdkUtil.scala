@@ -36,12 +36,13 @@ import akka.pattern.ask
 import spray.http.StatusCodes.{ClientError, ServerError}
 
 
-/**
+ /*
   * Created by 10054860 on 2016/7/15.
   */
+ //scalastyle:off method.name token public.methods.have.type procedure.declaration cyclomatic.complexity if.brace method.length procedure.declaration
 object RdkUtil extends Logger {
 
-  /**
+   /*
     * 获取真实的app名称
     */
   def getRealApp(script: String, app: String): String = {
@@ -64,7 +65,7 @@ object RdkUtil extends Logger {
     }
   }
 
-  /**
+   /*
     * 判断字符串是否为null或空白
     *
     * @param str
@@ -74,7 +75,7 @@ object RdkUtil extends Logger {
     if (str == null || str.isEmpty) true else false
   }
 
-  /**
+   /*
     * 创建ActiveMQ对象
     *
     * @param send true:单纯发送，false：接收订阅类型的对象
@@ -96,7 +97,7 @@ object RdkUtil extends Logger {
   }
 
 
-  /**
+   /*
     * 运行js文件
     *
     * @param runtime
@@ -182,7 +183,7 @@ object RdkUtil extends Logger {
     }
   }
 
-  /**
+   /*
     * 通过json字符串构造MQ_Message对象
     *
     * @param json
@@ -192,7 +193,7 @@ object RdkUtil extends Logger {
     json2Object[MQ_Message](json)
   }
 
-  /**
+   /*
     * 通过json字符串构造对象
     *
     * @param json
@@ -209,7 +210,7 @@ object RdkUtil extends Logger {
     }
   }
 
-  /**
+   /*
     * Object 转成 json 字符串
     *
     * @param obj
@@ -219,7 +220,7 @@ object RdkUtil extends Logger {
     (new GsonBuilder().disableHtmlEscaping().create()).toJson(obj)
   }
 
-  /**
+   /*
     * 生成UUID
     *
     * @return
@@ -227,7 +228,7 @@ object RdkUtil extends Logger {
   def genUUID: String = UUID.randomUUID().toString
 
 
-  /**
+   /*
     * RDK启动时，调用应用的初始化脚本
     */
   def initApplications: Unit = {
@@ -273,7 +274,7 @@ object RdkUtil extends Logger {
     pathLst
   }
 
-  /**
+   /*
     * 获取标准sql
     */
   def getVSql(dbSession: DBSession, sql: String): Option[String] = {
@@ -299,7 +300,7 @@ object RdkUtil extends Logger {
   }
 
 
-  /**
+   /*
     * 安全关闭对象
     *
     * @param closeable
@@ -315,7 +316,7 @@ object RdkUtil extends Logger {
     }
   }
 
-  /**
+   /*
     * 判断文件是否存在
     *
     * @param file
@@ -338,7 +339,9 @@ object RdkUtil extends Logger {
       case r: Some[A] => r
       case _ => None
     }
-
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings(
+    value = Array("OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE"),
+    justification = "false alarm")
   def uploadFile(runtime: Runtime, formData: MultipartFormData, fileName: String): Either[Exception, String] = {
     val file = new File(fileName)
     runtime.fileHelper.ensureFileExists(file)
@@ -442,4 +445,5 @@ object RdkUtil extends Logger {
     }
   }
 }
+//scalastyle:off method.name token public.methods.have.type procedure.declaration cyclomatic.complexity if.brace method.length procedure.declaration
 

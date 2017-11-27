@@ -4,7 +4,7 @@ import com.zte.vmax.rdk.cache.CacheHelper
 
 import org.scalatest.{FunSpec, Matchers}
 
-/**
+ /*
   * Created by 10054860 on 2016/7/14.
   */
 class CacheTestSpec extends FunSpec with Matchers {

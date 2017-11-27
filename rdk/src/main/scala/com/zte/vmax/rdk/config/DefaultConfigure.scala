@@ -6,19 +6,24 @@ import java.util.Properties
 import com.typesafe.config.{ConfigFactory, Config => TypeSafeConfig}
 import com.zte.vmax.rdk.util.Logger
 
-/**
+ /*
   * Created by 10054860 on 2016/9/26.
   * 读取vmax系统的配置文件
   */
+//scalastyle:off
 object DefaultConfigure extends Logger {
 
-  /**
+   /*
     * 从配置文件读取属性值
     *
     * @param file
     * @param lookUpKey 属性键
 
     */
+
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings(
+    value = Array("OS_OPEN_STREAM", "DM_DEFAULT_ENCODING"),
+    justification = "false alarm")
   private def getKey(file: String, lookUpKey: String): String = {
     val prop = new Properties()
     try {
@@ -33,7 +38,7 @@ object DefaultConfigure extends Logger {
 
   }
 
-  /**
+   /*
     * 构造rdk 默认jdbc url（gbase）
     *
     * @return
@@ -58,7 +63,7 @@ object DefaultConfigure extends Logger {
     return url
   }
 
-  /**
+   /*
     * 从proc/conf/extension.cfg文件属性项获取默认配置的参数，包括
     * local.ip
     * ums.local
@@ -87,3 +92,4 @@ object DefaultConfigure extends Logger {
 
 
 }
+//scalastyle:off

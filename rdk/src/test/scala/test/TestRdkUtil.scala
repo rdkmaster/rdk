@@ -13,7 +13,7 @@ import org.scalatest.{FunSpec, Matchers}
 
 import scala.util.Try
 
-/**
+ /*
   * Created by 10054860 on 2016/7/27.
   */
 class RdkUtilTest extends FunSpec with Matchers{

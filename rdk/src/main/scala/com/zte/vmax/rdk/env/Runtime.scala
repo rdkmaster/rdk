@@ -23,9 +23,14 @@ import spray.http.MediaType
 
 import scala.collection.mutable.ArrayBuffer
 
-/**
+ /*
   * Created by 10054860 on 2016/7/11.
   */
+
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(
+  value = Array("NP_NULL_PARAM_DEREF", "NP_NULL_PARAM_DEREF_ALL_TARGETS_DANGEROUS"),
+  justification = "false alarm")
+//scalastyle:off line.size.limit method.name number.of.methods token  public.methods.have.type
 class Runtime(engine: ScriptEngine) extends Logger {
   def jsLogger = appLogger
 
@@ -170,7 +175,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
     else ServiceRawResult(jsonParser.call(callable, result, "").toString, ct, headers.toList)
   }
 
-  /**
+   /*
     * 缓冲数据功能实现区，线程安全在js中控制了，这里不需要控制
     */
 
@@ -209,7 +214,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   def agingCacheDel(key: String) = AgingCache.remove(key)
 
-  /**
+   /*
     * 数据库数据获取处理
     */
 
@@ -295,7 +300,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   }
 
-  /**
+   /*
     * p2p消息发送
     *
     * @param topic 发送的主题
@@ -304,7 +309,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
   def p2p(topic: String, body: String): Unit = MqHelper.p2p(topic, body)
 
 
-  /**
+   /*
     * MQ的RPC调用
     *
     * @param topic      请求主题名称
@@ -317,7 +322,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
     MqHelper.rpc(application, topic, replyTopic, body, timeout)
   }
 
-  /**
+   /*
     * 广播消息
     *
     * @param topic 主题名称
@@ -325,7 +330,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
     */
   def broadcast(topic: String, body: String): Unit = MqHelper.broadcast(topic, body)
 
-  /**
+   /*
     * 回复消息
     *
     * @param replyTopic 回复的主题
@@ -333,7 +338,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
     */
   def reply(replyTopic: String, body: String): Unit = MqHelper.reply(application, replyTopic, body)
 
-  /**
+   /*
     * 订阅主题
     *
     * @param topic        主题名
@@ -342,7 +347,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
     */
   def subscribe(topic: String, functionName: String, jsFile: String): Unit = MqHelper.subscribe(application, topic, functionName, jsFile)
 
-  /**
+   /*
     * 取消订阅主题
     *
     * @param topic        主题名
@@ -352,7 +357,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
   def unSubscribe(topic: String, functionName: String, jsFile: String): Unit = MqHelper.unSubscribe(application, topic, functionName, jsFile)
 
 
-  /**
+   /*
     * 通过websocket广播消息
     *
     * @param topic
@@ -381,3 +386,4 @@ object Runtime {
     runtime
   }
 }
+//scalastyle:off line.size.limit method.name number.of.methods token  public.methods.have.type

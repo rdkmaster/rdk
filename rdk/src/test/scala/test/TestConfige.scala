@@ -2,7 +2,7 @@ package test
 
 import org.scalatest.{Matchers, FunSpec}
 import com.zte.vmax.rdk.config.Config
-/**
+ /*
  * Created by 10184092 on 2016/8/15.
  */
 class TestConfige extends FunSpec with Matchers{

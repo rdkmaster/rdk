@@ -13,7 +13,7 @@ import com.zte.vmax.rdk.util.{RdkUtil}
 import scala.util.{Failure, Success, Try}
 import scala.concurrent.duration._
 
-/**
+ /*
   * Created by 10054860 on 2016/7/28.
   * P2P 功能的MQ实现
   *
@@ -28,7 +28,7 @@ class P2PMQActor extends Actor with MQCreator {
     self ! CheckMessage
   }
 
-  /**
+   /*
     * 发送p2p消息
     *
     * @param subject
@@ -42,7 +42,7 @@ class P2PMQActor extends Actor with MQCreator {
 
   }
 
-  /**
+   /*
     * 同步RPC调用
     *
     * @param subject 主题
@@ -68,7 +68,7 @@ class P2PMQActor extends Actor with MQCreator {
 
   }
 
-  /**
+   /*
     * 回复消息
     *
     * @param dest
@@ -78,7 +78,7 @@ class P2PMQActor extends Actor with MQCreator {
     trySendP2P(dest, data)
   }
 
-  /**
+   /*
     * 广播消息
     *
     * @param subject
@@ -91,7 +91,7 @@ class P2PMQActor extends Actor with MQCreator {
 
   }
 
-  def incMessageCount = messageCount = messageCount + 1
+  def incMessageCount = messageCount = messageCount + 1 //scalastyle:off
 
   override def receive: Receive = {
     case msg: MQ_P2P => incMessageCount; p2p(msg.subject, msg.data)

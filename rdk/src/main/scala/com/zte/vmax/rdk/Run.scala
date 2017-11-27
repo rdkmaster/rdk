@@ -1,6 +1,6 @@
 package com.zte.vmax.rdk
 
-/**
+ /*
   * Created by 10045812 on 16-3-21.
   */
 
@@ -27,6 +27,11 @@ import scala.concurrent.duration._
 import scala.util.{Failure, Success}
 
 
+
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(
+  value = Array("EI_EXPOSE_REP"),
+  justification = "false alarm")
+//scalastyle:off  line.size.limit
 object Run extends App with SimpleRoutingApp with Logger {
   implicit lazy val system = RdkServer.system
   implicit val bindingTimeout: Timeout = 10.second
@@ -67,7 +72,7 @@ object Run extends App with SimpleRoutingApp with Logger {
         system.shutdown()
     }
   }
-  def concatRestHandler:Route ={
+  def concatRestHandler: Route = {
     val main = new ExportHandler(system, RdkServer.appRouter).runRoute ~ new UploadHandler(system, RdkServer.appRouter).runRoute ~ new RestHandler(system, RdkServer.appRouter).runRoute
     RdkServer.addRestHandler(main)
     RdkServer.getRestHandler.reduce(_~_)
@@ -86,15 +91,16 @@ object RdkServer {
   //MQ 处理路由
   val mqRouter: ActorRef = system.actorOf(Props[MQRouter], "mqRouter")
   //aging cache 检查老化
-  val agingActor:ActorRef = system.actorOf(Props[AgingCacheActor], "agingActor")
+  val agingActor: ActorRef = system.actorOf(Props[AgingCacheActor], "agingActor")
   //本RDK-server的唯一标识
   val uuid: String = UUID.randomUUID().toString
 
   private val restHandMap = new ConcurrentHashMap[Route, Int] {}
   //注册路由
-  def addRestHandler(route: Route):Unit={
-    restHandMap.put(route,1)
+  def addRestHandler(route: Route): Unit = {
+    restHandMap.put(route, 1)
   }
-  def getRestHandler:Set[Route] = restHandMap.keySet().toSet
+  def getRestHandler: Set[Route] = restHandMap.keySet().toSet
 
 }
+//scalastyle:off  line.size.limit

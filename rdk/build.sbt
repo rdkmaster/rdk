@@ -4,6 +4,8 @@ version       := "2.3.20"
 
 unmanagedBase := file("proc/bin/lib")
 
+unmanagedJars in Compile += file("src/codescan/findbugs/findbugs-annotations-1.3.9-1.jar")
+
 name          := "rdk-server"
 
 scalaVersion  := "2.10.5"

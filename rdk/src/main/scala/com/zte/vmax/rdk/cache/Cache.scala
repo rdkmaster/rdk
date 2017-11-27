@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap
 import com.zte.vmax.rdk.defaults.Misc
 
 
-/**
+ /*
   * Created by 10054860 on 2016/7/21.
   */
 
@@ -25,7 +25,7 @@ class AppCache(appName: String) {
     value
   }
 
-  def size() = map.size()
+  def size() = map.size()//scalastyle:off
 
   //清除缓存
   def remove(key: String): Unit = map.remove(key)
