@@ -5,7 +5,7 @@ import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.util.RdkUtil
 import scala.collection.JavaConversions._
 
-/**
+ /*
   * Created by 10054860 on 2016/8/10.
   */
 object RequestParser {
@@ -32,7 +32,7 @@ object RequestParser {
     if (conf.hasPath("unSubscribe.topic")) RdkUtil.json2Object[WSUnSubscribe](json) else None
   }
 
-  /**
+   /*
     * 解析
     *
     * @param json

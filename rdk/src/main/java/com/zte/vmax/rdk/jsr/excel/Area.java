@@ -3,6 +3,9 @@ package com.zte.vmax.rdk.jsr.excel;
 /**
  * Created by 10033559 on 2017/7/26.
  */
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(
+        value = ("BC_EQUALS_METHOD_SHOULD_WORK_FOR_ALL_OBJECTS"),
+        justification = "false alarm")
 public class Area {
 
     public static class CellPosition {
@@ -52,7 +55,6 @@ public class Area {
     }
 
     public CellPosition getEnd() { return end; }
-
     public boolean equals(Object obj) {
         Area that = (Area) obj;
         return that != null && Util.isEquals(this.start, that.start) && Util.isEquals(this.end, that.end);

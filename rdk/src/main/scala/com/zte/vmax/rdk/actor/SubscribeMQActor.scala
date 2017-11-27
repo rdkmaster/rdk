@@ -12,7 +12,7 @@ import com.zte.vmax.rdk.util.{HashTrait, RdkUtil}
 import scala.util.Try
 
 
-/**
+ /*
   * Created by 10054860 on 2016/7/28.
   */
 class SubscribeMQActor extends Actor with MQCreator {
@@ -27,7 +27,7 @@ class SubscribeMQActor extends Actor with MQCreator {
     self ! CheckCallBack
   }
 
-  /**
+   /*
     * 订阅消息
     *
     * @param topic
@@ -57,7 +57,7 @@ class SubscribeMQActor extends Actor with MQCreator {
     callbackMap.get(rm.topic) match {
       case Some(set) => set.foreach(callback => {
         logger.info(s"${self.path}-> callback for file=${callback.jsFile} method=${callback.func_name}")
-        RdkServer.appRouter ! ServiceRequest(ctx = NoneContext, script = callback.jsFile, app = null, param = rm.msg, method = callback.func_name,timeStamp = System.currentTimeMillis())
+        RdkServer.appRouter ! ServiceRequest(ctx = NoneContext, script = callback.jsFile, app = null, param = rm.msg, method = callback.func_name, timeStamp = System.currentTimeMillis())//scalastyle:off
       })
       case None =>
     }

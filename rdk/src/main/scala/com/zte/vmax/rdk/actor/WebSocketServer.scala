@@ -20,12 +20,15 @@ import spray.routing.{HttpServiceActor, Rejected}
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
-
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(
+  value = Array("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"),
+  justification = "false alarm")
+//scalastyle:off
 object WebSocketServer extends Logger {
 
   private[WebSocketServer] case object Ping
   private[WebSocketServer] case object StartPing
-  /**
+   /*
     * Created by 10054860 on 2016/8/10.
     */
   class WebSocketServer extends Actor {
@@ -115,7 +118,7 @@ object WebSocketServer extends Logger {
 
   }
 
-  /**
+   /*
     * 向所有客户端广播消息
     *
     * @param message
@@ -125,7 +128,7 @@ object WebSocketServer extends Logger {
     system.actorSelection("/user/RDK-WebSocket/*") ! message
   }
 
-  /**
+   /*
     * 启动WebSocket
     *
     * @param ip   主机
@@ -152,3 +155,4 @@ object WebSocketServer extends Logger {
 
   }
 }
+//scalastyle:off

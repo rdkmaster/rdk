@@ -5,7 +5,7 @@ import java.sql.ResultSet
 import com.zte.vmax.rdk.actor.Messages.DBSession
 import com.zte.vmax.rdk.proxy.DeprecatedDBAccessTrait
 
-/**
+ /*
   * Created by 10054860 on 2016/8/20.
   */
 object DeprecatedDBAccessMock extends DeprecatedDBAccessTrait {

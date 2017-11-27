@@ -5,7 +5,7 @@ import com.zte.vmax.rdk.config.Config
 
 import scala.concurrent.duration.Duration
 
-/**
+ /*
   * Created by 10054860 on 2016/8/29.
   */
 object ServiceConfig {
@@ -22,7 +22,7 @@ object ServiceConfig {
     case "infinite" ⇒ 1800 //30 min
     case x ⇒ Duration(x).toSeconds.toInt
   }
-  val exportTimeout:Int =RdkServer.system.settings.config.getString("spray.can.server.export-timeout") match {
+  val exportTimeout: Int = RdkServer.system.settings.config.getString("spray.can.server.export-timeout") match {
     case "infinite" ⇒ 1800//30 min
     case x ⇒ Duration(x).toSeconds.toInt
   }

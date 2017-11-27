@@ -4,14 +4,14 @@ import java.io.File
 
 import com.typesafe.config.ConfigFactory
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
-
+//scalastyle:off public.methods.have.type  procedure.declaration
 trait ConfigTrait extends Logger {
   var config: com.typesafe.config.Config = null
 
   //get path from envrioment to relative path
   protected var configHome = "./"
 
-  /**
+   /*
     * 设置配置文件，只写文件名即可。
     *
     * 默认从configHome路径去读文件，同时如果resources下有同名文件也会读取   *
@@ -50,7 +50,7 @@ trait ConfigTrait extends Logger {
   }
 }
 
-/**
+ /*
   * Created by 10054860 on 2016/7/9.
   */
 object Config extends ConfigTrait {
@@ -109,3 +109,4 @@ object Config extends ConfigTrait {
   }
 
 }
+//scalastyle:off public.methods.have.type  procedure.declaration

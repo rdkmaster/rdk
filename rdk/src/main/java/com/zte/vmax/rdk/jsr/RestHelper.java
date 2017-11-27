@@ -22,6 +22,10 @@ import scala.collection.Iterator;
 /**
  * Created by 10045812 on 16-6-27.
  */
+
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(
+        value = {"DM_DEFAULT_ENCODING", "SIC_INNER_SHOULD_BE_STATIC", "URF_UNREAD_FIELD"},
+        justification = "false alarm")
 public class RestHelper extends AbstractAppLoggable {
     private Iterator<Messages.Header> originHeaderIter;
 
@@ -127,7 +131,6 @@ public class RestHelper extends AbstractAppLoggable {
         }
         return baos.toByteArray();
     }
-
     private String commonRest(String url, String param, Object option, String method, boolean ifErrorInfo) {
         url = fixUrl(url);
         logger.debug("requesting(" + method + ") url=" + url);

@@ -10,9 +10,10 @@ import akka.actor.Actor
 import com.zte.vmax.rdk.actor.Messages.AgingValue
 import scala.concurrent.duration._
 
-/**
+ /*
  * Created by 10184092 on 2016/11/18.
  */
+//scalastyle:off public.methods.have.type token
 object AgingCache extends Logger {
 
   private val map = new ConcurrentHashMap[String, AgingValue] {}
@@ -77,3 +78,4 @@ object AgingCache extends Logger {
   }
 
 }
+//scalastyle:off public.methods.have.type token

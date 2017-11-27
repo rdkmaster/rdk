@@ -7,7 +7,7 @@ import com.zte.vmax.rdk.db.Defines.{DatabaseInfo, DbPoolInfo}
 import com.zte.vmax.rdk.loader.{JDBCDriverClassLoader, RdkClassLoader}
 import com.zte.vmax.rdk.util.Logger
 
-/**
+ /*
   * Created by 10054860 on 2016/9/20.
   */
 trait DBPool {
@@ -63,6 +63,6 @@ private class DbcpConnectionPool(dbInfo: DatabaseInfo, poolInfo: DbPoolInfo) ext
     }
 
   }
-  def getDataSource = dataSource
+  def getDataSource = dataSource //scalastyle:off
 
 }

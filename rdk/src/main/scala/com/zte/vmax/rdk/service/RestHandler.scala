@@ -14,7 +14,7 @@ import spray.routing.{Directives, RequestContext}
 
 import scala.concurrent.duration._
 
-
+//scalastyle:off cyclomatic.complexity method.length  public.methods.have.type
 class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport with Directives with Logger {
   implicit def json4sFormats: Formats = DefaultFormats
 
@@ -170,6 +170,7 @@ class RestHandler(system: ActorSystem, router: ActorRef) extends Json4sSupport w
       }
 
 }
+//scalastyle:off cyclomatic.complexity method.length  public.methods.have.type
 
 
 

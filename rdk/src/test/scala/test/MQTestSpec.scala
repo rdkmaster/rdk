@@ -16,7 +16,7 @@ import test.mock.mq.BaseRDKActiveMQMock
 import scala.util.Success
 
 
-/**
+ /*
   * Created by 10054860 on 2016/7/26.
   */
 

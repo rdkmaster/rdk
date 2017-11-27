@@ -7,11 +7,14 @@ import com.zte.vmax.rdk.db.Defines.{DbPoolInfo, DatabaseInfo, DataSourceKey}
 import com.zte.vmax.rdk.util.{RdkUtil, Logger}
 import scala.collection.JavaConverters._
 
-/**
+ /*
   * Created by 10054860 on 2016/9/20.
   */
+//scalastyle:off public.methods.have.type
 object DataSource extends Logger {
-
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings(
+    value = Array("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"),
+    justification = "false alarm")
   private case class KeyAndDefaultValue[A](key: String, default: A)
 
   private val DbUrlMatch = "db.*.url"
@@ -90,7 +93,7 @@ object DataSource extends Logger {
 
   }
 
-  /**
+   /*
     * 根据数据源名字，获取连接池对象
     * @param dataSourceName
     * @return
@@ -100,12 +103,13 @@ object DataSource extends Logger {
     dbName2DSKeyMap.get(fixedName).flatMap(poolMap.get(_))
   }
 
-  /**
+   /*
     * 根据数据源名字，删除数据源对象及其对应的连接池对象
     */
-  def removeDBInfoByName(dbName:String)={
+  def removeDBInfoByName(dbName: String) = {
     dbName2DSKeyMap.get(dbName).map(poolMap.remove(_))
     dbName2DSKeyMap.remove(dbName)
   }
 
 }
+//scalastyle:off public.methods.have.type

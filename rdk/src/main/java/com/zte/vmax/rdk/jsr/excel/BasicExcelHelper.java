@@ -14,10 +14,15 @@ import java.util.*;
 /**
  * Created by 10033559 on 2017/7/26.
  */
+
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(
+        value = {"DE_MIGHT_IGNORE", "RR_NOT_CHECKED", "MS_PKGPROTECT", "DM_NUMBER_CTOR", "REC_CATCH_EXCEPTION"},
+        justification = "false alarm")
 public abstract class BasicExcelHelper implements ExcelHelper{
 
     protected abstract Workbook getBook(InputStream fis) throws Exception;
     protected abstract Workbook getBook() throws Exception;
+
     protected abstract DataValidation getValidation4Range(Sheet sheet, CellRangeAddressList ranges, String[] validationList);
     protected abstract DataValidation getValidation4Formula(Sheet sheet, CellRangeAddressList ranges, String strFormula);
     protected abstract short getDataFormat(Workbook book, String formatDetail);

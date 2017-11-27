@@ -13,13 +13,19 @@ import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 import scala.collection.mutable.ArrayBuffer
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
-/**
+
+//scalastyle:off
+ /*
   * Created by 10054860 on 2016/7/19.
   */
 object DataBaseHelper extends Logger {
 
+
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings(
+    value = Array("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"),
+    justification = "false alarm")
   case class DBError(error: String)
-  /**
+   /*
     * 查询数据
     *
     * @param sql     select sql语句
@@ -99,7 +105,7 @@ object DataBaseHelper extends Logger {
     row.map(it => if (it == null) nullToString else it.toString).toArray
   }
 
-  /**
+   /*
     * 批量查询数据库(并发查询)
     *
     * @param sqlArr  select sql数组
@@ -127,7 +133,7 @@ object DataBaseHelper extends Logger {
 
   }
 
-  /**
+   /*
     * 执行sql语句，用于insert,update,delete或DDL操作（事务）
     *
     * @param sql 待执行的sql语句
@@ -138,7 +144,7 @@ object DataBaseHelper extends Logger {
   }
 
 
-  /**
+   /*
     * 批量执行sql语句，用于insert,update,delete或DDL操作（事务）
     *
     * @param sqlArr 待执行的sql语句数组
@@ -176,3 +182,4 @@ object DataBaseHelper extends Logger {
   }
 
 }
+//scalastyle:off

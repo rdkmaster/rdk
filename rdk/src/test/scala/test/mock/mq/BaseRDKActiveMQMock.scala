@@ -5,7 +5,7 @@ import javax.jms.{Destination, TextMessage, Message, MessageListener}
 import akka.actor.ActorRef
 import com.zte.vmax.activemq.rdk.{RDKMessage, RDKActiveMQ}
 
-/**
+ /*
   * Created by 10054860 on 2016/8/23.
   */
 class BaseRDKActiveMQMock(ip: String, port: String,actor:ActorRef) extends RDKActiveMQ(ip, port) {

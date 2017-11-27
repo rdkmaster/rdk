@@ -14,9 +14,10 @@ import akka.pattern.ask
 
 import scala.util.{Failure, Success}
 
-/**
+ /*
  * Created by 10184092 on 2016/12/6.
  */
+//scalastyle:off  public.methods.have.type
 class UploadHandler(system: ActorSystem, router: ActorRef) extends Directives with Logger {
   implicit val _sys = system
   implicit val timeout = Timeout(ServiceConfig.uploadTimeout second)
@@ -43,3 +44,4 @@ class UploadHandler(system: ActorSystem, router: ActorRef) extends Directives wi
       }
     }
 }
+//scalastyle:off  public.methods.have.type

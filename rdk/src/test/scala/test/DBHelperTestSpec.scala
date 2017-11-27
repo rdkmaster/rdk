@@ -8,7 +8,7 @@ import com.zte.vmax.rdk.proxy.{DeprecatedDBAccessTrait, ProxyManager}
 import org.scalatest.{FunSpec, Matchers}
 import test.mock.db.{BaseStatementMock, BaseResultSetMock, BaseMetaData, BaseConnectionMock}
 
-/**
+ /*
   * Created by 10054860 on 2016/7/14.
   */
 class DBHelperTestSpec extends FunSpec with Matchers {

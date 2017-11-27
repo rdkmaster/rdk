@@ -4,7 +4,7 @@ import com.zte.vmax.rdk.actor.Messages.{NoneContext, WSUnSubscribe, WSSubscribe,
 import com.zte.vmax.rdk.util.RdkUtil
 import com.zte.vmax.rdk.websock.RequestParser
 import org.scalatest.{FunSpec, Matchers}
-/**
+ /*
   * Created by 10054860 on 2016/8/11.
   */
 

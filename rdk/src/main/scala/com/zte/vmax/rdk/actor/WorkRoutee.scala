@@ -10,7 +10,7 @@ import spray.http.{MediaTypes, MultipartFormData}
 import spray.httpx.Json4sSupport
 
 
-/**
+ /*
   * Created by 10054860 on 2016/7/7.
   */
 class WorkRoutee extends Actor with Json4sSupport with Logger {

@@ -1,12 +1,13 @@
 package com.zte.vmax.rdk.util
 
-/**
+ /*
   * Created by 10054860 on 2016/7/11.
   */
 trait KeyTrait[A] {
   def key: A
 }
 
+//scalastyle:off class.type.parameter.name  public.methods.have.type
 trait HashTrait[Key, Value] {
   private var _map: Map[Key, Value] = Map()
 
@@ -35,7 +36,7 @@ trait HashTrait[Key, Value] {
       _map = Map()
     }
   }
-  def isEmpty ={
+  def isEmpty = {
     _map.isEmpty
   }
 
@@ -58,3 +59,4 @@ trait HashTrait[Key, Value] {
   }
 
 }
+//scalastyle:off class.type.parameter.name  public.methods.have.type
