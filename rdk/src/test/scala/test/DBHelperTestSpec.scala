@@ -51,12 +51,12 @@ class DBHelperTestSpec extends FunSpec with Matchers {
     ProxyManager.dbAccess = _ =>Some(_conn)
 
     it("fetch() should return true") {
-      val data = DataBaseHelper.fetchV2(DBSession("test",None), "select * from AAA", 1, "null", null)
+      val data = DataBaseHelper.fetchV2(DBSession("test",None), "select * from AAA", 1,  null)
       data should not be (None)
     }
 
     it("batchFetch() should return true") {
-      val data = DataBaseHelper.batchFetchV2(DBSession("test",None), "select * from AAA" :: Nil, 1, 1, null)
+      val data = DataBaseHelper.batchFetchV2(DBSession("test",None), "select * from AAA" :: Nil, 1, 1)
       data should not be (Nil)
     }
 

@@ -229,14 +229,13 @@ object RdkUtil extends Logger {
 
    def initExtensionConfig: Unit = {
      logger.info("*" * 20 + s"rdk init extension config begin..." + "*" * 20)
-
      implicit val timeout: Timeout = Timeout(ServiceConfig.initTimeout second)
 
      val request = ServiceRequest(ctx = NoneContext, "proc/conf/init-extension-config.js",
        app = "common", param = null, method = "run", timeStamp = System.currentTimeMillis())
-     val result = RdkServer.appRouter ? request
+     val future = RdkServer.appRouter ? request
      try {
-       Await.result(result, ServiceConfig.initTimeout second)
+       Await.result(future, ServiceConfig.initTimeout second)
        logger.info("*" * 20 + s"rdk init extension config complete" + "*" * 20)
      } catch {
        case ex: java.util.concurrent.TimeoutException => logger.warn("rdk init extension config timeout!" + ex)
@@ -282,7 +281,9 @@ object RdkUtil extends Logger {
             val initJs = dir.toFile.listFiles(new FilenameFilter {
               override def accept(dir: File, name: String): Boolean = name == "init.js"
             })
-            initJs.foreach(it => pathLst = (it.getCanonicalPath) :: pathLst)
+            if(initJs != null){
+              initJs.foreach(it => pathLst = (it.getCanonicalPath) :: pathLst)
+            }
           }
           FileVisitResult.CONTINUE
         }

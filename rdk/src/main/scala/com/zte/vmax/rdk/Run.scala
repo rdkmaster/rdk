@@ -10,14 +10,13 @@ import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
 import akka.actor.{ActorRef, ActorSystem, Props}
-
 import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
-import com.zte.vmax.rdk.actor.{WebSocketServer, AppRouter, MQRouter}
+import com.zte.vmax.rdk.actor.{AppRouter, Async, MQRouter, WebSocketServer}
 import com.zte.vmax.rdk.cache.AgingCache.AgingCacheActor
 import com.zte.vmax.rdk.config.Config
 import com.zte.vmax.rdk.db.DataSource
-import com.zte.vmax.rdk.service.{UploadHandler, ExportHandler, RestHandler}
+import com.zte.vmax.rdk.service.{ExportHandler, RestHandler, UploadHandler}
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 import org.apache.log4j.PropertyConfigurator
 import spray.routing.{Route, SimpleRoutingApp}
@@ -92,6 +91,7 @@ object Run extends App with SimpleRoutingApp with Logger {
 
 object RdkServer {
   val akkaConfig = ConfigFactory.parseFile(new File("proc/conf/akka.conf"))
+  val remoteConfig = ConfigFactory.parseFile(new File("src/main/resources/remoteActor.conf"))
   val system = ActorSystem("rdk-server", akkaConfig.withFallback(ConfigFactory.load()))
   //http-rest处理路由
   val appRouter: ActorRef = system.actorOf(Props[AppRouter], "appRouter")
@@ -99,6 +99,12 @@ object RdkServer {
   val mqRouter: ActorRef = system.actorOf(Props[MQRouter], "mqRouter")
   //aging cache 检查老化
   val agingActor: ActorRef = system.actorOf(Props[AgingCacheActor], "agingActor")
+
+  //进行异步任务
+  val remotesSystem = ActorSystem("rdk-server-remote", remoteConfig.withFallback(ConfigFactory.load()))
+
+  val asyncActor: ActorRef = remotesSystem.actorOf(Props[Async], "asyncActor")
+
   //本RDK-server的唯一标识
   val uuid: String = UUID.randomUUID().toString
 
