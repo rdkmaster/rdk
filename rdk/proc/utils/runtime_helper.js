@@ -26,24 +26,30 @@ var java = {
 
     String: Java.type('java.lang.String'),
     Thread: Java.type('java.lang.Thread'),
+    StringArray: Java.type('java.lang.String[]'),
 
     BigDecimal: Java.type('java.math.BigDecimal'),
-    StringArray: Java.type('java.lang.String[]'),
 
     ResultSet: Java.type('java.sql.ResultSet'),
 
     ArrayList: Java.type('java.util.ArrayList'),
+    HashMap:Java.type('java.util.HashMap'),
 
     StringMap: Java.type('com.google.gson.internal.StringMap'),
 
     ScalaMap: Java.type('scala.collection.immutable.Map'),
 
+    // deprecated, use rdk.xxx to instead.
     FileHelper: Java.type('com.zte.vmax.rdk.jsr.FileHelper'),
     RegFileFilter: Java.type('com.zte.vmax.rdk.util.RegFileFilter'),
     Config: Java.type('com.zte.vmax.rdk.config.Config'),
-
-    HashMap:Java.type('java.util.HashMap')
 };
+
+var rdk = {
+    FileHelper: Java.type('com.zte.vmax.rdk.jsr.FileHelper'),
+    RegFileFilter: Java.type('com.zte.vmax.rdk.util.RegFileFilter'),
+    Config: Java.type('com.zte.vmax.rdk.config.Config'),
+}
 
 var mq = {
     p2p: function (subject, message) {
@@ -293,9 +299,9 @@ var I18n = {
             return key;
         }
         try {
-            var val = i18n[rdk_runtime.locale()][key];
+            var val = i18n[I18n.locale()][key];
         } catch (e) {
-            warn('get locale data error, locale =', rdk_runtime.locale());
+            warn('get locale data error, locale =', I18n.locale());
             return key;
         }
 
@@ -306,9 +312,9 @@ var I18n = {
         return val;
     },
     locale: function() {
-        return rdk_runtime.locale();
+        return rdk.Config.get("other.locale");
     }
-}
+};
 //兼容以前代码
 var i18n = I18n.format;
 
@@ -1285,8 +1291,9 @@ var seviceAuthenticator = load('app/common/sevice-authenticator.js');
 //入参经过java后，就变成了java对象，在js中操作起来不方便
 function _callService(serviceImplement, request, script, headers) {
     request = _java2json(request);
-    if (!script.match(/^app\/.*\/init\.js$/)) {
-        // init.js不需要鉴权
+    var match = script.match(/^app\/.*\/server\/([^\/]*?)\.js$/);
+    if (match && match[1] != 'init') {
+        // 只有app目录下的文件才需要鉴权，并且init.js不需要鉴权
         seviceAuthenticator.authenticate(request, script, headers);
     }
     return serviceImplement.call(serviceImplement, request, script, headers);

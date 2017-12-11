@@ -22,11 +22,6 @@ trait ConfigTrait extends Logger {
   def setConfigFiles(files: String*): Unit = {
     logger.debug(s"config home: $configHome")
     config = files.toList.map(load).reduce((a, b) => a.withFallback(b))
-    config = config.withFallback(DefaultConfigure.getConfig).resolve()
-    //注册默认的数据源(gbase)
-    val defaultGbaseDataSource =
-      s"""db.default.url="${DefaultConfigure.getGbaseUrl}" """
-    config = config.withFallback(ConfigFactory.parseString(defaultGbaseDataSource)).resolve()
   }
 
   protected def load(file: String): com.typesafe.config.Config = {
@@ -58,11 +53,7 @@ object Config extends ConfigTrait {
   def setConfig(path: String) = {
     configHome = path
     //前面文件中的配置项优先
-    setConfigFiles(
-      "rdk.cfg",
-      "datasource.cfg",
-      "extension.cfg"
-    )
+    setConfigFiles("rdk.cfg", "datasource.cfg")
   }
 
   def get(key: String, defaultValue: String): String = {

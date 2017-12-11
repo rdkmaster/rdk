@@ -227,19 +227,35 @@ object RdkUtil extends Logger {
     */
   def genUUID: String = UUID.randomUUID().toString
 
+   def initExtensionConfig: Unit = {
+     logger.info("*" * 20 + s"rdk init extension config begin..." + "*" * 20)
+
+     implicit val timeout: Timeout = Timeout(ServiceConfig.initTimeout second)
+
+     val request = ServiceRequest(ctx = NoneContext, "proc/conf/init-extension-config.js",
+       app = "common", param = null, method = "run", timeStamp = System.currentTimeMillis())
+     val result = RdkServer.appRouter ? request
+     try {
+       Await.result(result, ServiceConfig.initTimeout second)
+       logger.info("*" * 20 + s"rdk init extension config complete" + "*" * 20)
+     } catch {
+       case ex: java.util.concurrent.TimeoutException => logger.warn("rdk init extension config timeout!" + ex)
+       case x: Exception => logger.warn("unexpected exception while init extension config:" + x)
+     }
+   }
 
    /*
     * RDK启动时，调用应用的初始化脚本
     */
   def initApplications: Unit = {
-    logger.info("*" * 20 + s"rdk init begin..." + "*" * 20)
+    logger.info("*" * 20 + s"rdk init application begin..." + "*" * 20)
     val initScripts: List[String] = forEachDir(Paths.get("app"))
 
     implicit val ec = RdkServer.system.dispatchers.lookup(Misc.routeDispatcher)
 
     val result = initScripts.map(script => {
-      val scriptFixSepartor = script.replaceAllLiterally("\\", "/")
-      val request = ServiceRequest(ctx = NoneContext, scriptFixSepartor.substring(scriptFixSepartor.indexOf("/app/") + 1),
+      val scriptFixSeparator = script.replaceAllLiterally("\\", "/")
+      val request = ServiceRequest(ctx = NoneContext, scriptFixSeparator.substring(scriptFixSeparator.indexOf("/app/") + 1),
         app = null, param = null, method = "init", timeStamp = System.currentTimeMillis())
       implicit val timeout: Timeout = Timeout(ServiceConfig.initTimeout second)
       Future {
@@ -251,8 +267,8 @@ object RdkUtil extends Logger {
       Await.result(Future.sequence(result), ServiceConfig.initTimeout second)
       logger.info("*" * 20 + s"rdk init complete" + "*" * 20)
     } catch {
-      case ex: java.util.concurrent.TimeoutException => logger.warn("init timeout!" + ex)
-      case x: Exception => logger.warn("unexpected exception:" + x)
+      case ex: java.util.concurrent.TimeoutException => logger.warn("rdk init application timeout!" + ex)
+      case x: Exception => logger.warn("unexpected exception while init application:" + x)
     }
 
   }
