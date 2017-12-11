@@ -231,13 +231,12 @@ object RdkUtil extends Logger {
      logger.info("*" * 20 + s"rdk init extension config begin..." + "*" * 20)
 
      implicit val timeout: Timeout = Timeout(ServiceConfig.initTimeout second)
-     implicit val ec = RdkServer.system.dispatchers.lookup(Misc.routeDispatcher)
 
      val request = ServiceRequest(ctx = NoneContext, "proc/conf/init-extension-config.js",
        app = "common", param = null, method = "run", timeStamp = System.currentTimeMillis())
-     val result = Future { RdkServer.appRouter ? request }(ec)
+     val result = RdkServer.appRouter ? request
      try {
-       Await.result(Future.apply(result), ServiceConfig.initTimeout second)
+       Await.result(result, ServiceConfig.initTimeout second)
        logger.info("*" * 20 + s"rdk init extension config complete" + "*" * 20)
      } catch {
        case ex: java.util.concurrent.TimeoutException => logger.warn("rdk init extension config timeout!" + ex)

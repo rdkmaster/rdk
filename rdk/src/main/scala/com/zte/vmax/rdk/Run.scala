@@ -40,15 +40,15 @@ object Run extends App with SimpleRoutingApp with Logger {
   def start: Unit = {
     //init log4j and watch it's change every 30seconds
     PropertyConfigurator.configureAndWatch("proc/conf/log4j.properties", 30000)
+    logger.info("#" * 50)
+    logger.info(s"  RDK Server is bootstrapping...")
+    logger.info("#" * 50)
 
     //config setting
     Config.setConfig("proc/conf/")
 
-    //init datasource
-    if (!DataSource.init(Config.config )) {
-      logger.error("Fail to init datasource config.")
-      return
-    }
+    //初始化扩展配置信息
+    RdkUtil.initExtensionConfig
 
     //bind http 端口
     val ip = Config.get("listen.ip")
@@ -57,8 +57,13 @@ object Run extends App with SimpleRoutingApp with Logger {
     if (wsPort != 0) {
       WebSocketServer.startWebSocket(ip, wsPort)
     }
-    //初始化扩展配置信息
-    RdkUtil.initExtensionConfig
+
+    //init datasource
+    if (!DataSource.init(Config.config)) {
+      logger.error("Fail to init datasource config.")
+      return
+    }
+
     //初始化应用
     RdkUtil.initApplications
 
