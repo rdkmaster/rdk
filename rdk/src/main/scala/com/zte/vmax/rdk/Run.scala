@@ -57,6 +57,8 @@ object Run extends App with SimpleRoutingApp with Logger {
     if (wsPort != 0) {
       WebSocketServer.startWebSocket(ip, wsPort)
     }
+    //初始化扩展配置信息
+    RdkUtil.initExtensionConfig
     //初始化应用
     RdkUtil.initApplications
 

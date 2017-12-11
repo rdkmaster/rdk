@@ -59,7 +59,7 @@ object DefaultConfigure extends Logger {
 
     val params = paramLst.filter(_._2.nonEmpty).map(it => s"${it._1}=${it._2}").mkString("&")
     val url = s"${url_pre}?${params}"
-    logger.debug(url)
+    logger.debug("default datasource jdbc url: " + url)
     return url
   }
 
