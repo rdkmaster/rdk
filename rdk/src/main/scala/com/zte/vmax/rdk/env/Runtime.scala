@@ -34,9 +34,9 @@ import scala.collection.mutable.ArrayBuffer
 class Runtime(engine: ScriptEngine) extends Logger {
   def jsLogger = appLogger
 
-  var serviceCaller: ScriptObjectMirror = null
-  private var jsonParser: ScriptObjectMirror = null
-
+  var serviceCaller: ScriptObjectMirror = _
+  var createJavascriptObject: ScriptObjectMirror = _
+  private var jsonParser: ScriptObjectMirror = _
 
   implicit var application: String = ""
 
@@ -120,13 +120,16 @@ class Runtime(engine: ScriptEngine) extends Logger {
     }
     try {
       serviceCaller = eval("_callService")
+      createJavascriptObject = eval("_createJavascriptObject")
       jsonParser = eval("json")
     }
     catch {
       case e: ScriptException => {
-        logger.error("internal error! no '_callService()/json()' defined!")
+        logger.error("internal error! no '_callService()/json()/createJavascriptObject()' defined!")
       }
     }
+
+    DataBaseHelper.createJavascriptObject = createJavascriptObject
   }
 
   @throws(classOf[ScriptException])
@@ -169,6 +172,10 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
     if (result.isInstanceOf[String]) ServiceRawResult(result.toString, ct, headers.toList)
     else ServiceRawResult(jsonParser.call(callable, result, "").toString, ct, headers.toList)
+  }
+
+  def locale(): String = {
+    Config.get("other.locale")
   }
 
    /*
@@ -229,39 +236,39 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   }
 
-  def fetch(sql: String, maxLine: Int, result: ScriptObjectMirror): Unit = {
+  def fetch(sql: String, maxLine: Int): ScriptObjectMirror = {
     if (cacheGet("#_#allowNullToString#_#").asInstanceOf[Boolean]) {
-      DataBaseHelper.fetch(useDbSession, sql, maxLine, null, result)
+      DataBaseHelper.fetchV2(useDbSession, sql, maxLine, null)
     } else {
-      DataBaseHelper.fetch(useDbSession, sql, maxLine, "null", result)
+      DataBaseHelper.fetchV2(useDbSession, sql, maxLine, "null")
     }
   }
 
-  def fetchWithDataSource(dataSource: String, sql: String, maxLine: Int, result: ScriptObjectMirror): Unit = {
+  def fetchWithDataSource(dataSource: String, sql: String, maxLine: Int): ScriptObjectMirror = {
     if (cacheGet("#_#allowNullToString#_#").asInstanceOf[Boolean]) {
-      DataBaseHelper.fetch(DBSession(application, Some(dataSource)), sql, maxLine, null, result)
+      DataBaseHelper.fetchV2(DBSession(application, Some(dataSource)), sql, maxLine, null)
     } else {
-      DataBaseHelper.fetch(DBSession(application, Some(dataSource)), sql, maxLine, "null", result)
+      DataBaseHelper.fetchV2(DBSession(application, Some(dataSource)), sql, maxLine, "null")
     }
   }
 
-  def batchFetch(sqlArr: ScriptObjectMirror, maxLine: Int, timeout: Long, resultArray: ScriptObjectMirror): Unit = {
-    val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
-    DataBaseHelper.batchFetch(useDbSession, lst.toList, maxLine, timeout, resultArray)
+  def batchFetch(sqlArr: ScriptObjectMirror, maxLine: Int, timeout: Long): ScriptObjectMirror = {
+    val lst = for (i <- 0 until sqlArr.size()) yield sqlArr.get(i.toString).toString
+    DataBaseHelper.batchFetch(useDbSession, lst.toList, maxLine, timeout)
   }
 
-  def batchFetchWithDataSource(dataSource: String, sqlArr: ScriptObjectMirror, maxLine: Int, timeout: Long, resultArray: ScriptObjectMirror): Unit = {
-    val lst = for (i <- 0 until sqlArr.size()) yield (sqlArr.get(i.toString).toString)
-    DataBaseHelper.batchFetch(DBSession(application, Some(dataSource)), lst.toList, maxLine, timeout, resultArray)
+  def batchFetchWithDataSource(dataSource: String, sqlArr: ScriptObjectMirror, maxLine: Int, timeout: Long): ScriptObjectMirror = {
+    val lst = for (i <- 0 until sqlArr.size()) yield sqlArr.get(i.toString).toString
+    DataBaseHelper.batchFetch(DBSession(application, Some(dataSource)), lst.toList, maxLine, timeout)
   }
 
-  def fetchFirstCell(sql: String, helper: ScriptObjectMirror): String = {
-    DataBaseHelper.fetch(useDbSession, sql, 1, "null", helper)
-    if (helper.hasMember("error")) {
+  def fetchFirstCell(sql: String): String = {
+    val result = DataBaseHelper.fetchV2(useDbSession, sql, 1, "null")
+    if (result.hasMember("error")) {
       return null
     }
 
-    val data = helper.getMember("data").asInstanceOf[ScriptObjectMirror]
+    val data = result.getMember("data").asInstanceOf[ScriptObjectMirror]
     if (data.getMember("length").asInstanceOf[Int] > 0) {
       val value = data.get("0").asInstanceOf[ScriptObjectMirror].get("0")
       if (!value.isInstanceOf[Undefined]) value.toString
