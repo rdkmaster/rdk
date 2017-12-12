@@ -11,7 +11,7 @@ BASE_DIR=$(pwd)
 BUILD_NUMBER=$1
 
 # You may need to modify the below parameters for your project
-JDK_HOME=/usr/java/jdk1.8.0_131 # scalastyle need jdk1.8
+JDK_HOME=../rdk-resource/jdk
 Scala_Version=scala-2.10
 Ivy2_Home=/home/sbt/ivy2
 Sbt_Home=/home/sbt
@@ -208,7 +208,7 @@ done
 
 # Check modified files for current commit
 $JDK_HOME/bin/java -jar $Scalastyle_Jar --config $BASE_DIR/$Script_Dir/scalastyle-config.xml --xmlOutput $BASE_DIR/scalastyle_result_new.xml --xmlEncoding UTF-8 $scala_files_st_add $scala_files_st_modi
-java -jar $Findbugs_Jar -textui -auxclasspath $Ivy2_Home $auxclasspathes -sourcepath $BASE_DIR -xml -output findbugs_result_new.xml $class_files_st_modi $class_files_st_add
+java -jar $Findbugs_Jar -textui -auxclasspath $Ivy2_Home $auxclasspathes -exclude $BASE_DIR/$Script_Dir/findbugs_exclude_filter.xml -sourcepath $BASE_DIR -xml -output findbugs_result_new.xml $class_files_st_modi $class_files_st_add
 cat scalastyle_result_new.xml
 cat findbugs_result_new.xml
 cd vmax-ci-script
@@ -229,7 +229,7 @@ incrementCompile $Project_Dir
 
 # Check modified files for last commit
 $JDK_HOME/bin/java -jar $Scalastyle_Jar --config $BASE_DIR/$Script_Dir/scalastyle-config.xml --xmlOutput $BASE_DIR/scalastyle_result_old.xml --xmlEncoding UTF-8 $scala_files_st_modi
-java -jar $Findbugs_Jar -textui -auxclasspath $Ivy2_Home $auxclasspathes -sourcepath $BASE_DIR -xml -output findbugs_result_old.xml $class_files_st_modi
+java -jar $Findbugs_Jar -textui -auxclasspath $Ivy2_Home $auxclasspathes -exclude $BASE_DIR/$Script_Dir/findbugs_exclude_filter.xml -sourcepath $BASE_DIR -xml -output findbugs_result_old.xml $class_files_st_modi
 cat scalastyle_result_old.xml
 cat findbugs_result_old.xml
 cd vmax-ci-script
