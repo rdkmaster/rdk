@@ -26,25 +26,73 @@ object DataBaseHelper extends Logger {
     value = Array("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"),
     justification = "false alarm")
   case class DBError(error: String)
-   /*
-    * 查询数据
+
+  var createJavascriptObject: ScriptObjectMirror = _
+
+  /**
+    * 原来的接口，目前已知pluto在用
     *
-    * @param sql     select sql语句
-    * @param maxLine 返回的最大行数
+    * @param session
+    * @param sql
+    * @param maxLine
+    * @param nullToString
     * @return
     */
-  def fetch(session: DBSession, sql: String, maxLine: Long, nullToString: String, result: ScriptObjectMirror): Unit = {
-    if(result == null) {
-      logger.error("Result Object cannot be null")
-      return;
-    }
+  def fetch(session: DBSession, sql: String, maxLine: Long, nullToString: String = "null"): Option[AnyRef] = {
+    getConnection(session).flatMap(connection =>
+      try {
+        val currentTime = System.currentTimeMillis()
+        val statement = connection.createStatement
+        val opSql = RdkUtil.getVSql(session, sql)
+        if (opSql.isEmpty) {
+          return None
+        }
+        val rs = statement.executeQuery(opSql.get)
+        val meta = rs.getMetaData
+        val fieldCnt = meta.getColumnCount
+
+        val fieldLst = 1 to fieldCnt map (i => (meta.getColumnLabel(i), meta.getColumnType(i)))
+        val fieldNames = fieldLst.map(_._1).toArray
+        val fieldTypes = fieldLst.map(_._2).toArray
+        val dataArray = new ArrayBuffer[Array[String]]
+        var i = 0L
+        while (rs.next() && i < maxLine) {
+          dataArray.append(getRowValue(rs, fieldCnt, fieldTypes, nullToString))
+          i = i + 1
+        }
+
+        RdkUtil.safeClose(rs)
+        RdkUtil.safeClose(statement)
+        RdkUtil.safeClose(connection)
+        appLogger(session.appName).debug(s"fetch->$sql (${System.currentTimeMillis - currentTime} ms)")
+        Some(DataTable(fieldNames, fieldTypes, dataArray.toArray))
+      }
+      catch {
+        case e: Throwable =>
+          appLogger(session.appName).error("fetch data error", e)
+          RdkUtil.safeClose(connection)
+          Some(DBError(e.toString))
+      })
+  }
+
+  /**
+    * runtime中使用这个接口查询数据，返回js对象给runtime
+    *
+    * @param session
+    * @param sql
+    * @param maxLine
+    * @param nullToString
+    * @return
+    */
+  def fetchV2(session: DBSession, sql: String, maxLine: Long, nullToString: String): ScriptObjectMirror = {
+    val result = createJavascriptObject.call(null, "DataTable").asInstanceOf[ScriptObjectMirror]
     getConnection(session).map(connection =>
       try {
         val currentTime = System.currentTimeMillis()
         val statement = connection.createStatement
         val opSql = RdkUtil.getVSql(session, sql)
         if (opSql.isEmpty) {
-          return
+          return result
         }
         val rs = statement.executeQuery(opSql.get)
         val meta = rs.getMetaData
@@ -61,7 +109,8 @@ object DataBaseHelper extends Logger {
 
         var i = 0L
         while (rs.next() && i < maxLine) {
-          val row = result.callMember("_addEmptyRow").asInstanceOf[ScriptObjectMirror]
+          val row = createJavascriptObject.call(null, "array").asInstanceOf[ScriptObjectMirror]
+          result.getMember("data").asInstanceOf[ScriptObjectMirror].callMember("push", row)
           getRowValue(rs, fieldCnt, fieldTypes, nullToString).foreach(item => row.callMember("push", item))
           i = i + 1
         }
@@ -70,13 +119,16 @@ object DataBaseHelper extends Logger {
         RdkUtil.safeClose(statement)
         RdkUtil.safeClose(connection)
         appLogger(session.appName).debug(s"fetch->$sql (${System.currentTimeMillis - currentTime} ms)")
+        result
       }
       catch {
         case e: Throwable =>
           appLogger(session.appName).error("fetch data error", e)
           RdkUtil.safeClose(connection)
           result.setMember("error", e.toString)
+          result
       })
+    result
   }
 
   private def getRowValue(rs: ResultSet, fieldCnt: Int, fieldTypes: Array[Int], nullToString: String): Array[String] = {
@@ -120,13 +172,10 @@ object DataBaseHelper extends Logger {
     * @param timeout 超时时间（秒）
     * @return 数据表集合
     */
-  def batchFetch(session: DBSession, sqlArr: List[String], maxLine: Long, timeout: Long, result: ScriptObjectMirror): Unit = {
-    if(result == null) {
-      logger.error("Result Object cannot be null")
-      return;
-    }
+  def batchFetch(session: DBSession, sqlArr: List[String], maxLine: Long, timeout: Long): ScriptObjectMirror = {
+    val resultArray = createJavascriptObject.call(null, "array").asInstanceOf[ScriptObjectMirror]
     if (sqlArr.isEmpty) {
-      return
+      return resultArray
     }
     val currentTime = System.currentTimeMillis()
 
@@ -136,12 +185,14 @@ object DataBaseHelper extends Logger {
       Future {
         // sql一样的时候，idx的值可能是错的
         val idx = sqlArr.indexOf(sql)
-        fetch(session, sql, maxLine, "null", result.get(idx.toString).asInstanceOf[ScriptObjectMirror])
+        val result = fetchV2(session, sql, maxLine, "null")
+        resultArray.callMember("push", result)
       }(ec)
     })
 
     Await.result(Future.sequence(futureResult), myTimeout.duration)
     appLogger(session.appName).debug(s"batchFetch->${sqlArr mkString} (${System.currentTimeMillis - currentTime} ms)")
+    resultArray
   }
 
    /*

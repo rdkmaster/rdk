@@ -877,13 +877,15 @@ var Data = {
             return;
         }
 
-        var dataTable = new DataTable([], [], []);
+        var dataTable;
         if (!!dataSource) {
-            rdk_runtime.fetchWithDataSource(dataSource, sql, maxLine, dataTable);
+            dataTable = rdk_runtime.fetchWithDataSource(dataSource, sql, maxLine);
         } else {
-            rdk_runtime.fetch(sql, maxLine, dataTable);
+            dataTable = rdk_runtime.fetch(sql, maxLine);
         }
-        dataTable.header = i18n(dataTable.header);
+        if (!dataTable.hasOwnProperty('error')) {
+            dataTable.header = i18n(dataTable.header);
+        }
         return dataTable;
     },
     fetch_first_cell: function (sql) {
@@ -891,7 +893,7 @@ var Data = {
         return Data.fetchFirstCell(sql);
     },
     fetchFirstCell: function (sql) {
-        return rdk_runtime.fetchFirstCell(sql, new DataTable([], [], []));
+        return rdk_runtime.fetchFirstCell(sql);
     },
     batchFetch: function (sqlArray, maxLine, timeout) {  //并发实现
         return Data._ifBatchFetchWithDataSource(sqlArray, maxLine, timeout, null, false);
@@ -921,24 +923,21 @@ var Data = {
             Log.warn("param timeout empty,set timeout=30");
             timeout = 30;
         }
-        var dataTableArray = [];
-        var dataObj = null;
+
+        var dataTables = null;
         if (!withDataSource) {
-            dataObj = JSON.parse(rdk_runtime.batchFetch(sqlArray, maxLine, timeout));
+            dataTables = rdk_runtime.batchFetch(sqlArray, maxLine, timeout);
         } else {
-            dataObj = JSON.parse(rdk_runtime.batchFetchWithDataSource(dataSource, sqlArray, maxLine, timeout));
+            dataTables = rdk_runtime.batchFetchWithDataSource(dataSource, sqlArray, maxLine, timeout);
         }
 
-        for (idx in dataObj) {
-            var res = dataObj[idx];
-            if (res.hasOwnProperty("error")) {
-                dataTableArray.push(res);
-            } else {
-                dataTableArray.push(new DataTable(i18n(res.fieldNames), res.fieldNames, res.data));
+        for (var idx in dataTables) {
+            var dataTable = dataTables[idx];
+            if (!dataTable.hasOwnProperty("error")) {
+                dataTable.header = i18n(dataTable.header);
             }
-
         }
-        return dataTableArray;
+        return dataTables;
 
     },
     batch_fetch: function (sqlArray, maxLine, timeout) {  //并发实现
@@ -1065,12 +1064,6 @@ function DataTable(header, field, data, paging) {
     this.clone = function () {
         return new DataTable(this.header, this.field, this.data, this.paging);
     };
-
-    this._addEmptyRow = function() {
-        var row = [];
-        this.data.push(row);
-        return row;
-    }
 }
 
 function json(data, indent) {
@@ -1299,4 +1292,15 @@ function _callService(serviceImplement, request, script, headers) {
     return serviceImplement.call(serviceImplement, request, script, headers);
 }
 
+function _createJavascriptObject(type) {
+    switch (type) {
+        case 'array':
+            return [];
+        case 'DataTable':
+            return new DataTable([], [], []);
+        case 'object':
+        default:
+            return {};
+    }
+}
 
