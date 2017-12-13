@@ -8,18 +8,5 @@
             // 在rest服务的js代码中，可以通过java.Config.get('db.default.url')来获取对应的配置项
         }
     }
-
-    function readProperties(configFile, key) {
-        var FileInputStream = Java.type('java.io.FileInputStream');
-        var Properties = Java.type('java.util.Properties');
-        var prop = new Properties();
-        try {
-            prop.load(new FileInputStream(configFile));
-        } catch(e) {
-            Log.error('read properties file error! file=' + configFile + ', error=' + e);
-            return;
-        }
-        return prop.get(key);
-    }
 })();
 
