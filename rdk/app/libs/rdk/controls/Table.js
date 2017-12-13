@@ -513,6 +513,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                     scope.sortHandler(sortObj.targetIndex,sortObj.columnDef,sortObj.status)
                 }
 
+                this.fixColumnWidth=function(){
+                    scope.fixedTableHead();
+                };
+
                 function _refreshSingleCheckedData(items){
                     angular.forEach(items, function(item){
                         var index = _.findIndex(scope.destData, item);
@@ -1232,6 +1236,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         var isIE =Utils.isIEFlag;
                         var hasHandeLastTh=false;
                         var resizeReady=false;
+                        scope.fixedTableHead=_fixedTableHead;
                         function _fixedTableHead(){
                             if(scope.isResize && resizeReady) return; //resize开启时只需调整一次表头
                             var tHeadThs =  element[0].querySelectorAll("table.rdk-table-head>thead>tr>th");
@@ -1258,23 +1263,22 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                             if(!scope.noHeader){
                                 tBodyTds =  element[0].querySelectorAll("table.rdk-table-body>thead>tr>th");
                                 var tBodyTdsDate =  element[0].querySelectorAll("table.rdk-table-body>tbody>tr:first-child>td");
+                                tableBody.style.tableLayout="auto";
                                 var colWidths = Array.prototype.map.call(tBodyTds, function(obj) {
                                     return $(obj).width();
                                    // return Utils.getStyle(obj,"width");
                                 });
-                                //TODO:IE列某些场景下表格列无法对齐
-                                if(isIE){
-                                    if(!scope.noData){
-                                        tableBody.style.tableLayout="auto";
-                                        colWidths = Array.prototype.map.call(tBodyTdsDate, function(obj) {
-                                            return $(obj).width();
-                                           // return  Utils.getStyle(obj,"width");
-                                        });
-                                    }
+                                //IE列某些场景下表格表头列和数据列无法对齐
+
+                                if(isIE && !scope.noData){
+                                    colWidths = Array.prototype.map.call(tBodyTdsDate, function(obj) {
+                                        return $(obj).width();
+                                       // return  Utils.getStyle(obj,"width");
+                                    });
                                     Array.prototype.map.call(tBodyTds, function(colObj,index){
                                         $(colObj).width(colWidths[index]);
                                     });
-                                    //表格初始隐藏列宽度获取失败
+                                    //表格初始隐藏,列宽度会获取失败(全为0)
                                     if(parseFloat(colWidths[0]) !=0){
                                         tableBody.style.tableLayout="fixed";
                                     }
@@ -1286,6 +1290,10 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                        // colObj.style.width=colWidths[index];
                                         $(colObj).width(colWidths[index]);
                                     }
+                                });
+                                //表头表体都设置宽度，应用有动态调节表格宽度的场景
+                                Array.prototype.map.call(tBodyTds, function(colObj,index) {
+                                    $(colObj).width(colWidths[index]);
                                 });
                                 //注意有多级表头
                                 var trHeight;
@@ -1390,8 +1398,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
 
                     function _getCheckedItems(){
                         var arr = [];
-                        var filterData = scope.$eval("destData | filter:globalSearch");
-                        angular.forEach(filterData, function(item){
+                        //var filterData = scope.$eval("destData | filter:globalSearch");
+                        angular.forEach(scope.destData, function(item){
                             if(item.checked){
                                 arr.push(item);
                             }
@@ -1523,7 +1531,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         var ths=thead.querySelector("tr:last-child").querySelectorAll("th[ng-repeat]");
                         for(var i= 0,thLen=ths.length;i<thLen;i++) {
                             for (var key in compileHeads) {
-                                if (compileHeads.hasOwnProperty(key) && key == i) {
+                                if (key == i) {
                                     ths[i].querySelector(".rdk-table-custom-header").innerHTML = "";
                                 }
                             }
@@ -1535,7 +1543,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         var ths=thead.querySelector("tr:last-child").querySelectorAll("th[ng-repeat]");
                         for(var i= 0,thLen=ths.length;i<thLen;i++) {
                             for (var key in compileHeads) {
-                                if (compileHeads.hasOwnProperty(key) && key == i) {
+                                // ie11？？compileHeads.hasOwnProperty(key) 存在为false的情况
+                                if (key == i) {
                                     ths[i].querySelector(".rdk-table-custom-header").innerHTML = "";
                                 }
                             }
