@@ -56,7 +56,7 @@ class DBHelperTestSpec extends FunSpec with Matchers {
     }
 
     it("batchFetch() should return true") {
-      val data = DataBaseHelper.batchFetch(DBSession("test",None), "select * from AAA" :: Nil, 1, 1, null)
+      val data = DataBaseHelper.batchFetchV2(DBSession("test",None), "select * from AAA" :: Nil, 1, 1, null)
       data should not be (Nil)
     }
 

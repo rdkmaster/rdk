@@ -254,12 +254,12 @@ class Runtime(engine: ScriptEngine) extends Logger {
 
   def batchFetch(sqlArr: ScriptObjectMirror, maxLine: Int, timeout: Long): ScriptObjectMirror = {
     val lst = for (i <- 0 until sqlArr.size()) yield sqlArr.get(i.toString).toString
-    DataBaseHelper.batchFetch(useDbSession, lst.toList, maxLine, timeout)
+    DataBaseHelper.batchFetchV2(useDbSession, lst.toList, maxLine, timeout)
   }
 
   def batchFetchWithDataSource(dataSource: String, sqlArr: ScriptObjectMirror, maxLine: Int, timeout: Long): ScriptObjectMirror = {
     val lst = for (i <- 0 until sqlArr.size()) yield sqlArr.get(i.toString).toString
-    DataBaseHelper.batchFetch(DBSession(application, Some(dataSource)), lst.toList, maxLine, timeout)
+    DataBaseHelper.batchFetchV2(DBSession(application, Some(dataSource)), lst.toList, maxLine, timeout)
   }
 
   def fetchFirstCell(sql: String): String = {

@@ -164,6 +164,34 @@ object DataBaseHelper extends Logger {
     row.map(it => if (it == null) nullToString else it.toString).toArray
   }
 
+  /**
+    * 原来的接口，目前已知pluto在用
+    *
+    * @param session
+    * @param sqlArr
+    * @param maxLine
+    * @param timeout
+    * @return
+    */
+  def batchFetch(session: DBSession, sqlArr: List[String], maxLine: Long, timeout: Long): List[Option[AnyRef]] = {
+    if (sqlArr.isEmpty) {
+      return Nil
+    }
+    val currentTime = System.currentTimeMillis()
+
+    implicit val ec = RdkServer.system.dispatchers.lookup(Misc.blocking_io_dispatcher)
+    implicit val myTimeout = Timeout(timeout seconds)
+    val result = sqlArr.map(sql => {
+      Future {
+        fetch(session, sql, maxLine)
+      }(ec)
+    })
+
+    val value = Await.result(Future.sequence(result), myTimeout.duration)
+    appLogger(session.appName).debug(s"batchFetch->${sqlArr mkString} (${System.currentTimeMillis - currentTime} ms)")
+    value
+  }
+
    /*
     * 批量查询数据库(并发查询)
     *
@@ -172,7 +200,7 @@ object DataBaseHelper extends Logger {
     * @param timeout 超时时间（秒）
     * @return 数据表集合
     */
-  def batchFetch(session: DBSession, sqlArr: List[String], maxLine: Long, timeout: Long): ScriptObjectMirror = {
+  def batchFetchV2(session: DBSession, sqlArr: List[String], maxLine: Long, timeout: Long): ScriptObjectMirror = {
     val resultArray = createJavascriptObject.call(null, "array").asInstanceOf[ScriptObjectMirror]
     if (sqlArr.isEmpty) {
       return resultArray
