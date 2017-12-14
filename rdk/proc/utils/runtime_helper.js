@@ -899,9 +899,10 @@ var Data = {
         }
         if (!dataTable.hasOwnProperty('error')) {
             // 从java里返回的数组，居然无法通过instanceof的判断了，这里将其强制转为js数组
-            dataTable.header = I18n.format([].concat(dataTable.header));
-            dataTable.field = [].concat(dataTable.field);
-            dataTable.data = [].concat(dataTable.data);
+            dataTable.header = Data._toRealArray(dataTable.header);
+            dataTable.field = Data._toRealArray(dataTable.field);
+            dataTable.data = Data._toRealArray(dataTable.data);
+            dataTable.header = I18n.format(dataTable.header);
         }
         return dataTable;
     },
@@ -947,15 +948,16 @@ var Data = {
         } else {
             dataTables = rdk_runtime.batchFetchWithDataSource(dataSource, sqlArray, maxLine, timeout);
         }
-        dataTables = [].concat(dataTables);
+        dataTables = Data._toRealArray(dataTables);
 
         for (var idx in dataTables) {
             var dataTable = dataTables[idx];
             if (!dataTable.hasOwnProperty("error")) {
                 // 从java里返回的数组，居然无法通过instanceof的判断了，这里将其强制转为js数组
-                dataTable.header = I18n.format([].concat(dataTable.header));
-                dataTable.field = [].concat(dataTable.field);
-                dataTable.data = [].concat(dataTable.data);
+                dataTable.header = Data._toRealArray(dataTable.header);
+                dataTable.field = Data._toRealArray(dataTable.field);
+                dataTable.data = Data._toRealArray(dataTable.data);
+                dataTable.header = I18n.format(dataTable.header);
             }
         }
         return dataTables;
@@ -991,6 +993,14 @@ var Data = {
     clear: function(resultSet) {
         info("clearing the resultSet and every resource else.");
         rdk_runtime.dbHelper().clear(rdk_runtime.useDbSession(), resultSet);
+    },
+    _toRealArray: function(array) {
+        // 从java中拿到的数组不是js的数组，需要做转换
+        var a = [];
+        for (var i = array.length - 1; i >= 0; i--) {
+            a[i] = array[i];
+        }
+        return a;
     }
 }
 var sql = Data.sql;
