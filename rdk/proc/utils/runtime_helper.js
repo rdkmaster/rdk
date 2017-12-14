@@ -278,6 +278,20 @@ var JVM = {
     }
 }
 
+function groupI18n(keys) {
+    var result = [];
+    each(keys, function (key) {
+        if (_.isString(key)) {
+            result.push(I18n.format(key));
+        } else {
+            //复杂key的情况，待支持
+            warn('complex key is not supported yet!')
+            result.push(key);
+        }
+    });
+    return result;
+}
+
 //国际化
 var I18n = {
     format: function (key) {
@@ -884,7 +898,10 @@ var Data = {
             dataTable = rdk_runtime.fetch(sql, maxLine);
         }
         if (!dataTable.hasOwnProperty('error')) {
-            dataTable.header = i18n(dataTable.header);
+            // 从java里返回的数组，居然无法通过instanceof的判断了，这里将其强制转为js数组
+            dataTable.header = I18n.format([].concat(dataTable.header));
+            dataTable.field = [].concat(dataTable.field);
+            dataTable.data = [].concat(dataTable.data);
         }
         return dataTable;
     },
@@ -930,11 +947,15 @@ var Data = {
         } else {
             dataTables = rdk_runtime.batchFetchWithDataSource(dataSource, sqlArray, maxLine, timeout);
         }
+        dataTables = [].concat(dataTables);
 
         for (var idx in dataTables) {
             var dataTable = dataTables[idx];
             if (!dataTable.hasOwnProperty("error")) {
-                dataTable.header = i18n(dataTable.header);
+                // 从java里返回的数组，居然无法通过instanceof的判断了，这里将其强制转为js数组
+                dataTable.header = I18n.format([].concat(dataTable.header));
+                dataTable.field = [].concat(dataTable.field);
+                dataTable.data = [].concat(dataTable.data);
             }
         }
         return dataTables;
@@ -1091,7 +1112,7 @@ function matrix(resultSet, mapIterator, keepResultSet) {
 
     for (var i = 1; i <= cc; i++) {
         var cn = metaData.getColumnLabel(i);
-        mtx.header.push(i18n(cn));
+        mtx.header.push(I18n.format(cn));
         mtx.field.push(cn);
     }
 
@@ -1224,24 +1245,6 @@ function _arg2string(args) {
             return "unknown_source: -1";
         }
     }
-}
-
-function i18n(key) {
-
-}
-
-function groupI18n(keys) {
-    var result = [];
-    each(keys, function (key) {
-        if (_.isString(key)) {
-            result.push(i18n(key));
-        } else {
-            //复杂key的情况，待支持
-            warn('complex key is not supported yet!')
-            result.push(key);
-        }
-    });
-    return result;
 }
 
 function _java2json(javaObj) {
