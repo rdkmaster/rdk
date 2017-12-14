@@ -211,14 +211,12 @@ object DataBaseHelper extends Logger {
     implicit val myTimeout = Timeout(timeout seconds)
     val futureResult = sqlArr.map(sql => {
       Future {
-        // sql一样的时候，idx的值可能是错的
-        val idx = sqlArr.indexOf(sql)
-        val result = fetchV2(session, sql, maxLine, "null")
-        resultArray.callMember("push", result)
+        fetchV2(session, sql, maxLine, "null")
       }(ec)
     })
 
-    Await.result(Future.sequence(futureResult), myTimeout.duration)
+    val futureResults = Await.result(Future.sequence(futureResult), myTimeout.duration)
+    futureResults.foreach(r => resultArray.callMember("push", r))
     appLogger(session.appName).debug(s"batchFetch->${sqlArr mkString} (${System.currentTimeMillis - currentTime} ms)")
     resultArray
   }
