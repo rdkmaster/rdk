@@ -1305,6 +1305,8 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 }
                                 tableBody.style.marginTop="-" + trHeight;
                                 tHeadBox.style.height=Utils.getStyle(tableHead,"height");
+                                //造成表头scrollLeft发生改变的场景
+                                scrollLeftHandle();
                             }
                             _reSetTableAddHeaders(tHeadBox,tableHead); //多级表头
                         }
@@ -1314,7 +1316,7 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         }
 
                         function scrollLeftHandle(event) {
-                            var target = event.target || event.srcElement;
+                            var target = !!event ? event.target || event.srcElement : tableWrap;
                             tHeadBox.scrollLeft=target.scrollLeft;
                             if(isIE && tHeadBox.scrollLeft!=target.scrollLeft && !hasHandeLastTh && !scope.isResize){
                                 var lastTh = tHeadBox.querySelector("thead>tr>th:last-child");
