@@ -1305,8 +1305,6 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 }
                                 tableBody.style.marginTop="-" + trHeight;
                                 tHeadBox.style.height=Utils.getStyle(tableHead,"height");
-                                //造成表头scrollLeft发生改变的场景
-                                scrollLeftHandle();
                             }
                             _reSetTableAddHeaders(tHeadBox,tableHead); //多级表头
                         }
