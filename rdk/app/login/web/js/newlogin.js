@@ -154,7 +154,10 @@ var Login = function () {
 }();
 
 $(document).ready(function(){
+    beforeInit();
+
     AuthenticateImplement.checkAuthenticate();
+    
     loadProperties();
 
     $('#inputUserName').focus();
@@ -216,3 +219,37 @@ function hidetip(id) {
 $('#com_zte_ums_ict_portal_login_rememberMe').click(function() {
     $(this).siblings('input[type="checkbox"]').click();
 })
+
+function beforeInit() {
+    $.ajax({
+        type: "GET",
+        contentType: "application/json",
+        url: '/rdk/service/app/portal/server/config',
+        success: function(config) {
+
+            // 左上角的图标.
+            if(config.favicon) {
+                // 将images 替换为image
+                config.favicon = (config.favicon+"").replace(/images/, "image");
+                $("link[rel*='icon']").attr("href", config.favicon);
+            }
+
+            $("body").css("opacity", '1');
+
+            // sswk 风格.
+            if(config.defaultTheme == 'sswk') { // 切换到sswk样式.
+                $("head").append('<link rel="stylesheet" href="./css/sswk.css">');
+
+                $("link[rel*='icon']").attr("href", './image/favicon/favicon_sswk.ico');
+                // 去掉标题.
+                $(".logoContainer span").remove();
+
+                // 大球替换
+                $(".ballContainer img").attr("src", "./image/ball_sswk.svg");
+            } else {
+                // 大球替换
+                $(".ballContainer img").attr("src", "./image/ball.svg");
+            }
+        }
+    });
+}

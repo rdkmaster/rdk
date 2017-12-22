@@ -6,6 +6,10 @@ input::-ms-clear {
     display: none;
 }
 
+body {
+    opacity: 0;
+}
+
 .bodyBg {
     display: flex;
     justify-content: flex-start;
@@ -20,6 +24,7 @@ input::-ms-clear {
     overflow: hidden;
     user-select: none;
     -webkit-user-select:none;
+    opacity: 0;
 }
 
 .logoContainer {

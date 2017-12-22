@@ -1,0 +1,48 @@
+.bodyBg {
+    background-image: url(../image/loginbg.jpg);
+}
+
+.logoContainer {
+    margin-bottom: 0px;
+}
+
+.logoContainer .logoImg {
+    background-image: url(../image/operators-logo.png);
+    height: 40px;
+    margin: 10px auto;
+}
+
+.loginContainer input {
+    border: 2px solid #6179b9;
+    background: rgba(135, 157, 212,.2);
+    color: #fff;
+}
+.inputContainer > input::-webkit-input-placeholder {
+    font-size: 14px;
+}
+.rememberContainer > span{
+    color: #fff;
+}
+
+.loginContainer  input[type=checkbox] {
+    background-color: #1738a1;
+}
+
+.loginBtn {
+    background: #446cea;
+}
+.loginBtn:hover{
+    background-color: #2d5ae9;
+}
+.inputContainer input:focus {
+    border:2px solid #fff;
+    box-shadow: 0 0 4px 0 #fff;
+}
+
+.toolTipsContainer {
+    color: #fd8178;
+}
+
+.copyright {
+    display: none;
+}
