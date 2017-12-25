@@ -1,0 +1,25 @@
+<scalastyle>
+ <name>Scalastyle standard configuration</name>
+ <check level="warning" class="org.scalastyle.scalariform.CyclomaticComplexityChecker" enabled="true">
+  <parameters>
+   <parameter name="maximum"><![CDATA[8]]></parameter>
+  </parameters>
+ </check> 
+ <check level="warning" class="org.scalastyle.scalariform.ParameterNumberChecker" enabled="true">
+  <parameters>
+   <parameter name="maxParameters"><![CDATA[5]]></parameter>
+  </parameters>
+ </check>
+ <check level="warning" class="org.scalastyle.file.FileLineLengthChecker" enabled="true">
+  <parameters>
+   <parameter name="maxLineLength"><![CDATA[120]]></parameter>
+   <parameter name="tabSize"><![CDATA[2]]></parameter>
+   <parameter name="ignoreImports">true</parameter>
+  </parameters>
+ </check>
+ <check level="warning" class="org.scalastyle.scalariform.MethodLengthChecker" enabled="true">
+  <parameters>
+   <parameter name="maxLength"><![CDATA[40]]></parameter>
+  </parameters>
+ </check>
+</scalastyle>
