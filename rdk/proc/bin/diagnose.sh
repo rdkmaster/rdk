@@ -1,7 +1,7 @@
 #!/bin/sh
 
 curDir=$(cd `dirname $0`; pwd)
-port=`more ../conf/rdk.cfg | grep listen.port| cut -d "=" -f2`
+port=`more ../conf/rdk.cfg | grep listen.port| cut -d "=" -f2 | sed 's/^[ \t]*//g'`
 
 log() {
     echo `date +%F" "%H:%M:%S`: $1 >> $curDir/../../proc/logs/diagnose.log
