@@ -1264,6 +1264,9 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                                 tBodyTds =  element[0].querySelectorAll("table.rdk-table-body>thead>tr>th");
                                 var tBodyTdsDate =  element[0].querySelectorAll("table.rdk-table-body>tbody>tr:first-child>td");
                                 tableBody.style.tableLayout="auto";
+                                Array.prototype.map.call(tBodyTds, function(obj) {
+                                    $(obj).width("");
+                                });
                                 var colWidths = Array.prototype.map.call(tBodyTds, function(obj) {
                                     return $(obj).width();
                                    // return Utils.getStyle(obj,"width");
