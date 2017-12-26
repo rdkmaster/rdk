@@ -44,6 +44,7 @@ restartRDK() {
     sleep 5
     log 'running rdk ...'
     sh $curDir/run.sh
+    log 'after invoke run.sh ...'
 }
 
 run() {

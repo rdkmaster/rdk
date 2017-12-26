@@ -3,6 +3,10 @@
 curDir=$(cd `dirname $0`; pwd)
 . $curDir/check_proc.sh
 
+log() {
+    echo `date +%F" "%H:%M:%S`: $1 >> $curDir/../../proc/logs/log.txt
+}
+
 if [ "$1" != "do-not-kill-diagnose" ]; then
 	diagnosePid=`ps gaux | grep $diagnose_flag | grep -v grep | awk '{print $2}'`
 	if [ "" != "$diagnosePid" ]; then
@@ -12,12 +16,12 @@ if [ "$1" != "do-not-kill-diagnose" ]; then
 fi
 
 if [ "" = "$pid" ]; then
-	echo "RDK Server is not running..."
+	log ": <<<RDK Server is not running...>>>"
 else
 	echo "killing rdk process, pid="$pid
-	echo `date +%F" "%H:%M:%S`":!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" >> $curDir/../../proc/logs/log.txt
-	echo `date +%F" "%H:%M:%S`":killing rdk process, pid="$pid             >> $curDir/../../proc/logs/log.txt
-	echo `date +%F" "%H:%M:%S`":!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" >> $curDir/../../proc/logs/log.txt
+	log ":!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+	log ":killing rdk process, pid="$pid             
+	log ":!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 	kill -9 $pid
 fi
 
