@@ -37,7 +37,7 @@ $JAVA_HOME/bin/java $jvm_opts -Dfile.encoding=UTF-8 -D$rdk_flag -classpath "$cla
 log "<<<RDK Server started successfully...>>>"
 
 cd $curDir
-sh $curDir/diagnose.sh 30 $diagnose_flag
+sh $curDir/diagnose.sh 30 $diagnose_flag &
 
 echo `date +%F" "%H:%M:%S`": <<<Run.sh started diagnose.sh>>>" >> $curDir/../../proc/logs/diagnose.log
 

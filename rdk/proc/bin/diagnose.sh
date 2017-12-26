@@ -76,4 +76,4 @@ run() {
     done
 }
 
-run &
+run
