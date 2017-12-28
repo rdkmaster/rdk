@@ -1,50 +1,49 @@
 #!/bin/sh
 
-curDir=$(cd `dirname $0`; pwd)
-port=`more ../conf/rdk.cfg | grep listen.port| cut -d "=" -f2 | sed 's/^[ \t]*//g'`
+scriptDir=$(cd `dirname $0`; pwd)
+. $scriptDir/utils.sh
 
-log() {
-    echo `date +%F" "%H:%M:%S`: $1 >> $curDir/../../proc/logs/diagnose.log
-}
+port=`more $scriptDir/../conf/rdk.cfg | grep listen.port| cut -d "=" -f2 | sed 's/^[ \t]*//g'`
 
 diagnose() {
+    rdkPid=$(getRDKPid)
+    if [ "$rdkPid" == "" ]; then
+        log "rdk server process is gone!"
+        return 1
+    fi
+
     for ((time=1; time<=$3; time++));do
         curl --silent --connect-timeout $1 --max-time $2 \
-            http://localhost:$port/rdk/service/app/console/server/diagnose > /dev/null
+            http://127.0.0.1:$port/rdk/service/app/console/server/diagnose > /dev/null
         if [ $? == 0 ]; then
             return 0
         fi
+        log 'rdk did not respond, I will try again later...'
         sleep 10
     done
-    log 'rdk did not respond for '$3' times'
+    log 'rdk did not respond after tried '$3' times'
     return 1
 }
 
 waitForReady() {
+    log "waiting for rdk to get ready ..."
     time1=$(date +%s)
     while true
     do
         sleep 10
         diagnose 10 30 1
         if [ $? == 0 ]; then
+            log "it seems that rdk is ready for work!"
             return 0
         fi
 
         time2=$(date +%s)
         delta=$(($time2 - $time1))
         if [ $delta -gt 1860 ]; then
+            log "NOT GOOD! rdk has not been ready since last restart!"
             return 1
         fi
     done
-}
-
-restartRDK() {
-    log 'shutting down rdk...'
-    sh $curDir/shutdown.sh 'do-not-kill-diagnose'
-    sleep 5
-    log 'running rdk ...'
-    sh $curDir/run.sh
-    log 'after invoke run.sh ...'
 }
 
 run() {
@@ -54,13 +53,11 @@ run() {
         waitTimeout=30
     fi
 
-    log "waiting for rdk to get ready..."
     waitForReady
     if [ $? != 0 ]; then
         log "NOT GOOD! rdk has not been ready since last restart!"
         return 1;
     fi
-    log "it seems that rdk is ready for work!"
 
     while true
     do
@@ -71,9 +68,11 @@ run() {
         if [ $? != 0 ]; then
             log 'NOT GOOD! rdk did not respond in time, gonna restart it.'
             restartRDK
-            break
+            waitForReady
         fi
     done
 }
 
+log "=============================================================="
+startRDK
 run
