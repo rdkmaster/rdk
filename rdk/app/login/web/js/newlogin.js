@@ -10,7 +10,11 @@ if (!AuthenticateImplement) {
         }
     }
 }
-
+//阻止浏览器的运回键
+history.pushState(null, null, document.URL);
+window.addEventListener('popstate', function () {
+    history.pushState(null, null, document.URL);
+});
 var Login = function () {
     // 暴露的外部接口
     return {
