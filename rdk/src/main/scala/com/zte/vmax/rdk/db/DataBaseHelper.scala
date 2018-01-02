@@ -136,7 +136,7 @@ object DataBaseHelper extends Logger {
       if (rs.getObject(i) != null) {
         fieldTypes(i - 1) match {
           case INTEGER => rs.getInt(i)
-          case BIGINT | REAL => rs.getLong(i)
+          case BIGINT => rs.getLong(i)
           case NUMERIC | DECIMAL => rs.getBigDecimal(i)
           case CHAR => rs.getString(i)
           case VARCHAR | LONGVARCHAR => rs.getString(i)
@@ -145,7 +145,7 @@ object DataBaseHelper extends Logger {
           case BIT | BOOLEAN => rs.getBoolean(i)
           case TINYINT => rs.getByte(i)
           case SMALLINT => rs.getShort(i)
-          case FLOAT => rs.getFloat(i)
+          case FLOAT | REAL => rs.getFloat(i)
           case DATE => rs.getDate(i)
           case TIME => rs.getTime(i)
           case BINARY | VARBINARY | LONGVARBINARY | JAVA_OBJECT | OTHER | STRUCT => rs.getBytes(i)
