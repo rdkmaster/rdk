@@ -3,7 +3,9 @@ package com.zte.vmax.rdk.jsr.excel;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 /**
@@ -36,7 +38,9 @@ public class CellFormat {
 
     public static String convertCell2StringValue(Cell cell){
         switch(cell.getCellTypeEnum()) {
-            case NUMERIC: return String.valueOf(cell.getNumericCellValue());
+            case NUMERIC: return HSSFDateUtil.isCellDateFormatted(cell) ?
+                    new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cell.getDateCellValue()).toString() :
+                    String.valueOf(cell.getNumericCellValue());
             case STRING:  return cell.getStringCellValue();
             case BOOLEAN: return String.valueOf(cell.getBooleanCellValue());
             case FORMULA: return String.valueOf(cell.getCellFormula());
