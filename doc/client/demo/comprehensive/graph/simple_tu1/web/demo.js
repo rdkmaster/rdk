@@ -4,8 +4,19 @@
         'rd.controls.Graph'
     ];
     var extraModules = [ ];
-    var controllerDefination = ['$scope', main];
-    function main(scope) {
+    var controllerDefination = ['$scope','EventService', main];
+    function main(scope,EventService) {
+
+        EventService.register('line', 'graph_update', function(event,data){
+            //如果设置延迟，在离开echart图时关闭tooltip  注意： 定时器的延迟时间一定要大于 tooltip 的延迟时间
+            $(document).on('mouseout','#line',function(){
+                setTimeout(function(){
+                    rdk.line.chart.dispatchAction({
+                        type: 'hideTip'
+                    })
+                },200)
+            })
+        })
     }
 
     var controllerName = 'DemoController';

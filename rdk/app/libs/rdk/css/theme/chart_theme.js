@@ -15,7 +15,7 @@ define(function() {
             fontWeight: 'normal',
             fontStyle: 'normal',
             fontFamily: '微软雅黑, Arial, Verdana, sans-serif',
-            fontFamily2: 'microsoft yahei', // IE8- 字体模糊并且不支持不同字体混排，额外指定一份
+            fontFamily2: 'microsoft yahei' // IE8- 字体模糊并且不支持不同字体混排，额外指定一份
         },
          title: {
              x: 'center', // 水平安放位置，默认为左对齐，可选为：
@@ -31,12 +31,11 @@ define(function() {
              padding: 5, // 标题内边距，单位px，默认各方向内边距为5，
              // 接受数组分别设定上右下左边距，同css
              itemGap: 25, // 主副标题纵向间隔，单位px，默认为10，
-             textStyle: {
-                 fontSize: 14,
-                 fontWeight: 'normal',
-                 fontStyle: 'normal',
-                 fontFamily: '微软雅黑, Arial, Verdana, sans-serif',
-             },
+
+             fontSize: 14,
+             fontWeight: 'normal',
+             fontStyle: 'normal',
+             fontFamily: '微软雅黑, Arial, Verdana, sans-serif',
              subtextStyle: {
                  color: '#aaa' // 副标题文字颜色
              }
@@ -60,7 +59,7 @@ define(function() {
              itemGap: 10, // 各个item之间的间隔，单位px，默认为10，
              // 横向布局时为水平间隔，纵向布局时为纵向间隔
              itemWidth: 20, // 图例图形宽度
-             itemHeight: 14, // 图例图形高度
+             itemHeight: 14 // 图例图形高度
          },
 
          // 值域
@@ -83,7 +82,7 @@ define(function() {
              itemWidth: 20, // 值域图形宽度，线性渐变水平布局宽度为该值 * 10
              itemHeight: 14, // 值域图形高度，线性渐变垂直布局高度为该值 * 10
              splitNumber: 5, // 分割段数，默认为5，为0时为线性渐变
-             color: ['#1e90ff', '#f0ffff'], //颜色
+             color: ['#1e90ff', '#f0ffff'] //颜色
              //text:['高','低'],         // 文本，默认为数值文本
          },
 
@@ -124,8 +123,8 @@ define(function() {
          tooltip: {
              trigger: 'item', // 触发类型，默认数据触发，见下图，可选为：'item' ¦ 'axis'
              showDelay: 20, // 显示延迟，添加显示延迟可以避免频繁切换，单位ms
-             hideDelay: 100, // 隐藏延迟，单位ms
-             transitionDuration: 0.4, // 动画变换时间，单位s
+             hideDelay: 20, // 隐藏延迟，单位ms
+             transitionDuration: 0.2, // 动画变换时间，单位s
              backgroundColor: 'rgba(0,0,0,0.7)', // 提示背景颜色，默认为透明度为0.7的黑色
              borderColor: '#333', // 提示边框颜色
              borderRadius: 4, // 提示边框圆角，单位px，默认为4
@@ -144,9 +143,8 @@ define(function() {
                      color: 'rgba(150,150,150,0.3)' // 阴影颜色
                  }
              },
-             textStyle: {
-                 color: '#fff'
-             }
+             color: '#fff'
+
          },
 
          // 区域缩放控制器
@@ -207,9 +205,9 @@ define(function() {
                  rotate: 0,
                  margin: 8,
                  // formatter: null,
-                 textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-                     color: '#333'
-                 }
+                 // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                 color: '#333'
+
              },
              splitLine: { // 分隔线
                  show: true, // 默认显示，属性show控制显示与否
@@ -233,10 +231,9 @@ define(function() {
          valueAxis: {
              position: 'left', // 位置
              nameLocation: 'end', // 坐标轴名字位置，支持'start' | 'end'
-             nameTextStyle: {
-                 color: ['#325bdb'],
-                 fontSize: 12
-             }, // 坐标轴文字样式，默认取全局样式
+             color: ['#325bdb'],
+             fontSize: 12,
+              // 坐标轴文字样式，默认取全局样式
              boundaryGap: [0, 0], // 数值起始和结束两端空白策略
              splitNumber: 5, // 分割段数，默认为5
              axisLine: { // 坐标轴线
@@ -260,10 +257,10 @@ define(function() {
                  show: true,
                  rotate: 0,
                  margin: 8,
-                 // formatter: null,
-                 textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-                     color: '#333'
-                 }
+                 color: '#333',
+                 formatter: null,
+               // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+
              },
              splitLine: { // 分隔线
                  show: true, // 默认显示，属性show控制显示与否
@@ -288,9 +285,7 @@ define(function() {
              splitNumber: 5,
              name: {
                  show: true,
-                 textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-                     color: '#333'
-                 }
+                 color: '#333'
              },
              axisLine: { // 坐标轴线
                  show: true, // 默认显示，属性show控制显示与否
@@ -302,9 +297,7 @@ define(function() {
              },
              axisLabel: { // 坐标轴文本标签，详见axis.axisLabel
                  show: false,
-                 textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-                     color: '#333'
-                 }
+                 color: '#333'
              },
              splitArea: {
                  show: true,
@@ -537,9 +530,7 @@ define(function() {
                      },
                      label: {
                          show: false,
-                         textStyle: {
-                             color: 'rgba(139,69,19,1)'
-                         }
+                         color: 'rgba(139,69,19,1)'
                      }
                  },
                  emphasis: { // 也是选中样式
@@ -551,9 +542,7 @@ define(function() {
                      },
                      label: {
                          show: false,
-                         textStyle: {
-                             color: 'rgba(139,69,19,1)'
-                         }
+                         color: 'rgba(139,69,19,1)'
                      }
                  }
              }
@@ -689,9 +678,9 @@ define(function() {
                          // show: false,
                          // 可选为 'start'|'end'|'left'|'right'|'top'|'bottom'
                          position: 'end',
-                         textStyle: { // 默认使用全局文本样式，详见TEXTSTYLE
-                             fontSize: 12
-                         }
+
+                         fontSize: 12
+
                      },
                      lineStyle: {
                          // color: 随borderColor, // 主色，线色，优先级高于borderColor和color
