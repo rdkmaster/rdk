@@ -51,6 +51,43 @@ var rdk = {
     Config: Java.type('com.zte.vmax.rdk.config.Config'),
 }
 
+var Async = {
+    run: function(callback, context){
+        var remoteToken = rdk_runtime.runAsync(callback, context);
+        Log.info('Async run called and returned with: ' + remoteToken);
+        return remoteToken
+    },
+    read: function(remoteToken, deleteAfterRead){
+        if (!_.isDefined(deleteAfterRead)){
+            deleteAfterRead = true
+        }
+        var result =  rdk_runtime.readAsync(remoteToken, deleteAfterRead)
+        Log.info('Async read called and returned with remoteToken: ' + remoteToken + ', deleteAfterRead: ' + deleteAfterRead);
+        return result
+
+    },
+    checkStatus: function(remoteToken, deleteAfterCheckStatus){
+        if (!_.isDefined(deleteAfterCheckStatus)) {
+            deleteAfterCheckStatus = false
+        }
+        var result = rdk_runtime.checkStatusAsync(remoteToken, deleteAfterCheckStatus)
+        Log.info('Async check status called with parameters :remoteToken ' + remoteToken + ', deleteAfterCheckStatus ' + deleteAfterCheckStatus);
+        return result
+    },
+    append: function(remoteToken, value){
+        var array = Cache.aging.get(remoteToken)
+        if(!array){
+            array = []
+        }
+        var result  = array.push(value)
+        Cache.aging.put(remoteToken, array)
+
+    },
+    clearOutput: function(remoteToken){
+        Cache.aging.del(remoteToken)
+    }
+}
+
 var mq = {
     p2p: function (subject, message) {
         return rdk_runtime.p2p(subject, message);

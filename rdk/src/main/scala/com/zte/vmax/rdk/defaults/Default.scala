@@ -22,6 +22,8 @@ object Misc {
   val p2p_router = "p2p-router"
   val subscribe_router = "subscribe-router"
   val blocking_io_dispatcher = "blocking-io-dispatcher"
+  val async_call_dispatcher = "async-call-dispatcher"
+
   val monitorFile = "proc/monitor/list.conf"
 }
 

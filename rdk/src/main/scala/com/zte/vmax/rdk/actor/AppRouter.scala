@@ -13,7 +13,7 @@ import com.zte.vmax.rdk.util.Logger
 class AppRouter extends Actor with Logger {
   val httpRouter = context.actorOf(FromConfig.props(Props[WorkRoutee].
     withDispatcher(Misc.routeDispatcher).
-    withMailbox("akka.actor.boundedmailbox")), Misc.router)
+    withMailbox("akka.actor.boundedmailbox")), Misc.router)// actor pool
   var msgNO = 0L
 
   def receive = {

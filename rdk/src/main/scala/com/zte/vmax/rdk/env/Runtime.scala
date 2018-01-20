@@ -3,6 +3,8 @@ package com.zte.vmax.rdk.env
 import java.util
 import javax.script._
 
+import com.zte.vmax.rdk.Async.AsyncHelper
+import com.zte.vmax.rdk.Async.AsyncTaskMessages.RemoteToken
 import com.google.gson.GsonBuilder
 import com.zte.vmax.rdk.actor.Messages.{DBSession, WSBroadcast}
 import com.zte.vmax.rdk.actor.WebSocketServer
@@ -325,7 +327,18 @@ class Runtime(engine: ScriptEngine) extends Logger {
     MqHelper.rpc(application, topic, replyTopic, body, timeout)
   }
 
-   /*
+  def runAsync(callback: ScriptObjectMirror, context: AnyRef): Any = {
+    return AsyncHelper.runAsync(callback, context)
+  }
+  def readAsync(remoteToken: String, deleteAfterRead: Boolean): Any = {
+    return AsyncHelper.readAsync(remoteToken, deleteAfterRead)
+  }
+  def checkStatusAsync(remoteToken: String, deleteAfterCheckStatus: Boolean): Any = {
+    return AsyncHelper.checkStatus(remoteToken, deleteAfterCheckStatus)
+  }
+
+
+  /*
     * 广播消息
     *
     * @param topic 主题名称
