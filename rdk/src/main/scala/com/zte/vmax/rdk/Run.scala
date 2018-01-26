@@ -91,7 +91,7 @@ object Run extends App with SimpleRoutingApp with Logger {
 
 object RdkServer {
   val akkaConfig = ConfigFactory.parseFile(new File("proc/conf/akka.conf"))
-  val remoteConfig = ConfigFactory.parseFile(new File("src/main/resources/remoteActor.conf"))
+  val remoteConfig = ConfigFactory.parseFile(new File("proc/conf/remoteActor.conf"))
   val system = ActorSystem("rdk-server", akkaConfig.withFallback(ConfigFactory.load()))
   //http-rest处理路由
   val appRouter: ActorRef = system.actorOf(Props[AppRouter], "appRouter")
