@@ -16,6 +16,7 @@ import com.zte.vmax.rdk.actor.{AppRouter, Async, MQRouter, WebSocketServer}
 import com.zte.vmax.rdk.cache.AgingCache.AgingCacheActor
 import com.zte.vmax.rdk.config.Config
 import com.zte.vmax.rdk.db.DataSource
+import com.zte.vmax.rdk.defaults.Misc
 import com.zte.vmax.rdk.service.{ExportHandler, RestHandler, UploadHandler}
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 import org.apache.log4j.PropertyConfigurator
@@ -103,7 +104,9 @@ object RdkServer {
   //进行异步任务
   val remotesSystem = ActorSystem("rdk-server-remote", remoteConfig.withFallback(ConfigFactory.load()))
 
-  val asyncActor: ActorRef = remotesSystem.actorOf(Props[Async], "asyncActor")
+  val asyncActor: ActorRef = remotesSystem.actorOf(Props[Async].
+    withDispatcher(Misc.async_call_dispatcher).
+    withMailbox("akka.actor.async.boundedmailbox"), "asyncActor")
 
   //本RDK-server的唯一标识
   val uuid: String = UUID.randomUUID().toString
