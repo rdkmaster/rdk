@@ -1,5 +1,5 @@
 (function() {
-    function _get(req) {
+    function _fetchData(method, req) {
         var result = new DataTable([], [], []);
         if (!req.service) {
             Log.error('bad argument, need a "service" property!')
@@ -13,7 +13,7 @@
         var dataTable = Cache.aging.get(key);
         if (!dataTable) {
             timestamp = new Date().getTime();
-            dataTable = Rest.get(req.service, param, {readTimeout: req.timeout ? req.timeout : 120000});
+            dataTable = Rest[method](req.service, param, {readTimeout: req.timeout ? req.timeout : 120000});
             try {
                 dataTable = JSON.parse(dataTable);
                 if (dataTable.hasOwnProperty('result')) {
@@ -24,7 +24,7 @@
                 return result;
             }
             log('read data spent', (new Date().getTime() - timestamp), 'ms');
-            Cache.aging.put(key, dataTable, 6*3600);
+            Cache.aging.put(key, dataTable, 960); // 15min
         } else {
             log('read data from cache success!')
         }
@@ -79,8 +79,14 @@
         });
         return result;
     }
+
     return {
-        get: _get
+        get: function(req) {
+            _fetchData('get', req);
+        },
+        post: function(req) {
+            _fetchData('post', req);
+        }
     }
 
     function _sort(data, index, sortAs, order) {
