@@ -49,7 +49,7 @@ var rdk = {
     FileHelper: Java.type('com.zte.vmax.rdk.jsr.FileHelper'),
     RegFileFilter: Java.type('com.zte.vmax.rdk.util.RegFileFilter'),
     Config: Java.type('com.zte.vmax.rdk.config.Config'),
-}
+};
 
 var Async = {
     run: function(callback, context){
