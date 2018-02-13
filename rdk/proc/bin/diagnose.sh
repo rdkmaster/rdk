@@ -6,7 +6,22 @@ scriptDir=$(cd `dirname $0`; pwd)
 port=`more $scriptDir/../conf/rdk.cfg | grep listen.port| cut -d "=" -f2 | sed 's/^[ \t]*//g'`
 
 alarmCode=('5004000001' '5004000002' '5004000003')
-alarmMsg=('rdk server process is gone!' 'rdk server did not respond after 3 tries' 'NOT GOOD! rdk has not been ready since last restart!')
+alarmMsgEn_us=('rdk server process is gone!' 'rdk server did not respond after 3 tries' 'NOT GOOD! rdk has not been ready since last restart!' 'rdk server is recovered')
+alarmMsgZh_cn=('rdk进程已死' 'rdk进程已连续三次没有响应请求' 'rdk自上次重启之后即一直不能响应请求' 'rdk进程已恢复')
+alarmMsg=("${alarmMsgZh_cn[@]}")
+curEnv='zh_CN' 
+
+
+readEnvLocale(){
+    if [ -f "/home/vmax/file/ran/conf/silence-conf-delta.xml" ]
+    then
+        curEnv=`awk -F '[<>]' '/Locale/{print $3}' /home/vmax/file/ran/conf/silence-conf-delta.xml`
+    elif [ -f "/home/vmax/file/ran/conf/silence-conf-normal.xml" ]
+    then
+        curEnv=`awk -F '[<>]' '/Locale/{print $3}' /home/vmax/file/ran/conf/silence-conf-normal.xml`
+    fi
+    log 'Current environment locale is: '"${curEnv}"
+}
 
 diagnose() {
     rdkPid=$(getRDKPid)
@@ -28,6 +43,15 @@ diagnose() {
 }
 
 waitForReady() {
+    readEnvLocale
+    if [ "${curEnv}" == "zh_CN" ]
+    then
+        alarmMsg=("${alarmMsgZh_cn[@]}")
+    elif [ "${curEnv}" == "en_US" ]
+    then
+        alarmMsg=("${alarmMsgEn_us[@]}")
+    fi
+
     log "waiting for rdk to get ready ..."
     time1=$(date +%s)
     while true
@@ -66,11 +90,12 @@ run() {
     waitForReady
     if [ $? != 0 ]; then
         log "NOT GOOD! rdk has not been ready since last restart!"  
-        sendAlarm "5004000003" 0 "NOT GOOD! rdk has not responded since last restart!"
-        log "send alarm: NOT GOOD! rdk has not responded since last restart!"
+        sendAlarm "5004000003" 0 "${alarmMsg[2]}"
+        log 'send alarm:'"${alarmMsgEn_us[2}"
         return 1;
     else
-        sendAlarm "5004000003" 1 "rdk server is recovered"
+        sendAlarm "5004000003" 1 "${alarmMsg[${#alarmMsg[@]} -1]}" 
+        log 'send alarm: '"${alarmMsgEn_us[${#alarmMsgEn_us[@]} -1]}" 
     fi
 
     while true
@@ -83,16 +108,16 @@ run() {
         if [ ${diagnoseRes} != 0 ]; then
             log 'NOT GOOD! rdk did not respond in time, gonna restart it.'
             sendAlarm "${alarmCode[${diagnoseRes} -1]}" 0 "${alarmMsg[${diagnoseRes} -1]}"
-            log 'send alarm: '"${alarmMsg[${diagnoseRes} -1]}"
+            log 'send alarm: '"${alarmMsgEn_us[${diagnoseRes} -1]}"
             restartRDK
             waitForReady
-            recoverMsg='rdk server is recovered'
-            sendAlarm "${alarmCode[${diagnoseRes} -1]}" 1 "${recoverMsg}"
-            log 'send alarm: '"${recoverMsg}"
+            sendAlarm "${alarmCode[${diagnoseRes} -1]}" 1 "${alarmMsg[${#alarmMsg[@]} -1]}" 
+            log 'send alarm: '"${alarmMsgEn_us[${#alarmMsgEn_us[@]} -1]}" 
         fi
     done
 }
 
 log "=============================================================="
+
 startRDK
 run
