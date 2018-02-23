@@ -1208,3 +1208,119 @@ RDK暂时没有定时器api可直接使用，但是可以通过定时老化缓�
 
 ## COMMON包相关 ##
 [单击这里](common.md)
+
+
+
+### `Async对象` ###
+
+该对象提供了一些异步任务执行，状态查询和结果读取方法。
+
+#### `Async.run()`
+定义：
+
+	function run(callback, context);
+
+说明：用于执行异步的callback任务。
+
+参数：
+
+- callback 异步调用的函数。
+- context 异步函数执行的上下文对象。
+
+返回：异步任务的remoteToken，以供后续读取异步任务结果，查询异步任务状态使用。
+
+###### `callback详解`
+定义：
+
+	function callback(key);
+
+参数：
+
+- key 自动生成，用于标记本次异步任务，只需要在定义callback的时候声明即可，无需在Async.run调用时传入。
+
+注意：RDK不处理callback的返回结果，应用可以调用Async.append接口将异步结果缓存到aging cache中，aging cache的默认有效时间为24小时，callback执行的超时时间为4小时，超时过后RDK会将相应的任务杀死，并标记状态为killed。
+
+#### `Async.read()`
+定义：
+
+	function read(remoteToken, deleteAfterRead);
+
+说明：用于读取异步任务的结果。
+
+参数：
+
+- remoteToken 异步任务的token，由Async.run 返回。
+- deleteAfterRead 删除异步任务在缓存中的结果，默认为true。
+
+返回：异步任务的中间结果，为json格式的数组。
+
+#### `Async.checkStatus()`
+定义：
+
+	function checkStatus(remoteToken, deleteAfterCheckStatus);
+
+说明：用于读取异步任务的状态。
+
+参数：
+
+- remoteToken 异步任务的token，由Async.run 返回。
+- deleteAfterRead 删除异步任务在缓存中的状态，默认为false。
+
+返回：异步任务的状态。
+
+- Running 异步任务尚在执行。
+- Finished 异步任务执行完成。
+- Killed 异步任务因为执行时间过长而被终止，超时时间为4小时。
+
+
+#### `Async.append()`
+定义：
+
+	function append(key, value);
+
+说明：在callback中调用，用于存储异步的中间结果到rdk的aging cache里，key为异步任务的标记，value为一个数组。
+
+参数：
+
+- key 异步任务的标记，为callback中的第一个参数。
+- value 需要缓存的异步结果。
+
+返回：缓存的异步结果。
+
+
+#### `Async.clearOutput()`
+定义：
+
+	function clearOutput(key);
+
+说明：在callback中调用，用于清空之前所存储的异步中间结果，即将aging cache里对应的缓存清空。
+
+参数：
+
+- key 异步任务的token，由Async.run返回。
+
+####异步任务执行示例
+第一步：定义callback。
+
+	function callback(key){
+		for(x in this.arr){
+		 Async.append(key, x) //异步接口，用于缓存异步中间结果
+		}
+		return 
+	 }
+	 
+第二步：执行callback。
+        var context={"arr":[1,2,3]}
+	var token =  Async.run(callback, context)
+
+	//获取异步的结果，并尝试清空缓存，期望为 {"0":"1","1":"2","2":"3"}
+	var result = Async.read(token, true)
+
+	//获取异步的状态，并尝试清空状态，期望为Finished
+	var status = Async.checkStatus(token,true)
+
+	//获取异步的结果，期望为()
+	var result = Async.read(token, true)
+
+	//获取异步的状态，期望为()
+	var status = Async.checkStatus(token,true)
