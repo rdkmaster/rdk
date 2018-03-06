@@ -1,18 +1,17 @@
 package com.zte.vmax.rdk.service
 
-import java.io.{FileOutputStream, File}
 import java.util.UUID
+
 import akka.actor.{ActorRef, ActorSystem}
+import akka.pattern.ask
 import akka.util.Timeout
-import com.zte.vmax.rdk.actor.Messages.{ServiceResult, UploadServiceParam, HttpRequestContext, ServiceRequest}
+import com.zte.vmax.rdk.actor.Messages.UploadServiceParam
 import com.zte.vmax.rdk.defaults.Const
-import com.zte.vmax.rdk.util.{RdkUtil, Logger}
+import com.zte.vmax.rdk.util.Logger
 import spray.http.MultipartFormData
 import spray.routing.Directives
-import scala.concurrent.duration._
-import akka.pattern.ask
 
-import scala.util.{Failure, Success}
+import scala.concurrent.duration._
 
  /*
  * Created by 10184092 on 2016/12/6.
@@ -29,17 +28,20 @@ class UploadHandler(system: ActorSystem, router: ActorRef) extends Directives wi
         entity(as[MultipartFormData]) {
           formData => ctx =>
             val begin = System.currentTimeMillis()
-            val fileName: String = Const.uploadFileDir + UUID.randomUUID().toString
-            val future = (router ? UploadServiceParam(formData, fileName, begin))
-              .mapTo[Either[Exception, String]]
+
+            val header = formData.fields.head.headers.head.value
+            val pattern = "\\bfilename=\"(.*)\"".r
+            val fileName = (pattern findFirstIn header).getOrElse("filename=\"data\"").split("\"").tail.apply(0)
+
+            val path: String = Const.uploadFileDir + UUID.randomUUID().toString + "/" + fileName
+            val future = (router ? UploadServiceParam(formData, path, begin)).mapTo[Either[Exception, String]]
             future.onFailure {
               case e => ctx.failWith(e)
             }
             future.onSuccess {
               case Left(e) => ctx.failWith(e)
-              case Right(s) => ctx.complete("rdk/" + fileName)
+              case Right(s) => ctx.complete(path)
             }
-
         }
       }
     }
