@@ -42,7 +42,7 @@ class AsyncRun extends Actor with Logger {
 
       //调用异步方法
       try {
-        scriptObjectMirror.call(scriptObjectMirror, self.path.name.toString, context)
+        scriptObjectMirror.call(context, self.path.name.toString)
       } catch {
         case e: Exception => {
           //因为之前已经给sender发送过 RemoteToken了，sender 的await也会因此返回，即认为callback成功，因此此时即使出错,
