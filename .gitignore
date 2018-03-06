@@ -21,6 +21,7 @@ test/npm-debug.log
 **/.idea
 **/.idea_modules
 **/*.iml
+rdk/out
 
 #忽略运行期临时目录
 **/doc/client/demo/tmp
