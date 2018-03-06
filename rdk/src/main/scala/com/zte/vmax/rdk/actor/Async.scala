@@ -8,6 +8,7 @@ import com.zte.vmax.rdk.config.Config
 import com.zte.vmax.rdk.util.RdkUtil.json2Object
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 import java.net.InetAddress
+import com.zte.vmax.rdk.defaults.Misc
 
 @edu.umd.cs.findbugs.annotations.SuppressWarnings(
   value = Array("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"),
@@ -35,7 +36,9 @@ class Async extends Actor with Logger {
       if (errorMsg == "") {
           val remoteToken = RemoteToken(asyncRunActorName, hostIp)
           //创建一个async run actor执行异步任务
-          val asyncRunActor = context.actorOf(Props[AsyncRun], asyncRunActorName)
+          val asyncRunActor = context.actorOf(Props[AsyncRun].
+            withDispatcher(Misc.async_call_dispatcher).
+            withMailbox("akka.actor.async.boundedmailbox"), asyncRunActorName)
           asyncRunActor.forward(AsyncRunMsg_ReadToken(msg, remoteToken))
       } else {
         sender() ! AsyncRunError(errorMsg)
