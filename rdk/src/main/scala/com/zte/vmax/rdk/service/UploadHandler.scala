@@ -30,9 +30,9 @@ class UploadHandler(system: ActorSystem, router: ActorRef) extends Directives wi
             val begin = System.currentTimeMillis()
 
             val header = formData.fields.head.headers.head.value
-            val pattern = "\\bfilename=\"(.*)\"".r
-            val fileName = (pattern findFirstIn header).getOrElse("filename=\"data\"").split("\"").tail.apply(0)
-
+            val pattern = "\\bfilename=\"?.+\"?".r
+            val fileName = (pattern findFirstIn header).getOrElse("filename=data")
+              .replace("\"", "").split("=").tail.apply(0)
             val path: String = Const.uploadFileDir + UUID.randomUUID().toString + "/" + fileName
             val future = (router ? UploadServiceParam(formData, path, begin)).mapTo[Either[Exception, String]]
             future.onFailure {
