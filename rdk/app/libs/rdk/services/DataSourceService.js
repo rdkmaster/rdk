@@ -551,6 +551,16 @@
                     formData.append("data", data);
                 } else {
                     formData = data;
+                    if (!formData) {
+                        if (onError) onError("invalid form data, empty set");
+                        return;
+                    }
+                    var file = formData.get('file');
+                    if (!file) {
+                        if (onError) onError("invalid form data, need a file property!");
+                        return;
+                    }
+                    formData.append("filename", encodeURI(file.name));
                 }
                 $.ajax({  
                     url: "/rdk/service/common/upload",    

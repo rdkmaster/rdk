@@ -36,7 +36,7 @@ object Messages {
 
   case class ServiceRawResult(content: String, contentType: MediaType, headers: List[HttpHeader])
 
-  case class UploadServiceParam(data: MultipartFormData, fileName: String, timeStamp: Long)
+  case class UploadServiceParam(data: MultipartFormData, timeStamp: Long)
 
   case class Header(key: String, value: String)
 
