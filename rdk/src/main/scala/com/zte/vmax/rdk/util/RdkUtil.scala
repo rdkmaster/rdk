@@ -3,7 +3,7 @@ package com.zte.vmax.rdk.util
 
 import java.io.{File, FileOutputStream, FilenameFilter}
 import java.lang.reflect.Method
-import java.net.InetAddress
+import java.net.{InetAddress, URLDecoder}
 import java.nio.file._
 import java.nio.file.attribute.BasicFileAttributes
 import java.util.UUID
@@ -20,7 +20,7 @@ import com.zte.vmax.rdk.RdkServer
 import com.zte.vmax.rdk.actor.Messages._
 import com.zte.vmax.rdk.cache.CacheHelper
 import com.zte.vmax.rdk.config.Config
-import com.zte.vmax.rdk.defaults.{Misc, RequestMethod}
+import com.zte.vmax.rdk.defaults.{Const, Misc, RequestMethod}
 import com.zte.vmax.rdk.env.Runtime
 import com.zte.vmax.rdk.jsr.FileHelper
 import com.zte.vmax.rdk.service.ServiceConfig
@@ -356,24 +356,57 @@ object RdkUtil extends Logger {
       case r: Some[A] => r
       case _ => None
     }
+
   @edu.umd.cs.findbugs.annotations.SuppressWarnings(
     value = Array("OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE"),
     justification = "false alarm")
-  def uploadFile(runtime: Runtime, formData: MultipartFormData, fileName: String): Either[Exception, String] = {
+  def uploadFile(runtime: Runtime, formData: MultipartFormData): Either[Exception, String] = {
+    val dataField = formData.fields.filter(f => {
+      val name = f.name.getOrElse("unknown")
+      name.equalsIgnoreCase("file") || name.equalsIgnoreCase("data")
+    })
+    if (dataField.isEmpty) return Left(new Exception("invalid form data, no file or data field found!"))
+
+    val fileField = formData.fields.filter(f => f.name.getOrElse("unknown").equalsIgnoreCase("filename"))
+    val fileName = if (fileField.isEmpty) {
+      // try read filename from data field
+      val header = dataField.head.headers.head.value
+      val pattern = "\\bfilename=\"?.+\"?".r
+      (pattern findFirstIn header).getOrElse("filename=data").replace("\"", "").split("=").tail.apply(0)
+    } else URLDecoder.decode(fileField.head.entity.asString, "utf-8")
+
+    val path = Const.uploadFileDir + UUID.randomUUID().toString + "/"
+    val dataFile = path + fileName
+    val data = dataField.head.entity.data.toByteArray
+    val writeDataResult =  writeBytes(runtime.fileHelper, dataFile, data)
+
+    val metaFile = path + "meta-info.json"
+    val lastModifiedField = formData.fields.filter(f => f.name.getOrElse("unknown").equalsIgnoreCase("lastModified"))
+    val lastModified = if (lastModifiedField.isEmpty) "0" else lastModifiedField.head.entity.asString
+    val writeMetaInfoResult = writeBytes(runtime.fileHelper, metaFile,
+      s"""
+        |{
+        |    "fileName": "$fileName",
+        |    "lastModified": "$lastModified",
+        |    "fileSize": "${data.length}"
+        |}
+      """.stripMargin.trim.getBytes())
+
+    if (writeDataResult.isRight && writeMetaInfoResult.isRight) Right(dataFile) else Left(writeDataResult.left.get)
+  }
+
+  def writeBytes(fileHelper: FileHelper, fileName: String, bytes: Array[Byte]): Either[Exception, Boolean] = {
     val file = new File(fileName)
-    runtime.fileHelper.ensureFileExists(file)
+    fileHelper.ensureFileExists(file)
     val out = new FileOutputStream(file)
-    var result: Either[Exception, String] = Right("upload file success!")
-    formData.fields.foreach {
-      field =>
-        try {
-          out.write(field.entity.data.toByteArray)
-        } catch {
-          case e: Throwable =>
-            result = Left(new Exception(e))
-        } finally {
-          out.close()
-        }
+    var result: Either[Exception, Boolean] = Right(true)
+    try {
+      out.write(bytes)
+    } catch {
+      case e: Throwable =>
+        result = Left(new Exception(e))
+    } finally {
+      out.close()
     }
     result
   }

@@ -24,7 +24,7 @@ class AppRouter extends Actor with Logger {
       printLog(msg)
       httpRouter.forward(msg)
     case msg: UploadServiceParam =>
-      printLog(msg.fileName)
+      printLog("processing file uploading")
       httpRouter.forward((msgNO, msg))
     case msg: ExportParam =>
       printLog(msg)
