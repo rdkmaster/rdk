@@ -11,6 +11,10 @@ log() {
     echo `date +%F" "%H:%M:%S`: ">>> $1" >> $logDir/log.txt
 }
 
+getRDKVersion() {
+    echo `ls $scriptDir/lib/rdk-server* | awk -F"-" '{print $5}' | awk -F".jar" '{print $1}'`
+}
+
 getRDKPid() {
     echo `ps gaux | grep rdk.Run | grep $scriptDir | grep -v grep | awk '{print $2}'`
 }

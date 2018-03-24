@@ -70,6 +70,25 @@ waitForReady() {
         fi
     done
 }
+sendHeartBeat() {
+    restUrl="http://localhost:8988/uniportal/zdh/entryServlet?taskName=heartbeat"
+    cmdMsg="<heartbeat>\
+                <service>vmaxplat</service>\
+                <role>RDK</role>\
+                <version>$(getRDKVersion)</version>\
+                <compileinfo></compileinfo>\
+                <servicestatus>1</servicestatus>\
+                <process>\
+                    <procName>rdk-server</procName>\
+                    <PID>$(getRDKPid)</PID>\
+                    <status>running</status>\
+                </process>\
+            </heartbeat>"
+    curlRes=`curl -l -H 'Content-Type:application/xml' -H 'charset:utf-8' -H 'authorization:administrator:SdzV4wj1ufh3+X1PgIQXj7ld9gc=' -X POST -d "${cmdMsg}" "${restUrl}"`
+    if [ $? != 0 ]; then
+       log 'failed to send heartbeat to dap, message details: cmdMsg - '"${cmdMsg}"' restURl - '"${restUrl}"' crulRes - '"${curlRes}"
+    fi
+}
 sendAlarm() {
     hostName=`hostname`
     hostIp=`cat /home/netnumen/ems/ums-server/utils/vmax-conf/serviceaddress.properties | grep vmax.host | awk -F '[=]' '{ print $2 }'`
@@ -105,7 +124,9 @@ run() {
         log 'diagnosing rdk ...'
         diagnose 10 30 3
         diagnoseRes=$?
-        if [ ${diagnoseRes} != 0 ]; then
+        if [ ${diagnoseRes} == 0 ]; then
+            sendHeartBeat
+        else
             log 'NOT GOOD! rdk did not respond in time, gonna restart it.'
             sendAlarm "${alarmCode[${diagnoseRes} -1]}" 0 "${alarmMsg[${diagnoseRes} -1]}"
             log 'send alarm: '"${alarmMsgEn_us[${diagnoseRes} -1]}"
