@@ -460,7 +460,9 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                     if (index != -1) {
                         _activeTabByIndex(index);
                     }
-
+                    //close掉Tab后重定义宽度
+                    $timeout(_setTabsWidth, 0);
+					
                     function findNextTab(fromIndex) {
                         var domTabs = element.find("ul").eq(0).find("li");
                         for (var i = 0; i < scope.tabs.length; i++) {
@@ -482,6 +484,8 @@ define(['angular', 'jquery', 'jquery-ui', 'rd.core', 'rd.attributes.Scroll', 'cs
                     var panelId = scope.tabs[index].tabid;
                     $("#" + panelId).css({'display': 'block'});
                     _activeTabByIndex(index);
+                    //close之后的tab再show出来后重新调整tab宽度
+                    $timeout(_setTabsWidth, 0);
                 }
 
                 function _destroy4ControllerScope(index){
