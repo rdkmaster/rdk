@@ -130,12 +130,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 <span class="disabledRecords spanRecords search-{{searchPosition}}">{{i18n.total}} {{count}} {{i18n.records}}</span>\
                 <ul class="pagination">\
                     <li ng-class="prevPageDisabled()"> \
-                        <a href ng-click="firstPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==0]">\
+                        <a href="javascript:void(0)" ng-click="firstPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==0]">\
                             {{i18n.first}}\
                         </a>\
                     </li>\
                     <li ng-class="prevPageDisabled()">\
-                        <a href ng-click= "prevPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==0]">\
+                        <a href="javascript:void(0)" ng-click= "prevPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==0]">\
                             {{i18n.prev}}\
                         </a>\
                     </li>\
@@ -146,12 +146,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         <a href="javascript:void(0)" ng-class="{true:\'regularRecords\', false:\'enabledRecords\'}[n == currentPage]">{{n+1}}</a>\
                     </li>\
                     <li ng-class="nextPageDisabled()"> \
-                        <a href ng-click="nextPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==pageCount()]">\
+                        <a href="javascript:void(0)" ng-click="nextPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==pageCount()]">\
                              {{i18n.next}}\
                         </a>\
                     </li>\
                     <li ng-class="nextPageDisabled()"> \
-                        <a href ng-click="lastPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==pageCount()]">\
+                        <a href="javascript:void(0)" ng-click="lastPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==pageCount()]">\
                             {{i18n.last}}\
                         </a>\
                     </li>\
@@ -163,12 +163,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                 <span class="disabledRecords spanRecords search-{{searchPosition}}">{{i18n.total}} {{count}} {{i18n.records}}</span>\
                 <ul class="pagination">\
                     <li ng-class="prevPageDisabled()"> \
-                        <a href ng-click="firstPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==0]">\
+                        <a href="javascript:void(0)" ng-click="firstPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==0]">\
                             <i class="iconfont iconfont-e8e1" aria-hidden="true"></i>\
                         </a>\
                     </li>\
                     <li ng-class="prevPageDisabled()">\
-                        <a href ng-click= "prevPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==0]">\
+                        <a href="javascript:void(0)" ng-click= "prevPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==0]">\
                             <i class="iconfont iconfont-e8df" aria-hidden="true"></i>\
                         </a>\
                     </li>\
@@ -178,12 +178,12 @@ define(['angular', 'jquery', 'underscore', 'jquery-headfix', 'jquery-gesture',
                         <i class="regular_right">  /  {{pageCount()+1}}</i></span>\
                     </li>\
                     <li ng-class="nextPageDisabled()"> \
-                        <a href ng-click="nextPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==pageCount()]">\
+                        <a href="javascript:void(0)" ng-click="nextPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==pageCount()]">\
                              <i class="iconfont iconfont-e8e0" aria-hidden="true"></i>\
                         </a>\
                     </li>\
                     <li ng-class="nextPageDisabled()"> \
-                        <a href ng-click="lastPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==pageCount()]">\
+                        <a href="javascript:void(0)" ng-click="lastPage()" ng-class="{true:\'disabledRecords\', false:\'enabledRecords\'}[currentPage==pageCount()]">\
                             <i class="iconfont iconfont-e8e2" aria-hidden="true"></i>\
                         </a>\
                     </li>\
