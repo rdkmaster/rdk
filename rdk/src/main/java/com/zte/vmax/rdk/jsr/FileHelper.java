@@ -27,9 +27,6 @@ import java.util.regex.Pattern;
 /**
  * Created by 10045812 on 16-5-6.
  */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(
-        value = {"BC_EQUALS_METHOD_SHOULD_WORK_FOR_ALL_OBJECTS", "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE", "DM_DEFAULT_ENCODING", "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"},
-        justification = "false alarm")
 public class FileHelper extends AbstractAppLoggable {
 
     protected void initLogger() {

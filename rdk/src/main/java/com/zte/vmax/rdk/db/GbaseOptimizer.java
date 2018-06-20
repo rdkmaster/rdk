@@ -32,9 +32,7 @@ import net.sf.jsqlparser.statement.select.Union;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(
-		value = {"SBSC_USE_STRINGBUFFER_CONCATENATION", "SBSC_USE_STRINGBUFFER_CONCATENATION"},
-		justification = "false alarm")
+
 public class GbaseOptimizer {
 	public static String optimizeSql(String sql) throws Exception {
 		CCJSqlParserManager parserManager = new CCJSqlParserManager();

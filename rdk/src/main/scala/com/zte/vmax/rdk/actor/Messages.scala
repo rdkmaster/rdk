@@ -13,10 +13,6 @@ import scala.language.existentials
   * Created by 10054860 on 2016/7/12.
   * MQ 服务消息定义
   */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(
-  value = Array("NP_LOAD_OF_KNOWN_NULL_VALUE", "EI_EXPOSE_REP", "SIC_INNER_SHOULD_BE_STATIC", "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"),
-  justification = "false alarm")
-//scalastyle:off number.of.methods
 object Messages {
 
   trait RDKContext
@@ -175,4 +171,3 @@ object Messages {
   case class CacheRemove(app: String, key: String)
 
 }
-//scalastyle:off number.of.methods

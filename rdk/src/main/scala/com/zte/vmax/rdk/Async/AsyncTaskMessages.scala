@@ -2,9 +2,6 @@ package com.zte.vmax.rdk.Async
 
 import jdk.nashorn.api.scripting.ScriptObjectMirror
 
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(
-  value = Array("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"),
-  justification = "false alarm")
 object AsyncTaskMessages {
   /*
  * RemoteToken 含有获取远程actor引用的关键信息

@@ -25,7 +25,7 @@ class AppCache(appName: String) {
     value
   }
 
-  def size() = map.size()//scalastyle:off
+  def size() = map.size()
 
   //清除缓存
   def remove(key: String): Unit = map.remove(key)

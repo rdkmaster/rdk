@@ -29,10 +29,6 @@ import scala.collection.mutable.ArrayBuffer
   * Created by 10054860 on 2016/7/11.
   */
 
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(
-  value = Array("NP_NULL_PARAM_DEREF", "NP_NULL_PARAM_DEREF_ALL_TARGETS_DANGEROUS"),
-  justification = "false alarm")
-//scalastyle:off line.size.limit method.name number.of.methods token  public.methods.have.type
 class Runtime(engine: ScriptEngine) extends Logger {
   def jsLogger = appLogger
 
@@ -275,7 +271,6 @@ class Runtime(engine: ScriptEngine) extends Logger {
       val value = data.get("0").asInstanceOf[ScriptObjectMirror].get("0")
       if (!value.isInstanceOf[Undefined]) value.toString
     }
-
     null
   }
 
@@ -402,4 +397,3 @@ object Runtime {
     runtime
   }
 }
-//scalastyle:off line.size.limit method.name number.of.methods token  public.methods.have.type

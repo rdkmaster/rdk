@@ -15,16 +15,10 @@ import scala.collection.mutable.ArrayBuffer
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 
-//scalastyle:off
  /*
   * Created by 10054860 on 2016/7/19.
   */
 object DataBaseHelper extends Logger {
-
-
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings(
-    value = Array("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"),
-    justification = "false alarm")
   case class DBError(error: String)
 
   var createJavascriptObject: ScriptObjectMirror = _
@@ -270,4 +264,3 @@ object DataBaseHelper extends Logger {
   }
 
 }
-//scalastyle:off

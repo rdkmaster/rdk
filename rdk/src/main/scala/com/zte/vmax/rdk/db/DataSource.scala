@@ -10,11 +10,7 @@ import scala.collection.JavaConverters._
  /*
   * Created by 10054860 on 2016/9/20.
   */
-//scalastyle:off public.methods.have.type
 object DataSource extends Logger {
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings(
-    value = Array("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"),
-    justification = "false alarm")
   private case class KeyAndDefaultValue[A](key: String, default: A)
 
   private val DbUrlMatch = "db.*.url"
@@ -112,4 +108,3 @@ object DataSource extends Logger {
   }
 
 }
-//scalastyle:off public.methods.have.type

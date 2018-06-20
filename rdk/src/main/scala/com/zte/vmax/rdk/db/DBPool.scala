@@ -63,6 +63,6 @@ private class DbcpConnectionPool(dbInfo: DatabaseInfo, poolInfo: DbPoolInfo) ext
     }
 
   }
-  def getDataSource = dataSource //scalastyle:off
+  def getDataSource = dataSource
 
 }

@@ -4,7 +4,7 @@ import java.io.File
 
 import com.typesafe.config.ConfigFactory
 import com.zte.vmax.rdk.util.{Logger, RdkUtil}
-//scalastyle:off public.methods.have.type  procedure.declaration
+
 trait ConfigTrait extends Logger {
   var config: com.typesafe.config.Config = null
 
@@ -100,4 +100,3 @@ object Config extends ConfigTrait {
   }
 
 }
-//scalastyle:off public.methods.have.type  procedure.declaration

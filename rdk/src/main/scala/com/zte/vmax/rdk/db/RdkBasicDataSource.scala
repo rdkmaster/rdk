@@ -43,6 +43,6 @@ class RdkBasicDataSource extends BasicDataSource with Logger {
 
   }
 
-  def getParentLogger = null //scalastyle:off
+  def getParentLogger = null
  }
 

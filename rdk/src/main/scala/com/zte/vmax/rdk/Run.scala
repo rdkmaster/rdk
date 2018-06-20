@@ -28,10 +28,6 @@ import scala.util.{Failure, Success}
 
 
 
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(
-  value = Array("EI_EXPOSE_REP"),
-  justification = "false alarm")
-//scalastyle:off  line.size.limit
 object Run extends App with SimpleRoutingApp with Logger {
   implicit lazy val system = RdkServer.system
   implicit val bindingTimeout: Timeout = 10.second
@@ -119,4 +115,3 @@ object RdkServer {
   def getRestHandler: Set[Route] = restHandMap.keySet().toSet
 
 }
-//scalastyle:off  line.size.limit

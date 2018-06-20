@@ -14,9 +14,6 @@ object ActorStatus extends Enumeration {
   val KILLED = Value("Killed")
 }
 
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(
-  value = Array("DB_DUPLICATE_BRANCHES"),
-  justification = "false alarm")
 class AsyncRun extends Actor with Logger {
   //缓存超时时间
   val ttl = 24 * 60 * 60;

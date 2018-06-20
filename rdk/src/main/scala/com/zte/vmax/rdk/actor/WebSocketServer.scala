@@ -20,10 +20,6 @@ import spray.routing.{HttpServiceActor, Rejected}
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(
-  value = Array("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"),
-  justification = "false alarm")
-//scalastyle:off
 object WebSocketServer extends Logger {
 
   private[WebSocketServer] case object Ping
@@ -155,4 +151,3 @@ object WebSocketServer extends Logger {
 
   }
 }
-//scalastyle:off

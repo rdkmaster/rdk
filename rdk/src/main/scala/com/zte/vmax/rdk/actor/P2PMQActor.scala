@@ -91,7 +91,7 @@ class P2PMQActor extends Actor with MQCreator {
 
   }
 
-  def incMessageCount = messageCount = messageCount + 1 //scalastyle:off
+  def incMessageCount = messageCount = messageCount + 1
 
   override def receive: Receive = {
     case msg: MQ_P2P => incMessageCount; p2p(msg.subject, msg.data)

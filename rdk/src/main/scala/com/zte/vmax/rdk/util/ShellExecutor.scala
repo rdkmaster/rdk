@@ -2,7 +2,6 @@ package com.zte.vmax.rdk.util
 
 import scala.sys.process._
 
-//scalastyle:off method.name
  /*
  * Created by 10184092 on 2016/12/29.
  */
@@ -44,4 +43,3 @@ object ShellExecutor extends Logger{
 
 
 }
-//scalastyle:off method.name

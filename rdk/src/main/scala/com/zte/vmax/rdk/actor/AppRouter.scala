@@ -9,7 +9,6 @@ import com.zte.vmax.rdk.util.Logger
  /*
   * Created by 10054860 on 2016/7/7.
   */
-//scalastyle:off public.methods.have.type
 class AppRouter extends Actor with Logger {
   val httpRouter = context.actorOf(FromConfig.props(Props[WorkRoutee].
     withDispatcher(Misc.routeDispatcher).
@@ -39,4 +38,3 @@ class AppRouter extends Actor with Logger {
   }
 
 }
-//scalastyle:off public.methods.have.type

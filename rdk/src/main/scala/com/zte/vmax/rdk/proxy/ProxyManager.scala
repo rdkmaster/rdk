@@ -13,9 +13,6 @@ import scala.util.Try
  /*
   * Created by 10054860 on 2016/8/19.
   */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(
-  value = Array("UUF_UNUSED_FIELD"),
-  justification = "false alarm")
 object ProxyManager extends Logger {
 
   private final val DefaultDataSourcePosfix = ".defaultDataSource"

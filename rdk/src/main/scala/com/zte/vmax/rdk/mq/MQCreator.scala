@@ -8,7 +8,6 @@ import scala.util.{Failure, Success, Try}
  /*
   * Created by 10054860 on 2016/7/28.
   */
-//scalastyle:off simplify.boolean.expression
 trait MQCreator extends Logger {
 
   var opMQ: Option[RDKActiveMQ] = None
@@ -67,4 +66,3 @@ trait MQCreator extends Logger {
 
   }
 }
-//scalastyle:off simplify.boolean.expression

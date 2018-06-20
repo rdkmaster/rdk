@@ -57,7 +57,7 @@ class SubscribeMQActor extends Actor with MQCreator {
     callbackMap.get(rm.topic) match {
       case Some(set) => set.foreach(callback => {
         logger.info(s"${self.path}-> callback for file=${callback.jsFile} method=${callback.func_name}")
-        RdkServer.appRouter ! ServiceRequest(ctx = NoneContext, script = callback.jsFile, app = null, param = rm.msg, method = callback.func_name, timeStamp = System.currentTimeMillis())//scalastyle:off
+        RdkServer.appRouter ! ServiceRequest(ctx = NoneContext, script = callback.jsFile, app = null, param = rm.msg, method = callback.func_name, timeStamp = System.currentTimeMillis())
       })
       case None =>
     }

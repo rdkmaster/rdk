@@ -39,7 +39,6 @@ import spray.http.StatusCodes.{ClientError, ServerError}
  /*
   * Created by 10054860 on 2016/7/15.
   */
- //scalastyle:off method.name token public.methods.have.type procedure.declaration cyclomatic.complexity if.brace method.length procedure.declaration
 object RdkUtil extends Logger {
 
    /*
@@ -356,10 +355,7 @@ object RdkUtil extends Logger {
       case r: Some[A] => r
       case _ => None
     }
-
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings(
-    value = Array("OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE"),
-    justification = "false alarm")
+   
   def uploadFile(runtime: Runtime, formData: MultipartFormData): Either[Exception, String] = {
     val dataField = formData.fields.filter(f => {
       val name = f.name.getOrElse("unknown")
@@ -495,5 +491,3 @@ object RdkUtil extends Logger {
     }
   }
 }
-//scalastyle:off method.name token public.methods.have.type procedure.declaration cyclomatic.complexity if.brace method.length procedure.declaration
-

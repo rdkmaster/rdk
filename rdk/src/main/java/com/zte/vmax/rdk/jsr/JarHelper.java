@@ -14,9 +14,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 
 
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(
-        value = {"DP_CREATE_CLASSLOADER_INSIDE_DO_PRIVILEGED", "AT_OPERATION_SEQUENCE_ON_CONCURRENT_ABSTRACTION"},
-        justification = "false alarm")
 public class JarHelper extends AbstractAppLoggable {
 
     private static ConcurrentHashMap<String, RdkClassLoader> appClzLoaderMap = new ConcurrentHashMap<String, RdkClassLoader>();

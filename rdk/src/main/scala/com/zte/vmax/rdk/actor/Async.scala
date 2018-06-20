@@ -10,11 +10,7 @@ import com.zte.vmax.rdk.util.{Logger, RdkUtil}
 import java.net.InetAddress
 import com.zte.vmax.rdk.defaults.Misc
 
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(
-  value = Array("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"),
-  justification = "false alarm")
 class Async extends Actor with Logger {
-  //scalastyle:off cyclomatic.complexity method.length
   val remoteActorSystemPrefix = "akka.tcp://rdk-server-remote@"
   val remoteActorSystemSuffix = RdkServer.remoteConfig.getString("akka.remote.netty.tcp.port") + "/user/asyncActor"
   override def receive: Receive = {
@@ -120,7 +116,6 @@ class Async extends Actor with Logger {
       }
     }
   }
-  //scalastyle:off cyclomatic.complexity method.length
 
 }
 

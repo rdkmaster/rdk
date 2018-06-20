@@ -11,9 +11,7 @@ import java.util.Map;
 /**
  * Created by 10033559 on 2017/7/26.
  */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(
-        value = {"BC_EQUALS_METHOD_SHOULD_WORK_FOR_ALL_OBJECTS", "MS_MUTABLE_COLLECTION_PKGPROTECT"},
-        justification = "false alarm")
+
 public class CellFormat {
 
     private StyleFormat style;

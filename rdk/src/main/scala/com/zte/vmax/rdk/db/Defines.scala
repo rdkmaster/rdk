@@ -3,9 +3,6 @@ package com.zte.vmax.rdk.db
  /*
   * Created by 10054860 on 2016/9/20.
   */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(
-  value = Array("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"),
-  justification = "false alarm")
 object Defines {
 
    /*

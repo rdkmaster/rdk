@@ -17,10 +17,6 @@ import spray.routing.directives.FileAndResourceDirectives
 import scala.math._
 
 
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(
-  value = Array("RV_RETURN_VALUE_IGNORED_BAD_PRACTICE"),
-  justification = "false alarm")
-//scalastyle:off if.brace
 trait CustomMarshallers extends FileAndResourceDirectives {
 
   implicit def actorRefFactory: ActorRefFactory
@@ -90,4 +86,3 @@ trait CustomMarshallers extends FileAndResourceDirectives {
         }
     }
 }
-//scalastyle:off if.brace
