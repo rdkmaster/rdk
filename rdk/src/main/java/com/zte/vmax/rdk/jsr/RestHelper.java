@@ -10,6 +10,7 @@ import jdk.nashorn.internal.runtime.Undefined;
 import javax.net.ssl.*;
 import java.io.*;
 import java.net.*;
+import java.nio.charset.Charset;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
@@ -217,7 +218,7 @@ public class RestHelper extends AbstractAppLoggable {
             result = new String(bytes, encoding);
         } catch (UnsupportedEncodingException e) {
             logger.warn("invalid encoding \"" + encoding + "\" using default");
-            result = new String(bytes);
+            result = new String(bytes, Charset.forName("UTF-8"));
         }
         return result;
     }

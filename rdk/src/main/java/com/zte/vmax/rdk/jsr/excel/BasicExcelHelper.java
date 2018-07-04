@@ -29,25 +29,30 @@ public abstract class BasicExcelHelper implements ExcelHelper{
     public static final byte[] XLS_MAGIC = new byte[]{(byte)0xD0,(byte)0xCF,(byte)0x11,(byte)0xE0};
     public static final byte[] XLSX_MAGIC = new byte[]{(byte)0x50,(byte)0x4B,(byte)0x03,(byte)0x04};
 
-    private static ExcelHelper getHelper4FullName(String fullName, boolean useStreaming){
+    private static ExcelHelper getHelper4FullName(String fullName, boolean useStreaming) {
         return fullName.matches("^.*\\.xlsx$") ? (useStreaming ? new XlsxSExcelHelper() : new XlsxExcelHelper()) : new XlsExcelHelper();
     }
 
-    private static ExcelHelper getHelper4FileMagic(String fullName, boolean useStreaming){
+    private static ExcelHelper getHelper4FileMagic(String fullName, boolean useStreaming) {
         InputStream input = null;
+        ExcelHelper result = null;
         try{
             input = new FileInputStream(fullName);
             byte[] magic = new byte[4];
             input.read(magic);
-            return Arrays.equals(magic, XLSX_MAGIC) ? (useStreaming ? new XlsxSExcelHelper() : new XlsxExcelHelper()) : new XlsExcelHelper();
+            result = Arrays.equals(magic, XLSX_MAGIC) ? (useStreaming ? new XlsxSExcelHelper() : new XlsxExcelHelper()) : new XlsExcelHelper();
         }catch(Exception e){
-            return getHelper4FullName(fullName, useStreaming);
+            result = getHelper4FullName(fullName, useStreaming);
         }finally {
             try{
-                if(input != null) input.close();
+                if(input != null) {
+                    input.close();
+                }
             }catch(Exception e){
+                result = null;
             }
         }
+        return result;
     }
 
     public static ExcelHelper getRealHelper(String fullName, boolean useStreaming){

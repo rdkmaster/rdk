@@ -16,6 +16,7 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -122,7 +123,7 @@ public class FileHelper extends AbstractAppLoggable {
             int len;
             fin = new FileInputStream(path);
             while ((len = fin.read(buf)) != -1) {
-                sb.append(new String(buf, 0, len).toString());
+                sb.append(new String(buf, 0, len, Charset.forName("UTF-8")).toString());
             }
 
         } catch (FileNotFoundException e) {
