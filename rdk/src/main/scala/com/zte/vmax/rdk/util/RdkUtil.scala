@@ -4,6 +4,7 @@ package com.zte.vmax.rdk.util
 import java.io.{File, FileOutputStream, FilenameFilter}
 import java.lang.reflect.Method
 import java.net.{InetAddress, URLDecoder}
+import java.nio.charset.Charset
 import java.nio.file._
 import java.nio.file.attribute.BasicFileAttributes
 import java.util.UUID
@@ -386,7 +387,7 @@ object RdkUtil extends Logger {
         |    "lastModified": "$lastModified",
         |    "fileSize": "${data.length}"
         |}
-      """.stripMargin.trim.getBytes())
+      """.stripMargin.trim.getBytes(Charset.defaultCharset()))
 
     if (writeDataResult.isRight && writeMetaInfoResult.isRight) Right(dataFile) else Left(writeDataResult.left.get)
   }

@@ -57,7 +57,10 @@ public class CellFormat {
 
     @Override
     public boolean equals(Object obj){
-        CellFormat that = (CellFormat) obj;
+        CellFormat that = null;
+        if (obj instanceof CellFormat) {
+            that = (CellFormat) obj;
+        }
         return that != null && Util.isEquals(this.style, that.style)  &&  Util.isEquals(this.detail, that.detail);
     }
 
@@ -96,7 +99,10 @@ public class CellFormat {
 
         @Override
         public boolean equals(Object obj){
-            FontFormat that = (FontFormat) obj;
+            FontFormat that = null;
+            if (obj instanceof FontFormat) {
+                that = (FontFormat) obj;
+            }
             return that != null && Util.isEquals(this.fontFamily, that.fontFamily) && this.fontSize == that.fontSize &&
                     this.fontColor == that.fontColor && this.fontWeight == that.fontWeight;
         }
@@ -132,7 +138,10 @@ public class CellFormat {
 
         @Override
         public boolean equals(Object obj){
-            StyleFormat that = (StyleFormat) obj;
+            StyleFormat that = null;
+            if (obj instanceof StyleFormat) {
+                that = (StyleFormat) obj;
+            }
             return that != null && this.backgroundColor == that.backgroundColor &&
                     Util.isEquals(this.textAlign, that.textAlign) && Util.isEquals(this.fontFormat, that.fontFormat);
         }
@@ -163,7 +172,10 @@ public class CellFormat {
 
         @Override
         public boolean equals(Object obj){
-            FormatDetail that = (FormatDetail) obj;
+            FormatDetail that = null;
+            if (obj instanceof FormatDetail) {
+                that = (FormatDetail) obj;
+            }
             return that!= null && Util.isEquals(this.type, that.type) && Util.isEquals(this.detail, that.detail);
         }
 

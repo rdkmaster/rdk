@@ -354,14 +354,14 @@ public class GbaseOptimizer {
 					.getExpressions().get(2).toString());
 			function.getParameters().getExpressions().remove(2);
 		}
-		String formatStr = "";
+		StringBuffer formatStrBuf = new StringBuffer();
 		for (int i = 0; i < length; i++) {
-			formatStr += '9';
+			formatStrBuf.append('9');
 			if (i == length - decimal - 1 && decimal != 0) {
-				formatStr += '.';
+				formatStrBuf.append('.');
 			}
 		}
-		function.getParameters().getExpressions().set(1, formatStr);
+		function.getParameters().getExpressions().set(1, formatStrBuf.toString());
 	}
 
 	// DATETOSTR()
@@ -417,23 +417,24 @@ public class GbaseOptimizer {
 			ArrayList<Integer> parmNumList) throws Exception {
 		if (function.getParameters() == null) {
 			throw new JSQLParserException(new Throwable(function.getName()
-					.toUpperCase() + "(),parameter can't be null."));
+					.toUpperCase() + "(), parameter can't be null."));
 		}
 		int parmNum = function.getParameters().getExpressions().size();
 		boolean parmNumCorrectFlag = false;
-		String parmNumStr = "";
+		StringBuffer parmNumStrBuf = new StringBuffer();
 		for (int i = 0; i < parmNumList.size(); i++) {
 			if (parmNum == parmNumList.get(i)) {
 				parmNumCorrectFlag = true;
 			}
-			parmNumStr += parmNumList.get(i);
+			parmNumStrBuf.append(parmNumList.get(i));
 			if (i != parmNumList.size() - 1) {
-				parmNumStr += " or ";
+				parmNumStrBuf.append(" or ");
 			}
 		}
 		if (!parmNumCorrectFlag) {
 			throw new Exception(function.getName().toUpperCase()
-					+ "() function,parameter number should be " + parmNumStr
+					+ "() function, parameter number should be "
+					+ parmNumStrBuf.toString()
 					+ '.');
 		}
 

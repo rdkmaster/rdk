@@ -47,7 +47,7 @@ class Runtime(engine: ScriptEngine) extends Logger {
   var context: Option[RDKContext] = None
 
   def setContext(context: RDKContext): Unit = {
-    if (context != NoneContext) {
+    if (context != NoneContext && context != null) {
       this.restHelper.setOriginHeader(getCurrentReqCtxHeaderArray(context).toIterator)
       this.context = Option(context)
     }
